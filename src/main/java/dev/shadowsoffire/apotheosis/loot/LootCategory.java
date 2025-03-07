@@ -18,13 +18,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 
-import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.Apoth.DataMaps;
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.Util;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -36,6 +37,7 @@ import net.neoforged.neoforge.registries.callback.BakeCallback;
 public final class LootCategory {
 
     public static final Codec<LootCategory> CODEC = Codec.lazyInitialized(() -> legacyResolverCodec());
+    public static final Codec<LootCategory> OPTIONAL_CODEC = Codec.lazyInitialized(() -> Apoth.BuiltInRegs.LOOT_CATEGORY.byNameCodec());
     public static final Codec<Set<LootCategory>> SET_CODEC = PlaceboCodecs.setOf(CODEC);
     public static final StreamCodec<RegistryFriendlyByteBuf, LootCategory> STREAM_CODEC = ByteBufCodecs.registry(Apoth.BuiltInRegs.LOOT_CATEGORY.key());
 
@@ -148,8 +150,11 @@ public final class LootCategory {
             return LootCategories.NONE;
         }
 
-        LootCategory override = AdventureConfig.TYPE_OVERRIDES.get(stack.getItem());
-        if (override != null) return override;
+        LootCategory override = BuiltInRegistries.ITEM.getData(DataMaps.LOOT_CATEGORY_OVERRIDES, stack.getItemHolder().getKey());
+        if (override != null) {
+            return override;
+        }
+
         for (LootCategory c : sortedCategories) {
             if (c.isValid(stack)) return c;
         }

@@ -477,6 +477,11 @@ public class Apoth {
          */
         public static final DataMapType<DimensionType, InvaderSpawnRules> INVADER_SPAWN_RULES = R.dataMap("invader_spawn_rules", Registries.DIMENSION_TYPE, InvaderSpawnRules.CODEC, UnaryOperator.identity());
 
+        /**
+         * Holds per-item loot category overrides.
+         */
+        public static final DataMapType<Item, LootCategory> LOOT_CATEGORY_OVERRIDES = R.dataMap("loot_category_overrides", Registries.ITEM, LootCategory.OPTIONAL_CODEC, c -> c.synced(LootCategory.OPTIONAL_CODEC, true));
+
         private static void bootstrap() {}
     }
 

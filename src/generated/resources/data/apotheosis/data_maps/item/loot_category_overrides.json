@@ -1,0 +1,6 @@
+{
+    "values": {
+        "minecraft:iron_sword": "apotheosis:melee_weapon",
+        "minecraft:shulker_shell": "apotheosis:none"
+    }
+}

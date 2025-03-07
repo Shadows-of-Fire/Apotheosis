@@ -1,15 +1,9 @@
 package dev.shadowsoffire.apotheosis;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 
-import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
-import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
-import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.network.PayloadProvider;
 import net.minecraft.ResourceLocationException;
@@ -32,7 +26,6 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public class AdventureConfig {
 
     public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
-    public static final Map<Item, LootCategory> TYPE_OVERRIDES = new HashMap<>(); // TODO: Turn this into a datamap or a collection of item tags.
 
     public static float augmentedMobChance = 0.075F;
 
@@ -67,36 +60,6 @@ public class AdventureConfig {
 
     public static void load(Configuration c) {
         c.setTitle("Apotheosis Adventure Module Config");
-
-        TYPE_OVERRIDES.clear();
-        TYPE_OVERRIDES.putAll(Apotheosis.IMC_TYPE_OVERRIDES);
-        String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|apotheosis:melee_weapon", "minecraft:shulker_shell|apotheosis:none" },
-            "A list of type overrides for the affix loot system.  Format is <itemname>|<type>.\nValid types are: none, melee_weapon, trident, shield, breaker, bow\nSynced.");
-        for (String s : overrides) {
-            String[] split = s.split("\\|");
-            try {
-                ResourceLocation key = ResourceLocation.parse(split[1].toLowerCase(Locale.ROOT));
-                LootCategory type = BuiltInRegs.LOOT_CATEGORY.get(key);
-                if (type.isArmor()) {
-                    throw new UnsupportedOperationException("Cannot override an item to an armor type.");
-                }
-
-                if (type.isNone() && !LootCategories.NONE.getKey().equals(key)) {
-                    throw new UnsupportedOperationException("Unknown loot category: " + key);
-                }
-
-                Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(split[0]));
-                if (item == Items.AIR) {
-                    throw new UnsupportedOperationException("Unknown item: " + split[0]);
-                }
-
-                TYPE_OVERRIDES.put(item, type);
-            }
-            catch (Exception e) {
-                Apotheosis.LOGGER.error("Invalid type override entry: " + s + " will be ignored!");
-                e.printStackTrace();
-            }
-        }
 
         randomAffixItem = c.getFloat("Random Affix Chance", "affixes", randomAffixItem, 0, 1, "The chance that a naturally spawned mob will be granted an affix item. 0 = 0%, 1 = 100%\nServer-authoritative.");
         cleaveHitsPlayers = c.getBoolean("Cleave Players", "affixes", cleaveHitsPlayers, "If affixes that cleave can hit players (excluding the user).\nServer-authoritative.");
@@ -154,12 +117,11 @@ public class AdventureConfig {
         return DIM_WHITELIST.contains(key.location());
     }
 
-    public static record ConfigPayload(Map<Item, LootCategory> catOverrides, Item affixTorch, int upgradeSigilCost, int upgradeLevelCost, int rerollSigilCost, int rerollLevelCost) implements CustomPacketPayload {
+    public static record ConfigPayload(Item affixTorch, int upgradeSigilCost, int upgradeLevelCost, int rerollSigilCost, int rerollLevelCost) implements CustomPacketPayload {
 
         public static final Type<ConfigPayload> TYPE = new Type<>(Apotheosis.loc("config"));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, ConfigPayload> CODEC = StreamCodec.composite(
-            ByteBufCodecs.map(HashMap::new, ByteBufCodecs.registry(Registries.ITEM), LootCategory.STREAM_CODEC), ConfigPayload::catOverrides,
             ByteBufCodecs.registry(Registries.ITEM), ConfigPayload::affixTorch,
             ByteBufCodecs.VAR_INT, ConfigPayload::upgradeSigilCost,
             ByteBufCodecs.VAR_INT, ConfigPayload::upgradeLevelCost,
@@ -168,7 +130,7 @@ public class AdventureConfig {
             ConfigPayload::new);
 
         public ConfigPayload() {
-            this(AdventureConfig.TYPE_OVERRIDES, AdventureConfig.torchItem, AdventureConfig.upgradeSigilCost, AdventureConfig.upgradeLevelCost, AdventureConfig.rerollSigilCost, AdventureConfig.rerollLevelCost);
+            this(AdventureConfig.torchItem, AdventureConfig.upgradeSigilCost, AdventureConfig.upgradeLevelCost, AdventureConfig.rerollSigilCost, AdventureConfig.rerollLevelCost);
         }
 
         @Override
@@ -190,8 +152,6 @@ public class AdventureConfig {
 
             @Override
             public void handle(ConfigPayload msg, IPayloadContext ctx) {
-                AdventureConfig.TYPE_OVERRIDES.clear();
-                AdventureConfig.TYPE_OVERRIDES.putAll(msg.catOverrides);
                 AdventureConfig.torchItem = msg.affixTorch();
                 AdventureConfig.upgradeSigilCost = msg.upgradeSigilCost;
                 AdventureConfig.upgradeLevelCost = msg.upgradeLevelCost;

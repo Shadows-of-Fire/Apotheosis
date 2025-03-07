@@ -5,12 +5,17 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import dev.shadowsoffire.apotheosis.Apoth.DataMaps;
+import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
+import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.mobs.InvaderSpawnRules;
 import dev.shadowsoffire.apotheosis.mobs.util.SurfaceType;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
@@ -67,6 +72,11 @@ public class ApothDataMapProvider extends DataMapProvider {
                 WorldTier.PINNACLE, 0.06F),
             Optional.empty(),
             SurfaceType.NEEDS_SURFACE), false, new ModLoadedCondition(TWILIGHT_FOREST.getNamespace()));
+
+        Builder<LootCategory, Item> catOverrides = builder(DataMaps.LOOT_CATEGORY_OVERRIDES);
+
+        catOverrides.add(BuiltInRegistries.ITEM.wrapAsHolder(Items.IRON_SWORD), LootCategories.MELEE_WEAPON, false);
+        catOverrides.add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SHULKER_SHELL), LootCategories.NONE, false);
     }
 
 }

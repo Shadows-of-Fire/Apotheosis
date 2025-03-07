@@ -1,14 +1,9 @@
 package dev.shadowsoffire.apotheosis;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig.ConfigPayload;
-import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.compat.GatewaysCompat;
@@ -35,7 +30,6 @@ import dev.shadowsoffire.apotheosis.data.twilight.TwilightAffixLootProvider;
 import dev.shadowsoffire.apotheosis.data.twilight.TwilightGearSetProvider;
 import dev.shadowsoffire.apotheosis.data.twilight.TwilightInvaderProvider;
 import dev.shadowsoffire.apotheosis.loot.AffixLootRegistry;
-import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRule;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.mobs.ApothMobEvents;
@@ -71,13 +65,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -92,8 +84,6 @@ public class Apotheosis {
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final boolean DEBUG_WORLDGEN = "on".equalsIgnoreCase(System.getenv("apotheosis.debug_worldgen"));
     public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
-
-    static final Map<Item, LootCategory> IMC_TYPE_OVERRIDES = new HashMap<>();
 
     public static boolean isRunningInDatagen = false;
 
@@ -205,34 +195,6 @@ public class Apotheosis {
 
         // Place gem bonus lists below everything else in the gem file.
         map.put("bonuses", 5);
-    }
-
-    @SubscribeEvent
-    @SuppressWarnings({ "unchecked", "deprecation" })
-    public void imc(InterModProcessEvent e) {
-        e.getIMCStream().forEach(msg -> {
-            switch (msg.method().toLowerCase(Locale.ROOT)) {
-                // Payload: Map.Entry<Item, String> where the string is a LootCategory ID.
-                case "loot_category_override" -> {
-                    try {
-                        var categoryOverride = (Map.Entry<Item, String>) msg.messageSupplier().get();
-                        Item item = categoryOverride.getKey();
-                        LootCategory cat = BuiltInRegs.LOOT_CATEGORY.get(ResourceLocation.parse(categoryOverride.getValue()));
-                        if (cat == null) throw new NullPointerException("Invalid loot category ID: " + categoryOverride.getValue());
-                        Apotheosis.IMC_TYPE_OVERRIDES.put(item, cat);
-                        Apotheosis.LOGGER.info("Mod {} has overriden the loot category of {} to {}.", msg.senderModId(), item, cat.getKey());
-                        break;
-                    }
-                    catch (Exception ex) {
-                        Apotheosis.LOGGER.error(ex.getMessage());
-                        ex.printStackTrace();
-                    }
-                }
-                default -> {
-                    Apotheosis.LOGGER.error("Unknown or invalid IMC Message: {}", msg);
-                }
-            }
-        });
     }
 
     public static void loadConfig(boolean firstLoad) {
