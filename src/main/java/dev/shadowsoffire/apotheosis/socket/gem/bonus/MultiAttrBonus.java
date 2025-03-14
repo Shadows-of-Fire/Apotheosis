@@ -14,6 +14,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemView;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
+import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -24,7 +25,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 
 public class MultiAttrBonus extends GemBonus {
 
@@ -45,7 +45,7 @@ public class MultiAttrBonus extends GemBonus {
     }
 
     @Override
-    public void addModifiers(GemInstance inst, ItemAttributeModifierEvent event) {
+    public void addModifiers(GemInstance inst, StackAttributeModifiersEvent event) {
         int i = 0;
         for (ModifierInst modifier : this.modifiers) {
             event.addModifier(modifier.attr, modifier.build(makeUniqueId(inst, "" + i), inst.purity()), inst.category().getSlots());

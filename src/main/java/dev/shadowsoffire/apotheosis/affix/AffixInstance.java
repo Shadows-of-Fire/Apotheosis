@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
@@ -29,7 +30,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
@@ -69,7 +69,7 @@ public record AffixInstance(DynamicHolder<Affix> affix, float level, DynamicHold
     /**
      * @see Affix#addModifiers(ItemStack, LootRarity, float, EquipmentSlot, BiConsumer)
      */
-    public void addModifiers(ItemAttributeModifierEvent event) {
+    public void addModifiers(StackAttributeModifiersEvent event) {
         this.getAffix().addModifiers(this, event);
     }
 

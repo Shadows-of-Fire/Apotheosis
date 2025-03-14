@@ -22,6 +22,7 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.DataMaps;
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apothic_attributes.modifiers.EntitySlotGroup;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.Util;
@@ -30,7 +31,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.registries.callback.BakeCallback;
 
@@ -44,19 +44,19 @@ public final class LootCategory {
     private static List<LootCategory> sortedCategories = new ArrayList<>();
 
     private final Predicate<ItemStack> validator;
-    private final EquipmentSlotGroup slots;
+    private final EntitySlotGroup slots;
     private final int priority;
 
     @Nullable
     private String descId;
 
-    public LootCategory(Predicate<ItemStack> validator, EquipmentSlotGroup slots, int priority) {
+    public LootCategory(Predicate<ItemStack> validator, EntitySlotGroup slots, int priority) {
         this.validator = Preconditions.checkNotNull(validator);
         this.slots = Preconditions.checkNotNull(slots);
         this.priority = priority;
     }
 
-    public LootCategory(Predicate<ItemStack> validator, EquipmentSlotGroup slots) {
+    public LootCategory(Predicate<ItemStack> validator, EntitySlotGroup slots) {
         this(validator, slots, 1000);
     }
 
@@ -80,7 +80,7 @@ public final class LootCategory {
      * Returns the relevant equipment slot for this item.
      * The passed item should be of the type this category represents.
      */
-    public EquipmentSlotGroup getSlots() {
+    public EntitySlotGroup getSlots() {
         return this.slots;
     }
 

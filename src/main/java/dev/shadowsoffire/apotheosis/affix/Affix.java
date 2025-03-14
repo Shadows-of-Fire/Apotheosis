@@ -12,6 +12,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
+import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
 import dev.shadowsoffire.apothic_enchanting.asm.EnchHooks;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -38,7 +39,6 @@ import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.common.extensions.IAttributeExtension;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
@@ -106,7 +106,7 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
      * @param inst  The affix instance.
      * @param event The attribute modifiers event.
      */
-    public void addModifiers(AffixInstance inst, ItemAttributeModifierEvent event) {}
+    public void addModifiers(AffixInstance inst, StackAttributeModifiersEvent event) {}
 
     /**
      * Calculates the protection value of this affix, with respect to the given damage source.<br>
@@ -318,7 +318,7 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
     static ResourceLocation makeUniqueId(AffixInstance inst, String salt) {
         ResourceLocation key = inst.affix().getId();
         LootCategory cat = LootCategory.forItem(inst.stack());
-        return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), key.getPath() + "_modifier_" + cat.getSlots().getSerializedName() + "_" + salt);
+        return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), key.getPath() + "_modifier_" + cat.getSlots().id().toShortLanguageKey() + "_" + salt);
     }
 
     /**

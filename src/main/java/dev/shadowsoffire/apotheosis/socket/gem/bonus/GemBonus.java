@@ -19,6 +19,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.DropTransformBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.FrozenDropsBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.LeechBlockBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.MageSlayerBonus;
+import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
 import dev.shadowsoffire.placebo.codec.CodecMap;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -82,7 +83,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
      * @param inst  The current gem instance.
      * @param event The attribute modifier event, which will accept any created modifiers.
      */
-    public void addModifiers(GemInstance inst, ItemAttributeModifierEvent event) {}
+    public void addModifiers(GemInstance inst, StackAttributeModifiersEvent event) {}
 
     /**
      * Calculates the protection value of this bonus, with respect to the given damage source.
@@ -245,7 +246,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     protected static ResourceLocation makeUniqueId(GemView view, String salt) {
         String path = view.gem().getId().getPath() + "_modifier_";
         if (view instanceof GemInstance inst) {
-            path += inst.category().getSlots().getSerializedName() + "_" + inst.slot();
+            path += inst.category().getSlots().id().toShortLanguageKey() + "_" + inst.slot();
         }
         return ResourceLocation.fromNamespaceAndPath(view.gem().getId().getNamespace(), path + salt);
     }

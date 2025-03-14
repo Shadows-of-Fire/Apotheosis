@@ -24,6 +24,7 @@ import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
+import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -219,7 +220,10 @@ public class ApothMobEvents {
 
             affixItem.set(Components.FROM_MOB, true);
             LootCategory cat = LootCategory.forItem(affixItem);
-            EquipmentSlot slot = Arrays.stream(EquipmentSlot.values()).filter(cat.getSlots()::test).findAny().orElse(EquipmentSlot.MAINHAND);
+            EquipmentSlot slot = Arrays.stream(EquipmentSlot.values())
+                .filter(eSlot -> cat.getSlots().test(EquipmentSlotCompat.fromVanilla(eSlot)))
+                .findAny()
+                .orElse(EquipmentSlot.MAINHAND);
             e.getEntity().setItemSlot(slot, affixItem);
             e.getEntity().setGuaranteedDrop(slot);
         }

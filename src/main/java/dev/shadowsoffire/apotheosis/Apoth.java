@@ -72,6 +72,8 @@ import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.SingletonRecipeSerializer;
+import dev.shadowsoffire.apothic_attributes.api.ALObjects;
+import dev.shadowsoffire.apothic_attributes.modifiers.EntitySlotGroup;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType.TickSide;
 import dev.shadowsoffire.placebo.registry.DeferredHelper;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -92,7 +94,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BowItem;
@@ -426,22 +427,23 @@ public class Apoth {
 
     public static final class LootCategories {
 
-        public static final LootCategory BOW = register("bow", s -> s.getItem() instanceof BowItem || s.getItem() instanceof CrossbowItem, EquipmentSlotGroup.HAND);
-        public static final LootCategory BREAKER = register("breaker", s -> s.canPerformAction(ItemAbilities.PICKAXE_DIG) || s.canPerformAction(ItemAbilities.SHOVEL_DIG), EquipmentSlotGroup.MAINHAND);
-        public static final LootCategory HELMET = register("helmet", armorSlot(EquipmentSlot.HEAD), EquipmentSlotGroup.HEAD);
-        public static final LootCategory CHESTPLATE = register("chestplate", armorSlot(EquipmentSlot.CHEST), EquipmentSlotGroup.CHEST);
-        public static final LootCategory LEGGINGS = register("leggings", armorSlot(EquipmentSlot.LEGS), EquipmentSlotGroup.LEGS);
-        public static final LootCategory BOOTS = register("boots", armorSlot(EquipmentSlot.FEET), EquipmentSlotGroup.FEET);
-        public static final LootCategory SHIELD = register("shield", s -> s.canPerformAction(ItemAbilities.SHIELD_BLOCK), EquipmentSlotGroup.HAND);
-        public static final LootCategory TRIDENT = register("trident", s -> s.getItem() instanceof TridentItem, EquipmentSlotGroup.MAINHAND);
-        public static final LootCategory MELEE_WEAPON = register("melee_weapon", s -> s.canPerformAction(ItemAbilities.SWORD_DIG) || getDefaultModifiers(s).compute(1, EquipmentSlot.MAINHAND) > 1, EquipmentSlotGroup.MAINHAND, 2000);
-        public static final LootCategory NONE = register("none", Predicates.alwaysFalse(), EquipmentSlotGroup.ANY, Integer.MAX_VALUE);
+        public static final LootCategory BOW = register("bow", s -> s.getItem() instanceof BowItem || s.getItem() instanceof CrossbowItem, ALObjects.EquipmentSlotGroups.HAND);
+        public static final LootCategory BREAKER = register("breaker", s -> s.canPerformAction(ItemAbilities.PICKAXE_DIG) || s.canPerformAction(ItemAbilities.SHOVEL_DIG), ALObjects.EquipmentSlotGroups.MAINHAND);
+        public static final LootCategory HELMET = register("helmet", armorSlot(EquipmentSlot.HEAD), ALObjects.EquipmentSlotGroups.HEAD);
+        public static final LootCategory CHESTPLATE = register("chestplate", armorSlot(EquipmentSlot.CHEST), ALObjects.EquipmentSlotGroups.CHEST);
+        public static final LootCategory LEGGINGS = register("leggings", armorSlot(EquipmentSlot.LEGS), ALObjects.EquipmentSlotGroups.LEGS);
+        public static final LootCategory BOOTS = register("boots", armorSlot(EquipmentSlot.FEET), ALObjects.EquipmentSlotGroups.FEET);
+        public static final LootCategory SHIELD = register("shield", s -> s.canPerformAction(ItemAbilities.SHIELD_BLOCK), ALObjects.EquipmentSlotGroups.HAND);
+        public static final LootCategory TRIDENT = register("trident", s -> s.getItem() instanceof TridentItem, ALObjects.EquipmentSlotGroups.MAINHAND);
+        public static final LootCategory MELEE_WEAPON = register("melee_weapon", s -> s.canPerformAction(ItemAbilities.SWORD_DIG) || getDefaultModifiers(s).compute(1, EquipmentSlot.MAINHAND) > 1,
+            ALObjects.EquipmentSlotGroups.MAINHAND, 2000);
+        public static final LootCategory NONE = register("none", Predicates.alwaysFalse(), ALObjects.EquipmentSlotGroups.ANY, Integer.MAX_VALUE);
 
-        private static LootCategory register(String path, Predicate<ItemStack> filter, EquipmentSlotGroup slots, int priority) {
+        private static LootCategory register(String path, Predicate<ItemStack> filter, EntitySlotGroup slots, int priority) {
             return R.custom(path, BuiltInRegs.LOOT_CATEGORY.key(), new LootCategory(filter, slots, priority));
         }
 
-        private static LootCategory register(String path, Predicate<ItemStack> filter, EquipmentSlotGroup slots) {
+        private static LootCategory register(String path, Predicate<ItemStack> filter, EntitySlotGroup slots) {
             return register(path, filter, slots, 1000);
         }
 

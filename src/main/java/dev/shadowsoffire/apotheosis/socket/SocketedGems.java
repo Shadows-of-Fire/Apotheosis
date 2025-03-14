@@ -13,6 +13,7 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
+import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -26,7 +27,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent;
 
 /**
@@ -41,7 +41,7 @@ public record SocketedGems(ImmutableList<GemInstance> gems) implements List<GemI
         this(ImmutableList.copyOf(gems));
     }
 
-    public void addModifiers(ItemAttributeModifierEvent event) {
+    public void addModifiers(StackAttributeModifiersEvent event) {
         this.streamValidGems().forEach(inst -> inst.addModifiers(event));
     }
 

@@ -39,6 +39,7 @@ import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
+import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import dev.shadowsoffire.apothic_enchanting.asm.EnchHooks;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.json.ChancedEffectInstance;
@@ -234,7 +235,10 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
             // We didn't apply an armor set to this invader. We still need to generate an affix item, so we'll pull one at random and equip it.
             ItemStack affixItem = LootController.createRandomLootItem(ctx, rarity);
             LootCategory cat = LootCategory.forItem(affixItem);
-            EquipmentSlot slot = Arrays.stream(EquipmentSlot.values()).filter(cat.getSlots()::test).findAny().orElse(EquipmentSlot.MAINHAND);
+            EquipmentSlot slot = Arrays.stream(EquipmentSlot.values())
+                .filter(eSlot -> cat.getSlots().test(EquipmentSlotCompat.fromVanilla(eSlot)))
+                .findAny()
+                .orElse(EquipmentSlot.MAINHAND);
             mob.setItemSlot(slot, affixItem);
         }
 

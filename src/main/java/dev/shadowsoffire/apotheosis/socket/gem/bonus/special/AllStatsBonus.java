@@ -15,6 +15,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemView;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
+import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -27,7 +28,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 
 @SuppressWarnings("deprecation")
 public class AllStatsBonus extends GemBonus {
@@ -52,7 +52,7 @@ public class AllStatsBonus extends GemBonus {
     }
 
     @Override
-    public void addModifiers(GemInstance inst, ItemAttributeModifierEvent event) {
+    public void addModifiers(GemInstance inst, StackAttributeModifiersEvent event) {
         int idx = 0;
         for (Holder<Attribute> attr : this.attributes) {
             ResourceLocation id = makeUniqueId(inst, "" + idx++);

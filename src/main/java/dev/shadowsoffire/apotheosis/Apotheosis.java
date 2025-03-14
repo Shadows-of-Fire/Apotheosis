@@ -8,6 +8,7 @@ import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.compat.GatewaysCompat;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
+import dev.shadowsoffire.apotheosis.compat.curios.CuriosCompat;
 import dev.shadowsoffire.apotheosis.compat.twilight.AdventureTwilightCompat;
 import dev.shadowsoffire.apotheosis.data.AffixLootEntryProvider;
 import dev.shadowsoffire.apotheosis.data.AffixProvider;
@@ -98,11 +99,17 @@ public class Apotheosis {
         if (ModList.get().isLoaded("gateways")) {
             GatewaysCompat.register();
         }
+        
         if (ModList.get().isLoaded("twilightforest")) {
             AdventureTwilightCompat.register();
         }
+        
         if (ModList.get().isLoaded("patchouli")) {
             PatchouliCompat.register();
+        }
+        
+        if (ModList.get().isLoaded("curios")) {
+            CuriosCompat.register(bus);
         }
     }
 

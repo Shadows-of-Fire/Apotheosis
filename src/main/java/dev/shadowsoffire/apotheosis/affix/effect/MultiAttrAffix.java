@@ -20,6 +20,7 @@ import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
@@ -32,7 +33,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 
 /**
  * An affix that applies multiple {@link AttributeModifier}s to a single item.
@@ -104,7 +104,7 @@ public class MultiAttrAffix extends Affix {
     }
 
     @Override
-    public void addModifiers(AffixInstance inst, ItemAttributeModifierEvent event) {
+    public void addModifiers(AffixInstance inst, StackAttributeModifiersEvent event) {
         LootCategory cat = inst.category();
         if (cat.isNone()) {
             Apotheosis.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.id(), inst.stack().getHoverName().getString());
