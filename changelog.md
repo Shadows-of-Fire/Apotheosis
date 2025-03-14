@@ -1,3 +1,10 @@
+## 8.2.1
+* Fixed Potion Charms not working in Curio slots.
+  * Also re-enabled the "Charms in Curios Only" config option.
+* Updated to Apothic Attributes 2.7.0.
+  * `LootCategory` has been updated to use the new `EntityEquipmentSlot` API.
+  * This permits addons to create categories (and subsequently, gems/affixes) for non-vanilla equipment slots.
+
 ## 8.2.0
 * Updated the Chronicle of Shadows to have information regarding all the changes since 8.0.0.
   * A new section regarding World Tiers has been added.
