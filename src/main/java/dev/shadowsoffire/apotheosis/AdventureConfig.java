@@ -110,6 +110,8 @@ public class AdventureConfig {
         upgradeLevelCost = c.getInt("Upgrade Level Cost", "augmenting", upgradeLevelCost, 0, 65536, "The number of experience levels it costs to upgrade an affix in the Augmenting Table.\nSynced.");
         rerollSigilCost = c.getInt("Reroll Sigil Cost", "augmenting", rerollSigilCost, 0, 64, "The number of Sigils of Enhancement it costs to reroll an affix in the Augmenting Table.\nSynced.");
         rerollLevelCost = c.getInt("Reroll Level Cost", "augmenting", rerollLevelCost, 0, 65536, "The number of experience levels it costs to reroll an affix in the Augmenting Table.\nSynced.");
+
+        charmsInCuriosOnly = c.getBoolean("Restrict Charms to Curios", "potion_charms", charmsInCuriosOnly, "If Potion Charms will only work when in a curios slot, instead of in the inventory.");
     }
 
     public static boolean canGenerateIn(WorldGenLevel world) {
@@ -117,7 +119,7 @@ public class AdventureConfig {
         return DIM_WHITELIST.contains(key.location());
     }
 
-    public static record ConfigPayload(Item affixTorch, int upgradeSigilCost, int upgradeLevelCost, int rerollSigilCost, int rerollLevelCost) implements CustomPacketPayload {
+    public static record ConfigPayload(Item affixTorch, int upgradeSigilCost, int upgradeLevelCost, int rerollSigilCost, int rerollLevelCost, boolean charmsInCuriosOnly) implements CustomPacketPayload {
 
         public static final Type<ConfigPayload> TYPE = new Type<>(Apotheosis.loc("config"));
 
@@ -127,10 +129,11 @@ public class AdventureConfig {
             ByteBufCodecs.VAR_INT, ConfigPayload::upgradeLevelCost,
             ByteBufCodecs.VAR_INT, ConfigPayload::rerollSigilCost,
             ByteBufCodecs.VAR_INT, ConfigPayload::rerollLevelCost,
+            ByteBufCodecs.BOOL, ConfigPayload::charmsInCuriosOnly,
             ConfigPayload::new);
 
         public ConfigPayload() {
-            this(AdventureConfig.torchItem, AdventureConfig.upgradeSigilCost, AdventureConfig.upgradeLevelCost, AdventureConfig.rerollSigilCost, AdventureConfig.rerollLevelCost);
+            this(AdventureConfig.torchItem, AdventureConfig.upgradeSigilCost, AdventureConfig.upgradeLevelCost, AdventureConfig.rerollSigilCost, AdventureConfig.rerollLevelCost, AdventureConfig.charmsInCuriosOnly);
         }
 
         @Override
@@ -171,7 +174,7 @@ public class AdventureConfig {
 
             @Override
             public String getVersion() {
-                return "2";
+                return "3";
             }
 
         }
