@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -42,6 +41,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingScreen;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.ChatFormatting;
@@ -305,21 +305,26 @@ public class AdventureModuleClient {
         public static void affixTooltips(ItemTooltipEvent e) {
             ItemStack stack = e.getItemStack();
             List<Component> components = new ArrayList<>();
-            Consumer<Component> dotPrefixer = afxComp -> {
-                components.add(Apotheosis.lang("text", "dot_prefix", afxComp).withStyle(ChatFormatting.YELLOW));
-            };
 
             if (stack.has(Components.AFFIXES)) {
                 AttributeTooltipContext ctx = AttributeTooltipContext.of(Minecraft.getInstance().player, e.getContext(), e.getFlags());
                 AffixHelper.streamAffixes(stack)
                     .sorted(Comparator.comparingInt(a -> a.getAffix().definition().type().ordinal()))
-                    .map(a -> a.getDescription(ctx))
-                    .filter(c -> c.getContents() != PlainTextContents.EMPTY)
-                    .forEach(dotPrefixer);
+                    .forEach(inst -> {
+                        Component desc = inst.getDescription(ctx);
+                        if (desc.getContents() != PlainTextContents.EMPTY) {
+                            if (inst.level() > Affix.STANDARD_MAX_LEVEL) {
+                                components.add(ApothMiscUtil.starPrefix(desc));
+                            }
+                            else {
+                                components.add(ApothMiscUtil.dotPrefix(desc));
+                            }
+                        }
+                    });
             }
 
             if (stack.has(Components.DURABILITY_BONUS) && !stack.has(DataComponents.UNBREAKABLE)) {
-                dotPrefixer.accept(Component.translatable("affix.apotheosis:durable.desc", Math.round(100 * stack.get(Components.DURABILITY_BONUS))));
+                components.add(ApothMiscUtil.dotPrefix(Component.translatable("affix.apotheosis:durable.desc", Math.round(100 * stack.get(Components.DURABILITY_BONUS)))));
             }
 
             if (!components.isEmpty()) {

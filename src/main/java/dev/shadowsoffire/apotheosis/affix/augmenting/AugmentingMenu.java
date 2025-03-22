@@ -100,7 +100,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
                     }
                 }
 
-                AffixHelper.applyAffix(mainItem, inst.withNewLevel(inst.level() + 0.25F));
+                AffixHelper.applyAffix(mainItem, inst.withNewLevel(Math.min(inst.level() + 0.25F, Affix.STANDARD_MAX_LEVEL)));
                 this.slots.get(0).set(mainItem);
                 player.level().playSound(null, this.pos, SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 1F, player.level().random.nextFloat() * 0.25F + 1F);
                 player.level().playSound(null, this.pos, SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.PLAYERS, 0.34F, player.level().random.nextFloat() * 0.2F + 0.8F);

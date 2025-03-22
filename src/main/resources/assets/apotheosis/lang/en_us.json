@@ -561,6 +561,7 @@
     "text.apotheosis.facets": "Facets: %s",
     "text.apotheosis.socketable_into": "Fits In:",
     "text.apotheosis.dot_prefix": "• %s",
+    "text.apotheosis.star_prefix": "🌟 %s",
     "text.apotheosis.socket_limit": "Max Sockets Applied: %s",
     "text.apotheosis.no_upgrade": "Max Upgrade Reached",
     "text.apotheosis.cut_cost": "Gem Cutting Cost",

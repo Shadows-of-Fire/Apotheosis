@@ -74,7 +74,7 @@ public class AffixCommand {
         builder.then(
             Commands.literal("apply")
                 .then(Commands.argument("affix", ResourceLocationArgument.id()).suggests(SUGGEST_APPLICABLE_AFFIX)
-                    .then(Commands.argument("level", FloatArgumentType.floatArg(0, 1))
+                    .then(Commands.argument("level", FloatArgumentType.floatArg(0, Affix.MAX_LEVEL))
                         .executes(c -> applyAffix(c, ResourceLocationArgument.getId(c, "affix"), FloatArgumentType.getFloat(c, "level"))))
                     .executes(c -> applyAffix(c, ResourceLocationArgument.getId(c, "affix"), c.getSource().getLevel().random.nextFloat()))));
 

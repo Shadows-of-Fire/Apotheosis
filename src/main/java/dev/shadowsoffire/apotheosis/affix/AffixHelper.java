@@ -40,7 +40,7 @@ public class AffixHelper {
      */
     public static void applyAffix(ItemStack stack, AffixInstance inst) {
         ItemAffixes.Builder builder = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY).toBuilder();
-        builder.upgrade(inst.affix(), inst.level());
+        builder.put(inst.affix(), inst.level());
         setAffixes(stack, builder.build());
     }
 

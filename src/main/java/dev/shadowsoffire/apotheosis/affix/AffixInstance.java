@@ -201,7 +201,7 @@ public record AffixInstance(DynamicHolder<Affix> affix, float level, DynamicHold
     }
 
     public AffixInstance withNewLevel(float level) {
-        return new AffixInstance(this.affix, Mth.clamp(level, 0, 1), this.rarity, this.stack);
+        return new AffixInstance(this.affix, Mth.clamp(level, 0, Affix.MAX_LEVEL), this.rarity, this.stack);
     }
 
     public ResourceLocation makeUniqueId(String salt) {
