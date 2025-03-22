@@ -7,12 +7,12 @@ import java.util.Map;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.util.IFestiveMarker;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -82,7 +82,7 @@ public class FestiveAffix extends Affix {
             for (int i = 0; i < inv.getSlots(); i++) {
                 ItemStack stack = inv.getStackInSlot(i);
                 if (!stack.isEmpty()) {
-                    stack.set(Components.FESTIVE_MARKER, true);
+                    ((IFestiveMarker) (Object) stack).setMarked(true);
                     iihm.setStackInSlot(i, stack);
                 }
             }
@@ -90,7 +90,7 @@ public class FestiveAffix extends Affix {
 
         e.getEntity().getAllSlots().forEach(i -> {
             if (!i.isEmpty()) {
-                i.set(Components.FESTIVE_MARKER, true);
+                ((IFestiveMarker) (Object) i).setMarked(true);
             }
         });
     }
@@ -108,7 +108,7 @@ public class FestiveAffix extends Affix {
 
                 List<ItemEntity> drops = new ArrayList<>(e.getDrops());
                 for (ItemEntity item : drops) {
-                    if (item.getItem().getOrDefault(Components.FESTIVE_MARKER, false)) {
+                    if (((IFestiveMarker) (Object) item.getItem()).isMarked()) {
                         continue;
                     }
                     for (int i = 0; i < 20; i++) {
@@ -128,7 +128,7 @@ public class FestiveAffix extends Affix {
     public static void removeMarker(LivingDropsEvent e) {
         e.getDrops().stream().forEach(ent -> {
             ItemStack s = ent.getItem();
-            s.remove(Components.FESTIVE_MARKER);
+            ((IFestiveMarker) (Object) s).setMarked(false);
             ent.setItem(s);
         });
     }

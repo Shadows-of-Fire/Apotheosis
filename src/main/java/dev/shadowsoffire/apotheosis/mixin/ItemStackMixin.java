@@ -1,6 +1,8 @@
 package dev.shadowsoffire.apotheosis.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -11,6 +13,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.util.IFestiveMarker;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -19,7 +22,10 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 
 @Mixin(value = ItemStack.class, priority = 500, remap = false)
-public class ItemStackMixin {
+public abstract class ItemStackMixin implements IFestiveMarker {
+
+    @Unique
+    private boolean apoth_isFestiveMarked = false;
 
     @Inject(method = "getHoverName", at = @At("RETURN"), cancellable = true)
     public void apoth_affixItemName(CallbackInfoReturnable<Component> cir) {
@@ -56,6 +62,27 @@ public class ItemStackMixin {
                 cir.setReturnValue(afxRes);
                 return;
             }
+        }
+    }
+
+    @Shadow
+    public abstract boolean isEmpty();
+
+    @Override
+    public boolean isMarked() {
+        return !this.isEmpty() && this.apoth_isFestiveMarked;
+    }
+
+    @Override
+    public void setMarked(boolean marked) {
+        this.apoth_isFestiveMarked = marked;
+    }
+
+    @Inject(method = "copy", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
+    public void apoth_copyFestiveMarker(CallbackInfoReturnable<ItemStack> cir) {
+        ItemStack copy = cir.getReturnValue();
+        if (this.isMarked()) {
+            ((IFestiveMarker) (Object) copy).setMarked(true);
         }
     }
 
