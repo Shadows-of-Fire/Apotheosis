@@ -3,12 +3,12 @@
         "minecraft:overworld": {
             "spawn_chances": {
                 "haven": 0.0,
-                "frontier": 0.013,
+                "frontier": 0.015,
                 "ascent": 0.018,
                 "summit": 0.025,
                 "pinnacle": 0.03
             },
-            "surface_type": "needs_sky"
+            "surface_type": "needs_sky_or_same_vertical_slice"
         },
         "minecraft:the_end": {
             "spawn_chances": {

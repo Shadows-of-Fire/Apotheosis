@@ -138,6 +138,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
                 player.level().playSound(null, this.pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.PLAYERS, 0.45F, player.level().random.nextFloat() * 0.75F + 0.5F);
                 this.broadcastChanges();
                 PacketDistributor.sendToPlayer((ServerPlayer) this.player, new RerollResultPayload(newAffix));
+                this.tile.setChanged();
                 return true;
             }
         }

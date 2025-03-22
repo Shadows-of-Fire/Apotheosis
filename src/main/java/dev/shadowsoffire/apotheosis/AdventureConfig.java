@@ -91,7 +91,7 @@ public class AdventureConfig {
         bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", bossAutoAggro, "If true, invading bosses will automatically target the closest player.\nServer-authoritative.");
         bossGlowOnSpawn = c.getBoolean("Boss Glowing On Spawn", "bosses", bossGlowOnSpawn, "If true, bosses will glow when they spawn.\nServer-authoritative.");
 
-        String[] dims = c.getStringList("Generation Dimension Whitelist", "worldgen", new String[] { "overworld" }, "The dimensions that the deadly module will generate in.\nServer-authoritative.");
+        String[] dims = c.getStringList("Generation Dimension Whitelist", "worldgen", new String[] { "overworld" }, "The dimensions that Apotheosis's worldgen will generate in.\nServer-authoritative.");
         DIM_WHITELIST.clear();
         for (String s : dims) {
             try {

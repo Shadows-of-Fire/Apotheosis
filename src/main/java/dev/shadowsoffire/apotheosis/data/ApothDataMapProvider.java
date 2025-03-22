@@ -36,12 +36,12 @@ public class ApothDataMapProvider extends DataMapProvider {
         invaderRules.add(BuiltinDimensionTypes.OVERWORLD, new InvaderSpawnRules(
             Map.of(
                 WorldTier.HAVEN, 0F,
-                WorldTier.FRONTIER, 0.013F,
+                WorldTier.FRONTIER, 0.015F,
                 WorldTier.ASCENT, 0.018F,
                 WorldTier.SUMMIT, 0.025F,
                 WorldTier.PINNACLE, 0.03F),
             Optional.empty(),
-            SurfaceType.NEEDS_SKY), false);
+            SurfaceType.NEEDS_SKY_OR_SAME_VERTICAL_SLICE), false);
 
         invaderRules.add(BuiltinDimensionTypes.NETHER, new InvaderSpawnRules(
             Map.of(
