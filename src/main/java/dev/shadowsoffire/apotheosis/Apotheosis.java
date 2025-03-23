@@ -88,8 +88,6 @@ public class Apotheosis {
     public static final boolean DEBUG_WORLDGEN = "on".equalsIgnoreCase(System.getenv("apotheosis.debug_worldgen"));
     public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
 
-    public static boolean isRunningInDatagen = false;
-
     public Apotheosis(IEventBus bus) {
         Apoth.bootstrap(bus);
         bus.register(this);
@@ -154,7 +152,6 @@ public class Apotheosis {
 
     @SubscribeEvent
     public void data(GatherDataEvent e) {
-        isRunningInDatagen = true;
         DataProvider.INDENT_WIDTH.set(4);
         DataGenBuilder.create(Apotheosis.MODID)
             .provider(ApothLootProvider::create)

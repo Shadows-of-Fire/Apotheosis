@@ -8,7 +8,7 @@ license="MIT License"
 
 modId="apotheosis"
 
-version="8.2.2.1-beta"
+version="8.2.2-beta2"
 
 displayName="Apotheosis"
 
@@ -36,7 +36,7 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="placebo"
     type="required"
-    versionRange="[9.7.1.1-beta,)"
+    versionRange="[9.7.1,)"
     ordering="AFTER"
     side="BOTH"
 

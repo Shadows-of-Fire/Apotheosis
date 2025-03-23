@@ -97,6 +97,7 @@ import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
 import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
+import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 @EventBusSubscriber(bus = Bus.MOD, modid = Apotheosis.MODID, value = Dist.CLIENT)
@@ -191,7 +192,7 @@ public class AdventureModuleClient {
     }
 
     public static void checkAffixLangKeys() {
-        if (Apotheosis.isRunningInDatagen) return; // TODO: Load the lang file, somehow
+        if (DatagenModLoader.isRunningDataGen()) return; // TODO: Load the lang file, somehow
 
         StringBuilder sb = new StringBuilder("Missing Affix Lang Keys:\n");
         boolean any = false;
