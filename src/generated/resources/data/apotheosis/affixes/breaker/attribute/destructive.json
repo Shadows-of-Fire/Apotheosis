@@ -2,7 +2,8 @@
     "type": "apotheosis:attribute",
     "attribute": "apothic_attributes:mining_speed",
     "categories": [
-        "apotheosis:breaker"
+        "apotheosis:breaker",
+        "apotheosis:shears"
     ],
     "definition": {
         "affix_type": "stat",

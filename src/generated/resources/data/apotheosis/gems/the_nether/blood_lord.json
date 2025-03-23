@@ -37,10 +37,10 @@
                     "attribute": "apothic_attributes:life_steal",
                     "operation": "add_value",
                     "values": {
-                        "flawed": 0.25,
-                        "normal": 0.4,
-                        "flawless": 0.5,
-                        "perfect": 0.6
+                        "flawed": 0.1,
+                        "normal": 0.125,
+                        "flawless": 0.15,
+                        "perfect": 0.15
                     }
                 },
                 {

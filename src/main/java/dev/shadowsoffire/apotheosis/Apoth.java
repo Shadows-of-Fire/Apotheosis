@@ -435,6 +435,7 @@ public class Apoth {
         public static final LootCategory TRIDENT = register("trident", s -> s.getItem() instanceof TridentItem, ALObjects.EquipmentSlotGroups.MAINHAND);
         public static final LootCategory MELEE_WEAPON = register("melee_weapon", s -> s.canPerformAction(ItemAbilities.SWORD_DIG) || getDefaultModifiers(s).compute(1, EquipmentSlot.MAINHAND) > 1,
             ALObjects.EquipmentSlotGroups.MAINHAND, 2000);
+        public static final LootCategory SHEARS = register("shears", s -> s.canPerformAction(ItemAbilities.SHEARS_DIG), ALObjects.EquipmentSlotGroups.MAINHAND, 2500);
         public static final LootCategory NONE = register("none", Predicates.alwaysFalse(), ALObjects.EquipmentSlotGroups.ANY, Integer.MAX_VALUE);
 
         private static LootCategory register(String path, Predicate<ItemStack> filter, EntitySlotGroup slots, int priority) {

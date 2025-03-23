@@ -32,7 +32,8 @@
                     "apotheosis:boots",
                     "apotheosis:shield",
                     "apotheosis:trident",
-                    "apotheosis:melee_weapon"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:shears"
                 ]
             },
             "mode": "global",

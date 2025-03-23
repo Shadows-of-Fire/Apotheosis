@@ -1,4 +1,4 @@
-// 1.21.1	2025-03-06T03:03:29.684915	Affixes
+// 1.21.1	2025-03-22T23:43:54.872333	Affixes
 24d89e7e2661a316fbff852fc0f2c8fba0ced14a data/apotheosis/affixes/armor/attribute/adamantine.json
 5a04ead49fff5a3a9061b65682e7432afa771cfc data/apotheosis/affixes/armor/attribute/aquatic.json
 921b26af1796a2871957f5cbc13f74e35fa3ddbc data/apotheosis/affixes/armor/attribute/blessed.json
@@ -29,7 +29,7 @@ c826445ef08f8e7f9cc810605833718d39055f68 data/apotheosis/affixes/breaker/ability
 a3f7871ca66509e70ddb463784ca9d0df53f5855 data/apotheosis/affixes/breaker/ability/sandforming.json
 ecbdc17052a73fef785764c412e9b26e0e75eca7 data/apotheosis/affixes/breaker/ability/stoneforming.json
 0e2124220dcf37434df8ae51502d5a9719dc213d data/apotheosis/affixes/breaker/ability/supermassive.json
-5fa567942e6b27aec67db1c8cc5a7e189519c813 data/apotheosis/affixes/breaker/attribute/destructive.json
+602bc637e853ac4f51b76f5bbe074bb416ef9eb3 data/apotheosis/affixes/breaker/attribute/destructive.json
 1c02f14fd1d293d6e7811118c69c9e3987689d69 data/apotheosis/affixes/breaker/attribute/experienced.json
 9cafca6c408ead1c2438c31855659e21db48bd08 data/apotheosis/affixes/breaker/attribute/lengthy.json
 f23835f5597caeb9a0cdac2383ca668b354c39c0 data/apotheosis/affixes/breaker/attribute/submerged.json
@@ -38,20 +38,20 @@ ea677ce1a1e7fe3077512e634f5c94cb6b869b6c data/apotheosis/affixes/breaker/effect/
 5df9b3dac26786780a3ec770a10b408490413072 data/apotheosis/affixes/breaker/enchantment/prosperous.json
 80c3b7e3bc25200675335555ac70ceaa1b38263f data/apotheosis/affixes/breaker/mob_effect/spelunkers.json
 1d33a83aa049e26d56ca975f0985229e0e4b8f5d data/apotheosis/affixes/breaker/mob_effect/swift.json
-c876edf22d2dea93267a7002ab7c788a7427f616 data/apotheosis/affixes/generic/attribute/lucky.json
+36a8fcae47b19a8237989665bdaba0e7313338b8 data/apotheosis/affixes/generic/attribute/lucky.json
 9c3a600f173a40e96a5f03387a0ac381857cd59f data/apotheosis/affixes/generic/telepathic.json
-e83ea2418fe476ef6ff1849aff55fd34d3b8c08b data/apotheosis/affixes/melee/attribute/berserking.json
+418865eea58de6681217a7afa8821c85a2949267 data/apotheosis/affixes/melee/attribute/berserking.json
 91d4dcc80dc3e6b3ffd6d85695642daed540809d data/apotheosis/affixes/melee/attribute/forceful.json
 be0cd9f08762fe503730a0d7f13fd379e7d0291a data/apotheosis/affixes/melee/attribute/giant_slaying.json
 8298c69c1160729432929aa155ffce413ee78b1f data/apotheosis/affixes/melee/attribute/glacial.json
 ff2853de15e268d4e7f67caac9a3161a7f4bc847 data/apotheosis/affixes/melee/attribute/graceful.json
 7d8d59d4aacc7af45b870a34fc8f1a20014bab78 data/apotheosis/affixes/melee/attribute/infernal.json
-98d9c48a71a8140964f2c870ed7459ff3ee6ddcd data/apotheosis/affixes/melee/attribute/intricate.json
-f7e43837baaf80c0df8a2765c2060019b339f43a data/apotheosis/affixes/melee/attribute/lacerating.json
+13fd2448dee03ec4811629a2835cec9c33c0c3b7 data/apotheosis/affixes/melee/attribute/intricate.json
+34428ef80199302185b806e3af1b980aa9187fed data/apotheosis/affixes/melee/attribute/lacerating.json
 9c60d335f443775d883c0572ac744a22b3653e2f data/apotheosis/affixes/melee/attribute/lengthy.json
 a6200fc2d40fc0cc46787fa63e77fa3e8ea01660 data/apotheosis/affixes/melee/attribute/murderous.json
-a644443520b6adab0937ffcffe1f6eae7079bb54 data/apotheosis/affixes/melee/attribute/piercing.json
-3187d9f767f27eba1901a885a12fdae2ff8fc4c1 data/apotheosis/affixes/melee/attribute/vampiric.json
+b0ee90c39e5e13a4e9b333d8d12036aef306ced3 data/apotheosis/affixes/melee/attribute/piercing.json
+ab81418ecf1d0f7ec8c29593c293555b8e90d18d data/apotheosis/affixes/melee/attribute/vampiric.json
 7ca016fec37a4148fbfca64b65563f5ac93c35e9 data/apotheosis/affixes/melee/attribute/violent.json
 d4cd158b19d1b916d437aeb4384369bae3a2a619 data/apotheosis/affixes/melee/cleaving.json
 2087a7c6f2b27bc98e0e47805b0f9af9770fde5b data/apotheosis/affixes/melee/executing.json
@@ -89,3 +89,4 @@ fdd08542aaaea04953e323cae8bf636ba71d5ce4 data/apotheosis/affixes/shield/mob_effe
 843bfa84401c13306338dd81959b0b7646ed5d77 data/apotheosis/affixes/shield/mob_effect/withering.json
 fe3baeefd6f1ddfa670d816b01d350dd7e460c3d data/apotheosis/affixes/shield/psychic.json
 cac1562379ecdc025d120d9fe5dc3cdbbcbf5a17 data/apotheosis/affixes/shield/retreating.json
+ef311b8add0f556b45fcd1550a266fb759aeec08 data/apotheosis/affixes/weapon/attribute/shredding.json

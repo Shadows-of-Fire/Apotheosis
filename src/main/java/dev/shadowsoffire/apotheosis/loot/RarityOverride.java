@@ -45,6 +45,10 @@ public record RarityOverride(LootCategory category, Map<LootRarity, List<LootRul
         return this.overrides.get(rarity);
     }
 
+    public static Builder builder(LootCategory category) {
+        return new Builder(category);
+    }
+
     public static class Builder {
 
         private final LootCategory category;

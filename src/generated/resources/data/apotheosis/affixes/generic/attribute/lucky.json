@@ -10,7 +10,8 @@
         "apotheosis:boots",
         "apotheosis:shield",
         "apotheosis:trident",
-        "apotheosis:melee_weapon"
+        "apotheosis:melee_weapon",
+        "apotheosis:shears"
     ],
     "definition": {
         "affix_type": "stat",

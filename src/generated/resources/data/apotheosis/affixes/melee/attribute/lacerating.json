@@ -3,7 +3,8 @@
     "attribute": "apothic_attributes:crit_damage",
     "categories": [
         "apotheosis:melee_weapon",
-        "apotheosis:trident"
+        "apotheosis:trident",
+        "apotheosis:bow"
     ],
     "definition": {
         "affix_type": "stat",

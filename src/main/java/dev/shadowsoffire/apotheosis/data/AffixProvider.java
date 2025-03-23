@@ -243,7 +243,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
 
         this.addAttribute("breaker", "destructive", ALObjects.Attributes.MINING_SPEED, Operation.ADD_MULTIPLIED_TOTAL, b -> b
             .definition(AffixType.STAT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
-            .categories(LootCategories.BREAKER)
+            .categories(LootCategories.BREAKER, LootCategories.SHEARS)
             .value(common, 0.15F, 0.3F)
             .value(uncommon, 0.15F, 0.3F)
             .value(rare, 0.25F, 0.5F)
@@ -352,10 +352,10 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .weights(TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .exclusiveWith(afx("melee/attribute/berserking")))
             .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT)
-            .value(common, 0.05F, 0.075F)
-            .value(uncommon, 0.05F, 0.075F)
+            .value(common, 0.05F, 0.08F)
+            .value(uncommon, 0.05F, 0.08F)
             .value(rare, 0.05F, 0.10F)
-            .value(epic, 0.075F, 0.125F)
+            .value(epic, 0.08F, 0.13F)
             .value(mythic, 0.10F, 0.15F));
 
         this.addAttribute("melee", "murderous", Attributes.ATTACK_DAMAGE, Operation.ADD_MULTIPLIED_BASE, b -> b
@@ -392,7 +392,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
             .value(common, 0.10F, 0.20F)
             .value(uncommon, 0.10F, 0.20F)
             .value(rare, 0.15F, 0.25F)
-            .value(epic, 0.20F, 0.275F)
+            .value(epic, 0.20F, 0.28F)
             .value(mythic, 0.30F, 0.40F));
 
         // TODO: Rename to "weapon"
@@ -474,7 +474,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
             .value(common, 0.05F, 0.10F)
             .value(uncommon, 0.05F, 0.10F)
             .value(rare, 0.10F, 0.20F)
-            .value(epic, 0.10F, 0.225F)
+            .value(epic, 0.10F, 0.20F)
             .value(mythic, 0.15F, 0.25F));
 
         this.addAttribute("melee", "giant_slaying", ALObjects.Attributes.CURRENT_HP_DAMAGE, Operation.ADD_VALUE, b -> b

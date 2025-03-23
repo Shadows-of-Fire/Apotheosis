@@ -87,6 +87,10 @@ public record LootRarity(TextColor color, Holder<Item> material, TieredWeights w
         return Codec.unboundedMap(LootRarity.CODEC, codec);
     }
 
+    public static Builder builder(TextColor color, Holder<Item> material) {
+        return new Builder(color, material);
+    }
+
     public static class Builder {
 
         private final TextColor color;

@@ -34,25 +34,24 @@ public class RarityOverrideRegistry extends DynamicRegistry<RarityOverride> {
 
     @Override
     protected void validateItem(ResourceLocation key, RarityOverride value) {
-        String path = key.getPath();
-        path.replace('/', ':');
+        String path = key.getPath().replace('/', ':');
         ResourceLocation cat = ResourceLocation.tryParse(path);
         Preconditions.checkNotNull(cat, "Invalid category path: " + path);
         LootCategory category = BuiltInRegs.LOOT_CATEGORY.get(cat);
-        Preconditions.checkNotNull(category, "Category not found: " + cat);
+        Preconditions.checkArgument(!category.isNone(), "Category not found: " + cat);
         Preconditions.checkArgument(value.category() == category, "Category mismatch: " + value.category() + " != " + category);
     }
 
     @Override
     protected void beginReload() {
+        super.beginReload();
         this.byCategory = new HashMap<>();
     }
 
     @Override
     protected void onReload() {
         this.registry.forEach((key, value) -> {
-            String path = key.getPath();
-            path.replace('/', ':');
+            String path = key.getPath().replace('/', ':');
             ResourceLocation cat = ResourceLocation.tryParse(path);
             LootCategory category = BuiltInRegs.LOOT_CATEGORY.get(cat);
             RarityOverride old = this.byCategory.put(category, value);

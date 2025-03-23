@@ -88,26 +88,32 @@ public final class LootCategory {
         return this.validator.test(stack);
     }
 
+    @Deprecated(forRemoval = true)
     public boolean isArmor() {
         return this == LootCategories.HELMET || this == LootCategories.CHESTPLATE || this == LootCategories.LEGGINGS || this == LootCategories.BOOTS;
     }
 
+    @Deprecated(forRemoval = true)
     public boolean isBreaker() {
         return this == LootCategories.BREAKER;
     }
 
+    @Deprecated(forRemoval = true)
     public boolean isRanged() {
         return this == LootCategories.BOW || this == LootCategories.TRIDENT;
     }
 
+    @Deprecated(forRemoval = true)
     public boolean isDefensive() {
         return this.isArmor() || this == LootCategories.SHIELD;
     }
 
+    @Deprecated(forRemoval = true)
     public boolean isMelee() {
         return this == LootCategories.MELEE_WEAPON || this == LootCategories.TRIDENT;
     }
 
+    @Deprecated(forRemoval = true)
     public boolean isMeleeOrShield() {
         return this.isMelee() || this == LootCategories.SHIELD;
     }

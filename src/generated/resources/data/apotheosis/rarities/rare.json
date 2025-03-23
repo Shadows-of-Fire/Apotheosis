@@ -2,7 +2,6 @@
     "type": "apotheosis:rarity",
     "color": "#5555FF",
     "material": "apotheosis:rare_material",
-    "overrides": {},
     "rules": [
         {
             "type": "apotheosis:affix",

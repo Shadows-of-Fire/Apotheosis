@@ -23,6 +23,7 @@ import dev.shadowsoffire.apotheosis.data.GearSetProvider;
 import dev.shadowsoffire.apotheosis.data.GemProvider;
 import dev.shadowsoffire.apotheosis.data.InvaderProvider;
 import dev.shadowsoffire.apotheosis.data.PurityWeightsProvider;
+import dev.shadowsoffire.apotheosis.data.RarityOverrideProvider;
 import dev.shadowsoffire.apotheosis.data.RarityProvider;
 import dev.shadowsoffire.apotheosis.data.RogueSpawnerProvider;
 import dev.shadowsoffire.apotheosis.data.TierAugmentProvider;
@@ -160,6 +161,7 @@ public class Apotheosis {
             .provider(ApothRecipeProvider::new)
             .provider(ApothTagsProvider::new)
             .provider(RarityProvider::new)
+            .provider(RarityOverrideProvider::new)
             .provider(AffixLootEntryProvider::new)
             .provider(AffixProvider::new)
             .provider(GemProvider::new)
