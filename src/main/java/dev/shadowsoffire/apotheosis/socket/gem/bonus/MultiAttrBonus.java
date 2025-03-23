@@ -48,14 +48,14 @@ public class MultiAttrBonus extends GemBonus {
     public void addModifiers(GemInstance inst, StackAttributeModifiersEvent event) {
         int i = 0;
         for (ModifierInst modifier : this.modifiers) {
-            event.addModifier(modifier.attr, modifier.build(makeUniqueId(inst, "" + i), inst.purity()), inst.category().getSlots());
+            event.addModifier(modifier.attr, modifier.build(makeUniqueId(inst, String.valueOf(i++)), inst.purity()), inst.category().getSlots());
         }
     }
 
     @Override
     public void skipModifierIds(GemInstance inst, Consumer<ResourceLocation> skip) {
         for (int i = 0; i < this.modifiers.size(); i++) {
-            skip.accept(makeUniqueId(inst, "" + i));
+            skip.accept(makeUniqueId(inst, String.valueOf(i)));
         }
     }
 
