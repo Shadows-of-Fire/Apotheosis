@@ -641,10 +641,10 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .modifier(b -> b
                     .attr(ALObjects.Attributes.LIFE_STEAL)
                     .op(Operation.ADD_VALUE)
-                    .value(Purity.FLAWED, 0.25F)
-                    .value(Purity.NORMAL, 0.40F)
-                    .value(Purity.FLAWLESS, 0.50F)
-                    .value(Purity.PERFECT, 0.60F))
+                    .value(Purity.FLAWED, 0.10F)
+                    .value(Purity.NORMAL, 0.125F)
+                    .value(Purity.FLAWLESS, 0.15F)
+                    .value(Purity.PERFECT, 0.15F))
                 .modifier(b -> b
                     .attr(ALObjects.Attributes.LIFE_STEAL)
                     .op(Operation.ADD_MULTIPLIED_TOTAL)

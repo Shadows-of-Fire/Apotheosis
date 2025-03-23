@@ -352,11 +352,11 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .weights(TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .exclusiveWith(afx("melee/attribute/berserking")))
             .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT)
-            .value(common, 0.15F, 0.20F)
-            .value(uncommon, 0.15F, 0.20F)
-            .value(rare, 0.15F, 0.25F)
-            .value(epic, 0.15F, 0.30F)
-            .value(mythic, 0.25F, 0.40F));
+            .value(common, 0.05F, 0.075F)
+            .value(uncommon, 0.05F, 0.075F)
+            .value(rare, 0.05F, 0.10F)
+            .value(epic, 0.075F, 0.125F)
+            .value(mythic, 0.10F, 0.15F));
 
         this.addAttribute("melee", "murderous", Attributes.ATTACK_DAMAGE, Operation.ADD_MULTIPLIED_BASE, b -> b
             .definition(AffixType.STAT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
@@ -375,9 +375,10 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
             .value(epic, 4F, 6F)
             .value(mythic, 5F, 8F));
 
+        // TODO: Rename from "melee" to "weapon".
         this.addAttribute("melee", "piercing", ALObjects.Attributes.ARMOR_PIERCE, Operation.ADD_VALUE, b -> b
             .definition(AffixType.STAT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
-            .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT)
+            .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW)
             .step(0.25F)
             .value(common, 2F, 4F)
             .value(uncommon, 2F, 4F)
@@ -385,18 +386,29 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
             .value(epic, 5F, 10F)
             .value(mythic, 5F, 12F));
 
+        this.addAttribute("weapon", "shredding", ALObjects.Attributes.ARMOR_SHRED, Operation.ADD_VALUE, b -> b
+            .definition(AffixType.STAT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
+            .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW)
+            .value(common, 0.10F, 0.20F)
+            .value(uncommon, 0.10F, 0.20F)
+            .value(rare, 0.15F, 0.25F)
+            .value(epic, 0.20F, 0.275F)
+            .value(mythic, 0.30F, 0.40F));
+
+        // TODO: Rename to "weapon"
         this.addAttribute("melee", "lacerating", ALObjects.Attributes.CRIT_DAMAGE, Operation.ADD_VALUE, b -> b
             .definition(AffixType.STAT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
-            .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT)
+            .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW)
             .value(common, 0.10F, 0.20F)
             .value(uncommon, 0.10F, 0.20F)
             .value(rare, 0.15F, 0.25F)
             .value(epic, 0.15F, 0.25F)
             .value(mythic, 0.25F, 0.40F));
 
+        // TODO: Rename to "weapon"
         this.addAttribute("melee", "intricate", ALObjects.Attributes.CRIT_CHANCE, Operation.ADD_VALUE, b -> b
             .definition(AffixType.STAT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
-            .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT)
+            .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW)
             .value(common, 0.10F, 0.20F)
             .value(uncommon, 0.10F, 0.20F)
             .value(rare, 0.10F, 0.25F)
@@ -459,11 +471,11 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .weights(TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .exclusiveWith(afx("melee/attribute/vampiric")))
             .categories(LootCategories.MELEE_WEAPON)
-            .value(common, 0.10F, 0.20F)
-            .value(uncommon, 0.10F, 0.20F)
-            .value(rare, 0.15F, 0.25F)
-            .value(epic, 0.15F, 0.30F)
-            .value(mythic, 0.20F, 0.45F));
+            .value(common, 0.05F, 0.10F)
+            .value(uncommon, 0.05F, 0.10F)
+            .value(rare, 0.10F, 0.20F)
+            .value(epic, 0.10F, 0.225F)
+            .value(mythic, 0.15F, 0.25F));
 
         this.addAttribute("melee", "giant_slaying", ALObjects.Attributes.CURRENT_HP_DAMAGE, Operation.ADD_VALUE, b -> b
             .definition(AffixType.STAT, d -> d
