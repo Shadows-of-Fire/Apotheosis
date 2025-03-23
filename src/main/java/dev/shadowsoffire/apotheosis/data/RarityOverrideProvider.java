@@ -6,15 +6,16 @@ import java.util.function.UnaryOperator;
 import org.spongepowered.include.com.google.common.base.Preconditions;
 
 import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
+import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
-import dev.shadowsoffire.apotheosis.affix.AffixType;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.AffixType;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.loot.LootRule;
 import dev.shadowsoffire.apotheosis.loot.LootRule.AffixLootRule;
 import dev.shadowsoffire.apotheosis.loot.LootRule.ComponentLootRule;
 import dev.shadowsoffire.apotheosis.loot.LootRule.DurabilityLootRule;
+import dev.shadowsoffire.apotheosis.loot.LootRule.SelectLootRule;
 import dev.shadowsoffire.apotheosis.loot.LootRule.SocketLootRule;
 import dev.shadowsoffire.apotheosis.loot.RarityOverride;
 import dev.shadowsoffire.apotheosis.loot.RarityOverrideRegistry;
@@ -22,8 +23,9 @@ import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.util.data.DynamicRegistryProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.component.Unbreakable;
 
 public class RarityOverrideProvider extends DynamicRegistryProvider<RarityOverride> {
 
@@ -69,15 +71,18 @@ public class RarityOverrideProvider extends DynamicRegistryProvider<RarityOverri
                 .rule(new AffixLootRule(AffixType.STAT))
                 .rule(new AffixLootRule(AffixType.BASIC_EFFECT))
                 .rule(new AffixLootRule(AffixType.BASIC_EFFECT))
-                .rule(new DurabilityLootRule(0.45F, 0.75F))));
+                .rule(new SelectLootRule(0.99F, // 99% chance to roll a durability bonus, 1% to be unbreakable.
+                    new DurabilityLootRule(0.45F, 0.75F),
+                    new ComponentLootRule(DataComponentPatch.builder()
+                        .set(DataComponents.UNBREAKABLE, new Unbreakable(true))
+                        .remove(Components.DURABILITY_BONUS)
+                        .build()))))
+
+        );
     }
 
     private static LootRarity rarity(String path) {
         return Preconditions.checkNotNull(RarityRegistry.INSTANCE.getValue(Apotheosis.loc(path)));
-    }
-
-    private static <T> LootRule componentRule(DataComponentType<T> type, T value) {
-        return new ComponentLootRule(DataComponentPatch.builder().set(type, value).build());
     }
 
     private void addOverride(LootCategory category, UnaryOperator<RarityOverride.Builder> config) {

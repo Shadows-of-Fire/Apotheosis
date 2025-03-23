@@ -395,6 +395,14 @@
     "affix.apotheosis.stoneforming.desc": "Breaking [%s] converts it to %s, shift-right click to select a target.",
     "affix.apotheosis.stoneforming.target_updated": "Target updated to: %s",
 
+    "affix.apotheosis:shears/effect/leafforming": "Leaf-Forming",
+    "affix.apotheosis:shears/effect/leafforming.suffix": "of the Arborist",
+    "affix.apotheosis:shears/effect/leafforming.desc": "Leaves may be converted between eachother",
+
+    "affix.apotheosis:shears/effect/gardening": "Gardening",
+    "affix.apotheosis:shears/effect/gardening.suffix": "of the Gardener",
+    "affix.apotheosis:shears/effect/gardening.desc": "Flowers may be converted between eachother",
+
     "affix.apotheosis.target.attack_self": "On hit, gain %s",
     "affix.apotheosis.target.attack_target": "On hit, inflict %s",
     "affix.apotheosis.target.hurt_self": "When attacked, gain %s",

@@ -1,6 +1,9 @@
 {
     "type": "apotheosis:stoneforming",
     "candidates": "#apotheosis:sandforming_candidates",
+    "categories": [
+        "apotheosis:breaker"
+    ],
     "definition": {
         "affix_type": "ability",
         "exclusive_set": [

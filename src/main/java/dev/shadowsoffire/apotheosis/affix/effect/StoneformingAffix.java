@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.affix.effect;
 
+import java.util.Set;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -22,6 +24,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -37,15 +40,18 @@ public class StoneformingAffix extends Affix {
     public static final Codec<StoneformingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             affixDef(),
+            LootCategory.SET_CODEC.fieldOf("categories").forGetter(a -> a.categories),
             RegistryCodecs.homogeneousList(Registries.BLOCK).fieldOf("candidates").forGetter(a -> a.candidates))
         .apply(inst, StoneformingAffix::new));
 
     public static final Component TOOLTIP_MARKER = Component.literal("APOTH_STONEFORMING_MARKER");
 
+    protected final Set<LootCategory> categories;
     protected final HolderSet<Block> candidates;
 
-    public StoneformingAffix(AffixDefinition definition, HolderSet<Block> candidates) {
+    public StoneformingAffix(AffixDefinition definition, Set<LootCategory> categories, HolderSet<Block> candidates) {
         super(definition);
+        this.categories = categories;
         this.candidates = candidates;
     }
 
@@ -56,7 +62,7 @@ public class StoneformingAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat.isBreaker();
+        return this.categories.contains(cat);
     }
 
     @Override
@@ -110,7 +116,7 @@ public class StoneformingAffix extends Affix {
     public Block getTarget(AffixInstance inst) {
         Block target = inst.stack().get(Components.STONEFORMING_TARGET);
         if (target == null || !isCandidate(target)) {
-            return this.candidates.get(0).value();
+            return this.candidates.size() > 0 ? this.candidates.get(0).value() : Blocks.AIR;
         }
         return target;
     }

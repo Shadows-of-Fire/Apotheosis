@@ -1,4 +1,4 @@
-// 1.21.1	2025-03-22T23:43:54.872333	Affixes
+// 1.21.1	2025-03-23T00:55:00.744465	Affixes
 24d89e7e2661a316fbff852fc0f2c8fba0ced14a data/apotheosis/affixes/armor/attribute/adamantine.json
 5a04ead49fff5a3a9061b65682e7432afa771cfc data/apotheosis/affixes/armor/attribute/aquatic.json
 921b26af1796a2871957f5cbc13f74e35fa3ddbc data/apotheosis/affixes/armor/attribute/blessed.json
@@ -26,15 +26,15 @@ c58242615310c42d86f9543e119ddeedcde62254 data/apotheosis/affixes/armor/mob_effec
 bab7a09178be909d51c4b19f7b8212eda798b5cf data/apotheosis/affixes/armor/mob_effect/nimble.json
 92cbbe8fb889049cd136f981196389ce41bc4eed data/apotheosis/affixes/armor/mob_effect/revitalizing.json
 c826445ef08f8e7f9cc810605833718d39055f68 data/apotheosis/affixes/breaker/ability/enlightened.json
-a3f7871ca66509e70ddb463784ca9d0df53f5855 data/apotheosis/affixes/breaker/ability/sandforming.json
-ecbdc17052a73fef785764c412e9b26e0e75eca7 data/apotheosis/affixes/breaker/ability/stoneforming.json
-0e2124220dcf37434df8ae51502d5a9719dc213d data/apotheosis/affixes/breaker/ability/supermassive.json
+0dd0db217e13b9124261b620473cdeef6816a2db data/apotheosis/affixes/breaker/ability/sandforming.json
+63e3c3aa5b6ec84964a52330b062c44f8b40ea09 data/apotheosis/affixes/breaker/ability/stoneforming.json
+65e16a4257d652e691228ef588b5530ede2a56e8 data/apotheosis/affixes/breaker/ability/supermassive.json
 602bc637e853ac4f51b76f5bbe074bb416ef9eb3 data/apotheosis/affixes/breaker/attribute/destructive.json
 1c02f14fd1d293d6e7811118c69c9e3987689d69 data/apotheosis/affixes/breaker/attribute/experienced.json
 9cafca6c408ead1c2438c31855659e21db48bd08 data/apotheosis/affixes/breaker/attribute/lengthy.json
 f23835f5597caeb9a0cdac2383ca668b354c39c0 data/apotheosis/affixes/breaker/attribute/submerged.json
 9165c8b197b6ec2f3f0a0367464d779b7534500b data/apotheosis/affixes/breaker/effect/omnetic.json
-ea677ce1a1e7fe3077512e634f5c94cb6b869b6c data/apotheosis/affixes/breaker/effect/radial.json
+1566d6d74a6cf64dca72d7e6f9cfec7f96d8b3a7 data/apotheosis/affixes/breaker/effect/radial.json
 5df9b3dac26786780a3ec770a10b408490413072 data/apotheosis/affixes/breaker/enchantment/prosperous.json
 80c3b7e3bc25200675335555ac70ceaa1b38263f data/apotheosis/affixes/breaker/mob_effect/spelunkers.json
 1d33a83aa049e26d56ca975f0985229e0e4b8f5d data/apotheosis/affixes/breaker/mob_effect/swift.json
@@ -78,6 +78,8 @@ f5d0e989819d1aecc45b7e76c3037b55cd1e29ae data/apotheosis/affixes/ranged/mob_effe
 1fbf99bc57491a18351fb67588e4d101aba484df data/apotheosis/affixes/ranged/mob_effect/ivy_laced.json
 89f2a408f02981e337d6fe5a0838f51ce4a17256 data/apotheosis/affixes/ranged/mob_effect/shulkers.json
 ea33f76a620b62fc603dbf8f9810251585f53238 data/apotheosis/affixes/ranged/spectral.json
+7c26fc15a5a1e80881798942c1bd70ce7e129d12 data/apotheosis/affixes/shears/effect/gardening.json
+89138c40ff41d200351b474baf236a7093dcca51 data/apotheosis/affixes/shears/effect/leafforming.json
 61025573feea67a89a62c791e9f2aae4c54ab3d3 data/apotheosis/affixes/shield/attribute/ironforged.json
 aede17f94b1ea4ed9723499433ebdfcdbbe78252 data/apotheosis/affixes/shield/attribute/stalwart.json
 c0d4e3778d0689dd8e26f847b067f6900e82e257 data/apotheosis/affixes/shield/attribute/steel_touched.json

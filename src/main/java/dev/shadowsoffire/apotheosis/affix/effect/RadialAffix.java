@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.affix.effect;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -53,21 +54,24 @@ public class RadialAffix extends Affix {
     public static final Codec<RadialAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             affixDef(),
+            LootCategory.SET_CODEC.fieldOf("categories").forGetter(a -> a.categories),
             LootRarity.mapCodec(Codec.list(RadialData.CODEC)).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, RadialAffix::new));
 
     private static Set<UUID> breakers = new HashSet<>();
 
+    protected final Set<LootCategory> categories;
     protected final Map<LootRarity, List<RadialData>> values;
 
-    public RadialAffix(AffixDefinition def, Map<LootRarity, List<RadialData>> values) {
+    public RadialAffix(AffixDefinition def, Set<LootCategory> categories, Map<LootRarity, List<RadialData>> values) {
         super(def);
+        this.categories = categories;
         this.values = values;
     }
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat.isBreaker() && this.values.containsKey(rarity);
+        return this.categories.contains(cat) && this.values.containsKey(rarity);
     }
 
     @Override
@@ -266,6 +270,7 @@ public class RadialAffix extends Affix {
     public static class Builder extends AffixBuilder<Builder> {
 
         protected final Map<LootRarity, List<RadialData>> values = new HashMap<>();
+        protected final Set<LootCategory> categories = new LinkedHashSet<>();
 
         public Builder value(LootRarity rarity, UnaryOperator<DataListBuilder> config) {
             List<RadialData> list = new ArrayList<>();
@@ -283,10 +288,18 @@ public class RadialAffix extends Affix {
             return this;
         }
 
+        public Builder categories(LootCategory... cats) {
+            for (LootCategory cat : cats) {
+                this.categories.add(cat);
+            }
+            return this;
+        }
+
         public RadialAffix build() {
             Preconditions.checkNotNull(this.definition);
             Preconditions.checkArgument(this.values.size() > 0);
-            return new RadialAffix(this.definition, this.values);
+            Preconditions.checkArgument(this.categories.size() > 0);
+            return new RadialAffix(this.definition, this.categories, this.values);
         }
 
         public static interface DataListBuilder {

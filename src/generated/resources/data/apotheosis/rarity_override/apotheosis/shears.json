@@ -97,9 +97,20 @@
                 "affix_type": "basic_effect"
             },
             {
-                "type": "apotheosis:durability",
-                "min": 0.45,
-                "max": 0.75
+                "type": "apotheosis:select",
+                "chance": 0.99,
+                "if_false": {
+                    "type": "apotheosis:component",
+                    "components": {
+                        "!apotheosis:durability_bonus": {},
+                        "minecraft:unbreakable": {}
+                    }
+                },
+                "if_true": {
+                    "type": "apotheosis:durability",
+                    "min": 0.45,
+                    "max": 0.75
+                }
             }
         ]
     }

@@ -1,13 +1,13 @@
 {
     "type": "apotheosis:stoneforming",
-    "candidates": "#apotheosis:stoneforming_candidates",
+    "candidates": "#apotheosis:gardening_candidates",
     "categories": [
-        "apotheosis:breaker"
+        "apotheosis:shears"
     ],
     "definition": {
-        "affix_type": "ability",
+        "affix_type": "basic_effect",
         "exclusive_set": [
-            "apotheosis:breaker/ability/sandforming"
+            "apotheosis:shears/effect/leafforming"
         ],
         "weights": {
             "weight": 25

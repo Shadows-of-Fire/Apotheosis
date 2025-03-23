@@ -1,7 +1,7 @@
 {
-	"replace": false,
-	"values": [
-		"#minecraft:base_stone_overworld",
-		"#c:cobblestones"
-	]
+    "replace": false,
+    "values": [
+        "#minecraft:base_stone_overworld",
+        "#c:cobblestones"
+    ]
 }

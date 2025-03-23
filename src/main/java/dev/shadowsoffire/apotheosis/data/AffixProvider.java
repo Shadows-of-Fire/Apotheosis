@@ -625,6 +625,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
         this.add(Apotheosis.loc("breaker/effect/radial"),
             new RadialAffix.Builder()
                 .definition(AffixType.BASIC_EFFECT, DEFAULT_WEIGHT, 5)
+                .categories(LootCategories.BREAKER, LootCategories.SHEARS)
                 .value(uncommon, c -> c
                     .radii(1, 2, 0, 1)
                     .radii(1, 3)
@@ -824,6 +825,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .definition(AffixType.ABILITY, c -> c
                     .weights(TieredWeights.onlyFor(WorldTier.PINNACLE, 20, 5))
                     .exclusiveWith(afx("breaker/effect/radial")))
+                .categories(LootCategories.BREAKER)
                 .value(mythic, c -> c
                     .radii(7, 7))
                 .build());
@@ -833,6 +835,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .weights(TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .exclusiveWith(afx("breaker/ability/sandforming"))
                 .build(),
+            Set.of(LootCategories.BREAKER),
             blockSet(Apoth.Tags.STONEFORMING_CANDIDATES)));
 
         this.add(Apotheosis.loc("breaker/ability/sandforming"), new StoneformingAffix(
@@ -840,6 +843,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .weights(TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .exclusiveWith(afx("breaker/ability/stoneforming"))
                 .build(),
+            Set.of(LootCategories.BREAKER),
             blockSet(Apoth.Tags.SANDFORMING_CANDIDATES)));
 
         // Ranged Abilities
@@ -915,6 +919,23 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
             .value(epic, 200, 400)
             .value(mythic, 300, 600)
             .build());
+
+        // Shear Effects
+        this.add(Apotheosis.loc("shears/effect/leafforming"), new StoneformingAffix(
+            AffixDefinition.builder(AffixType.BASIC_EFFECT)
+                .weights(TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY))
+                .exclusiveWith(afx("shears/effect/gardening"))
+                .build(),
+            Set.of(LootCategories.SHEARS),
+            blockSet(Apoth.Tags.LEAFFORMING_CANDIDATES)));
+
+        this.add(Apotheosis.loc("shears/effect/gardening"), new StoneformingAffix(
+            AffixDefinition.builder(AffixType.BASIC_EFFECT)
+                .weights(TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY))
+                .exclusiveWith(afx("shears/effect/leafforming"))
+                .build(),
+            Set.of(LootCategories.SHEARS),
+            blockSet(Apoth.Tags.GARDENING_CANDIDATES)));
 
         this.futures.add(CompletableFuture.runAsync(RarityRegistry.INSTANCE::validateExistingHolders));
         this.futures.add(CompletableFuture.runAsync(AffixRegistry.INSTANCE::validateExistingHolders));

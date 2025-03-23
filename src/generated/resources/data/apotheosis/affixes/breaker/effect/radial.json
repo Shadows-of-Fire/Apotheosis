@@ -1,5 +1,9 @@
 {
     "type": "apotheosis:radial",
+    "categories": [
+        "apotheosis:breaker",
+        "apotheosis:shears"
+    ],
     "definition": {
         "affix_type": "basic_effect",
         "exclusive_set": [],

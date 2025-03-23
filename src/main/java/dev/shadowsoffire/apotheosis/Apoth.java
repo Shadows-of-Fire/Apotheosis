@@ -407,6 +407,8 @@ public class Apoth {
         public static final TagKey<Block> ROGUE_SPAWNER_COVERS = BlockTags.create(Apotheosis.loc("rogue_spawner_covers"));
         public static final TagKey<Block> STONEFORMING_CANDIDATES = BlockTags.create(Apotheosis.loc("stoneforming_candidates"));
         public static final TagKey<Block> SANDFORMING_CANDIDATES = BlockTags.create(Apotheosis.loc("sandforming_candidates"));
+        public static final TagKey<Block> LEAFFORMING_CANDIDATES = BlockTags.create(Apotheosis.loc("leafforming_candidates"));
+        public static final TagKey<Block> GARDENING_CANDIDATES = BlockTags.create(Apotheosis.loc("gardening_candidates"));
     }
 
     public static final class DamageTypes {

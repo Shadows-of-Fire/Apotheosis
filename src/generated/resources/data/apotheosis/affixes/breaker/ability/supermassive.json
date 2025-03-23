@@ -1,5 +1,8 @@
 {
     "type": "apotheosis:radial",
+    "categories": [
+        "apotheosis:breaker"
+    ],
     "definition": {
         "affix_type": "ability",
         "exclusive_set": [
