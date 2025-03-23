@@ -1,11 +1,13 @@
 package dev.shadowsoffire.apotheosis.loot;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.include.com.google.common.base.Preconditions;
 
 import com.google.common.base.Predicates;
 import com.mojang.serialization.Codec;
@@ -24,14 +26,13 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public record LootRarity(TextColor color, Holder<Item> material, TieredWeights weights, List<LootRule> rules, Map<LootCategory, List<LootRule>> overrides, int sortIndex) implements CodecProvider<LootRarity>, Weighted {
+public record LootRarity(TextColor color, Holder<Item> material, TieredWeights weights, List<LootRule> rules, int sortIndex) implements CodecProvider<LootRarity>, Weighted {
 
     public static final Codec<LootRarity> LOAD_CODEC = RecordCodecBuilder.create(inst -> inst.group(
         TextColor.CODEC.fieldOf("color").forGetter(LootRarity::color),
         ItemStack.ITEM_NON_AIR_CODEC.fieldOf("material").forGetter(LootRarity::material),
         TieredWeights.CODEC.fieldOf("weights").forGetter(Weighted::weights),
         LootRule.CODEC.listOf().fieldOf("rules").forGetter(LootRarity::rules),
-        LootCategory.mapCodec(LootRule.CODEC.listOf()).fieldOf("overrides").forGetter(LootRarity::overrides), // TODO: Move this to an external file? Might allow better composition for custom loot categories...
         Codec.intRange(0, 2000).optionalFieldOf("sort_index", 1000).forGetter(LootRarity::sortIndex))
         .apply(inst, LootRarity::new));
 
@@ -45,6 +46,11 @@ public record LootRarity(TextColor color, Holder<Item> material, TieredWeights w
     }
 
     public List<LootRule> getRules(LootCategory category) {
+        RarityOverride overrides = RarityOverrideRegistry.INSTANCE.getOverride(category);
+        if (overrides != null && overrides.hasRules(this)) {
+            return overrides.getRules(this);
+        }
+
         return this.rules;
     }
 
@@ -80,4 +86,41 @@ public record LootRarity(TextColor color, Holder<Item> material, TieredWeights w
     public static <T> Codec<Map<LootRarity, T>> mapCodec(Codec<T> codec) {
         return Codec.unboundedMap(LootRarity.CODEC, codec);
     }
+
+    public static class Builder {
+
+        private final TextColor color;
+        private final Holder<Item> material;
+        private TieredWeights weights;
+        private final List<LootRule> rules = new ArrayList<>();
+        private int index = 1000;
+
+        public Builder(TextColor color, Holder<Item> material) {
+            this.color = color;
+            this.material = material;
+        }
+
+        public Builder weights(TieredWeights.Builder builder) {
+            this.weights = builder.build();
+            return this;
+        }
+
+        public Builder rule(LootRule rule) {
+            this.rules.add(rule);
+            return this;
+        }
+
+        public Builder sortIndex(int index) {
+            this.index = index;
+            return this;
+        }
+
+        public LootRarity build() {
+            Preconditions.checkNotNull(this.weights);
+            Preconditions.checkArgument(this.rules.size() > 0);
+            return new LootRarity(this.color, this.material, this.weights, this.rules, this.index);
+        }
+
+    }
+
 }

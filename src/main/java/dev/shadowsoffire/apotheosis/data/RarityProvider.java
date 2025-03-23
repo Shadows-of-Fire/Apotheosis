@@ -1,19 +1,12 @@
 package dev.shadowsoffire.apotheosis.data;
 
-import java.util.ArrayList;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.UnaryOperator;
-
-import org.spongepowered.include.com.google.common.base.Preconditions;
 
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.AffixType;
-import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.LootRule;
 import dev.shadowsoffire.apotheosis.loot.LootRule.AffixLootRule;
@@ -149,68 +142,12 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
         return new ComponentLootRule(DataComponentPatch.builder().set(type, value).build());
     }
 
-    void addRarity(String id, TextColor color, Holder<Item> material, UnaryOperator<RarityBuilder> config) {
+    void addRarity(String id, TextColor color, Holder<Item> material, UnaryOperator<LootRarity.Builder> config) {
         this.add(Apotheosis.loc(id), config.apply(builder(color, material)).build());
     }
 
-    public static RarityBuilder builder(TextColor color, Holder<Item> material) {
-        return new RarityBuilder(color, material);
-    }
-
-    public static class RarityBuilder {
-
-        private final TextColor color;
-        private final Holder<Item> material;
-        private TieredWeights weights;
-        private final List<LootRule> rules = new ArrayList<>();
-        private final Map<LootCategory, List<LootRule>> overrides = new IdentityHashMap<>();
-        private int index = 1000;
-
-        public RarityBuilder(TextColor color, Holder<Item> material) {
-            this.color = color;
-            this.material = material;
-        }
-
-        public RarityBuilder weights(TieredWeights.Builder builder) {
-            this.weights = builder.build();
-            return this;
-        }
-
-        public RarityBuilder rule(LootRule rule) {
-            this.rules.add(rule);
-            return this;
-        }
-
-        public RarityBuilder override(LootCategory category, UnaryOperator<RuleListBuilder> config) {
-            List<LootRule> list = new ArrayList<>();
-            config.apply(new RuleListBuilder(){
-
-                @Override
-                public RuleListBuilder rule(LootRule rule) {
-                    list.add(rule);
-                    return this;
-                }
-
-            });
-            this.overrides.put(category, list);
-            return this;
-        }
-
-        public RarityBuilder sortIndex(int index) {
-            this.index = index;
-            return this;
-        }
-
-        public LootRarity build() {
-            Preconditions.checkNotNull(this.weights);
-            Preconditions.checkArgument(this.rules.size() > 0);
-            return new LootRarity(this.color, this.material, this.weights, this.rules, this.overrides, this.index);
-        }
-
-    }
-
-    public static interface RuleListBuilder {
-        RuleListBuilder rule(LootRule rule);
+    public static LootRarity.Builder builder(TextColor color, Holder<Item> material) {
+        return new LootRarity.Builder(color, material);
     }
 
 }

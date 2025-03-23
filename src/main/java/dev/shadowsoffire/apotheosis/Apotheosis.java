@@ -32,6 +32,7 @@ import dev.shadowsoffire.apotheosis.data.twilight.TwilightGearSetProvider;
 import dev.shadowsoffire.apotheosis.data.twilight.TwilightInvaderProvider;
 import dev.shadowsoffire.apotheosis.loot.AffixLootRegistry;
 import dev.shadowsoffire.apotheosis.loot.LootRule;
+import dev.shadowsoffire.apotheosis.loot.RarityOverrideRegistry;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.mobs.ApothMobEvents;
 import dev.shadowsoffire.apotheosis.mobs.registries.AugmentRegistry;
@@ -99,15 +100,15 @@ public class Apotheosis {
         if (ModList.get().isLoaded("gateways")) {
             GatewaysCompat.register();
         }
-        
+
         if (ModList.get().isLoaded("twilightforest")) {
             AdventureTwilightCompat.register();
         }
-        
+
         if (ModList.get().isLoaded("patchouli")) {
             PatchouliCompat.register();
         }
-        
+
         if (ModList.get().isLoaded("curios")) {
             CuriosCompat.register(bus);
         }
@@ -130,6 +131,7 @@ public class Apotheosis {
         NeoForge.EVENT_BUS.register(new AdventureEvents());
         NeoForge.EVENT_BUS.register(new ApothMobEvents());
         RarityRegistry.INSTANCE.registerToBus();
+        RarityOverrideRegistry.INSTANCE.registerToBus();
         AffixRegistry.INSTANCE.registerToBus();
         GemRegistry.INSTANCE.registerToBus();
         AffixLootRegistry.INSTANCE.registerToBus();
