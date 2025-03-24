@@ -179,7 +179,7 @@ public class AffixCommand {
                 return fail(c, "The target item does not contain the selected affix.", -4);
             }
 
-            Stream<DynamicHolder<Affix>> alternatives = LootController.getAvailableAffixes(held, rarity.get(), afx.get().definition().type());
+            Stream<DynamicHolder<Affix>> alternatives = LootController.getAlternativeAffixes(held, rarity.get(), afx);
             c.getSource().sendSystemMessage(Component.translatable("Possible alternatives to %s:", afx.get().getName(true)));
             AttributeTooltipContext ctx = AttributeTooltipContext.of(living instanceof Player p ? p : null, TooltipContext.of(c.getSource().getLevel()), ApothicAttributes.getTooltipFlag());
 

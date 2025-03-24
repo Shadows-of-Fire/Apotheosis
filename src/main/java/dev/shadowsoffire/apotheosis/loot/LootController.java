@@ -104,6 +104,24 @@ public class LootController {
             .filter(a -> a.get().isCompatibleWith(current));
     }
 
+    /**
+     * Returns the pool of alternative affixes for an item, given the existing affixes present.
+     * <p>
+     * This method will make a copy of the item, remove the target affix from it, and then call {@link #getAvailableAffixes(ItemStack, LootRarity, AffixType)} for
+     * the same affix type.
+     *
+     * @param stack  The item stack the affixes may be applied to
+     * @param rarity The rarity of the item stack
+     * @param type   The type of affix to target
+     * @return A list of alternative affixes for the item. May be empty. The original affix will not be present in the list.
+     */
+    public static Stream<DynamicHolder<Affix>> getAlternativeAffixes(ItemStack stack, LootRarity rarity, DynamicHolder<Affix> affix) {
+        ItemStack copy = stack.copy();
+        ItemAffixes fixed = copy.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY).toBuilder().remove(affix).build();
+        copy.set(Components.AFFIXES, fixed);
+        return getAvailableAffixes(copy, rarity, affix.get().definition().type()).filter(a -> !a.equals(affix));
+    }
+
     public static List<WeightedEntry.Wrapper<Affix>> getWeightedAffixes(ItemStack stack, LootRarity rarity, AffixType type, GenContext ctx) {
         return getAvailableAffixes(stack, rarity, type).map(a -> a.get().<Affix>wrap(ctx.tier(), ctx.luck())).toList();
     }

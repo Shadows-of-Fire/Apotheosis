@@ -99,27 +99,31 @@ public final class ItemAffixes {
             this.affixes.putAll(base.affixes);
         }
 
-        public void put(DynamicHolder<Affix> affix, float level) {
+        public Builder put(DynamicHolder<Affix> affix, float level) {
             if (level <= 0) {
                 this.affixes.removeFloat(affix);
             }
             else {
                 this.affixes.put(affix, Math.clamp(level, 0, Affix.MAX_LEVEL));
             }
+            return this;
         }
 
-        public void upgrade(DynamicHolder<Affix> affix, float level) {
+        public Builder upgrade(DynamicHolder<Affix> affix, float level) {
             if (level > 0) {
                 this.affixes.merge(affix, Math.clamp(level, 0, Affix.MAX_LEVEL), Float::max);
             }
+            return this;
         }
 
-        public void remove(DynamicHolder<Affix> affix) {
+        public Builder remove(DynamicHolder<Affix> affix) {
             this.affixes.removeFloat(affix);
+            return this;
         }
 
-        public void removeIf(Predicate<DynamicHolder<Affix>> filter) {
+        public Builder removeIf(Predicate<DynamicHolder<Affix>> filter) {
             this.affixes.keySet().removeIf(filter);
+            return this;
         }
 
         public float getLevel(DynamicHolder<Affix> key) {
