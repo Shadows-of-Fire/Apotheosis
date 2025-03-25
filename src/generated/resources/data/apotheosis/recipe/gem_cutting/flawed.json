@@ -9,6 +9,10 @@
     "purity": "flawed",
     "right": [
         {
+            "count": 27,
+            "item": "apotheosis:common_material"
+        },
+        {
             "count": 9,
             "item": "apotheosis:uncommon_material"
         },

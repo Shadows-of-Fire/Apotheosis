@@ -18,7 +18,7 @@ public class ApothTagsProvider extends EnchantmentTagsProvider {
 
     @Override
     protected void addTags(Provider provider) {
-
+        
     }
 
 }

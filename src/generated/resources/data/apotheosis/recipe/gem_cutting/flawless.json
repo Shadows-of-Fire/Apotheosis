@@ -9,6 +9,10 @@
     "purity": "flawless",
     "right": [
         {
+            "count": 27,
+            "item": "apotheosis:rare_material"
+        },
+        {
             "count": 9,
             "item": "apotheosis:epic_material"
         },

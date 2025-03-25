@@ -100,8 +100,13 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         List<Holder<Item>> rarityMaterials = List.of(Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL);
         for (int i = 0; i < Purity.values().length - 1; i++) {
             Purity purity = Purity.BY_ID.apply(i);
-            List<Holder<Item>> materials = rarityMaterials.subList(Math.max(i - 1, 0), Math.min(i + 2, rarityMaterials.size()));
-            addPurityUpgrade(purity, 1 + i * 2, materials, i == 0 ? 3 : 9);
+            List<Holder<Item>> materials = rarityMaterials.subList(Math.max(i - 2, 0), Math.min(i + 2, rarityMaterials.size()));
+            int zeroCost = switch (purity) {
+                case CRACKED -> 3;
+                case CHIPPED -> 9;
+                default -> 27;
+            };
+            addPurityUpgrade(purity, 1 + i * 2, materials, zeroCost);
         }
 
         out.accept(Apotheosis.loc("potion_charm"), new PotionCharmRecipe("", CraftingBookCategory.MISC, charmPattern()), null);

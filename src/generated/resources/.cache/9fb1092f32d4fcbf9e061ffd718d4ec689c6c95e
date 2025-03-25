@@ -1,10 +1,10 @@
-// 1.21.1	2024-12-25T16:38:50.4557148	Recipes
+// 1.21.1	2025-03-24T18:38:15.3837218	Recipes
 bab664def1f01400bfe3a7cf432385247dcd847d data/apotheosis/recipe/augmenting_table.json
 cfc46608a868f8e622a46d07c0b0d2d642bec035 data/apotheosis/recipe/gem_cutting/chipped.json
 527c22d6be2eb2dbc699e129a7db9313980d97a5 data/apotheosis/recipe/gem_cutting/cracked.json
-c60d64ece743daf5afb56c44ef1594bd7c86ef7d data/apotheosis/recipe/gem_cutting/flawed.json
-c3f32e8ab774ebff2bac6522f8cf041069af8d26 data/apotheosis/recipe/gem_cutting/flawless.json
-7d1e81771392cdacb85b1fdd12c8fad0a84662fe data/apotheosis/recipe/gem_cutting/normal.json
+352695987a105286de394eb61d74bbee833181ad data/apotheosis/recipe/gem_cutting/flawed.json
+9c80f0ba63fcf51a5b3956fcc9b6c1e70a448c4f data/apotheosis/recipe/gem_cutting/flawless.json
+294eff87389ffefe9c64b6e4b25ed7bddbbd1f5e data/apotheosis/recipe/gem_cutting/normal.json
 a391e858f4a4fbee5fcdcf669d25282eb00104ac data/apotheosis/recipe/gem_cutting_table.json
 a347031477eb93618ffdb13c26c94480f507c32a data/apotheosis/recipe/gem_fused_slate.json
 335353336e6ceeb73a8afc9330cc26f1623226e0 data/apotheosis/recipe/infusion/potion_charm.json
