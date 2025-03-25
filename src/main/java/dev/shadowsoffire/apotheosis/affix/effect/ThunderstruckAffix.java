@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.affix.effect;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -11,10 +12,13 @@ import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.util.DamageSourceExtension;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -29,13 +33,16 @@ public class ThunderstruckAffix extends Affix {
     public static final Codec<ThunderstruckAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             affixDef(),
+            LootCategory.SET_CODEC.fieldOf("categories").forGetter(a -> a.categories),
             LootRarity.mapCodec(StepFunction.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, ThunderstruckAffix::new));
 
+    protected final Set<LootCategory> categories;
     protected final Map<LootRarity, StepFunction> values;
 
-    public ThunderstruckAffix(AffixDefinition def, Map<LootRarity, StepFunction> values) {
+    public ThunderstruckAffix(AffixDefinition def, Set<LootCategory> categories, Map<LootRarity, StepFunction> values) {
         super(def);
+        this.categories = categories;
         this.values = values;
     }
 
@@ -56,7 +63,7 @@ public class ThunderstruckAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat.isMelee() && this.values.containsKey(rarity);
+        return this.categories.contains(cat) && this.values.containsKey(rarity);
     }
 
     @Override
@@ -65,7 +72,10 @@ public class ThunderstruckAffix extends Affix {
         if (ApothicAttributes.getLocalAtkStrength(user) >= 0.98) {
             List<Entity> nearby = target.level().getEntities(target, new AABB(target.blockPosition()).inflate(6), CleavingAffix.cleavePredicate(user, target));
             for (Entity e : nearby) {
-                e.hurt(user.damageSources().mobAttack(user), this.getTrueLevel(inst.getRarity(), inst.level()));
+                DamageSource src = user.damageSources().mobAttack(user);
+                ((DamageSourceExtension) src).addTag(DamageTypeTags.IS_LIGHTNING);
+                ((DamageSourceExtension) src).addTag(DamageTypeTags.BYPASSES_ARMOR);
+                e.hurt(src, this.getTrueLevel(inst.getRarity(), inst.level()));
             }
         }
     }

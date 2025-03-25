@@ -880,8 +880,9 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .build());
 
         this.add(Apotheosis.loc("melee/thunderstruck"),
-            AffixBuilder.simple(ThunderstruckAffix::new)
+            AffixBuilder.categorized(ThunderstruckAffix::new)
                 .definition(AffixType.ABILITY, DEFAULT_WEIGHT, DEFAULT_QUALITY)
+                .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT)
                 .step(1)
                 .value(epic, 3, 6)
                 .value(mythic, 4, 8)

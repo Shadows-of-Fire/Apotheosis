@@ -1,4 +1,4 @@
-// 1.21.1	2025-03-23T00:55:00.744465	Affixes
+// 1.21.1	2025-03-25T00:16:46.1997062	Affixes
 24d89e7e2661a316fbff852fc0f2c8fba0ced14a data/apotheosis/affixes/armor/attribute/adamantine.json
 5a04ead49fff5a3a9061b65682e7432afa771cfc data/apotheosis/affixes/armor/attribute/aquatic.json
 921b26af1796a2871957f5cbc13f74e35fa3ddbc data/apotheosis/affixes/armor/attribute/blessed.json
@@ -62,7 +62,7 @@ d4cd158b19d1b916d437aeb4384369bae3a2a619 data/apotheosis/affixes/melee/cleaving.
 2756f826f5f0bc1eb66209c7b0779bb6a62a825e data/apotheosis/affixes/melee/mob_effect/omniscient.json
 b94b381cc96d761722a013930e5bab18abfe6e68 data/apotheosis/affixes/melee/mob_effect/sophisticated.json
 fb8a16dad1f811200f6b54d932582b20170429ea data/apotheosis/affixes/melee/mob_effect/weakening.json
-541bc2f5db75e295d715ee838fbc5446bef5bcda data/apotheosis/affixes/melee/thunderstruck.json
+7f2dcfb79440f8e1786f438fc6f9e091f584fa7d data/apotheosis/affixes/melee/thunderstruck.json
 5453d9422d37750b385faeded12f9546fa00860e data/apotheosis/affixes/ranged/attribute/agile.json
 f1cd5b3d1a565e8a0c32e94459b8e22b1f355ce7 data/apotheosis/affixes/ranged/attribute/elven.json
 b4f6467516aa5ca3baf569889c83153bff4b595a data/apotheosis/affixes/ranged/attribute/streamlined.json
