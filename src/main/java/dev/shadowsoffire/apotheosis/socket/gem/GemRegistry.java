@@ -6,10 +6,12 @@ import com.google.common.base.Preconditions;
 
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.socket.gem.ExtraGemBonusRegistry.ExtraGemBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.tiers.Constraints;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.TieredDynamicRegistry;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -36,6 +38,26 @@ public class GemRegistry extends TieredDynamicRegistry<Gem> {
                     if (bonus.supports(p)) atLeastOne = true;
                 }
                 Preconditions.checkArgument(atLeastOne, "No bonuses provided for supported purity %s. At least one bonus must be provided, or the minimum purity should be raised.", p.getName());
+            }
+        }
+    }
+
+    @Override
+    protected void onReload() {
+        super.onReload();
+        for (Gem gem : this.getValues()) {
+            DynamicHolder<Gem> holder = this.holder(gem);
+            for (ExtraGemBonus extraBonus : ExtraGemBonusRegistry.getBonusesFor(holder)) {
+                for (GemBonus bonus : extraBonus.bonuses()) {
+                    try {
+                        gem.appendExtraBonus(bonus);
+                    }
+                    catch (Exception ex) {
+                        ResourceLocation extraBonusKey = ExtraGemBonusRegistry.INSTANCE.getKey(extraBonus);
+                        this.logger.warn("Failed to apply extra gem bonus for class {} to gem {}.", bonus.getGemClass().key(), holder.getId());
+                        this.logger.warn("Exception while applying ExtraGemBonus %s: ".formatted(extraBonusKey), ex);
+                    }
+                }
             }
         }
     }

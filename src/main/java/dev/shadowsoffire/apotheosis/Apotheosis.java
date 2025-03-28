@@ -44,6 +44,7 @@ import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
 import dev.shadowsoffire.apotheosis.net.RadialStateChangePayload;
 import dev.shadowsoffire.apotheosis.net.RerollResultPayload;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
+import dev.shadowsoffire.apotheosis.socket.gem.ExtraGemBonusRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.PurityWeightsRegistry;
@@ -132,6 +133,7 @@ public class Apotheosis {
         RarityRegistry.INSTANCE.registerToBus();
         RarityOverrideRegistry.INSTANCE.registerToBus();
         AffixRegistry.INSTANCE.registerToBus();
+        ExtraGemBonusRegistry.INSTANCE.registerToBus();
         GemRegistry.INSTANCE.registerToBus();
         AffixLootRegistry.INSTANCE.registerToBus();
         InvaderRegistry.INSTANCE.registerToBus();

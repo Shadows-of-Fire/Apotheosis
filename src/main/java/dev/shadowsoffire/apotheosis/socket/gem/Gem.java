@@ -2,13 +2,11 @@ package dev.shadowsoffire.apotheosis.socket.gem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
@@ -18,6 +16,7 @@ import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.socket.gem.ExtraGemBonusRegistry.ExtraGemBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.tiers.Constraints;
 import dev.shadowsoffire.apotheosis.tiers.Constraints.Constrained;
@@ -49,7 +48,8 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
     protected final List<GemBonus> bonuses;
     protected final boolean unique;
 
-    protected transient final Map<LootCategory, GemBonus> bonusMap;
+    protected transient final Map<LootCategory, GemBonus> bonusMap = new IdentityHashMap<>();
+    protected transient final List<GemBonus> extraBonuses = new ArrayList<>();
 
     public Gem(TieredWeights weights, Constraints constraints, Purity minPurity, List<GemBonus> bonuses, boolean unique) {
         this.weights = weights;
@@ -58,12 +58,12 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
         this.bonuses = bonuses;
         this.unique = unique;
         Preconditions.checkArgument(!bonuses.isEmpty(), "No bonuses were provided.");
-        // TODO: Improve error reporting when gem class overlaps are detected.
-        this.bonusMap = bonuses.stream().<Pair<LootCategory, GemBonus>>mapMulti((gemData, mapper) -> {
-            for (LootCategory c : gemData.getGemClass().types()) {
-                mapper.accept(Pair.of(c, gemData));
+        for (GemBonus bonus : this.bonuses) {
+            validateBonus(bonus);
+            for (LootCategory category : bonus.getGemClass().types()) {
+                this.bonusMap.put(category, bonus);
             }
-        }).collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
+        }
     }
 
     /**
@@ -84,14 +84,16 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
         list.accept(CommonComponents.EMPTY);
 
         list.accept(Component.translatable("text.apotheosis.when_socketed_in").withStyle(ChatFormatting.GOLD));
-        for (GemBonus bonus : this.bonuses) {
-            if (!bonus.supports(gem.purity())) {
-                continue;
+        Consumer<GemBonus> appendBonusToTooltip = bonus -> {
+            if (bonus.supports(gem.purity())) {
+                Component modifComp = bonus.getSocketBonusTooltip(gem, ctx);
+                Component sum = Component.translatable("text.apotheosis.dot_prefix", Component.translatable("%s: %s", Component.translatable("gem_class." + bonus.getGemClass().key()), modifComp)).withStyle(ChatFormatting.GOLD);
+                list.accept(sum);
             }
-            Component modifComp = bonus.getSocketBonusTooltip(gem, ctx);
-            Component sum = Component.translatable("text.apotheosis.dot_prefix", Component.translatable("%s: %s", Component.translatable("gem_class." + bonus.getGemClass().key()), modifComp)).withStyle(ChatFormatting.GOLD);
-            list.accept(sum);
-        }
+        };
+
+        this.bonuses.forEach(appendBonusToTooltip);
+        this.extraBonuses.forEach(appendBonusToTooltip);
     }
 
     /**
@@ -153,6 +155,12 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
         return this.minPurity;
     }
 
+    /**
+     * @deprecated The internal structure of gem bonuses is no longer represented by this list.
+     *             Gems may have additional bonuses stapled to them by {@link ExtraGemBonus}.
+     *             Use {@link #getBonus(LootCategory, Purity)}
+     */
+    @Deprecated(forRemoval = true)
     public List<GemBonus> getBonuses() {
         return this.bonuses;
     }
@@ -194,6 +202,28 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
         }
         else {
             list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.anything")).withStyle(style));
+        }
+    }
+
+    /**
+     * Checks if a bonus can be added to this Gem.
+     * 
+     * @throws IllegalArgumentException if the bonus cannot be added.
+     */
+    private void validateBonus(GemBonus bonus) {
+        for (LootCategory category : bonus.getGemClass().types()) {
+            if (this.bonusMap.containsKey(category)) {
+                GemBonus conflict = this.bonusMap.get(category);
+                throw new IllegalArgumentException("Gem Bonus for class %s conflicts with existing bonus for class %s (categories overlap)".formatted(bonus.getGemClass().key(), conflict.getGemClass().key()));
+            }
+        }
+    }
+
+    void appendExtraBonus(GemBonus bonus) {
+        validateBonus(bonus);
+        this.extraBonuses.add(bonus);
+        for (LootCategory category : bonus.getGemClass().types()) {
+            this.bonusMap.put(category, bonus);
         }
     }
 
