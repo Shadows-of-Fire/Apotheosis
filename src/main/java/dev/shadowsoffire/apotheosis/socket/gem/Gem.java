@@ -186,7 +186,7 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
     public static void addTypeInfo(Consumer<Component> list, Object... types) {
         Arrays.sort(types, (c1, c2) -> ((LootCategory) c1).getKey().compareTo(((LootCategory) c2).getKey()));
         Style style = Style.EMPTY.withColor(0x0AFF0A);
-        if (types.length != BuiltInRegs.LOOT_CATEGORY.size() - 1) {
+        if (types.length < BuiltInRegs.LOOT_CATEGORY.size() - 1) {
             StringBuilder sb = new StringBuilder();
             int i = 0;
             while (i < types.length) {

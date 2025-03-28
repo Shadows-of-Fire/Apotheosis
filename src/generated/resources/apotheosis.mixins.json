@@ -6,6 +6,7 @@
     "maxShiftBy": 5,
     "mixins": [
         "AbstractSkeletonMixin",
+        "AnyHolderSetMixin",
         "BaseSpawnerAccessor",
         "DamageSourceMixin",
         "EnchantmentHelperMixin",
