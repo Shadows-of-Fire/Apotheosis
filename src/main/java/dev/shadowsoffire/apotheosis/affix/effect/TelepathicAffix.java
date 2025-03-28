@@ -22,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.neoforged.neoforge.event.level.BlockDropsEvent;
 
 /**
  * Teleport Drops
@@ -84,6 +85,20 @@ public class TelepathicAffix extends Affix {
             for (ItemEntity item : e.getDrops()) {
                 item.setPos(targetPos.x, targetPos.y, targetPos.z);
                 item.setPickUpDelay(0);
+            }
+        }
+    }
+
+    // EventPriority.LOWEST
+    public static void drops(BlockDropsEvent e) {
+        if (e.getBreaker() instanceof LivingEntity living) {
+            ItemStack tool = living.getMainHandItem();
+            if (AffixHelper.streamAffixes(tool).anyMatch(AffixInstance::enablesTelepathy)) {
+                Vec3 targetPos = living.position();
+                for (ItemEntity item : e.getDrops()) {
+                    item.setPos(targetPos.x, targetPos.y, targetPos.z);
+                    item.setPickUpDelay(0);
+                }
             }
         }
     }

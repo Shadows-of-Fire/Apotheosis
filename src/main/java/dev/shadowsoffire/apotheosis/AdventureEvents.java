@@ -70,6 +70,7 @@ import net.neoforged.neoforge.event.entity.living.MobDespawnEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.HarvestCheck;
+import net.neoforged.neoforge.event.level.BlockDropsEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -203,6 +204,11 @@ public class AdventureEvents {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void dropsLowest(LivingDropsEvent e) {
+        TelepathicAffix.drops(e);
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void dropsLowest(BlockDropsEvent e) {
         TelepathicAffix.drops(e);
     }
 

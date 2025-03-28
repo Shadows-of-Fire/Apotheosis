@@ -7,7 +7,6 @@
     "mixins": [
         "AbstractSkeletonMixin",
         "BaseSpawnerAccessor",
-        "BlockMixin",
         "DamageSourceMixin",
         "EnchantmentHelperMixin",
         "EndDragonFightMixin",
