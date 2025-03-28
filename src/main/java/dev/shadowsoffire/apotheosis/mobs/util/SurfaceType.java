@@ -38,7 +38,8 @@ public enum SurfaceType implements BiPredicate<ServerLevelAccessor, BlockPos> {
 
     /**
      * Checks if the target position can see the sky, or if it is in the same vertical slice as a player.
-     * A vertical slice is defined as being within 16 blocks on the Y-axis of the nearest player.
+     * A vertical slice is defined as being within 8 blocks on the Y-axis of the nearest player.
+     * TODO: Might need to add a distance check to this, since moving horizontally when underground is harder.
      */
     private static boolean skyOrSameVerticalSlice(ServerLevelAccessor level, BlockPos pos) {
         if (NEEDS_SKY.test(level, pos)) {
@@ -46,6 +47,6 @@ public enum SurfaceType implements BiPredicate<ServerLevelAccessor, BlockPos> {
         }
 
         Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), -1, false);
-        return Math.abs(player.position().y - pos.getY()) <= 16;
+        return Math.abs(player.position().y - pos.getY()) <= 8;
     }
 }
