@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.socket.gem.bonus.special;
 
 import java.util.Map;
 
-import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -32,7 +31,7 @@ public class BloodyArrowBonus extends GemBonus {
     protected final Map<Purity, Data> values;
 
     public BloodyArrowBonus(Map<Purity, Data> values) {
-        super(new GemClass("ranged_weapon", ImmutableSet.of(LootCategories.BOW)));
+        super(new GemClass(LootCategories.BOW));
         this.values = values;
     }
 

@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.socket.gem.bonus.special;
 
 import java.util.Map;
 
-import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -30,7 +29,7 @@ public class LeechBlockBonus extends GemBonus {
     protected final Map<Purity, Data> values;
 
     public LeechBlockBonus(Map<Purity, Data> values) {
-        super(new GemClass("shield", ImmutableSet.of(LootCategories.SHIELD)));
+        super(new GemClass(LootCategories.SHIELD));
         this.values = values;
     }
 

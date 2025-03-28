@@ -12,7 +12,6 @@ import dev.shadowsoffire.apotheosis.affix.effect.MobEffectAffix.Target;
 import dev.shadowsoffire.apotheosis.compat.twilight.FortificationBonus;
 import dev.shadowsoffire.apotheosis.compat.twilight.OreMagnetBonus;
 import dev.shadowsoffire.apotheosis.compat.twilight.TreasureGoblinBonus;
-import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.conditions.MatchesBlockCondition;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
@@ -61,6 +60,7 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.holdersets.AnyHolderSet;
 
 public class GemProvider extends DynamicRegistryProvider<Gem> {
 
@@ -75,7 +75,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
     public static final GemClass WEAPONS = new GemClass("weapons", LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW);
     public static final GemClass WEAPON_OR_TOOL = new GemClass("weapon_or_tool", LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW, LootCategories.BREAKER);
     public static final GemClass NON_TRIDENT_WEAPONS = new GemClass("weapons", LootCategories.MELEE_WEAPON, LootCategories.BOW);
-    public static final GemClass ANYTHING = new GemClass("anything", BuiltInRegs.LOOT_CATEGORY.stream().filter(lc -> lc != LootCategories.NONE).toArray(LootCategory[]::new));
+    public static final GemClass ANYTHING = new GemClass("anything", new AnyHolderSet<>(BuiltInRegs.LOOT_CATEGORY.asLookup()));
 
     public static final Holder<MobEffect> TW_FROSTED = DeferredHolder.create(Registries.MOB_EFFECT, ResourceLocation.parse("twilightforest:frosted"));
 

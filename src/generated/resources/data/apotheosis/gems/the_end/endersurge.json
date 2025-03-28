@@ -23,18 +23,9 @@
             "enchantment": "minecraft:sharpness",
             "gem_class": {
                 "key": "anything",
-                "types": [
-                    "apotheosis:bow",
-                    "apotheosis:breaker",
-                    "apotheosis:helmet",
-                    "apotheosis:chestplate",
-                    "apotheosis:leggings",
-                    "apotheosis:boots",
-                    "apotheosis:shield",
-                    "apotheosis:trident",
-                    "apotheosis:melee_weapon",
-                    "apotheosis:shears"
-                ]
+                "types": {
+                    "type": "neoforge:any"
+                }
             },
             "mode": "global",
             "values": {

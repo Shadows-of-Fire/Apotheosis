@@ -25,6 +25,7 @@ import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -60,8 +61,8 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
         Preconditions.checkArgument(!bonuses.isEmpty(), "No bonuses were provided.");
         for (GemBonus bonus : this.bonuses) {
             validateBonus(bonus);
-            for (LootCategory category : bonus.getGemClass().types()) {
-                this.bonusMap.put(category, bonus);
+            for (Holder<LootCategory> category : bonus.getGemClass().types()) {
+                this.bonusMap.put(category.value(), bonus);
             }
         }
     }
@@ -211,9 +212,9 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
      * @throws IllegalArgumentException if the bonus cannot be added.
      */
     private void validateBonus(GemBonus bonus) {
-        for (LootCategory category : bonus.getGemClass().types()) {
-            if (this.bonusMap.containsKey(category)) {
-                GemBonus conflict = this.bonusMap.get(category);
+        for (Holder<LootCategory> category : bonus.getGemClass().types()) {
+            if (this.bonusMap.containsKey(category.value())) {
+                GemBonus conflict = this.bonusMap.get(category.value());
                 throw new IllegalArgumentException("Gem Bonus for class %s conflicts with existing bonus for class %s (categories overlap)".formatted(bonus.getGemClass().key(), conflict.getGemClass().key()));
             }
         }
@@ -222,8 +223,8 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
     void appendExtraBonus(GemBonus bonus) {
         validateBonus(bonus);
         this.extraBonuses.add(bonus);
-        for (LootCategory category : bonus.getGemClass().types()) {
-            this.bonusMap.put(category, bonus);
+        for (Holder<LootCategory> category : bonus.getGemClass().types()) {
+            this.bonusMap.put(category.value(), bonus);
         }
     }
 
