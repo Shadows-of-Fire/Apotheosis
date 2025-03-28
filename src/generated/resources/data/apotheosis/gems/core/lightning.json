@@ -1,7 +1,8 @@
 {
     "type": "apotheosis:gem",
     "weights": {
-        "weight": 10
+        "quality": 0.1,
+        "weight": 100
     },
     "bonuses": [
         {

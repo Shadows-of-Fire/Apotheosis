@@ -9,6 +9,7 @@
         "affix_type": "basic_effect",
         "exclusive_set": [],
         "weights": {
+            "quality": 0.1,
             "weight": 25
         }
     },

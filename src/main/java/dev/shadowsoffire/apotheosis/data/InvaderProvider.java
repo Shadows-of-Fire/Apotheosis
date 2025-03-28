@@ -35,7 +35,7 @@ import net.neoforged.neoforge.common.Tags;
 public class InvaderProvider extends DynamicRegistryProvider<Invader> {
 
     public static final int DEFAULT_WEIGHT = 100;
-    public static final int DEFAULT_QUALITY = 0;
+    public static final float DEFAULT_QUALITY = 0.1F;
 
     public InvaderProvider(PackOutput output, CompletableFuture<Provider> registries) {
         super(output, registries, InvaderRegistry.INSTANCE);
@@ -90,7 +90,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(0.75, 3.7)
             .basicData(c -> meleeGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, 150, 5))
+                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, DEFAULT_WEIGHT, 1.5F))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS)));
 
@@ -99,7 +99,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(0.75, 2.45)
             .basicData(c -> meleeGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, 150, 5))
+                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, DEFAULT_WEIGHT, 1.5F))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS)));
 
@@ -110,7 +110,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(1.5, 2.5)
             .basicData(c -> meleeGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, 150, 5))
+                .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, DEFAULT_WEIGHT, 1.5F))
                 .constraints(x -> x
                     .dimensions(Level.OVERWORLD)
                     .biomes(biomes, Tags.Biomes.IS_SNOWY))
@@ -198,7 +198,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(1.2, 3.6)
             .basicData(c -> rangedGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.SUMMIT, 150, 5))
+                .weights(TieredWeights.forTiersAbove(WorldTier.SUMMIT, DEFAULT_WEIGHT, 1.5F))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS))
             .stats(mythic, c -> c
@@ -241,7 +241,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(0.75, 2.45)
             .basicData(c -> meleeGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, 150, 5))
+                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, DEFAULT_WEIGHT, 1.5F))
                 .constraints(Constraints.forDimension(Level.NETHER))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS)));
 
@@ -250,7 +250,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(2, 2)
             .basicData(c -> meleeGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, DEFAULT_WEIGHT, 5))
+                .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, DEFAULT_WEIGHT, 2))
                 .constraints(Constraints.forDimension(Level.NETHER))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
@@ -259,7 +259,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(0.75, 3.7)
             .basicData(c -> rangedGear(meleeGear(c))
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, 150, 5))
+                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, DEFAULT_WEIGHT, 1.5F))
                 .constraints(Constraints.forDimension(Level.NETHER))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS))
             .stats(epic, c -> c
@@ -292,7 +292,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(1.2, 3.6)
             .basicData(c -> rangedGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.SUMMIT, 150, 5))
+                .weights(TieredWeights.forTiersAbove(WorldTier.SUMMIT, DEFAULT_WEIGHT, 1.5F))
                 .constraints(Constraints.forDimension(Level.NETHER))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS))
             .stats(mythic, c -> c
@@ -352,7 +352,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(0.75, 2.45)
             .basicData(c -> rangedGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.SUMMIT, 150, 5))
+                .weights(TieredWeights.forTiersAbove(WorldTier.SUMMIT, DEFAULT_WEIGHT, 1.5F))
                 .constraints(Constraints.forDimension(Level.END))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS)));
 

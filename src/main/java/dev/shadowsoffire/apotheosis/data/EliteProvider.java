@@ -36,6 +36,9 @@ import net.minecraft.world.level.Level;
 
 public class EliteProvider extends DynamicRegistryProvider<Elite> {
 
+    public static final int DEFAULT_WEIGHT = 100;
+    public static final float DEFAULT_QUALITY = 0.1F;
+
     public EliteProvider(PackOutput output, CompletableFuture<Provider> registries) {
         super(output, registries, EliteRegistry.INSTANCE);
     }
@@ -52,7 +55,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
             .entities(EntityType.GOAT)
             .basicData(c -> c
                 .name(Component.literal("Craig the Eternal").withStyle(s -> s.withColor(GradientColor.RAINBOW)))
-                .weights(TieredWeights.onlyFor(WorldTier.PINNACLE, 100, 0))
+                .weights(TieredWeights.onlyFor(WorldTier.PINNACLE, DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .exclusion(excludedSpawnTypes(MobSpawnType.SPAWN_EGG))
                 .gearSets(WorldTier.PINNACLE, "#pinnacle_melee")
@@ -76,7 +79,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
             .affixes(0.25F, Set.of())
             .basicData(c -> InvaderProvider.rangedGear(c)
                 .name(Component.literal("Honeyed Archer"))
-                .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, 100, 0))
+                .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .exclusion(excludedSpawnTypes(MobSpawnType.SPAWN_EGG, MobSpawnType.SPAWNER, MobSpawnType.MOB_SUMMONED))
                 .exclusion(new SurfaceTypeCondition(SurfaceType.NEEDS_SURFACE))
@@ -97,7 +100,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
             .affixes(0.35F, Set.of())
             .basicData(c -> InvaderProvider.rangedGear(c)
                 .name(Component.literal("Undead Knight"))
-                .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, 100, 0))
+                .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .exclusion(excludedSpawnTypes(MobSpawnType.SPAWN_EGG, MobSpawnType.SPAWNER, MobSpawnType.MOB_SUMMONED))
                 .exclusion(new SurfaceTypeCondition(SurfaceType.NEEDS_SURFACE))
@@ -117,7 +120,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
             .affixes(0.45F, Set.of())
             .basicData(c -> InvaderProvider.rangedGear(c)
                 .name(Component.literal("Withering Archer"))
-                .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, 100, 0))
+                .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .constraints(Constraints.forDimension(Level.NETHER))
                 .exclusion(excludedSpawnTypes(MobSpawnType.SPAWN_EGG, MobSpawnType.SPAWNER, MobSpawnType.MOB_SUMMONED))
                 .nbt(witherCloud()))

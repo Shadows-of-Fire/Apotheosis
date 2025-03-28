@@ -64,8 +64,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class GemProvider extends DynamicRegistryProvider<Gem> {
 
-    public static final int DEFAULT_WEIGHT = 10;
-    public static final int DEFAULT_QUALITY = 0;
+    public static final int DEFAULT_WEIGHT = 100;
+    public static final float DEFAULT_QUALITY = 0.1F;
 
     public static final GemClass ARMOR = new GemClass("armor", LootCategories.HELMET, LootCategories.CHESTPLATE, LootCategories.LEGGINGS, LootCategories.BOOTS);
     public static final GemClass LIGHT_WEAPON = new GemClass("light_weapon", LootCategories.MELEE_WEAPON, LootCategories.TRIDENT);
@@ -515,7 +515,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 200, 0, 40)
                 .value(Purity.PERFECT, 200, 1, 40)));
 
-        addGem("overworld/earth", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 5, 1.5F), c -> c
+        addGem("overworld/earth", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.OVERWORLD))
@@ -541,7 +541,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 3)
                 .value(Purity.PERFECT, 4)));
 
-        addGem("overworld/royalty", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 5, 1.5F), c -> c
+        addGem("overworld/royalty", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.OVERWORLD))
@@ -632,7 +632,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.FLAWLESS, -0.35F)
                     .value(Purity.PERFECT, -0.40F))));
 
-        addGem("the_nether/blood_lord", TieredWeights.forTiersAbove(WorldTier.ASCENT, 5, 1.5F), c -> c
+        addGem("the_nether/blood_lord", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.NETHER))
@@ -686,7 +686,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 Purity.FLAWLESS, new LeechBlockBonus.Data(0.55F, 450),
                 Purity.PERFECT, new LeechBlockBonus.Data(0.65F, 450)))));
 
-        addGem("the_nether/inferno", TieredWeights.forTiersAbove(WorldTier.ASCENT, 5, 1.5F), c -> c
+        addGem("the_nether/inferno", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.NETHER))
@@ -717,7 +717,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.75)
                 .value(Purity.PERFECT, 0.90)));
 
-        addGem("the_end/endersurge", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 5, 1.5F), c -> c
+        addGem("the_end/endersurge", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWLESS)
             .contstraints(Constraints.forDimension(Level.END))
@@ -727,7 +727,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 1)
                 .value(Purity.PERFECT, 2)));
 
-        addGem("the_end/mageslayer", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 5, 1.5F), c -> c
+        addGem("the_end/mageslayer", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.NORMAL)
             .contstraints(Constraints.forDimension(Level.END))
@@ -757,7 +757,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 300, 0, 400)
                 .value(Purity.PERFECT, 300, 1, 400)));
 
-        addConditionally("twilightforest", "twilight/queen", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 5, 1.5F), c -> c
+        addConditionally("twilightforest", "twilight/queen", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse("twilightforest:twilight_forest"))))
@@ -784,7 +784,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 180, 1, 500)
                 .value(Purity.PERFECT, 240, 2, 500)));
 
-        addConditionally("twilightforest", "twilight/forest", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 5, 1.5F), c -> c
+        addConditionally("twilightforest", "twilight/forest", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse("twilightforest:twilight_forest"))))

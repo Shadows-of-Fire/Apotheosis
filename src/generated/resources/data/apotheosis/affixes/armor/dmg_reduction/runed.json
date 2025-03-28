@@ -13,6 +13,7 @@
             "apotheosis:armor/dmg_reduction/blockading"
         ],
         "weights": {
+            "quality": 0.1,
             "weight": 25
         }
     },

@@ -10,6 +10,7 @@
         "affix_type": "stat",
         "exclusive_set": [],
         "weights": {
+            "quality": 0.1,
             "weight": 25
         }
     },

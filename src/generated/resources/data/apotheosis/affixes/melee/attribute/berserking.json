@@ -10,6 +10,7 @@
             "apotheosis:melee/attribute/vampiric"
         ],
         "weights": {
+            "quality": 0.1,
             "weight": 25
         }
     },

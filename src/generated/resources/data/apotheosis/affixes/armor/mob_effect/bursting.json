@@ -6,6 +6,7 @@
             "apotheosis:armor/mob_effect/revitalizing"
         ],
         "weights": {
+            "quality": 0.1,
             "weight": 25
         }
     },

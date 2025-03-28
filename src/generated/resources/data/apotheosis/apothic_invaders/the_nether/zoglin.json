@@ -29,19 +29,19 @@
         },
         "weights": {
             "frontier": {
-                "quality": 5.0,
+                "quality": 2.0,
                 "weight": 100
             },
             "ascent": {
-                "quality": 5.0,
+                "quality": 2.0,
                 "weight": 100
             },
             "summit": {
-                "quality": 5.0,
+                "quality": 2.0,
                 "weight": 100
             },
             "pinnacle": {
-                "quality": 5.0,
+                "quality": 2.0,
                 "weight": 100
             }
         }

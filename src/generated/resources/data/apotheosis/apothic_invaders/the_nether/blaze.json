@@ -30,12 +30,12 @@
         },
         "weights": {
             "summit": {
-                "quality": 5.0,
-                "weight": 150
+                "quality": 1.5,
+                "weight": 100
             },
             "pinnacle": {
-                "quality": 5.0,
-                "weight": 150
+                "quality": 1.5,
+                "weight": 100
             }
         }
     },

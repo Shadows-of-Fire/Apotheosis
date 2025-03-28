@@ -9,16 +9,16 @@
     "unique": true,
     "weights": {
         "ascent": {
-            "quality": 1.5,
-            "weight": 5
+            "quality": 2.0,
+            "weight": 50
         },
         "summit": {
-            "quality": 1.5,
-            "weight": 5
+            "quality": 2.0,
+            "weight": 50
         },
         "pinnacle": {
-            "quality": 1.5,
-            "weight": 5
+            "quality": 2.0,
+            "weight": 50
         }
     },
     "bonuses": [

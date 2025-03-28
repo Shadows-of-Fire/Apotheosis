@@ -10,6 +10,7 @@
             "apotheosis:breaker/ability/stoneforming"
         ],
         "weights": {
+            "quality": 0.1,
             "weight": 25
         }
     }

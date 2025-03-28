@@ -9,7 +9,7 @@
         "exclusive_set": [],
         "weights": {
             "pinnacle": {
-                "quality": 2.5,
+                "quality": 0.75,
                 "weight": 15
             }
         }
