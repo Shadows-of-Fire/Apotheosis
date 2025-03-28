@@ -40,8 +40,9 @@ public class SalvagingRecipe implements Recipe<SingleRecipeInput> {
         this.outputs = outputs;
     }
 
-    public boolean matches(ItemStack stack) {
-        return this.input.test(stack);
+    @Override
+    public boolean matches(SingleRecipeInput input, Level level) {
+        return this.input.test(input.getItem(0));
     }
 
     public Ingredient getInput() {
@@ -102,12 +103,6 @@ public class SalvagingRecipe implements Recipe<SingleRecipeInput> {
 
     @Override
     @Deprecated
-    public boolean matches(SingleRecipeInput input, Level level) {
-        return false;
-    }
-
-    @Override
-    @Deprecated
     public ItemStack assemble(SingleRecipeInput input, Provider registries) {
         return ItemStack.EMPTY;
     }
@@ -115,7 +110,7 @@ public class SalvagingRecipe implements Recipe<SingleRecipeInput> {
     @Override
     @Deprecated
     public boolean canCraftInDimensions(int width, int height) {
-        return false;
+        return true;
     }
 
     @Override

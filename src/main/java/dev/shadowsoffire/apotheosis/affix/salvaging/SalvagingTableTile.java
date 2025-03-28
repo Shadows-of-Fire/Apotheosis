@@ -103,7 +103,7 @@ public class SalvagingTableTile extends BlockEntity {
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            if (slot == 0) return SalvagingMenu.findMatch(SalvagingTableTile.this.level, stack) != null;
+            if (slot == 0) return !SalvagingMenu.findMatch(SalvagingTableTile.this.level, stack).isEmpty();
             return false;
         }
 

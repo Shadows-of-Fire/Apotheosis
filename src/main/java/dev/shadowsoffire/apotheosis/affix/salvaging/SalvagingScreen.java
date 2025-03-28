@@ -30,6 +30,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
 
@@ -69,11 +70,12 @@ public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
         for (int i = 0; i < 15; i++) {
             Slot s = this.menu.getSlot(i);
             ItemStack stack = s.getItem();
-            var recipe = SalvagingMenu.findMatch(Minecraft.getInstance().level, stack);
-            if (recipe != null) {
-                for (OutputData d : recipe.getOutputs()) {
-                    int[] counts = SalvagingMenu.getSalvageCounts(d, stack);
-                    matches.add(new OutputData(d.stack(), counts[0], counts[1]));
+            for (RecipeHolder<SalvagingRecipe> recipe : SalvagingMenu.findMatch(Minecraft.getInstance().level, stack)) {
+                if (recipe != null) {
+                    for (OutputData d : recipe.value().getOutputs()) {
+                        int[] counts = SalvagingMenu.getSalvageCounts(d, stack);
+                        matches.add(new OutputData(d.stack(), counts[0], counts[1]));
+                    }
                 }
             }
         }

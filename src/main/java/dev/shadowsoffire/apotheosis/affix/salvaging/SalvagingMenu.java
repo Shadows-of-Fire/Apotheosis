@@ -1,10 +1,7 @@
 package dev.shadowsoffire.apotheosis.affix.salvaging;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 import com.google.common.base.Predicates;
 
@@ -25,6 +22,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
 public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
@@ -38,7 +37,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
         int leftOffset = 17;
         int topOffset = 17;
         for (int i = 0; i < 12; i++) {
-            this.addSlot(new UpdatingSlot(this.inputInv, i, leftOffset + i % 4 * 19, topOffset + i / 4 * 19, s -> findMatch(this.level, s) != null){
+            this.addSlot(new UpdatingSlot(this.inputInv, i, leftOffset + i % 4 * 19, topOffset + i / 4 * 19, s -> !findMatch(this.level, s).isEmpty()){
 
                 @Override
                 public int getMaxStackSize() {
@@ -59,7 +58,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
         }
 
         this.addPlayerSlots(inv, 8, 92);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && findMatch(this.level, stack) != null, 0, 12);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && !findMatch(this.level, stack).isEmpty(), 0, 12);
         this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
         this.registerInvShuffleRules();
     }
@@ -137,35 +136,31 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
     }
 
     public static List<ItemStack> salvageItem(Level level, ItemStack stack) {
-        var recipe = findMatch(level, stack);
-        if (recipe == null) return Collections.emptyList();
         List<ItemStack> outputs = new ArrayList<>();
-        for (OutputData d : recipe.getOutputs()) {
-            ItemStack out = d.stack().copy();
-            out.setCount(getSalvageCount(d, stack, level.random));
-            outputs.add(out);
+        for (RecipeHolder<SalvagingRecipe> recipe : findMatch(level, stack)) {
+            for (OutputData d : recipe.value().getOutputs()) {
+                ItemStack out = d.stack().copy();
+                out.setCount(getSalvageCount(d, stack, level.random));
+                outputs.add(out);
+            }
         }
         return outputs;
     }
 
     public static List<ItemStack> getBestPossibleSalvageResults(Level level, ItemStack stack) {
-        var recipe = findMatch(level, stack);
-        if (recipe == null) return Collections.emptyList();
         List<ItemStack> outputs = new ArrayList<>();
-        for (OutputData d : recipe.getOutputs()) {
-            ItemStack out = d.stack().copy();
-            out.setCount(getSalvageCounts(d, stack)[1]);
-            outputs.add(out);
+        for (RecipeHolder<SalvagingRecipe> recipe : findMatch(level, stack)) {
+            for (OutputData d : recipe.value().getOutputs()) {
+                ItemStack out = d.stack().copy();
+                out.setCount(getSalvageCounts(d, stack)[1]);
+                outputs.add(out);
+            }
         }
         return outputs;
     }
 
-    @Nullable
-    public static SalvagingRecipe findMatch(Level level, ItemStack stack) {
-        for (var recipe : level.getRecipeManager().getAllRecipesFor(RecipeTypes.SALVAGING)) {
-            if (recipe.value().matches(stack)) return recipe.value();
-        }
-        return null;
+    public static List<RecipeHolder<SalvagingRecipe>> findMatch(Level level, ItemStack stack) {
+        return level.getRecipeManager().getRecipesFor(RecipeTypes.SALVAGING, new SingleRecipeInput(stack), level);
     }
 
 }
