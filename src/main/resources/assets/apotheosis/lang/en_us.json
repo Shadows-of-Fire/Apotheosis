@@ -776,6 +776,7 @@
     "config.jade.plugin_apotheosis.spawner": "Apoth Spawner Module",
     "config.jade.plugin_apotheosis.ench": "Apoth Ench Module",
     "config.jade.plugin_apotheosis.adventure": "Apoth Adventure Module",
+	"message.apotheosis.item_linking_disabled": "Item Linking has been disabled by the server.",
 
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Chronicle of Shadows",

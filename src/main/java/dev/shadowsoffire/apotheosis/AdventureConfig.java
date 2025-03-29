@@ -50,13 +50,16 @@ public class AdventureConfig {
     // Wandering Trader
     public static boolean undergroundTrader = true;
 
-    public static boolean charmsInCuriosOnly = false; // TODO: Hook this up.
+    public static boolean charmsInCuriosOnly = false;
 
     // Augmenting
     public static int upgradeSigilCost = 2;
     public static int upgradeLevelCost = 225;
     public static int rerollSigilCost = 1;
     public static int rerollLevelCost = 175;
+
+    public static boolean enableItemLinking = true;
+    public static int itemLinkingCooldown = 100;
 
     public static void load(Configuration c) {
         c.setTitle("Apotheosis Adventure Module Config");
@@ -112,6 +115,9 @@ public class AdventureConfig {
         rerollLevelCost = c.getInt("Reroll Level Cost", "augmenting", rerollLevelCost, 0, 65536, "The number of experience levels it costs to reroll an affix in the Augmenting Table.\nSynced.");
 
         charmsInCuriosOnly = c.getBoolean("Restrict Charms to Curios", "potion_charms", charmsInCuriosOnly, "If Potion Charms will only work when in a curios slot, instead of in the inventory.");
+
+        enableItemLinking = c.getBoolean("Enable Item Linking", "quality_of_life", enableItemLinking, "If linking items to chat (via the hotkey) is enabled.\nServer-Authoritative.");
+        itemLinkingCooldown = c.getInt("Item Linking Cooldown", "quality_of_life", itemLinkingCooldown, 0, 65536, "The cooldown, in ticks, between player item links.\nServer-Authoritative.");
     }
 
     public static boolean canGenerateIn(WorldGenLevel world) {
