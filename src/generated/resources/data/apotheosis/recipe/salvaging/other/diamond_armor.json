@@ -1,0 +1,27 @@
+{
+    "type": "apotheosis:salvaging",
+    "input": [
+        {
+            "item": "minecraft:diamond_helmet"
+        },
+        {
+            "item": "minecraft:diamond_chestplate"
+        },
+        {
+            "item": "minecraft:diamond_leggings"
+        },
+        {
+            "item": "minecraft:diamond_boots"
+        }
+    ],
+    "outputs": [
+        {
+            "max_count": 3,
+            "min_count": 1,
+            "stack": {
+                "count": 1,
+                "id": "minecraft:diamond"
+            }
+        }
+    ]
+}

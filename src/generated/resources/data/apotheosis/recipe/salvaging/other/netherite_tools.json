@@ -1,0 +1,30 @@
+{
+    "type": "apotheosis:salvaging",
+    "input": [
+        {
+            "item": "minecraft:netherite_sword"
+        },
+        {
+            "item": "minecraft:netherite_pickaxe"
+        },
+        {
+            "item": "minecraft:netherite_axe"
+        },
+        {
+            "item": "minecraft:netherite_shovel"
+        },
+        {
+            "item": "minecraft:netherite_hoe"
+        }
+    ],
+    "outputs": [
+        {
+            "max_count": 2,
+            "min_count": 0,
+            "stack": {
+                "count": 1,
+                "id": "minecraft:netherite_scrap"
+            }
+        }
+    ]
+}

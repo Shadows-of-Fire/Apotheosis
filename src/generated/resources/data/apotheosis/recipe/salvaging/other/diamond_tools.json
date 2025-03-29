@@ -1,0 +1,30 @@
+{
+    "type": "apotheosis:salvaging",
+    "input": [
+        {
+            "item": "minecraft:diamond_sword"
+        },
+        {
+            "item": "minecraft:diamond_pickaxe"
+        },
+        {
+            "item": "minecraft:diamond_axe"
+        },
+        {
+            "item": "minecraft:diamond_shovel"
+        },
+        {
+            "item": "minecraft:diamond_hoe"
+        }
+    ],
+    "outputs": [
+        {
+            "max_count": 1,
+            "min_count": 0,
+            "stack": {
+                "count": 1,
+                "id": "minecraft:diamond"
+            }
+        }
+    ]
+}

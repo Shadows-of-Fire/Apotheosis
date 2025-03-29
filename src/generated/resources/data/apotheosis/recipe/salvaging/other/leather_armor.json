@@ -1,0 +1,27 @@
+{
+    "type": "apotheosis:salvaging",
+    "input": [
+        {
+            "item": "minecraft:leather_helmet"
+        },
+        {
+            "item": "minecraft:leather_chestplate"
+        },
+        {
+            "item": "minecraft:leather_leggings"
+        },
+        {
+            "item": "minecraft:leather_boots"
+        }
+    ],
+    "outputs": [
+        {
+            "max_count": 3,
+            "min_count": 1,
+            "stack": {
+                "count": 1,
+                "id": "minecraft:leather"
+            }
+        }
+    ]
+}

@@ -62,17 +62,34 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         addAffixSalvaging("rare", Items.RARE_MATERIAL);
         addAffixSalvaging("epic", Items.EPIC_MATERIAL);
         addAffixSalvaging("mythic", Items.MYTHIC_MATERIAL);
+
         addGemSalvaging(Purity.CRACKED, 1, 2);
         addGemSalvaging(Purity.CHIPPED, 1, 3);
         addGemSalvaging(Purity.FLAWED, 2, 4);
         addGemSalvaging(Purity.NORMAL, 3, 5);
         addGemSalvaging(Purity.FLAWLESS, 4, 7);
         addGemSalvaging(Purity.PERFECT, 5, 10);
-        addOtherSalvaging("leather_horse_armor", Ingredient.of(Items.LEATHER_HORSE_ARMOR), new OutputData(Items.LEATHER, 3, 8));
-        addOtherSalvaging("iron_horse_armor", Ingredient.of(Items.IRON_HORSE_ARMOR), new OutputData(Items.IRON_INGOT, 3, 8));
-        addOtherSalvaging("golden_horse_armor", Ingredient.of(Items.GOLDEN_HORSE_ARMOR), new OutputData(Items.GOLD_INGOT, 3, 8));
-        addOtherSalvaging("diamond_horse_armor", Ingredient.of(Items.DIAMOND_HORSE_ARMOR), new OutputData(Items.DIAMOND, 3, 8));
-        addOtherSalvaging("wolf_armor", Ingredient.of(Items.WOLF_ARMOR), new OutputData(Items.ARMADILLO_SCUTE, 1, 3));
+
+        addOtherSalvaging("leather_horse_armor", new OutputData(Items.LEATHER, 3, 8), Items.LEATHER_HORSE_ARMOR);
+        addOtherSalvaging("iron_horse_armor", new OutputData(Items.IRON_INGOT, 3, 8), Items.IRON_HORSE_ARMOR);
+        addOtherSalvaging("golden_horse_armor", new OutputData(Items.GOLD_INGOT, 3, 8), Items.GOLDEN_HORSE_ARMOR);
+        addOtherSalvaging("diamond_horse_armor", new OutputData(Items.DIAMOND, 3, 8), Items.DIAMOND_HORSE_ARMOR);
+        addOtherSalvaging("wolf_armor", new OutputData(Items.ARMADILLO_SCUTE, 1, 3), Items.WOLF_ARMOR);
+
+        addOtherSalvaging("wooden_tools", new OutputData(Items.OAK_PLANKS, 0, 1), Items.WOODEN_SWORD, Items.WOODEN_PICKAXE, Items.WOODEN_AXE, Items.WOODEN_SHOVEL, Items.WOODEN_HOE);
+        addOtherSalvaging("stone_tools", new OutputData(Items.COBBLESTONE, 0, 1), Items.STONE_SWORD, Items.STONE_PICKAXE, Items.STONE_AXE, Items.STONE_SHOVEL, Items.STONE_HOE);
+        addOtherSalvaging("gold_tools", new OutputData(Items.GOLD_INGOT, 0, 1), Items.GOLDEN_SWORD, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_SHOVEL, Items.GOLDEN_HOE);
+        addOtherSalvaging("iron_tools", new OutputData(Items.IRON_INGOT, 0, 1), Items.IRON_SWORD, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_SHOVEL, Items.IRON_HOE);
+        addOtherSalvaging("diamond_tools", new OutputData(Items.DIAMOND, 0, 1), Items.DIAMOND_SWORD, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE);
+        addOtherSalvaging("netherite_tools", new OutputData(Items.NETHERITE_SCRAP, 0, 2), Items.NETHERITE_SWORD, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
+
+        addOtherSalvaging("leather_armor", new OutputData(Items.LEATHER, 1, 3), Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS);
+        addOtherSalvaging("chain_armor", new OutputData(Items.CHAIN, 1, 3), Items.CHAINMAIL_HELMET, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_LEGGINGS, Items.CHAINMAIL_BOOTS);
+        addOtherSalvaging("gold_armor", new OutputData(Items.GOLD_INGOT, 1, 3), Items.GOLDEN_HELMET, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_LEGGINGS, Items.GOLDEN_BOOTS);
+        addOtherSalvaging("iron_armor", new OutputData(Items.IRON_INGOT, 1, 3), Items.IRON_HELMET, Items.IRON_CHESTPLATE, Items.IRON_LEGGINGS, Items.IRON_BOOTS);
+        addOtherSalvaging("diamond_armor", new OutputData(Items.DIAMOND, 1, 3), Items.DIAMOND_HELMET, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_LEGGINGS, Items.DIAMOND_BOOTS);
+        addOtherSalvaging("netherite_armor", new OutputData(Items.NETHERITE_SCRAP, 0, 2), Items.NETHERITE_HELMET, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS);
+
         addReforging("common", 1, 0, 2, Blocks.SIMPLE_REFORGING_TABLE, Blocks.REFORGING_TABLE);
         addReforging("uncommon", 2, 1, 5, Blocks.SIMPLE_REFORGING_TABLE, Blocks.REFORGING_TABLE);
         addReforging("rare", 2, 2, 15, Blocks.SIMPLE_REFORGING_TABLE, Blocks.REFORGING_TABLE);
@@ -154,8 +171,8 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         addSalvaging("affix_item/" + rarity, input, output);
     }
 
-    private void addOtherSalvaging(String path, Ingredient input, OutputData output) {
-        addSalvaging("salvaging/other/" + path, input, List.of(output));
+    private void addOtherSalvaging(String path, OutputData output, Item... inputs) {
+        addSalvaging("salvaging/other/" + path, Ingredient.of(inputs), List.of(output));
     }
 
     private void addSalvaging(String path, Ingredient input, OutputData output) {

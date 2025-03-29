@@ -1,0 +1,30 @@
+{
+    "type": "apotheosis:salvaging",
+    "input": [
+        {
+            "item": "minecraft:wooden_sword"
+        },
+        {
+            "item": "minecraft:wooden_pickaxe"
+        },
+        {
+            "item": "minecraft:wooden_axe"
+        },
+        {
+            "item": "minecraft:wooden_shovel"
+        },
+        {
+            "item": "minecraft:wooden_hoe"
+        }
+    ],
+    "outputs": [
+        {
+            "max_count": 1,
+            "min_count": 0,
+            "stack": {
+                "count": 1,
+                "id": "minecraft:oak_planks"
+            }
+        }
+    ]
+}

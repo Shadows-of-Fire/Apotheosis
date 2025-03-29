@@ -1,4 +1,4 @@
-// 1.21.1	2025-03-24T18:38:15.3837218	Recipes
+// 1.21.1	2025-03-28T19:57:29.2546478	Recipes
 bab664def1f01400bfe3a7cf432385247dcd847d data/apotheosis/recipe/augmenting_table.json
 cfc46608a868f8e622a46d07c0b0d2d642bec035 data/apotheosis/recipe/gem_cutting/chipped.json
 527c22d6be2eb2dbc699e129a7db9313980d97a5 data/apotheosis/recipe/gem_cutting/cracked.json
@@ -26,11 +26,23 @@ b1fb97aa8454c7d5e7673d87d6dc25784f088076 data/apotheosis/recipe/salvaging/gem/fl
 6a98dbe578f6c1e1751fb141dc17c3af32fc48ed data/apotheosis/recipe/salvaging/gem/flawless.json
 9bbe5ee093bc26e0db3bfb25560270bca817ebd2 data/apotheosis/recipe/salvaging/gem/normal.json
 05a650e7277be9adac26c751e234d5e30c3bdf78 data/apotheosis/recipe/salvaging/gem/perfect.json
+93aa0c5c1e8da80e379d1eb29ff26d96eaa3d9a3 data/apotheosis/recipe/salvaging/other/chain_armor.json
+b3de38c3febbe6e853d56ea3e8b5e946bd0bf75e data/apotheosis/recipe/salvaging/other/diamond_armor.json
 09f096a2caebb47cb1ce679e85e0eddfb69e48c6 data/apotheosis/recipe/salvaging/other/diamond_horse_armor.json
+92f3d3ee55f332ace3ad905e72578833d13fc173 data/apotheosis/recipe/salvaging/other/diamond_tools.json
 f8397dbece5e24bca7ad2e40dc0ac24f95923ba6 data/apotheosis/recipe/salvaging/other/golden_horse_armor.json
+919e2bcd100adc8b29baa7ccbae3177e0378e88f data/apotheosis/recipe/salvaging/other/gold_armor.json
+b5258244dd88e95731f5fdc952a5684ce3050935 data/apotheosis/recipe/salvaging/other/gold_tools.json
+5ea869468994324e91ef44603bfa55e6d0cedaea data/apotheosis/recipe/salvaging/other/iron_armor.json
 f3975c5ea820291d9044c9cc99360bef92bb694e data/apotheosis/recipe/salvaging/other/iron_horse_armor.json
+25bc98196066de25a61355ff16cc9f92dd7a27ef data/apotheosis/recipe/salvaging/other/iron_tools.json
+0cd953244f0c6d186ffabd1e8f9dff1bf329f3f6 data/apotheosis/recipe/salvaging/other/leather_armor.json
 1464fbe2cec8ba2f14ce4134aa370b23d9b39039 data/apotheosis/recipe/salvaging/other/leather_horse_armor.json
+94afbb18233bc336a27799a28f356cc579863923 data/apotheosis/recipe/salvaging/other/netherite_armor.json
+9cc6016ba44c2ae5225bbaf4eecb0964bbee5e82 data/apotheosis/recipe/salvaging/other/netherite_tools.json
+886b5466ef781e550d44a13d73ae4dd3359cafd2 data/apotheosis/recipe/salvaging/other/stone_tools.json
 a756981025dfe410efee4943ca0f92eb2f1a4559 data/apotheosis/recipe/salvaging/other/wolf_armor.json
+c2b2d31857bf756466edbe74e1ce1809171758d5 data/apotheosis/recipe/salvaging/other/wooden_tools.json
 0a7e8418e7f6cf3ae2ad923cf074129e4ba3f1a8 data/apotheosis/recipe/salvaging_table.json
 06fac3501f6cbe4957002668ac7364c9550c26b1 data/apotheosis/recipe/sigil_add_sockets.json
 28330682d7a3fc9278b3f8c5efe42bd0971d672c data/apotheosis/recipe/sigil_of_enhancement.json
