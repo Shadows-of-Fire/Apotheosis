@@ -9,7 +9,10 @@ import java.util.Set;
 import java.util.function.Function;
 
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.joml.Vector2i;
+import org.joml.Vector2ic;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -34,6 +37,8 @@ import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.client.SocketTooltipRenderer.SocketComponent;
 import dev.shadowsoffire.apotheosis.client.StoneformingTooltipRenderer.StoneformingComponent;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
+import dev.shadowsoffire.apotheosis.loot.LootCategory;
+import dev.shadowsoffire.apotheosis.mixin.GuiGraphicsAccessor;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload.BossSpawnData;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
@@ -42,11 +47,20 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingScreen;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
+import dev.shadowsoffire.apotheosis.util.EquipmentComparePositioner;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
+import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
+import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
@@ -68,8 +82,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.FastColor;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
+import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -83,6 +100,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.ClientHooks;
 import net.neoforged.neoforge.client.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.GatherSkippedAttributeTooltipsEvent;
@@ -103,7 +121,9 @@ import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 @EventBusSubscriber(bus = Bus.MOD, modid = Apotheosis.MODID, value = Dist.CLIENT)
 public class AdventureModuleClient {
 
-    public static List<BossSpawnData> BOSS_SPAWNS = new ArrayList<>();
+    public static final int COMPARE_PADDING = 18;
+
+    private static final List<BossSpawnData> BOSS_SPAWNS = new ArrayList<>();
 
     @SubscribeEvent
     public static void setup(FMLClientSetupEvent e) {
@@ -177,6 +197,7 @@ public class AdventureModuleClient {
         e.register(AdventureKeys.TOGGLE_RADIAL);
         e.register(AdventureKeys.OPEN_WORLD_TIER_SELECT);
         e.register(AdventureKeys.LINK_ITEM_TO_CHAT);
+        e.register(AdventureKeys.COMPARE_EQUIPMENT);
     }
 
     @SubscribeEvent
@@ -344,6 +365,188 @@ public class AdventureModuleClient {
                 }
             }
         }
+
+        @SubscribeEvent(priority = EventPriority.LOW)
+        public static void compareItems(RenderTooltipEvent.Pre e) {
+            Minecraft mc = Minecraft.getInstance();
+            if (!InputConstants.isKeyDown(mc.getWindow().getWindow(), AdventureKeys.COMPARE_EQUIPMENT.getKey().getValue())) return;
+            if (!(mc.screen instanceof AbstractContainerScreen)) return;
+            Slot slot = ((AbstractContainerScreen<?>) mc.screen).getSlotUnderMouse();
+            if (slot == null || !slot.hasItem() || slot.getItem() != e.getItemStack()) return;
+
+            ItemStack stack = e.getItemStack();
+            LootCategory cat = LootCategory.forItem(stack);
+            if (cat.isNone()) return;
+
+            Player player = mc.player;
+            // If the item is an equipable, find it's slot and do the comparison there.
+            // TODO: Update this whole block to some kind of iterate-over-slots and check categories thingy.
+            // I think that will automatically pick up curios? Not sure.
+            if (stack.getItem() instanceof Equipable equip) {
+                EquipmentSlot equipmentSlot = equip.getEquipmentSlot();
+                ItemStack equipped = player.getItemBySlot(equipmentSlot);
+                if (!equipped.isEmpty() && stack != equipped) {
+                    tryRenderComparison(e, mc, equipped);
+                }
+            }
+            else {
+                // Otherwise... well, the item lives in a hand, though we don't know which one necessarily.
+                // So we need to look at both, and find one with the same loot category to do the comparison.
+                if (cat.getSlots().test(ALObjects.EquipmentSlots.MAINHAND)) {
+                    ItemStack equipped = player.getMainHandItem();
+                    LootCategory equippedCat = LootCategory.forItem(equipped);
+                    if (equippedCat == cat && stack != equipped) {
+                        tryRenderComparison(e, mc, equipped);
+                        return;
+                    }
+                }
+
+                if (cat.getSlots().test(ALObjects.EquipmentSlots.OFFHAND)) {
+                    ItemStack equipped = player.getOffhandItem();
+                    LootCategory equippedCat = LootCategory.forItem(equipped);
+                    if (equippedCat == cat && stack != equipped) {
+                        tryRenderComparison(e, mc, equipped);
+                        return;
+                    }
+                }
+
+                // And other than that it lives somewhere else entirely. Maybe we should fire an event here to lookup the comparison item?
+                // Could be useful for addons extending the EntityEquipmentSlot API.
+            }
+        }
+
+        private static boolean tryRenderComparison(RenderTooltipEvent.Pre e, Minecraft mc, ItemStack equipped) {
+            Font font = e.getFont();
+            GuiGraphics gfx = e.getGraphics();
+            GuiGraphicsAccessor acc = (GuiGraphicsAccessor) gfx;
+
+            ClientTooltipPositioner positioner = e.getTooltipPositioner();
+            List<Component> equipLines = Screen.getTooltipFromItem(mc, equipped);
+
+            int scnWidth = e.getScreenWidth();
+            int scnHeight = e.getScreenHeight();
+
+            List<ClientTooltipComponent> compList = e.getComponents();
+            int compWidth = -1;
+            int compHeight = 0;
+            for (var comp : compList) {
+                compWidth = Math.max(compWidth, comp.getWidth(font));
+                compHeight += comp.getHeight();
+            }
+
+            // Ask the positioner for the default position of the original item.
+            // In an ideal case, the original item fits, and the new tooltip fits to the left of it without any change.
+            Vector2ic compPos = positioner.positionTooltip(scnWidth, scnHeight, e.getX(), e.getY(), compWidth, compHeight);
+
+            // Lie about the x pos (0) and GUI width (width - compWidth) here to get the "best" line wrapping.
+            // This combo allows the components to be split in a way that has the highest likelihood the two tooltips will fit on the screen.
+            List<ClientTooltipComponent> equipList = ClientHooks.gatherTooltipComponents(equipped, equipLines, equipped.getTooltipImage(), 0, gfx.guiWidth() - compWidth - COMPARE_PADDING * 2, gfx.guiHeight(), font);
+            int equipWidth = -1;
+            int equipHeight = 0;
+            for (var comp : equipList) {
+                equipWidth = Math.max(equipWidth, comp.getWidth(font));
+                equipHeight += comp.getHeight();
+            }
+
+            // Compute the default position for the equipped item hover.
+            // We try to put it to the left, at the same Y-level. The 12 px are padding to ensure the mouse doesn't overlap the tooltip.
+            Vector2ic equipPos = new Vector2i(compPos.x() - COMPARE_PADDING - equipWidth, compPos.y());
+
+            EquipmentComparePositioner realPositioner = new EquipmentComparePositioner(scnWidth, scnHeight);
+
+            boolean canRender = realPositioner.position(equipPos, equipWidth + 6, equipHeight + 6, compPos, compWidth + 6, compHeight + 6);
+
+            if (canRender) {
+                try {
+                    e.setCanceled(true);
+
+                    // Draw the hovered item's tooltip
+                    renderTooltipInternalNoEvent(gfx, font, compList, realPositioner.getComparePos());
+
+                    // Draw the equipped item's tooltip
+                    Vector2ic newEquipPos = realPositioner.getEquippedPos();
+                    acc.setTooltipStack(equipped);
+                    renderTooltipInternalNoEvent(gfx, font, equipList, newEquipPos);
+
+                    // Reset the tooltip stack and draw the "equipped" text above the equipped item.
+                    // We (optimistically) hope it fits, and don't check if it does or not.
+                    acc.setTooltipStack(ItemStack.EMPTY);
+
+                    Component equippedTxt = Apotheosis.lang("text", "equipped");
+                    int txtWidth = font.width(equippedTxt);
+                    int txtX = (newEquipPos.x() + (equipWidth / 2)) - txtWidth / 2;
+                    int txtY = newEquipPos.y() - font.lineHeight - 10;
+
+                    PoseStack pose = gfx.pose();
+                    pose.pushPose();
+
+                    // Colors
+                    final int bgColor = 0xFF14141E;
+                    final int borderTop = 0xEF5E5D89;
+                    final int borderBot = 0xEF393954;
+
+                    TooltipRenderUtil.renderTooltipBackground(gfx, txtX - 15, txtY, font.width(equippedTxt) + 30, font.lineHeight, 400, bgColor, bgColor, borderTop, borderBot);
+                    pose.translate(0, 0, 400);
+                    gfx.drawString(font, equippedTxt, txtX, txtY, 0xFFFFFF);
+
+                    pose.popPose();
+                }
+                finally {
+                    acc.setTooltipStack(e.getItemStack());
+                }
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        @SuppressWarnings("deprecation")
+        private static void renderTooltipInternalNoEvent(GuiGraphics gfx, Font font, List<ClientTooltipComponent> components, Vector2ic pos) {
+            if (!components.isEmpty()) {
+                GuiGraphicsAccessor acc = (GuiGraphicsAccessor) gfx;
+
+                int i = 0;
+                int j = components.size() == 1 ? -2 : 0;
+
+                for (ClientTooltipComponent clienttooltipcomponent : components) {
+                    int k = clienttooltipcomponent.getWidth(font);
+                    if (k > i) {
+                        i = k;
+                    }
+
+                    j += clienttooltipcomponent.getHeight();
+                }
+
+                int i2 = i;
+                int j2 = j;
+                Vector2ic vector2ic = pos;
+                int l = vector2ic.x();
+                int i1 = vector2ic.y();
+                gfx.pose().pushPose();
+                RenderTooltipEvent.Color colorEvent = ClientHooks.onRenderTooltipColor(acc.getTooltipStack(), gfx, l, i1, font, components);
+                gfx.drawManaged(() -> TooltipRenderUtil.renderTooltipBackground(gfx, l, i1, i2, j2, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd(), colorEvent.getBorderStart(), colorEvent.getBorderEnd()));
+                gfx.pose().translate(0.0F, 0.0F, 400.0F);
+                int k1 = i1;
+
+                for (int l1 = 0; l1 < components.size(); l1++) {
+                    ClientTooltipComponent clienttooltipcomponent1 = components.get(l1);
+                    clienttooltipcomponent1.renderText(font, l, k1, gfx.pose().last().pose(), gfx.bufferSource());
+                    k1 += clienttooltipcomponent1.getHeight() + (l1 == 0 ? 2 : 0);
+                }
+
+                k1 = i1;
+
+                for (int k2 = 0; k2 < components.size(); k2++) {
+                    ClientTooltipComponent clienttooltipcomponent2 = components.get(k2);
+                    clienttooltipcomponent2.renderImage(font, l, k1, gfx);
+                    k1 += clienttooltipcomponent2.getHeight() + (k2 == 0 ? 2 : 0);
+                }
+
+                gfx.pose().popPose();
+            }
+        }
+
     }
 
     // Keep private because this stuff isn't meant to be public

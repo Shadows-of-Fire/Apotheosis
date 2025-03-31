@@ -34,6 +34,11 @@ public class AdventureKeys {
         KeyConflictContext.GUI, KeyModifier.SHIFT, Type.KEYSYM,
         GLFW.GLFW_KEY_T, "key.categories." + Apotheosis.MODID);
 
+    public static final KeyMapping COMPARE_EQUIPMENT = new KeyMapping(
+        Apotheosis.langKey("key", "compare_equipment"),
+        KeyConflictContext.GUI, KeyModifier.NONE, Type.KEYSYM,
+        GLFW.GLFW_KEY_LEFT_SHIFT, "key.categories." + Apotheosis.MODID);
+
     @SubscribeEvent
     public static void handleKeys(ClientTickEvent.Post e) {
         if (Minecraft.getInstance().player == null) return;

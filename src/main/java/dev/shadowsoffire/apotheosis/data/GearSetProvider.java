@@ -309,6 +309,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .tag("pinnacle_ranged"));
     }
 
+    @SuppressWarnings("removal")
     protected static ItemStack buffedItem(Item item, RegistryLookup<Enchantment> enchants, float magnitude) {
         ItemStack stack = new ItemStack(item);
         LootCategory cat = LootCategory.forItem(stack);
@@ -328,6 +329,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         return stack;
     }
 
+    @SuppressWarnings("removal")
     protected static ItemStack buffedGoldItem(Item item, RegistryLookup<Enchantment> enchants) {
         ItemStack stack = new ItemStack(item);
         LootCategory cat = LootCategory.forItem(stack);

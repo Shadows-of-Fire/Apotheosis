@@ -13,6 +13,7 @@
         "EndDragonFightMixin",
         "GLMProviderMixin",
         "GoldToolsHaveFortuneModuleMixin",
+        "GuiGraphicsAccessor",
         "ItemStackMixin",
         "LivingEntityInvoker",
         "LivingEntityMixin",
