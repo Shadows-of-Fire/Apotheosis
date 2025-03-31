@@ -50,7 +50,9 @@ public class TreasureGoblinBonus extends GemBonus {
     @Override
     public void doPostAttack(GemInstance inst, LivingEntity user, Entity target) {
         Data d = this.values.get(inst.purity());
-        if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) return;
+        if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) {
+            return;
+        }
         if (user.getRandom().nextFloat() <= d.chance) {
             Redcap goblin = AdventureTwilightCompat.REDCAP.get().create(user.level());
             goblin.setData(Attachments.BONUS_LOOT_TABLES, new BonusLootTables(List.of(Apoth.LootTables.TREASURE_GOBLIN)));
@@ -65,8 +67,12 @@ public class TreasureGoblinBonus extends GemBonus {
                 int y = Mth.nextInt(goblin.getRandom(), -1, 1);
                 int z = Mth.nextInt(goblin.getRandom(), -5, 5);
                 goblin.setPos(target.position().add(x, y, z));
-                if (user.level().noCollision(goblin)) break;
-                if (i == 7) goblin.setPos(target.position());
+                if (user.level().noCollision(goblin)) {
+                    break;
+                }
+                if (i == 7) {
+                    goblin.setPos(target.position());
+                }
             }
             goblin.addEffect(new MobEffectInstance(MobEffects.GLOWING, 96000, 0, true, false));
             user.level().addFreshEntity(goblin);

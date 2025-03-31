@@ -79,10 +79,14 @@ public class SocketHelper {
      */
     private static SocketedGems getGemsImpl(ItemStack stack) {
         int size = getSockets(stack);
-        if (size <= 0 || stack.isEmpty()) return SocketedGems.EMPTY;
+        if (size <= 0 || stack.isEmpty()) {
+            return SocketedGems.EMPTY;
+        }
 
         LootCategory cat = LootCategory.forItem(stack);
-        if (cat.isNone()) return SocketedGems.EMPTY;
+        if (cat.isNone()) {
+            return SocketedGems.EMPTY;
+        }
 
         NonNullList<GemInstance> list = NonNullList.withSize(size, GemInstance.EMPTY);
         ItemContainerContents socketedGems = stack.getOrDefault(Components.SOCKETED_GEMS, ItemContainerContents.EMPTY);
@@ -131,7 +135,9 @@ public class SocketHelper {
     public static int getFirstEmptySocket(ItemStack stack) {
         SocketedGems gems = getGems(stack);
         for (int socket = 0; socket < gems.size(); socket++) {
-            if (!gems.get(socket).isValid()) return socket;
+            if (!gems.get(socket).isValid()) {
+                return socket;
+            }
         }
         return 0;
     }

@@ -142,19 +142,25 @@ public class RadialAffix extends Affix {
      * @param level  The level of this affix, in this case, the mode of operation.
      */
     public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, RadialData level, float hardness) {
-        if (!breakers.add(player.getUUID())) return; // Prevent multiple break operations from cascading, and don't execute when sneaking.
+        if (!breakers.add(player.getUUID())) {
+            return; // Prevent multiple break operations from cascading, and don't execute when sneaking.
+        }
+
         try {
             breakBlockRadius(player, pos, level.x, level.y, level.xOff, level.yOff, hardness);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+
         breakers.remove(player.getUUID());
     }
 
     public static void breakBlockRadius(ServerPlayer player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
         Level world = player.level();
-        if (x < 2 && y < 2) return;
+        if (x < 2 && y < 2) {
+            return;
+        }
         int lowerY = (int) Math.ceil(-y / 2D), upperY = (int) Math.round(y / 2D);
         int lowerX = (int) Math.ceil(-x / 2D), upperX = (int) Math.round(x / 2D);
 
@@ -164,7 +170,9 @@ public class RadialAffix extends Affix {
         Vec3 target = base.add(look.x * reach, look.y * reach, look.z * reach);
         HitResult trace = world.clip(new ClipContext(base, target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
 
-        if (trace == null || trace.getType() != Type.BLOCK) return;
+        if (trace == null || trace.getType() != Type.BLOCK) {
+            return;
+        }
         BlockHitResult res = (BlockHitResult) trace;
 
         Direction face = res.getDirection(); // Face of the block currently being looked at by the player.
@@ -181,10 +189,14 @@ public class RadialAffix extends Affix {
                     genPos = rotateDown(genPos, iy + yOff, player.getDirection());
                 }
 
-                if (genPos.equals(pos)) continue;
+                if (genPos.equals(pos)) {
+                    continue;
+                }
                 BlockState state = world.getBlockState(genPos);
                 float stateHardness = state.getDestroySpeed(world, genPos);
-                if (!state.isAir() && stateHardness != -1 && stateHardness <= hardness * 3F && isEffective(state, player, genPos)) PlaceboUtil.tryHarvestBlock(player, genPos);
+                if (!state.isAir() && stateHardness != -1 && stateHardness <= hardness * 3F && isEffective(state, player, genPos)) {
+                    PlaceboUtil.tryHarvestBlock(player, genPos);
+                }
             }
         }
 

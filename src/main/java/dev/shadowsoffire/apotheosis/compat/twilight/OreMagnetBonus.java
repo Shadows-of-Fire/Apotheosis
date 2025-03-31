@@ -38,7 +38,9 @@ public class OreMagnetBonus extends GemBonus {
     @Override
     public InteractionResult onItemUse(GemInstance inst, UseOnContext ctx) {
         BlockState state = ctx.getLevel().getBlockState(ctx.getClickedPos());
-        if (state.isAir()) return null;
+        if (state.isAir()) {
+            return null;
+        }
         Level level = ctx.getLevel();
         Player player = ctx.getPlayer();
         player.startUsingItem(ctx.getHand());

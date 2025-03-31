@@ -108,7 +108,9 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
     public boolean canApplyTo(ItemStack socketed, ItemStack gem, Purity purity) {
         if (this.isUnique()) {
             List<Gem> gems = SocketHelper.getGems(socketed).streamValidGems().map(GemInstance::gem).map(DynamicHolder::get).toList();
-            if (gems.contains(this)) return false;
+            if (gems.contains(this)) {
+                return false;
+            }
         }
         return this.isValidIn(socketed, gem, purity);
     }
@@ -208,7 +210,7 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
 
     /**
      * Checks if a bonus can be added to this Gem.
-     * 
+     *
      * @throws IllegalArgumentException if the bonus cannot be added.
      */
     private void validateBonus(GemBonus bonus) {

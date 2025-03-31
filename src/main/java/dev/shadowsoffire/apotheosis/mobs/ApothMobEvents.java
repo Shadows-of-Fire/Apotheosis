@@ -24,8 +24,8 @@ import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
-import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
+import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -84,7 +84,9 @@ public class ApothMobEvents {
         }
 
         Player player = e.getLevel().getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
-        if (player == null) return; // Spawns require player context
+        if (player == null) {
+            return; // Spawns require player context
+        }
 
         Mob mob = e.getEntity();
         RandomSource rand = e.getLevel().getRandom();
@@ -105,11 +107,7 @@ public class ApothMobEvents {
 
     private boolean trySpawnInvader(FinalizeSpawnEvent e, Mob mob, GenContext ctx, Player player) {
         // Invaders can only trigger off of natural spawns (chunk generation is considered "natural")
-        if (e.getSpawnType() != MobSpawnType.NATURAL && e.getSpawnType() != MobSpawnType.CHUNK_GENERATION) {
-            return false;
-        }
-
-        if (this.cooldownData.isOnCooldown(mob.level()) || !(mob instanceof Monster)) {
+        if ((e.getSpawnType() != MobSpawnType.NATURAL && e.getSpawnType() != MobSpawnType.CHUNK_GENERATION) || this.cooldownData.isOnCooldown(mob.level()) || !(mob instanceof Monster)) {
             return false;
         }
 

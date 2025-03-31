@@ -74,7 +74,9 @@ public class FestiveAffix extends Affix {
 
     // EventPriority.LOW
     public static void markEquipment(LivingDeathEvent e) {
-        if (e.getEntity() instanceof Player || e.getEntity().getPersistentData().getBoolean("apoth.no_pinata")) return;
+        if (e.getEntity() instanceof Player || e.getEntity().getPersistentData().getBoolean("apoth.no_pinata")) {
+            return;
+        }
 
         IItemHandler inv = e.getEntity().getCapability(Capabilities.ItemHandler.ENTITY);
 
@@ -98,7 +100,9 @@ public class FestiveAffix extends Affix {
     @Override
     public void modifyEntityLoot(AffixInstance inst, LivingDropsEvent e) {
         LivingEntity dead = e.getEntity();
-        if (dead instanceof Player || dead.getPersistentData().getBoolean("apoth.no_pinata")) return;
+        if (dead instanceof Player || dead.getPersistentData().getBoolean("apoth.no_pinata")) {
+            return;
+        }
         if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty()) {
             if (inst != null && inst.isValid() && player.level().random.nextFloat() < this.getTrueLevel(inst.rarity().get(), inst.level())) {
 

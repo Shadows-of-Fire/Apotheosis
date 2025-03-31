@@ -32,7 +32,9 @@ public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
         WorldGenLevel world = ctx.level();
-        if (!AdventureConfig.canGenerateIn(world)) return false;
+        if (!AdventureConfig.canGenerateIn(world)) {
+            return false;
+        }
         BlockPos pos = ctx.origin();
         RandomSource rand = ctx.random();
         int xRadius = 3 + rand.nextInt(3);
@@ -70,7 +72,9 @@ public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
                         BlockPos blockpos = pos.offset(x, y, z);
                         BlockState state = states[x + xRadius][y + 1][z + zRadius];
                         if (x != -xRadius && y != floor && z != -zRadius && x != xRadius && y != roof && z != zRadius) {
-                            if (!state.is(Blocks.CHEST)) world.setBlock(blockpos, CAVE_AIR, 2);
+                            if (!state.is(Blocks.CHEST)) {
+                                world.setBlock(blockpos, CAVE_AIR, 2);
+                            }
                         }
                         else if (y > floor && !states[x + xRadius][y - 1 + 1][z + zRadius].isSolid()) {
                             world.setBlock(blockpos, CAVE_AIR, 2);

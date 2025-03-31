@@ -117,9 +117,12 @@ public class CleavingAffix extends Affix {
 
     public static Predicate<Entity> cleavePredicate(Entity user, Entity target) {
         return e -> {
-            if (e instanceof Animal && !(target instanceof Animal) || e instanceof AbstractVillager && !(target instanceof AbstractVillager)) return false;
-            if (!AdventureConfig.cleaveHitsPlayers && e instanceof Player) return false;
-            if (target instanceof Enemy && !(e instanceof Enemy)) return false;
+            if (e instanceof Animal && !(target instanceof Animal) || e instanceof AbstractVillager && !(target instanceof AbstractVillager)) {
+                return false;
+            }
+            if ((!AdventureConfig.cleaveHitsPlayers && e instanceof Player) || (target instanceof Enemy && !(e instanceof Enemy))) {
+                return false;
+            }
             return e != user && e instanceof LivingEntity le && le.isAlive();
         };
     }

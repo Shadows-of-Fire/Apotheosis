@@ -105,7 +105,7 @@ public class ApothMiscUtil {
         }
 
         PlayerAdvancements advancements = ((ServerPlayer) player).getAdvancements();
-        ServerAdvancementManager manager = ((ServerPlayer) player).getServer().getAdvancements();
+        ServerAdvancementManager manager = player.getServer().getAdvancements();
 
         AdvancementHolder holder = manager.get(key);
         if (holder != null) {

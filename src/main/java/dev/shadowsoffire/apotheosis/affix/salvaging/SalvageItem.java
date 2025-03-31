@@ -22,7 +22,9 @@ public class SalvageItem extends Item {
 
     @Override
     public Component getName(ItemStack pStack) {
-        if (!this.rarity.isBound()) return super.getName(pStack);
+        if (!this.rarity.isBound()) {
+            return super.getName(pStack);
+        }
         return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(this.rarity.get().color()));
     }
 

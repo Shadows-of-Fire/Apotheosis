@@ -76,9 +76,13 @@ public class AffixTrade implements WandererTrade {
     @Override
     @Nullable
     public MerchantOffer getOffer(Entity trader, RandomSource rand) {
-        if (trader.level().isClientSide) return null;
+        if (trader.level().isClientSide) {
+            return null;
+        }
         Player player = trader.level().getNearestPlayer(trader, -1);
-        if (player == null) return null;
+        if (player == null) {
+            return null;
+        }
         GenContext ctx = GenContext.forPlayer(rand, player);
 
         ItemStack affixItem;
@@ -93,7 +97,9 @@ public class AffixTrade implements WandererTrade {
             affixItem = LootController.createLootItem(entry.stack(), selectedRarity, ctx);
         }
 
-        if (affixItem.isEmpty()) return null;
+        if (affixItem.isEmpty()) {
+            return null;
+        }
         affixItem.set(Components.FROM_TRADER, true);
         return new MerchantOffer(this.price, this.price2, affixItem, 1, 100, 1);
     }

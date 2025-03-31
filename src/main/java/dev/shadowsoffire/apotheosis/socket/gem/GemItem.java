@@ -46,7 +46,9 @@ public class GemItem extends Item implements ITabFiller {
     @Override
     public Component getName(ItemStack pStack) {
         UnsocketedGem inst = UnsocketedGem.of(pStack);
-        if (!inst.isValid()) return super.getName(pStack);
+        if (!inst.isValid()) {
+            return super.getName(pStack);
+        }
         MutableComponent comp = Component.translatable(this.getDescriptionId(pStack));
         comp = Component.translatable("item.apotheosis.gem." + inst.purity().getSerializedName(), comp);
         return comp.withStyle(Style.EMPTY.withColor(inst.purity().getColor()));
@@ -55,7 +57,9 @@ public class GemItem extends Item implements ITabFiller {
     @Override
     public String getDescriptionId(ItemStack pStack) {
         DynamicHolder<Gem> gem = getGem(pStack);
-        if (!gem.isBound()) return super.getDescriptionId();
+        if (!gem.isBound()) {
+            return super.getDescriptionId();
+        }
         return super.getDescriptionId(pStack) + "." + gem.getId();
     }
 

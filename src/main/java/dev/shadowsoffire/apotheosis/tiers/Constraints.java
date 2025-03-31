@@ -48,11 +48,7 @@ public record Constraints(Set<WorldTier> tiers, Set<ResourceKey<Level>> dimensio
     }
 
     public boolean test(GenContext ctx) {
-        if (!this.tiers.isEmpty() && !this.tiers.contains(ctx.tier())) {
-            return false;
-        }
-
-        if (!this.dimensions.isEmpty() && !this.dimensions.contains(ctx.dimension())) {
+        if ((!this.tiers.isEmpty() && !this.tiers.contains(ctx.tier())) || (!this.dimensions.isEmpty() && !this.dimensions.contains(ctx.dimension()))) {
             return false;
         }
 

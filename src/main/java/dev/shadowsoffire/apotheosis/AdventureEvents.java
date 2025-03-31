@@ -124,7 +124,9 @@ public class AdventureEvents {
                         weapon = user.getOffhandItem();
                     }
                 }
-                if (weapon.isEmpty()) return;
+                if (weapon.isEmpty()) {
+                    return;
+                }
                 SocketHelper.getGems(weapon).onProjectileFired(user, proj);
                 AffixHelper.streamAffixes(weapon).forEach(a -> {
                     a.onProjectileFired(user, proj);
@@ -178,7 +180,9 @@ public class AdventureEvents {
         for (AffixInstance inst : affixes.values()) {
             blocked = inst.onShieldBlock(e.getEntity(), e.getDamageSource(), blocked);
         }
-        if (blocked != e.getOriginalBlockedDamage()) e.setBlockedDamage(blocked);
+        if (blocked != e.getOriginalBlockedDamage()) {
+            e.setBlockedDamage(blocked);
+        }
     }
 
     @SubscribeEvent
@@ -254,7 +258,9 @@ public class AdventureEvents {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void enchLevels(GetEnchantmentLevelEvent e) {
         boolean isReentrant = reentrantLock.get().getAndSet(true);
-        if (isReentrant) return;
+        if (isReentrant) {
+            return;
+        }
         SocketHelper.getGems(e.getStack()).getEnchantmentLevels(e);
 
         AffixHelper.streamAffixes(e.getStack()).forEach(inst -> inst.getEnchantmentLevels(e));

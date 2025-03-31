@@ -53,8 +53,7 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
 
         // If we have a focus, we need to manipulate the potion-contents having input items to match that focus.
         if (PotionCharmItem.isValidPotion(potion)) {
-            for (int i = 0; i < recipeInputs.size(); i++) {
-                List<ItemStack> stacks = recipeInputs.get(i);
+            for (List<ItemStack> stacks : recipeInputs) {
                 if (stacks.get(0).has(DataComponents.POTION_CONTENTS)) {
                     for (ItemStack s : stacks) {
                         s.set(DataComponents.POTION_CONTENTS, new PotionContents(potion));
@@ -101,7 +100,9 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
         @Override
         public String apply(ItemStack stack, UidContext context) {
             if (context != UidContext.Recipe) {
-                if (!PotionCharmItem.hasEffect(stack)) return NONE;
+                if (!PotionCharmItem.hasEffect(stack)) {
+                    return NONE;
+                }
                 MobEffectInstance contained = PotionCharmItem.getEffect(stack);
                 return contained.getEffect().getKey().location() + "@" + contained.getAmplifier() + "@" + contained.getDuration();
             }

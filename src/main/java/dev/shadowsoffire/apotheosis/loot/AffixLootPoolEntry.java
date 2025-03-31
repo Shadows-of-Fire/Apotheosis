@@ -75,7 +75,9 @@ public class AffixLootPoolEntry extends ContextualLootPoolEntry {
 
             stack = LootController.createLootItem(entry.stack(), rarity, gCtx);
         }
-        if (!stack.isEmpty()) list.accept(stack);
+        if (!stack.isEmpty()) {
+            list.accept(stack);
+        }
     }
 
     @Override

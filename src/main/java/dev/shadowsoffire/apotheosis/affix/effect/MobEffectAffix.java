@@ -128,7 +128,9 @@ public class MobEffectAffix extends Affix {
 
     @Override
     public void doPostHurt(AffixInstance inst, LivingEntity user, DamageSource source) {
-        if (this.target == Target.HURT_SELF) this.applyEffect(user, inst.getRarity(), inst.level());
+        if (this.target == Target.HURT_SELF) {
+            this.applyEffect(user, inst.getRarity(), inst.level());
+        }
         else if (this.target == Target.HURT_ATTACKER) {
             if (source.getEntity() instanceof LivingEntity tLiving) {
                 this.applyEffect(tLiving, inst.getRarity(), inst.level());
@@ -138,7 +140,9 @@ public class MobEffectAffix extends Affix {
 
     @Override
     public void doPostAttack(AffixInstance inst, LivingEntity user, Entity target) {
-        if (this.target == Target.ATTACK_SELF) this.applyEffect(user, inst.getRarity(), inst.level());
+        if (this.target == Target.ATTACK_SELF) {
+            this.applyEffect(user, inst.getRarity(), inst.level());
+        }
         else if (this.target == Target.ATTACK_TARGET) {
             if (target instanceof LivingEntity tLiving) {
                 this.applyEffect(tLiving, inst.getRarity(), inst.level());
@@ -197,10 +201,14 @@ public class MobEffectAffix extends Affix {
     }
 
     private void applyEffect(LivingEntity target, LootRarity rarity, float level) {
-        if (target.level().isClientSide()) return;
+        if (target.level().isClientSide()) {
+            return;
+        }
 
         int cooldown = this.getCooldown(rarity);
-        if (cooldown != 0 && isOnCooldown(this.id(), cooldown, target)) return;
+        if (cooldown != 0 && isOnCooldown(this.id(), cooldown, target)) {
+            return;
+        }
         EffectData data = this.values.get(rarity);
         MobEffectInstance inst = target.getEffect(this.effect);
         if (this.stackOnReapply && inst != null) {

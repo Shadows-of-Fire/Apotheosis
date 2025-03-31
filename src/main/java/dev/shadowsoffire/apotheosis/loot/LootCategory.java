@@ -162,7 +162,9 @@ public final class LootCategory {
         }
 
         for (LootCategory c : sortedCategories) {
-            if (c.isValid(stack)) return c;
+            if (c.isValid(stack)) {
+                return c;
+            }
         }
         return LootCategories.NONE;
     }

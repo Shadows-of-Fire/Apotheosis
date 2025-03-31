@@ -33,7 +33,9 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
     protected InternalItemHandler inv = new InternalItemHandler(2){
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            if (slot == 0) return ReforgingTableTile.this.isValidRarityMat(stack);
+            if (slot == 0) {
+                return ReforgingTableTile.this.isValidRarityMat(stack);
+            }
             return stack.is(Items.SIGIL_OF_REBIRTH);
         };
 
@@ -71,8 +73,12 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
             this.time++;
         }
         else {
-            if (this.time == 0 && this.step1) return;
-            else this.time++;
+            if (this.time == 0 && this.step1) {
+                return;
+            }
+            else {
+                this.time++;
+            }
         }
 
         if (this.step1 && this.time == 59) {

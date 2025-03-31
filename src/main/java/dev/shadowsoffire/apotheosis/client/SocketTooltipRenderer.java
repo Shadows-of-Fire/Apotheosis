@@ -67,7 +67,9 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
     }
 
     public static Component getSocketDesc(GemInstance inst) {
-        if (!inst.isValid()) return Component.translatable("socket.apotheosis.empty");
+        if (!inst.isValid()) {
+            return Component.translatable("socket.apotheosis.empty");
+        }
         return inst.getSocketBonusTooltip(AdventureModuleClient.tooltipCtx());
     }
 

@@ -214,8 +214,12 @@ public class Apotheosis {
         Configuration nameConfig = new Configuration(ApothicAttributes.getConfigFile("name_generation"));
         AdventureConfig.load(mainConfig);
         NameHelper.load(nameConfig);
-        if (firstLoad && mainConfig.hasChanged()) mainConfig.save();
-        if (firstLoad && nameConfig.hasChanged()) nameConfig.save();
+        if (firstLoad && mainConfig.hasChanged()) {
+            mainConfig.save();
+        }
+        if (firstLoad && nameConfig.hasChanged()) {
+            nameConfig.save();
+        }
     }
 
     /**

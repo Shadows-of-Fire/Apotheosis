@@ -35,7 +35,9 @@ public class GemRegistry extends TieredDynamicRegistry<Gem> {
             if (p.isAtLeast(item.getMinPurity())) {
                 boolean atLeastOne = false;
                 for (GemBonus bonus : item.bonuses) {
-                    if (bonus.supports(p)) atLeastOne = true;
+                    if (bonus.supports(p)) {
+                        atLeastOne = true;
+                    }
                 }
                 Preconditions.checkArgument(atLeastOne, "No bonuses provided for supported purity %s. At least one bonus must be provided, or the minimum purity should be raised.", p.getName());
             }
@@ -91,7 +93,9 @@ public class GemRegistry extends TieredDynamicRegistry<Gem> {
      */
     public static ItemStack createRandomGemStack(GenContext ctx) {
         Gem gem = GemRegistry.INSTANCE.getRandomItem(ctx);
-        if (gem == null) return ItemStack.EMPTY;
+        if (gem == null) {
+            return ItemStack.EMPTY;
+        }
         Purity purity = Purity.random(ctx);
         return createGemStack(gem, purity);
     }

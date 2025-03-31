@@ -63,7 +63,9 @@ public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
     }
 
     public void computeResults() {
-        if (this.salvageBtn == null) return;
+        if (this.salvageBtn == null) {
+            return;
+        }
 
         var matches = new ArrayList<OutputData>();
 
@@ -83,7 +85,9 @@ public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
         var compressed = new ArrayList<OutputData>();
 
         for (OutputData data : matches) {
-            if (data == null) continue;
+            if (data == null) {
+                continue;
+            }
             boolean success = false;
             for (int i = 0; i < compressed.size(); i++) {
                 OutputData existing = compressed.get(i);
@@ -118,7 +122,9 @@ public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
             // Skip drawing the item if it already exists in the output inventory.
             int displaySlot = -1;
             for (int slot = 12; slot < 18; slot++) {
-                if (skipSlots.contains(slot)) continue;
+                if (skipSlots.contains(slot)) {
+                    continue;
+                }
                 ItemStack outStack = this.menu.slots.get(slot).getItem();
                 if (outStack.isEmpty()) {
                     displaySlot = slot;
@@ -129,7 +135,9 @@ public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
                     break;
                 }
             }
-            if (displaySlot == -1) continue;
+            if (displaySlot == -1) {
+                continue;
+            }
             Slot slot = this.menu.getSlot(displaySlot);
             renderGuiItem(gfx, display, this.getGuiLeft() + slot.x, this.getGuiTop() + slot.y, GrayBufferSource::new);
         }
@@ -184,7 +192,9 @@ public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
             tooltip.add(Component.translatable("%s-%s %s", data.min(), data.max(), data.stack().getHoverName()));
         }
 
-        if (tooltip.size() > 1) this.drawOnLeft(gfx, tooltip, this.getGuiTop() + 29);
+        if (tooltip.size() > 1) {
+            this.drawOnLeft(gfx, tooltip, this.getGuiTop() + 29);
+        }
         stack.popPose();
 
         super.renderTooltip(gfx, x, y);

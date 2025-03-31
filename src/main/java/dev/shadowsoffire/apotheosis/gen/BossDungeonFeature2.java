@@ -40,7 +40,9 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
         WorldGenLevel world = ctx.level();
-        if (!AdventureConfig.canGenerateIn(world)) return false;
+        if (!AdventureConfig.canGenerateIn(world)) {
+            return false;
+        }
         BlockPos pos = ctx.origin();
         RandomSource rand = ctx.random();
 

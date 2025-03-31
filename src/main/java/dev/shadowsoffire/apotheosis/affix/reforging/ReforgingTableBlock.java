@@ -66,7 +66,9 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
     @Override
     @Deprecated
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() == this && newState.getBlock() == this) return;
+        if (state.getBlock() == this && newState.getBlock() == this) {
+            return;
+        }
         BlockEntity te = world.getBlockEntity(pos);
         if (te instanceof ReforgingTableTile ref) {
             for (int i = 0; i < ref.inv.getSlots(); i++) {

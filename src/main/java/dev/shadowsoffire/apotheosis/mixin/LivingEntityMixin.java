@@ -23,7 +23,9 @@ public abstract class LivingEntityMixin extends Entity {
         int color = super.getTeamColor();
         if (color == 16777215) {
             Component name = this.getCustomName();
-            if (name != null && name.getStyle().getColor() != null) color = name.getStyle().getColor().getValue();
+            if (name != null && name.getStyle().getColor() != null) {
+                color = name.getStyle().getColor().getValue();
+            }
         }
         return color;
     }

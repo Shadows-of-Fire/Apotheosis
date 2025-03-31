@@ -82,7 +82,7 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory category, Purity 
     /**
      * Creates a {@link GemInstance} with {@link LootCategories#NONE} and an unknown slot index (-1).
      * This instance will be unable to invoke bonus methods, but may be used to easily retrieve the gem properties.
-     * 
+     *
      * @deprecated See {@link UnsocketedGem}.
      */
     @Deprecated(forRemoval = true, since = "8.1.0")
@@ -102,7 +102,7 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory category, Purity 
      * Checks if the underlying {@link #gem} is bound, but does not validate that the {@link #category} is correct.
      * <p>
      * This should only be used in conjunction with {@link #unsocketed(ItemStack)}. Otherwise, use {@link #isValid()}.
-     * 
+     *
      * @deprecated See {@link UnsocketedGem}.
      */
     @Deprecated(forRemoval = true, since = "8.1.0")

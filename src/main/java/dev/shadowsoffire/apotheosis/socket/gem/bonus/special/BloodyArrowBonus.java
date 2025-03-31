@@ -39,7 +39,9 @@ public class BloodyArrowBonus extends GemBonus {
     public void onProjectileFired(GemInstance inst, LivingEntity user, Projectile proj) {
         if (proj instanceof AbstractArrow arrow) {
             Data d = this.values.get(inst.purity());
-            if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) return;
+            if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) {
+                return;
+            }
             user.hurt(user.damageSources().source(Ench.DamageTypes.CORRUPTED), user.getMaxHealth() * d.healthCost);
             arrow.setBaseDamage(arrow.getBaseDamage() * d.dmgMultiplier);
             Affix.startCooldown(makeUniqueId(inst), user);

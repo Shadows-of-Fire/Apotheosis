@@ -50,7 +50,9 @@ public class SalvagingTableBlock extends Block implements EntityBlock {
     @Override
     @Deprecated
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() == this && newState.getBlock() == this) return;
+        if (state.getBlock() == this && newState.getBlock() == this) {
+            return;
+        }
         BlockEntity te = world.getBlockEntity(pos);
         if (te instanceof SalvagingTableTile salvTile) {
             for (int i = 0; i < salvTile.output.getSlots(); i++) {

@@ -27,7 +27,7 @@ public class EquipmentComparePositioner {
      * <p>
      * The first rectangle will always be placed to the left of the second rectangle, with 30px of horizontal padding between them (if possible).
      * Both rectangles will always have the same y-level, regardless of their heights.
-     * 
+     *
      * @param equipPos The position of the first rectangle.
      * @param equipW   The width of the first rectangle.
      * @param equipH   The height of the first rectangle.
@@ -40,7 +40,9 @@ public class EquipmentComparePositioner {
         this.equipped = rect(equipPos, equipW, equipH);
         this.compareTo = rect(compPos, compW, compH);
 
-        if (canRenderNow()) return true;
+        if (canRenderNow()) {
+            return true;
+        }
 
         int padding = AdventureModuleClient.COMPARE_PADDING - 6; // We have to subtract 6 here to counter magic padding added by the tooltip border.
 
@@ -78,7 +80,9 @@ public class EquipmentComparePositioner {
         // Calculate vertical placement (shared Y)
         final int maxHeight = Math.max(equipH, compH);
         final int maxY = scnHeight - maxHeight - 1;
-        if (maxY < 1) return false;
+        if (maxY < 1) {
+            return false;
+        }
 
         int sharedY = Math.min(Math.min(equipPos.y(), compPos.y()), maxY);
         sharedY = Math.max(sharedY, 1);  // Minimum top margin

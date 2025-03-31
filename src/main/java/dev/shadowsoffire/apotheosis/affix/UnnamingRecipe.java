@@ -32,7 +32,9 @@ public class UnnamingRecipe extends ApothSmithingRecipe {
     public ItemStack assemble(SmithingRecipeInput pInv, HolderLookup.Provider regs) {
         ItemStack out = pInv.getItem(BASE).copy();
         DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(out);
-        if (!rarity.isBound()) return ItemStack.EMPTY;
+        if (!rarity.isBound()) {
+            return ItemStack.EMPTY;
+        }
         // args[1] will be set to the item's underlying name. args[0] will be ignored.
         Component comp = Component.translatable("%2$s", "", "").withStyle(Style.EMPTY.withColor(rarity.get().color()));
         AffixHelper.setName(out, comp);

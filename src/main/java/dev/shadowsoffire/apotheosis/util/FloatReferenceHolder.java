@@ -18,7 +18,9 @@ public class FloatReferenceHolder {
         @Override
         public void set(int index, int value) {
             super.set(index, value);
-            if (!FloatReferenceHolder.this.updating) FloatReferenceHolder.this.updateFromArray();
+            if (!FloatReferenceHolder.this.updating) {
+                FloatReferenceHolder.this.updateFromArray();
+            }
         };
     };
 

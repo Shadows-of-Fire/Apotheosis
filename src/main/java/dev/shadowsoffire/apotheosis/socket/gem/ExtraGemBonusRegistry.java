@@ -54,7 +54,7 @@ public class ExtraGemBonusRegistry extends DynamicRegistry<ExtraGemBonus> {
     @Override
     protected void registerBuiltinCodecs() {
         this.registerDefaultCodec(Apotheosis.loc("extra_gem_bonus"), ExtraGemBonus.CODEC);
-    };
+    }
 
     public static record ExtraGemBonus(DynamicHolder<Gem> gem, List<GemBonus> bonuses) implements CodecProvider<ExtraGemBonus> {
 

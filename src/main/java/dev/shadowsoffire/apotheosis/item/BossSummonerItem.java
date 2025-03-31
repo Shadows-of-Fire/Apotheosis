@@ -36,7 +36,9 @@ public class BossSummonerItem extends Item {
         BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
         if (!world.noCollision(item.size().move(pos))) {
             pos = pos.above();
-            if (!world.noCollision(item.size().move(pos))) return InteractionResult.FAIL;
+            if (!world.noCollision(item.size().move(pos))) {
+                return InteractionResult.FAIL;
+            }
         }
 
         Mob boss = item.createBoss((ServerLevel) world, pos, gCtx);

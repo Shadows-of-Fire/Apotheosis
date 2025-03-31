@@ -398,7 +398,9 @@ public class NameHelper {
             String key = getID(tier, items);
             tierKeys.put(tier, key);
             String[] read = c.getStringList(key, "tools", tierNames.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairIngredient));
-            if (read.length > 0) tierNames.put(key, read);
+            if (read.length > 0) {
+                tierNames.put(key, read);
+            }
         }
 
         for (Map.Entry<ResourceKey<ArmorMaterial>, List<Item>> e : armorsByTier.entrySet()) {
@@ -415,20 +417,25 @@ public class NameHelper {
         suffixFormat = c.getString("Suffix Format", "formatting", suffixFormat, "The format string that will be used when a suffix is applied.");
         ownershipFormat = c.getString("Ownership Format", "formatting", ownershipFormat, "The format string that will be used to indicate ownership.");
 
-        if (c.hasChanged()) c.save();
+        if (c.hasChanged()) {
+            c.save();
+        }
     }
 
     private static String computeComment(List<Item> items, Supplier<Ingredient> repair) {
         String cmt = "A list of material-based prefix names for this material group. May be empty.\n";
         cmt += "Items in this group: ";
-        for (Item i : items)
+        for (Item i : items) {
             cmt += BuiltInRegistries.ITEM.getKey(i) + ", ";
+        }
         cmt = cmt.substring(0, cmt.length() - 2);
         return cmt + "\n";
     }
 
     private static String getID(Object o, List<Item> items) {
-        if (o instanceof Enum<?>) return ((Enum<?>) o).name();
+        if (o instanceof Enum<?>) {
+            return ((Enum<?>) o).name();
+        }
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(items.get(0));
         return id.getNamespace() + "_" + id.getPath();
     }

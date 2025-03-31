@@ -39,7 +39,9 @@ public record StoneformingTooltipRenderer(StoneformingComponent comp) implements
 
     @Override
     public void renderImage(Font font, int x, int y, GuiGraphics gfx) {
-        if (affix().getCandidates().size() == 0) return;
+        if (affix().getCandidates().size() == 0) {
+            return;
+        }
 
         String text = I18n.get("affix.apotheosis.stoneforming.desc", "<M1>", "<M2>");
         int xPos = font.width(text.substring(0, text.indexOf("<M1>") + 1));

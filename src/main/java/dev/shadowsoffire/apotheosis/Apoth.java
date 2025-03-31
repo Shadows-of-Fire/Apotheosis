@@ -450,7 +450,9 @@ public class Apoth {
 
         private static Predicate<ItemStack> armorSlot(EquipmentSlot slot) {
             return stack -> {
-                if (stack.is(Items.CARVED_PUMPKIN) || stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof AbstractSkullBlock) return false;
+                if (stack.is(net.minecraft.world.item.Items.CARVED_PUMPKIN) || stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof AbstractSkullBlock) {
+                    return false;
+                }
 
                 EquipmentSlot itemSlot = stack.getEquipmentSlot();
                 if (itemSlot == null) {

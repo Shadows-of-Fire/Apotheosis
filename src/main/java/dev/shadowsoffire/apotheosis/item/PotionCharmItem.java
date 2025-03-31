@@ -56,14 +56,17 @@ public class PotionCharmItem extends Item implements ITabFiller {
 
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected) {
-        if (!hasEffect(stack)) return;
-        if (AdventureConfig.charmsInCuriosOnly && slot != -1) return;
+        if (!hasEffect(stack) || (AdventureConfig.charmsInCuriosOnly && slot != -1)) {
+            return;
+        }
         if (stack.get(Components.CHARM_ENABLED) && entity instanceof ServerPlayer player) {
             MobEffectInstance contained = getEffect(stack);
             MobEffectInstance active = player.getEffect(contained.getEffect());
             if (active == null || active.getDuration() < getCriticalDuration(active.getEffect())) {
                 int durationOffset = getCriticalDuration(contained.getEffect());
-                if (contained.getEffect() == MobEffects.REGENERATION) durationOffset += 50 >> contained.getAmplifier();
+                if (contained.getEffect() == MobEffects.REGENERATION) {
+                    durationOffset += 50 >> contained.getAmplifier();
+                }
                 MobEffectInstance newEffect = new MobEffectInstance(contained.getEffect(), (int) Math.ceil(contained.getDuration() / 24D) + durationOffset, contained.getAmplifier(), false, false);
                 player.addEffect(newEffect);
 
@@ -144,13 +147,17 @@ public class PotionCharmItem extends Item implements ITabFiller {
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        if (!hasEffect(stack)) return 1;
+        if (!hasEffect(stack)) {
+            return 1;
+        }
         return 192;
     }
 
     @Override
     public Component getName(ItemStack stack) {
-        if (!hasEffect(stack)) return Component.translatable("item.apotheosis.potion_charm_broke");
+        if (!hasEffect(stack)) {
+            return Component.translatable("item.apotheosis.potion_charm_broke");
+        }
         MobEffectInstance effect = getEffect(stack);
         MutableComponent potionCmp = Component.translatable(effect.getDescriptionId());
         if (effect.getAmplifier() > 0) {
@@ -209,7 +216,7 @@ public class PotionCharmItem extends Item implements ITabFiller {
      * <p>
      * By default, only single-effect potions that are not instantaneous are allowed.
      * Additional potions may be blacklisted via config file.
-     * 
+     *
      * @return True if the potion may be converted into a potion charm.
      */
     @SuppressWarnings("deprecation")

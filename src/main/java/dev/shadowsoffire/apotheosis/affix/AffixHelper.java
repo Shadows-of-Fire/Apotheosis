@@ -63,7 +63,7 @@ public class AffixHelper {
      * This method retrieves the current affix name, and if present, makes a deep copy of the contents to insert the hover name in as an argument.
      * <p>
      * Failure to make a deep copy of the contents will lead to the component being different on the client and server, causing desyncs in container menus.
-     * 
+     *
      * @param stack       The item stack
      * @param currentName The current return value from {@link ItemStack#getHoverName()}
      * @return The updated name, or null if the component was absent or malformed
@@ -99,12 +99,17 @@ public class AffixHelper {
      * @apiNote Prefer using {@link #streamAffixes(ItemStack)} where applicable, since invalid instances will be pre-filtered.
      */
     public static Map<DynamicHolder<Affix>, AffixInstance> getAffixes(ItemStack stack) {
-        if (AffixRegistry.INSTANCE.getValues().isEmpty()) return Collections.emptyMap(); // Don't enter getAffixesImpl if the affixes haven't loaded yet.
+        if (AffixRegistry.INSTANCE.getValues().isEmpty())
+         {
+            return Collections.emptyMap(); // Don't enter getAffixesImpl if the affixes haven't loaded yet.
+        }
         return CachedObjectSource.getOrCreate(stack, AFFIX_CACHED_OBJECT, AffixHelper::getAffixesImpl, CachedObject.hashComponents(Components.AFFIXES, Components.RARITY));
     }
 
     public static Map<DynamicHolder<Affix>, AffixInstance> getAffixesImpl(ItemStack stack) {
-        if (stack.isEmpty()) return Collections.emptyMap();
+        if (stack.isEmpty()) {
+            return Collections.emptyMap();
+        }
         DynamicHolder<LootRarity> rarity = getRarity(stack);
         if (!rarity.isBound()) {
             return Collections.emptyMap();
@@ -114,7 +119,9 @@ public class AffixHelper {
         if (!affixes.isEmpty()) {
             LootCategory cat = LootCategory.forItem(stack);
             for (DynamicHolder<Affix> affix : affixes.keySet()) {
-                if (!affix.isBound() || !affix.get().canApplyTo(stack, cat, rarity.get())) continue;
+                if (!affix.isBound() || !affix.get().canApplyTo(stack, cat, rarity.get())) {
+                    continue;
+                }
                 float lvl = affixes.getLevel(affix);
                 map.put(affix, new AffixInstance(affix, lvl, rarity, stack));
             }

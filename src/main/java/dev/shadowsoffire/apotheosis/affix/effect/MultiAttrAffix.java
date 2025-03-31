@@ -122,7 +122,9 @@ public class MultiAttrAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        if (cat.isNone()) return false;
+        if (cat.isNone()) {
+            return false;
+        }
         return (this.categories.isEmpty() || this.categories.contains(cat)) && this.rarities.contains(rarity);
     }
 

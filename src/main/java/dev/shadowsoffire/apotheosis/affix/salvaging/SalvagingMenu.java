@@ -65,7 +65,9 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
 
     @Override
     public boolean stillValid(Player player) {
-        if (this.level.isClientSide) return true;
+        if (this.level.isClientSide) {
+            return true;
+        }
         return this.level.getBlockState(this.pos).is(Blocks.SALVAGING_TABLE);
     }
 
@@ -109,10 +111,14 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
             s.set(ItemStack.EMPTY);
             for (ItemStack out : outputs) {
                 for (int outSlot = 0; outSlot < 6; outSlot++) {
-                    if (out.isEmpty()) break;
+                    if (out.isEmpty()) {
+                        break;
+                    }
                     out = this.tile.output.insertItem(outSlot, out, false);
                 }
-                if (!out.isEmpty()) this.giveItem(this.player, out);
+                if (!out.isEmpty()) {
+                    this.giveItem(this.player, out);
+                }
             }
         }
     }

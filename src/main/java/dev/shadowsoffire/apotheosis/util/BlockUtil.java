@@ -42,7 +42,9 @@ public class BlockUtil {
         if (source != null) {
             player = FakePlayerFactory.get(level, new GameProfile(source, UsernameCache.getLastKnownUsername(source)));
             Player realPlayer = level.getPlayerByUUID(source);
-            if (realPlayer != null) player.setPos(realPlayer.position());
+            if (realPlayer != null) {
+                player.setPos(realPlayer.position());
+            }
         }
         else {
             player = FakePlayerFactory.getMinecraft(level);

@@ -24,7 +24,9 @@ public class CommonTooltipUtil {
 
     public static void appendBossData(Level level, LivingEntity entity, Consumer<Component> tooltip) {
         DynamicHolder<LootRarity> rarity = RarityRegistry.INSTANCE.holder(ResourceLocation.tryParse(entity.getPersistentData().getString(Invader.RARITY_KEY)));
-        if (!rarity.isBound()) return;
+        if (!rarity.isBound()) {
+            return;
+        }
         tooltip.accept(Component.translatable("info.apotheosis.boss", rarity.get().toComponent()).withStyle(ChatFormatting.GRAY));
         if (SharedConstants.IS_RUNNING_IN_IDE) {
             tooltip.accept(CommonComponents.EMPTY);

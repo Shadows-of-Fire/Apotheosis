@@ -30,7 +30,9 @@ public class RogueSpawnerFeature extends Feature<RogueSpawnerFeature.Config> {
     @Override
     public boolean place(FeaturePlaceContext<Config> ctx) {
         WorldGenLevel world = ctx.level();
-        if (!AdventureConfig.canGenerateIn(world)) return false;
+        if (!AdventureConfig.canGenerateIn(world)) {
+            return false;
+        }
         BlockPos pos = ctx.origin();
         RandomSource rand = ctx.random();
         if (rand.nextFloat() <= ctx.config().successChance()) {
@@ -39,7 +41,9 @@ public class RogueSpawnerFeature extends Feature<RogueSpawnerFeature.Config> {
             BlockState upState = world.getBlockState(pos.above());
             if (STONE_TEST.test(downState, rand) && upState.isAir() && (state.isAir() || STONE_TEST.test(state, rand))) {
                 RogueSpawner item = RogueSpawnerRegistry.INSTANCE.getRandomItem(rand);
-                if (item == null) return false;
+                if (item == null) {
+                    return false;
+                }
                 item.place(world, pos, rand);
                 Apotheosis.debugLog(pos, "Rogue Spawner - " + RogueSpawnerRegistry.INSTANCE.getKey(item));
                 return true;

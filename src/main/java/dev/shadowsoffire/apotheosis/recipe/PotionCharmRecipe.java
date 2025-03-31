@@ -59,7 +59,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
      * <p>
      * A contents is found by being the only {@link PotionCharmItem#isValidPotion valid} contents in the entire grid,
      * and by being the same as all other potion contents found in the grid.
-     * 
+     *
      * @return The deduced contents, or {@link PotionContents#EMPTY} if none was found.
      */
     public static PotionContents findPotion(CraftingInput input) {

@@ -214,7 +214,9 @@ public class AdventureModuleClient {
     }
 
     public static void checkAffixLangKeys() {
-        if (DatagenModLoader.isRunningDataGen()) return; // TODO: Load the lang file, somehow
+        if (DatagenModLoader.isRunningDataGen()) {
+            return; // TODO: Load the lang file, somehow
+        }
 
         StringBuilder sb = new StringBuilder("Missing Affix Lang Keys:\n");
         boolean any = false;
@@ -250,11 +252,12 @@ public class AdventureModuleClient {
 
         @SubscribeEvent
         public static void render(RenderLevelStageEvent e) {
-            if (e.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) return;
+            if (e.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) {
+                return;
+            }
             PoseStack stack = e.getPoseStack();
             Player p = Minecraft.getInstance().player;
-            for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
-                BossSpawnData data = BOSS_SPAWNS.get(i);
+            for (BossSpawnData data : BOSS_SPAWNS) {
                 stack.pushPose();
                 float partials = e.getPartialTick().getGameTimeDeltaPartialTick(false);
                 Vec3 vec = Minecraft.getInstance().getCameraEntity().getEyePosition(partials);
@@ -369,14 +372,19 @@ public class AdventureModuleClient {
         @SubscribeEvent(priority = EventPriority.LOW)
         public static void compareItems(RenderTooltipEvent.Pre e) {
             Minecraft mc = Minecraft.getInstance();
-            if (!InputConstants.isKeyDown(mc.getWindow().getWindow(), AdventureKeys.COMPARE_EQUIPMENT.getKey().getValue())) return;
-            if (!(mc.screen instanceof AbstractContainerScreen)) return;
+            if (!InputConstants.isKeyDown(mc.getWindow().getWindow(), AdventureKeys.COMPARE_EQUIPMENT.getKey().getValue()) || !(mc.screen instanceof AbstractContainerScreen)) {
+                return;
+            }
             Slot slot = ((AbstractContainerScreen<?>) mc.screen).getSlotUnderMouse();
-            if (slot == null || !slot.hasItem() || slot.getItem() != e.getItemStack()) return;
+            if (slot == null || !slot.hasItem() || slot.getItem() != e.getItemStack()) {
+                return;
+            }
 
             ItemStack stack = e.getItemStack();
             LootCategory cat = LootCategory.forItem(stack);
-            if (cat.isNone()) return;
+            if (cat.isNone()) {
+                return;
+            }
 
             Player player = mc.player;
             // If the item is an equipable, find it's slot and do the comparison there.

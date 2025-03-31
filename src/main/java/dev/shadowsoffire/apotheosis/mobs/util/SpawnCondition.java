@@ -38,7 +38,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
      * Checks if this spawn condition should allow the underlying effect to activate.
      * <p>
      * How multiple spawn conditions interact is up to the underlying effect. Typically, multiple conditions in a list will be merged via logical and.
-     * 
+     *
      * @param mob       The mob in question.
      * @param level     The level the mob is spawning into.
      * @param spawnType The spawn type of the mob.

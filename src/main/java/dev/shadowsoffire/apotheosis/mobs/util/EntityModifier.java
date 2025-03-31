@@ -101,7 +101,9 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
         @Override
         public void apply(Mob mob, GenContext ctx) {
             AttributeInstance inst = mob.getAttribute(this.modifier.attribute());
-            if (inst == null) return;
+            if (inst == null) {
+                return;
+            }
             this.modifier.apply(Apotheosis.loc("rm_ " + mob.getRandom().nextInt()), ctx.rand(), mob);
         }
 

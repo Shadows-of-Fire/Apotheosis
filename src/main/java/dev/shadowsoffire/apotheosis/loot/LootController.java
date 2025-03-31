@@ -28,7 +28,9 @@ public class LootController {
      */
     public static ItemStack createLootItem(ItemStack stack, LootRarity rarity, GenContext ctx) {
         LootCategory cat = LootCategory.forItem(stack);
-        if (cat.isNone()) return stack;
+        if (cat.isNone()) {
+            return stack;
+        }
         return createLootItem(stack, cat, rarity, ctx);
     }
 
@@ -83,8 +85,12 @@ public class LootController {
      */
     public static ItemStack createRandomLootItem(GenContext ctx, @Nullable LootRarity rarity) {
         AffixLootEntry entry = AffixLootRegistry.INSTANCE.getRandomItem(ctx);
-        if (entry == null) return ItemStack.EMPTY;
-        if (rarity == null) rarity = LootRarity.random(ctx, entry.rarities());
+        if (entry == null) {
+            return ItemStack.EMPTY;
+        }
+        if (rarity == null) {
+            rarity = LootRarity.random(ctx, entry.rarities());
+        }
         return createLootItem(entry.stack(), entry.getType(), rarity, ctx);
     }
 

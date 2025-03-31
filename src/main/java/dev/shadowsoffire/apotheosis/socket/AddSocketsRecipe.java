@@ -52,7 +52,9 @@ public class AddSocketsRecipe extends ApothSmithingRecipe {
     @Override
     public ItemStack assemble(SmithingRecipeInput inv, HolderLookup.Provider regs) {
         ItemStack out = inv.getItem(BASE).copy();
-        if (out.isEmpty()) return ItemStack.EMPTY;
+        if (out.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
         int sockets = SocketHelper.getSockets(out) + 1;
         SocketHelper.setSockets(out, sockets);
         return out;

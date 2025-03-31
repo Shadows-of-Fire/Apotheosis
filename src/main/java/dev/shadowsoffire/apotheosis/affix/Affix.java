@@ -86,7 +86,9 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
      * @return The name part, prefix or suffix, as requested.
      */
     public Component getName(boolean prefix) {
-        if (prefix) return Component.translatable("affix." + this.id());
+        if (prefix) {
+            return Component.translatable("affix." + this.id());
+        }
         return Component.translatable("affix." + this.id() + ".suffix");
     }
 
@@ -302,8 +304,12 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
     }
 
     public static String fmt(float f) {
-        if (f == (long) f) return String.format("%d", (long) f);
-        else return IAttributeExtension.FORMAT.format(f);
+        if (f == (long) f) {
+            return String.format("%d", (long) f);
+        }
+        else {
+            return IAttributeExtension.FORMAT.format(f);
+        }
     }
 
     public static MutableComponent valueBounds(Component min, Component max) {

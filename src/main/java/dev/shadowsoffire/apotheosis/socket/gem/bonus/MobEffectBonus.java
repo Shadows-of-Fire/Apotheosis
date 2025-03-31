@@ -90,7 +90,9 @@ public class MobEffectBonus extends GemBonus {
 
     @Override
     public void doPostHurt(GemInstance inst, LivingEntity user, DamageSource source) {
-        if (this.target == Target.HURT_SELF) this.applyEffect(inst, user);
+        if (this.target == Target.HURT_SELF) {
+            this.applyEffect(inst, user);
+        }
         else if (this.target == Target.HURT_ATTACKER) {
             if (source.getEntity() instanceof LivingEntity tLiving) {
                 this.applyEffect(inst, tLiving);
@@ -100,7 +102,9 @@ public class MobEffectBonus extends GemBonus {
 
     @Override
     public void doPostAttack(GemInstance inst, LivingEntity user, Entity target) {
-        if (this.target == Target.ATTACK_SELF) this.applyEffect(inst, user);
+        if (this.target == Target.ATTACK_SELF) {
+            this.applyEffect(inst, user);
+        }
         else if (this.target == Target.ATTACK_TARGET) {
             if (target instanceof LivingEntity tLiving) {
                 this.applyEffect(inst, tLiving);
@@ -160,7 +164,9 @@ public class MobEffectBonus extends GemBonus {
 
     private void applyEffect(GemInstance inst, LivingEntity target) {
         int cooldown = this.getCooldown(inst.purity());
-        if (cooldown != 0 && Affix.isOnCooldown(makeUniqueId(inst), cooldown, target)) return;
+        if (cooldown != 0 && Affix.isOnCooldown(makeUniqueId(inst), cooldown, target)) {
+            return;
+        }
         EffectData data = this.values.get(inst.purity());
         MobEffectInstance effectInst = target.getEffect(this.effect);
         if (this.stackOnReapply && effectInst != null) {

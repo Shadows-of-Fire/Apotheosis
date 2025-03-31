@@ -41,7 +41,9 @@ public class AffixConvertLootModifier extends ContextualLootModifier {
         for (AffixConversionEntry entry : this.entries) {
             if (entry.pattern.matches(context.getQueriedLootTableId())) {
                 RandomSource rand = context.getRandom();
-                if (entry.chance() <= 0) break; // Entries with a chance of 0 are used to skip certain loot tables that would match other patterns.
+                if (entry.chance() <= 0) {
+                    break; // Entries with a chance of 0 are used to skip certain loot tables that would match other patterns.
+                }
 
                 for (ItemStack s : generatedLoot) {
                     if (!LootCategory.forItem(s).isNone() && AffixHelper.getAffixes(s).isEmpty() && rand.nextFloat() <= entry.chance()) {

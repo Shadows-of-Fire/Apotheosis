@@ -59,7 +59,9 @@ public class GemCuttingScreen extends AdventureContainerScreen<GemCuttingMenu> {
                 return;
             }
         }
-        if (this.upgradeBtn != null) this.upgradeBtn.active = false;
+        if (this.upgradeBtn != null) {
+            this.upgradeBtn.active = false;
+        }
     }
 
     @Override
@@ -91,7 +93,9 @@ public class GemCuttingScreen extends AdventureContainerScreen<GemCuttingMenu> {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMETHYST_BLOCK_BREAK, this.pitch + this.pitchOff, 1.5F));
                 this.pitchOff = -this.pitchOff;
             }
-            if (this.ticks++ > 8) this.stop();
+            if (this.ticks++ > 8) {
+                this.stop();
+            }
         }
 
         public static void start(BlockPos pos) {

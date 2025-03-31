@@ -68,7 +68,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     /**
      * Gets the one-line socket bonus tooltip.
-     * 
+     *
      * @param gem    The gem view.
      * @param rarity The rarity of the gem.
      */

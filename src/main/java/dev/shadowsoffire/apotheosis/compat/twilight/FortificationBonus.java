@@ -39,7 +39,9 @@ public class FortificationBonus extends GemBonus {
     @Override
     public void doPostHurt(GemInstance inst, LivingEntity user, DamageSource source) {
         Data d = this.values.get(inst.purity());
-        if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) return;
+        if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) {
+            return;
+        }
         if (user.hasData(TFDataAttachments.FORTIFICATION_SHIELDS) && user.getRandom().nextFloat() <= d.chance) {
             user.getData(TFDataAttachments.FORTIFICATION_SHIELDS).setShields(user, 5, true);
             user.playSound(TFSounds.SHIELD_ADD.get(), 1.0F, (user.getRandom().nextFloat() - user.getRandom().nextFloat()) * 0.2F + 1.0F);

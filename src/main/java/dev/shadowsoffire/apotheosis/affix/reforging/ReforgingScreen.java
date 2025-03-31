@@ -59,7 +59,9 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
             Slot slot = this.getMenu().getSlot(3 + idx);
             if (this.isHovering(slot.x, slot.y, 16, 16, mouseX, mouseY)) {
                 ItemStack choice = slot.getItem();
-                if (choice.isEmpty()) continue;
+                if (choice.isEmpty()) {
+                    continue;
+                }
                 List<Component> tooltips = new ArrayList<>();
 
                 int sigilCost = this.menu.getSigilCost(idx);
@@ -123,7 +125,9 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
 
         for (int idx = 0; idx < 3; idx++) {
             Slot slot = this.getMenu().getSlot(3 + idx);
-            if (!slot.hasItem()) break;
+            if (!slot.hasItem()) {
+                break;
+            }
 
             int sigilCost = this.menu.getSigilCost(idx);
             int matCost = this.menu.getMatCost(idx);

@@ -98,7 +98,9 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
     @Nullable
     public LootRarity getRarity() {
         ItemStack s = this.getSlot(1).getItem();
-        if (s.isEmpty()) return null;
+        if (s.isEmpty()) {
+            return null;
+        }
         return RarityRegistry.getMaterialRarity(s.getItem()).getOptional().orElse(null);
     }
 
@@ -160,7 +162,9 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
             ItemStack input = ReforgingMenu.this.getSlot(0).getItem();
             LootRarity rarity = ReforgingMenu.this.getRarity();
             ReforgingRecipe recipe = ReforgingMenu.this.tile.getRecipeFor(rarity);
-            if (recipe == null || input.isEmpty()) return false;
+            if (recipe == null || input.isEmpty()) {
+                return false;
+            }
 
             int sigils = ReforgingMenu.this.getSigilCount();
             int sigilCost = ReforgingMenu.this.getSigilCost(this.getSlotIndex());
@@ -169,7 +173,9 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
             int levels = ReforgingMenu.this.player.experienceLevel;
             int levelCost = ReforgingMenu.this.getLevelCost(this.getSlotIndex());
 
-            if ((sigils < sigilCost || mats < matCost || levels < levelCost) && !ReforgingMenu.this.player.isCreative()) return false;
+            if ((sigils < sigilCost || mats < matCost || levels < levelCost) && !ReforgingMenu.this.player.isCreative()) {
+                return false;
+            }
 
             return super.mayPickup(playerIn);
         }

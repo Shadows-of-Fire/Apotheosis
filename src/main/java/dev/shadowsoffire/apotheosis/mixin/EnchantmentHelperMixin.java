@@ -124,7 +124,9 @@ public class EnchantmentHelperMixin {
 
         if (chance > 0) {
             for (int i = 0; i < amount; i++) {
-                if (level.getRandom().nextFloat() <= chance) blocked += delta;
+                if (level.getRandom().nextFloat() <= chance) {
+                    blocked += delta;
+                }
             }
         }
 

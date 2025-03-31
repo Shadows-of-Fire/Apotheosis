@@ -41,7 +41,9 @@ public class AdventureKeys {
 
     @SubscribeEvent
     public static void handleKeys(ClientTickEvent.Post e) {
-        if (Minecraft.getInstance().player == null) return;
+        if (Minecraft.getInstance().player == null) {
+            return;
+        }
 
         while (TOGGLE_RADIAL.consumeClick() && TOGGLE_RADIAL.isConflictContextAndModifierActive()) {
             if (Minecraft.getInstance().screen == null) {

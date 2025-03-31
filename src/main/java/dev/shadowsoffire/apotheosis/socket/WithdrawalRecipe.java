@@ -48,10 +48,12 @@ public class WithdrawalRecipe extends ApothSmithingRecipe implements ReactiveSmi
     public void onCraft(Container inv, Player player, ItemStack output) {
         ItemStack base = inv.getItem(BASE);
         SocketedGems gems = SocketHelper.getGems(base);
-        for (int i = 0; i < gems.size(); i++) {
-            ItemStack stack = gems.get(i).gemStack();
+        for (GemInstance gem : gems) {
+            ItemStack stack = gem.gemStack();
             if (!stack.isEmpty()) {
-                if (!player.addItem(stack)) Block.popResource(player.level(), player.blockPosition(), stack);
+                if (!player.addItem(stack)) {
+                    Block.popResource(player.level(), player.blockPosition(), stack);
+                }
             }
         }
         SocketHelper.setGems(base, SocketedGems.EMPTY); // shouldn't be necessary, since base will be deleted, but we do this anyway to safeguard against infinite loops.
