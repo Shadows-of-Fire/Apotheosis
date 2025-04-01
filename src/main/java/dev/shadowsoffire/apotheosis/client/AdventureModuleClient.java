@@ -279,7 +279,7 @@ public class AdventureModuleClient {
             }
         }
 
-        @SubscribeEvent(priority = EventPriority.HIGH)
+        @SubscribeEvent
         public static void tooltips(AddAttributeTooltipsEvent e) {
             ItemStack stack = e.getStack();
             int sockets = SocketHelper.getSockets(stack);

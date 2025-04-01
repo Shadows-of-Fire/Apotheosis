@@ -59,3 +59,10 @@ ${mixinConfig}
     versionRange="[${apothicEnchantingVersion},)"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.${modid}]]
+    modId="curios"
+    type="optional"
+    versionRange="[${curiosVersion},)"
+    ordering="AFTER"
+    side="BOTH"
