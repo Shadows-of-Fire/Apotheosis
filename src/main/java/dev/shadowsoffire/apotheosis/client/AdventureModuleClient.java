@@ -13,7 +13,6 @@ import org.joml.Vector2i;
 import org.joml.Vector2ic;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -61,7 +60,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -113,6 +112,7 @@ import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
 import net.neoforged.neoforge.client.event.RenderTooltipEvent;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.data.loading.DatagenModLoader;
@@ -248,25 +248,25 @@ public class AdventureModuleClient {
 
     public static class GameBusEvents {
 
-        private static MultiBufferSource.BufferSource buf = MultiBufferSource.immediate(new ByteBufferBuilder(512));
-
         @SubscribeEvent
         public static void render(RenderLevelStageEvent e) {
             if (e.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) {
                 return;
             }
+
             PoseStack stack = e.getPoseStack();
             Player p = Minecraft.getInstance().player;
+            BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
+
             for (BossSpawnData data : BOSS_SPAWNS) {
                 stack.pushPose();
                 float partials = e.getPartialTick().getGameTimeDeltaPartialTick(false);
-                Vec3 vec = Minecraft.getInstance().getCameraEntity().getEyePosition(partials);
+                Vec3 vec = e.getCamera().getPosition();
                 stack.translate(-vec.x, -vec.y, -vec.z);
                 stack.translate(data.pos().getX(), data.pos().getY(), data.pos().getZ());
                 BeaconRenderer.renderBeaconBeam(stack, buf, BeaconRenderer.BEAM_LOCATION, partials, 1, p.level().getGameTime(), 0, 64, data.color(), 0.166F, 0.33F);
                 stack.popPose();
             }
-            buf.endBatch();
         }
 
         @SubscribeEvent
@@ -365,6 +365,25 @@ public class AdventureModuleClient {
 
                 if (!PotionCharmItem.isValidPotion(potion)) {
                     e.getToolTip().add(Component.translatable("misc.apotheosis.blacklisted_potion").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void renderCanSocketTooltip(ScreenEvent.Render.Post e) {
+            if (e.getScreen() instanceof AbstractContainerScreen<?> screen) {
+                ItemStack carried = screen.getMenu().getCarried();
+                ItemStack hover = screen.getSlotUnderMouse() == null ? ItemStack.EMPTY : screen.getSlotUnderMouse().getItem();
+                if (carried.is(Apoth.Items.GEM) && SocketHelper.canSocketGemInItem(hover, carried)) {
+                    GuiGraphics gfx = e.getGuiGraphics();
+                    List<Component> tooltip = new ArrayList<>();
+                    // We want the hovered item's name to be white by default, so we need to wrap it in a component specifying white.
+                    Component itemName = Component.translatable("%s", hover.getHoverName()).withStyle(ChatFormatting.WHITE);
+                    tooltip.add(Apotheosis.lang("misc", "right_click_to_socket", carried.getHoverName(), itemName).withStyle(ChatFormatting.GRAY));
+                    gfx.pose().pushPose();
+                    gfx.pose().translate(0, 0, 400);
+                    e.getGuiGraphics().renderComponentTooltip(Minecraft.getInstance().font, tooltip, e.getMouseX(), e.getMouseY());
+                    gfx.pose().popPose();
                 }
             }
         }

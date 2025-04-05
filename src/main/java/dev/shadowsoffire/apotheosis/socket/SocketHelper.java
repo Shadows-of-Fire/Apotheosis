@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.socket;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.ToIntFunction;
 import java.util.stream.Stream;
@@ -7,9 +9,12 @@ import java.util.stream.Stream;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
+import dev.shadowsoffire.apotheosis.event.CanSocketGemEvent;
 import dev.shadowsoffire.apotheosis.event.GetItemSocketsEvent;
+import dev.shadowsoffire.apotheosis.event.ItemSocketingEvent;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
+import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
 import dev.shadowsoffire.placebo.util.CachedObject;
 import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
 import net.minecraft.core.NonNullList;
@@ -140,6 +145,57 @@ public class SocketHelper {
             }
         }
         return 0;
+    }
+
+    /**
+     * Checks if a gem can be applied to a given {@link ItemStack}.
+     * <p>
+     * A gem may be socketed into an item if the item has empty sockets, the gem matches the item, and no other mod changes the rules.
+     * 
+     * @param stack    The item being socketed into
+     * @param gemStack The gem to socket
+     * @return True if the gem may be socketed into the item.
+     */
+    public static boolean canSocketGemInItem(ItemStack stack, ItemStack gemStack) {
+        UnsocketedGem gem = UnsocketedGem.of(gemStack);
+
+        if (!gem.isValid() || !SocketHelper.hasEmptySockets(stack)) {
+            return false;
+        }
+
+        CanSocketGemEvent event = NeoForge.EVENT_BUS.post(new CanSocketGemEvent(stack, gemStack));
+        return !event.isCanceled() && gem.canApplyTo(stack);
+    }
+
+    /**
+     * Sockets a gem into an item and returns the result of doing so.
+     * If the item cannot be socketed (per {@link #canSocketGemInItem(ItemStack, ItemStack)} an empty stack is returned.
+     * <p>
+     * This method does not modify the input {@code stack}.
+     * <p>
+     * This method fires the {@link ItemSocketingEvent} before returning the final result.
+     *
+     * @param stack    The item being socketed into
+     * @param gemStack The gem to socket
+     * @return A copy of the item with the gem socketed into it, or {@link ItemStack#EMPTY} if the action could not be performed.
+     * @apiNote If you only care about attempting to socket a gem, you do not need to manually call {@link #canSocketGemInItem}.
+     */
+    public static ItemStack socketGemInItem(ItemStack stack, ItemStack gemStack) {
+        if (!canSocketGemInItem(stack, gemStack)) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack result = stack.copy();
+        result.setCount(1);
+        int socket = SocketHelper.getFirstEmptySocket(result);
+        List<GemInstance> gems = new ArrayList<>(SocketHelper.getGems(result).gems());
+        ItemStack gemToInsert = gemStack.copy();
+        gemToInsert.setCount(1);
+        gems.set(socket, GemInstance.socketed(result, gemStack.copy(), socket));
+        SocketHelper.setGems(result, new SocketedGems(gems));
+
+        ItemSocketingEvent event = NeoForge.EVENT_BUS.post(new ItemSocketingEvent(stack, gemToInsert, result));
+        return event.getOutput();
     }
 
     /**

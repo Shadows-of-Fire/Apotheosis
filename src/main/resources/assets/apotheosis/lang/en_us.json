@@ -61,6 +61,7 @@
     "misc.apotheosis.radial_state.require_sneaking": "Enabled While Sneaking",
     "misc.apotheosis.radial_state.enabled": "Enabled",
     "misc.apotheosis.radial_state.disabled": "Disabled",
+    "misc.apotheosis.right_click_to_socket": "Right-click to socket %s into %s",
 
     "affix.apotheosis:armor/attribute/blessed": "Blessed",
     "affix.apotheosis:armor/attribute/blessed.suffix": "of Health",

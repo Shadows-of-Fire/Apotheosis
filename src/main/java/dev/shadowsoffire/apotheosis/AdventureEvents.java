@@ -40,21 +40,27 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.ItemStackedOnOtherEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;
@@ -367,6 +373,24 @@ public class AdventureEvents {
         if (e.getSource().is(ALObjects.DamageTypes.COLD_DAMAGE)) {
             LivingEntity entity = e.getEntity();
             entity.setData(Attachments.COLD_DAMAGE_TAKEN, entity.getData(Attachments.COLD_DAMAGE_TAKEN) + e.getNewDamage());
+        }
+    }
+
+    // WAR: getStackedOnItem and getCarriedItem are flipped in Neo until https://github.com/neoforged/NeoForge/issues/1797 is fixed.
+    @SubscribeEvent
+    public void stackedOnOther(ItemStackedOnOtherEvent e) {
+        Slot slot = e.getSlot();
+        SlotAccess access = e.getCarriedSlotAccess();
+        if (e.getClickAction() == ClickAction.SECONDARY && e.getStackedOnItem().is(Items.GEM) && slot.allowModification(e.getPlayer())) {
+            ItemStack stack = e.getCarriedItem();
+            ItemStack gemStack = e.getStackedOnItem();
+            ItemStack socketed = SocketHelper.socketGemInItem(stack, gemStack);
+            if (!socketed.isEmpty()) {
+                slot.set(socketed);
+                access.set(gemStack.copyWithCount(gemStack.getCount() - 1));
+                e.setCanceled(true);
+                e.getPlayer().playSound(SoundEvents.AMETHYST_BLOCK_BREAK, 1, 1.5F + 0.35F * (1 - 2 * e.getPlayer().getRandom().nextFloat()));
+            }
         }
     }
 
