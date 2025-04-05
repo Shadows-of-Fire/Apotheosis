@@ -29,7 +29,7 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="neoforge"
     type="required"
-    versionRange="[21.1.89,)"
+    versionRange="[21.1.144,)"
     ordering="NONE"
     side="BOTH"
 

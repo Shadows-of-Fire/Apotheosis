@@ -41,7 +41,6 @@ import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
@@ -376,14 +375,13 @@ public class AdventureEvents {
         }
     }
 
-    // WAR: getStackedOnItem and getCarriedItem are flipped in Neo until https://github.com/neoforged/NeoForge/issues/1797 is fixed.
     @SubscribeEvent
     public void stackedOnOther(ItemStackedOnOtherEvent e) {
         Slot slot = e.getSlot();
         SlotAccess access = e.getCarriedSlotAccess();
-        if (e.getClickAction() == ClickAction.SECONDARY && e.getStackedOnItem().is(Items.GEM) && slot.allowModification(e.getPlayer())) {
-            ItemStack stack = e.getCarriedItem();
-            ItemStack gemStack = e.getStackedOnItem();
+        if (e.getClickAction() == ClickAction.SECONDARY && e.getCarriedItem().is(Items.GEM) && slot.allowModification(e.getPlayer())) {
+            ItemStack stack = e.getStackedOnItem();
+            ItemStack gemStack = e.getCarriedItem();
             ItemStack socketed = SocketHelper.socketGemInItem(stack, gemStack);
             if (!socketed.isEmpty()) {
                 slot.set(socketed);
