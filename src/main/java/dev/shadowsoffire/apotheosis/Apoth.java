@@ -93,6 +93,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
@@ -104,6 +105,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -409,6 +411,18 @@ public class Apoth {
         public static final TagKey<Block> SANDFORMING_CANDIDATES = BlockTags.create(Apotheosis.loc("sandforming_candidates"));
         public static final TagKey<Block> LEAFFORMING_CANDIDATES = BlockTags.create(Apotheosis.loc("leafforming_candidates"));
         public static final TagKey<Block> GARDENING_CANDIDATES = BlockTags.create(Apotheosis.loc("gardening_candidates"));
+
+        /**
+         * List of {@link Potion}s that cannot be converted into Potion Charms using {@link PotionCharmRecipe}.
+         */
+        public static final TagKey<Potion> POTION_CHARM_BLACKLIST = TagKey.create(Registries.POTION, Apotheosis.loc("potion_charm_blacklist"));
+
+        /**
+         * List of {@link MobEffect}s that will have their duration extended when using a {@link PotionCharmItem}.
+         * <p>
+         * This is necessary for certain effects (i.e. night vision) that have different effects at low duration levels.
+         */
+        public static final TagKey<MobEffect> EXTENDED_CHARM_DURATION = TagKey.create(Registries.MOB_EFFECT, Apotheosis.loc("extended_charm_duration"));
     }
 
     public static final class DamageTypes {

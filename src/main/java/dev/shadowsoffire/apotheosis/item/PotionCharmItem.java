@@ -1,10 +1,9 @@
 package dev.shadowsoffire.apotheosis.item;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig;
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.placebo.tabs.ITabFiller;
 import net.minecraft.ChatFormatting;
@@ -40,9 +39,6 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 public class PotionCharmItem extends Item implements ITabFiller {
-
-    public static final Set<ResourceLocation> EXTENDED_POTIONS = new HashSet<>();
-    public static final Set<ResourceLocation> BLACKLIST = new HashSet<>();
 
     public PotionCharmItem() {
         super(new Item.Properties().stacksTo(1).durability(192).setNoRepair().component(Components.CHARM_ENABLED, false));
@@ -83,7 +79,7 @@ public class PotionCharmItem extends Item implements ITabFiller {
     }
 
     private static int getCriticalDuration(Holder<MobEffect> effect) {
-        return EXTENDED_POTIONS.contains(effect.getKey().location()) ? 210 : 5;
+        return effect.is(Apoth.Tags.EXTENDED_CHARM_DURATION) ? 210 : 5;
     }
 
     @Override
@@ -231,7 +227,7 @@ public class PotionCharmItem extends Item implements ITabFiller {
             return false;
         }
 
-        return !BLACKLIST.contains(holder.getKey().location());
+        return !holder.is(Apoth.Tags.POTION_CHARM_BLACKLIST);
     }
 
 }
