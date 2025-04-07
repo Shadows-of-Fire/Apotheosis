@@ -201,6 +201,25 @@ public class Apoth {
          */
         public static final AttachmentType<Float> COLD_DAMAGE_TAKEN = R.attachment("cold_damage_taken", () -> 0F, b -> b.serialize(Codec.FLOAT));
 
+        /**
+         * Client-only attachment to record if the affix effect render has started.
+         * <p>
+         * Rendering starts when an item touches the ground, and stops if it leaves the ground.
+         */
+        public static final AttachmentType<Boolean> AFFIX_EFFECT_RENDER_STARTED = R.attachment("affix_effect_render_started", () -> false, UnaryOperator.identity());
+
+        /**
+         * Client-only attachment to record the tick count of an entity when the effect renderer starts.
+         * <p>
+         * This is used to interpolate progress-based effects that ease in.
+         */
+        public static final AttachmentType<Integer> AFFIX_EFFECT_START_TIME = R.attachment("affix_effect_start_time", () -> 0, UnaryOperator.identity());
+
+        /**
+         * Client-only attachment to record the time (in ticks, relative to the entity tick count) at which the next affix effect particle spawns.
+         */
+        public static final AttachmentType<Integer> AFFIX_EFFECT_NEXT_PARTICLE_TIME = R.attachment("affix_effect_next_particle_time", () -> 0, UnaryOperator.identity());
+
         private static void bootstrap() {}
     }
 

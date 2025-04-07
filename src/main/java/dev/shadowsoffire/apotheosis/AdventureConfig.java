@@ -60,6 +60,7 @@ public class AdventureConfig {
 
     public static boolean enableItemLinking = true;
     public static int itemLinkingCooldown = 100;
+    public static boolean enableAffixItemEffects = true;
 
     public static boolean enableEquipmentCompare = true;
 
@@ -121,6 +122,7 @@ public class AdventureConfig {
         enableItemLinking = c.getBoolean("Enable Item Linking", "quality_of_life", enableItemLinking, "If linking items to chat (via the hotkey) is enabled.\nServer-Authoritative.");
         itemLinkingCooldown = c.getInt("Item Linking Cooldown", "quality_of_life", itemLinkingCooldown, 0, 65536, "The cooldown, in ticks, between player item links.\nServer-Authoritative.");
         enableEquipmentCompare = c.getBoolean("Enable Equipment Comparisons", "quality_of_life", enableEquipmentCompare, "If equipment comparison popups are enabled when the hotkey is held.\nClientside.");
+        enableAffixItemEffects = c.getBoolean("Enable Affix Item Effects", "flair", enableAffixItemEffects, "If affix item effects (custom shadows, beams, particles, etc) are enabled.\nClientside.");
     }
 
     public static boolean canGenerateIn(WorldGenLevel world) {
