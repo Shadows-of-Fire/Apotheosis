@@ -2,6 +2,23 @@
     "type": "apotheosis:rarity",
     "color": "#ED7014",
     "material": "apotheosis:mythic_material",
+    "render_data": {
+        "beam_height": 3.5,
+        "beam_radius": 0.035,
+        "beam_texture": "apotheosis:textures/rarity/beam.png",
+        "glow_radius": 0.065,
+        "glow_texture": "apotheosis:textures/rarity/glow.png",
+        "particle": {
+            "enabled": true
+        },
+        "shadow": {
+            "alpha": 255,
+            "frame_time": 1.5,
+            "frames": 7,
+            "size": 0.4,
+            "texture": "apotheosis:textures/rarity/shadow_t4.png"
+        }
+    },
     "rules": [
         {
             "type": "apotheosis:affix",

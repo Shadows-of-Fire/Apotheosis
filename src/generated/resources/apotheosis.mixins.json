@@ -24,6 +24,7 @@
         "WitherSkullBlockMixin"
     ],
     "client": [
+        "client.EntityRendererMixin",
         "client.GuiMixin",
         "client.SkeletonModelMixin"
     ],

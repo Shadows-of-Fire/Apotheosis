@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
@@ -26,14 +27,15 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public record LootRarity(TextColor color, Holder<Item> material, TieredWeights weights, List<LootRule> rules, int sortIndex) implements CodecProvider<LootRarity>, Weighted {
+public record LootRarity(TextColor color, Holder<Item> material, TieredWeights weights, List<LootRule> rules, int sortIndex, RarityRenderData renderData) implements CodecProvider<LootRarity>, Weighted {
 
     public static final Codec<LootRarity> LOAD_CODEC = RecordCodecBuilder.create(inst -> inst.group(
         TextColor.CODEC.fieldOf("color").forGetter(LootRarity::color),
         ItemStack.ITEM_NON_AIR_CODEC.fieldOf("material").forGetter(LootRarity::material),
         TieredWeights.CODEC.fieldOf("weights").forGetter(Weighted::weights),
         LootRule.CODEC.listOf().fieldOf("rules").forGetter(LootRarity::rules),
-        Codec.intRange(0, 2000).optionalFieldOf("sort_index", 1000).forGetter(LootRarity::sortIndex))
+        Codec.intRange(0, 2000).optionalFieldOf("sort_index", 1000).forGetter(LootRarity::sortIndex),
+        RarityRenderData.CODEC.optionalFieldOf("render_data", RarityRenderData.DEFAULT).forGetter(LootRarity::renderData))
         .apply(inst, LootRarity::new));
 
     /**
@@ -98,6 +100,7 @@ public record LootRarity(TextColor color, Holder<Item> material, TieredWeights w
         private TieredWeights weights;
         private final List<LootRule> rules = new ArrayList<>();
         private int index = 1000;
+        private RarityRenderData renderData = RarityRenderData.DEFAULT;
 
         public Builder(TextColor color, Holder<Item> material) {
             this.color = color;
@@ -119,10 +122,15 @@ public record LootRarity(TextColor color, Holder<Item> material, TieredWeights w
             return this;
         }
 
+        public Builder renderData(UnaryOperator<RarityRenderData.Builder> config) {
+            this.renderData = config.apply(new RarityRenderData.Builder()).build();
+            return this;
+        }
+
         public LootRarity build() {
             Preconditions.checkNotNull(this.weights);
             Preconditions.checkArgument(this.rules.size() > 0);
-            return new LootRarity(this.color, this.material, this.weights, this.rules, this.index);
+            return new LootRarity(this.color, this.material, this.weights, this.rules, this.index, this.renderData);
         }
 
     }

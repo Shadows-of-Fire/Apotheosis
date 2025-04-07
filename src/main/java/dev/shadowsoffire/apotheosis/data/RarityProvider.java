@@ -53,7 +53,9 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
                 .with(WorldTier.SUMMIT, 0, 0)
                 .with(WorldTier.PINNACLE, 0, 0))
             .rule(new AffixLootRule(AffixType.STAT))
-            .rule(new ChancedLootRule(0.25F, new AffixLootRule(AffixType.STAT))));
+            .rule(new ChancedLootRule(0.25F, new AffixLootRule(AffixType.STAT)))
+            .renderData(c -> c
+                .beamHeight(0)));
 
         // Uncommon, reasonable rarity until the final tier.
         // Two stats, with a chance for a basic effect. Opportunity for a socket.
@@ -68,7 +70,14 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
             .rule(new AffixLootRule(AffixType.STAT))
             .rule(new AffixLootRule(AffixType.STAT))
             .rule(new ChancedLootRule(0.5F, new AffixLootRule(AffixType.BASIC_EFFECT)))
-            .rule(new SocketLootRule(0, 1)));
+            .rule(new SocketLootRule(0, 1))
+            .renderData(c -> c
+                .beamHeight(0)
+                .shadow(d -> d
+                    .alpha(0xAF)
+                    .texture(Apotheosis.loc("textures/rarity/shadow_t1.png"))
+                    .frames(20)
+                    .frameTime(1.5F))));
 
         // Rare - always available, but starts out with very low frequency.
         // Two stats, one basic effect, with a chance for another.
@@ -86,7 +95,16 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
             .rule(new AffixLootRule(AffixType.BASIC_EFFECT))
             .rule(new ChancedLootRule(0.35F, new AffixLootRule(AffixType.BASIC_EFFECT)))
             .rule(new SocketLootRule(0, 2))
-            .rule(new DurabilityLootRule(0.1F, 0.25F)));
+            .rule(new DurabilityLootRule(0.1F, 0.25F))
+            .renderData(c -> c
+                .beamHeight(2.5F)
+                .glowRadius(0)
+                .shadow(d -> d
+                    .texture(Apotheosis.loc("textures/rarity/shadow_t2.png"))
+                    .frames(20)
+                    .frameTime(1.5F)))
+
+        );
 
         // Epic, not available in Haven, and exceptionally low chance on Frontier+Ascent.
         // Starts to really appear in Summit, and is the most common rarity in Apotheosis.
@@ -107,7 +125,17 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
             .rule(new ChancedLootRule(0.25F, new AffixLootRule(AffixType.BASIC_EFFECT)))
             .rule(new AffixLootRule(AffixType.ABILITY))
             .rule(new SocketLootRule(1, 3))
-            .rule(new DurabilityLootRule(0.25F, 0.55F)));
+            .rule(new DurabilityLootRule(0.25F, 0.55F))
+            .renderData(c -> c
+                .beamHeight(3F)
+                .shadow(d -> d
+                    .texture(Apotheosis.loc("textures/rarity/shadow_t3.png"))
+                    .frames(20)
+                    .size(0.4F)
+                    .frameTime(1.5F))
+                .particle(true))
+
+        );
 
         // Mythic, the pinnacle rarity. Does not appear until summit, and has very low rarity until Apotheosis.
         // Four stats, two basic effects, one ability, guaranteed sockets and high durability bonuses.
@@ -135,7 +163,16 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
                 new ComponentLootRule(DataComponentPatch.builder()
                     .set(DataComponents.UNBREAKABLE, new Unbreakable(true))
                     .remove(Components.DURABILITY_BONUS)
-                    .build()))));
+                    .build())))
+            .renderData(c -> c
+                .shadow(d -> d
+                    .texture(Apotheosis.loc("textures/rarity/shadow_t4.png"))
+                    .frames(7)
+                    .size(0.4F)
+                    .frameTime(1.5F))
+                .particle(true))
+
+        );
     }
 
     static <T> LootRule componentRule(DataComponentType<T> type, T value) {

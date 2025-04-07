@@ -52,6 +52,7 @@ import dev.shadowsoffire.apotheosis.loot.modifiers.GemLootModifier;
 import dev.shadowsoffire.apotheosis.mobs.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.mobs.BossSpawnerBlock.BossSpawnerTile;
 import dev.shadowsoffire.apotheosis.mobs.InvaderSpawnRules;
+import dev.shadowsoffire.apotheosis.particle.RarityParticleData;
 import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
 import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
@@ -82,6 +83,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -439,6 +441,12 @@ public class Apoth {
         public static final ResourceLocation WORLD_TIER_PINNACLE = Apotheosis.loc("progression/pinnacle");
     }
 
+    public static final class Particles {
+        public static final ParticleType<RarityParticleData> RARITY_GLOW = R.particle("rarity_glow", false, type -> RarityParticleData.CODEC, type -> RarityParticleData.STREAM_CODEC);
+
+        private static void bootstrap() {}
+    }
+
     public static final class LootCategories {
 
         public static final LootCategory BOW = register("bow", s -> s.getItem() instanceof BowItem || s.getItem() instanceof CrossbowItem, ALObjects.EquipmentSlotGroups.HAND);
@@ -525,6 +533,7 @@ public class Apoth {
         RecipeSerializers.bootstrap();
         ItemSubPredicates.bootstrap();
         EntitySubPredicates.bootstrap();
+        Particles.bootstrap();
         LootCategories.bootstrap();
         DataMaps.bootstrap();
 

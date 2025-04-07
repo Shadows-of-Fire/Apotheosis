@@ -108,6 +108,7 @@ import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactori
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
@@ -205,6 +206,11 @@ public class AdventureModuleClient {
         e.register(
             (stack, tint) -> tint == 0 ? -1 : FastColor.ARGB32.opaque(stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getColor()),
             Apoth.Items.POTION_CHARM.value());
+    }
+
+    @SubscribeEvent
+    public static void factories(RegisterParticleProvidersEvent e) {
+        e.registerSprite(Apoth.Particles.RARITY_GLOW, RarityParticle::new);
     }
 
     public static void onBossSpawn(BlockPos pos, int color) {

@@ -2,6 +2,13 @@
     "type": "apotheosis:rarity",
     "color": "#808080",
     "material": "apotheosis:common_material",
+    "render_data": {
+        "beam_height": 0.0,
+        "beam_radius": 0.035,
+        "beam_texture": "apotheosis:textures/rarity/beam.png",
+        "glow_radius": 0.065,
+        "glow_texture": "apotheosis:textures/rarity/glow.png"
+    },
     "rules": [
         {
             "type": "apotheosis:affix",

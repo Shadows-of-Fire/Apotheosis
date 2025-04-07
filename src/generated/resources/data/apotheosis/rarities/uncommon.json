@@ -2,6 +2,20 @@
     "type": "apotheosis:rarity",
     "color": "#33FF33",
     "material": "apotheosis:uncommon_material",
+    "render_data": {
+        "beam_height": 0.0,
+        "beam_radius": 0.035,
+        "beam_texture": "apotheosis:textures/rarity/beam.png",
+        "glow_radius": 0.065,
+        "glow_texture": "apotheosis:textures/rarity/glow.png",
+        "shadow": {
+            "alpha": 175,
+            "frame_time": 1.5,
+            "frames": 20,
+            "size": 0.35,
+            "texture": "apotheosis:textures/rarity/shadow_t1.png"
+        }
+    },
     "rules": [
         {
             "type": "apotheosis:affix",
