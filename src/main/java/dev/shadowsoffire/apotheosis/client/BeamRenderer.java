@@ -40,7 +40,7 @@ public class BeamRenderer {
         float f13 = (float) height * textureScale * (0.5F / beamRadius) + f12;
         renderPart(
             poseStack,
-            bufferSource.getBuffer(RenderType.beaconBeam(beamLocation, true)),
+            bufferSource.getBuffer(ApothRenderTypes.affixBeam(beamLocation, true)),
             colorBot,
             colorTop,
             yOffset,
@@ -68,7 +68,7 @@ public class BeamRenderer {
         f13 = (float) height * textureScale + f12;
         renderPart(
             poseStack,
-            bufferSource.getBuffer(RenderType.beaconBeam(glowLocation, true)),
+            bufferSource.getBuffer(ApothRenderTypes.affixBeam(glowLocation, true)),
             FastColor.ARGB32.color(FastColor.ARGB32.alpha(colorBot) / 2, colorBot),
             FastColor.ARGB32.color(FastColor.ARGB32.alpha(colorTop) / 2, colorTop),
             yOffset,

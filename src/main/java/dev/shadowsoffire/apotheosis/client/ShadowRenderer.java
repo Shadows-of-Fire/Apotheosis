@@ -8,7 +8,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.shadowsoffire.apotheosis.loot.RarityRenderData.ShadowData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
@@ -47,7 +46,7 @@ public class ShadowRenderer {
         int zMax = Mth.floor(z + (double) size);
         PoseStack.Pose pose = poseStack.last();
         // Use a custom render type instead of SHADOW_RENDER_TYPE to replace the texture
-        VertexConsumer vtx = buffer.getBuffer(RenderType.entityShadow(data.texture()));
+        VertexConsumer vtx = buffer.getBuffer(ApothRenderTypes.affixShadow(data.texture()));
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
         for (int zi = zMin; zi <= zMax; zi++) {
