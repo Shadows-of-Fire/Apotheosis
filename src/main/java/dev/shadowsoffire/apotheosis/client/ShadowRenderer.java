@@ -98,7 +98,7 @@ public class ShadowRenderer {
                 double maxZ = (double) pos.getZ() + aabb.maxZ;
                 float xi = (float) (minX - x);
                 float xp = (float) (maxX - x);
-                float yi = (float) (minY - y);
+                float yi = (float) (minY - y) + 0.001F; // Apply a slight offset to avoid Z-clipping with the block [Fixes flickering with BSL]
                 float zi = (float) (minZ - z);
                 float zp = (float) (maxZ - z);
 
