@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.mobs.types;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,16 +26,16 @@ import net.minecraft.world.level.ServerLevelAccessor;
  *
  * @param chance      The chance that this augmentation is selected.
  * @param constraints Any context-based restrictions on the application of this augmentation.
- * @param exclusions  Any entity-based restrictions on the application of this augmentation.
+ * @param conditions  Any entity-based restrictions on the application of this augmentation.
  * @param modifiers   The list of modifiers that will be applied to the target entity.
  */
-public record Augmentation(float chance, Constraints constraints, List<SpawnCondition> exclusions, List<EntityModifier> modifiers) implements CodecProvider<Augmentation> {
+public record Augmentation(float chance, Constraints constraints, List<SpawnCondition> conditions, List<EntityModifier> modifiers) implements CodecProvider<Augmentation> {
 
     public static final Codec<Augmentation> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.floatRange(0, 1).fieldOf("application_chance").forGetter(Augmentation::chance),
-            Constraints.CODEC.fieldOf("constraints").forGetter(Augmentation::constraints),
-            SpawnCondition.CODEC.listOf().optionalFieldOf("exclusions", Collections.emptyList()).forGetter(Augmentation::exclusions),
+            Constraints.CODEC.optionalFieldOf("constraints", Constraints.EMPTY).forGetter(Augmentation::constraints),
+            SpawnCondition.CODEC.listOf().optionalFieldOf("conditions", Collections.emptyList()).forGetter(Augmentation::conditions),
             EntityModifier.CODEC.listOf().fieldOf("modifiers").forGetter(Augmentation::modifiers))
         .apply(inst, Augmentation::new));
 
@@ -47,14 +49,50 @@ public record Augmentation(float chance, Constraints constraints, List<SpawnCond
             return false;
         }
 
-        return SpawnCondition.checkAll(this.exclusions, mob, level, type);
+        return SpawnCondition.checkAll(this.conditions, mob, level, type);
     }
 
     public void apply(Mob mob, GenContext ctx) {
-        if (ctx.rand().nextFloat() <= this.chance) {
-            for (EntityModifier em : this.modifiers) {
-                em.apply(mob, ctx);
+        for (EntityModifier em : this.modifiers) {
+            em.apply(mob, ctx);
+        }
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private float chance = 1F;
+        private Constraints constraints = Constraints.EMPTY;
+        private List<SpawnCondition> conditions = new ArrayList<>();
+        private List<EntityModifier> modifiers = new ArrayList<>();
+
+        public Builder chance(float chance) {
+            this.chance = chance;
+            return this;
+        }
+
+        public Builder constraints(Constraints constraints) {
+            this.constraints = constraints;
+            return this;
+        }
+
+        public Builder conditions(SpawnCondition... condition) {
+            this.conditions.addAll(Arrays.asList(condition));
+            return this;
+        }
+
+        public Builder modifiers(EntityModifier... modifiers) {
+            this.modifiers.addAll(Arrays.asList(modifiers));
+            return this;
+        }
+
+        public Augmentation build() {
+            if (modifiers.isEmpty()) {
+                throw new IllegalStateException("At least one modifier must be added");
             }
+            return new Augmentation(chance, constraints, conditions, modifiers);
         }
     }
 

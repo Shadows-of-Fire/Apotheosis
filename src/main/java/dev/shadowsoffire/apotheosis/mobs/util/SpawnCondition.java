@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.mobs.util;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +25,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 /**
@@ -78,6 +81,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         register("spawn_type", SpawnTypeCondition.CODEC);
         register("surface_type", SurfaceTypeCondition.CODEC);
         register("has_tag", EntityTagCondition.CODEC);
+        register("is_monster", IsMonsterCondition.CODEC);
         register("nbt", NbtCondition.CODEC);
         register("and", AndCondition.CODEC);
         register("or", OrCondition.CODEC);
@@ -107,6 +111,10 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         @Override
         public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
             return this.types.contains(spawnType);
+        }
+
+        public static SpawnTypeCondition of(MobSpawnType... types) {
+            return new SpawnTypeCondition(new LinkedHashSet<>(Arrays.asList(types)));
         }
 
     }
@@ -151,6 +159,25 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         @Override
         public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
             return mob.getType().is(tag);
+        }
+
+    }
+
+    /**
+     * Checks that an entity is an {@link Monster}.
+     */
+    public static record IsMonsterCondition() implements SpawnCondition {
+
+        public static Codec<IsMonsterCondition> CODEC = Codec.unit(IsMonsterCondition::new);
+
+        @Override
+        public Codec<? extends SpawnCondition> getCodec() {
+            return CODEC;
+        }
+
+        @Override
+        public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
+            return mob instanceof Monster;
         }
 
     }

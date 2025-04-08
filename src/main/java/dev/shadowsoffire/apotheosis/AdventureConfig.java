@@ -27,8 +27,6 @@ public class AdventureConfig {
 
     public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
 
-    public static float augmentedMobChance = 0.075F;
-
     // Boss Stats
     public static boolean curseBossItems = false;
     public static float bossAnnounceRange = 96;
@@ -37,12 +35,12 @@ public class AdventureConfig {
     public static int bossSpawnCooldown = 3600;
     public static boolean bossAutoAggro = false;
     public static boolean bossGlowOnSpawn = true;
+    public static float bossSpawnRange = 96;
 
     // Generation
     public static float spawnerValueChance = 0.11F;
 
     // Affix
-    public static float randomAffixItem = 0.075F;
     public static boolean disableQuarkOnAffixItems = true;
     public static Item torchItem = Items.TORCH;
     public static boolean cleaveHitsPlayers = false;
@@ -67,7 +65,6 @@ public class AdventureConfig {
     public static void load(Configuration c) {
         c.setTitle("Apotheosis Adventure Module Config");
 
-        randomAffixItem = c.getFloat("Random Affix Chance", "affixes", randomAffixItem, 0, 1, "The chance that a naturally spawned mob will be granted an affix item. 0 = 0%, 1 = 100%\nServer-authoritative.");
         cleaveHitsPlayers = c.getBoolean("Cleave Players", "affixes", cleaveHitsPlayers, "If affixes that cleave can hit players (excluding the user).\nServer-authoritative.");
 
         disableQuarkOnAffixItems = c.getBoolean("Disable Quark Tooltips for Affix Items", "affixes", true, "If Quark's Attribute Tooltip handling is disabled for affix items.\nClientside.");
@@ -96,6 +93,8 @@ public class AdventureConfig {
         bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", bossSpawnCooldown, 0, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.\nServer-authoritative.");
         bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", bossAutoAggro, "If true, invading bosses will automatically target the closest player.\nServer-authoritative.");
         bossGlowOnSpawn = c.getBoolean("Boss Glowing On Spawn", "bosses", bossGlowOnSpawn, "If true, bosses will glow when they spawn.\nServer-authoritative.");
+        bossSpawnRange = c.getFloat("Boss Spawn Range", "bosses", bossSpawnRange, 48, 1024,
+            "The maximum distance at which bosses may spawn from any player. Generally, this should match the Announce Range.\nServer-authoritative.");
 
         String[] dims = c.getStringList("Generation Dimension Whitelist", "worldgen", new String[] { "overworld" }, "The dimensions that Apotheosis's worldgen will generate in.\nServer-authoritative.");
         DIM_WHITELIST.clear();

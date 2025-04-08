@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
@@ -31,11 +30,7 @@ public class BeamRenderer {
         float f3 = 0.0F;
         float f5 = 0.0F;
         float f6 = -beamRadius;
-        float f7 = 0.0F;
-        float f8 = 0.0F;
         float f9 = -beamRadius;
-        float f10 = 0.0F;
-        float f11 = 1.0F;
         float f12 = -1.0F + f2;
         float f13 = (float) height * textureScale * (0.5F / beamRadius) + f12;
         renderPart(
@@ -62,8 +57,6 @@ public class BeamRenderer {
         float f4 = -glowRadius;
         f5 = -glowRadius;
         f6 = -glowRadius;
-        f10 = 0.0F;
-        f11 = 1.0F;
         f12 = -1.0F + f2;
         f13 = (float) height * textureScale + f12;
         renderPart(

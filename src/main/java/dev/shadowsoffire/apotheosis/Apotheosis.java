@@ -17,6 +17,7 @@ import dev.shadowsoffire.apotheosis.data.ApothDataMapProvider;
 import dev.shadowsoffire.apotheosis.data.ApothLootProvider;
 import dev.shadowsoffire.apotheosis.data.ApothRecipeProvider;
 import dev.shadowsoffire.apotheosis.data.ApothTagsProvider;
+import dev.shadowsoffire.apotheosis.data.AugmentationProvider;
 import dev.shadowsoffire.apotheosis.data.EliteProvider;
 import dev.shadowsoffire.apotheosis.data.GLMProvider;
 import dev.shadowsoffire.apotheosis.data.GearSetProvider;
@@ -39,6 +40,7 @@ import dev.shadowsoffire.apotheosis.mobs.ApothMobEvents;
 import dev.shadowsoffire.apotheosis.mobs.registries.AugmentRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
+import dev.shadowsoffire.apotheosis.mobs.util.EntityModifier;
 import dev.shadowsoffire.apotheosis.mobs.util.SpawnCondition;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
 import dev.shadowsoffire.apotheosis.net.LinkItemToChatPayload;
@@ -88,6 +90,7 @@ public class Apotheosis {
     public static final String MODID = "apotheosis";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final boolean DEBUG_WORLDGEN = "on".equalsIgnoreCase(System.getenv("apotheosis.debug_worldgen"));
+    public static final boolean DEBUG_MOBS = "on".equalsIgnoreCase(System.getenv("apotheosis.debug_mobs"));
     public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
 
     public Apotheosis(IEventBus bus) {
@@ -97,6 +100,7 @@ public class Apotheosis {
         ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR_TOUGHNESS.value(), 100D, "maxValue");
         LootRule.initCodecs();
         SpawnCondition.initCodecs();
+        EntityModifier.initCodecs();
         GemBonus.initCodecs();
         if (ModList.get().isLoaded("gateways")) {
             GatewaysCompat.register();
@@ -179,6 +183,7 @@ public class Apotheosis {
             .provider(TwilightGearSetProvider::new)
             .provider(TwilightInvaderProvider::new)
             .provider(ApothDataMapProvider::new)
+            .provider(AugmentationProvider::new)
             .build(e);
 
         Object2IntOpenHashMap<String> map = (Object2IntOpenHashMap<String>) DataProvider.FIXED_ORDER_FIELDS;

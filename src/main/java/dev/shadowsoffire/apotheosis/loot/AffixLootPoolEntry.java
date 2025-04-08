@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis.loot;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -38,6 +37,8 @@ public class AffixLootPoolEntry extends ContextualLootPoolEntry {
     private final Set<DynamicHolder<LootRarity>> rarities;
     private final Set<DynamicHolder<AffixLootEntry>> entries;
 
+    private transient boolean validated = false;
+
     /**
      * Creates a new affix loot pool entry.
      *
@@ -56,25 +57,12 @@ public class AffixLootPoolEntry extends ContextualLootPoolEntry {
 
     @Override
     protected void createItemStack(Consumer<ItemStack> list, LootContext ctx, GenContext gCtx) {
-        ItemStack stack;
-        if (this.entries.isEmpty()) {
-            LootRarity selectedRarity = LootRarity.randomFromHolders(gCtx, this.rarities);
-            stack = LootController.createRandomLootItem(gCtx, selectedRarity);
+        if (!this.validated) {
+            this.entries.forEach(AffixLootPoolEntry::checkBound);
+            this.validated = true;
         }
-        else {
-            Set<AffixLootEntry> resolved = this.entries.stream().filter(AffixLootPoolEntry::checkBound).map(DynamicHolder::get).collect(Collectors.toSet());
-            AffixLootEntry entry = AffixLootRegistry.INSTANCE.getRandomItem(gCtx, resolved::contains);
-            LootRarity rarity;
 
-            if (this.rarities.isEmpty()) {
-                rarity = LootRarity.random(gCtx, entry.rarities());
-            }
-            else {
-                rarity = LootRarity.randomFromHolders(gCtx, this.rarities);
-            }
-
-            stack = LootController.createLootItem(entry.stack(), rarity, gCtx);
-        }
+        ItemStack stack = LootController.createAffixItemFromPools(this.rarities, this.entries, gCtx);
         if (!stack.isEmpty()) {
             list.accept(stack);
         }

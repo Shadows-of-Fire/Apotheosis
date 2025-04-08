@@ -1,31 +1,45 @@
 package dev.shadowsoffire.apotheosis.mobs.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.loot.AffixLootEntry;
+import dev.shadowsoffire.apotheosis.loot.AffixLootRegistry;
+import dev.shadowsoffire.apotheosis.loot.LootCategory;
+import dev.shadowsoffire.apotheosis.loot.LootController;
+import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.mobs.types.Augmentation;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.placebo.codec.CodecMap;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.json.ChancedEffectInstance;
 import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.systems.gear.GearSet;
 import dev.shadowsoffire.placebo.systems.gear.GearSet.SetPredicate;
 import dev.shadowsoffire.placebo.systems.gear.GearSetRegistry;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.item.Item.TooltipContext;
-import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.ItemStack;
 
+/**
+ * Underlying modifiers used by {@link Augmentation}.
+ */
 public interface EntityModifier extends CodecProvider<EntityModifier> {
 
     public static final CodecMap<EntityModifier> CODEC = new CodecMap<>("Apothic Entity Modifier");
@@ -35,17 +49,14 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
      */
     void apply(Mob mob, GenContext ctx);
 
-    /**
-     * Generates a description for this entity modifier.
-     * <p>
-     * This is used in the world tier selection screen to show the guaranteed changes.
-     */
-    public void appendHoverText(TooltipContext ctx, Consumer<MutableComponent> list);
+    @Deprecated(forRemoval = true)
+    default void appendHoverText(TooltipContext ctx, Consumer<MutableComponent> list) {}
 
-    public static void initSerializers() {
+    public static void initCodecs() {
         register("mob_effect", EffectModifier.CODEC);
         register("attribute", AttributeModifier.CODEC);
         register("gear_set", GearSetModifier.CODEC);
+        register("random_affix_item", RandomAffixItemModifier.CODEC);
     }
 
     private static void register(String id, Codec<? extends EntityModifier> codec) {
@@ -75,13 +86,6 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
             mob.addEffect(this.effect.createDeterministic(duration));
         }
 
-        @Override
-        public void appendHoverText(TooltipContext ctx, Consumer<MutableComponent> list) {
-            List<Component> output = new ArrayList<>();
-            PotionContents.addPotionTooltip(Arrays.asList(this.effect.createDeterministic(1)), output::add, 1, ctx.tickRate());
-            list.accept(Component.literal(output.get(0).getString()));
-        }
-
     }
 
     /**
@@ -107,26 +111,16 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
             this.modifier.apply(Apotheosis.loc("rm_ " + mob.getRandom().nextInt()), ctx.rand(), mob);
         }
 
-        @Override
-        public void appendHoverText(TooltipContext ctx, Consumer<MutableComponent> list) {
-            // list.accept(modifier.attribute().value().toComponent(modifier.createDeterministic(Gateways.loc("gateway_random_modifier")),
-            // ApothicAttributes.getTooltipFlag()));
-            // TODO: Show the augmenting range for the modifier.
-        }
-
     }
 
     /**
      * Applies a gear set to the target entity.
-     * <p>
-     * The applied gear set should be deterministic to a reasonable degree, since it must be translated to a single name.
      */
-    public static record GearSetModifier(List<SetPredicate> gearSets, String desc) implements EntityModifier {
+    public static record GearSetModifier(List<SetPredicate> gearSets) implements EntityModifier {
 
         public static Codec<GearSetModifier> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                SetPredicate.CODEC.listOf().fieldOf("valid_gear_sets").forGetter(GearSetModifier::gearSets),
-                Codec.STRING.fieldOf("desc").forGetter(GearSetModifier::desc))
+                SetPredicate.CODEC.listOf().fieldOf("valid_gear_sets").forGetter(GearSetModifier::gearSets))
             .apply(inst, GearSetModifier::new));
 
         @Override
@@ -142,9 +136,43 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
             }
         }
 
+    }
+
+    /**
+     * Applies a random affix item to the target entity.
+     */
+    public static record RandomAffixItemModifier(Set<DynamicHolder<LootRarity>> rarities, Set<DynamicHolder<AffixLootEntry>> entries) implements EntityModifier {
+
+        public static Codec<RandomAffixItemModifier> CODEC = RecordCodecBuilder.create(inst -> inst
+            .group(
+                PlaceboCodecs.setOf(RarityRegistry.INSTANCE.holderCodec()).optionalFieldOf("rarities", Set.of()).forGetter(a -> a.rarities),
+                PlaceboCodecs.setOf(AffixLootRegistry.INSTANCE.holderCodec()).optionalFieldOf("entries", Set.of()).forGetter(a -> a.entries))
+            .apply(inst, RandomAffixItemModifier::new));
+
+        public RandomAffixItemModifier() {
+            this(Set.of(), Set.of());
+        }
+
         @Override
-        public void appendHoverText(TooltipContext ctx, Consumer<MutableComponent> list) {
-            list.accept(Apotheosis.lang("info", "gear_set_modifier", Component.translatable(this.desc)));
+        public Codec<? extends EntityModifier> getCodec() {
+            return CODEC;
+        }
+
+        @Override
+        public void apply(Mob mob, GenContext ctx) {
+            ItemStack stack = LootController.createAffixItemFromPools(this.rarities, this.entries, ctx);
+            if (stack.isEmpty()) {
+                return;
+            }
+
+            stack.set(Components.FROM_MOB, true);
+            LootCategory cat = LootCategory.forItem(stack);
+            EquipmentSlot slot = Arrays.stream(EquipmentSlot.values())
+                .filter(eSlot -> cat.getSlots().test(EquipmentSlotCompat.fromVanilla(eSlot)))
+                .findAny()
+                .orElse(EquipmentSlot.MAINHAND);
+            mob.setItemSlot(slot, stack);
+            mob.setGuaranteedDrop(slot);
         }
 
     }

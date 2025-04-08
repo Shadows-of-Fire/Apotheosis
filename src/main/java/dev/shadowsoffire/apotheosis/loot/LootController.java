@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
@@ -130,6 +132,33 @@ public class LootController {
 
     public static List<WeightedEntry.Wrapper<Affix>> getWeightedAffixes(ItemStack stack, LootRarity rarity, AffixType type, GenContext ctx) {
         return getAvailableAffixes(stack, rarity, type).map(a -> a.get().<Affix>wrap(ctx.tier(), ctx.luck())).toList();
+    }
+
+    public static ItemStack createAffixItemFromPools(Set<DynamicHolder<LootRarity>> rarities, Set<DynamicHolder<AffixLootEntry>> entries, GenContext gCtx) {
+        ItemStack stack;
+        if (entries.isEmpty()) {
+            LootRarity selectedRarity = LootRarity.randomFromHolders(gCtx, rarities);
+            stack = LootController.createRandomLootItem(gCtx, selectedRarity);
+        }
+        else {
+            Set<AffixLootEntry> resolved = entries.stream().filter(DynamicHolder::isBound).map(DynamicHolder::get).collect(Collectors.toSet());
+            AffixLootEntry entry = AffixLootRegistry.INSTANCE.getRandomItem(gCtx, resolved::contains);
+            if (entry == null) {
+                return ItemStack.EMPTY;
+            }
+
+            LootRarity rarity;
+
+            if (rarities.isEmpty()) {
+                rarity = LootRarity.random(gCtx, entry.rarities());
+            }
+            else {
+                rarity = LootRarity.randomFromHolders(gCtx, rarities);
+            }
+
+            stack = LootController.createLootItem(entry.stack(), rarity, gCtx);
+        }
+        return stack;
     }
 
 }

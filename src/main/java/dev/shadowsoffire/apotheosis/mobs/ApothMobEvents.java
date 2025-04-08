@@ -1,17 +1,16 @@
 package dev.shadowsoffire.apotheosis.mobs;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+
 import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apoth.Attachments;
-import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apoth.DataMaps;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.loot.LootCategory;
-import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.mobs.registries.AugmentRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
@@ -25,7 +24,6 @@ import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
-import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -39,12 +37,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -79,12 +75,15 @@ public class ApothMobEvents {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void finalizeMobSpawns(FinalizeSpawnEvent e) {
+        debugLog("Finalizing spawn for: {}", e.getEntity().getName().getString());
         if (e.isCanceled() || e.isSpawnCancelled()) {
+            debugLog("Discarding due to cancellation.");
             return;
         }
 
         Player player = e.getLevel().getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
         if (player == null) {
+            debugLog("Discarding due to lack of player context.");
             return; // Spawns require player context
         }
 
@@ -93,6 +92,7 @@ public class ApothMobEvents {
         GenContext ctx = GenContext.forPlayerAtPos(rand, player, mob.blockPosition());
 
         if (this.trySpawnInvader(e, mob, ctx, player)) {
+            debugLog("Successfully spawned an invader. Skipping Augmentations and Elites.");
             return;
         }
 
@@ -101,13 +101,17 @@ public class ApothMobEvents {
         if (this.trySpawnElite(e, mob, ctx, player)) {
             return;
         }
-
-        this.tryRandomAffixItems(e, mob, ctx);
     }
 
     private boolean trySpawnInvader(FinalizeSpawnEvent e, Mob mob, GenContext ctx, Player player) {
         // Invaders can only trigger off of natural spawns (chunk generation is considered "natural")
         if ((e.getSpawnType() != MobSpawnType.NATURAL && e.getSpawnType() != MobSpawnType.CHUNK_GENERATION) || this.cooldownData.isOnCooldown(mob.level()) || !(mob instanceof Monster)) {
+            debugLog("[Invaders]: Failed invader preconditions.");
+            return false;
+        }
+
+        if (player.distanceToSqr(mob) > AdventureConfig.bossSpawnRange * AdventureConfig.bossSpawnRange) {
+            debugLog("[Invaders]: Not close enough to be an invader.");
             return false;
         }
 
@@ -116,6 +120,7 @@ public class ApothMobEvents {
 
         InvaderSpawnRules rules = sLevel.registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).getData(DataMaps.INVADER_SPAWN_RULES, dimId);
         if (rules == null) {
+            debugLog("[Invaders]: No invader spawn rules present for dimension {}", dimId);
             return false;
         }
 
@@ -123,7 +128,7 @@ public class ApothMobEvents {
         SurfaceType surface = rules.surfaceType();
 
         if (ctx.rand().nextFloat() <= chance && surface.test(sLevel, BlockPos.containing(e.getX(), e.getY(), e.getZ()))) {
-
+            debugLog("[Invaders]: Succeeded at random chance roll and surface test.");
             Invader item = InvaderRegistry.INSTANCE.getRandomItem(ctx);
             if (item == null) {
                 Apotheosis.LOGGER.error("Attempted to spawn an Invader in dimension {} using configured spawn rules {} but no bosses were made available.", dimId, rules);
@@ -131,6 +136,7 @@ public class ApothMobEvents {
             }
 
             if (!item.basicData().canSpawn(mob, sLevel, e.getSpawnType())) {
+                debugLog("[Invaders]: Failed invader spawn conditions.");
                 return false;
             }
 
@@ -143,7 +149,6 @@ public class ApothMobEvents {
                 sLevel.addFreshEntityWithPassengers(boss);
                 e.setCanceled(true);
                 e.setSpawnCancelled(true);
-                Apotheosis.debugLog(boss.blockPosition(), "Surface Boss - " + boss.getName().getString());
                 Component name = getName(boss);
                 if (name == null || name.getStyle().getColor() == null) {
                     Apotheosis.LOGGER.warn("A Boss {} ({}) has spawned without a custom name!", boss.getName().getString(), EntityType.getKey(boss.getType()));
@@ -160,8 +165,15 @@ public class ApothMobEvents {
                 }
 
                 this.cooldownData.startCooldown(mob.level(), rules.cooldown().orElse(AdventureConfig.bossSpawnCooldown));
+                debugLog("[Invaders]: Successfully spawned an invader {} at {}", name, boss.blockPosition());
                 return true;
             }
+            else {
+                debugLog("Failed entity spawn checks.");
+            }
+        }
+        else {
+            debugLog("[Invaders]: Failed at random chance roll or surface test.");
         }
 
         return false;
@@ -176,11 +188,18 @@ public class ApothMobEvents {
         }
         mob.setData(Attachments.TIER_AUGMENTS_APPLIED, true);
 
-        if (ctx.rand().nextFloat() <= AdventureConfig.augmentedMobChance) {
-            for (Augmentation aug : AugmentRegistry.getAll()) {
-                if (aug.canApply(level, mob, type, ctx)) {
+        for (Augmentation aug : AugmentRegistry.getAll()) {
+            if (aug.canApply(level, mob, type, ctx)) {
+                if (ctx.rand().nextFloat() <= aug.chance()) {
+                    debugLog("Applying augmentation {}", AugmentRegistry.INSTANCE.getKey(aug));
                     aug.apply(mob, ctx);
                 }
+                else {
+                    debugLog("Roll failed for augmentation {}", AugmentRegistry.INSTANCE.getKey(aug));
+                }
+            }
+            else {
+                debugLog("Skipped augmentation {}", AugmentRegistry.INSTANCE.getKey(aug));
             }
         }
     }
@@ -189,7 +208,13 @@ public class ApothMobEvents {
         ServerLevelAccessor sLevel = e.getLevel();
 
         Elite item = EliteRegistry.INSTANCE.getRandomItem(ctx, mob);
-        if (item == null || !item.basicData().canSpawn(mob, sLevel, e.getSpawnType())) {
+        if (item == null) {
+            debugLog("No Elites were available for {} and {}", ctx, mob);
+            return false;
+        }
+
+        if (!item.basicData().canSpawn(mob, sLevel, e.getSpawnType())) {
+            debugLog("The elite {} was selected but could not spawn based on spawn conditions.", EliteRegistry.INSTANCE.getKey(item));
             return false;
         }
 
@@ -199,32 +224,11 @@ public class ApothMobEvents {
             if (!item.basicData().finalizeSpawn()) {
                 e.setCanceled(true);
             }
+            debugLog("Successfully spawned the elite {} at {}", EliteRegistry.INSTANCE.getKey(item), mob.blockPosition());
             return true;
         }
 
         return false;
-    }
-
-    private void tryRandomAffixItems(FinalizeSpawnEvent e, Mob mob, GenContext ctx) {
-        if (e.getSpawnType() != MobSpawnType.NATURAL && e.getSpawnType() != MobSpawnType.CHUNK_GENERATION) {
-            return;
-        }
-
-        if (ctx.rand().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
-            ItemStack affixItem = LootController.createRandomLootItem(ctx, null);
-            if (affixItem.isEmpty()) {
-                return;
-            }
-
-            affixItem.set(Components.FROM_MOB, true);
-            LootCategory cat = LootCategory.forItem(affixItem);
-            EquipmentSlot slot = Arrays.stream(EquipmentSlot.values())
-                .filter(eSlot -> cat.getSlots().test(EquipmentSlotCompat.fromVanilla(eSlot)))
-                .findAny()
-                .orElse(EquipmentSlot.MAINHAND);
-            e.getEntity().setItemSlot(slot, affixItem);
-            e.getEntity().setGuaranteedDrop(slot);
-        }
     }
 
     /**
@@ -284,6 +288,14 @@ public class ApothMobEvents {
     @Nullable
     private static Component getName(Mob boss) {
         return boss.getSelfAndPassengers().filter(e -> e.getPersistentData().contains(Invader.BOSS_KEY)).findFirst().map(Entity::getCustomName).orElse(null);
+    }
+
+    private static final Marker MARKER = MarkerManager.getMarker(ApothMobEvents.class.getSimpleName());
+
+    private static void debugLog(String msg, Object... args) {
+        if (Apotheosis.DEBUG_MOBS) {
+            Apotheosis.LOGGER.debug(MARKER, msg, args);
+        }
     }
 
 }
