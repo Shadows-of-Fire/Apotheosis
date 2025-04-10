@@ -1,28 +1,37 @@
 package dev.shadowsoffire.apotheosis.client;
 
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.UnaryOperator;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import net.minecraft.ChatFormatting;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.advancements.CriterionProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button.OnPress;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class SelectWorldTierScreen extends Screen {
 
     public static final ResourceLocation TEXTURE = Apotheosis.loc("textures/gui/mountain.png");
-    public static final ResourceLocation BTN_TEX_HAVEN = Apotheosis.loc("textures/gui/buttons/haven.png");
-    public static final ResourceLocation BTN_TEX_FRONTIER = Apotheosis.loc("textures/gui/buttons/frontier.png");
-    public static final ResourceLocation BTN_TEX_ASCENT = Apotheosis.loc("textures/gui/buttons/ascent.png");
-    public static final ResourceLocation BTN_TEX_SUMMIT = Apotheosis.loc("textures/gui/buttons/summit.png");
-    public static final ResourceLocation BTN_TEX_PINNACLE = Apotheosis.loc("textures/gui/buttons/pinnacle.png");
     public static final ResourceLocation SEPARATOR_LINE = Apotheosis.loc("textures/gui/separator_line.png");
     public static final ResourceLocation SWORD_EMPTY = Apotheosis.loc("textures/gui/sword_empty.png");
     public static final ResourceLocation SWORD_FULL = Apotheosis.loc("textures/gui/sword_full.png");
@@ -32,13 +41,13 @@ public class SelectWorldTierScreen extends Screen {
     public static final int IMAGE_WIDTH = 498;
     public static final int IMAGE_HEIGHT = 286;
 
-    protected SimpleTexButton havenBtn, frontierBtn, ascentBtn, summitBtn, pinnacleBtn;
-
     protected SimpleTexButton activateButton;
 
     protected WorldTier displayedTier = WorldTier.getTier(Minecraft.getInstance().player);
 
     protected int leftPos, topPos;
+
+    protected Map<WorldTier, SimpleTexButton> tierButtons = new EnumMap<>(WorldTier.class);
 
     public SelectWorldTierScreen() {
         super(Apotheosis.lang("title", "select_world_tier"));
@@ -46,69 +55,14 @@ public class SelectWorldTierScreen extends Screen {
 
     @Override
     protected void init() {
-        leftPos = Math.max(0, (this.width - GUI_WIDTH) / 2);
-        topPos = Math.max(0, (this.height - GUI_HEIGHT) / 2);
-        LocalPlayer player = Minecraft.getInstance().player;
+        this.leftPos = Math.max(0, (this.width - GUI_WIDTH) / 2);
+        this.topPos = Math.max(0, (this.height - GUI_HEIGHT) / 2);
 
-        this.havenBtn = this.addRenderableWidget(
-            SimpleTexButton.builder()
-                .size(30, 30)
-                .pos(leftPos + 100, topPos + 215)
-                .texture(BTN_TEX_HAVEN)
-                .texSize(30, 90)
-                .action(displayTier(WorldTier.HAVEN))
-                .message(Apotheosis.lang("button", "haven"))
-                .inactiveMessage(tierLocked(WorldTier.HAVEN))
-                .build());
-        this.havenBtn.active = WorldTier.isUnlocked(player, WorldTier.HAVEN);
-
-        this.frontierBtn = this.addRenderableWidget(
-            SimpleTexButton.builder()
-                .size(30, 30)
-                .pos(leftPos + 210, topPos + 205)
-                .texture(BTN_TEX_FRONTIER)
-                .texSize(30, 90)
-                .action(displayTier(WorldTier.FRONTIER))
-                .message(Apotheosis.lang("button", "frontier"))
-                .inactiveMessage(tierLocked(WorldTier.FRONTIER))
-                .build());
-        this.frontierBtn.active = WorldTier.isUnlocked(player, WorldTier.FRONTIER);
-
-        this.ascentBtn = this.addRenderableWidget(
-            SimpleTexButton.builder()
-                .size(30, 30)
-                .pos(leftPos + 250, topPos + 115)
-                .texture(BTN_TEX_ASCENT)
-                .texSize(30, 90)
-                .action(displayTier(WorldTier.ASCENT))
-                .message(Apotheosis.lang("button", "ascent"))
-                .inactiveMessage(tierLocked(WorldTier.ASCENT))
-                .build());
-        this.ascentBtn.active = WorldTier.isUnlocked(player, WorldTier.ASCENT);
-
-        this.summitBtn = this.addRenderableWidget(
-            SimpleTexButton.builder()
-                .size(30, 30)
-                .pos(leftPos + 315, topPos + 60)
-                .texture(BTN_TEX_SUMMIT)
-                .texSize(30, 90)
-                .action(displayTier(WorldTier.SUMMIT))
-                .message(Apotheosis.lang("button", "summit"))
-                .inactiveMessage(tierLocked(WorldTier.SUMMIT))
-                .build());
-        this.summitBtn.active = WorldTier.isUnlocked(player, WorldTier.SUMMIT);
-
-        this.pinnacleBtn = this.addRenderableWidget(
-            SimpleTexButton.builder()
-                .size(30, 30)
-                .pos(leftPos + 395, topPos + 0)
-                .texture(BTN_TEX_PINNACLE)
-                .texSize(30, 90)
-                .action(displayTier(WorldTier.PINNACLE))
-                .message(Apotheosis.lang("button", "pinnacle"))
-                .inactiveMessage(tierLocked(WorldTier.PINNACLE))
-                .build());
-        this.pinnacleBtn.active = WorldTier.isUnlocked(player, WorldTier.PINNACLE);
+        addTierButton(WorldTier.HAVEN, b -> b.pos(leftPos + 100, topPos + 215));
+        addTierButton(WorldTier.FRONTIER, b -> b.pos(leftPos + 210, topPos + 205));
+        addTierButton(WorldTier.ASCENT, b -> b.pos(leftPos + 250, topPos + 115));
+        addTierButton(WorldTier.SUMMIT, b -> b.pos(leftPos + 315, topPos + 60));
+        addTierButton(WorldTier.PINNACLE, b -> b.pos(leftPos + 395, topPos));
 
         this.activateButton = this.addRenderableWidget(
             SimpleTexButton.builder()
@@ -197,11 +151,20 @@ public class SelectWorldTierScreen extends Screen {
     }
 
     protected void updateButtonStatus() {
-        this.havenBtn.forceHovered = this.displayedTier == WorldTier.HAVEN;
-        this.frontierBtn.forceHovered = this.displayedTier == WorldTier.FRONTIER;
-        this.ascentBtn.forceHovered = this.displayedTier == WorldTier.ASCENT;
-        this.summitBtn.forceHovered = this.displayedTier == WorldTier.SUMMIT;
-        this.pinnacleBtn.forceHovered = this.displayedTier == WorldTier.PINNACLE;
+        LocalPlayer player = Minecraft.getInstance().player;
+
+        for (WorldTier tier : WorldTier.values()) {
+            SimpleTexButton button = this.tierButtons.get(tier);
+            if (WorldTier.isUnlocked(player, tier)) {
+                button.active = true;
+                button.setMessage(Apotheosis.lang("button", tier.getSerializedName()));
+            }
+            else {
+                button.active = false;
+                button.setMessage(Apotheosis.lang("button", "tier_locked", Apotheosis.lang("button", tier.getSerializedName())).withStyle(ChatFormatting.RED));
+            }
+            button.forceHovered = this.displayedTier == tier;
+        }
 
         this.activateButton.active = WorldTier.getTier(Minecraft.getInstance().player) != this.displayedTier;
         if (this.activateButton.active) {
@@ -215,9 +178,57 @@ public class SelectWorldTierScreen extends Screen {
         }
     }
 
-    private static Component tierLocked(WorldTier tier) {
-        Component advName = Apotheosis.lang("advancements", "progression." + tier.getSerializedName() + ".title").withStyle(ChatFormatting.GOLD);
-        return Apotheosis.lang("button", "tier_locked", advName).withStyle(ChatFormatting.RED);
+    private void addTierButton(WorldTier tier, UnaryOperator<SimpleTexButton.Builder> config) {
+        SimpleTexButton button = config.apply(
+            SimpleTexButton.builder()
+                .size(30, 30)
+                .texture(Apotheosis.loc("textures/gui/buttons/" + tier.getSerializedName() + ".png"))
+                .texSize(30, 90)
+                .action(displayTier(tier))
+                .message(Apotheosis.lang("button", tier.getSerializedName()))
+                .inactiveMessage(tierLocked(tier)))
+            .build();
+        this.tierButtons.put(tier, button);
+        this.addRenderableWidget(button);
+    }
+
+    private static List<Component> tierLocked(WorldTier tier) {
+        ClientAdvancements advancements = Minecraft.getInstance().getConnection().getAdvancements();
+        AdvancementHolder advancement = advancements.get(Apotheosis.loc("progression/" + tier.getSerializedName()));
+
+        List<Component> list = new ArrayList<>();
+        MutableComponent advName = Apotheosis.lang("advancements", "progression." + tier.getSerializedName() + ".title").withStyle(ChatFormatting.GOLD);
+
+        if (advancement == null) {
+            list.add(Apotheosis.lang("button", "tier_advancement", advName.withStyle(ChatFormatting.OBFUSCATED)).withStyle(ChatFormatting.RED));
+            list.add(CommonComponents.SPACE);
+            for (int i = 0; i < 3; i++) {
+                list.add(Apotheosis.lang("info", "criteria_unknown", Component.literal("Do something, idk").withStyle(ChatFormatting.OBFUSCATED)).withStyle(ChatFormatting.GRAY));
+            }
+            return list;
+        }
+
+        list.add(Apotheosis.lang("button", "tier_advancement", advName).withStyle(ChatFormatting.RED));
+        list.add(CommonComponents.SPACE);
+        AdvancementProgress progress = advancements.progress.get(advancement);
+        for (String criteria : progress.criteria.keySet()) {
+            CriterionProgress critProg = progress.criteria.get(criteria);
+            if (critProg.isDone()) {
+                Component critDesc = Apotheosis.lang("advancements", "progression." + tier.getSerializedName() + ".criteria." + criteria).withStyle(ChatFormatting.GREEN);
+                list.add(Apotheosis.lang("info", "criteria_done", critDesc));
+            }
+            else {
+                Component critDesc = Apotheosis.lang("advancements", "progression." + tier.getSerializedName() + ".criteria." + criteria).withStyle(ChatFormatting.GRAY);
+                list.add(Apotheosis.lang("info", "criteria_unfinished", critDesc));
+            }
+        }
+
+        return list;
+    }
+
+    @Nullable
+    private static AdvancementHolder getTierAdvancement(WorldTier tier) {
+        return Minecraft.getInstance().getConnection().getAdvancements().get(Apotheosis.loc("progression/" + tier.getSerializedName()));
     }
 
 }

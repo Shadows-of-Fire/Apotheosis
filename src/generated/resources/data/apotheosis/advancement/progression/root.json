@@ -1,16 +1,7 @@
 {
     "criteria": {
-        "affixed": {
-            "conditions": {
-                "items": [
-                    {
-                        "predicates": {
-                            "apotheosis:affixed_item": {}
-                        }
-                    }
-                ]
-            },
-            "trigger": "minecraft:inventory_changed"
+        "tick": {
+            "trigger": "minecraft:tick"
         }
     },
     "display": {
@@ -30,7 +21,7 @@
     },
     "requirements": [
         [
-            "affixed"
+            "tick"
         ]
     ],
     "sends_telemetry_event": true

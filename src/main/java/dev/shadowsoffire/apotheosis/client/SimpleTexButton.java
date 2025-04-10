@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.spongepowered.include.com.google.common.base.Preconditions;
@@ -32,7 +33,7 @@ public class SimpleTexButton extends Button {
     protected final int yTexStart;
     protected final int textureWidth;
     protected final int textureHeight;
-    protected Component inactiveMessage = CommonComponents.EMPTY;
+    protected List<Component> inactiveMessage = List.of();
     protected Component buttonText = CommonComponents.EMPTY;
     protected boolean forceHovered = false;
 
@@ -59,6 +60,16 @@ public class SimpleTexButton extends Button {
     }
 
     public SimpleTexButton setInactiveMessage(Component msg) {
+        if (msg == CommonComponents.EMPTY) {
+            this.inactiveMessage = List.of();
+        }
+        else {
+            this.inactiveMessage = Arrays.asList(msg);
+        }
+        return this;
+    }
+
+    public SimpleTexButton setInactiveMessage(List<Component> msg) {
         this.inactiveMessage = msg;
         return this;
     }
@@ -115,8 +126,8 @@ public class SimpleTexButton extends Button {
             }
             List<Component> tooltips = new ArrayList<>();
             tooltips.add(primary);
-            if (!this.active && this.inactiveMessage != CommonComponents.EMPTY) {
-                tooltips.add(this.inactiveMessage);
+            if (!this.active && !this.inactiveMessage.isEmpty()) {
+                tooltips.addAll(this.inactiveMessage);
             }
             gfx.renderComponentTooltip(Minecraft.getInstance().font, tooltips, pMouseX, pMouseY);
         }
@@ -143,7 +154,7 @@ public class SimpleTexButton extends Button {
         protected int textureWidth = 256;
         protected int textureHeight = 256;
         protected Component message = CommonComponents.EMPTY;
-        protected Component inactiveMessage = CommonComponents.EMPTY;
+        protected List<Component> inactiveMessage = new ArrayList<>();
         protected Component buttonText = CommonComponents.EMPTY;
         protected Either<ResourceLocation, WidgetSprites> texture = null;
         protected OnPress action = btn -> {};
@@ -178,6 +189,11 @@ public class SimpleTexButton extends Button {
         }
 
         public Builder inactiveMessage(Component message) {
+            this.inactiveMessage.add(message);
+            return this;
+        }
+
+        public Builder inactiveMessage(List<Component> message) {
             this.inactiveMessage = message;
             return this;
         }

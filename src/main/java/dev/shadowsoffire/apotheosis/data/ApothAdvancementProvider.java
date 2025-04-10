@@ -27,6 +27,7 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.critereon.PlayerTrigger;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.component.DataComponentPredicate;
 import net.minecraft.data.PackOutput;
@@ -77,7 +78,7 @@ public class ApothAdvancementProvider extends AdvancementProvider {
                     false,
                     false)
                 .requirements(AdvancementRequirements.Strategy.OR)
-                .addCriterion("affixed", InventoryChangeTrigger.TriggerInstance.hasItems(ip(new AffixItemPredicate())))
+                .addCriterion("tick", PlayerTrigger.TriggerInstance.tick())
                 .save(saver, loc("progression/root"));
 
             AdvancementHolder haven = Advancement.Builder.advancement()

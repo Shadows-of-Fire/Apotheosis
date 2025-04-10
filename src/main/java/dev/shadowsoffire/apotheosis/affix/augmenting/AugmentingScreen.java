@@ -396,8 +396,8 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                     tooltips.add(sigilCostMsg);
                     tooltips.add(levelCostMsg);
                 }
-                else if (this.inactiveMessage != CommonComponents.EMPTY) {
-                    tooltips.add(this.inactiveMessage);
+                else if (!this.inactiveMessage.isEmpty()) {
+                    tooltips.addAll(this.inactiveMessage);
                 }
                 else {
                     if (AugmentingScreen.this.menu.getSigils().getCount() < sigilCost) {
