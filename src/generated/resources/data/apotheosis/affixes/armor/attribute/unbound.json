@@ -11,8 +11,8 @@
         ],
         "weights": {
             "pinnacle": {
-                "quality": 0.75,
-                "weight": 20
+                "quality": 0.2,
+                "weight": 1
             }
         }
     },

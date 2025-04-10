@@ -215,7 +215,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
 
         this.addAttribute("armor", "unbound", NeoForgeMod.CREATIVE_FLIGHT, Operation.ADD_VALUE, b -> b
             .definition(AffixType.STAT, d -> d
-                .weights(TieredWeights.onlyFor(WorldTier.PINNACLE, 20, 0.75F))
+                .weights(TieredWeights.onlyFor(WorldTier.PINNACLE, 1, DEFAULT_QUALITY * 2F))
                 .exclusiveWith(afx("armor/attribute/winged")))
             .categories(LootCategories.CHESTPLATE)
             .value(mythic, 1));

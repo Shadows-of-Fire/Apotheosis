@@ -1,4 +1,4 @@
-// 1.21.1	2025-03-27T23:21:02.3865667	Affixes
+// 1.21.1	2025-04-09T23:24:35.4153478	Affixes
 25581ee0a1d84bdbe5eadaa04ac02e33ba182b0e data/apotheosis/affixes/armor/attribute/adamantine.json
 6df2683685c5934ff580ef1d3901e1c593c48fde data/apotheosis/affixes/armor/attribute/aquatic.json
 a08886d35608a8ff9f1f79282f5f9beb203ddd47 data/apotheosis/affixes/armor/attribute/blessed.json
@@ -11,7 +11,7 @@ d1ab8f4746600aa352b17b51a7a020a27a7c1cc5 data/apotheosis/affixes/armor/attribute
 fd7a6053b36ada31af79c9efc046e085ce3cb1eb data/apotheosis/affixes/armor/attribute/spiritual.json
 80bdf9b872577a552a6ff5310722663ab89b7c9f data/apotheosis/affixes/armor/attribute/stalwart.json
 63cd8f6855ea53a022d1a9ef7055d4df996c13a3 data/apotheosis/affixes/armor/attribute/steel_touched.json
-c834702a19552404467f977e6433b1b4ea59f687 data/apotheosis/affixes/armor/attribute/unbound.json
+63bb7cfc7aa7ca163bba0821947bb29ca9935a8c data/apotheosis/affixes/armor/attribute/unbound.json
 f0f4f5dd01326cab14fae0e5fe8a44d304a89c44 data/apotheosis/affixes/armor/attribute/windswept.json
 4b53092559db63540120d16cef0f3a8433c4bc3c data/apotheosis/affixes/armor/attribute/winged.json
 2912944ddcad9494bbcda2f310e9e4595e308103 data/apotheosis/affixes/armor/dmg_reduction/blast_forged.json
