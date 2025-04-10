@@ -8,6 +8,7 @@ import java.util.function.UnaryOperator;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -36,6 +37,12 @@ public class SelectWorldTierScreen extends Screen {
     public static final ResourceLocation SWORD_EMPTY = Apotheosis.loc("textures/gui/sword_empty.png");
     public static final ResourceLocation SWORD_FULL = Apotheosis.loc("textures/gui/sword_full.png");
 
+    public static final AnimationData HAVEN_ANIMATION = new AnimationData(138, 156, 21, 320, 10, Apotheosis.loc("textures/gui/animations/haven.png"));
+    public static final AnimationData FRONTIER_ANIMATION = new AnimationData(210, 236, 45, 588, 21, Apotheosis.loc("textures/gui/animations/frontier.png"));
+    public static final AnimationData ASCENT_ANIMATION = new AnimationData(251, 106, 42, 1380, 30, Apotheosis.loc("textures/gui/animations/ascent.png"));
+    public static final AnimationData SUMMIT_ANIMATION = new AnimationData(349, 41, 5, 640, 20, Apotheosis.loc("textures/gui/animations/summit.png"));
+    public static final AnimationData PINNACLE_ANIMATION = new AnimationData(356, -2, 47, 960, 12, Apotheosis.loc("textures/gui/animations/pinnacle.png"));
+
     public static final int GUI_WIDTH = 480;
     public static final int GUI_HEIGHT = 270;
     public static final int IMAGE_WIDTH = 498;
@@ -49,6 +56,8 @@ public class SelectWorldTierScreen extends Screen {
 
     protected Map<WorldTier, SimpleTexButton> tierButtons = new EnumMap<>(WorldTier.class);
 
+    protected int animTicks = 0;
+
     public SelectWorldTierScreen() {
         super(Apotheosis.lang("title", "select_world_tier"));
     }
@@ -60,7 +69,7 @@ public class SelectWorldTierScreen extends Screen {
 
         addTierButton(WorldTier.HAVEN, b -> b.pos(leftPos + 100, topPos + 215));
         addTierButton(WorldTier.FRONTIER, b -> b.pos(leftPos + 210, topPos + 205));
-        addTierButton(WorldTier.ASCENT, b -> b.pos(leftPos + 250, topPos + 115));
+        addTierButton(WorldTier.ASCENT, b -> b.pos(leftPos + 230, topPos + 115));
         addTierButton(WorldTier.SUMMIT, b -> b.pos(leftPos + 315, topPos + 60));
         addTierButton(WorldTier.PINNACLE, b -> b.pos(leftPos + 395, topPos));
 
@@ -121,6 +130,21 @@ public class SelectWorldTierScreen extends Screen {
             gfx.blit(tex, (int) (swordLeft / scale), (int) ((topPos + 77) / scale), 0, 0, 0, 30, 30, 30, 30);
         }
         pose.popPose();
+
+        AnimationData anim = switch (this.displayedTier) {
+            case HAVEN -> HAVEN_ANIMATION;
+            case FRONTIER -> FRONTIER_ANIMATION;
+            case ASCENT -> ASCENT_ANIMATION;
+            case SUMMIT -> SUMMIT_ANIMATION;
+            case PINNACLE -> PINNACLE_ANIMATION;
+        };
+
+        anim.render(gfx, leftPos, topPos, this.animTicks, partialTick);
+    }
+
+    @Override
+    public void tick() {
+        this.animTicks++;
     }
 
     protected OnPress displayTier(WorldTier tier) {
@@ -129,6 +153,7 @@ public class SelectWorldTierScreen extends Screen {
         return btn -> {
             this.displayedTier = tier;
             this.updateButtonStatus();
+            this.animTicks = 0;
         };
     }
 
@@ -229,6 +254,20 @@ public class SelectWorldTierScreen extends Screen {
     @Nullable
     private static AdvancementHolder getTierAdvancement(WorldTier tier) {
         return Minecraft.getInstance().getConnection().getAdvancements().get(Apotheosis.loc("progression/" + tier.getSerializedName()));
+    }
+
+    private static record AnimationData(int x, int y, int width, int height, int frames, ResourceLocation texture) {
+
+        private void render(GuiGraphics gfx, int left, int top, int time, float partialTick) {
+            int frameHeight = height / frames;
+            int frame = (int) ((time + partialTick) / 2F);
+            if (frame >= frames) {
+                return;
+            }
+            RenderSystem.enableBlend();
+            gfx.blit(texture, left + x, top + y, 0, (frame + 1F) * frameHeight, this.width, frameHeight, this.width, this.height);
+        }
+
     }
 
 }
