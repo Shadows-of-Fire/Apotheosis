@@ -1,0 +1,17 @@
+{
+    "type": "apotheosis:sized_upgrade_recipe",
+    "addition": {
+        "count": 4,
+        "tag": "c:gems/diamond"
+    },
+    "base": {
+        "item": "minecraft:golden_leggings"
+    },
+    "result": {
+        "count": 1,
+        "id": "minecraft:diamond_leggings"
+    },
+    "template": {
+        "item": "apotheosis:diamond_upgrade_smithing_template"
+    }
+}

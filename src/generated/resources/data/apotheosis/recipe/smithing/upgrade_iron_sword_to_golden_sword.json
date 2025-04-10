@@ -1,0 +1,17 @@
+{
+    "type": "apotheosis:sized_upgrade_recipe",
+    "addition": {
+        "count": 4,
+        "tag": "c:ingots/gold"
+    },
+    "base": {
+        "item": "minecraft:iron_sword"
+    },
+    "result": {
+        "count": 1,
+        "id": "minecraft:golden_sword"
+    },
+    "template": {
+        "item": "apotheosis:gold_upgrade_smithing_template"
+    }
+}

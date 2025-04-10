@@ -536,6 +536,27 @@
     "item.apotheosis.sigil_of_unnaming": "Sigil of Unnaming",
     "item.apotheosis.sigil_of_unnaming.desc": "Removes the affixed name from an item",
 
+    "item.apotheosis.iron_upgrade_smithing_template": "Smithing Template",
+    "upgrade.apotheosis.iron": "Iron Upgrade ",
+    "item.apotheosis.iron_upgrade_smithing_template.applies_to": "Stone and Chain Equipment",
+    "item.apotheosis.iron_upgrade_smithing_template.ingredients": "4 Iron Ingots",
+    "item.apotheosis.iron_upgrade_smithing_template.base_slot_description": "Add chain armor or stone equipment",
+    "item.apotheosis.iron_upgrade_smithing_template.additions_slot_description": "Add four iron ingots",
+
+    "item.apotheosis.gold_upgrade_smithing_template": "Smithing Template",
+    "upgrade.apotheosis.gold": "Gold Upgrade ",
+    "item.apotheosis.gold_upgrade_smithing_template.applies_to": "Iron Equipment",
+    "item.apotheosis.gold_upgrade_smithing_template.ingredients": "4 Gold Ingots",
+    "item.apotheosis.gold_upgrade_smithing_template.base_slot_description": "Add iron armor, weapon, or tools",
+    "item.apotheosis.gold_upgrade_smithing_template.additions_slot_description": "Add four gold ingots",
+
+    "item.apotheosis.diamond_upgrade_smithing_template": "Smithing Template",
+    "upgrade.apotheosis.diamond": "Diamond Upgrade ",
+    "item.apotheosis.diamond_upgrade_smithing_template.applies_to": "Golden Equipment",
+    "item.apotheosis.diamond_upgrade_smithing_template.ingredients": "4 Diamonds",
+    "item.apotheosis.diamond_upgrade_smithing_template.base_slot_description": "Add golden armor, weapon, or tools",
+    "item.apotheosis.diamond_upgrade_smithing_template.additions_slot_description": "Add four diamonds",
+
     "block.apotheosis.boss_spawner": "Caged Invader",
     "block.apotheosis.gem_cutting_table": "Gem Cutting Table",
     "block.apotheosis.gem_cutting_table.desc": "Uses Gem Dust and Rarity Materials to upgrade Gems",

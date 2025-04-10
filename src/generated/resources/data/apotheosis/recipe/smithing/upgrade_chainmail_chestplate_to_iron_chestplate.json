@@ -1,0 +1,17 @@
+{
+    "type": "apotheosis:sized_upgrade_recipe",
+    "addition": {
+        "count": 4,
+        "tag": "c:ingots/iron"
+    },
+    "base": {
+        "item": "minecraft:chainmail_chestplate"
+    },
+    "result": {
+        "count": 1,
+        "id": "minecraft:iron_chestplate"
+    },
+    "template": {
+        "item": "apotheosis:iron_upgrade_smithing_template"
+    }
+}

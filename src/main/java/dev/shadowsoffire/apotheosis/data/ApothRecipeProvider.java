@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Blocks;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -25,6 +26,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
+import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
 import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.apothic_enchanting.table.EnchantingStatRegistry.Stats;
 import dev.shadowsoffire.placebo.datagen.LegacyRecipeProvider;
@@ -32,9 +34,11 @@ import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -132,6 +136,40 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             new Stats(15F, 100F, 8.5F, 32.5F, 0),
             new Stats(15F, 100F, 13.5F, 37.5F, 0)),
             null);
+
+        addShaped(new ItemStack(Items.IRON_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.COMMON_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        addShaped(new ItemStack(Items.GOLD_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.UNCOMMON_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        addShaped(new ItemStack(Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.RARE_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+
+        addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_SWORD, Tags.Items.INGOTS_IRON, 4, Items.IRON_SWORD);
+        addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_PICKAXE, Tags.Items.INGOTS_IRON, 4, Items.IRON_PICKAXE);
+        addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_AXE, Tags.Items.INGOTS_IRON, 4, Items.IRON_AXE);
+        addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_SHOVEL, Tags.Items.INGOTS_IRON, 4, Items.IRON_SHOVEL);
+        addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_HOE, Tags.Items.INGOTS_IRON, 4, Items.IRON_HOE);
+        addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.CHAINMAIL_HELMET, Tags.Items.INGOTS_IRON, 4, Items.IRON_HELMET);
+        addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.CHAINMAIL_CHESTPLATE, Tags.Items.INGOTS_IRON, 4, Items.IRON_CHESTPLATE);
+        addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.CHAINMAIL_LEGGINGS, Tags.Items.INGOTS_IRON, 4, Items.IRON_LEGGINGS);
+        addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.CHAINMAIL_BOOTS, Tags.Items.INGOTS_IRON, 4, Items.IRON_BOOTS);
+
+        addSizedUpgrade(Apoth.Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.IRON_SWORD, Tags.Items.INGOTS_GOLD, 4, Items.GOLDEN_SWORD);
+        addSizedUpgrade(Apoth.Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.IRON_PICKAXE, Tags.Items.INGOTS_GOLD, 4, Items.GOLDEN_PICKAXE);
+        addSizedUpgrade(Apoth.Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.IRON_AXE, Tags.Items.INGOTS_GOLD, 4, Items.GOLDEN_AXE);
+        addSizedUpgrade(Apoth.Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.IRON_SHOVEL, Tags.Items.INGOTS_GOLD, 4, Items.GOLDEN_SHOVEL);
+        addSizedUpgrade(Apoth.Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.IRON_HOE, Tags.Items.INGOTS_GOLD, 4, Items.GOLDEN_HOE);
+        addSizedUpgrade(Apoth.Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.IRON_HELMET, Tags.Items.INGOTS_GOLD, 4, Items.GOLDEN_HELMET);
+        addSizedUpgrade(Apoth.Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.IRON_CHESTPLATE, Tags.Items.INGOTS_GOLD, 4, Items.GOLDEN_CHESTPLATE);
+        addSizedUpgrade(Apoth.Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.IRON_LEGGINGS, Tags.Items.INGOTS_GOLD, 4, Items.GOLDEN_LEGGINGS);
+        addSizedUpgrade(Apoth.Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.IRON_BOOTS, Tags.Items.INGOTS_GOLD, 4, Items.GOLDEN_BOOTS);
+
+        addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_SWORD, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_SWORD);
+        addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_PICKAXE, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_PICKAXE);
+        addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_AXE, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_AXE);
+        addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_SHOVEL, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_SHOVEL);
+        addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_HOE, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_HOE);
+        addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_HELMET, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_HELMET);
+        addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_CHESTPLATE, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_CHESTPLATE);
+        addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_LEGGINGS, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_LEGGINGS);
+        addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_BOOTS, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_BOOTS);
     }
 
     private ShapedRecipePattern charmPattern() {
@@ -189,5 +227,12 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
 
     private static <T extends ItemLike> Ingredient ingredient(Holder<T> holder) {
         return Ingredient.of(holder.value());
+    }
+
+    private void addSizedUpgrade(Holder<Item> template, Item base, TagKey<Item> addition, int size, Item output) {
+        String path1 = BuiltInRegistries.ITEM.getKey(base).getPath();
+        String path2 = BuiltInRegistries.ITEM.getKey(output).getPath();
+        this.recipeOutput.accept(Apotheosis.loc("smithing/upgrade_%s_to_%s".formatted(path1, path2)),
+            new SizedUpgradeRecipe(Ingredient.of(template.value()), Ingredient.of(base), SizedIngredient.of(addition, size), output.getDefaultInstance()), null);
     }
 }

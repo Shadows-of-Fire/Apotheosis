@@ -71,6 +71,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
+import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.SingletonRecipeSerializer;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
@@ -78,6 +79,7 @@ import dev.shadowsoffire.apothic_attributes.modifiers.EntitySlotGroup;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType.TickSide;
 import dev.shadowsoffire.placebo.registry.DeferredHelper;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.critereon.ItemSubPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -106,6 +108,7 @@ import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
@@ -286,8 +289,26 @@ public class Apoth {
 
         public static final Holder<Item> POTION_CHARM = R.item("potion_charm", PotionCharmItem::new);
 
+        public static final Holder<Item> IRON_UPGRADE_SMITHING_TEMPLATE = R.item("iron_upgrade_smithing_template", () -> createVanillaUpgradeTemplate("iron"));
+
+        public static final Holder<Item> GOLD_UPGRADE_SMITHING_TEMPLATE = R.item("gold_upgrade_smithing_template", () -> createVanillaUpgradeTemplate("gold"));
+
+        public static final Holder<Item> DIAMOND_UPGRADE_SMITHING_TEMPLATE = R.item("diamond_upgrade_smithing_template", () -> createVanillaUpgradeTemplate("diamond"));
+
         private static Holder<Item> rarityMat(String id) {
             return R.item(id + "_material", () -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(id)), new Item.Properties()));
+        }
+
+        private static SmithingTemplateItem createVanillaUpgradeTemplate(String type) {
+            String path = type + "_upgrade_smithing_template";
+            return new SmithingTemplateItem(
+                Apotheosis.lang("item", path + ".applies_to").withStyle(ChatFormatting.BLUE),
+                Apotheosis.lang("item", path + ".ingredients").withStyle(ChatFormatting.BLUE),
+                Apotheosis.lang("upgrade", type).withStyle(ChatFormatting.GRAY),
+                Apotheosis.lang("item", path + ".base_slot_description"),
+                Apotheosis.lang("item", path + ".additions_slot_description"),
+                SmithingTemplateItem.createNetheriteUpgradeIconList(),
+                SmithingTemplateItem.createNetheriteUpgradeMaterialList());
         }
 
         private static void bootstrap() {}
@@ -353,6 +374,7 @@ public class Apoth {
         public static final Holder<RecipeSerializer<?>> BASIC_GEM_CUTTING = R.recipeSerializer("basic_gem_cutting", () -> BasicGemCuttingRecipe.Serializer.INSTANCE);
         public static final Holder<RecipeSerializer<?>> POTION_CHARM_CRAFTING = R.recipeSerializer("potion_charm_crafting", () -> PotionCharmRecipe.Serializer.INSTANCE);
         public static final Holder<RecipeSerializer<?>> POTION_CHARM_INFUSION = R.recipeSerializer("potion_charm_infusion", () -> CharmInfusionRecipe.Serializer.INSTANCE);
+        public static final Holder<RecipeSerializer<?>> SIZED_UPGRADE_RECIPE = R.recipeSerializer("sized_upgrade_recipe", () -> SizedUpgradeRecipe.Serializer.INSTANCE);
 
         private static void bootstrap() {}
     }

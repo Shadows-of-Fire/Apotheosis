@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.Nullable;
+
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
@@ -12,7 +14,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.ingredients.ITypedIngredient;
-import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
+import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -95,18 +97,28 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
         }
     }
 
-    public static class PotionCharmSubtypes implements IIngredientSubtypeInterpreter<ItemStack> {
+    public static class PotionCharmSubtypes implements ISubtypeInterpreter<ItemStack> {
 
-        @Override
         public String apply(ItemStack stack, UidContext context) {
             if (context != UidContext.Recipe) {
                 if (!PotionCharmItem.hasEffect(stack)) {
-                    return NONE;
+                    return "";
                 }
                 MobEffectInstance contained = PotionCharmItem.getEffect(stack);
                 return contained.getEffect().getKey().location() + "@" + contained.getAmplifier() + "@" + contained.getDuration();
             }
-            return NONE;
+            return "";
+        }
+
+        @Override
+        public @Nullable Object getSubtypeData(ItemStack ingredient, UidContext context) {
+            String data = apply(ingredient, context);
+            return data.isEmpty() ? null : data;
+        }
+
+        @Override
+        public String getLegacyStringSubtypeInfo(ItemStack ingredient, UidContext context) {
+            return apply(ingredient, context);
         }
 
     }

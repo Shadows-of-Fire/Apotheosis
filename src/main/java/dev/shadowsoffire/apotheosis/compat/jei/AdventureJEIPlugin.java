@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jetbrains.annotations.Nullable;
+
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -21,13 +23,14 @@ import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.util.ApothSmithingRecipe;
+import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
 import dev.shadowsoffire.apothic_enchanting.compat.InfusionRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
-import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
+import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -117,6 +120,8 @@ public class AdventureJEIPlugin implements IModPlugin {
         reg.getCraftingCategory().addExtension(PotionCharmRecipe.class, new PotionCharmExtension());
 
         InfusionRecipeCategory.registerExtension(CharmInfusionRecipe.class, new CharmInfusionExtension());
+
+        reg.getSmithingCategory().addExtension(SizedUpgradeRecipe.class, new SizedUpgradeRecipeExtension());
     }
 
     private static final List<ItemStack> DUMMY_INPUTS = Arrays.asList(Items.GOLDEN_SWORD, Items.DIAMOND_PICKAXE, Items.STONE_AXE, Items.IRON_CHESTPLATE, Items.TRIDENT).stream().map(ItemStack::new).toList();
@@ -146,15 +151,23 @@ public class AdventureJEIPlugin implements IModPlugin {
     /**
      * A Gem Stack is unique to JEI based on the Gem's ID and Rarity.
      */
-    static class GemSubtypes implements IIngredientSubtypeInterpreter<ItemStack> {
-
-        @Override
+    static class GemSubtypes implements ISubtypeInterpreter<ItemStack> {
         public String apply(ItemStack stack, UidContext context) {
             UnsocketedGem inst = UnsocketedGem.of(stack);
             if (!inst.isValid()) {
                 return BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
             }
             return inst.gem().getId() + "@" + inst.purity().getSerializedName();
+        }
+
+        @Override
+        public @Nullable Object getSubtypeData(ItemStack ingredient, UidContext context) {
+            return apply(ingredient, context);
+        }
+
+        @Override
+        public String getLegacyStringSubtypeInfo(ItemStack ingredient, UidContext context) {
+            return apply(ingredient, context);
         }
 
     }

@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "G": {
+            "item": "apotheosis:gem_fused_slate"
+        },
+        "S": {
+            "item": "minecraft:stone"
+        },
+        "U": {
+            "item": "apotheosis:uncommon_material"
+        }
+    },
+    "pattern": [
+        " U ",
+        "SGS",
+        "SGS"
+    ],
+    "result": {
+        "count": 2,
+        "id": "apotheosis:gold_upgrade_smithing_template"
+    }
+}

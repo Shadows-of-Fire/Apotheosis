@@ -1,0 +1,17 @@
+{
+    "type": "apotheosis:sized_upgrade_recipe",
+    "addition": {
+        "count": 4,
+        "tag": "c:ingots/iron"
+    },
+    "base": {
+        "item": "minecraft:stone_sword"
+    },
+    "result": {
+        "count": 1,
+        "id": "minecraft:iron_sword"
+    },
+    "template": {
+        "item": "apotheosis:iron_upgrade_smithing_template"
+    }
+}

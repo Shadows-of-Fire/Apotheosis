@@ -1,0 +1,17 @@
+{
+    "type": "apotheosis:sized_upgrade_recipe",
+    "addition": {
+        "count": 4,
+        "tag": "c:ingots/iron"
+    },
+    "base": {
+        "item": "minecraft:stone_pickaxe"
+    },
+    "result": {
+        "count": 1,
+        "id": "minecraft:iron_pickaxe"
+    },
+    "template": {
+        "item": "apotheosis:iron_upgrade_smithing_template"
+    }
+}
