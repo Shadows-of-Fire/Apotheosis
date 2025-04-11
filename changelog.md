@@ -1,3 +1,75 @@
+## 8.3.0
+This update is Apotheosis's Quality of Life update, bringing a variety of utility and nice-to-have changes in one bundle.  
+Some of these are native features that improve how things work, and some are re-implementations of complementary mod features with better integration to Apotheosis.
+
+### Quality of Life Features
+#### Link Item to Chat
+Inspired by [Quark](https://www.curseforge.com/minecraft/mc-mods/quark), Apotheosis now has a native functionality to link your items to chat, so you can show off your Affixes!
+
+Pushing the hotkey (default: Shift+T) will send a chat message containing a hoverable link to the item. This works on any item, not just affix items.
+
+This ability has a server-configurable cooldown, defaulting to 5s. Item Linking can be disabled in the config file.
+
+#### Equipment Comparison
+Inspired by [Equipment Compare](https://www.curseforge.com/minecraft/mc-mods/equipment-compare), Apotheosis now has an Equipment Comparison feature.  
+Holding the hotkey (default: Shift) while hovering an affixable item will compare it with an equipped affixable item of the same loot category.  
+This feature does not make comparisons between items of different categories, and does not work on items that cannot be affixed.
+
+#### Affix Loot Effects
+Inspired by [Loot Beams](https://www.curseforge.com/minecraft/mc-mods/loot-beams), Affix Items that are dropped in-world will now have special effects displayed, increasing in flair with the item's rarity.  
+Custom rarities can specify what effects they would like to apply with new settings in the rarity JSON file.
+
+These loot effects can be disabled in the config file.
+
+#### Socketing In-Inventory
+Gems can now be socketed into items by picking up a gem, hovering a socketable item and right clicking the item. This uses a mechanism similar to how bundles work to enable on-the-fly socketing.
+
+#### Upgrade Templates
+Apotheosis now adds three upgrade templates for vanilla materials (iron / gold / diamond), allowing you to keep holding on to otherwise aging Affix Items.
+
+#### Tier Unlock Checklists
+World Tier buttons in the select screen will now show details on each criteria and which ones you have accomplished, meaning you don't need to flip between the select screen and the advancement menu.
+
+Criteria (and advancement names) will only be visible once you've progressed to the ability to see the advancement in question.
+
+Modpacks that adjust the criteria for tier unlocks will need to provide new language keys (and ideally change the criteria names) to ensure the data is visible.
+
+### Features
+* The World Tier Select Screen now has animations that play when selecting a tier or opening the menu.
+* In the overworld, Invaders may now spawn underground as long as they are within 8 vertical blocks of a player.
+* A new affix for Armor Shred has been added to melee and ranged weapons.
+* Shears can now be affixed.
+  * Shears have a much more limited affix pool compared to most items, enabled by the new rarity override system.
+* Lower-tier rarity materials can now be used to upgrade Gems, costing 27 of the relevant material.
+* The salvaging table now matches all possible recipes for a given item, instead of only the first one.
+  * Salvaging recipes for most vanilla equipment have been added, so salvaging affix items may yield additional returns.
+
+### Balance
+* Armor Pierce, Crit Damage, and Crit Chance affixes are now available on Bows.
+* Lifesteal and Overheal affixes have had their values reduced.
+* The Thunderstruck affix now does armor-piercing lightning damage (was physical damage).
+* Many weight and quality values (for invaders, affixes, and gems) have been adjusted to avoid outliers at high luck levels (~200).
+  * Values above 200 still start going into insane outlier territory, but there's only so much to do without implementing full diminishing returns.
+* Substantially reduced the weight of the Unbound (creative flight) affix.
+
+### Bugfixes
+* Fixed ominous bottles not being dropped when killing Raid Captains.
+* Fixed multi-attribute bonuses not applying both attribute modifiers when using the same attribute twice.
+* Fixed the Augmenting Table not handling Exclusive Sets and affix weights properly.
+  * Prior to this change, it was impossible to reroll into an affix that was exclusive with the current affix without rerolling to a third affix.
+* Fixed the Telepathic affix not working on blocks.
+* Fixed certain recipes showing incorrect gems as inputs on rotation.
+* The Potion Charm blacklist has been hooked up as a Potion tag (`apotheosis:potion_charm_blacklist`). Prior to this it was not setup since the charm's re-addition.
+
+### Technical Changes
+* Rarity Overrides have been migrated out of the rarity file into their own `rarity_override` registry.
+  * This allows mods which ship custom loot categories to ship their own rarity overrides while not interfering with overrides from other mods.
+* A new `extra_gem_bonuses` registry was added, to allow mods to staple new bonuses to existing Gems.
+  * This is intended to avoid bloat when adding new categories, rather than forcing mods which add new loot categories to add a bunch of new gem types.
+* GemClass now uses a `HolderSet<LootCategory>` instead of a `Set`. This allows things such as the Endersurge Gem to work on all loot categories (even modded ones) without adjustments.
+  * It also enables the use of tag keys as GemClass entries, instead of specifying all the entries inline, which would allow better integration to existing gems.
+* The Augmentation system has been hooked up. The "Random Affix Chance" that was previously in the config file has been migrated to an Augmentation.
+
 ## 8.2.1
 * Fixed Potion Charms not working in Curio slots.
   * Also re-enabled the "Charms in Curios Only" config option.
