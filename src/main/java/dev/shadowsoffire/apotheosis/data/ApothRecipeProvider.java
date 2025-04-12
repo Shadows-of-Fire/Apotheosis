@@ -27,7 +27,6 @@ import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
-import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.apothic_enchanting.table.EnchantingStatRegistry.Stats;
 import dev.shadowsoffire.placebo.datagen.LegacyRecipeProvider;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -60,7 +59,7 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         out.accept(Apotheosis.loc("socketing"), new SocketingRecipe(), null);
         out.accept(Apotheosis.loc("unnaming"), new UnnamingRecipe(), null);
         out.accept(Apotheosis.loc("widthdrawal"), new WithdrawalRecipe(), null);
-        addSockets("sigil_add_sockets", ingredient(Items.SIGIL_OF_SOCKETING), 3);
+        addSockets("sigil_add_sockets", ingredient(Items.SIGIL_OF_SOCKETING), 2);
         addAffixSalvaging("common", Items.COMMON_MATERIAL);
         addAffixSalvaging("uncommon", Items.UNCOMMON_MATERIAL);
         addAffixSalvaging("rare", Items.RARE_MATERIAL);
@@ -111,7 +110,7 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             Items.GEM_DUST);
         addShaped(new ItemStack(Items.SIGIL_OF_REBIRTH, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE,
             Items.GEM_FUSED_SLATE);
-        addShaped(new ItemStack(Items.SIGIL_OF_SOCKETING, 3), 3, 3, Items.GEM_DUST, Ench.Items.INFUSED_BREATH, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.AMETHYST_SHARD,
+        addShaped(new ItemStack(Items.SIGIL_OF_SOCKETING, 3), 3, 3, Items.GEM_DUST, Items.GUNPOWDER, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.AMETHYST_SHARD,
             Items.GEM_DUST);
         addShaped(new ItemStack(Items.SIGIL_OF_UNNAMING, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.FLINT, Items.FLINT, Items.FLINT, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE,
             Items.GEM_FUSED_SLATE);

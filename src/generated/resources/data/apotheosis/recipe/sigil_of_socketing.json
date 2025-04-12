@@ -12,12 +12,12 @@
         "G": {
             "item": "apotheosis:gem_dust"
         },
-        "I": {
-            "item": "apothic_enchanting:infused_breath"
+        "U": {
+            "item": "minecraft:gunpowder"
         }
     },
     "pattern": [
-        "GIG",
+        "GUG",
         "EEE",
         "GAG"
     ],

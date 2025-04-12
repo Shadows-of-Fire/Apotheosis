@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-10T00:29:40.7796731	Recipes
+// 1.21.1	2025-04-11T22:45:38.7856894	Recipes
 bab664def1f01400bfe3a7cf432385247dcd847d data/apotheosis/recipe/augmenting_table.json
 09ba3d6cf5c8648fcf8b628cffa3ab3b4df2fd98 data/apotheosis/recipe/diamond_upgrade_smithing_template.json
 cfc46608a868f8e622a46d07c0b0d2d642bec035 data/apotheosis/recipe/gem_cutting/chipped.json
@@ -47,10 +47,10 @@ f3975c5ea820291d9044c9cc99360bef92bb694e data/apotheosis/recipe/salvaging/other/
 a756981025dfe410efee4943ca0f92eb2f1a4559 data/apotheosis/recipe/salvaging/other/wolf_armor.json
 c2b2d31857bf756466edbe74e1ce1809171758d5 data/apotheosis/recipe/salvaging/other/wooden_tools.json
 0a7e8418e7f6cf3ae2ad923cf074129e4ba3f1a8 data/apotheosis/recipe/salvaging_table.json
-06fac3501f6cbe4957002668ac7364c9550c26b1 data/apotheosis/recipe/sigil_add_sockets.json
+7ada93dee34d98bff1375a6e77780835391cbb30 data/apotheosis/recipe/sigil_add_sockets.json
 28330682d7a3fc9278b3f8c5efe42bd0971d672c data/apotheosis/recipe/sigil_of_enhancement.json
 8af0314b290614384ac3f81fb0d900bcfb2f7d37 data/apotheosis/recipe/sigil_of_rebirth.json
-45299b83e1d9236a8b5f517118c6241a53167934 data/apotheosis/recipe/sigil_of_socketing.json
+eef202e416d80e30b1ef0daf5eba715ca994b166 data/apotheosis/recipe/sigil_of_socketing.json
 bea3253b86645b96176cbd98bcbb06ba74c38132 data/apotheosis/recipe/sigil_of_unnaming.json
 ddbc3df4738526ec602f81bd1b8ae822bf11bbfb data/apotheosis/recipe/sigil_of_withdrawal.json
 164d9cdbfdfd0e9c087942a5576aee8a8ec9f499 data/apotheosis/recipe/simple_reforging_table.json
