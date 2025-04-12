@@ -13,6 +13,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
+import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
@@ -179,6 +180,18 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
 
     public final ResourceLocation getId() {
         return GemRegistry.INSTANCE.getKey(this);
+    }
+
+    /**
+     * Creates a new {@link ItemStack} containing this {@link Gem}.
+     * <p>
+     * The provided purity will be automatically clamped based on {@link Gem#getMinPurity()}.
+     */
+    public ItemStack toStack(Purity purity) {
+        ItemStack stack = new ItemStack(Items.GEM);
+        GemItem.setGem(stack, this);
+        GemItem.setPurity(stack, Purity.max(purity, this.getMinPurity()));
+        return stack;
     }
 
     public static String fmt(float f) {

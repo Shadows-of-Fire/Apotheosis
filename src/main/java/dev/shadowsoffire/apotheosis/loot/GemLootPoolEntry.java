@@ -55,7 +55,7 @@ public class GemLootPoolEntry extends ContextualLootPoolEntry {
         }
 
         Purity purity = Purity.random(gCtx, this.purities);
-        ItemStack stack = GemRegistry.createGemStack(gem, purity);
+        ItemStack stack = gem.toStack(purity);
         list.accept(stack);
     }
 

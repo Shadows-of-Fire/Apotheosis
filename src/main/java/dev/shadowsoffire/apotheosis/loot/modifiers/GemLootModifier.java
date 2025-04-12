@@ -55,7 +55,7 @@ public class GemLootModifier extends ContextualLootModifier {
                         gem = GemRegistry.INSTANCE.getRandomItem(gCtx);
                     }
 
-                    generatedLoot.add(GemRegistry.createGemStack(gem, purity));
+                    generatedLoot.add(gem.toStack(purity));
                 }
                 break;
             }

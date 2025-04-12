@@ -31,7 +31,7 @@ public class GemCommand {
             Gem gem = GemRegistry.INSTANCE.getValue(ResourceLocationArgument.getId(c, "gem"));
             Player p = c.getSource().getPlayerOrException();
             GenContext ctx = GenContext.forPlayer(p);
-            ItemStack stack = GemRegistry.createGemStack(gem, Purity.random(ctx));
+            ItemStack stack = gem.toStack(Purity.random(ctx));
             p.addItem(stack);
             return 0;
         }))).then(Commands.literal("random").executes(c -> {

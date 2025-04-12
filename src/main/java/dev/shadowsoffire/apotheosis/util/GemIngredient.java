@@ -32,7 +32,7 @@ public record GemIngredient(Purity purity) implements ICustomIngredient {
         }
         return GemRegistry.INSTANCE.getValues().stream()
             .filter(g -> this.purity.isAtLeast(g.getMinPurity()))
-            .map(g -> GemRegistry.createGemStack(g, this.purity));
+            .map(g -> g.toStack(this.purity));
     }
 
     @Override

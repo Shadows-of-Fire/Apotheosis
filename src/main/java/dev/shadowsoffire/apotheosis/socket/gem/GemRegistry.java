@@ -4,7 +4,6 @@ import org.jetbrains.annotations.Nullable;
 
 import com.google.common.base.Preconditions;
 
-import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.socket.gem.ExtraGemBonusRegistry.ExtraGemBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
@@ -74,12 +73,12 @@ public class GemRegistry extends TieredDynamicRegistry<Gem> {
      * Creates a new {@link ItemStack} containing the provided {@link Gem}.
      * <p>
      * The provided purity will be automatically clamped based on {@link Gem#getMinPurity()}.
+     * 
+     * @deprecated Use {@link Gem#toStack(Purity)} instead.
      */
+    @Deprecated
     public static ItemStack createGemStack(Gem gem, Purity purity) {
-        ItemStack stack = new ItemStack(Items.GEM);
-        GemItem.setGem(stack, gem);
-        GemItem.setPurity(stack, Purity.max(purity, gem.getMinPurity()));
-        return stack;
+        return gem.toStack(purity);
     }
 
     /**

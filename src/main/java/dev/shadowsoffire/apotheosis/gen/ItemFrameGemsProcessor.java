@@ -59,7 +59,7 @@ public class ItemFrameGemsProcessor extends StructureProcessor {
         Gem gem = GemRegistry.INSTANCE.getRandomItem(ctx);
         if (gem != null) {
             Purity purity = Purity.random(ctx, this.purities);
-            ItemStack stack = GemRegistry.createGemStack(gem, purity);
+            ItemStack stack = gem.toStack(purity);
             nbt.put("Item", stack.save(level.registryAccess()));
         }
         nbt.putInt("TileX", pos.getX());
