@@ -312,7 +312,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         // Upgrade all affixes on Invader items by 10-25%
         ItemAffixes.Builder builder = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY).toBuilder();
         for (DynamicHolder<Affix> afx : builder.keySet()) {
-            builder.upgrade(afx, builder.getLevel(afx) + Mth.nextFloat(rand, 0.1F, 0.25F));
+            builder.upgrade(afx, Math.min(Affix.STANDARD_MAX_LEVEL, builder.getLevel(afx) + Mth.nextFloat(rand, 0.1F, 0.25F)));
         }
         AffixHelper.setAffixes(stack, builder.build());
 

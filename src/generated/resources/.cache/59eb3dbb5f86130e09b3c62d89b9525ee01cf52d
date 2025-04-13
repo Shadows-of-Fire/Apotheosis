@@ -1,4 +1,4 @@
-// 1.21.1	2025-01-07T01:14:06.0905479	Loot Tables
+// 1.21.1	2025-04-13T00:48:13.9799287	Loot Tables
 6e72c67c502d8671fc08cf2e1d05ac59ca9bf011 data/apotheosis/loot_table/blocks/augmenting_table.json
 570237e7dd2494f473d6d1734ee129a70e3c0ef7 data/apotheosis/loot_table/blocks/gem_cutting_table.json
 beecd2bb25a814e49f588a5c4a46c9ba065c2fb1 data/apotheosis/loot_table/blocks/reforging_table.json
@@ -8,5 +8,6 @@ b14737f9215c1596fdfabc331cf5330929d83fce data/apotheosis/loot_table/chests/chest
 6f1c00911db4ebe8e2b4b21ecabf1aed72c32c22 data/apotheosis/loot_table/chests/spawner_brutal.json
 71229bc3b2babd6b9e8ba26df2b803ac333ef6b9 data/apotheosis/loot_table/chests/spawner_swarm.json
 d05dd53e055571d7376845cbb45041b2f07b0858 data/apotheosis/loot_table/chests/tome_tower.json
-d268093564b55c2d247c9b30e426fa1d2645a9cd data/apotheosis/loot_table/entity/boss_drops.json
+5bc4fc4504c864a7e6a1204cd0ebf8412377a521 data/apotheosis/loot_table/entity/boss_drops.json
+35578e42643a5b3c8c864ee84f55bfa95866d988 data/apotheosis/loot_table/entity/rare_boss_drops.json
 f401bd0aed50af526256371a3d24ed39f20cf7b5 data/apotheosis/loot_table/entity/treasure_goblin.json

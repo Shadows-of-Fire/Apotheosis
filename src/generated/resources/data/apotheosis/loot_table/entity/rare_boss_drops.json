@@ -7,7 +7,7 @@
                 {
                     "type": "apotheosis:random_gem",
                     "quality": 1,
-                    "weight": 30
+                    "weight": 45
                 },
                 {
                     "type": "placebo:stack_entry",
@@ -18,15 +18,15 @@
                         "count": 1,
                         "id": "apotheosis:sigil_of_malice"
                     },
-                    "weight": 25
+                    "weight": 30
                 },
                 {
                     "type": "minecraft:empty",
-                    "weight": 45
+                    "weight": 25
                 }
             ],
             "rolls": 1.0
         }
     ],
-    "random_sequence": "apotheosis:entity/boss_drops"
+    "random_sequence": "apotheosis:entity/rare_boss_drops"
 }

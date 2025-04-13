@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.affix;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -32,7 +33,7 @@ import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 /**
  * Helper class for affixes that modify attributes, as the apply method is the same for most of those.
  */
-public class AttributeAffix extends Affix {
+public class AttributeAffix extends Affix implements AttributeProvidingAffix {
 
     public static final Codec<AttributeAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
@@ -111,6 +112,13 @@ public class AttributeAffix extends Affix {
             return false;
         }
         return (this.categories.isEmpty() || this.categories.contains(cat)) && this.modifiers.containsKey(rarity);
+    }
+
+    @Override
+    public void gatherModifierTooltips(AffixInstance inst, AttributeTooltipContext ctx, Consumer<Component> list) {
+        ModifierInst modif = this.modifiers.get(inst.getRarity());
+        Attribute attr = this.attribute.value();
+        list.accept(attr.toComponent(modif.build(inst), ctx.flag()));
     }
 
     @Override

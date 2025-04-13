@@ -54,6 +54,7 @@ import dev.shadowsoffire.apotheosis.mobs.BossSpawnerBlock.BossSpawnerTile;
 import dev.shadowsoffire.apotheosis.mobs.InvaderSpawnRules;
 import dev.shadowsoffire.apotheosis.particle.RarityParticleData;
 import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
+import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
 import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
 import dev.shadowsoffire.apotheosis.socket.SocketingRecipe;
@@ -71,9 +72,9 @@ import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
-import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.SingletonRecipeSerializer;
+import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import dev.shadowsoffire.apothic_attributes.modifiers.EntitySlotGroup;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType.TickSide;
@@ -176,6 +177,10 @@ public class Apoth {
 
         public static final DataComponentType<Block> STONEFORMING_TARGET = R.component("stoneforming_target", b -> b.persistent(BuiltInRegistries.BLOCK.byNameCodec()).networkSynchronized(ByteBufCodecs.registry(Registries.BLOCK)));
 
+        public static final DataComponentType<Boolean> MALICE_MARKER = R.component("malice_marker", b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+
+        public static final DataComponentType<Boolean> TOUCHED_BY_MALICE = R.component("touched_by_malice", b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+
         private static void bootstrap() {}
 
     }
@@ -273,6 +278,9 @@ public class Apoth {
 
         public static final Holder<Item> SIGIL_OF_UNNAMING = R.item("sigil_of_unnaming", TooltipItem::new, p -> p.rarity(Rarity.UNCOMMON));
 
+        public static final Holder<Item> SIGIL_OF_MALICE = R.item("sigil_of_malice", TooltipItem::new, p -> p
+            .component(DataComponents.ITEM_NAME, Apotheosis.lang("item", "sigil_of_malice").withStyle(ChatFormatting.RED)));
+
         public static final Holder<Item> BOSS_SUMMONER = R.item("boss_summoner", BossSummonerItem::new);
 
         public static final Holder<Item> SIMPLE_REFORGING_TABLE = R.blockItem("simple_reforging_table", Blocks.SIMPLE_REFORGING_TABLE);
@@ -352,6 +360,8 @@ public class Apoth {
     public static class Sounds {
         public static final Holder<SoundEvent> REFORGE = R.sound("reforge");
 
+        public static final Holder<SoundEvent> MALICE = R.sound("malice");
+
         private static void bootstrap() {}
     }
 
@@ -367,6 +377,7 @@ public class Apoth {
         public static final Holder<RecipeSerializer<?>> WITHDRAWAL = R.recipeSerializer("withdrawal", () -> new SingletonRecipeSerializer<>(WithdrawalRecipe::new));
         public static final Holder<RecipeSerializer<?>> SOCKETING = R.recipeSerializer("socketing", () -> new SingletonRecipeSerializer<>(SocketingRecipe::new));
         public static final Holder<RecipeSerializer<?>> UNNAMING = R.recipeSerializer("unnaming", () -> new SingletonRecipeSerializer<>(UnnamingRecipe::new));
+        public static final Holder<RecipeSerializer<?>> MALICE = R.recipeSerializer("malice", () -> new SingletonRecipeSerializer<>(MaliceRecipe::new));
         public static final Holder<RecipeSerializer<?>> ADD_SOCKETS = R.recipeSerializer("add_sockets", () -> AddSocketsRecipe.Serializer.INSTANCE);
         public static final Holder<RecipeSerializer<?>> SALVAGING = R.recipeSerializer("salvaging", () -> SalvagingRecipe.Serializer.INSTANCE);
         public static final Holder<RecipeSerializer<?>> REFORGING = R.recipeSerializer("reforging", () -> ReforgingRecipe.Serializer.INSTANCE);

@@ -16,6 +16,7 @@ import dev.shadowsoffire.apotheosis.client.AdventureContainerScreen;
 import dev.shadowsoffire.apotheosis.client.DropDownList;
 import dev.shadowsoffire.apotheosis.client.SimpleTexButton;
 import dev.shadowsoffire.apotheosis.loot.LootController;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.ChatFormatting;
@@ -341,7 +342,11 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
             int idx = this.entries.indexOf(entry);
             // blit(ResourceLocation pAtlasLocation, int pX, int pY, float pUOffset, float pVOffset, int pWidth, int pHeight, int pTextureWidth, int pTextureHeight)
             gfx.blit(TEXTURE, x, y, 0, 239 + (hovered == idx ? this.baseHeight : 0), this.width, this.baseHeight, 256, 307);
-            gfx.drawString(AugmentingScreen.this.font, entry.getName(true), x + 2, y + 3, 0xFFFF80);
+            Component name = entry.getName(true);
+            if (entry.level() >= Affix.STANDARD_MAX_LEVEL) {
+                name = ApothMiscUtil.starPrefix(name);
+            }
+            gfx.drawString(AugmentingScreen.this.font, name, x + 2, y + 3, 0xFFFF80);
         }
 
     }

@@ -102,7 +102,16 @@ public class ApothLootProvider extends LootTableProvider {
                     .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(GemLootPoolEntry.builder(Set.of(), Set.of()).setWeight(30).setQuality(1))
-                        .add(EmptyLootItem.emptyItem().setWeight(70))));
+                        .add(item(Apoth.Items.SIGIL_OF_MALICE.value(), 1, 1).setWeight(25).setQuality(1))
+                        .add(EmptyLootItem.emptyItem().setWeight(45))));
+
+            output.accept(Apoth.LootTables.BONUS_RARE_BOSS_DROPS,
+                LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(GemLootPoolEntry.builder(Set.of(), Set.of()).setWeight(45).setQuality(1))
+                        .add(item(Apoth.Items.SIGIL_OF_MALICE.value(), 1, 1).setWeight(30).setQuality(1))
+                        .add(EmptyLootItem.emptyItem().setWeight(25))));
 
             DynamicHolder<LootRarity> rare = RarityRegistry.INSTANCE.holder(Apotheosis.loc("rare"));
             DynamicHolder<LootRarity> epic = RarityRegistry.INSTANCE.holder(Apotheosis.loc("epic"));

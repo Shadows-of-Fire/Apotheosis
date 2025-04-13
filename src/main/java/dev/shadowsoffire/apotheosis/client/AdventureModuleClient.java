@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.client;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -27,6 +28,7 @@ import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
+import dev.shadowsoffire.apotheosis.affix.AttributeProvidingAffix;
 import dev.shadowsoffire.apotheosis.affix.augmenting.AugmentingScreen;
 import dev.shadowsoffire.apotheosis.affix.augmenting.AugmentingTableTileRenderer;
 import dev.shadowsoffire.apotheosis.affix.effect.StoneformingAffix;
@@ -76,6 +78,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.PlainTextContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -337,30 +340,78 @@ public class AdventureModuleClient {
         public static void affixTooltips(ItemTooltipEvent e) {
             ItemStack stack = e.getItemStack();
             List<Component> components = new ArrayList<>();
+            AttributeTooltipContext ctx = AttributeTooltipContext.of(Minecraft.getInstance().player, e.getContext(), e.getFlags());
 
             if (stack.has(Components.AFFIXES)) {
-                AttributeTooltipContext ctx = AttributeTooltipContext.of(Minecraft.getInstance().player, e.getContext(), e.getFlags());
                 AffixHelper.streamAffixes(stack)
                     .sorted(Comparator.comparingInt(a -> a.getAffix().definition().type().ordinal()))
                     .forEach(inst -> {
                         Component desc = inst.getDescription(ctx);
                         if (desc.getContents() != PlainTextContents.EMPTY) {
                             if (inst.level() > Affix.STANDARD_MAX_LEVEL) {
-                                components.add(ApothMiscUtil.starPrefix(desc));
+                                components.add(ApothMiscUtil.starPrefix(desc).withStyle(ChatFormatting.YELLOW));
                             }
                             else {
-                                components.add(ApothMiscUtil.dotPrefix(desc));
+                                components.add(ApothMiscUtil.dotPrefix(desc).withStyle(ChatFormatting.YELLOW));
                             }
                         }
                     });
             }
 
             if (stack.has(Components.DURABILITY_BONUS) && !stack.has(DataComponents.UNBREAKABLE)) {
-                components.add(ApothMiscUtil.dotPrefix(Component.translatable("affix.apotheosis:durable.desc", Math.round(100 * stack.get(Components.DURABILITY_BONUS)))));
+                Component desc = Component.translatable("affix.apotheosis:durable.desc", Math.round(100 * stack.get(Components.DURABILITY_BONUS)));
+                components.add(ApothMiscUtil.dotPrefix(desc).withStyle(ChatFormatting.YELLOW));
+            }
+
+            if (stack.getOrDefault(Components.MALICE_MARKER, false)) {
+                Component desc = Apotheosis.lang("text", "malice_marker").withStyle(ChatFormatting.RED, ChatFormatting.UNDERLINE);
+                components.add(desc);
+            }
+
+            if (stack.getOrDefault(Components.TOUCHED_BY_MALICE, false)) {
+                Component desc = Apotheosis.lang("text", "touched_by_malice");
+                components.add(ApothMiscUtil.dotPrefix(desc).withStyle(ChatFormatting.RED));
             }
 
             if (!components.isEmpty()) {
                 e.getToolTip().addAll(1, components);
+            }
+
+            // We want attribute modifiers that are being supplied by over-max affixes to reflect that in the tooltip.
+            // However, there's not really any way to know which attribute modifiers are from affixes.
+            // So to fix that, we have to ask all over-max affixes for their modifier tooltips, and search for them in the tooltip.
+            // If we find them, we add a star prefix to them.
+            Set<Component> special = new HashSet<>();
+            AffixHelper.streamAffixes(stack)
+                .filter(inst -> inst.level() > Affix.STANDARD_MAX_LEVEL)
+                .filter(inst -> inst.getAffix() instanceof AttributeProvidingAffix)
+                .forEach(inst -> ((AttributeProvidingAffix) inst.getAffix()).gatherModifierTooltips(inst, ctx, special::add));
+
+            List<Component> tooltips = e.getToolTip();
+
+            Component listHeader = Component.literal(" \u2507 ").withStyle(ChatFormatting.GRAY);
+
+            if (!special.isEmpty()) {
+                for (int i = 0; i < tooltips.size(); i++) {
+                    Component comp = tooltips.get(i);
+                    if (special.contains(comp)) {
+                        tooltips.remove(i);
+                        tooltips.add(i, ApothMiscUtil.starPrefix(comp).withStyle(comp.getStyle()));
+                    }
+                    // Try to find tooltips nested in a list header to apply the star to support merged tooltips.
+                    else if (comp.getContents().equals(listHeader.getContents()) && comp.getSiblings().size() == 1) {
+                        Component child = comp.getSiblings().get(0);
+                        if (special.contains(child)) {
+                            tooltips.remove(i);
+                            MutableComponent replacement = listHeader.copy();
+                            replacement.append(ApothMiscUtil.starPrefix(child).withStyle(child.getStyle()));
+                            for (int j = 1; j < comp.getSiblings().size(); j++) {
+                                replacement.append(comp.getSiblings().get(j));
+                            }
+                            tooltips.add(i, replacement);
+                        }
+                    }
+                }
             }
         }
 

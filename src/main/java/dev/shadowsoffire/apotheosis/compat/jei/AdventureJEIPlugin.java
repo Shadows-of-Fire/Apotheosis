@@ -8,9 +8,11 @@ import org.jetbrains.annotations.Nullable;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.UnnamingRecipe;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.compat.jei.PotionCharmExtension.PotionCharmSubtypes;
 import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
+import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
 import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
 import dev.shadowsoffire.apotheosis.socket.WithdrawalRecipe;
@@ -107,6 +109,8 @@ public class AdventureJEIPlugin implements IModPlugin {
         reg.getSmithingCategory().addExtension(SizedUpgradeRecipe.class, new SizedUpgradeRecipeExtension());
         reg.getSmithingCategory().addExtension(AddSocketsRecipe.class, new AddSocketsExtension());
         reg.getSmithingCategory().addExtension(WithdrawalRecipe.class, new WithdrawalExtension());
+        reg.getSmithingCategory().addExtension(UnnamingRecipe.class, new UnnamingExtension());
+        reg.getSmithingCategory().addExtension(MaliceRecipe.class, new MaliceExtension());
     }
 
     /**

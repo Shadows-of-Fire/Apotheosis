@@ -10,7 +10,6 @@ import com.mojang.serialization.JsonOps;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.color.GradientColor;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
-import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
@@ -19,6 +18,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderOwner;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
@@ -124,12 +124,12 @@ public class ApothMiscUtil {
         return Holder.Reference.createStandAlone(owner, key);
     }
 
-    public static Component dotPrefix(Component comp) {
-        return Apotheosis.lang("text", "dot_prefix", comp).withStyle(ChatFormatting.YELLOW);
+    public static MutableComponent dotPrefix(Component comp) {
+        return Apotheosis.lang("text", "dot_prefix", comp);
     }
 
-    public static Component starPrefix(Component comp) {
-        return Apotheosis.lang("text", "star_prefix", comp).withStyle(ChatFormatting.YELLOW);
+    public static MutableComponent starPrefix(Component comp) {
+        return Apotheosis.lang("text", "star_prefix", comp);
     }
 
     private static class ClientInternal {

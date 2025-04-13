@@ -1,9 +1,11 @@
 package dev.shadowsoffire.apotheosis.affix;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -11,22 +13,32 @@ import javax.annotation.Nullable;
 
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingMenu;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.mixin.ItemStackMixin;
+import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.CachedObject;
 import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
 import dev.shadowsoffire.placebo.util.StepFunction;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
+import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 
 public class AffixHelper {
 
@@ -99,8 +111,7 @@ public class AffixHelper {
      * @apiNote Prefer using {@link #streamAffixes(ItemStack)} where applicable, since invalid instances will be pre-filtered.
      */
     public static Map<DynamicHolder<Affix>, AffixInstance> getAffixes(ItemStack stack) {
-        if (AffixRegistry.INSTANCE.getValues().isEmpty())
-         {
+        if (AffixRegistry.INSTANCE.getValues().isEmpty()) {
             return Collections.emptyMap(); // Don't enter getAffixesImpl if the affixes haven't loaded yet.
         }
         return CachedObjectSource.getOrCreate(stack, AFFIX_CACHED_OBJECT, AffixHelper::getAffixesImpl, CachedObject.hashComponents(Components.AFFIXES, Components.RARITY));
@@ -183,6 +194,61 @@ public class AffixHelper {
 
     public static Collection<DynamicHolder<Affix>> byType(AffixType type) {
         return AffixRegistry.INSTANCE.getTypeMap().get(type);
+    }
+
+    /**
+     * Applies the effect of the Sigil of Malice to the given item stack.
+     * <p>
+     * The sigil increases the effective level of one affix on the item to 1.5F, and removes another affix at random (based on the reforge seed).
+     * 
+     * @param stack The input stack. The stack is modified in place.
+     * @apiNote This cannot be run reliably on the client, as the reforge seed is not guaranteed to be present.
+     */
+    public static void applyMalice(Player player, ItemStack stack) {
+        ItemAffixes affixes = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY);
+        if (affixes.isEmpty() || affixes.size() < 2) {
+            return;
+        }
+
+        int seed = player.getPersistentData().getInt(ReforgingMenu.REFORGE_SEED);
+        RandomSource rand = new XoroshiroRandomSource(seed);
+
+        ItemAffixes.Builder builder = affixes.toBuilder();
+        List<DynamicHolder<Affix>> afxList = new ArrayList<>(affixes.keySet());
+
+        // Choose two distinct indices
+        int size = afxList.size();
+        int firstIndex = rand.nextInt(size);
+        int secondIndex;
+        do {
+            secondIndex = rand.nextInt(size);
+        }
+        while (secondIndex == firstIndex);
+
+        DynamicHolder<Affix> buffed = afxList.get(firstIndex);
+        DynamicHolder<Affix> removed = afxList.get(secondIndex);
+
+        builder.upgrade(buffed, 1.5F);
+        float oldLevel = builder.getLevel(removed);
+        builder.remove(removed);
+
+        setAffixes(stack, builder.build());
+        stack.set(Components.TOUCHED_BY_MALICE, true);
+        player.getPersistentData().putInt(ReforgingMenu.REFORGE_SEED, player.getRandom().nextInt());
+
+        AttributeTooltipContext ctx = AttributeTooltipContext.of(player, TooltipContext.of(player.level()), ApothicAttributes.getTooltipFlag());
+
+        AffixInstance buff = new AffixInstance(buffed, 1.5F, getRarity(stack), stack);
+        AffixInstance rem = new AffixInstance(removed, oldLevel, getRarity(stack), stack);
+
+        MutableComponent buffedName = Component.translatable("[%s]", buff.getName(true));
+        buffedName.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, buff.getAugmentingText(ctx))));
+
+        MutableComponent removedName = Component.translatable("[%s]", rem.getName(true));
+        removedName.setStyle(Style.EMPTY.withColor(ChatFormatting.RED).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, rem.getAugmentingText(ctx))));
+
+        Component msg = Apotheosis.lang("text", "malice_notice", buffedName, removedName);
+        player.sendSystemMessage(msg);
     }
 
     @Deprecated

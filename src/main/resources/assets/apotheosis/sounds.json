@@ -2,5 +2,9 @@
 	"reforge": {
 		"subtitle": "apotheosis.subtitle.reforge",
 		"sounds": ["apotheosis:reforge"]
-	}
+	},
+    "malice": {
+        "subtitle": "apotheosis.subtitle.malice",
+        "sounds": ["apotheosis:malice"]
+    }
 }

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
 import org.spongepowered.include.com.google.common.base.Preconditions;
@@ -18,6 +19,7 @@ import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixBuilder;
 import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
+import dev.shadowsoffire.apotheosis.affix.AttributeProvidingAffix;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
@@ -37,7 +39,7 @@ import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 /**
  * An affix that applies multiple {@link AttributeModifier}s to a single item.
  */
-public class MultiAttrAffix extends Affix {
+public class MultiAttrAffix extends Affix implements AttributeProvidingAffix {
 
     public static final Codec<MultiAttrAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
@@ -126,6 +128,15 @@ public class MultiAttrAffix extends Affix {
             return false;
         }
         return (this.categories.isEmpty() || this.categories.contains(cat)) && this.rarities.contains(rarity);
+    }
+
+    @Override
+    public void gatherModifierTooltips(AffixInstance inst, AttributeTooltipContext ctx, Consumer<Component> list) {
+        for (int i = 0; i < this.modifiers.size(); i++) {
+            ModifierInst modif = this.modifiers.get(i);
+            Attribute attr = modif.attr.value();
+            list.accept(attr.toComponent(modif.build(inst, i), ctx.flag()));
+        }
     }
 
     @Override

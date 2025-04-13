@@ -49,7 +49,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
  */
 public abstract class Affix implements CodecProvider<Affix>, Weighted {
 
-    public static final float MAX_LEVEL = 1.0F;
+    public static final float MAX_LEVEL = 2.0F;
     public static final float STANDARD_MAX_LEVEL = 1.0F;
 
     protected final AffixDefinition definition;

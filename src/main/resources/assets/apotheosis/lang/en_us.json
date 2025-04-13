@@ -531,10 +531,13 @@
     "item.apotheosis.sigil_of_rebirth.desc": "Used to fuel the Reforging Table",
 
     "item.apotheosis.sigil_of_enhancement": "Sigil of Enhancement",
-    "item.apotheosis.sigil_of_enhancement.desc": "Used to fuel the Augmentation Table",
+    "item.apotheosis.sigil_of_enhancement.desc": "Used to fuel the Augmenting Table",
 
     "item.apotheosis.sigil_of_unnaming": "Sigil of Unnaming",
     "item.apotheosis.sigil_of_unnaming.desc": "Removes the affixed name from an item",
+
+    "item.apotheosis.sigil_of_malice": "Sigil of Malice",
+    "item.apotheosis.sigil_of_malice.desc": "Applies Touch of Malice to an Affix Item",
 
     "item.apotheosis.iron_upgrade_smithing_template": "Smithing Template",
     "upgrade.apotheosis.iron": "Iron Upgrade ",
@@ -602,6 +605,11 @@
     "text.apotheosis.potential_rerolls": "Potential Rerolls",
     "text.apotheosis.upgraded_form": "Upgraded Form",
     "text.apotheosis.alternative_page": "Page %s/%s (scroll to change)",
+    "text.apotheosis.any_x_item": "Any %s Affix Item",
+    "text.apotheosis.any_affix_item": "Any Affix Item",
+    "text.apotheosis.malice_marker": "Malice will be applied on craft",
+    "text.apotheosis.touched_by_malice": "Touched by Malice",
+    "text.apotheosis.malice_notice": "Malice: %s consumed the strength of %s",
 
     "title.apotheosis.smithing": "Apothic Smithing",
     "title.apotheosis.salvaging": "Salvaging",
@@ -635,7 +643,6 @@
     "loot_category.apotheosis.leggings.plural": "Leggings",
     "loot_category.apotheosis.boots": "Boots",
     "loot_category.apotheosis.boots.plural": "Boots",
-    "text.apotheosis.any_x_item": "Any %s Affix Item",
 
     "info.apotheosis.boss_spawn": "%s has awoken nearby!",
     "info.apotheosis.boss": "%s Apothic Boss",

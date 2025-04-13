@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-11T22:45:38.7856894	Recipes
+// 1.21.1	2025-04-11T23:56:10.764834	Recipes
 bab664def1f01400bfe3a7cf432385247dcd847d data/apotheosis/recipe/augmenting_table.json
 09ba3d6cf5c8648fcf8b628cffa3ab3b4df2fd98 data/apotheosis/recipe/diamond_upgrade_smithing_template.json
 cfc46608a868f8e622a46d07c0b0d2d642bec035 data/apotheosis/recipe/gem_cutting/chipped.json
@@ -11,6 +11,7 @@ a347031477eb93618ffdb13c26c94480f507c32a data/apotheosis/recipe/gem_fused_slate.
 56e52aee3c0163ff48c1144278a50a1c78ecf79e data/apotheosis/recipe/gold_upgrade_smithing_template.json
 335353336e6ceeb73a8afc9330cc26f1623226e0 data/apotheosis/recipe/infusion/potion_charm.json
 a2b81edb041170334599ea0d2152c38c7ce798a6 data/apotheosis/recipe/iron_upgrade_smithing_template.json
+16e3115f0d8efcfba9704e4f51cdd276a5357bd5 data/apotheosis/recipe/malice.json
 4d07bd52af85fdeb3a5bbe497c0600d84e403be8 data/apotheosis/recipe/potion_charm.json
 0803ca18f18ad251e9cbd1cc8ad11c7a557c7586 data/apotheosis/recipe/reforging/common.json
 0c9e500b832b072a30fd1ed224da480ba89e1712 data/apotheosis/recipe/reforging/epic.json
