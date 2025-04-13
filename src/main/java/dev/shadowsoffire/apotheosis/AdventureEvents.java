@@ -26,6 +26,7 @@ import dev.shadowsoffire.apotheosis.commands.ReforgeCommand;
 import dev.shadowsoffire.apotheosis.commands.SocketCommand;
 import dev.shadowsoffire.apotheosis.commands.WorldTierCommand;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
+import dev.shadowsoffire.apotheosis.mobs.types.Elite;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
@@ -43,6 +44,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -388,6 +390,17 @@ public class AdventureEvents {
                 access.set(gemStack.copyWithCount(gemStack.getCount() - 1));
                 e.setCanceled(true);
                 e.getPlayer().playSound(SoundEvents.AMETHYST_BLOCK_BREAK, 1, 1.5F + 0.35F * (1 - 2 * e.getPlayer().getRandom().nextFloat()));
+            }
+        }
+    }
+
+    @SubscribeEvent(receiveCanceled = true)
+    public void removeCloudsOnDeath(LivingDeathEvent e) {
+        if (e.getEntity().getPersistentData().getBoolean(Elite.MINIBOSS_KEY)) {
+            for (Entity passenger : e.getEntity().getPassengers()) {
+                if (passenger instanceof AreaEffectCloud cloud) {
+                    cloud.discard();
+                }
             }
         }
     }
