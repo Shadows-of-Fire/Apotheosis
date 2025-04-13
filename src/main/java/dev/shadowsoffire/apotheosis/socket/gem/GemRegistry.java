@@ -96,7 +96,7 @@ public class GemRegistry extends TieredDynamicRegistry<Gem> {
             return ItemStack.EMPTY;
         }
         Purity purity = Purity.random(ctx);
-        return createGemStack(gem, purity);
+        return gem.toStack(purity);
     }
 
 }

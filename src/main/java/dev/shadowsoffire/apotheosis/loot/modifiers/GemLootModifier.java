@@ -55,6 +55,11 @@ public class GemLootModifier extends ContextualLootModifier {
                         gem = GemRegistry.INSTANCE.getRandomItem(gCtx);
                     }
 
+                    if (gem == null) {
+                        Apotheosis.LOGGER.error("A GemLootModifier (entry {}) failed to resolve a gem for table {}!", entry.toString(), ctx.getQueriedLootTableId());
+                        continue;
+                    }
+
                     generatedLoot.add(gem.toStack(purity));
                 }
                 break;
