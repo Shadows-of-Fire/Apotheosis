@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.WorldGenLevel;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -29,13 +30,11 @@ public class AdventureConfig {
 
     // Boss Stats
     public static boolean curseBossItems = false;
-    public static float bossAnnounceRange = 96;
+    public static float bossAnnounceRange = NaturalSpawner.SPAWN_DISTANCE_BLOCK + 12;
     public static float bossAnnounceVolume = 0.75F;
-    public static boolean bossAnnounceIgnoreY = false;
     public static int bossSpawnCooldown = 3600;
     public static boolean bossAutoAggro = false;
     public static boolean bossGlowOnSpawn = true;
-    public static float bossSpawnRange = 96;
 
     // Generation
     public static float spawnerValueChance = 0.11F;
@@ -86,15 +85,12 @@ public class AdventureConfig {
 
         curseBossItems = c.getBoolean("Curse Boss Items", "bosses", curseBossItems,
             "If boss items are always cursed.  Enable this if you want bosses to be less overpowered by always giving them a negative effect.\nServer-authoritative.");
-        bossAnnounceRange = c.getFloat("Boss Announce Range", "bosses", bossAnnounceRange, 0, 1024,
+        bossAnnounceRange = c.getFloat("Boss Announcement Range", "bosses", bossAnnounceRange, 0, 1024,
             "The range at which boss spawns will be announced.  If you are closer than this number of blocks (ignoring y-level), you will receive the announcement.\nServer-authoritative.");
         bossAnnounceVolume = c.getFloat("Boss Announce Volume", "bosses", bossAnnounceVolume, 0, 1, "The volume of the boss announcement sound. 0 to disable.\nClientside.");
-        bossAnnounceIgnoreY = c.getBoolean("Boss Announce Ignore Y", "bosses", bossAnnounceIgnoreY, "If the boss announcement range ignores y-level.\nServer-authoritative.");
         bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", bossSpawnCooldown, 0, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.\nServer-authoritative.");
         bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", bossAutoAggro, "If true, invading bosses will automatically target the closest player.\nServer-authoritative.");
         bossGlowOnSpawn = c.getBoolean("Boss Glowing On Spawn", "bosses", bossGlowOnSpawn, "If true, bosses will glow when they spawn.\nServer-authoritative.");
-        bossSpawnRange = c.getFloat("Boss Spawn Range", "bosses", bossSpawnRange, 48, 1024,
-            "The maximum distance at which bosses may spawn from any player. Generally, this should match the Announce Range.\nServer-authoritative.");
 
         String[] dims = c.getStringList("Generation Dimension Whitelist", "worldgen", new String[] { "overworld" }, "The dimensions that Apotheosis's worldgen will generate in.\nServer-authoritative.");
         DIM_WHITELIST.clear();

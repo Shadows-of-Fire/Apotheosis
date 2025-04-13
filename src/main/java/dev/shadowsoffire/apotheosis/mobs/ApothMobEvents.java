@@ -105,13 +105,13 @@ public class ApothMobEvents {
 
     private boolean trySpawnInvader(FinalizeSpawnEvent e, Mob mob, GenContext ctx, Player player) {
         // Invaders can only trigger off of natural spawns (chunk generation is considered "natural")
-        if ((e.getSpawnType() != MobSpawnType.NATURAL && e.getSpawnType() != MobSpawnType.CHUNK_GENERATION) || this.cooldownData.isOnCooldown(mob.level()) || !(mob instanceof Monster)) {
+        if ((e.getSpawnType() != MobSpawnType.NATURAL && e.getSpawnType() != MobSpawnType.CHUNK_GENERATION) || !(mob instanceof Monster)) {
             debugLog("[Invaders]: Failed invader preconditions.");
             return false;
         }
 
-        if (player.distanceToSqr(mob) > AdventureConfig.bossSpawnRange * AdventureConfig.bossSpawnRange) {
-            debugLog("[Invaders]: Not close enough to be an invader.");
+        if (this.cooldownData.isOnCooldown(mob.level())) {
+            debugLog("[Invaders]: Cooldown is active for " + mob.level().dimension().location());
             return false;
         }
 
@@ -127,7 +127,12 @@ public class ApothMobEvents {
         float chance = rules.spawnChances().get(ctx.tier());
         SurfaceType surface = rules.surfaceType();
 
-        if (ctx.rand().nextFloat() <= chance && surface.test(sLevel, BlockPos.containing(e.getX(), e.getY(), e.getZ()))) {
+        if (ctx.rand().nextFloat() > chance) {
+            debugLog("[Invaders]: Failed random chance roll.");
+            return false;
+        }
+
+        if (surface.test(sLevel, BlockPos.containing(e.getX(), e.getY(), e.getZ()))) {
             debugLog("[Invaders]: Succeeded at random chance roll and surface test.");
             Invader item = InvaderRegistry.INSTANCE.getRandomItem(ctx);
             if (item == null) {
@@ -155,7 +160,7 @@ public class ApothMobEvents {
                 }
                 else {
                     sLevel.players().forEach(p -> {
-                        Vec3 tPos = new Vec3(boss.getX(), AdventureConfig.bossAnnounceIgnoreY ? p.getY() : boss.getY(), boss.getZ());
+                        Vec3 tPos = new Vec3(boss.getX(), p.getY(), boss.getZ());
                         if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
                             ((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) boss.getX(), (int) boss.getY())));
                             TextColor color = name.getStyle().getColor();
@@ -173,7 +178,7 @@ public class ApothMobEvents {
             }
         }
         else {
-            debugLog("[Invaders]: Failed at random chance roll or surface test.");
+            debugLog("[Invaders]: Failed surface test " + surface);
         }
 
         return false;

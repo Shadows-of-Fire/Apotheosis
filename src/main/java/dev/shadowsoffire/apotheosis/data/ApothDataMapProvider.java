@@ -36,8 +36,8 @@ public class ApothDataMapProvider extends DataMapProvider {
         invaderRules.add(BuiltinDimensionTypes.OVERWORLD, new InvaderSpawnRules(
             Map.of(
                 WorldTier.HAVEN, 0F,
-                WorldTier.FRONTIER, 0.015F,
-                WorldTier.ASCENT, 0.018F,
+                WorldTier.FRONTIER, 0.018F,
+                WorldTier.ASCENT, 0.020F,
                 WorldTier.SUMMIT, 0.025F,
                 WorldTier.PINNACLE, 0.03F),
             Optional.empty(),
@@ -46,8 +46,8 @@ public class ApothDataMapProvider extends DataMapProvider {
         invaderRules.add(BuiltinDimensionTypes.NETHER, new InvaderSpawnRules(
             Map.of(
                 WorldTier.HAVEN, 0F,
-                WorldTier.FRONTIER, 0.02F,
-                WorldTier.ASCENT, 0.025F,
+                WorldTier.FRONTIER, 0.025F,
+                WorldTier.ASCENT, 0.027F,
                 WorldTier.SUMMIT, 0.03F,
                 WorldTier.PINNACLE, 0.035F),
             Optional.empty(),
@@ -56,8 +56,8 @@ public class ApothDataMapProvider extends DataMapProvider {
         invaderRules.add(BuiltinDimensionTypes.END, new InvaderSpawnRules(
             Map.of(
                 WorldTier.HAVEN, 0F,
-                WorldTier.FRONTIER, 0.013F,
-                WorldTier.ASCENT, 0.018F,
+                WorldTier.FRONTIER, 0.018F,
+                WorldTier.ASCENT, 0.020F,
                 WorldTier.SUMMIT, 0.025F,
                 WorldTier.PINNACLE, 0.03F),
             Optional.empty(),
@@ -66,10 +66,10 @@ public class ApothDataMapProvider extends DataMapProvider {
         invaderRules.add(TWILIGHT_FOREST, new InvaderSpawnRules(
             Map.of(
                 WorldTier.HAVEN, 0F,
-                WorldTier.FRONTIER, 0.04F,
-                WorldTier.ASCENT, 0.05F,
-                WorldTier.SUMMIT, 0.055F,
-                WorldTier.PINNACLE, 0.06F),
+                WorldTier.FRONTIER, 0.05F,
+                WorldTier.ASCENT, 0.053F,
+                WorldTier.SUMMIT, 0.06F,
+                WorldTier.PINNACLE, 0.063F),
             Optional.empty(),
             SurfaceType.NEEDS_SURFACE), false, new ModLoadedCondition(TWILIGHT_FOREST.getNamespace()));
 
