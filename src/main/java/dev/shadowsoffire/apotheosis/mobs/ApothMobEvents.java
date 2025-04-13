@@ -188,6 +188,8 @@ public class ApothMobEvents {
      * Applies all active {@link TierAugment}s to the mob, then rolls the {@link AdventureConfig#augmentedMobChance} to apply {@link Augmentation}s.
      */
     private void tryAugmentations(ServerLevelAccessor level, Mob mob, MobSpawnType type, GenContext ctx) {
+        float healthPct = mob.getHealth() / mob.getMaxHealth();
+
         for (TierAugment aug : TierAugmentRegistry.getAugments(ctx.tier(), Target.MONSTERS)) {
             aug.apply(level, mob);
         }
@@ -207,6 +209,9 @@ public class ApothMobEvents {
                 debugLog("Skipped augmentation {}", AugmentRegistry.INSTANCE.getKey(aug));
             }
         }
+
+        // Since Tier Augments or Augmentations may apply max health, we need to update the mob's current HP.
+        mob.setHealth(healthPct * mob.getMaxHealth());
     }
 
     private boolean trySpawnElite(FinalizeSpawnEvent e, Mob mob, GenContext ctx, Player player) {
