@@ -35,6 +35,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -327,6 +328,17 @@ public class AdventureEvents {
     public void clone(PlayerEvent.Clone e) {
         int oldSeed = e.getOriginal().getPersistentData().getInt(ReforgingMenu.REFORGE_SEED);
         e.getEntity().getPersistentData().putInt(ReforgingMenu.REFORGE_SEED, oldSeed);
+    }
+
+    @SubscribeEvent(receiveCanceled = true)
+    public void removeCloudsOnDeath(LivingDeathEvent e) {
+        if (e.getEntity().getPersistentData().getBoolean("apoth.miniboss")) {
+            for (Entity passenger : e.getEntity().getPassengers()) {
+                if (passenger instanceof AreaEffectCloud cloud) {
+                    cloud.discard();
+                }
+            }
+        }
     }
 
 }
