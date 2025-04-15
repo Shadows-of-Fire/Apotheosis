@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.compat;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.block.Blocks;
 
 public class ApothSmithingCategory implements IRecipeCategory<SmithingRecipe> {
 
-    public static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
+    public static final ResourceLocation RECIPE_GUI_VANILLA = Apotheosis.loc("textures/gui/smithing_jei.png");
 
     private static final Map<Class<? extends SmithingRecipe>, Extension<SmithingRecipe>> EXTENSIONS = new IdentityHashMap<>();
 
@@ -30,7 +31,7 @@ public class ApothSmithingCategory implements IRecipeCategory<SmithingRecipe> {
     private final IDrawable icon;
 
     public ApothSmithingCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 16, 0, 0).build();
+        this.background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 0, 0, 108, 18).setTextureSize(108, 18).addPadding(0, 16, 16, 16).build();
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SMITHING_TABLE));
     }
 

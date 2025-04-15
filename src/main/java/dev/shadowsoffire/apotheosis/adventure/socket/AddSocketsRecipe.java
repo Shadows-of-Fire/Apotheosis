@@ -9,13 +9,14 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
-public class AddSocketsRecipe extends ApothSmithingRecipe {
+public class AddSocketsRecipe extends ApothSmithingRecipe implements ReactiveSmithingRecipe {
 
     private final Ingredient input;
     private final int maxSockets;
@@ -64,6 +65,9 @@ public class AddSocketsRecipe extends ApothSmithingRecipe {
     public int getMaxSockets() {
         return this.maxSockets;
     }
+
+    @Override
+    public void onCraft(Container inv, Player player, ItemStack output) {}
 
     public static class Serializer implements RecipeSerializer<AddSocketsRecipe> {
 
