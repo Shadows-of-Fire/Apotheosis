@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -45,7 +46,7 @@ class ShieldBreakerTest implements Predicate<ItemStack> {
                 return t.canDisableShield(zombies.target.getOffhandItem(), zombies.target, zombies.attacker);
             }
 
-            return t.canDisableShield(Items.SHIELD.getDefaultInstance(), null, null);
+            return t.getItem() instanceof AxeItem;
         }
 
         catch (Exception ex) {
