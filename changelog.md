@@ -35,6 +35,7 @@ Criteria (and advancement names) will only be visible once you've progressed to 
 Modpacks that adjust the criteria for tier unlocks will need to provide new language keys (and ideally change the criteria names) to ensure the data is visible.
 
 ### Features
+* Added the Sigil of Malice, which does something™ to affix items.
 * The World Tier Select Screen now has animations that play when selecting a tier or opening the menu.
 * In the overworld, Invaders may now spawn underground as long as they are within 8 vertical blocks of a player.
 * A new affix for Armor Shred has been added to melee and ranged weapons.
