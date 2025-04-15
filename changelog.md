@@ -1,3 +1,9 @@
+## 7.4.7
+* Fixed a bunch of logspam when using newer Forge versions.
+* Fixed a hang in the anvil menu when placing an enchanted book in the right slot.
+* Fixed JEI integration for the Sigil of Socketing and Sigil of Withdrawal.
+* Made it so that Area Effect Clouds are removed from Minibosses when killed (instead of persisting until they time out).
+
 ## 7.4.6
 * Fix certain entity inventories being duplicated when using Loot Pinata.
 * okazako: Updated Japanese translation.
