@@ -54,6 +54,7 @@ Modpacks that adjust the criteria for tier unlocks will need to provide new lang
 * Many weight and quality values (for invaders, affixes, and gems) have been adjusted to avoid outliers at high luck levels (~200).
   * Values above 200 still start going into insane outlier territory, but there's only so much to do without implementing full diminishing returns.
 * Substantially reduced the weight of the Unbound (creative flight) affix.
+* The Sigil of Socketing is substantially cheaper, but can only grant up to two sockets.
 
 ### Bugfixes
 * Fixed ominous bottles not being dropped when killing Raid Captains.
@@ -63,6 +64,9 @@ Modpacks that adjust the criteria for tier unlocks will need to provide new lang
 * Fixed the Telepathic affix not working on blocks.
 * Fixed certain recipes showing incorrect gems as inputs on rotation.
 * The Potion Charm blacklist has been hooked up as a Potion tag (`apotheosis:potion_charm_blacklist`). Prior to this it was not setup since the charm's re-addition.
+* Area Effect Clouds that spawn on elites (i.e. the Withering Archer) will be removed when the elite dies.
+* Tier Augments which adjust max health will now cause the original health percentage to be rescaled, instead of leaving the current health untouched.
+* Fixed JEI integration for the Sigil of Socketing and Sigil of Withdrawal.
 
 ### Technical Changes
 * Rarity Overrides have been migrated out of the rarity file into their own `rarity_override` registry.
