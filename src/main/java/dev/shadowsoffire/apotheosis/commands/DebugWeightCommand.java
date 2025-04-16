@@ -91,7 +91,9 @@ public class DebugWeightCommand {
 
         Apotheosis.LOGGER.info("Starting dump of all {} weights...", registry.getPath());
         Apotheosis.LOGGER.info("Current GenContext: {}", ctx);
-        list.sort(Comparator.comparing(w -> -w.weight().asInt()));
+        Comparator<Wrapper<T>> comparator = Comparator.comparing(w -> -w.weight().asInt());
+        comparator = comparator.thenComparing(Comparator.comparing(w -> registry.getKey(w.data()).toString()));
+        list.sort(comparator);
         for (Wrapper<T> entry : list) {
             ResourceLocation key = registry.getKey(entry.data());
             float chance = entry.weight().asInt() / total;
