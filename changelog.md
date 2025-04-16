@@ -45,6 +45,7 @@ Modpacks that adjust the criteria for tier unlocks will need to provide new lang
 * The salvaging table now matches all possible recipes for a given item, instead of only the first one.
   * Salvaging recipes for most vanilla equipment have been added, so salvaging affix items may yield additional returns.
 * Added the Gem of the Molten Breach, a new Nether-exclusive gem.
+* Added the Gem of the Verdant Ruin, a new Overworld-exclusive gem.
 
 ### Balance
 * Armor Pierce, Crit Damage, and Crit Chance affixes are now available on Bows.

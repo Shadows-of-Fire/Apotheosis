@@ -31,6 +31,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.FrozenDropsBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.LeechBlockBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.MageSlayerBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.OmneticBonus;
+import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.RadialBonus;
 import dev.shadowsoffire.apotheosis.tiers.Constraints;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
@@ -632,6 +633,54 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.NORMAL, -0.30F)
                     .value(Purity.FLAWLESS, -0.35F)
                     .value(Purity.PERFECT, -0.40F))));
+
+        addGem("overworld/verdant_ruin", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 50, 2F), c -> c
+            .unique()
+            .minPurity(Purity.FLAWED)
+            .contstraints(Constraints.forDimension(Level.OVERWORLD))
+            .bonus(WEAPONS, MultiAttrBonus.builder()
+                .desc("bonus.apotheosis:multi_attr.desc.and")
+                .modifier(b -> b
+                    .attr(ALObjects.Attributes.ARMOR_SHRED)
+                    .op(Operation.ADD_VALUE)
+                    .value(Purity.FLAWED, 0.075F)
+                    .value(Purity.NORMAL, 0.15F)
+                    .value(Purity.FLAWLESS, 0.25F)
+                    .value(Purity.PERFECT, 0.40F))
+                .modifier(b -> b
+                    .attr(Attributes.ARMOR)
+                    .op(Operation.ADD_MULTIPLIED_TOTAL)
+                    .value(Purity.FLAWED, -0.025F)
+                    .value(Purity.NORMAL, -0.05F)
+                    .value(Purity.FLAWLESS, -0.075F)
+                    .value(Purity.PERFECT, -0.10F)))
+            .bonus(LootCategories.CHESTPLATE, DamageReductionBonus.builder()
+                .damageType(DamageType.MAGIC)
+                .value(Purity.FLAWED, 0.125F)
+                .value(Purity.NORMAL, 0.15F)
+                .value(Purity.FLAWLESS, 0.175F)
+                .value(Purity.PERFECT, 0.20F))
+            .bonus(LootCategories.BOOTS, MultiAttrBonus.builder()
+                .desc("bonus.apotheosis:multi_attr.desc.and")
+                .modifier(b -> b
+                    .attr(Attributes.KNOCKBACK_RESISTANCE)
+                    .op(Operation.ADD_MULTIPLIED_TOTAL)
+                    .value(Purity.FLAWED, 0.05F)
+                    .value(Purity.NORMAL, 0.10F)
+                    .value(Purity.FLAWLESS, 0.15F)
+                    .value(Purity.PERFECT, 0.20F))
+                .modifier(b -> b
+                    .attr(Attributes.ATTACK_KNOCKBACK)
+                    .op(Operation.ADD_MULTIPLIED_TOTAL)
+                    .value(Purity.FLAWED, -0.075F)
+                    .value(Purity.NORMAL, -0.10F)
+                    .value(Purity.FLAWLESS, -0.125F)
+                    .value(Purity.PERFECT, -0.15F)))
+            .bonus(LootCategories.BREAKER, RadialBonus.builder()
+                .value(Purity.FLAWED, 3, 2, 0, 1)
+                .value(Purity.NORMAL, 3, 3, 0, 0)
+                .value(Purity.FLAWLESS, 5, 3, 0, 0)
+                .value(Purity.PERFECT, 5, 5, 0, 0)));
 
         addGem("the_nether/blood_lord", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
             .unique()

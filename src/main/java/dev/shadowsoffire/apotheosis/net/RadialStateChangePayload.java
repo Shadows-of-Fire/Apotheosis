@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.affix.effect.RadialAffix;
+import dev.shadowsoffire.apotheosis.util.RadialUtil;
 import dev.shadowsoffire.placebo.network.PayloadProvider;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.ConnectionProtocol;
@@ -43,7 +43,7 @@ public class RadialStateChangePayload implements CustomPacketPayload {
         @Override
         public void handle(RadialStateChangePayload msg, IPayloadContext ctx) {
             Player player = ctx.player();
-            RadialAffix.toggleRadialState(player);
+            RadialUtil.toggleRadialState(player);
         }
 
         @Override

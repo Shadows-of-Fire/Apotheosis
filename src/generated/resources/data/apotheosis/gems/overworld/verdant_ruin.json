@@ -1,0 +1,132 @@
+{
+    "type": "apotheosis:gem",
+    "constraints": {
+        "dimensions": [
+            "minecraft:overworld"
+        ]
+    },
+    "min_purity": "flawed",
+    "unique": true,
+    "weights": {
+        "frontier": {
+            "quality": 2.0,
+            "weight": 50
+        },
+        "ascent": {
+            "quality": 2.0,
+            "weight": 50
+        },
+        "summit": {
+            "quality": 2.0,
+            "weight": 50
+        },
+        "pinnacle": {
+            "quality": 2.0,
+            "weight": 50
+        }
+    },
+    "bonuses": [
+        {
+            "type": "apotheosis:multi_attribute",
+            "desc": "bonus.apotheosis:multi_attr.desc.and",
+            "gem_class": {
+                "key": "weapons",
+                "types": [
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident",
+                    "apotheosis:bow"
+                ]
+            },
+            "modifiers": [
+                {
+                    "attribute": "apothic_attributes:armor_shred",
+                    "operation": "add_value",
+                    "values": {
+                        "flawed": 0.075,
+                        "normal": 0.15,
+                        "flawless": 0.25,
+                        "perfect": 0.4
+                    }
+                },
+                {
+                    "attribute": "minecraft:generic.armor",
+                    "operation": "add_multiplied_total",
+                    "values": {
+                        "flawed": -0.025,
+                        "normal": -0.05,
+                        "flawless": -0.075,
+                        "perfect": -0.1
+                    }
+                }
+            ]
+        },
+        {
+            "type": "apotheosis:damage_reduction",
+            "damage_type": "magic",
+            "gem_class": "apotheosis:chestplate",
+            "values": {
+                "flawed": 0.125,
+                "normal": 0.15,
+                "flawless": 0.175,
+                "perfect": 0.2
+            }
+        },
+        {
+            "type": "apotheosis:multi_attribute",
+            "desc": "bonus.apotheosis:multi_attr.desc.and",
+            "gem_class": "apotheosis:boots",
+            "modifiers": [
+                {
+                    "attribute": "minecraft:generic.knockback_resistance",
+                    "operation": "add_multiplied_total",
+                    "values": {
+                        "flawed": 0.05,
+                        "normal": 0.1,
+                        "flawless": 0.15,
+                        "perfect": 0.2
+                    }
+                },
+                {
+                    "attribute": "minecraft:generic.attack_knockback",
+                    "operation": "add_multiplied_total",
+                    "values": {
+                        "flawed": -0.075,
+                        "normal": -0.1,
+                        "flawless": -0.125,
+                        "perfect": -0.15
+                    }
+                }
+            ]
+        },
+        {
+            "type": "apotheosis:radial",
+            "gem_class": "apotheosis:breaker",
+            "values": {
+                "flawed": {
+                    "x": 3,
+                    "xOff": 0,
+                    "y": 2,
+                    "yOff": 1
+                },
+                "normal": {
+                    "x": 3,
+                    "xOff": 0,
+                    "y": 3,
+                    "yOff": 0
+                },
+                "flawless": {
+                    "x": 5,
+                    "xOff": 0,
+                    "y": 3,
+                    "yOff": 0
+                },
+                "perfect": {
+                    "x": 5,
+                    "xOff": 0,
+                    "y": 5,
+                    "yOff": 0
+                }
+            }
+        }
+    ]
+}
