@@ -19,7 +19,6 @@ import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.mobs.types.Augmentation;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
-import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.placebo.codec.CodecMap;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
@@ -60,7 +59,7 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
     }
 
     private static void register(String id, Codec<? extends EntityModifier> codec) {
-        CODEC.register(Gateways.loc(id), codec);
+        CODEC.register(Apotheosis.loc(id), codec);
     }
 
     /**
