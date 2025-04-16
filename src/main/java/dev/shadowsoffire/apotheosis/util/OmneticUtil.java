@@ -18,14 +18,22 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent.HarvestCheck;
 
 public class OmneticUtil {
 
+    /**
+     * Applies the Omnetic data to the break speed event. This is done by calculating the break speed for each omnetic tool and selecting the maximum speed.
+     * <p>
+     * If the max omnetic-provided speed is lower than the current speed, nothing changes.
+     */
     public static void applyOmneticData(PlayerEvent.BreakSpeed e, OmneticData data) {
         float speed = e.getOriginalSpeed();
         for (ItemStack item : data.items()) {
             speed = Math.max(OmneticUtil.getBaseSpeed(e.getEntity(), item, e.getState(), e.getPosition().orElse(BlockPos.ZERO)), speed);
         }
-        e.setNewSpeed(speed);
+        e.setNewSpeed(Math.max(speed, e.getNewSpeed()));
     }
 
+    /**
+     * Applies the Omnetic data to the harvest check event. This is done by checking if any of the omnetic tools can harvest the block.
+     */
     public static void applyOmneticData(HarvestCheck e, OmneticData data) {
         for (ItemStack item : data.items()) {
             if (item.isCorrectToolForDrops(e.getTargetBlock())) {
