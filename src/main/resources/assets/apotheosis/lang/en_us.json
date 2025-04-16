@@ -137,8 +137,8 @@
     "affix.apotheosis:melee/attribute/piercing": "Piercing",
     "affix.apotheosis:melee/attribute/piercing.suffix": "of the Sunderer",
 
-    "affix.apotheosis:melee/attribute/shredding": "Shredding",
-    "affix.apotheosis:melee/attribute/shredding.suffix": "of Penetration",
+    "affix.apotheosis:weapon/attribute/shredding": "Shredding",
+    "affix.apotheosis:weapon/attribute/shredding.suffix": "of the Maelstrom",
 
     "affix.apotheosis:melee/attribute/giant_slaying": "Giant Slaying",
     "affix.apotheosis:melee/attribute/giant_slaying.suffix": "of Colossal Strikes",
