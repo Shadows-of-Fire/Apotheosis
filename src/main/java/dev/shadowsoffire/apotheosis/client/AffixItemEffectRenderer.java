@@ -78,10 +78,9 @@ public class AffixItemEffectRenderer {
                 final float beamHeight = renderData.beamHeight();
                 final float beamRadius = renderData.beamRadius();
                 final float glowRadius = renderData.glowRadius();
-
-                int alphaZero = 0;
-                int alphaLow = 0x1F << 24;
-                int alphaMax = 0x9F << 24;
+                final int alphaZero = 0;
+                final int alphaLow = 0x1F;
+                final int alphaMax = 0x9F;
 
                 float height = beamHeight * progress;
 
@@ -90,19 +89,19 @@ public class AffixItemEffectRenderer {
                 if (beamHeight > 0) {
                     // Render four segments of beacon beams to control the transparency gradient.
                     BeamRenderer.renderBeaconBeam(pose, buf, renderData.beamTexture(), renderData.glowTexture(), partials, 1, p.level().getGameTime(),
-                        0, Math.min(height, 0.5F), alphaZero | color, alphaLow | color, beamRadius, glowRadius);
+                        0, Math.min(height, 0.5F), color(alphaZero, color), color(alphaLow, color), beamRadius, glowRadius);
                     height -= 0.5F;
 
                     BeamRenderer.renderBeaconBeam(pose, buf, renderData.beamTexture(), renderData.glowTexture(), partials, 1, p.level().getGameTime(),
-                        0.5F, Math.clamp(height, 0, 0.5F), alphaLow | color, alphaMax | color, beamRadius, glowRadius);
+                        0.5F, Math.clamp(height, 0, 0.5F), color(alphaLow, color), color(alphaMax, color), beamRadius, glowRadius);
                     height -= 0.5F;
 
                     BeamRenderer.renderBeaconBeam(pose, buf, renderData.beamTexture(), renderData.glowTexture(), partials, 1, p.level().getGameTime(),
-                        1, Math.clamp(height, 0, 0.5F), alphaMax | color, alphaMax | color, beamRadius, glowRadius);
+                        1, Math.clamp(height, 0, 0.5F), color(alphaMax, color), color(alphaMax, color), beamRadius, glowRadius);
                     height -= 0.5F;
 
                     BeamRenderer.renderBeaconBeam(pose, buf, renderData.beamTexture(), renderData.glowTexture(), partials, 1, p.level().getGameTime(),
-                        1.5F, Math.clamp(height, 0, beamHeight), alphaMax | color, alphaZero | color, beamRadius, glowRadius);
+                        1.5F, Math.clamp(height, 0, beamHeight), color(alphaMax, color), color(alphaZero, color), beamRadius, glowRadius);
                 }
 
                 pose.popPose();
@@ -126,6 +125,10 @@ public class AffixItemEffectRenderer {
                 }
             }
         }
+    }
+
+    private static int color(int alpha, int color) {
+        return FastColor.ARGB32.color(alpha, color);
     }
 
 }
