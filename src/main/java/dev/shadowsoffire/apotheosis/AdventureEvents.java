@@ -29,6 +29,7 @@ import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.mobs.types.Elite;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.OmneticBonus;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
@@ -231,11 +232,13 @@ public class AdventureEvents {
     @SubscribeEvent
     public void harvest(HarvestCheck e) {
         OmneticAffix.harvest(e);
+        OmneticBonus.harvest(e);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void speed(BreakSpeed e) {
         OmneticAffix.speed(e);
+        OmneticBonus.speed(e);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

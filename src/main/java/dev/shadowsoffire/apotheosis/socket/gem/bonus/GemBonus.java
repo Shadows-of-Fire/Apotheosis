@@ -19,6 +19,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.DropTransformBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.FrozenDropsBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.LeechBlockBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.MageSlayerBonus;
+import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.OmneticBonus;
 import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
 import dev.shadowsoffire.placebo.codec.CodecMap;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
@@ -271,6 +272,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
         register("mageslayer", MageSlayerBonus.CODEC);
         register("mob_effect", MobEffectBonus.CODEC);
         register("frozen_drops", FrozenDropsBonus.CODEC);
+        register("omnetic", OmneticBonus.CODEC);
     }
 
     protected static <T extends GemBonus> App<RecordCodecBuilder.Mu<T>, GemClass> gemClass() {

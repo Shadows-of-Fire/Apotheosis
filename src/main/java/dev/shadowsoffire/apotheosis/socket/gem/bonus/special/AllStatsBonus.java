@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.socket.gem.bonus.special;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -95,7 +95,7 @@ public class AllStatsBonus extends GemBonus {
         private Operation operation;
 
         private Builder() {
-            this.values = new HashMap<>();
+            this.values = new LinkedHashMap<>();
             this.attributes = new ArrayList<>();
         }
 

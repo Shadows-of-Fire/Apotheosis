@@ -1,0 +1,213 @@
+{
+    "type": "apotheosis:gem",
+    "constraints": {
+        "dimensions": [
+            "minecraft:the_nether"
+        ]
+    },
+    "min_purity": "flawed",
+    "unique": true,
+    "weights": {
+        "ascent": {
+            "quality": 2.0,
+            "weight": 50
+        },
+        "summit": {
+            "quality": 2.0,
+            "weight": 50
+        },
+        "pinnacle": {
+            "quality": 2.0,
+            "weight": 50
+        }
+    },
+    "bonuses": [
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "apothic_attributes:prot_pierce",
+            "gem_class": {
+                "key": "light_weapon",
+                "types": [
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
+                ]
+            },
+            "operation": "add_value",
+            "values": {
+                "flawed": 5.5,
+                "normal": 8.0,
+                "flawless": 9.5,
+                "perfect": 12.0
+            }
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "apothic_attributes:armor_pierce",
+            "gem_class": "apotheosis:bow",
+            "operation": "add_value",
+            "values": {
+                "flawed": 4.0,
+                "normal": 5.5,
+                "flawless": 8.0,
+                "perfect": 10.0
+            }
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "minecraft:player.entity_interaction_range",
+            "gem_class": "apotheosis:shield",
+            "operation": "add_value",
+            "values": {
+                "flawed": 0.5,
+                "normal": 0.75,
+                "flawless": 1.25,
+                "perfect": 1.75
+            }
+        },
+        {
+            "type": "apotheosis:multi_attribute",
+            "desc": "bonus.apotheosis:multi_attr.desc.and",
+            "gem_class": "apotheosis:chestplate",
+            "modifiers": [
+                {
+                    "attribute": "minecraft:generic.attack_damage",
+                    "operation": "add_multiplied_base",
+                    "values": {
+                        "flawed": 0.05,
+                        "normal": 0.1,
+                        "flawless": 0.125,
+                        "perfect": 0.175
+                    }
+                },
+                {
+                    "attribute": "apothic_attributes:healing_received",
+                    "operation": "add_multiplied_total",
+                    "values": {
+                        "flawed": -0.05,
+                        "normal": -0.15,
+                        "flawless": -0.25,
+                        "perfect": -0.35
+                    }
+                }
+            ]
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "minecraft:generic.scale",
+            "gem_class": "apotheosis:leggings",
+            "operation": "add_value",
+            "values": {
+                "flawed": 0.075,
+                "normal": 0.125,
+                "flawless": 0.15,
+                "perfect": 0.25
+            }
+        },
+        {
+            "type": "apotheosis:omnetic",
+            "gem_class": "apotheosis:breaker",
+            "values": {
+                "flawed": {
+                    "items": [
+                        {
+                            "count": 1,
+                            "id": "minecraft:diamond_axe"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:diamond_shovel"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:diamond_pickaxe"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:diamond_sword"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:diamond_hoe"
+                        }
+                    ],
+                    "name": "diamond"
+                },
+                "normal": {
+                    "items": [
+                        {
+                            "count": 1,
+                            "id": "minecraft:diamond_axe"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:diamond_shovel"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:diamond_pickaxe"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:diamond_sword"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:diamond_hoe"
+                        }
+                    ],
+                    "name": "diamond"
+                },
+                "flawless": {
+                    "items": [
+                        {
+                            "count": 1,
+                            "id": "minecraft:netherite_axe"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:netherite_shovel"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:netherite_pickaxe"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:netherite_sword"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:netherite_hoe"
+                        }
+                    ],
+                    "name": "netherite"
+                },
+                "perfect": {
+                    "items": [
+                        {
+                            "count": 1,
+                            "id": "minecraft:netherite_axe"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:netherite_shovel"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:netherite_pickaxe"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:netherite_sword"
+                        },
+                        {
+                            "count": 1,
+                            "id": "minecraft:netherite_hoe"
+                        }
+                    ],
+                    "name": "netherite"
+                }
+            }
+        }
+    ]
+}

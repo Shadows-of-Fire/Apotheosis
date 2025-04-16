@@ -260,13 +260,17 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory category, Purity 
         this.ifPresent(b -> b.skipModifierIds(this, skip));
     }
 
+    public Optional<GemBonus> getBonus() {
+        return this.gem.get().getBonus(this.category, this.purity);
+    }
+
     /**
      * Resolves a gem bonus using {@link Optional#map(Function)}.
      *
      * @throws UnsupportedOperationException if this instance is not {@link #isValid()}.
      */
     private <T> Optional<T> map(Function<GemBonus, T> function) {
-        return this.gem.get().getBonus(this.category, this.purity).map(function);
+        return this.getBonus().map(function);
     }
 
     /**
@@ -275,6 +279,6 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory category, Purity 
      * @throws UnsupportedOperationException if this instance is not {@link #isValid()}.
      */
     private void ifPresent(Consumer<GemBonus> function) {
-        this.gem.get().getBonus(this.category, this.purity).ifPresent(function);
+        this.getBonus().ifPresent(function);
     }
 }

@@ -1,4 +1,4 @@
-// 1.21.1	2025-03-27T23:39:48.9492991	Gems
+// 1.21.1	2025-04-15T23:32:36.1759862	Gems
 31d0b1a57a47a447c3a028b7e189fe3ef7e14e4a data/apotheosis/gems/core/ballast.json
 9f304df62799fdb15d7bb2e8b1aa96a5f873ea5d data/apotheosis/gems/core/brawlers.json
 497305a3bceb1d47c46d8e616f030b453ceb229f data/apotheosis/gems/core/breach.json
@@ -18,5 +18,6 @@ ebd784ddd1b013322a9fa9b4db6c32ff43b70313 data/apotheosis/gems/the_end/endersurge
 51458fdb7761e79266d5b834e9d1d234b6c83579 data/apotheosis/gems/the_end/mageslayer.json
 932be08ee3855eb15d777971860800d874e10a77 data/apotheosis/gems/the_nether/blood_lord.json
 4047ef18f676fe912398b7e42718836ee50ee5fe data/apotheosis/gems/the_nether/inferno.json
+7fe2bbcc4c918479b8dd3fd3917f997b9024f6c9 data/apotheosis/gems/the_nether/molten_breach.json
 37866a7bcef4d84920ec91fcee6aa97c33a1af9c data/apotheosis/gems/twilight/forest.json
 2aee3fa3455125eec59275c43f7d7a1705e59e00 data/apotheosis/gems/twilight/queen.json

@@ -30,6 +30,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.DropTransformBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.FrozenDropsBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.LeechBlockBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.MageSlayerBonus;
+import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.OmneticBonus;
 import dev.shadowsoffire.apotheosis.tiers.Constraints;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
@@ -716,6 +717,60 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.625)
                 .value(Purity.FLAWLESS, 0.75)
                 .value(Purity.PERFECT, 0.90)));
+
+        addGem("the_nether/molten_breach", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
+            .unique()
+            .minPurity(Purity.FLAWED)
+            .contstraints(Constraints.forDimension(Level.NETHER))
+            .bonus(LIGHT_WEAPON, AttributeBonus.builder()
+                .attr(ALObjects.Attributes.PROT_PIERCE)
+                .op(Operation.ADD_VALUE)
+                .value(Purity.FLAWED, 5.5)
+                .value(Purity.NORMAL, 8)
+                .value(Purity.FLAWLESS, 9.5)
+                .value(Purity.PERFECT, 12))
+            .bonus(LootCategories.BOW, AttributeBonus.builder()
+                .attr(ALObjects.Attributes.ARMOR_PIERCE)
+                .op(Operation.ADD_VALUE)
+                .value(Purity.FLAWED, 4)
+                .value(Purity.NORMAL, 5.5)
+                .value(Purity.FLAWLESS, 8)
+                .value(Purity.PERFECT, 10))
+            .bonus(LootCategories.SHIELD, AttributeBonus.builder()
+                .attr(Attributes.ENTITY_INTERACTION_RANGE)
+                .op(Operation.ADD_VALUE)
+                .value(Purity.FLAWED, 0.5)
+                .value(Purity.NORMAL, 0.75)
+                .value(Purity.FLAWLESS, 1.25)
+                .value(Purity.PERFECT, 1.75))
+            .bonus(LootCategories.CHESTPLATE, MultiAttrBonus.builder()
+                .desc("bonus.apotheosis:multi_attr.desc.and")
+                .modifier(b -> b
+                    .attr(Attributes.ATTACK_DAMAGE)
+                    .op(Operation.ADD_MULTIPLIED_BASE)
+                    .value(Purity.FLAWED, 0.05F)
+                    .value(Purity.NORMAL, 0.10F)
+                    .value(Purity.FLAWLESS, 0.125F)
+                    .value(Purity.PERFECT, 0.175F))
+                .modifier(b -> b
+                    .attr(ALObjects.Attributes.HEALING_RECEIVED)
+                    .op(Operation.ADD_MULTIPLIED_TOTAL)
+                    .value(Purity.FLAWED, -0.05F)
+                    .value(Purity.NORMAL, -0.15F)
+                    .value(Purity.FLAWLESS, -0.25F)
+                    .value(Purity.PERFECT, -0.35F)))
+            .bonus(LootCategories.LEGGINGS, AttributeBonus.builder()
+                .attr(Attributes.SCALE)
+                .op(Operation.ADD_VALUE)
+                .value(Purity.FLAWED, 0.075)
+                .value(Purity.NORMAL, 0.125)
+                .value(Purity.FLAWLESS, 0.15)
+                .value(Purity.PERFECT, 0.25))
+            .bonus(LootCategories.BREAKER, OmneticBonus.builder()
+                .value(Purity.FLAWED, "diamond", Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_SWORD, Items.DIAMOND_HOE)
+                .value(Purity.NORMAL, "diamond", Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_SWORD, Items.DIAMOND_HOE)
+                .value(Purity.FLAWLESS, "netherite", Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_HOE)
+                .value(Purity.PERFECT, "netherite", Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_HOE)));
 
         addGem("the_end/endersurge", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
             .unique()
