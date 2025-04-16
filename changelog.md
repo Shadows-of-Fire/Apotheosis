@@ -1,6 +1,8 @@
 ## 8.3.0
 This update is Apotheosis's Quality of Life update, bringing a variety of utility and nice-to-have changes in one bundle.  
-Some of these are native features that improve how things work, and some are re-implementations of complementary mod features with better integration to Apotheosis.
+Some of these are native features that improve how things work, and some are re-implementations of complementary mod features with better integration to Apotheosis.  
+
+![](https://i.imgur.com/pUUcbtf.jpeg)  
 
 ### Quality of Life Features
 #### Link Item to Chat
