@@ -70,7 +70,7 @@ public record LinkItemToChatPayload(int containerId, int slot, Item intendedItem
                 ItemStack stack = slot.getItem();
                 if (stack.getItem() == msg.intendedItem) {
                     Component comp = stack.getDisplayName();
-                    PlayerChatMessage chatMsg = PlayerChatMessage.unsigned(player.getUUID(), "").withUnsignedContent(comp);
+                    PlayerChatMessage chatMsg = PlayerChatMessage.system("").withUnsignedContent(comp);
                     player.getServer().getPlayerList().broadcastChatMessage(chatMsg, (ServerPlayer) player, ChatType.bind(ChatType.CHAT, player));
                     ItemLinking.startCooldown(player.getUUID(), player.level().getGameTime());
                 }
