@@ -447,6 +447,10 @@ public class AdventureModuleClient {
 
         @SubscribeEvent(priority = EventPriority.LOW)
         public static void compareItems(RenderTooltipEvent.Pre e) {
+            if (!AdventureConfig.enableEquipmentCompare) {
+                return;
+            }
+
             Minecraft mc = Minecraft.getInstance();
             if (!InputConstants.isKeyDown(mc.getWindow().getWindow(), AdventureKeys.COMPARE_EQUIPMENT.getKey().getValue()) || !(mc.screen instanceof AbstractContainerScreen)) {
                 return;
