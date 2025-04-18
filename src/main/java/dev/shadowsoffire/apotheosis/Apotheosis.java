@@ -89,8 +89,8 @@ public class Apotheosis {
 
     public static final String MODID = "apotheosis";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-    public static final boolean DEBUG_WORLDGEN = "on".equalsIgnoreCase(System.getenv("apotheosis.debug_worldgen"));
-    public static final boolean DEBUG_MOBS = "on".equalsIgnoreCase(System.getenv("apotheosis.debug_mobs"));
+    public static final boolean DEBUG_WORLDGEN = "on".equalsIgnoreCase(System.getenv("APOTH_DEBUG_WORLDGEN"));
+    public static final boolean DEBUG_MOBS = "on".equalsIgnoreCase(System.getenv("APOTH_DEBUG_MOBS"));
     public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
 
     public Apotheosis(IEventBus bus) {
