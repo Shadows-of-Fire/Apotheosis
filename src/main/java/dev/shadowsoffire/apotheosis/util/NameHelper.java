@@ -334,7 +334,7 @@ public class NameHelper {
             name.append(type[random.nextInt(type.length)]);
         }
 
-        stack.set(DataComponents.CUSTOM_NAME, name);
+        stack.set(DataComponents.CUSTOM_NAME, name.withStyle(name.getStyle().withItalic(false)));
         return name;
     }
 

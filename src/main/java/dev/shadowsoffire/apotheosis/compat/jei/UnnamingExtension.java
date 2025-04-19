@@ -45,7 +45,7 @@ public class UnnamingExtension implements ISmithingCategoryExtension<UnnamingRec
         List<ItemStack> outputs = getDummyItems()
             .map(stack -> {
                 LootRarity rarity = AffixHelper.getRarity(stack).get();
-                Component comp = Component.translatable("%2$s", "", "").withStyle(Style.EMPTY.withColor(rarity.color()));
+                Component comp = Component.translatable("%2$s", "", "").withStyle(Style.EMPTY.withColor(rarity.color()).withItalic(false));
                 AffixHelper.setName(stack, comp);
                 return stack;
             })

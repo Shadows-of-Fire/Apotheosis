@@ -70,7 +70,7 @@ public class LootController {
         jRand.setSeed(ctx.rand().nextLong());
         Collections.shuffle(nameList, jRand);
         String key = nameList.size() > 1 ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.two";
-        MutableComponent name = Component.translatable(key, nameList.get(0).getName(true), "", nameList.size() > 1 ? nameList.get(1).getName(false) : "").withStyle(Style.EMPTY.withColor(rarity.color()));
+        MutableComponent name = Component.translatable(key, nameList.get(0).getName(true), "", nameList.size() > 1 ? nameList.get(1).getName(false) : "").withStyle(Style.EMPTY.withColor(rarity.color()).withItalic(false));
         AffixHelper.setName(stack, name);
 
         return stack;

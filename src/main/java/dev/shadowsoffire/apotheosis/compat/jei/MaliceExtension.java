@@ -57,7 +57,7 @@ public class MaliceExtension implements ISmithingCategoryExtension<MaliceRecipe>
         return DUMMY_ITEMS.stream().map(ItemStack::new)
             .map(stack -> {
                 LootController.createLootItem(stack, rarity, GenContext.dummy(rand));
-                AffixHelper.setName(stack, Apotheosis.lang("text", "any_affix_item").withStyle(Style.EMPTY.withColor(rarity.color())));
+                AffixHelper.setName(stack, Apotheosis.lang("text", "any_affix_item").withStyle(Style.EMPTY.withColor(rarity.color()).withItalic(false)));
                 return stack;
             });
     }

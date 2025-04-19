@@ -66,7 +66,7 @@ public class AffixItemIngredient implements ICustomIngredient {
             .map(ItemStack::new)
             .map(stack -> {
                 LootController.createLootItem(stack, rarity, GenContext.dummy(src));
-                AffixHelper.setName(stack, Component.translatable("text.apotheosis.any_x_item", rarity.toComponent(), "").withStyle(Style.EMPTY.withColor(rarity.color())));
+                AffixHelper.setName(stack, Component.translatable("text.apotheosis.any_x_item", rarity.toComponent(), "").withStyle(Style.EMPTY.withColor(rarity.color()).withItalic(false)));
                 return stack;
             });
     }
