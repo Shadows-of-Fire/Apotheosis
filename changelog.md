@@ -1,3 +1,12 @@
+## 8.3.1
+* Fixed an issue where loot beams would not properly adjust the alpha value if the incoming color had it set already.
+* Fixed Omnetic (both the affix and the gem bonus) being able to reduce the player's mining speed.
+* Fixed item linking not working on servers with chat signing enabled.
+* Changed the names of the debug environment variables to be linux-compatible.
+* Fixed affix names being italic under certain conditions.
+* Fixed an issue where Boss items could not be removed from RS/AE systems until reloading the world.
+* Fixed missing translations for new keybinds in the controls menu.
+
 ## 8.3.0
 This update is Apotheosis's Quality of Life update, bringing a variety of utility and nice-to-have changes in one bundle.  
 Some of these are native features that improve how things work, and some are re-implementations of complementary mod features with better integration to Apotheosis.  
