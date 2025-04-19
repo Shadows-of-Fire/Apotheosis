@@ -47,6 +47,7 @@ import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.systems.gear.GearSet;
 import dev.shadowsoffire.placebo.systems.gear.GearSetRegistry;
+import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -55,7 +56,9 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
@@ -78,6 +81,7 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.network.connection.ConnectionType;
 
 /**
  * An Invader is a preset entity with per-rarity stats that will spawn with a full gear set and an equipped affix item.
@@ -327,7 +331,14 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
                 newArgs[i] = tc.getArgs()[i - 1];
             }
             Component copy = Component.translatable(newKey, newArgs).withStyle(name.getStyle().withItalic(false));
-            AffixHelper.setName(stack, copy);
+
+            // We need to ensure things aren't entangled, but we can't otherwise make a deep copy of the TranslatableContents.
+            // So... we just serialize the entire thing and deserialize it. Shouldn't be too expensive to run here.
+            var rfbb = new RegistryFriendlyByteBuf(Unpooled.buffer(), reg, ConnectionType.NEOFORGE);
+            ComponentSerialization.TRUSTED_STREAM_CODEC.encode(rfbb, copy);
+            Component deserialized = ComponentSerialization.TRUSTED_STREAM_CODEC.decode(rfbb);
+
+            AffixHelper.setName(stack, deserialized);
         }
 
         ItemEnchantments.Mutable enchMap = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
