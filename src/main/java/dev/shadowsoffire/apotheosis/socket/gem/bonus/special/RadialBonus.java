@@ -3,10 +3,14 @@ package dev.shadowsoffire.apotheosis.socket.gem.bonus.special;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
@@ -15,11 +19,13 @@ import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.util.RadialUtil;
 import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialData;
+import dev.shadowsoffire.placebo.util.CachedObject;
+import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
@@ -30,6 +36,8 @@ public class RadialBonus extends GemBonus {
             gemClass(),
             Purity.mapCodec(RadialData.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, RadialBonus::new));
+
+    public static final ResourceLocation GEM_RADIAL_DATA_CACHED_OBJECT = Apotheosis.loc("gem_radial_data");
 
     protected final Map<Purity, RadialData> values;
 
@@ -57,15 +65,26 @@ public class RadialBonus extends GemBonus {
     // EventPriority.LOW
     public static void onBreak(BlockEvent.BreakEvent e) {
         Player player = e.getPlayer();
-        ItemStack tool = player.getMainHandItem();
-        Level world = player.level();
-        if (!world.isClientSide && tool.has(Components.SOCKETED_GEMS)) {
+        RadialData data = getRadialData(player.getMainHandItem());
+        if (data != null) {
+            RadialUtil.attemptRadialMining(e, data);
+        }
+    }
+
+    @Nullable
+    public static RadialData getRadialData(ItemStack tool) {
+        return CachedObjectSource.getOrCreate(tool, GEM_RADIAL_DATA_CACHED_OBJECT, RadialBonus::getRadialDataImpl, CachedObject.hashComponents(Apoth.Components.SOCKETED_GEMS, Apoth.Components.SOCKETS));
+    }
+
+    @Nullable
+    private static RadialData getRadialDataImpl(ItemStack tool) {
+        if (tool.has(Components.SOCKETED_GEMS)) {
             GemInstance inst = SocketHelper.getGems(tool).streamValidGems().filter(g -> g.getBonus().orElse(null) instanceof RadialBonus).findFirst().orElse(null);
             if (inst != null && inst.isValid()) {
-                RadialData data = ((RadialBonus) inst.getBonus().get()).values.get(inst.purity());
-                RadialUtil.attemptRadialMining(e, data);
+                return ((RadialBonus) inst.getBonus().get()).values.get(inst.purity());
             }
         }
+        return null;
     }
 
     public static Builder builder() {

@@ -147,6 +147,7 @@ public class AdventureModuleClient {
         });
         NeoForge.EVENT_BUS.register(AdventureKeys.class);
         NeoForge.EVENT_BUS.register(GameBusEvents.class);
+        NeoForge.EVENT_BUS.register(RadialProgressTracker.class);
     }
 
     @SubscribeEvent

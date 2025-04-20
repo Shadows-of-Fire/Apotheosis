@@ -26,6 +26,7 @@
     "client": [
         "client.EntityRendererMixin",
         "client.GuiMixin",
+        "client.MultiPlayerGameModeMixin",
         "client.SkeletonModelMixin"
     ],
     "minVersion": "0.8",

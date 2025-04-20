@@ -1,6 +1,8 @@
 package dev.shadowsoffire.apotheosis.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
@@ -12,6 +14,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -20,7 +23,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,7 +34,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 
 public class RadialUtil {
 
-    private static Set<UUID> breakers = new HashSet<>();
+    private static ThreadLocal<Set<UUID>> breakers = ThreadLocal.withInitial(HashSet::new);
 
     /**
      * Updates the players radial state to the next state, and notifies them of the change.
@@ -46,81 +48,115 @@ public class RadialUtil {
 
     public static void attemptRadialMining(BlockEvent.BreakEvent e, RadialData data) {
         Player player = e.getPlayer();
-        ItemStack tool = player.getMainHandItem();
-        Level world = player.level();
-        if (!world.isClientSide && RadialState.getState(player).isRadialMiningEnabled(player)) {
-            float hardness = e.getState().getDestroySpeed(e.getLevel(), e.getPos());
-            RadialUtil.breakExtraBlocks((ServerPlayer) player, e.getPos(), tool, data, hardness);
+        if (RadialState.isRadialMiningEnabled(player)) {
+            RadialUtil.breakExtraBlocks(player, e.getPos(), data);
         }
     }
 
     /**
      * Performs the actual extra breaking of blocks
      *
-     * @param player The player breaking the block
-     * @param pos    The position of the originally broken block
-     * @param tool   The tool being used (which has this affix on it)
-     * @param level  The level of this affix, in this case, the mode of operation.
+     * @param player          The player breaking the block
+     * @param pos             The position of the originally broken block
+     * @param tool            The tool being used (which has this affix on it)
+     * @param data            The level of this affix, in this case, the mode of operation.
+     * @param srcDestroySpeed The destroy speed of the block being broken.
      */
-    public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, RadialData level, float hardness) {
-        if (!breakers.add(player.getUUID())) {
+    public static void breakExtraBlocks(Player player, BlockPos pos, RadialData data) {
+        if (!breakers.get().add(player.getUUID())) {
             return; // Prevent multiple break operations from cascading, and don't execute when sneaking.
         }
 
         try {
-            breakBlockRadius(player, pos, level.x, level.y, level.xOff, level.yOff, hardness);
+            breakBlockRadius(player, pos, data);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
 
-        breakers.remove(player.getUUID());
+        breakers.get().remove(player.getUUID());
     }
 
-    public static void breakBlockRadius(ServerPlayer player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
-        Level world = player.level();
-        if (x < 2 && y < 2) {
-            return;
+    /**
+     * Returns a list of all blocks that would be broken by the radial breaking operation.
+     * <p>
+     * The list of all blocks is eagerly computed and returned, so be careful with large radii.
+     * 
+     * @param player The player breaking the block
+     * @param srcPos The position of the originally broken block
+     * @param data   The level of this affix, in this case, the mode of operation.
+     */
+    public static List<BlockPos> getBrokenBlocks(Player player, Direction direction, BlockPos srcPos, RadialData data) {
+        Level level = player.level();
+        if (data.x < 2 && data.y < 2) {
+            return List.of();
         }
-        int lowerY = (int) Math.ceil(-y / 2D), upperY = (int) Math.round(y / 2D);
-        int lowerX = (int) Math.ceil(-x / 2D), upperX = (int) Math.round(x / 2D);
 
-        Vec3 base = player.getEyePosition(0);
-        Vec3 look = player.getLookAngle();
-        double reach = player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE);
-        Vec3 target = base.add(look.x * reach, look.y * reach, look.z * reach);
-        HitResult trace = world.clip(new ClipContext(base, target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
+        int lowerY = (int) Math.ceil(-data.y / 2D), upperY = (int) Math.round(data.y / 2D);
+        int lowerX = (int) Math.ceil(-data.x / 2D), upperX = (int) Math.round(data.x / 2D);
 
-        if (trace == null || trace.getType() != Type.BLOCK) {
-            return;
-        }
-        BlockHitResult res = (BlockHitResult) trace;
+        List<BlockPos> broken = new ArrayList<>();
 
-        Direction face = res.getDirection(); // Face of the block currently being looked at by the player.
+        float srcDestroySpeed = level.getBlockState(srcPos).getDestroySpeed(level, srcPos);
 
         for (int iy = lowerY; iy < upperY; iy++) {
             for (int ix = lowerX; ix < upperX; ix++) {
-                BlockPos genPos = new BlockPos(pos.getX() + ix + xOff, pos.getY() + iy + yOff, pos.getZ());
+                BlockPos genPos = new BlockPos(srcPos.getX() + ix + data.xOff, srcPos.getY() + iy + data.yOff, srcPos.getZ());
 
                 if (player.getDirection().getAxis() == Axis.X) {
-                    genPos = new BlockPos(genPos.getX() - (ix + xOff), genPos.getY(), genPos.getZ() + ix + xOff);
+                    genPos = new BlockPos(genPos.getX() - (ix + data.xOff), genPos.getY(), genPos.getZ() + ix + data.xOff);
                 }
 
-                if (face.getAxis().isVertical()) {
-                    genPos = rotateDown(genPos, iy + yOff, player.getDirection());
+                if (direction.getAxis().isVertical()) {
+                    genPos = rotateDown(genPos, iy + data.yOff, player.getDirection());
                 }
 
-                if (genPos.equals(pos)) {
+                if (genPos.equals(srcPos)) {
                     continue;
                 }
-                BlockState state = world.getBlockState(genPos);
-                float stateHardness = state.getDestroySpeed(world, genPos);
-                if (!state.isAir() && stateHardness != -1 && stateHardness <= hardness * 3F && isEffective(state, player, genPos)) {
-                    PlaceboUtil.tryHarvestBlock(player, genPos);
+
+                BlockState state = level.getBlockState(genPos);
+                float stateDestroySpeed = state.getDestroySpeed(level, genPos);
+                if (!state.isAir() && stateDestroySpeed != -1 && stateDestroySpeed <= srcDestroySpeed * 3F && isEffective(state, player, genPos)) {
+                    broken.add(genPos);
                 }
             }
         }
 
+        return broken;
+    }
+
+    /**
+     * Traces the player's look vector and returns the result.
+     */
+    public static HitResult tracePlayerLook(Player player) {
+        Vec3 base = player.getEyePosition(0);
+        Vec3 look = player.getLookAngle();
+        double reach = player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE);
+        Vec3 target = base.add(look.x * reach, look.y * reach, look.z * reach);
+        Level level = player.level();
+        return level.clip(new ClipContext(base, target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
+    }
+
+    public static void breakBlockRadius(Player player, BlockPos srcPos, RadialData data) {
+        HitResult trace = tracePlayerLook(player);
+        if (trace == null || trace.getType() != Type.BLOCK) {
+            return;
+        }
+
+        BlockHitResult res = (BlockHitResult) trace;
+        Direction face = res.getDirection(); // Face of the block currently being looked at by the player.
+
+        List<BlockPos> broken = getBrokenBlocks(player, face, srcPos, data);
+        for (BlockPos pos : broken) {
+            if (!player.level().isClientSide) {
+                PlaceboUtil.tryHarvestBlock((ServerPlayer) player, pos);
+            }
+            else {
+                // TODO: This should be used when BreakEvent is fired on the client, but currently this is unreachable.
+                ClientAccess.breakClientBlock(pos);
+            }
+        }
     }
 
     static BlockPos rotateDown(BlockPos pos, int y, Direction horizontal) {
@@ -128,7 +164,7 @@ public class RadialUtil {
         return new BlockPos(pos.getX() + vec.getX() * y, pos.getY() - y, pos.getZ() + vec.getZ() * y);
     }
 
-    static boolean isEffective(BlockState state, Player player, BlockPos pos) {
+    public static boolean isEffective(BlockState state, Player player, BlockPos pos) {
         return player.hasCorrectToolForDrops(state, player.level(), pos);
     }
 
@@ -159,8 +195,8 @@ public class RadialUtil {
         /**
          * @return If the radial breaking feature is enabled while the player is in the current state
          */
-        public boolean isRadialMiningEnabled(Player input) {
-            return this.condition.apply(input);
+        public static boolean isRadialMiningEnabled(Player input) {
+            return getState(input).condition.apply(input);
         }
 
         public RadialState next() {
@@ -197,6 +233,13 @@ public class RadialUtil {
 
         public static void setState(Player player, RadialState state) {
             player.getPersistentData().putString("apoth.radial_state", state.name());
+        }
+    }
+
+    private static class ClientAccess {
+
+        public static void breakClientBlock(BlockPos pos) {
+            Minecraft.getInstance().gameMode.destroyBlock(pos);
         }
     }
 

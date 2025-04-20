@@ -8,12 +8,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.UnaryOperator;
 
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.include.com.google.common.base.Preconditions;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixBuilder;
 import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
@@ -23,12 +26,14 @@ import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.util.RadialUtil;
 import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialData;
+import dev.shadowsoffire.placebo.util.CachedObject;
+import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
@@ -40,6 +45,8 @@ public class RadialAffix extends Affix {
             LootCategory.SET_CODEC.fieldOf("categories").forGetter(a -> a.categories),
             LootRarity.mapCodec(Codec.list(RadialData.CODEC)).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, RadialAffix::new));
+
+    public static final ResourceLocation AFFIX_RADIAL_DATA_CACHED_OBJECT = Apotheosis.loc("afx_radial_data");
 
     protected final Set<LootCategory> categories;
     protected final Map<LootRarity, List<RadialData>> values;
@@ -79,15 +86,26 @@ public class RadialAffix extends Affix {
     // EventPriority.LOW
     public static void onBreak(BlockEvent.BreakEvent e) {
         Player player = e.getPlayer();
-        ItemStack tool = player.getMainHandItem();
-        Level world = player.level();
-        if (!world.isClientSide && tool.has(Components.AFFIXES)) {
+        RadialData data = getRadialData(player.getMainHandItem());
+        if (data != null) {
+            RadialUtil.attemptRadialMining(e, data);
+        }
+    }
+
+    @Nullable
+    public static RadialData getRadialData(ItemStack tool) {
+        return CachedObjectSource.getOrCreate(tool, AFFIX_RADIAL_DATA_CACHED_OBJECT, RadialAffix::getRadialDataImpl, CachedObject.hashComponents(Apoth.Components.AFFIXES));
+    }
+
+    @Nullable
+    private static RadialData getRadialDataImpl(ItemStack tool) {
+        if (tool.has(Components.AFFIXES)) {
             AffixInstance inst = AffixHelper.streamAffixes(tool).filter(i -> i.getAffix() instanceof RadialAffix).findFirst().orElse(null);
             if (inst != null && inst.isValid()) {
-                RadialData data = ((RadialAffix) inst.getAffix()).getTrueLevel(inst.rarity().get(), inst.level());
-                RadialUtil.attemptRadialMining(e, data);
+                return ((RadialAffix) inst.getAffix()).getTrueLevel(inst.rarity().get(), inst.level());
             }
         }
+        return null;
     }
 
     private RadialData getTrueLevel(AffixInstance inst) {
