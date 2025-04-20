@@ -30,6 +30,7 @@ import dev.shadowsoffire.apotheosis.mobs.types.Elite;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.OmneticBonus;
+import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.RadialBonus;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
@@ -244,6 +245,7 @@ public class AdventureEvents {
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onBreak(BlockEvent.BreakEvent e) {
         RadialAffix.onBreak(e);
+        RadialBonus.onBreak(e);
     }
 
     @SubscribeEvent
