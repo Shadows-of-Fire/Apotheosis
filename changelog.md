@@ -1,3 +1,7 @@
+## 8.3.2
+* Fixed the Gem of the Verdant Ruin's radial mining bonus not working.
+* Made Radial Mining (affixes and gems) have proper client-sided display effects.
+
 ## 8.3.1
 * Fixed an issue where loot beams would not properly adjust the alpha value if the incoming color had it set already.
 * Fixed Omnetic (both the affix and the gem bonus) being able to reduce the player's mining speed.
