@@ -1,3 +1,8 @@
+## 8.3.3
+* Added the World Tier Tutorial, which makes information about World Tiers much more obvious to new players.
+  * This new tutorial will not be visible by default for players who have progressed past World Tier: Haven.
+  * It can be opened manually by clicking the '?' button in the bottom corner of the World Tier Select screen.
+
 ## 8.3.2
 * Fixed the Gem of the Verdant Ruin's radial mining bonus not working.
 * Made Radial Mining (affixes and gems) have proper client-sided display effects.
