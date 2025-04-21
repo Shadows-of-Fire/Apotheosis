@@ -16,6 +16,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.AffixBuilder.ValuedAffixBuilder;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
@@ -24,6 +25,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -119,6 +121,13 @@ public class AttributeAffix extends Affix implements AttributeProvidingAffix {
         ModifierInst modif = this.modifiers.get(inst.getRarity());
         Attribute attr = this.attribute.value();
         list.accept(attr.toComponent(modif.build(inst), ctx.flag()));
+    }
+
+    @Override
+    public void skipModifierIds(AffixInstance inst, AttributeTooltipContext ctx, Consumer<ResourceLocation> skip) {
+        if (ctx.player() != null && WorldTier.isTutorialActive(ctx.player())) {
+            skip.accept(inst.makeUniqueId());
+        }
     }
 
     @Override

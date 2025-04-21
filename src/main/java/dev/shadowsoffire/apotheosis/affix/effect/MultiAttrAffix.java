@@ -22,6 +22,7 @@ import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.affix.AttributeProvidingAffix;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
@@ -30,6 +31,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -136,6 +138,15 @@ public class MultiAttrAffix extends Affix implements AttributeProvidingAffix {
             ModifierInst modif = this.modifiers.get(i);
             Attribute attr = modif.attr.value();
             list.accept(attr.toComponent(modif.build(inst, i), ctx.flag()));
+        }
+    }
+
+    @Override
+    public void skipModifierIds(AffixInstance inst, AttributeTooltipContext ctx, Consumer<ResourceLocation> skip) {
+        if (ctx.player() != null && WorldTier.isTutorialActive(ctx.player())) {
+            for (int i = 0; i < this.modifiers.size(); i++) {
+                skip.accept(inst.makeUniqueId("" + i));
+            }
         }
     }
 

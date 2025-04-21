@@ -37,13 +37,41 @@
     "button.apotheosis.show_detailed_info.desc": "View Mob Buffs, Player Buffs, and Rarities",
     "button.apotheosis.return": "X",
     "button.apotheosis.return.desc": "Go back to the Tier Select screen",
+    "button.apotheosis.inactive": "Inactive",
+    "button.apotheosis.locked": "This World Tier is locked",
+    "button.apotheosis.skip_tutorial": "Skip Tutorial",
+    "button.apotheosis.prev_tutorial": "Previous",
+    "button.apotheosis.next_tutorial": "Next",
+    "button.apotheosis.done": "Done",
+    "button.apotheosis.open_world_tier_tutorial": "Open the World Tier tutorial",
 
+    "tutorial.apotheosis.world_tier.introduction.title": "Introduction",
+    "tutorial.apotheosis.world_tier.introduction.desc": "Welcome to the tutorial for Apothic World Tiers! In this tutorial, you will learn about the new World Tier system, and how to progress through it. Click \"Next\" to continue, or click \"Skip Tutorial\" to skip this tutorial.",
+
+    "tutorial.apotheosis.world_tier.world_tiers.title": "World Tiers",
+    "tutorial.apotheosis.world_tier.world_tiers.desc": "World Tiers are the progression system for Apotheosis. Unlocking and activating new World Tiers will raise the difficulty of the game, but also increase the quality of loot that you find in the world.\n\nHover over a World Tier's icon to see the unlock requirements, and click it to focus an unlocked one.",
+    
+    "tutorial.apotheosis.world_tier.tier_name.title": "World Tier Name",
+    "tutorial.apotheosis.world_tier.tier_name.desc": "This is the name of the selected World Tier, as well as a short description of the tier.",
+    
+    "tutorial.apotheosis.world_tier.tier_difficulty.title": "World Tier Difficulty",
+    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "This is the difficulty of the selected World Tier. Higher difficulties mean stronger mobs, but also better rewards.\n\nAt World Tier: Frontier and above, Apothic Invaders will begin to spawn in your world.",
+    
+    "tutorial.apotheosis.world_tier.detailed_info.title": "Detailed Info", 
+    "tutorial.apotheosis.world_tier.detailed_info.desc": "This button will show you detailed information about the World Tier, including the buffs and debuffs for both players and mobs, as well as the drop chances for each rarity and gem purity.\n\nIf you aren't sure what Rarities or Purities are, see the Chronicle of Shadows (the in-game guidebook).",
+    
+    "tutorial.apotheosis.world_tier.activate.title": "Activating World Tiers",
+    "tutorial.apotheosis.world_tier.activate.desc": "This button allows you to activate the selected world tier, if it is not already active.\n\nClicking \"Done\" will automatically activate World Tier: Haven. For all other World Tiers, you need to return here and activate them yourself.",
+    
     "text.apotheosis.tier_info": "World Tier Information",
     "text.apotheosis.monster_augments": "Monster Augments",
     "text.apotheosis.player_augments": "Player Augments",
     "text.apotheosis.drop_chances": "Drop Chances",
     "text.apotheosis.rarities": "Rarities",
     "text.apotheosis.purities": "Purities",
+    "text.apotheosis.unidentified": "Unidentified %s",
+    "text.apotheosis.world_tier_tutorial": "This item has an unknown power",
+    "text.apotheosis.world_tier_tutorial.2": "Press %s and activate World Tier: Haven to unlock it",
 
     "key.apotheosis.toggle_radial_mining": "Change Radial Mining Mode",
     "key.apotheosis.open_world_tier_select": "Open World Tier Select",

@@ -27,6 +27,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -48,14 +49,10 @@ public class SelectWorldTierScreen extends Screen {
     public static final int IMAGE_WIDTH = 498;
     public static final int IMAGE_HEIGHT = 286;
 
-    protected SimpleTexButton activateButton;
-
+    protected SimpleTexButton activateButton, detailButton, tutorialButton;
     protected WorldTier displayedTier = WorldTier.getTier(Minecraft.getInstance().player);
-
     protected int leftPos, topPos;
-
     protected Map<WorldTier, SimpleTexButton> tierButtons = new EnumMap<>(WorldTier.class);
-
     protected int animTicks = 0;
 
     public SelectWorldTierScreen() {
@@ -82,7 +79,7 @@ public class SelectWorldTierScreen extends Screen {
                 .buttonText(Apotheosis.lang("button", "activate_tier"))
                 .build());
 
-        this.addRenderableWidget(
+        this.detailButton = this.addRenderableWidget(
             SimpleTexButton.builder()
                 .size(80, 20)
                 .pos(leftPos + 178, topPos + 75)
@@ -92,7 +89,23 @@ public class SelectWorldTierScreen extends Screen {
                 .message(Apotheosis.lang("button", "show_detailed_info.desc"))
                 .build());
 
+        this.tutorialButton = this.addRenderableWidget(
+            SimpleTexButton.builder()
+                .size(12, 15)
+                .pos(leftPos + GUI_WIDTH - 14, topPos + GUI_HEIGHT - 17)
+                .texture(SimpleTexButton.APOTH_SPRITES)
+                .action(btn -> {
+                    this.minecraft.pushGuiLayer(new WorldTierTutorialScreen(this, Apotheosis.lang("title", "world_tier_tutorial")));
+                })
+                .buttonText(Component.literal("?"))
+                .message(Apotheosis.lang("button", "open_world_tier_tutorial"))
+                .build());
+
         this.updateButtonStatus();
+
+        if (this.minecraft.screen == this && WorldTier.isTutorialActive(this.minecraft.player) && WorldTier.isUnlocked(this.minecraft.player, WorldTier.HAVEN)) {
+            this.minecraft.pushGuiLayer(new WorldTierTutorialScreen(this, Apotheosis.lang("title", "world_tier_tutorial")));
+        }
     }
 
     @Override
@@ -157,11 +170,12 @@ public class SelectWorldTierScreen extends Screen {
         };
     }
 
-    protected OnPress activateSelectedTier() {
+    private OnPress activateSelectedTier() {
         return btn -> {
             WorldTier tier = this.displayedTier;
-            if (WorldTier.getTier(Minecraft.getInstance().player) != tier) {
+            if (WorldTier.getTier(Minecraft.getInstance().player) != tier || WorldTier.isTutorialActive(Minecraft.getInstance().player)) {
                 PacketDistributor.sendToServer(new WorldTierPayload(tier));
+                this.minecraft.getConnection().send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
             }
             btn.active = false;
             this.activateButton.setButtonText(Apotheosis.lang("button", "activated").withColor(0x9A669C));
@@ -173,6 +187,12 @@ public class SelectWorldTierScreen extends Screen {
         return btn -> {
             Minecraft.getInstance().pushGuiLayer(new WorldTierDetailScreen(this.displayedTier));
         };
+    }
+
+    void closeTutorial() {
+        if (this.activateButton.isActive()) {
+            this.activateButton.onPress();
+        }
     }
 
     protected void updateButtonStatus() {
@@ -191,11 +211,19 @@ public class SelectWorldTierScreen extends Screen {
             button.forceHovered = this.displayedTier == tier;
         }
 
-        this.activateButton.active = WorldTier.getTier(Minecraft.getInstance().player) != this.displayedTier;
+        this.activateButton.active = WorldTier.getTier(player) != this.displayedTier;
+        if (WorldTier.isTutorialActive(player) && this.displayedTier == WorldTier.HAVEN) {
+            this.activateButton.active = WorldTier.isUnlocked(player, displayedTier);
+        }
+
         if (this.activateButton.active) {
             this.activateButton.setButtonText(Apotheosis.lang("button", "activate").withColor(0xFAA8FF));
             Component tierName = Apotheosis.lang("text", "world_tier." + this.displayedTier.getSerializedName()).withStyle(ChatFormatting.GOLD);
             this.activateButton.setMessage(Apotheosis.lang("button", "activate_tier", tierName));
+        }
+        else if (WorldTier.isTutorialActive(player) && !WorldTier.isUnlocked(player, displayedTier)) {
+            this.activateButton.setButtonText(Apotheosis.lang("button", "inactive").withStyle(ChatFormatting.RED));
+            this.activateButton.setMessage(Apotheosis.lang("button", "locked").withStyle(ChatFormatting.RED));
         }
         else {
             this.activateButton.setButtonText(Apotheosis.lang("button", "activated").withColor(0x9A669C));

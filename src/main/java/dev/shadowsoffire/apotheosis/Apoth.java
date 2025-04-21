@@ -95,6 +95,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.stats.StatFormatter;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
@@ -499,6 +500,12 @@ public class Apoth {
         private static void bootstrap() {}
     }
 
+    public static final class Stats {
+        public static final ResourceLocation WORLD_TIERS_ACTIVATED = R.customStat("world_tiers_activated", StatFormatter.DEFAULT);
+
+        private static void bootstrap() {}
+    }
+
     public static final class LootCategories {
 
         public static final LootCategory BOW = register("bow", s -> s.getItem() instanceof BowItem || s.getItem() instanceof CrossbowItem, ALObjects.EquipmentSlotGroups.HAND);
@@ -585,6 +592,7 @@ public class Apoth {
         RecipeSerializers.bootstrap();
         ItemSubPredicates.bootstrap();
         EntitySubPredicates.bootstrap();
+        Stats.bootstrap();
         Particles.bootstrap();
         LootCategories.bootstrap();
         DataMaps.bootstrap();

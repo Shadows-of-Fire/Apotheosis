@@ -13,7 +13,7 @@ import net.minecraft.world.entity.Entity;
 public abstract class EntityMixin {
 
     @Shadow
-    abstract Component getCustomName();
+    public abstract Component getCustomName();
 
     /**
      * Used to make the glowing effect on mobs use their name color.

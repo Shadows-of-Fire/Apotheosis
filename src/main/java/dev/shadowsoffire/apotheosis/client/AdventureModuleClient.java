@@ -47,6 +47,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingScreen;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apotheosis.util.EquipmentComparePositioner;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
@@ -80,6 +81,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.PlainTextContents;
+import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -104,6 +106,7 @@ import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.ClientHooks;
 import net.neoforged.neoforge.client.event.AddAttributeTooltipsEvent;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.GatherSkippedAttributeTooltipsEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
@@ -259,6 +262,12 @@ public class AdventureModuleClient {
     public static class GameBusEvents {
 
         @SubscribeEvent
+        public static void login(ClientPlayerNetworkEvent.LoggingIn e) {
+            // Since we use the stats to determine if the world tier tutorial is active, we need to send the request here.
+            e.getConnection().send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
+        }
+
+        @SubscribeEvent
         public static void render(RenderLevelStageEvent e) {
             if (e.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) {
                 return;
@@ -293,7 +302,7 @@ public class AdventureModuleClient {
         public static void tooltips(AddAttributeTooltipsEvent e) {
             ItemStack stack = e.getStack();
             int sockets = SocketHelper.getSockets(stack);
-            if (sockets > 0) {
+            if (sockets > 0 && !WorldTier.isTutorialActive(Minecraft.getInstance().player)) {
                 e.addTooltipLines(Component.literal("APOTH_REMOVE_MARKER"));
             }
         }
@@ -306,6 +315,11 @@ public class AdventureModuleClient {
                     gem.skipModifierIds(e::skipId);
                 }
             }
+            AffixHelper.streamAffixes(stack).forEach(inst -> {
+                if (inst.getAffix() instanceof AttributeProvidingAffix afx) {
+                    afx.skipModifierIds(inst, e.getContext(), e::skipId);
+                }
+            });
         }
 
         @SubscribeEvent
@@ -342,6 +356,14 @@ public class AdventureModuleClient {
             ItemStack stack = e.getItemStack();
             List<Component> components = new ArrayList<>();
             AttributeTooltipContext ctx = AttributeTooltipContext.of(Minecraft.getInstance().player, e.getContext(), e.getFlags());
+
+            if (e.getEntity() != null && WorldTier.isTutorialActive(e.getEntity())) {
+                if (stack.has(Components.AFFIXES) || stack.has(Components.SOCKETS) || stack.has(Components.RARITY)) {
+                    e.getToolTip().add(1, Apotheosis.lang("text", "world_tier_tutorial").withStyle(ChatFormatting.YELLOW));
+                    e.getToolTip().add(2, Apotheosis.lang("text", "world_tier_tutorial.2", AdventureKeys.OPEN_WORLD_TIER_SELECT.getTranslatedKeyMessage()).withStyle(ChatFormatting.YELLOW));
+                }
+                return;
+            }
 
             if (stack.has(Components.AFFIXES)) {
                 AffixHelper.streamAffixes(stack)

@@ -18,12 +18,15 @@ import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.mixin.ItemStackMixin;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.CachedObject;
 import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
@@ -38,6 +41,7 @@ import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 
 public class AffixHelper {
@@ -83,6 +87,13 @@ public class AffixHelper {
     @Nullable
     public static Component getModifiedStackName(ItemStack stack, Component currentName) {
         if (stack.has(Components.AFFIX_NAME)) {
+            if (FMLEnvironment.dist.isClient()) {
+                Component hidden = ClientAccess.getHiddenAffixName(currentName);
+                if (hidden != null) {
+                    return hidden;
+                }
+            }
+
             try {
                 Component component = AffixHelper.getName(stack);
                 TranslatableContents contents = copyContents(component);
@@ -261,6 +272,18 @@ public class AffixHelper {
         Object[] args = tContents.getArgs();
         Object[] clone = Arrays.copyOf(args, args.length);
         return new TranslatableContents(tContents.getKey(), tContents.getFallback(), clone);
+    }
+
+    private static class ClientAccess {
+
+        @Nullable
+        private static Component getHiddenAffixName(Component currentName) {
+            LocalPlayer player = Minecraft.getInstance().player;
+            if (player != null && WorldTier.isTutorialActive(player)) {
+                return Apotheosis.lang("text", "unidentified", currentName);
+            }
+            return null;
+        }
     }
 
 }

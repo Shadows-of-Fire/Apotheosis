@@ -16,15 +16,18 @@ import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -90,7 +93,7 @@ public enum WorldTier implements StringRepresentable {
 
     public static void setTier(Player player, WorldTier tier) {
         WorldTier oldTier = player.getData(Attachments.WORLD_TIER);
-        if (oldTier == tier) {
+        if (oldTier == tier && !isTutorialActive(player)) {
             return;
         }
 
@@ -107,6 +110,7 @@ public enum WorldTier implements StringRepresentable {
             }
 
             player.setData(Attachments.TIER_AUGMENTS_APPLIED, true);
+            player.awardStat(Apoth.Stats.WORLD_TIERS_ACTIVATED);
         }
 
     }
@@ -115,8 +119,31 @@ public enum WorldTier implements StringRepresentable {
         return ApothMiscUtil.hasAdvancement(player, tier.getUnlockAdvancement());
     }
 
+    /**
+     * Checks if the World Tier tutorial is active. The tutorial is active if the player is in Haven (the default), and has never clicked the "activate" button.
+     * <p>
+     * The tutorial being active has the following side effects:
+     * <ul>
+     * <li>Affix items have their name set to "Unidentified %s" instead of the real affix name</li>
+     * <li>Affix items have their affix descriptions removed, and replaced with text directing the player to open the Tier Select screen</li>
+     * <li>Upon opening the Tier Select screen, the screen will immediately open the World Tier Tutorial GUI Layer</li>
+     * </ul>
+     */
+    public static boolean isTutorialActive(Player player) {
+        if (FMLEnvironment.dist.isClient() && player.level().isClientSide) {
+            return ClientAccess.isTutorialActive(player);
+        }
+        return getTier(player) == WorldTier.HAVEN && ((ServerPlayer) player).getStats().getValue(Stats.CUSTOM.get(Apoth.Stats.WORLD_TIERS_ACTIVATED)) == 0;
+    }
+
     public static <T> MapCodec<Map<WorldTier, T>> mapCodec(Codec<T> elementCodec) {
         return Codec.simpleMap(WorldTier.CODEC, elementCodec,
             Keyable.forStrings(() -> Arrays.stream(WorldTier.values()).map(StringRepresentable::getSerializedName)));
+    }
+
+    private static class ClientAccess {
+        private static boolean isTutorialActive(Player player) {
+            return getTier(player) == WorldTier.HAVEN && Minecraft.getInstance().player.getStats().getValue(Stats.CUSTOM.get(Apoth.Stats.WORLD_TIERS_ACTIVATED)) == 0;
+        }
     }
 }
