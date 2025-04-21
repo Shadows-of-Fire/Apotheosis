@@ -576,8 +576,6 @@
     "advancements.apotheosis.shieldench.desc": "Encante um escudo",
     "advancements.apotheosis.altar": "Transformação Oceânica",
     "advancements.apotheosis.altar.desc": "Create an Altar of the Seas, which can turn unwanted enchanted items into a new book.",
-    "advancements.apotheosis.splitting": "Esmagador de Encantamentos",
-    "advancements.apotheosis.splitting.desc": "Deixe cair uma bigorna encantada com divisão em um livro encantado para separá-lo",
     "advancements.apotheosis.sharp10": "O Mais Afiado",
     "advancements.apotheosis.sharp10.desc": "Encante uma arma com afiação X ou superior",
     "advancements.apotheosis.level20": "Poder Ilimitado",
@@ -915,12 +913,6 @@
 
     "enchantment.apotheosis.knowledge": "Conhecimento das eras",
     "enchantment.apotheosis.knowledge.desc": "Os saques dos inimigos são diretamente convertidos em experiência.",
-
-    "enchantment.apotheosis.splitting": "Divisão",
-    "enchantment.apotheosis.splitting.desc": "Bigornas dividem encantamentos múltiplos de livros sobre os quais caem.",
-    
-    "enchantment.apotheosis.obliteration": "Obliteração",
-    "enchantment.apotheosis.obliteration.desc": "Bigornas dividem encantamentos únicos de livros sobre os quais caem.",
 
     "enchantment.apotheosis.natures_blessing": "Bênção da natureza",
     "enchantment.apotheosis.natures_blessing.desc": "Enxadas podem ser usadas para fertilizar plantações.",

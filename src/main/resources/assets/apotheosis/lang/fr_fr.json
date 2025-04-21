@@ -552,8 +552,6 @@
     "advancements.apotheosis.shieldench.desc": "Enchantez un Bouclier",
     "advancements.apotheosis.altar": "Transformation Océanique",
     "advancements.apotheosis.altar.desc": "Créez un Autel des Mers, qui peut transformer des objets enchantés indésirables en un nouveau livre.",
-    "advancements.apotheosis.splitting": "Broyeur d'Enchantements",
-    "advancements.apotheosis.splitting.desc": "Laissez tomber avec succès une enclume enchantée avec Scission sur un livre enchanté pour le diviser en deux",
     "advancements.apotheosis.sharp10": "Le plus tranchant",
     "advancements.apotheosis.sharp10.desc": "Enchantez une arme avec Tranchant X ou plus",
     "advancements.apotheosis.level20": "Pouvoir illimité",
@@ -891,12 +889,6 @@
 
     "enchantment.apotheosis.knowledge": "Connaissance des Âges",
     "enchantment.apotheosis.knowledge.desc": "Les drops des ennemis sont directement convertis en expérience.",
-
-    "enchantment.apotheosis.splitting": "Fission",
-    "enchantment.apotheosis.splitting.desc": "Permet aux enclumes de séparer plusieurs enchantements des livres sur lesquels ils tombent.",
-
-    "enchantment.apotheosis.obliteration": "Oblitération",
-    "enchantment.apotheosis.obliteration.desc": "Permet aux enclumes de séparer un seul enchantement des livres sur lesquels ils tombent.",
 
     "enchantment.apotheosis.natures_blessing": "Bénédiction de la Nature",
     "enchantment.apotheosis.natures_blessing.desc": "Les houes peuvent être utilisées pour fertiliser les cultures avec de la poudre d'os.",

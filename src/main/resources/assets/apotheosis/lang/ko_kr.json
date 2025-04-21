@@ -552,8 +552,6 @@
     "advancements.apotheosis.shieldench.desc": "방패를 마법 부여하세요.",
     "advancements.apotheosis.altar": "해양의 변형",
     "advancements.apotheosis.altar.desc": "원하지 않았던 마법 부여 아이템을 새로운 책으로 바꿀 수 있는 바다의 제단을 만드세요.",
-    "advancements.apotheosis.splitting": "마법 부여 분쇄기",
-    "advancements.apotheosis.splitting.desc": "분할 마법이 부여된 모루를 마법이 부여된 책에 성공적으로 떨어뜨려 분할하세요.",
     "advancements.apotheosis.sharp10": "가장 날카로움",
     "advancements.apotheosis.sharp10.desc": "날카로움 X 이상의 무기를 마법 부여하세요",
     "advancements.apotheosis.level20": "무제한 힘",
@@ -891,12 +889,6 @@
 
     "enchantment.apotheosis.knowledge": "시대의 지식",
     "enchantment.apotheosis.knowledge.desc": "적의 전리품이 즉시 경험치로 변환됩니다.",
-
-    "enchantment.apotheosis.splitting": "분할",
-    "enchantment.apotheosis.splitting.desc": "모루가 책 위에 떨어지면, 책에 있는 마법이 여러 개로 분리합니다.",
-    
-    "enchantment.apotheosis.obliteration": "소멸",
-    "enchantment.apotheosis.obliteration.desc": "모루가 책 위에 떨어지면, 책에 있는 마법이 단일로 분리합니다.",
 
     "enchantment.apotheosis.natures_blessing": "자연의 축복",
     "enchantment.apotheosis.natures_blessing.desc": "괭이에 뼛가루를 사용할 수 있도록 합니다.",

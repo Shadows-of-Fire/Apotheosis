@@ -102,8 +102,6 @@
     "advancements.apotheosis.shieldench.desc": "Zaczaruj tarczę",
     "advancements.apotheosis.altar": "Oceaniczna transformacja",
     "advancements.apotheosis.altar.desc": "Stwórz Ołtarz Mórz, który potrafi zmienić niechciany magiczny przedmiot w nową książkę.",
-    "advancements.apotheosis.splitting": "Łamacz zaklęć",
-    "advancements.apotheosis.splitting.desc": "Z powodzeniem upuść kowadło zaczarowane zaklęciem dzielenia na zaczarowanej księdze żeby podzielić ją na pół",
     "advancements.apotheosis.sharp10": "Najostrzejsze",
     "advancements.apotheosis.sharp10.desc": "Zaczaruj broń z ostrością X lub wyższą",
     "advancements.apotheosis.level20": "Nielimitowana Moc",
@@ -328,12 +326,6 @@
 
     "enchantment.apotheosis.knowledge": "Znajomość epok",
     "enchantment.apotheosis.knowledge.desc": "Zrzuty wrogów są bezpośrednio przekształcane w doświadczenie.",
-
-    "enchantment.apotheosis.splitting": "Rozdzielacz",
-    "enchantment.apotheosis.splitting.desc": "Pozwala kowadłom na dzielenie wielu zaklęć z książek, na które spadają.",
-	
-	"enchantment.apotheosis.obliteration": "Obliteracja",
-    "enchantment.apotheosis.obliteration.desc": "Pozwala kowadłom rozdzielać pojedyncze zaklęcia z książek, na które spadają.",
 
     "enchantment.apotheosis.natures_blessing": "Błogosławieństwo natury",
     "enchantment.apotheosis.natures_blessing.desc": "Motyki mogą być używane do upraw na mączkę kostną.",

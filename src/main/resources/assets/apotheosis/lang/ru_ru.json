@@ -956,8 +956,6 @@
     "advancements.apotheosis.shieldench.desc": "Зачаруйте щит",
     "advancements.apotheosis.altar": "Океаническая трансформация",
     "advancements.apotheosis.altar.desc": "Создайте алтарь морей, который может превратить ненужные зачарованные предметы в новую книгу.",
-    "advancements.apotheosis.splitting": "Разрушитель чар",
-    "advancements.apotheosis.splitting.desc": "Успешно уроните наковальню, зачарованную разделением, на зачарованную книгу, чтобы расколоть её на части",
     "advancements.apotheosis.sharp10": "Острейший",
     "advancements.apotheosis.sharp10.desc": "Зачаруйте оружие с остротой X или выше",
     "advancements.apotheosis.level20": "Неограниченная сила",
@@ -1295,12 +1293,6 @@
 
     "enchantment.apotheosis.knowledge": "Знание веков",
     "enchantment.apotheosis.knowledge.desc": "Дроп с убитых существ напрямую преобразовывается в опыт.",
-
-    "enchantment.apotheosis.splitting": "Разделение",
-    "enchantment.apotheosis.splitting.desc": "Позволяет наковальне разделять несколько зачарований из чародейских книг, на которые она упадёт.",
-    
-    "enchantment.apotheosis.obliteration": "Уничтожение",
-    "enchantment.apotheosis.obliteration.desc": "Позволяет наковальне разделять отдельные зачарования из чародейских книг, на которые она упадёт.",
 
     "enchantment.apotheosis.natures_blessing": "Благословение природы",
     "enchantment.apotheosis.natures_blessing.desc": "Наделяет мотыгу свойствами костной муки.",

@@ -217,8 +217,6 @@
     "advancements.apotheosis.shieldench.desc": "Enchant a shield",
     "advancements.apotheosis.altar": "Oceanic Transformation",
     "advancements.apotheosis.altar.desc": "Create an Altar of the Seas, which can turn unwanted enchanted items into a new book.",
-    "advancements.apotheosis.splitting": "Enchantment Crusher",
-    "advancements.apotheosis.splitting.desc": "Successfully drop an anvil enchanted with Splitting on an enchanted book to split it apart",
     "advancements.apotheosis.sharp10": "Sharpestest",
     "advancements.apotheosis.sharp10.desc": "Enchant a weapon with Sharpness X or higher",
     "advancements.apotheosis.level20": "Unlimited Power",
@@ -487,12 +485,6 @@
 
     "enchantment.apotheosis.knowledge": "Poder del Conocimiento",
     "enchantment.apotheosis.knowledge.desc": "Los drops enemigos se convierten directamente en experiencia.",
-
-    "enchantment.apotheosis.splitting": "Divisor",
-    "enchantment.apotheosis.splitting.desc": "Permite que los yunques dividan múltiples encantamientos de los libros sobre los que caen.",
-    
-    "enchantment.apotheosis.obliteration": "Obliteración",
-    "enchantment.apotheosis.obliteration.desc": "Permite que los yunques dividan encantamientos individuales de los libros sobre los que caen.",
 
     "enchantment.apotheosis.natures_blessing": "Bendición de la Naturaleza",
     "enchantment.apotheosis.natures_blessing.desc": "Las azadas se pueden utilizar para los cultivos como polvo de huesos.",
