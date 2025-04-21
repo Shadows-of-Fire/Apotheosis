@@ -41,13 +41,13 @@ public class WorldTierDetailScreen extends Screen {
 
     @Override
     protected void init() {
-        int leftPos = (this.width - SelectWorldTierScreen.GUI_WIDTH) / 2;
-        int topPos = (this.height - SelectWorldTierScreen.GUI_HEIGHT) / 2;
+        int leftPos = (this.width - WorldTierSelectScreen.GUI_WIDTH) / 2;
+        int topPos = (this.height - WorldTierSelectScreen.GUI_HEIGHT) / 2;
 
         this.addRenderableWidget(
             SimpleTexButton.builder()
                 .size(20, 20)
-                .pos(leftPos + SelectWorldTierScreen.GUI_WIDTH - 15, topPos - 5)
+                .pos(leftPos + WorldTierSelectScreen.GUI_WIDTH - 15, topPos - 5)
                 .texture(SimpleTexButton.APOTH_SPRITES)
                 .action(btn -> Minecraft.getInstance().popGuiLayer())
                 .buttonText(Apotheosis.lang("button", "return"))
@@ -59,8 +59,8 @@ public class WorldTierDetailScreen extends Screen {
     public void renderBackground(GuiGraphics gfx, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(gfx, mouseX, mouseY, partialTick);
 
-        int leftPos = (this.width - SelectWorldTierScreen.IMAGE_WIDTH) / 2 + 26;
-        int topPos = (this.height - SelectWorldTierScreen.IMAGE_HEIGHT) / 2 + 30;
+        int leftPos = (this.width - WorldTierSelectScreen.IMAGE_WIDTH) / 2 + 26;
+        int topPos = (this.height - WorldTierSelectScreen.IMAGE_HEIGHT) / 2 + 30;
 
         LocalPlayer player = Minecraft.getInstance().player;
         AttributeTooltipContext ctx = AttributeTooltipContext.of(player, TooltipContext.of(player.level()), ApothicAttributes.getTooltipFlag());

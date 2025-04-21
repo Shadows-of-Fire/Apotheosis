@@ -53,7 +53,7 @@ public class AdventureKeys {
 
         while (OPEN_WORLD_TIER_SELECT.consumeClick() && OPEN_WORLD_TIER_SELECT.isConflictContextAndModifierActive()) {
             if (Minecraft.getInstance().screen == null) {
-                Minecraft.getInstance().setScreen(new SelectWorldTierScreen());
+                Minecraft.getInstance().setScreen(new WorldTierSelectScreen());
             }
         }
 

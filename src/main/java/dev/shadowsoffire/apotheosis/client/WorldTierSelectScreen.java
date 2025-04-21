@@ -31,7 +31,7 @@ import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-public class SelectWorldTierScreen extends Screen {
+public class WorldTierSelectScreen extends Screen {
 
     public static final ResourceLocation TEXTURE = Apotheosis.loc("textures/gui/mountain.png");
     public static final ResourceLocation SEPARATOR_LINE = Apotheosis.loc("textures/gui/separator_line.png");
@@ -55,7 +55,7 @@ public class SelectWorldTierScreen extends Screen {
     protected Map<WorldTier, SimpleTexButton> tierButtons = new EnumMap<>(WorldTier.class);
     protected int animTicks = 0;
 
-    public SelectWorldTierScreen() {
+    public WorldTierSelectScreen() {
         super(Apotheosis.lang("title", "select_world_tier"));
     }
 

@@ -15,15 +15,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 
 /**
- * This screen is intended to be used as a GUI Layer over {@link SelectWorldTierScreen} to show the world tier tutorial.
+ * This screen is intended to be used as a GUI Layer over {@link WorldTierSelectScreen} to show the world tier tutorial.
  */
 public class WorldTierTutorialScreen extends Screen {
 
-    private final SelectWorldTierScreen parent;
+    private final WorldTierSelectScreen parent;
     private TutorialStage stage = TutorialStage.INTRODUCTION;
     private SimpleTexButton skipButton, prevButton, nextButton;
 
-    public WorldTierTutorialScreen(SelectWorldTierScreen parent, Component title) {
+    public WorldTierTutorialScreen(WorldTierSelectScreen parent, Component title) {
         super(title);
         this.parent = parent;
     }
@@ -32,8 +32,8 @@ public class WorldTierTutorialScreen extends Screen {
     protected void init() {
         super.init();
 
-        int imgLeft = (this.width - SelectWorldTierScreen.IMAGE_WIDTH) / 2;
-        int imgTop = (this.height - SelectWorldTierScreen.IMAGE_HEIGHT) / 2;
+        int imgLeft = (this.width - WorldTierSelectScreen.IMAGE_WIDTH) / 2;
+        int imgTop = (this.height - WorldTierSelectScreen.IMAGE_HEIGHT) / 2;
 
         skipButton = this.addRenderableWidget(
             SimpleTexButton.builder()
@@ -77,18 +77,18 @@ public class WorldTierTutorialScreen extends Screen {
 
     @Override
     public void renderBackground(GuiGraphics gfx, int mouseX, int mouseY, float partialTick) {
-        int imgLeft = (this.width - SelectWorldTierScreen.IMAGE_WIDTH) / 2;
-        int imgTop = (this.height - SelectWorldTierScreen.IMAGE_HEIGHT) / 2;
+        int imgLeft = (this.width - WorldTierSelectScreen.IMAGE_WIDTH) / 2;
+        int imgTop = (this.height - WorldTierSelectScreen.IMAGE_HEIGHT) / 2;
 
         RenderSystem.enableBlend();
-        gfx.blit(stage.overlay, imgLeft, imgTop, 0, 0, SelectWorldTierScreen.IMAGE_WIDTH, SelectWorldTierScreen.IMAGE_HEIGHT, SelectWorldTierScreen.IMAGE_WIDTH, SelectWorldTierScreen.IMAGE_HEIGHT);
+        gfx.blit(stage.overlay, imgLeft, imgTop, 0, 0, WorldTierSelectScreen.IMAGE_WIDTH, WorldTierSelectScreen.IMAGE_HEIGHT, WorldTierSelectScreen.IMAGE_WIDTH, WorldTierSelectScreen.IMAGE_HEIGHT);
     }
 
     @Override
     public void render(GuiGraphics gfx, int mouseX, int mouseY, float partialTick) {
         super.render(gfx, mouseX, mouseY, partialTick);
-        int imgLeft = (this.width - SelectWorldTierScreen.IMAGE_WIDTH) / 2;
-        int imgTop = (this.height - SelectWorldTierScreen.IMAGE_HEIGHT) / 2;
+        int imgLeft = (this.width - WorldTierSelectScreen.IMAGE_WIDTH) / 2;
+        int imgTop = (this.height - WorldTierSelectScreen.IMAGE_HEIGHT) / 2;
         PoseStack pose = gfx.pose();
 
         float scale = 2;
