@@ -44,7 +44,7 @@ import dev.shadowsoffire.apotheosis.mobs.util.EntityModifier;
 import dev.shadowsoffire.apotheosis.mobs.util.SpawnCondition;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
 import dev.shadowsoffire.apotheosis.net.LinkItemToChatPayload;
-import dev.shadowsoffire.apotheosis.net.RadialStateChangePayload;
+import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
 import dev.shadowsoffire.apotheosis.net.RerollResultPayload;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
 import dev.shadowsoffire.apotheosis.socket.gem.ExtraGemBonusRegistry;
@@ -131,7 +131,7 @@ public class Apotheosis {
         });
         PayloadHelper.registerPayload(new BossSpawnPayload.Provider());
         PayloadHelper.registerPayload(new RerollResultPayload.Provider());
-        PayloadHelper.registerPayload(new RadialStateChangePayload.Provider());
+        PayloadHelper.registerPayload(new RadialStatePayload.Provider());
         PayloadHelper.registerPayload(new WorldTierPayload.Provider());
         PayloadHelper.registerPayload(new ConfigPayload.Provider());
         PayloadHelper.registerPayload(new LinkItemToChatPayload.Provider());

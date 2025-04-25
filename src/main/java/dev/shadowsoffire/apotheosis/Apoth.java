@@ -73,6 +73,7 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
+import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialState;
 import dev.shadowsoffire.apotheosis.util.SingletonRecipeSerializer;
 import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
@@ -228,6 +229,11 @@ public class Apoth {
          * Client-only attachment to record the time (in ticks, relative to the entity tick count) at which the next affix effect particle spawns.
          */
         public static final AttachmentType<Integer> AFFIX_EFFECT_NEXT_PARTICLE_TIME = R.attachment("affix_effect_next_particle_time", () -> 0, UnaryOperator.identity());
+
+        /**
+         * Client-only attachment to record the time (in ticks, relative to the entity tick count) at which the next affix effect particle spawns.
+         */
+        public static final AttachmentType<RadialState> RADIAL_MINING_MODE = R.attachment("radial_mining_mode", () -> RadialState.REQUIRE_NOT_SNEAKING, b -> b.serialize(RadialState.CODEC).copyOnDeath());
 
         private static void bootstrap() {}
     }

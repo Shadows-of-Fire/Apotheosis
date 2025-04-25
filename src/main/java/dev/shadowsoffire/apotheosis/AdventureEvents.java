@@ -27,6 +27,7 @@ import dev.shadowsoffire.apotheosis.commands.SocketCommand;
 import dev.shadowsoffire.apotheosis.commands.WorldTierCommand;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.mobs.types.Elite;
+import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.OmneticBonus;
@@ -35,6 +36,7 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
+import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialState;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import dev.shadowsoffire.apothic_attributes.event.ApotheosisCommandEvent;
 import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
@@ -407,6 +409,13 @@ public class AdventureEvents {
                     cloud.discard();
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void syncRadialState(EntityJoinLevelEvent e) {
+        if (e.getEntity() instanceof ServerPlayer player) {
+            PacketDistributor.sendToPlayer(player, new RadialStatePayload(RadialState.getState(player)));
         }
     }
 

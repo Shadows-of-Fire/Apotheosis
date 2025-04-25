@@ -50,8 +50,8 @@ import net.neoforged.neoforge.client.model.data.ModelData;
  */
 public class RadialProgressTracker {
 
-    /** Maximum number of blocks from the iterator to render */
-    private static final int MAX_BLOCKS = 60;
+    /** Maximum number of blocks to render, so perf doesn't tank for huge AOEs */
+    private static final int MAX_BLOCKS = 100;
 
     @Nullable
     private static CacheKey lastKey = null;

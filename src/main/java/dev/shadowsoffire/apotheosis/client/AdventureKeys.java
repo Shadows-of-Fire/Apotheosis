@@ -6,8 +6,9 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Type;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.net.RadialStateChangePayload;
+import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
 import dev.shadowsoffire.apotheosis.util.ItemLinking;
+import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialState;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -47,7 +48,7 @@ public class AdventureKeys {
 
         while (TOGGLE_RADIAL.consumeClick() && TOGGLE_RADIAL.isConflictContextAndModifierActive()) {
             if (Minecraft.getInstance().screen == null) {
-                PacketDistributor.sendToServer(RadialStateChangePayload.INSTANCE);
+                PacketDistributor.sendToServer(new RadialStatePayload());
             }
         }
 

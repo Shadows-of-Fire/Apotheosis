@@ -6,13 +6,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.IntFunction;
 
 import com.google.common.base.Predicate;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -20,7 +25,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ByIdMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
@@ -31,6 +39,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class RadialUtil {
 
@@ -43,9 +52,15 @@ public class RadialUtil {
         RadialState state = RadialState.getState(player);
         RadialState next = state.next();
         RadialState.setState(player, next);
-        player.sendSystemMessage(Apotheosis.sysMessageHeader().append(Component.translatable("misc.apotheosis.radial_state_updated", next.toComponent(), state.toComponent()).withStyle(ChatFormatting.YELLOW)));
+        player.sendSystemMessage(Apotheosis.sysMessageHeader().append(Apotheosis.lang("misc", "radial_state_updated", next.toComponent(), state.toComponent()).withStyle(ChatFormatting.YELLOW)));
+        PacketDistributor.sendToPlayer((ServerPlayer) player, new RadialStatePayload(next));
     }
 
+    /**
+     * Executes the radial mining effect with the given context and radial data.
+     * <p>
+     * If radial mining is disabled for the player, this method does nothing.
+     */
     public static void attemptRadialMining(BlockEvent.BreakEvent e, RadialData data) {
         Player player = e.getPlayer();
         if (RadialState.isRadialMiningEnabled(player)) {
@@ -186,6 +201,10 @@ public class RadialUtil {
         ENABLED(p -> true),
         DISABLED(p -> false);
 
+        public static final IntFunction<RadialState> BY_ID = ByIdMap.continuous(Enum::ordinal, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
+        public static final Codec<RadialState> CODEC = PlaceboCodecs.enumCodec(RadialState.class);
+        public static final StreamCodec<ByteBuf, RadialState> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, Enum::ordinal);
+
         private Predicate<Player> condition;
 
         RadialState(Predicate<Player> condition) {
@@ -214,25 +233,16 @@ public class RadialUtil {
 
         /**
          * Returns the current radial break state for the given player.
-         * <p>
-         * The state defaults to {@link #REQUIRE_NOT_SNEAKING} if no state is set.
          *
          * @param player The player
-         * @return The current radial state, or {@link #REQUIRE_NOT_SNEAKING} if a parse error occurred.
+         * @return The current radial state, defaulting to {@link #REQUIRE_NOT_SNEAKING}.
          */
         public static RadialState getState(Player player) {
-            String str = player.getPersistentData().getString("apoth.radial_state");
-            try {
-                return RadialState.valueOf(str);
-            }
-            catch (Exception ex) {
-                setState(player, RadialState.REQUIRE_NOT_SNEAKING);
-                return RadialState.REQUIRE_NOT_SNEAKING;
-            }
+            return player.getData(Apoth.Attachments.RADIAL_MINING_MODE);
         }
 
         public static void setState(Player player, RadialState state) {
-            player.getPersistentData().putString("apoth.radial_state", state.name());
+            player.setData(Apoth.Attachments.RADIAL_MINING_MODE, state);
         }
     }
 
