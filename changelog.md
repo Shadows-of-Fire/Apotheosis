@@ -1,3 +1,7 @@
+## 8.3.4
+* Fixed the Radial Mining State not being communicated to the client.
+  * This was causing the radial preview to always display as if the state was "Disabled while sneaking".
+
 ## 8.3.3
 * Added the World Tier Tutorial, which makes information about World Tiers much more obvious to new players.
   * This new tutorial will not be visible by default for players who have progressed past World Tier: Haven.
