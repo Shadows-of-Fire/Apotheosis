@@ -3,6 +3,7 @@
 
     "key.categories.apotheosis": "Apotheosis",
     "key.apotheosis.toggle_radial_mining": "Change Radial Mining Mode",
+    "key.apotheosis.world_tiers_arent_real": "World Tier Error Notification",
 
     "info.apotheosis.affix_item": "Apothic Affix Item",
     
@@ -19,6 +20,8 @@
     "misc.apotheosis.radial_state.require_sneaking": "Enabled While Sneaking",
     "misc.apotheosis.radial_state.enabled": "Enabled",
     "misc.apotheosis.radial_state.disabled": "Disabled",
+
+    "message.apotheosis.world_tiers_arent_real": "World Tiers are only available in Minecraft 1.21.1+. This version of Apotheosis uses a dimension-based progression system instead.",
 
     "affix.apotheosis:armor/attribute/blessed": "Blessed",
     "affix.apotheosis:armor/attribute/blessed.suffix": "of Health",

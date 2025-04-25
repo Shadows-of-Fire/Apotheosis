@@ -68,7 +68,6 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
@@ -158,6 +157,7 @@ public class AdventureModuleClient {
         @SubscribeEvent
         public static void keys(RegisterKeyMappingsEvent e) {
             e.register(AdventureKeys.TOGGLE_RADIAL);
+            e.register(AdventureKeys.WORLD_TIERS_ARENT_REAL);
         }
 
         @SubscribeEvent
