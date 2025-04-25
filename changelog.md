@@ -1,3 +1,6 @@
+## 7.4.8
+* Added a hotkey bound to CTRL+T which emits a message about World Tiers being a 1.21+ exclusive feature.
+
 ## 7.4.7
 * Fixed a bunch of logspam when using newer Forge versions.
 * Fixed a hang in the anvil menu when placing an enchanted book in the right slot.
