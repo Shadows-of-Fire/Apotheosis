@@ -1,0 +1,27 @@
+{
+    "name": "等级选择",
+    "icon": "apotheosis:textures/gui/book/haven_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)世界等级选择界面$()是你了解和管理$(6)世界等级$()的综合页面。$(p)可以使用“打开世界等级选择界面”绑定按键打开，默认是CTRL+T。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "激活等级",
+            "text": "等级不会自动激活。当你解锁一个新等级时，首先需要点击“激活”按钮来启用它。$(p)你可以点击屏幕中的等级符号来选择一个等级，然后使用按钮激活它。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "等级信息",
+            "text": "要查看等级信息，请选择等级，然后按下“详细信息”按钮。$(p)这将显示该等级的稀有度和纯度权重，以及将应用的任何等级强化。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "注意事项",
+            "text": "你可以随时切换等级。$(p)在多人游戏中，多个玩家可能拥有不同的等级，但不会相互影响。大多数内容都会以距离最近的玩家的等级为准。"
+        }
+    ]
+}

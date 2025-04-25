@@ -1,0 +1,19 @@
+{
+    "name": "宝石切割",
+    "icon": "apotheosis:gem_cutting_table",
+    "category": "apotheosis:adventure/gems",
+	"flag": "apotheosis:adventure",
+	"sortnum": 6,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_cutting_table",
+			"text": "$(9)宝石切割台$()用于升级$(l:apotheosis:adventure/gems/gems)宝石$()。升级宝石通常需要$(9)宝石粉$()、$(9)珍宝材料$()和第二个相同纯度的宝石。"
+		},
+		{
+			"title": "升级花费",
+            "type": "patchouli:text",
+            "text": "升级宝石的花费随着宝石的纯度而增加。$(p)更强的宝石需要更多$(9)宝石粉$()和更高等级的$(9)珍宝材料$()。$(p)宝石升级的具体花费可在JEI中查看。"
+        }
+	]
+}

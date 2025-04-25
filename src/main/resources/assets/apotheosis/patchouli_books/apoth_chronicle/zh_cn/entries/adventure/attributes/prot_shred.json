@@ -1,6 +1,6 @@
 {
     "name": "保护撕裂",
-    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
 	"sortnum": 0,

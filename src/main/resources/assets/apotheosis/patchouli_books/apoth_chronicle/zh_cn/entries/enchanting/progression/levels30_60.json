@@ -30,15 +30,15 @@
 		},
 		{
             "type": "patchouli:spotlight",
-			"title": "其他属性",
+			"title": "附魔线索",
 			"item": "apothic_enchanting:sightshelf",
 			"text": "你现在可以使用更好的选项来增加其他属性。$(p)除了来自下界书架和海洋书架的加成之外，你现在还可以制作$(9)视界书架$()来增加你的$(#00AAAA)魔咒线索$()。"
 		},
 		{
             "type": "patchouli:crafting",
-			"title": "其他属性",
-			"recipe": "apotheosis:rectifier",
-			"text": "如果你有稳定的紫水晶供应，你还可以制作$(9)校准书架$()来进一步增加你的$(#CCCC33)校准$()。"
+			"title": "量子稳定",
+			"recipe": "apotheosis:geode_shelf",
+			"text": "通过进行灌注制作紫水晶母岩，你可以合成$(9)稳定书架$()。$(p)这将防止你收到负面量子化滚动。"
 		}
 	]
 }

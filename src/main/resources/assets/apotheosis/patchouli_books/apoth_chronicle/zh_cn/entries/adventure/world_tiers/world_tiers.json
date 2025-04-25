@@ -1,0 +1,37 @@
+{
+    "name": "世界等级",
+    "icon": "apotheosis:textures/gui/book/summit_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(6)世界等级$()是一个按每个玩家计算的世界强度调节器。每个等级都会控制出现的内容类型、敌人的强度、可能获得的奖励等。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "等级",
+            "text": "游戏共分为五个等级，每一级都比上一级增加了世界难度和可用奖励。$(p)等级分为$(9)避风港$()、$(9)边界$()、$(9)进击$()、$(9)顶点$()和$(9)巅峰$()。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "等级强化",
+            "text": "每个等级都有各自的强化，适用于该等级玩家的调节器以及在该等级中生成的怪物。$(p)你可以在$(l:apotheosis:adventure/world_tiers/select_screen)世界等级选择界面$()查看每个等级的所有等级强化。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "稀有度掉落几率",
+            "text": "世界等级还能控制每种稀有度的权重。$(p)随着你的进展，更高稀有度的物品（和入侵者）将变得越来越常见。$(p)具体掉落几率会显示在$(l:apotheosis:adventure/world_tiers/select_screen)世界等级选择界面$()。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "宝石",
+            "text": "世界等级也会调整哪些宝石可以生成，以及它们可以与哪些纯度一起生成。$(p)和以前一样，可以在选择界面找到详细纯度几率。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "其他注意事项",
+            "text": "世界等级还可以调整其他物品的生成几率，如词缀、词缀战利品条目和精英怪。$(p)这些几率并没有在任何地方显示，但你可能会发现每个等级的内容不同。"
+        }
+    ]
+}
