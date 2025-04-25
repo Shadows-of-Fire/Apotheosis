@@ -10,6 +10,7 @@ import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.mobs.InvaderSpawnRules;
 import dev.shadowsoffire.apotheosis.mobs.util.SurfaceType;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -30,7 +31,7 @@ public class ApothDataMapProvider extends DataMapProvider {
     }
 
     @Override
-    protected void gather() {
+    protected void gather(HolderLookup.Provider provider) {
         Builder<InvaderSpawnRules, DimensionType> invaderRules = builder(DataMaps.INVADER_SPAWN_RULES);
 
         invaderRules.add(BuiltinDimensionTypes.OVERWORLD, new InvaderSpawnRules(
