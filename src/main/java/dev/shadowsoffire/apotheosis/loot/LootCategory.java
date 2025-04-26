@@ -190,7 +190,7 @@ public final class LootCategory {
     @Nullable
     private static ResourceLocation readLocWithApothNamespace(String path) {
         try {
-            return Apotheosis.loc(path);
+            return path.contains(":") ? ResourceLocation.parse(path) : Apotheosis.loc(path);
         }
         catch (ResourceLocationException resourcelocationexception) {
             return null;
