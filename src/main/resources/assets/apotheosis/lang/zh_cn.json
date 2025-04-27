@@ -49,7 +49,7 @@
     "tutorial.apotheosis.world_tier.introduction.desc": "欢迎来到神化世界等级教程！在本教程中，你将了解新的世界等级系统，以及如何在其中取得进展。点击“下一页”继续，或点击“跳过教程”跳过本教程。",
 
     "tutorial.apotheosis.world_tier.world_tiers.title": "世界等级",
-    "tutorial.apotheosis.world_tier.world_tiers.desc": "世界等级是神化的进阶系统，解锁和激活新的世界等级会提高游戏难度，但同时也会提高在世界中找到的战利品的质量。\n\n将鼠标悬停在世界等级的图标上可查看解锁要求，点击它可对焦解锁要求。",
+    "tutorial.apotheosis.world_tier.world_tiers.desc": "世界等级是神化的进阶系统，解锁和激活新的世界等级会提高游戏难度，但同时也会提高在世界中找到的战利品的质量。\n\n将鼠标悬停在世界等级的图标上可查看解锁要求，点击它可将已解锁的设为焦点。",
     
     "tutorial.apotheosis.world_tier.tier_name.title": "世界等级名称",
     "tutorial.apotheosis.world_tier.tier_name.desc": "这是所选世界等级的名称，以及对该等级的简短描述。",
@@ -527,7 +527,7 @@
     "item.apotheosis.gem.apotheosis:overworld/verdant_ruin": "翠绿废墟宝石",
     "item.apotheosis.gem.apotheosis:the_nether/inferno": "炽狱宝石",
     "item.apotheosis.gem.apotheosis:the_nether/blood_lord": "嗜血领主宝石",
-    "item.apotheosis.gem.apotheosis:the_nether/molten_breach": "熔融裂缝宝石",
+    "item.apotheosis.gem.apotheosis:the_nether/molten_breach": "熔融突破宝石",
     "item.apotheosis.gem.apotheosis:the_end/endersurge": "影激宝石",
     "item.apotheosis.gem.apotheosis:the_end/mageslayer": "法师克星宝石",
     "item.apotheosis.gem.apotheosis:twilight/forest": "暮色森林宝石",
