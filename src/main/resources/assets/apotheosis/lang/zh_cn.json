@@ -6,7 +6,7 @@
     "text.apotheosis.world_tier.haven": "避风港",
     "text.apotheosis.world_tier.haven.desc": "旅途的开始",
 
-    "text.apotheosis.world_tier.frontier": "边界",
+    "text.apotheosis.world_tier.frontier": "险境",
     "text.apotheosis.world_tier.frontier.desc": "勇闯危险世界",
 
     "text.apotheosis.world_tier.ascent": "进击",
@@ -22,7 +22,7 @@
     "title.apotheosis.world_tier_details": "世界等级详情",
 
     "button.apotheosis.haven": "避风港",
-    "button.apotheosis.frontier": "边界",
+    "button.apotheosis.frontier": "险境",
     "button.apotheosis.ascent": "进击",
     "button.apotheosis.summit": "顶点",
     "button.apotheosis.pinnacle": "巅峰",
@@ -55,7 +55,7 @@
     "tutorial.apotheosis.world_tier.tier_name.desc": "这是所选世界等级的名称，以及对该等级的简短描述。",
     
     "tutorial.apotheosis.world_tier.tier_difficulty.title": "世界等级难度",
-    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "这是所选世界等级的难度。难度越高，怪物越强，奖励也越好。\n\n在世界等级为边界及以上等级时神化入侵者会在你的世界中开始生成。",
+    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "这是所选世界等级的难度。难度越高，怪物越强，奖励也越好。\n\n在世界等级为险境及以上等级时神化入侵者会在你的世界中开始生成。",
     
     "tutorial.apotheosis.world_tier.detailed_info.title": "详细信息", 
     "tutorial.apotheosis.world_tier.detailed_info.desc": "该按钮将显示世界等级的详细信息，包括玩家和怪物的正面效果和负面效果，以及每种稀有度和宝石纯度的掉落几率。\n\n如果你不确定什么是稀有度或纯度，请参阅《阴影编年史》（游戏内指南）。",
@@ -718,8 +718,8 @@
     "advancements.apotheosis.progression.haven.desc": "当你找到第一个词缀物品时，“避风港”就会解锁，并默认激活。",
     "advancements.apotheosis.progression.haven.criteria.affixed": "拾取一件词缀物品",
 
-    "advancements.apotheosis.progression.frontier.title": "世界等级：边界",
-    "advancements.apotheosis.progression.frontier.desc": "装备全套词缀物品以取得“边界”进展。\n解锁后，使用CTRL+T激活它。",
+    "advancements.apotheosis.progression.frontier.title": "世界等级：险境",
+    "advancements.apotheosis.progression.frontier.desc": "装备全套词缀物品以取得“险境”进展。\n解锁后，使用CTRL+T激活它。",
     "advancements.apotheosis.progression.frontier.criteria.common_helm": "装备普通头盔",
     "advancements.apotheosis.progression.frontier.criteria.common_chest": "装备普通胸甲",
     "advancements.apotheosis.progression.frontier.criteria.common_legs": "装备普通护腿",
