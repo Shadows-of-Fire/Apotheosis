@@ -3,7 +3,7 @@
 
     "key.categories.apotheosis": "神化",
 
-    "text.apotheosis.world_tier.haven": "避风港",
+    "text.apotheosis.world_tier.haven": "居所",
     "text.apotheosis.world_tier.haven.desc": "旅途的开始",
 
     "text.apotheosis.world_tier.frontier": "险境",
@@ -21,7 +21,7 @@
     "title.apotheosis.select_world_tier": "选择世界等级",
     "title.apotheosis.world_tier_details": "世界等级详情",
 
-    "button.apotheosis.haven": "避风港",
+    "button.apotheosis.haven": "居所",
     "button.apotheosis.frontier": "险境",
     "button.apotheosis.ascent": "进击",
     "button.apotheosis.summit": "顶点",
@@ -46,7 +46,7 @@
     "button.apotheosis.open_world_tier_tutorial": "打开世界等级教程",
 
     "tutorial.apotheosis.world_tier.introduction.title": "介绍",
-    "tutorial.apotheosis.world_tier.introduction.desc": "欢迎来到神化世界等级教程！在本教程中，你将了解新的世界等级系统，以及如何在其中取得进展。点击“下一页”继续，或点击“跳过教程”跳过本教程。",
+    "tutorial.apotheosis.world_tier.introduction.desc": "欢迎来到神化世界等级教程！在本教程中，你将了解新的世界等级系统，以及如何在其中获得进度。点击“下一页”继续，或点击“跳过教程”跳过本教程。",
 
     "tutorial.apotheosis.world_tier.world_tiers.title": "世界等级",
     "tutorial.apotheosis.world_tier.world_tiers.desc": "世界等级是神化的进阶系统，解锁和激活新的世界等级会提高游戏难度，但同时也会提高在世界中找到的战利品的质量。\n\n将鼠标悬停在世界等级的图标上可查看解锁要求，点击它可将已解锁的设为焦点。",
@@ -61,7 +61,7 @@
     "tutorial.apotheosis.world_tier.detailed_info.desc": "该按钮将显示世界等级的详细信息，包括玩家和怪物的正面效果和负面效果，以及每种稀有度和宝石纯度的掉落几率。\n\n如果你不确定什么是稀有度或纯度，请参阅《阴影编年史》（游戏内指南）。",
     
     "tutorial.apotheosis.world_tier.activate.title": "激活世界等级",
-    "tutorial.apotheosis.world_tier.activate.desc": "如果所选世界等级尚未激活，则可以通过点击该按钮激活选择的等级。\n\n点击“完成”将自动激活世界等级：避风港。至于所有其他世界等级，你需要回到这里自己激活它们。",
+    "tutorial.apotheosis.world_tier.activate.desc": "如果所选世界等级尚未激活，则可以通过点击该按钮激活选择的等级。\n\n点击“完成”将自动激活世界等级：居所。至于所有其他世界等级，你需要回到这里自己激活它们。",
     
     "text.apotheosis.tier_info": "世界等级信息",
     "text.apotheosis.monster_augments": "怪物强化",
@@ -71,7 +71,7 @@
     "text.apotheosis.purities": "纯度",
     "text.apotheosis.unidentified": "未知%s",
     "text.apotheosis.world_tier_tutorial": "该物品拥有未知力量",
-    "text.apotheosis.world_tier_tutorial.2": "按%s并激活世界等级: 避风港以解锁它",
+    "text.apotheosis.world_tier_tutorial.2": "按%s并激活世界等级: 居所以解锁它",
 
     "key.apotheosis.toggle_radial_mining": "更改径向挖掘模式",
     "key.apotheosis.open_world_tier_select": "打开世界等级选择界面",
@@ -714,12 +714,12 @@
     "advancements.apotheosis.progression.root.title": "神化世界等级",
     "advancements.apotheosis.progression.root.desc": "在神化中解锁世界等级的里程碑。\n按CTRL+T打开选择界面。",
 
-    "advancements.apotheosis.progression.haven.title": "避风港",
-    "advancements.apotheosis.progression.haven.desc": "当你找到第一个词缀物品时，“避风港”就会解锁，并默认激活。",
+    "advancements.apotheosis.progression.haven.title": "居所",
+    "advancements.apotheosis.progression.haven.desc": "当你找到第一个词缀物品时，“居所”就会解锁，并默认激活。",
     "advancements.apotheosis.progression.haven.criteria.affixed": "拾取一件词缀物品",
 
     "advancements.apotheosis.progression.frontier.title": "世界等级：险境",
-    "advancements.apotheosis.progression.frontier.desc": "装备全套词缀物品以取得“险境”进展。\n解锁后，使用CTRL+T激活它。",
+    "advancements.apotheosis.progression.frontier.desc": "装备全套词缀物品以解锁“险境”。\n解锁后，使用CTRL+T激活它。",
     "advancements.apotheosis.progression.frontier.criteria.common_helm": "装备普通头盔",
     "advancements.apotheosis.progression.frontier.criteria.common_chest": "装备普通胸甲",
     "advancements.apotheosis.progression.frontier.criteria.common_legs": "装备普通护腿",
