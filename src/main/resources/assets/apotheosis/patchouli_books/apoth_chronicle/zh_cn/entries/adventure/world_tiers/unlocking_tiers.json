@@ -26,7 +26,7 @@
         {
             "type": "patchouli:text",
             "title": "攀升",
-            "text": "解锁$(9)攀升$()需要：$(p)装备全套$(#33FF33)不寻常品质$()词缀装备（含武器）$(p)并且击杀一名$(l:apotheosis:adventure/mobs/invader)神化入侵者$()"
+            "text": "解锁$(9)攀升$()需要：$(p)装备全套$(#33FF33)罕见品质$()词缀装备（含武器）$(p)并且击杀一名$(l:apotheosis:adventure/mobs/invader)神化入侵者$()"
         },
         {
             "type": "patchouli:text",
