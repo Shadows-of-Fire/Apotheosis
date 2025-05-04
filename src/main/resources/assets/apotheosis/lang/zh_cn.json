@@ -575,7 +575,7 @@
     "upgrade.apotheosis.iron": "铁升级 ",
     "item.apotheosis.iron_upgrade_smithing_template.applies_to": "石质和锁链装备",
     "item.apotheosis.iron_upgrade_smithing_template.ingredients": "4 铁锭",
-    "item.apotheosis.iron_upgrade_smithing_template.base_slot_description": "加入铁质盔甲，武器，或者工具",
+    "item.apotheosis.iron_upgrade_smithing_template.base_slot_description": "加入锁链或者石质装备",
     "item.apotheosis.iron_upgrade_smithing_template.additions_slot_description": "加入 4 铁锭",
 
     "item.apotheosis.gold_upgrade_smithing_template": "锻造模板",
