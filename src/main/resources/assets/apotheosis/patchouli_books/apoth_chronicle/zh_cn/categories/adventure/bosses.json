@@ -1,7 +1,0 @@
-{
-    "name": "Boss",
-    "description": "$(9)Boss$()是一个使用词缀力量的敌人。$(p)通常，你可以通过他们独特的名字和强大的装备来识别他们。",
-    "icon": "apotheosis:boss_summoner",
-	"flag": "apotheosis:adventure",
-	"parent": "apotheosis:adventure/adventure"
-}

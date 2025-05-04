@@ -1,0 +1,7 @@
+{
+    "name": "宝石 & 镶孔",
+    "description": "闪亮的石头总能吸引一个人的眼睛。$(p)请留意神化宝石, 一种可以插入词缀物品并提供加成的物品。",
+    "icon": "apotheosis:gem",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

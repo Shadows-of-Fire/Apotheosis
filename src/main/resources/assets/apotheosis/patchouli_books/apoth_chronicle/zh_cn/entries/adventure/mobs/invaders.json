@@ -1,0 +1,28 @@
+{
+    "name": "神化入侵者",
+    "icon": "minecraft:beacon",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "一个奇怪的声音，一个奇特的信息，以及来自天空的巨大光束……$(p)所有的迹象都表明，一个神化入侵者，正在主动入侵你的世界。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "生成机制",
+            "text": "神化入侵者可能会罕见地出现在普通怪物能够生成的露天区域。$(p)它们的到来会伴随着大声的噪音、状态提示消息以及信标光束标识。$(p)入侵者的生成频率会因世界层级和维度不同而增减。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "入侵者稀有度",
+            "text": "每个入侵者都有对应的稀有度，可通过其名称和轮廓颜色辨识。$(p)稀有度越高的入侵者实力越强，但相应也会掉落更丰厚的战利品。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "战利品",
+            "text": "入侵者必定会掉落一件$(l:apotheosis:adventure/mobs/invader_items)特殊词缀物品$()，且相比普通生物可能拥有额外的战利品表。$(p)它们掉落宝石的概率也更高。"
+        }
+	]
+}

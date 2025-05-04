@@ -1,0 +1,37 @@
+{
+    "name": "世界层级",
+    "icon": "apotheosis:textures/gui/book/summit_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(6)世界层级$()是针对每位玩家的世界强度调节机制。每个层级决定了生成的内容类型、敌人强度、可获得的增益效果等全局设定。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "层级划分",
+            "text": "世界层级共分为五级，每提升一级都将显著增加世界难度与奖励价值。$(p)层级依次为：$(9)避风港$()、$(9)边境$()、$(9)攀升$()、$(9)高峰$()和$(9)顶点$()。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "层级增强效果",
+            "text": "每个层级都有专属的增强效果，这些加成会同时作用于身处该层级的玩家和生成的生物。$(p)你可以在$(l:apotheosis:adventure/world_tiers/select_screen)世界层级选择界面$()查看各层级的所有增强效果。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "稀有度掉落权重",
+            "text": "世界层级还控制着各类稀有度的权重分配。$(p)随着层级提升，高稀有度物品（及入侵者）的出现概率将显著增加。$(p)具体掉落概率可在$(l:apotheosis:adventure/world_tiers/select_screen)世界层级选择界面$()查阅。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "宝石生成规则",
+            "text": "世界层级还会影响可生成的宝石种类及其纯度等级。$(p)跟之前一样，具体的纯度生成概率可在选择界面中查询。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "其他注意事项",
+            "text": "世界层级还可能调控其他元素的生成率，包括词缀、词缀战利品条目和精英怪物等。$(p)这些参数不会在界面显示，但是基于不同层级你会感受到差异化的内容。"
+        }
+    ]
+}

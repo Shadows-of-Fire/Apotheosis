@@ -1,0 +1,7 @@
+{
+    "name": "世界层级",
+    "description": "当你变强的时候，你周围的世界也在变强。$(p)这一节涵盖了神化世界层级概念 - 它们改变了什么, 它们怎么解锁, 如何改变当前世界层级",
+    "icon": "apotheosis:textures/gui/book/summit_icon.png",
+    "flag": "apotheosis:adventure",
+    "parent": "apotheosis:adventure/adventure"
+}

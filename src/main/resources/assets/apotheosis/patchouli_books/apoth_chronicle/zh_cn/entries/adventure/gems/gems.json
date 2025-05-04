@@ -1,7 +1,7 @@
 {
     "name": "宝石",
     "icon": "apotheosis:gem",
-    "category": "apotheosis:adventure/affix_loot",
+    "category": "apotheosis:adventure/gems",
 	"flag": "apotheosis:adventure",
 	"sortnum": 1,
     "pages": [
@@ -17,7 +17,7 @@
 		{
 			"type": "patchouli:text",
 			"title": "获取宝石",
-			"text": "宝石可以在箱子的战利品中找到，也可能在杀怪时少量找到。然而，要掉落宝石，击杀者必须是真正的玩家，而不是机器或其他自动化来源。$(p)宝石更有可能从Boss那里掉落。"
+			"text": "宝石可以在箱子的战利品中找到，也可能在杀怪时少量找到。然而，要掉落宝石，击杀者必须是真正的玩家，而不是机器或其他自动化来源。$(p)宝石更有可能从入侵者那里掉落。"
 		},
 		{
 			"type": "patchouli:text",
