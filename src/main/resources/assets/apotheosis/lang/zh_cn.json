@@ -18,8 +18,8 @@
     "text.apotheosis.world_tier.pinnacle": "顶点",
     "text.apotheosis.world_tier.pinnacle.desc": "醉心于山颠的风暴之中",
 
-    "title.apotheosis.select_world_tier": "选择世界等级",
-    "title.apotheosis.world_tier_details": "世界等级详情",
+    "title.apotheosis.select_world_tier": "选择世界层级",
+    "title.apotheosis.world_tier_details": "世界层级详情",
 
     "button.apotheosis.haven": "居所",
     "button.apotheosis.frontier": "边境",
@@ -29,41 +29,41 @@
     "button.apotheosis.tier_locked": "%s（已锁定）",
     "button.apotheosis.tier_advancement": "完成%s进度以解锁。",
     "button.apotheosis.tier_advancement_criteria": "",
-    "button.apotheosis.activate_tier": "激活世界等级：%s",
-    "button.apotheosis.already_activated": "该世界等级目前处于激活状态",
+    "button.apotheosis.activate_tier": "激活世界层级：%s",
+    "button.apotheosis.already_activated": "该世界层级目前处于激活状态",
     "button.apotheosis.activate": "激活",
     "button.apotheosis.activated": "已激活",
     "button.apotheosis.show_detailed_info": "详细信息",
     "button.apotheosis.show_detailed_info.desc": "查看生物增益、玩家增益和稀有度",
     "button.apotheosis.return": "X",
-    "button.apotheosis.return.desc": "返回等级选择界面",
+    "button.apotheosis.return.desc": "返回层级选择界面",
     "button.apotheosis.inactive": "未激活",
-    "button.apotheosis.locked": "该世界等级已锁定",
+    "button.apotheosis.locked": "该世界层级已锁定",
     "button.apotheosis.skip_tutorial": "跳过教程",
     "button.apotheosis.prev_tutorial": "上一页",
     "button.apotheosis.next_tutorial": "下一页",
     "button.apotheosis.done": "完成",
-    "button.apotheosis.open_world_tier_tutorial": "打开世界等级教程",
+    "button.apotheosis.open_world_tier_tutorial": "打开世界层级教程",
 
     "tutorial.apotheosis.world_tier.introduction.title": "介绍",
-    "tutorial.apotheosis.world_tier.introduction.desc": "欢迎来到神化世界等级教程！在本教程中，你将了解新的世界等级系统，以及如何在其中获得进度。点击“下一页”继续，或点击“跳过教程”跳过本教程。",
+    "tutorial.apotheosis.world_tier.introduction.desc": "欢迎来到神化世界层级教程！在本教程中，你将了解新的世界层级系统，以及如何在其中获得进度。点击“下一页”继续，或点击“跳过教程”跳过本教程。",
 
-    "tutorial.apotheosis.world_tier.world_tiers.title": "世界等级",
-    "tutorial.apotheosis.world_tier.world_tiers.desc": "世界等级是神化的进阶系统，解锁和激活新的世界等级会提高游戏难度，但同时也会提高在世界中找到的战利品的质量。\n\n将鼠标悬停在世界等级的图标上可查看解锁要求，点击它可将已解锁的设为焦点。",
+    "tutorial.apotheosis.world_tier.world_tiers.title": "世界层级",
+    "tutorial.apotheosis.world_tier.world_tiers.desc": "世界层级是神化的进阶系统，解锁和激活新的世界层级会提高游戏难度，但同时也会提高在世界中找到的战利品的质量。\n\n将鼠标悬停在世界层级的图标上可查看解锁要求，点击它可将已解锁的设为焦点。",
     
-    "tutorial.apotheosis.world_tier.tier_name.title": "世界等级名称",
-    "tutorial.apotheosis.world_tier.tier_name.desc": "这是所选世界等级的名称，以及对该等级的简短描述。",
+    "tutorial.apotheosis.world_tier.tier_name.title": "世界层级名称",
+    "tutorial.apotheosis.world_tier.tier_name.desc": "这是所选世界层级的名称，以及对该层级的简短描述。",
     
-    "tutorial.apotheosis.world_tier.tier_difficulty.title": "世界等级难度",
-    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "这是所选世界等级的难度。难度越高，怪物越强，奖励也越好。\n\n在世界等级为边境及以上等级时神化入侵者会在你的世界中开始生成。",
+    "tutorial.apotheosis.world_tier.tier_difficulty.title": "世界层级难度",
+    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "这是所选世界层级的难度。难度越高，怪物越强，奖励也越好。\n\n在世界层级为边境及以上层级时神化入侵者会在你的世界中开始生成。",
     
     "tutorial.apotheosis.world_tier.detailed_info.title": "详细信息", 
-    "tutorial.apotheosis.world_tier.detailed_info.desc": "该按钮将显示世界等级的详细信息，包括玩家和怪物的正面效果和负面效果，以及每种稀有度和宝石纯度的掉落几率。\n\n如果你不确定什么是稀有度或纯度，请参阅《阴影编年史》（游戏内指南）。",
+    "tutorial.apotheosis.world_tier.detailed_info.desc": "该按钮将显示世界层级的详细信息，包括玩家和怪物的正面效果和负面效果，以及每种稀有度和宝石纯度的掉落几率。\n\n如果你不确定什么是稀有度或纯度，请参阅《阴影编年史》（游戏内指南）。",
     
-    "tutorial.apotheosis.world_tier.activate.title": "激活世界等级",
-    "tutorial.apotheosis.world_tier.activate.desc": "如果所选世界等级尚未激活，则可以通过点击该按钮激活选择的等级。\n\n点击“完成”将自动激活世界等级：居所。至于所有其他世界等级，你需要回到这里自己激活它们。",
+    "tutorial.apotheosis.world_tier.activate.title": "激活世界层级",
+    "tutorial.apotheosis.world_tier.activate.desc": "如果所选世界层级尚未激活，则可以通过点击该按钮激活选择的层级。\n\n点击“完成”将自动激活世界层级：居所。至于所有其他世界层级，你需要回到这里自己激活它们。",
     
-    "text.apotheosis.tier_info": "世界等级信息",
+    "text.apotheosis.tier_info": "世界层级信息",
     "text.apotheosis.monster_augments": "怪物强化",
     "text.apotheosis.player_augments": "玩家强化",
     "text.apotheosis.drop_chances": "掉落几率",
@@ -71,10 +71,10 @@
     "text.apotheosis.purities": "纯度",
     "text.apotheosis.unidentified": "未知%s",
     "text.apotheosis.world_tier_tutorial": "该物品拥有未知力量",
-    "text.apotheosis.world_tier_tutorial.2": "按%s并激活世界等级: 居所以解锁它",
+    "text.apotheosis.world_tier_tutorial.2": "按%s并激活世界层级: 居所以解锁它",
 
     "key.apotheosis.toggle_radial_mining": "更改径向挖掘模式",
-    "key.apotheosis.open_world_tier_select": "打开世界等级选择界面",
+    "key.apotheosis.open_world_tier_select": "打开世界层级选择界面",
     "key.apotheosis.compare_equipment": "对比悬停的物品",
     "key.apotheosis.link_item_to_chat": "将悬停的物品链接到聊天栏",
 
@@ -711,14 +711,14 @@
 
     "comment_id": "/进度",
 
-    "advancements.apotheosis.progression.root.title": "神化世界等级",
-    "advancements.apotheosis.progression.root.desc": "在神化中解锁世界等级的里程碑。\n按CTRL+T打开选择界面。",
+    "advancements.apotheosis.progression.root.title": "神化世界层级",
+    "advancements.apotheosis.progression.root.desc": "在神化中解锁世界层级的里程碑。\n按CTRL+T打开选择界面。",
 
     "advancements.apotheosis.progression.haven.title": "居所",
     "advancements.apotheosis.progression.haven.desc": "当你找到第一个词缀物品时，“居所”就会解锁，并默认激活。",
     "advancements.apotheosis.progression.haven.criteria.affixed": "拾取一件词缀物品",
 
-    "advancements.apotheosis.progression.frontier.title": "世界等级：边境",
+    "advancements.apotheosis.progression.frontier.title": "世界层级：边境",
     "advancements.apotheosis.progression.frontier.desc": "装备全套词缀物品以解锁“边境”。\n解锁后，使用CTRL+T激活它。",
     "advancements.apotheosis.progression.frontier.criteria.common_helm": "装备普通头盔",
     "advancements.apotheosis.progression.frontier.criteria.common_chest": "装备普通胸甲",
@@ -726,7 +726,7 @@
     "advancements.apotheosis.progression.frontier.criteria.common_feet": "装备普通靴子", 
     "advancements.apotheosis.progression.frontier.criteria.common_hand": "装备普通武器",
 
-    "advancements.apotheosis.progression.ascent.title": "世界等级：攀升",
+    "advancements.apotheosis.progression.ascent.title": "世界层级：攀升",
     "advancements.apotheosis.progression.ascent.desc": "装备全套罕见装备并杀死入侵者以开始你的攀升",
     "advancements.apotheosis.progression.ascent.criteria.uncommon_helm": "装备罕见头盔",
     "advancements.apotheosis.progression.ascent.criteria.uncommon_chest": "装备罕见胸甲",
@@ -735,7 +735,7 @@
     "advancements.apotheosis.progression.ascent.criteria.uncommon_hand": "装备罕见武器",
     "advancements.apotheosis.progression.ascent.criteria.kill_apothic_invader": "杀死神化入侵者",
 
-    "advancements.apotheosis.progression.summit.title": "世界等级：高峰",
+    "advancements.apotheosis.progression.summit.title": "世界层级：高峰",
     "advancements.apotheosis.progression.summit.desc": "要达到“高峰”，杀死凋灵，并装备全套稀有装备",
     "advancements.apotheosis.progression.summit.criteria.rare_helm": "装备稀有头盔",
     "advancements.apotheosis.progression.summit.criteria.rare_chest": "装备稀有胸甲",
@@ -744,7 +744,7 @@
     "advancements.apotheosis.progression.summit.criteria.rare_hand": "装备稀有武器",
     "advancements.apotheosis.progression.summit.criteria.kill_wither": "杀死凋灵",
 
-    "advancements.apotheosis.progression.pinnacle.title": "世界等级：顶点",
+    "advancements.apotheosis.progression.pinnacle.title": "世界层级：顶点",
     "advancements.apotheosis.progression.pinnacle.desc": "达到“顶点”需要解放末地，并获得全套史诗装备",
     "advancements.apotheosis.progression.pinnacle.criteria.epic_helm": "装备史诗头盔",
     "advancements.apotheosis.progression.pinnacle.criteria.epic_chest": "装备史诗胸甲",

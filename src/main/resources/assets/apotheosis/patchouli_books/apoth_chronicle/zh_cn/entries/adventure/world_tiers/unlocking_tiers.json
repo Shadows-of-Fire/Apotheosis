@@ -1,17 +1,17 @@
 {
-    "name": "解锁等级",
+    "name": "解锁层级",
     "icon": "apotheosis:textures/gui/book/frontier_icon.png",
     "category": "apotheosis:adventure/world_tiers",
     "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "每个$(6)世界等级$()都必须在解锁后才能启用（居所除外，默认情况下已启用）。$(p)通过完成特定进度来解锁世界等级。$(p)解锁等级后，你需要在$(l:apotheosis:adventure/world_tiers/select_screen)选择界面$()激活它。"
+            "text": "每个$(6)世界层级$()都必须在解锁后才能启用（居所除外，默认情况下已启用）。$(p)通过完成特定进度来解锁世界层级。$(p)解锁层级后，你需要在$(l:apotheosis:adventure/world_tiers/select_screen)选择界面$()激活它。"
         },
         {
             "type": "patchouli:text",
             "title": "前言",
-            "text": "本节将介绍解锁世界等级的默认要求。$(p)注意，整合包可能会改变这些要求，因此请务必参考“神化世界等级”进度标签以获取完整信息。"
+            "text": "本节将介绍解锁世界层级的默认要求。$(p)注意，整合包可能会改变这些要求，因此请务必参考“神化世界层级”进度标签以获取完整信息。"
         },
         {
             "type": "patchouli:text",
@@ -36,7 +36,7 @@
         {
             "type": "patchouli:text",
             "title": "顶点",
-            "text": "最后一个等级是$(9)顶点$()，不仅需要获得全套$(#BB00BB)史诗$()物品，还要解放末地。$(p)这意味着要杀死末影龙。"
+            "text": "最后一个层级是$(9)顶点$()，不仅需要获得全套$(#BB00BB)史诗$()物品，还要解放末地。$(p)这意味着要杀死末影龙。"
         }
     ]
 }
