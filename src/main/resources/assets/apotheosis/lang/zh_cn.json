@@ -6,26 +6,26 @@
     "text.apotheosis.world_tier.haven": "居所",
     "text.apotheosis.world_tier.haven.desc": "旅途的开始",
 
-    "text.apotheosis.world_tier.frontier": "险境",
+    "text.apotheosis.world_tier.frontier": "边境",
     "text.apotheosis.world_tier.frontier.desc": "勇闯危险世界",
 
-    "text.apotheosis.world_tier.ascent": "进击",
+    "text.apotheosis.world_tier.ascent": "攀升",
     "text.apotheosis.world_tier.ascent.desc": "寻求力量，达到更高高度",
 
-    "text.apotheosis.world_tier.summit": "顶点",
-    "text.apotheosis.world_tier.summit.desc": "你已到达顶点，但这不是终点",
+    "text.apotheosis.world_tier.summit": "高峰",
+    "text.apotheosis.world_tier.summit.desc": "你已到达高峰，但这不是终点",
 
-    "text.apotheosis.world_tier.pinnacle": "巅峰",
-    "text.apotheosis.world_tier.pinnacle.desc": "在山峰的风暴中迷失自我",
+    "text.apotheosis.world_tier.pinnacle": "顶点",
+    "text.apotheosis.world_tier.pinnacle.desc": "醉心于山颠的风暴之中",
 
     "title.apotheosis.select_world_tier": "选择世界等级",
     "title.apotheosis.world_tier_details": "世界等级详情",
 
     "button.apotheosis.haven": "居所",
-    "button.apotheosis.frontier": "险境",
-    "button.apotheosis.ascent": "进击",
-    "button.apotheosis.summit": "顶点",
-    "button.apotheosis.pinnacle": "巅峰",
+    "button.apotheosis.frontier": "边境",
+    "button.apotheosis.ascent": "攀升",
+    "button.apotheosis.summit": "高峰",
+    "button.apotheosis.pinnacle": "顶点",
     "button.apotheosis.tier_locked": "%s（已锁定）",
     "button.apotheosis.tier_advancement": "完成%s进度以解锁。",
     "button.apotheosis.tier_advancement_criteria": "",
@@ -55,7 +55,7 @@
     "tutorial.apotheosis.world_tier.tier_name.desc": "这是所选世界等级的名称，以及对该等级的简短描述。",
     
     "tutorial.apotheosis.world_tier.tier_difficulty.title": "世界等级难度",
-    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "这是所选世界等级的难度。难度越高，怪物越强，奖励也越好。\n\n在世界等级为险境及以上等级时神化入侵者会在你的世界中开始生成。",
+    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "这是所选世界等级的难度。难度越高，怪物越强，奖励也越好。\n\n在世界等级为边境及以上等级时神化入侵者会在你的世界中开始生成。",
     
     "tutorial.apotheosis.world_tier.detailed_info.title": "详细信息", 
     "tutorial.apotheosis.world_tier.detailed_info.desc": "该按钮将显示世界等级的详细信息，包括玩家和怪物的正面效果和负面效果，以及每种稀有度和宝石纯度的掉落几率。\n\n如果你不确定什么是稀有度或纯度，请参阅《阴影编年史》（游戏内指南）。",
@@ -417,23 +417,23 @@
     "affix.apotheosis:durable": "耐用",
     "affix.apotheosis:durable.suffix": "耐久",
 
-    "affix.apotheosis:breaker/ability/stoneforming": "石头形成",
+    "affix.apotheosis:breaker/ability/stoneforming": "塑石",
     "affix.apotheosis:breaker/ability/stoneforming.suffix": "石工",
     "affix.apotheosis:breaker/ability/stoneforming.desc": "天然石头可能会彼此转化",
 
-    "affix.apotheosis:breaker/ability/sandforming": "沙子形成",
+    "affix.apotheosis:breaker/ability/sandforming": "塑沙",
     "affix.apotheosis:breaker/ability/sandforming.suffix": "沙子",
     "affix.apotheosis:breaker/ability/sandforming.desc": "沙子和类似方块可能会彼此转化",
 
     "affix.apotheosis.stoneforming.desc": "破坏[%s]会将其转化为%s，Shift右击可选择目标。",
     "affix.apotheosis.stoneforming.target_updated": "目标已更新为：%s",
 
-    "affix.apotheosis:shears/effect/leafforming": "树叶形成",
-    "affix.apotheosis:shears/effect/leafforming.suffix": "树木学家",
+    "affix.apotheosis:shears/effect/leafforming": "塑叶",
+    "affix.apotheosis:shears/effect/leafforming.suffix": "树艺师",
     "affix.apotheosis:shears/effect/leafforming.desc": "树叶可能会彼此转化",
 
     "affix.apotheosis:shears/effect/gardening": "园艺",
-    "affix.apotheosis:shears/effect/gardening.suffix": "园丁",
+    "affix.apotheosis:shears/effect/gardening.suffix": "园艺师",
     "affix.apotheosis:shears/effect/gardening.desc": "花可能会彼此转化",
 
     "affix.apotheosis.target.attack_self": "击中目标时，获得%s",
@@ -461,7 +461,7 @@
 
     "purity.apotheosis.cracked": "碎裂",
     "purity.apotheosis.chipped": "开裂",
-    "purity.apotheosis.flawed": "有瑕疵",
+    "purity.apotheosis.flawed": "有瑕",
     "purity.apotheosis.normal": "正常",
     "purity.apotheosis.flawless": "无瑕",
     "purity.apotheosis.perfect": "完美",
@@ -524,7 +524,7 @@
     "item.apotheosis.gem.apotheosis:core/combatant": "战斗宝石",
     "item.apotheosis.gem.apotheosis:overworld/earth": "地球宝石",
     "item.apotheosis.gem.apotheosis:overworld/royalty": "王室宝石",
-    "item.apotheosis.gem.apotheosis:overworld/verdant_ruin": "翠绿废墟宝石",
+    "item.apotheosis.gem.apotheosis:overworld/verdant_ruin": "翠殒宝石",
     "item.apotheosis.gem.apotheosis:the_nether/inferno": "炽狱宝石",
     "item.apotheosis.gem.apotheosis:the_nether/blood_lord": "嗜血领主宝石",
     "item.apotheosis.gem.apotheosis:the_nether/molten_breach": "熔融突破宝石",
@@ -536,7 +536,7 @@
     "item.apotheosis.boss_summoner": "神化Boss召唤器",
     "item.apotheosis.gem.cracked": "碎裂的%s",
     "item.apotheosis.gem.chipped": "开裂的%s",
-    "item.apotheosis.gem.flawed": "有瑕疵的%s",
+    "item.apotheosis.gem.flawed": "有瑕的%s",
     "item.apotheosis.gem.normal": "%s",
     "item.apotheosis.gem.flawless": "无瑕的%s",
     "item.apotheosis.gem.perfect": "完美的%s",
@@ -639,8 +639,8 @@
     "text.apotheosis.alternative_page": "第%s页，共%s页（滚动以翻页）",
     "text.apotheosis.any_x_item": "任意%s词缀物品",
     "text.apotheosis.any_affix_item": "任意词缀物品",
-    "text.apotheosis.malice_marker": "恶意将在合成时施加",
-    "text.apotheosis.touched_by_malice": "被恶意触摸了",
+    "text.apotheosis.malice_marker": "合成时将会施加恶意",
+    "text.apotheosis.touched_by_malice": "受恶意侵蚀",
     "text.apotheosis.malice_notice": "恶意：%s消耗了%s的力量",
 
     "title.apotheosis.smithing": "神化锻造",
@@ -718,16 +718,16 @@
     "advancements.apotheosis.progression.haven.desc": "当你找到第一个词缀物品时，“居所”就会解锁，并默认激活。",
     "advancements.apotheosis.progression.haven.criteria.affixed": "拾取一件词缀物品",
 
-    "advancements.apotheosis.progression.frontier.title": "世界等级：险境",
-    "advancements.apotheosis.progression.frontier.desc": "装备全套词缀物品以解锁“险境”。\n解锁后，使用CTRL+T激活它。",
+    "advancements.apotheosis.progression.frontier.title": "世界等级：边境",
+    "advancements.apotheosis.progression.frontier.desc": "装备全套词缀物品以解锁“边境”。\n解锁后，使用CTRL+T激活它。",
     "advancements.apotheosis.progression.frontier.criteria.common_helm": "装备普通头盔",
     "advancements.apotheosis.progression.frontier.criteria.common_chest": "装备普通胸甲",
     "advancements.apotheosis.progression.frontier.criteria.common_legs": "装备普通护腿",
     "advancements.apotheosis.progression.frontier.criteria.common_feet": "装备普通靴子", 
     "advancements.apotheosis.progression.frontier.criteria.common_hand": "装备普通武器",
 
-    "advancements.apotheosis.progression.ascent.title": "世界等级：进击",
-    "advancements.apotheosis.progression.ascent.desc": "装备全套罕见装备并杀死入侵者以开始你的进击",
+    "advancements.apotheosis.progression.ascent.title": "世界等级：攀升",
+    "advancements.apotheosis.progression.ascent.desc": "装备全套罕见装备并杀死入侵者以开始你的攀升",
     "advancements.apotheosis.progression.ascent.criteria.uncommon_helm": "装备罕见头盔",
     "advancements.apotheosis.progression.ascent.criteria.uncommon_chest": "装备罕见胸甲",
     "advancements.apotheosis.progression.ascent.criteria.uncommon_legs": "装备罕见护腿",
@@ -735,8 +735,8 @@
     "advancements.apotheosis.progression.ascent.criteria.uncommon_hand": "装备罕见武器",
     "advancements.apotheosis.progression.ascent.criteria.kill_apothic_invader": "杀死神化入侵者",
 
-    "advancements.apotheosis.progression.summit.title": "世界等级：顶点",
-    "advancements.apotheosis.progression.summit.desc": "要达到“顶点”，杀死凋灵，并装备全套稀有装备",
+    "advancements.apotheosis.progression.summit.title": "世界等级：高峰",
+    "advancements.apotheosis.progression.summit.desc": "要达到“高峰”，杀死凋灵，并装备全套稀有装备",
     "advancements.apotheosis.progression.summit.criteria.rare_helm": "装备稀有头盔",
     "advancements.apotheosis.progression.summit.criteria.rare_chest": "装备稀有胸甲",
     "advancements.apotheosis.progression.summit.criteria.rare_legs": "装备稀有护腿",
@@ -744,8 +744,8 @@
     "advancements.apotheosis.progression.summit.criteria.rare_hand": "装备稀有武器",
     "advancements.apotheosis.progression.summit.criteria.kill_wither": "杀死凋灵",
 
-    "advancements.apotheosis.progression.pinnacle.title": "世界等级：巅峰",
-    "advancements.apotheosis.progression.pinnacle.desc": "达到“巅峰”需要解放末地，并获得全套史诗装备",
+    "advancements.apotheosis.progression.pinnacle.title": "世界等级：顶点",
+    "advancements.apotheosis.progression.pinnacle.desc": "达到“顶点”需要解放末地，并获得全套史诗装备",
     "advancements.apotheosis.progression.pinnacle.criteria.epic_helm": "装备史诗头盔",
     "advancements.apotheosis.progression.pinnacle.criteria.epic_chest": "装备史诗胸甲",
     "advancements.apotheosis.progression.pinnacle.criteria.epic_legs": "装备史诗护腿",
@@ -781,7 +781,7 @@
     "advancements.apotheosis.gem.desc": "找到一个神化宝石，它可以镶嵌在词缀物品上。",
 
     "advancements.apotheosis.rare_gem": "远未达到完美",
-    "advancements.apotheosis.rare_gem.desc": "获得一个有瑕疵的宝石。",
+    "advancements.apotheosis.rare_gem.desc": "获得一个有瑕的宝石。",
 
     "advancements.apotheosis.mythic_gem": "无瑕水晶",
     "advancements.apotheosis.mythic_gem.desc": "获得一个无瑕的宝石。",
