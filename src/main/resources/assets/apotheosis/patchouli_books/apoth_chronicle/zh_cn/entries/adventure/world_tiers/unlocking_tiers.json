@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "每个$(6)世界层级$()都必须在解锁后才能启用（居所除外，默认情况下已启用）。$(p)通过完成特定进度来解锁世界层级。$(p)解锁层级后，你需要在$(l:apotheosis:adventure/world_tiers/select_screen)选择界面$()激活它。"
+            "text": "每个$(6)世界层级$()都必须在解锁后才能启用（居所除外，默认情况下已启用）。$(p)解锁世界层级需要完成特定的进度目标。$(p)解锁层级后，你需要在$(l:apotheosis:adventure/world_tiers/select_screen)选择界面$()激活它。"
         },
         {
             "type": "patchouli:text",
