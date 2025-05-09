@@ -641,7 +641,7 @@
     "text.apotheosis.any_affix_item": "任意词缀物品",
     "text.apotheosis.malice_marker": "合成时将会施加恶意",
     "text.apotheosis.touched_by_malice": "受恶意侵蚀",
-    "text.apotheosis.malice_notice": "恶意：%吞噬了%s的力量",
+    "text.apotheosis.malice_notice": "恶意：%s吞噬了%s的力量",
 
     "title.apotheosis.smithing": "神化锻造",
     "title.apotheosis.salvaging": "回收",
