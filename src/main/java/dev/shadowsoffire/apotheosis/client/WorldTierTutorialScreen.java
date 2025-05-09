@@ -73,6 +73,7 @@ public class WorldTierTutorialScreen extends Screen {
                 .buttonText(Apotheosis.lang("button", "next_tutorial"))
                 .build());
 
+        this.updateButtons();
     }
 
     @Override
