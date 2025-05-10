@@ -40,16 +40,16 @@
     "button.apotheosis.inactive": "未激活",
     "button.apotheosis.locked": "该世界层级已锁定",
     "button.apotheosis.skip_tutorial": "跳过教程",
-    "button.apotheosis.prev_tutorial": "上一页",
-    "button.apotheosis.next_tutorial": "下一页",
+    "button.apotheosis.prev_tutorial": "上一步",
+    "button.apotheosis.next_tutorial": "下一步",
     "button.apotheosis.done": "完成",
     "button.apotheosis.open_world_tier_tutorial": "打开世界层级教程",
 
     "tutorial.apotheosis.world_tier.introduction.title": "介绍",
-    "tutorial.apotheosis.world_tier.introduction.desc": "欢迎来到神化世界层级教程！在本教程中，你将了解新的世界层级系统，以及如何在其中获得进度。点击“下一页”继续，或点击“跳过教程”跳过本教程。",
+    "tutorial.apotheosis.world_tier.introduction.desc": "欢迎来到神化世界层级教程！在本教程中，你将了解新的世界层级系统，以及其进阶方式。点击“下一步”继续，或点击“跳过教程”跳过本教程。",
 
     "tutorial.apotheosis.world_tier.world_tiers.title": "世界层级",
-    "tutorial.apotheosis.world_tier.world_tiers.desc": "世界层级是神化的进阶系统，解锁和激活新的世界层级会提高游戏难度，但同时也会提高在世界中找到的战利品的质量。\n\n将鼠标悬停在世界层级的图标上可查看解锁要求，点击它可将已解锁的设为焦点。",
+    "tutorial.apotheosis.world_tier.world_tiers.desc": "世界层级是神化的进阶系统，解锁并激活新的世界层级会提高游戏难度，但同时也会提高世界中战利品的品质。\n\n将鼠标放在世界层级的图标上可查看解锁条件，点击图标以选中已解锁的层级。",
     
     "tutorial.apotheosis.world_tier.tier_name.title": "世界层级名称",
     "tutorial.apotheosis.world_tier.tier_name.desc": "这是所选世界层级的名称，以及对该层级的简短描述。",
@@ -58,25 +58,25 @@
     "tutorial.apotheosis.world_tier.tier_difficulty.desc": "这是所选世界层级的难度。难度越高，怪物越强，奖励也越好。\n\n在世界层级为边境及以上层级时神化入侵者会在你的世界中开始生成。",
     
     "tutorial.apotheosis.world_tier.detailed_info.title": "详细信息", 
-    "tutorial.apotheosis.world_tier.detailed_info.desc": "该按钮将显示世界层级的详细信息，包括玩家和怪物的正面效果和负面效果，以及每种稀有度和宝石纯度的掉落几率。\n\n如果你不确定什么是稀有度或纯度，请参阅《阴影编年史》（游戏内指南）。",
+    "tutorial.apotheosis.world_tier.detailed_info.desc": "该按钮将显示世界层级的详细信息，包括玩家和怪物的正面效果和负面效果，以及不同稀有度的物品与不同纯度的宝石的掉落概率。\n\n如果你不清楚什么是稀有度或纯度，请参阅《阴影编年史》（游戏内指南）。",
     
     "tutorial.apotheosis.world_tier.activate.title": "激活世界层级",
-    "tutorial.apotheosis.world_tier.activate.desc": "如果所选世界层级尚未激活，则可以通过点击该按钮激活选择的层级。\n\n点击“完成”将自动激活世界层级：居所。至于所有其他世界层级，你需要回到这里自己激活它们。",
+    "tutorial.apotheosis.world_tier.activate.desc": "如果所选世界层级尚未激活，则可以通过点击该按钮激活选择的层级。\n\n点击“完成”将自动激活世界层级：居所。至于所有其他世界层级，你需要回到这里手动激活它们。",
     
     "text.apotheosis.tier_info": "世界层级信息",
     "text.apotheosis.monster_augments": "怪物强化",
     "text.apotheosis.player_augments": "玩家强化",
-    "text.apotheosis.drop_chances": "掉落几率",
+    "text.apotheosis.drop_chances": "掉落概率",
     "text.apotheosis.rarities": "稀有度",
     "text.apotheosis.purities": "纯度",
     "text.apotheosis.unidentified": "未知%s",
     "text.apotheosis.world_tier_tutorial": "该物品拥有未知力量",
     "text.apotheosis.world_tier_tutorial.2": "按%s并激活世界层级: 居所以解锁它",
 
-    "key.apotheosis.toggle_radial_mining": "更改径向挖掘模式",
+    "key.apotheosis.toggle_radial_mining": "更改范围挖掘模式",
     "key.apotheosis.open_world_tier_select": "打开世界层级选择界面",
-    "key.apotheosis.compare_equipment": "对比悬停的物品",
-    "key.apotheosis.link_item_to_chat": "将悬停的物品链接到聊天栏",
+    "key.apotheosis.compare_equipment": "对比鼠标所指的物品",
+    "key.apotheosis.link_item_to_chat": "将鼠标所指的物品链接到聊天栏",
 
     "info.apotheosis.affix_item": "神化词缀物品",
 
@@ -88,7 +88,7 @@
     "misc.apotheosis.affix_name.four": "%s %s的%s（%s）",
     "misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
 
-    "misc.apotheosis.radial_state_updated": "径向挖掘模式已更新为“%s”",
+    "misc.apotheosis.radial_state_updated": "范围挖掘模式已更新为“%s”",
     "misc.apotheosis.radial_state.require_not_sneaking": "潜行时禁用",
     "misc.apotheosis.radial_state.require_sneaking": "潜行时启用",
     "misc.apotheosis.radial_state.enabled": "启用",
@@ -641,7 +641,7 @@
     "text.apotheosis.any_affix_item": "任意词缀物品",
     "text.apotheosis.malice_marker": "合成时将会施加恶意",
     "text.apotheosis.touched_by_malice": "受恶意侵蚀",
-    "text.apotheosis.malice_notice": "恶意：%s消耗了%s的力量",
+    "text.apotheosis.malice_notice": "恶意：%s吞噬了%s的力量",
 
     "title.apotheosis.smithing": "神化锻造",
     "title.apotheosis.salvaging": "回收",
@@ -868,7 +868,7 @@
     "config.jade.plugin_apotheosis.ench": "神化附魔模块",
     "config.jade.plugin_apotheosis.adventure": "神化冒险模块",
     "message.apotheosis.item_linking_disabled": "物品链接已被服务器禁用。",
-    "text.apotheosis.equipped": "已装备",
+    "text.apotheosis.equipped": "当前装备",
 
     "comment_id": "指南书",
     "book.apotheosis.name": "阴影编年史",

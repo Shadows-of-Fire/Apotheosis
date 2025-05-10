@@ -38,7 +38,7 @@
             "type": "patchouli:crafting",
 			"title": "量子稳定",
 			"recipe": "apothic_enchanting:geode_shelf",
-			"text": "通过进行灌注制作紫水晶母岩，你可以合成$(9)稳定书架$()。$(p)这将防止你收到负面量子化滚动。"
+			"text": "通过进行灌注制作紫水晶母岩，你可以合成$(9)稳定书架$()。$(p)这将防止你被负面的量子化随机影响。"
 		}
 	]
 }
