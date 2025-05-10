@@ -1,3 +1,8 @@
+## 8.3.5
+* Potentially fixed an issue with AAA Particles.
+* Fixed the previous button in the world tier tutorial being active when it shouldn't be.
+* Fixed more cases where max health would not be updated when applying tier augments or entity gear.
+
 ## 8.3.4
 * Fixed the Radial Mining State not being communicated to the client.
   * This was causing the radial preview to always display as if the state was "Disabled while sneaking".
