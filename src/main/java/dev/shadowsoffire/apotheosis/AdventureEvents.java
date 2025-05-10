@@ -359,6 +359,7 @@ public class AdventureEvents {
             entity.setData(Attachments.TIER_AUGMENTS_APPLIED, true);
         }
         else if (entity instanceof Mob mob) {
+            float healthPct = mob.getHealth() / mob.getMaxHealth();
             Player player = e.getLevel().getNearestPlayer(mob, -1);
             if (player != null) {
                 WorldTier tier = player.getData(Attachments.WORLD_TIER);
@@ -367,6 +368,7 @@ public class AdventureEvents {
                 }
                 entity.setData(Attachments.TIER_AUGMENTS_APPLIED, true);
             }
+            mob.setHealth(healthPct * mob.getMaxHealth());
         }
     }
 

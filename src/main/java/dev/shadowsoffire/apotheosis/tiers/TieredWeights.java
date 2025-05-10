@@ -46,7 +46,7 @@ public record TieredWeights(Map<WorldTier, Weight> weights) {
         public static Weight ZERO = new Weight(0, 0);
 
         public static MapCodec<Weight> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            Codec.intRange(0, 1024).fieldOf("weight").forGetter(Weight::weight),
+            Codec.intRange(0, 65536).fieldOf("weight").forGetter(Weight::weight),
             Codec.floatRange(-16, 16).optionalFieldOf("quality", 0F).forGetter(Weight::quality))
             .apply(inst, Weight::new));
 

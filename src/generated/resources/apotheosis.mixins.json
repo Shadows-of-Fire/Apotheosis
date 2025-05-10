@@ -17,6 +17,7 @@
         "GuiGraphicsAccessor",
         "ItemStackMixin",
         "LivingEntityInvoker",
+        "LivingEntityMixin",
         "MHFMixinLivingEntity",
         "MobMixin",
         "SmithingMenuMixin",

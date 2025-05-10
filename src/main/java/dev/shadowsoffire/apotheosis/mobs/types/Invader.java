@@ -16,7 +16,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig;
-import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -35,9 +34,6 @@ import dev.shadowsoffire.apotheosis.tiers.Constraints.Constrained;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
-import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
-import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
-import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import dev.shadowsoffire.apothic_enchanting.asm.EnchHooks;
@@ -172,12 +168,6 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         }
 
         entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, ctx.rand().nextFloat() * 360.0F, 0.0F);
-
-        // Apply the tier augments, since invaders will not receive them otherwise.
-        for (TierAugment aug : TierAugmentRegistry.getAugments(ctx.tier(), Target.MONSTERS)) {
-            aug.apply(level, entity);
-        }
-        entity.setData(Attachments.TIER_AUGMENTS_APPLIED, true);
 
         // TODO: Implement supporting entities here. Need to return the boss *and* the supports for spawning.
         return entity;
