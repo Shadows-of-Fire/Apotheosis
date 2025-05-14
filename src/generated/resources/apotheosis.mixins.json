@@ -14,7 +14,6 @@
         "EntityMixin",
         "GLMProviderMixin",
         "GoldToolsHaveFortuneModuleMixin",
-        "GuiGraphicsAccessor",
         "ItemStackMixin",
         "LivingEntityInvoker",
         "LivingEntityMixin",
@@ -26,6 +25,7 @@
     ],
     "client": [
         "client.EntityRendererMixin",
+        "client.GuiGraphicsAccessor",
         "client.GuiMixin",
         "client.MultiPlayerGameModeMixin",
         "client.SkeletonModelMixin"

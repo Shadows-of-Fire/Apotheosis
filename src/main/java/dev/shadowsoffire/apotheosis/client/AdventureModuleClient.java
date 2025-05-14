@@ -39,7 +39,7 @@ import dev.shadowsoffire.apotheosis.client.SocketTooltipRenderer.SocketComponent
 import dev.shadowsoffire.apotheosis.client.StoneformingTooltipRenderer.StoneformingComponent;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
-import dev.shadowsoffire.apotheosis.mixin.GuiGraphicsAccessor;
+import dev.shadowsoffire.apotheosis.mixin.client.GuiGraphicsAccessor;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload.BossSpawnData;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
