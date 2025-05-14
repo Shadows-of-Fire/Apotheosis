@@ -1,6 +1,0 @@
-{
-    "name": "花园模块",
-    "description": "花园模块负责与植物相关的对象的改动。",
-    "icon": "minecraft:sugar_cane",
-	"flag": "apotheosis:garden"
-}

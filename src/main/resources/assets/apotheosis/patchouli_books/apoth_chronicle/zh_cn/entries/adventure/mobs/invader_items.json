@@ -1,0 +1,17 @@
+{
+    "name": "入侵者物品",
+    "icon": "minecraft:ender_chest",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "每个入侵者都仅有一件词缀物品，以及其余附魔的全套装备。$(p)该词缀物品必定在其死亡时掉落，稀有度与入侵者相同。$(p)其上的词缀往往比平时更强。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "光是这件物品就是你杀死入侵者后获得的战利品，而且很可能物超所值。$(p)作为对原主人的纪念，每件物品的名称前都会有入侵者的名字。"
+		}
+	]
+}

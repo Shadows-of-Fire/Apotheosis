@@ -1,0 +1,27 @@
+{
+    "name": "层级选择",
+    "icon": "apotheosis:textures/gui/book/haven_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)世界层级选择界面$()是你了解和管理$(6)世界层级$()的综合页面。$(p)可以使用“打开世界层级选择界面”绑定按键打开，默认是CTRL+T。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "激活层级",
+            "text": "层级不会自动激活。当你解锁一个新层级时，首先需要点击“激活”按钮来启用它。$(p)你可以点击屏幕中的层级图标来选择一个层级，然后使用激活按钮来启用它。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "层级信息",
+            "text": "要查看层级信息，先选中该层级，然后按下“详细信息”按钮。$(p)这将显示该层级的稀有度和纯度权重，以及任何会生效的层级增强效果。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "注意事项",
+            "text": "你可以随时切换层级。$(p)在多人游戏中，多个玩家可能拥有不同的层级，但不会相互影响。大多数游戏内容都会以距离最近的玩家的层级为准。"
+        }
+    ]
+}

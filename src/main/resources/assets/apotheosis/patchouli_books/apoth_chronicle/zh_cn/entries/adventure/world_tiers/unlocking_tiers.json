@@ -1,0 +1,42 @@
+{
+    "name": "解锁层级",
+    "icon": "apotheosis:textures/gui/book/frontier_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "每个$(6)世界层级$()都必须在解锁后才能启用（居所除外，默认情况下已启用）。$(p)解锁世界层级需要完成特定的进度目标。$(p)解锁层级后，你需要在$(l:apotheosis:adventure/world_tiers/select_screen)选择界面$()激活它。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "前言",
+            "text": "本节将介绍解锁世界层级的默认要求。$(p)注意，整合包可能会改变这些要求，因此请务必参考“神化世界层级”进度标签以获取完整信息。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "居所",
+            "text": "$(9)居所$()默认情况下已解锁，尽管你在拾起第一个词缀物品之前无法看到它。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "边境",
+            "text": "$(9)边境$()可通过在每个盔甲栏装备词缀物品，并在任意一只手里拿着词缀武器解锁。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "攀升",
+            "text": "解锁$(9)攀升$()需要装备一套$(#33FF33)罕见$()词缀物品，包括武器。$(p)你还需要杀死一只神化入侵者。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "高峰",
+            "text": "要达到$(9)高峰$()有点难。$(p)你需要获得全套$(#5555FF)稀有$()词缀物品，并杀死凋灵。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "顶点",
+            "text": "最后一个层级是$(9)顶点$()，不仅需要获得全套$(#BB00BB)史诗$()物品，还要解放末地。$(p)这意味着要杀死末影龙。"
+        }
+    ]
+}

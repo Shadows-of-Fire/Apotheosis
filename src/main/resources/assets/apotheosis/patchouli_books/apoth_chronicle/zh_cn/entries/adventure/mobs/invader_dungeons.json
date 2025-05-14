@@ -1,0 +1,17 @@
+{
+    "name": "入侵者地牢",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "在远古洞穴深处有一些隐藏的建筑，其中蕴藏着词缀的无尽力量。如果这种力量可以自由获取，那将是一个令人欣喜的惊喜，但可惜的是，它却被一个笼中入侵者保卫着。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "这些建筑在地下有几种不同的变体，每个地牢都有一个笼中入侵者和几个战利品箱。一旦靠近笼子就会触发，释放入侵者。"
+		}
+	]
+}

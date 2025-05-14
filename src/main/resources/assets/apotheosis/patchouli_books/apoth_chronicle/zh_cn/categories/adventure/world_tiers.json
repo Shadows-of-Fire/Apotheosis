@@ -1,0 +1,7 @@
+{
+    "name": "世界层级",
+    "description": "当你变得更强大时，你周围的世界也会变得更强大。$(p)本节将介绍神化世界层级——它们会改变什么、如何解锁它们以及如何更改当前层级。",
+    "icon": "apotheosis:textures/gui/book/summit_icon.png",
+    "flag": "apotheosis:adventure",
+    "parent": "apotheosis:adventure/adventure"
+}
