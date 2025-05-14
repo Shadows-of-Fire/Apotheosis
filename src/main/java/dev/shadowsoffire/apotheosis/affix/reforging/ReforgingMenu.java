@@ -136,7 +136,6 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
                 rand.setSeed(this.seed ^ BuiltInRegistries.ITEM.getKey(input.getItem()).hashCode() + slot);
                 GenContext ctx = GenContext.forPlayer(rand, this.player);
                 ItemStack output = LootController.createLootItem(input.copy(), rarity, ctx);
-                output.remove(Components.TOUCHED_BY_MALICE);
                 this.choicesInv.setStackInSlot(slot, output);
             }
             else {

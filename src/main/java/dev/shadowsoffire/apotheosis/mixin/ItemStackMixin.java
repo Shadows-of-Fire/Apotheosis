@@ -5,11 +5,14 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.google.common.base.Predicates;
 import com.llamalad7.mixinextras.sugar.Local;
 
+import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
@@ -17,8 +20,11 @@ import dev.shadowsoffire.apotheosis.util.IFestiveMarker;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 
 @Mixin(value = ItemStack.class, priority = 500, remap = false)
@@ -86,4 +92,12 @@ public abstract class ItemStackMixin implements IFestiveMarker {
         }
     }
 
+    @Inject(method = "inventoryTick", at = @At("HEAD"))
+    public void apoth_tryTickMalice(Level level, Entity entity, int inventorySlot, boolean isCurrentItem, CallbackInfo ci) {
+        ItemStack ths = (ItemStack) (Object) this;
+        if (!level.isClientSide && ths.has(Apoth.Components.MALICE_MARKER) && entity instanceof Player player) {
+            AffixHelper.applyMalice(player, ths);
+            ths.remove(Components.MALICE_MARKER);
+        }
+    }
 }
