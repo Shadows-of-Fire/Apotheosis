@@ -131,6 +131,7 @@ public class AdventureModuleClient {
     public static final int COMPARE_PADDING = 18;
 
     private static final List<BossSpawnData> BOSS_SPAWNS = new ArrayList<>();
+    private static final Component GEM_SOCKET_MARKER = Component.literal("APOTH_SOCKET_MARKER");
 
     @SubscribeEvent
     public static void setup(FMLClientSetupEvent e) {
@@ -303,7 +304,7 @@ public class AdventureModuleClient {
             ItemStack stack = e.getStack();
             int sockets = SocketHelper.getSockets(stack);
             if (sockets > 0 && !WorldTier.isTutorialActive(Minecraft.getInstance().player)) {
-                e.addTooltipLines(Component.literal("APOTH_REMOVE_MARKER"));
+                e.addTooltipLines(GEM_SOCKET_MARKER.copy());
             }
         }
 
@@ -327,11 +328,11 @@ public class AdventureModuleClient {
             List<Either<FormattedText, TooltipComponent>> list = e.getTooltipElements();
             for (int i = 0; i < list.size(); i++) {
                 var entry = list.get(i);
-                if (containsText(entry, "APOTH_REMOVE_MARKER")) {
+                if (containsMarker(entry, GEM_SOCKET_MARKER)) {
                     list.remove(i);
                     list.add(i, Either.right(new SocketComponent(e.getItemStack(), SocketHelper.getGems(e.getItemStack()))));
                 }
-                else if (containsAffixMarker(entry, StoneformingAffix.TOOLTIP_MARKER)) {
+                else if (containsMarker(entry, StoneformingAffix.TOOLTIP_MARKER)) {
                     list.remove(i);
                     AffixInstance inst = AffixHelper.streamAffixes(e.getItemStack()).filter(a -> a.getAffix() instanceof StoneformingAffix).findFirst().orElse(null);
                     if (inst != null) {
@@ -341,12 +342,7 @@ public class AdventureModuleClient {
             }
         }
 
-        private static boolean containsText(Either<FormattedText, TooltipComponent> entry, String text) {
-            Optional<FormattedText> o = entry.left();
-            return o.isPresent() && o.get() instanceof Component comp && comp.contains(Component.literal(text));
-        }
-
-        private static boolean containsAffixMarker(Either<FormattedText, TooltipComponent> entry, Component marker) {
+        private static boolean containsMarker(Either<FormattedText, TooltipComponent> entry, Component marker) {
             Optional<FormattedText> o = entry.left();
             return o.isPresent() && o.get() instanceof Component comp && comp.contains(marker);
         }
