@@ -1,3 +1,8 @@
+## 8.3.6
+* Fixed `GuiGraphicsAccessor` not being in the client package.
+* Fixed the Sigil of Malice not working when shift-clicking the output item.
+* mc-kaishixiaxue & rtxyd: Updated chinese translation.
+
 ## 8.3.5
 * Potentially fixed an issue with AAA Particles.
 * Fixed the previous button in the world tier tutorial being active when it shouldn't be.
