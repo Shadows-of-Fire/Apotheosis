@@ -872,11 +872,11 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
         // Melee Abilities
 
         this.add(Apotheosis.loc("melee/festive"),
-            AffixBuilder.simple(FestiveAffix::new)
+            FestiveAffix.builder()
+                .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT)
                 .definition(AffixType.BASIC_EFFECT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
-                .step(0.005F)
-                .value(epic, 0.02F, 0.05F)
-                .value(mythic, 0.03F, 0.06F)
+                .value(epic, StepFunction.fromBounds(0.02F, 0.05F, 0.005F), 20)
+                .value(mythic, StepFunction.fromBounds(0.03F, 0.06F, 0.005F), 20)
                 .build());
 
         this.add(Apotheosis.loc("melee/thunderstruck"),
