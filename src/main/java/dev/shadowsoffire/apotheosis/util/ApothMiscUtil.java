@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.util;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -24,6 +26,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.ServerAdvancementManager;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.fml.loading.FMLEnvironment;
 
@@ -130,6 +133,18 @@ public class ApothMiscUtil {
 
     public static MutableComponent starPrefix(Component comp) {
         return Apotheosis.lang("text", "star_prefix", comp);
+    }
+
+    /**
+     * Returns a random element from the set, using the provided random source.
+     */
+    public static <T> T getRandomElement(Collection<T> set, RandomSource rand) {
+        int index = rand.nextInt(set.size());
+        Iterator<T> iter = set.iterator();
+        for (int i = 0; i < index; i++) {
+            iter.next();
+        }
+        return iter.next();
     }
 
     private static class ClientInternal {

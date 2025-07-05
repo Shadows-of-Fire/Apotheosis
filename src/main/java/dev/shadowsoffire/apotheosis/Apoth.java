@@ -45,6 +45,7 @@ import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.loot.conditions.KilledByRealPlayerCondition;
 import dev.shadowsoffire.apotheosis.loot.conditions.MatchesBlockCondition;
+import dev.shadowsoffire.apotheosis.loot.functions.ReforgeItemFunction;
 import dev.shadowsoffire.apotheosis.loot.modifiers.AffixConvertLootModifier;
 import dev.shadowsoffire.apotheosis.loot.modifiers.AffixHookLootModifier;
 import dev.shadowsoffire.apotheosis.loot.modifiers.AffixLootModifier;
@@ -127,6 +128,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -428,6 +430,12 @@ public class Apoth {
         private static void bootstrap() {}
     }
 
+    public static final class LootFunctions {
+        public static final LootItemFunctionType<ReforgeItemFunction> MATCHES_BLOCK = R.custom("reforge_item", Registries.LOOT_FUNCTION_TYPE, ReforgeItemFunction.TYPE);
+
+        private static void bootstrap() {}
+    }
+
     public static final class Triggers {
         public static final GemCutTrigger GEM_CUTTING = R.criteriaTrigger("gem_cutting", new GemCutTrigger());
         public static final EquippedItemTrigger EQUIPPED_ITEM = R.criteriaTrigger("equipped_item", new EquippedItemTrigger());
@@ -593,6 +601,7 @@ public class Apoth {
         Ingredients.bootstrap();
         RecipeTypes.bootstrap();
         LootModifiers.bootstrap();
+        LootFunctions.bootstrap();
         LootConditions.bootstrap();
         LootPoolEntries.bootstrap();
         RecipeSerializers.bootstrap();

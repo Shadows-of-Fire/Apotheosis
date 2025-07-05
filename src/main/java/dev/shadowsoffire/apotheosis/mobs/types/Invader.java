@@ -186,10 +186,6 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
             rarity = LootRarity.random(ctx, this.stats.keySet());
         }
 
-        if (rarity == null) {
-            rarity = this.stats.keySet().stream().findAny().orElseThrow();
-        }
-
         BossStats stats = this.stats.get(rarity);
         int duration = mob instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 

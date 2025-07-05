@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.include.com.google.common.base.Preconditions;
 
-import com.google.common.base.Predicates;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -75,12 +74,10 @@ public record LootRarity(TextColor color, Holder<Item> material, TieredWeights w
         return RarityRegistry.INSTANCE.getRandomItem(ctx);
     }
 
-    @Nullable
     public static LootRarity random(GenContext ctx, Set<LootRarity> pool) {
-        return RarityRegistry.INSTANCE.getRandomItem(ctx, pool.isEmpty() ? Predicates.alwaysTrue() : pool::contains);
+        return RarityRegistry.INSTANCE.getRandomItem(ctx, pool);
     }
 
-    @Nullable
     public static LootRarity randomFromHolders(GenContext ctx, Set<DynamicHolder<LootRarity>> pool) {
         return random(ctx, pool.stream().filter(DynamicHolder::isBound).map(DynamicHolder::get).collect(Collectors.toSet()));
     }
