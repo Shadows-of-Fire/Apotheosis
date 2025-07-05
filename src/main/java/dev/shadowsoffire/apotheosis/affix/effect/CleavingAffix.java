@@ -115,6 +115,11 @@ public class CleavingAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).isConstant();
+    }
+
     public static Predicate<Entity> cleavePredicate(Entity user, Entity target) {
         return e -> {
             if (e instanceof Animal && !(target instanceof Animal) || e instanceof AbstractVillager && !(target instanceof AbstractVillager)) {
@@ -132,6 +137,9 @@ public class CleavingAffix extends Affix {
         public static final Codec<CleaveValues> CODEC = RecordCodecBuilder
             .create(inst -> inst.group(StepFunction.CODEC.fieldOf("chance").forGetter(c -> c.chance), StepFunction.CODEC.fieldOf("targets").forGetter(c -> c.targets)).apply(inst, CleaveValues::new));
 
+        public boolean isConstant() {
+            return this.chance.isConstant() && this.targets.isConstant();
+        }
     }
 
     public static class Builder extends AffixBuilder<Builder> {

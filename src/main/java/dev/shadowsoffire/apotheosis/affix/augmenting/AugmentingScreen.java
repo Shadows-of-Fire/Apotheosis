@@ -199,7 +199,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
 
             AffixInstance current = this.currentItemAffixes.get(selected);
 
-            if (current.level() >= 1F) {
+            if (!AugmentingMenu.canAugment(current)) {
                 this.upgradeBtn.active = false;
                 this.upgradeBtn.setInactiveMessage(Component.translatable("button.apotheosis.augmenting.max_level").withStyle(ChatFormatting.RED));
             }
@@ -343,7 +343,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
             // blit(ResourceLocation pAtlasLocation, int pX, int pY, float pUOffset, float pVOffset, int pWidth, int pHeight, int pTextureWidth, int pTextureHeight)
             gfx.blit(TEXTURE, x, y, 0, 239 + (hovered == idx ? this.baseHeight : 0), this.width, this.baseHeight, 256, 307);
             Component name = entry.getName(true);
-            if (entry.level() >= Affix.STANDARD_MAX_LEVEL) {
+            if (!AugmentingMenu.canAugment(entry)) {
                 name = ApothMiscUtil.starPrefix(name);
             }
             gfx.drawString(AugmentingScreen.this.font, name, x + 2, y + 3, 0xFFFF80);

@@ -122,6 +122,11 @@ public class RadialAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).size() == 1;
+    }
+
     public static class Builder extends AffixBuilder<Builder> {
 
         protected final Map<LootRarity, List<RadialData>> values = new HashMap<>();

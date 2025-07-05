@@ -108,6 +108,11 @@ public class EnchantmentAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).isConstant();
+    }
+
     public static enum Mode {
         SINGLE,
         EXISTING,

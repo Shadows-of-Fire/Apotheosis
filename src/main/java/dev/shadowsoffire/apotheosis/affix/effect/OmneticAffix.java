@@ -79,6 +79,11 @@ public class OmneticAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return true;
+    }
+
     public static class Builder extends AffixBuilder<Builder> {
 
         private final Map<LootRarity, OmneticData> values = new HashMap<>();

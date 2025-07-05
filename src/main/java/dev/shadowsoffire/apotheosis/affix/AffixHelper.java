@@ -227,6 +227,8 @@ public class AffixHelper {
         ItemAffixes.Builder builder = affixes.toBuilder();
         List<DynamicHolder<Affix>> afxList = new ArrayList<>(affixes.keySet());
 
+        // TODO: Should we filter out affixes that are level-independent?
+
         // Choose two distinct indices
         int size = afxList.size();
         int firstIndex = rand.nextInt(size);

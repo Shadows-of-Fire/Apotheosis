@@ -104,6 +104,13 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
     }
 
     /**
+     * Returns true if this affix is level-independent, meaning that its power does not change with the level of the affix.
+     */
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return false;
+    }
+
+    /**
      * Adds any attribute modifiers supplied by this affix to the passed consumer.
      * <p>
      * Attribute modifiers must have unique IDs per-slot, since the same affix may be applicable to multiple items.

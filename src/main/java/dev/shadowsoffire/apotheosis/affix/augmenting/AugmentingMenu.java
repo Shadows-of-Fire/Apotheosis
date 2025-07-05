@@ -90,7 +90,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
         switch (id & 0b1) {
             case UPGRADE -> {
                 AffixInstance inst = affixes.get(selected);
-                if (inst.level() >= 1) {
+                if (!canAugment(inst)) {
                     return false;
                 }
 
@@ -184,6 +184,13 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
         }
 
         return AffixHelper.streamAffixes(stack).sorted(Comparator.comparing(inst -> inst.affix().getId())).toList();
+    }
+
+    /**
+     * Returns true if the given affix instance can be upgraded in the augmenting table.
+     */
+    public static boolean canAugment(AffixInstance inst) {
+        return !inst.isLevelIndependent() && inst.level() < Affix.STANDARD_MAX_LEVEL;
     }
 
     protected static List<DynamicHolder<Affix>> computeAlternatives(ItemStack stack, AffixInstance selected) {

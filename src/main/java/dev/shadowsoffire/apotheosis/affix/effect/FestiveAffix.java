@@ -150,6 +150,11 @@ public class FestiveAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).chance.isConstant();
+    }
+
     public static Builder builder() {
         return new Builder();
     }

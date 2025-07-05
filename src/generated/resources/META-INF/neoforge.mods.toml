@@ -36,7 +36,7 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="placebo"
     type="required"
-    versionRange="[9.8.1,)"
+    versionRange="[9.8.2-beta0,)"
     ordering="AFTER"
     side="BOTH"
 

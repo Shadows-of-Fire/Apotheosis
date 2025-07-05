@@ -155,6 +155,16 @@ public class MultiAttrAffix extends Affix implements AttributeProvidingAffix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        for (ModifierInst modif : this.modifiers) {
+            if (!modif.values.get(inst.getRarity()).isConstant()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
