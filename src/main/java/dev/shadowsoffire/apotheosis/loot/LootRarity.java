@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.include.com.google.common.base.Preconditions;
@@ -79,7 +78,7 @@ public record LootRarity(TextColor color, Holder<Item> material, TieredWeights w
     }
 
     public static LootRarity randomFromHolders(GenContext ctx, Set<DynamicHolder<LootRarity>> pool) {
-        return random(ctx, pool.stream().filter(DynamicHolder::isBound).map(DynamicHolder::get).collect(Collectors.toSet()));
+        return RarityRegistry.INSTANCE.getRandomItemFromHolders(ctx, pool);
     }
 
     public static <T> Codec<Map<LootRarity, T>> mapCodec(Codec<T> codec) {

@@ -25,7 +25,6 @@ public class GemCommand {
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_ATTRIB = (ctx, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ATTRIBUTE.keySet().stream().map(ResourceLocation::toString), builder);
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_GEM = (ctx, builder) -> SharedSuggestionProvider.suggest(GemRegistry.INSTANCE.getKeys().stream().map(ResourceLocation::toString), builder);
 
-    @SuppressWarnings("removal")
     public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
         root.then(Commands.literal("gem").requires(c -> c.hasPermission(2)).then(Commands.literal("fromPreset").then(Commands.argument("gem", ResourceLocationArgument.id()).suggests(SUGGEST_GEM).executes(c -> {
             Gem gem = GemRegistry.INSTANCE.getValue(ResourceLocationArgument.getId(c, "gem"));

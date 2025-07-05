@@ -1,7 +1,6 @@
-package dev.shadowsoffire.apotheosis.loot;
+package dev.shadowsoffire.apotheosis.loot.entry;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -15,8 +14,6 @@ import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import net.minecraft.util.random.WeightedEntry.Wrapper;
-import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
@@ -24,6 +21,14 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
+/**
+ * The gem loot pool entry (`apotheosis:random_gem`) allows for the generation of a random gem in a loot pool.
+ * <p>
+ * The entry can be configured with a set of {@link Purity} values, which will be randomly selected when generating the gem,
+ * as well as a set of {@link Gem} holders, which will be randomly selected from when generating the gem.
+ * 
+ * @apiNote If the effective weights of all gems in the pool are zero, a random one will be selected uniformly.
+ */
 public class GemLootPoolEntry extends ContextualLootPoolEntry {
     public static final MapCodec<GemLootPoolEntry> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
         PlaceboCodecs.setOf(Purity.CODEC).optionalFieldOf("purities", Set.of()).forGetter(a -> a.purities),
@@ -36,6 +41,8 @@ public class GemLootPoolEntry extends ContextualLootPoolEntry {
     private final Set<Purity> purities;
     private final Set<DynamicHolder<Gem>> gems;
 
+    private transient boolean validated = false;
+
     public GemLootPoolEntry(Set<Purity> purities, Set<DynamicHolder<Gem>> gems, int weight, int quality, List<LootItemCondition> conditions, List<LootItemFunction> functions) {
         super(weight, quality, conditions, functions);
         this.purities = purities;
@@ -44,11 +51,15 @@ public class GemLootPoolEntry extends ContextualLootPoolEntry {
 
     @Override
     protected void createItemStack(Consumer<ItemStack> list, LootContext ctx, GenContext gCtx) {
+        if (!this.validated) {
+            this.gems.forEach(this::checkBound);
+            this.validated = true;
+        }
+
         Gem gem;
 
         if (!this.gems.isEmpty()) {
-            List<Wrapper<Gem>> resolved = this.gems.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<Gem>wrap(gCtx.tier(), gCtx.luck())).toList();
-            gem = WeightedRandom.getRandomItem(ctx.getRandom(), resolved).get().data();
+            gem = GemRegistry.INSTANCE.getRandomItemFromHolders(gCtx, this.gems);
         }
         else {
             gem = GemRegistry.INSTANCE.getRandomItem(gCtx);
@@ -64,19 +75,17 @@ public class GemLootPoolEntry extends ContextualLootPoolEntry {
         return TYPE;
     }
 
-    /**
-     * Unwraps the holder to its object, if present, otherwise returns null and logs an error.
-     */
-    private Gem unwrap(DynamicHolder<Gem> holder) {
-        if (!holder.isBound()) {
-            Apotheosis.LOGGER.error("A GemLootPoolEntry failed to resolve the Gem {}!", holder.getId());
-            return null;
-        }
-        return holder.get();
-    }
-
     public static LootPoolSingletonContainer.Builder<?> builder(Set<Purity> purities, Set<DynamicHolder<Gem>> gems) {
         return LootPoolSingletonContainer.simpleBuilder(ctor(purities, gems));
+    }
+
+    /**
+     * Checks that the given holder is bound, and logs an error if it is not.
+     */
+    private void checkBound(DynamicHolder<Gem> holder) {
+        if (!holder.isBound()) {
+            Apotheosis.LOGGER.error("A GemLootPoolEntry failed to resolve the Gem {}!", holder.getId());
+        }
     }
 
     private static EntryConstructor ctor(Set<Purity> purities, Set<DynamicHolder<Gem>> gems) {

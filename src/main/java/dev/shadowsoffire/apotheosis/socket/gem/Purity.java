@@ -93,13 +93,18 @@ public enum Purity implements StringRepresentable, TieredWeights.Weighted {
         return random(ctx, ALL_PURITIES);
     }
 
+    /**
+     * Returns a random purity from the given pool, or from all purities if the pool is empty.
+     * <p>
+     * If the effective weights of all given purities are zero, a random purity is selected from the pool uniformly.
+     */
     public static Purity random(GenContext ctx, Set<Purity> pool) {
         if (pool.isEmpty()) {
             pool = ALL_PURITIES;
         }
 
         List<Wrapper<Purity>> list = pool.stream().map(l -> l.<Purity>wrap(ctx.tier(), ctx.luck())).toList();
-        return WeightedRandom.getRandomItem(ctx.rand(), list).map(Wrapper::data).orElse(Purity.CRACKED);
+        return WeightedRandom.getRandomItem(ctx.rand(), list).map(Wrapper::data).orElse(ApothMiscUtil.getRandomElement(pool, ctx.rand()));
     }
 
     public static <T> MapCodec<Map<Purity, T>> mapCodec(Codec<T> elementCodec) {

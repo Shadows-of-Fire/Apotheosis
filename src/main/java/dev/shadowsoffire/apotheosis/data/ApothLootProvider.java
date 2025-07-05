@@ -7,10 +7,10 @@ import java.util.function.BiConsumer;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.loot.AffixLootPoolEntry;
-import dev.shadowsoffire.apotheosis.loot.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.loot.entry.AffixLootPoolEntry;
+import dev.shadowsoffire.apotheosis.loot.entry.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;

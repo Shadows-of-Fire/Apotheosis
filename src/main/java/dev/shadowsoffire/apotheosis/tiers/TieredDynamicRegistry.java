@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -14,6 +15,7 @@ import com.google.common.base.Predicates;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.DynamicRegistry;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
@@ -64,6 +66,13 @@ public abstract class TieredDynamicRegistry<V extends CodecProvider<? super V> &
             return ApothMiscUtil.getRandomElement(pool.isEmpty() ? this.getValues() : pool, ctx.rand());
         }
         return v;
+    }
+
+    /**
+     * Similar to {@link #getRandomItem(GenContext, Set)}, but uses a set of {@link DynamicHolder} objects instead of the actual items.
+     */
+    public final V getRandomItemFromHolders(GenContext ctx, Set<DynamicHolder<V>> pool) {
+        return getRandomItem(ctx, pool.stream().filter(DynamicHolder::isBound).map(DynamicHolder::get).collect(Collectors.toSet()));
     }
 
 }
