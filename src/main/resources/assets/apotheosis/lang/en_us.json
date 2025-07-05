@@ -33,6 +33,8 @@
     "button.apotheosis.already_activated": "This World Tier is currently active",
     "button.apotheosis.activate": "Activate",
     "button.apotheosis.activated": "Activated",
+    "button.apotheosis.disabled": "Disabled",
+    "button.apotheosis.tier_changes_disabled": "Manual World Tier changes are disabled in the config.",
     "button.apotheosis.show_detailed_info": "Detailed Info",
     "button.apotheosis.show_detailed_info.desc": "View Mob Buffs, Player Buffs, and Rarities",
     "button.apotheosis.return": "X",
@@ -62,7 +64,8 @@
     
     "tutorial.apotheosis.world_tier.activate.title": "Activating World Tiers",
     "tutorial.apotheosis.world_tier.activate.desc": "This button allows you to activate the selected world tier, if it is not already active.\n\nClicking \"Done\" will automatically activate World Tier: Haven. For all other World Tiers, you need to return here and activate them yourself.",
-    
+    "tutorial.apotheosis.world_tier.activate_disabled.desc": "Normally, this button allows you to activate the selected world tier.\n\nHowever, in this modpack, World Tiers are automatically activated and cannot be manually changed. You can still view the details of each World Tier, but you cannot activate or deactivate them.",
+
     "text.apotheosis.tier_info": "World Tier Information",
     "text.apotheosis.monster_augments": "Monster Augments",
     "text.apotheosis.player_augments": "Player Augments",
@@ -701,6 +704,8 @@
     "death.attack.apotheosis:psychic.player": "%s attack was reflected by %s.",
     "death.attack.apotheosis:execute": "%s was executed.",
     "death.attack.apotheosis:execute.player": "%s was executed by %s.",
+
+    "disconnect.apotheosis.tier_changes_disabled": "Manual world tier changes are disabled in the config.",
 
     "comment_id": "/Adventure + Gateways Compat",
 

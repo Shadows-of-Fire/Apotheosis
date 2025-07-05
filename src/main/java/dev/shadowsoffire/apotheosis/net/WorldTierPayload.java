@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.net;
 import java.util.List;
 import java.util.Optional;
 
+import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.placebo.network.PayloadProvider;
@@ -45,8 +46,13 @@ public record WorldTierPayload(WorldTier tier) implements CustomPacketPayload {
                 WorldTier.setTier(player, msg.tier);
             }
             else {
-                if (WorldTier.isUnlocked(player, msg.tier)) {
-                    WorldTier.setTier(player, msg.tier);
+                if (AdventureConfig.enableManualWorldTierChanges) {
+                    if (WorldTier.isUnlocked(player, msg.tier)) {
+                        WorldTier.setTier(player, msg.tier);
+                    }
+                }
+                else {
+                    ctx.connection().disconnect(Apotheosis.lang("disconnect", "tier_changes_disabled"));
                 }
             }
         }
