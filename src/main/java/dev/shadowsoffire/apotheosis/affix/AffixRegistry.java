@@ -26,6 +26,7 @@ import dev.shadowsoffire.apotheosis.client.AdventureModuleClient;
 import dev.shadowsoffire.apotheosis.tiers.TieredDynamicRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.util.thread.EffectiveSide;
 
 public class AffixRegistry extends TieredDynamicRegistry<Affix> {
 
@@ -51,6 +52,9 @@ public class AffixRegistry extends TieredDynamicRegistry<Affix> {
         this.byType = builder.build();
         if (!FMLEnvironment.production && FMLEnvironment.dist.isClient()) {
             AdventureModuleClient.checkAffixLangKeys();
+        }
+        if (EffectiveSide.get().isServer()) {
+            this.validateAffixExclusiveSets();
         }
     }
 
@@ -79,6 +83,19 @@ public class AffixRegistry extends TieredDynamicRegistry<Affix> {
 
     public Multimap<AffixType, DynamicHolder<Affix>> getTypeMap() {
         return this.byType;
+    }
+
+    /**
+     * Validates that all affixes in the registry only name bound affixes in their exclusive sets.
+     */
+    protected void validateAffixExclusiveSets() {
+        for (Affix a : this.registry.values()) {
+            for (DynamicHolder<Affix> other : a.definition.exclusiveSet()) {
+                if (!other.isBound()) {
+                    this.logger.error("The affix {} contains the unknown affix {} in its exclusive set!", a.id(), other.getId());
+                }
+            }
+        }
     }
 
 }
