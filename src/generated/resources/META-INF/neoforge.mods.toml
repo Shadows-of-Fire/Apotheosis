@@ -29,14 +29,14 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="neoforge"
     type="required"
-    versionRange="[21.1.144,)"
+    versionRange="[21.1.187,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="placebo"
     type="required"
-    versionRange="[9.8.2-beta0,)"
+    versionRange="[9.8.2-beta1,)"
     ordering="AFTER"
     side="BOTH"
 
