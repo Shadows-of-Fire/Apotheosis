@@ -43,6 +43,7 @@ import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.loot.conditions.KilledByRealPlayerCondition;
 import dev.shadowsoffire.apotheosis.loot.conditions.MatchesBlockCondition;
+import dev.shadowsoffire.apotheosis.loot.conditions.WorldTierCondition;
 import dev.shadowsoffire.apotheosis.loot.entry.AffixLootPoolEntry;
 import dev.shadowsoffire.apotheosis.loot.entry.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.loot.functions.ReforgeItemFunction;
@@ -426,6 +427,8 @@ public class Apoth {
         public static final LootItemConditionType MATCHES_BLOCK = R.lootCondition("matches_block", MatchesBlockCondition.CODEC);
 
         public static final LootItemConditionType KILLED_BY_REAL_PLAYER = R.lootCondition("killed_by_real_player", KilledByRealPlayerCondition.CODEC);
+
+        public static final LootItemConditionType HAS_WORLD_TIER = R.lootCondition("has_world_tier", WorldTierCondition.CODEC);
 
         private static void bootstrap() {}
     }
