@@ -26,7 +26,6 @@ import dev.shadowsoffire.apotheosis.client.AdventureModuleClient;
 import dev.shadowsoffire.apotheosis.tiers.TieredDynamicRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.fml.util.thread.EffectiveSide;
 
 public class AffixRegistry extends TieredDynamicRegistry<Affix> {
 
@@ -39,21 +38,21 @@ public class AffixRegistry extends TieredDynamicRegistry<Affix> {
     }
 
     @Override
-    protected void beginReload() {
-        super.beginReload();
+    protected void beginReload(ReloadType type) {
+        super.beginReload(type);
         this.byType = ImmutableMultimap.of();
     }
 
     @Override
-    protected void onReload() {
-        super.onReload();
+    protected void onReload(ReloadType type) {
+        super.onReload(type);
         ImmutableMultimap.Builder<AffixType, DynamicHolder<Affix>> builder = ImmutableMultimap.builder();
         this.registry.values().forEach(a -> builder.put(a.definition().type(), this.holder(a)));
         this.byType = builder.build();
         if (!FMLEnvironment.production && FMLEnvironment.dist.isClient()) {
             AdventureModuleClient.checkAffixLangKeys();
         }
-        if (EffectiveSide.get().isServer()) {
+        if (type == ReloadType.SERVER) {
             this.validateAffixExclusiveSets();
         }
     }

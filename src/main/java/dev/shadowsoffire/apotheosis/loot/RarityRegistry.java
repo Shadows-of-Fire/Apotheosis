@@ -54,15 +54,15 @@ public class RarityRegistry extends TieredDynamicRegistry<LootRarity> {
     }
 
     @Override
-    protected void beginReload() {
-        super.beginReload();
+    protected void beginReload(ReloadType type) {
+        super.beginReload(type);
         this.materialMap = HashBiMap.create();
         this.sorted.clear();
     }
 
     @Override
-    protected void onReload() {
-        super.onReload();
+    protected void onReload(ReloadType type) {
+        super.onReload(type);
         for (LootRarity r : this.getValues()) {
             DynamicHolder<LootRarity> old = this.materialMap.put(r.getMaterial(), this.holder(r));
             if (old != null) {

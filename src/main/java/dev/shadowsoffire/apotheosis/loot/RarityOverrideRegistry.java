@@ -43,13 +43,14 @@ public class RarityOverrideRegistry extends DynamicRegistry<RarityOverride> {
     }
 
     @Override
-    protected void beginReload() {
-        super.beginReload();
+    protected void beginReload(ReloadType type) {
+        super.beginReload(type);
         this.byCategory = new HashMap<>();
     }
 
     @Override
-    protected void onReload() {
+    protected void onReload(ReloadType type) {
+        super.onReload(type);
         this.registry.forEach((key, value) -> {
             String path = key.getPath().replace('/', ':');
             ResourceLocation cat = ResourceLocation.tryParse(path);
