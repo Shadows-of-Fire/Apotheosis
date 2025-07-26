@@ -57,11 +57,6 @@ neoForge {
     }
 
     ideSyncTask generateModMetadata
-
-    neoFormRuntime {
-        useEclipseCompiler = false // Allows for parallelism on recompile - disabled due to a bug.
-        version = "1.0.21"
-    }
 }
 
 repositories {

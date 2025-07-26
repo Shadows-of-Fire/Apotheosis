@@ -1,9 +1,12 @@
 package dev.shadowsoffire.apotheosis.data;
 
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.UnaryOperator;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.apothic_spawners.ApothicSpawners;
@@ -295,6 +298,23 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Ench.Enchantments.CHAINSAW, 1)))
             .maxTrades(1)
             .xp(500));
+
+        // Need to add a bunch of these so they sufficiently fill the trade pool.
+        // Otherwise they become way too rare.
+        this.addAffixTrade("affix/automatic_1");
+        this.addAffixTrade("affix/automatic_2");
+        this.addAffixTrade("affix/automatic_3");
+        this.addAffixTrade("affix/automatic_4");
+        this.addAffixTrade("affix/automatic_5");
+        this.addAffixTrade("affix/automatic_6");
+        this.addAffixTrade("affix/automatic_7");
+        this.addAffixTrade("affix/automatic_8");
+        this.addAffixTrade("affix/automatic_9");
+        this.addAffixTrade("affix/automatic_10");
+    }
+
+    public void addAffixTrade(String path) {
+        this.add(Apotheosis.loc(path), new AutomaticAffixTrade(Set.of(), List.of(), false));
     }
 
     public void add(String path, UnaryOperator<Builder> builder) {

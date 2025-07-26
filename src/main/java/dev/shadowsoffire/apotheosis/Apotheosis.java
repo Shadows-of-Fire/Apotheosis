@@ -6,6 +6,8 @@ import org.apache.logging.log4j.Logger;
 import dev.shadowsoffire.apotheosis.AdventureConfig.ConfigPayload;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
+import dev.shadowsoffire.apotheosis.affix.trades.AffixTrade;
+import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
 import dev.shadowsoffire.apotheosis.compat.GatewaysCompat;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
 import dev.shadowsoffire.apotheosis.compat.curios.CuriosCompat;
@@ -60,6 +62,7 @@ import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.datagen.DataGenBuilder;
 import dev.shadowsoffire.placebo.network.PayloadHelper;
+import dev.shadowsoffire.placebo.systems.wanderer.WandererTradesRegistry;
 import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
 import dev.shadowsoffire.placebo.util.RunnableReloader;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -117,6 +120,9 @@ public class Apotheosis {
         if (ModList.get().isLoaded("curios")) {
             CuriosCompat.register(bus);
         }
+
+        WandererTradesRegistry.INSTANCE.registerCodec(loc("affix_trade"), AffixTrade.CODEC);
+        WandererTradesRegistry.INSTANCE.registerCodec(loc("automatic_affix_trade"), AutomaticAffixTrade.CODEC);
     }
 
     @SubscribeEvent
