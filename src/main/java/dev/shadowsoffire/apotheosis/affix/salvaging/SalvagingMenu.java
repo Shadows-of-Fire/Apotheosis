@@ -107,7 +107,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
         for (int inSlot = 0; inSlot < 12; inSlot++) {
             Slot s = this.getSlot(inSlot);
             ItemStack stack = s.getItem();
-            List<ItemStack> outputs = salvageItem(this.level, stack);
+            List<ItemStack> outputs = getSalvageResults(this.level, stack);
             s.set(ItemStack.EMPTY);
             for (ItemStack out : outputs) {
                 for (int outSlot = 0; outSlot < 6; outSlot++) {
@@ -141,7 +141,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
         return out;
     }
 
-    public static List<ItemStack> salvageItem(Level level, ItemStack stack) {
+    public static List<ItemStack> getSalvageResults(Level level, ItemStack stack) {
         List<ItemStack> outputs = new ArrayList<>();
         for (RecipeHolder<SalvagingRecipe> recipe : findMatch(level, stack)) {
             for (OutputData d : recipe.value().getOutputs()) {
