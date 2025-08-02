@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.serialization.JsonOps;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -14,6 +15,7 @@ import dev.shadowsoffire.placebo.color.GradientColor;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.core.Holder;
@@ -29,6 +31,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.settings.IKeyConflictContext;
+import net.neoforged.neoforge.client.settings.KeyModifier;
 
 public class ApothMiscUtil {
 
@@ -147,7 +151,7 @@ public class ApothMiscUtil {
         return iter.next();
     }
 
-    private static class ClientInternal {
+    public static class ClientInternal {
 
         public static Player getClientPlayer() {
             return Minecraft.getInstance().player;
@@ -161,6 +165,40 @@ public class ApothMiscUtil {
                 return progress != null && progress.isDone();
             }
             return false;
+        }
+
+        /**
+         * Alright, so... Key Mappings have this issue where if the main key is also a modifier key (shift/ctrl/alt), then the key is never considered "down" due to how
+         * {@link KeyModifier#NONE} works.
+         * To properly validate if the key is down, we need to first check if the key is a modifier key, and if so, we need to skip the modifier check (but still do the
+         * conflict context check).
+         * 
+         * @param mapping
+         * @return
+         */
+        public static boolean isKeyReallyDown(KeyMapping mapping) {
+            InputConstants.Key key = mapping.getKey();
+            if (key == InputConstants.UNKNOWN) {
+                return false;
+            }
+
+            IKeyConflictContext context = mapping.getKeyConflictContext();
+            if (!context.isActive()) {
+                return false;
+            }
+
+            if (!InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), key.getValue())) {
+                return false;
+            }
+
+            KeyModifier modifier = mapping.getKeyModifier();
+            if (modifier == KeyModifier.NONE) {
+                // If the key doesn't have a modifier, we need to first check if the is a modifier key, and if so, we need to skip the modifier check.
+                return KeyModifier.isKeyCodeModifier(key) || modifier.isActive(context);
+            }
+            else {
+                return modifier.isActive(context);
+            }
         }
     }
 

@@ -13,7 +13,6 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import org.joml.Vector2i;
 import org.joml.Vector2ic;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -467,9 +466,10 @@ public class AdventureModuleClient {
         }
 
         Minecraft mc = Minecraft.getInstance();
-        if (!InputConstants.isKeyDown(mc.getWindow().getWindow(), AdventureKeys.COMPARE_EQUIPMENT.getKey().getValue()) || !(mc.screen instanceof AbstractContainerScreen)) {
+        if (!ApothMiscUtil.ClientInternal.isKeyReallyDown(AdventureKeys.COMPARE_EQUIPMENT) || !(mc.screen instanceof AbstractContainerScreen)) {
             return;
         }
+
         Slot slot = ((AbstractContainerScreen<?>) mc.screen).getSlotUnderMouse();
         if (slot == null || !slot.hasItem() || slot.getItem() != e.getItemStack()) {
             return;
