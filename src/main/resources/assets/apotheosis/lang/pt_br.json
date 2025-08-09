@@ -86,9 +86,9 @@
     "death.attack.apotheosis.execute": "%s foi executado por %s",
     "death.attack.apotheosis.execute.item": "%s foi executado por %s usando %s",
 
-    "misc.apotheosis.affix_name.two": "%s %s",
-    "misc.apotheosis.affix_name.three": "%s %s %s",
-    "misc.apotheosis.affix_name.four": "%s %s %s %s",
+    "misc.apotheosis.affix_name.two": "%2$s %1$s",
+    "misc.apotheosis.affix_name.three": "%2$s %1$s %3$s",
+    "misc.apotheosis.affix_name.four": "%3$s %2$s %4$s de %1$s",
 	"misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
 
     "misc.apotheosis.radial_state_updated": "Modo de mineração radial atualizado para \"%s\"",
