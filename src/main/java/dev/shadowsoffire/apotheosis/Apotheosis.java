@@ -29,6 +29,7 @@ import dev.shadowsoffire.apotheosis.data.PurityWeightsProvider;
 import dev.shadowsoffire.apotheosis.data.RarityOverrideProvider;
 import dev.shadowsoffire.apotheosis.data.RarityProvider;
 import dev.shadowsoffire.apotheosis.data.RogueSpawnerProvider;
+import dev.shadowsoffire.apotheosis.data.SongProvider;
 import dev.shadowsoffire.apotheosis.data.TierAugmentProvider;
 import dev.shadowsoffire.apotheosis.data.WandererTradesProvider;
 import dev.shadowsoffire.apotheosis.data.twilight.TwilightAffixLootProvider;
@@ -68,6 +69,7 @@ import dev.shadowsoffire.placebo.util.RunnableReloader;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -131,7 +133,8 @@ public class Apotheosis {
             TabFillingRegistry.register(Apoth.Tabs.ADVENTURE.getKey(), Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST,
                 Items.GEM_FUSED_SLATE, Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_WITHDRAWAL, Items.SIGIL_OF_REBIRTH, Items.SIGIL_OF_ENHANCEMENT, Items.SIGIL_OF_UNNAMING, Items.SIGIL_OF_MALICE,
                 Items.BOSS_SUMMONER, Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE, Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.AUGMENTING_TABLE, Items.GEM,
-                Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE);
+                Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE,
+                Items.MUSIC_DISC_FLASH, Items.MUSIC_DISC_GLIMMER, Items.MUSIC_DISC_SHIMMER);
 
             TabFillingRegistry.register(CreativeModeTabs.FOOD_AND_DRINKS, Items.POTION_CHARM);
         });
@@ -169,6 +172,7 @@ public class Apotheosis {
     public void data(GatherDataEvent e) {
         DataProvider.INDENT_WIDTH.set(4);
         DataGenBuilder.create(Apotheosis.MODID)
+            .registry(Registries.JUKEBOX_SONG, SongProvider::bootstrap)
             .provider(ApothLootProvider::create)
             .provider(ApothRecipeProvider::new)
             .provider(ApothTagsProvider::new)

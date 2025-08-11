@@ -1,0 +1,8 @@
+{
+    "comparator_output": 8,
+    "description": {
+        "translate": "jukebox_song.apotheosis.shimmer"
+    },
+    "length_in_seconds": 166.0,
+    "sound_event": "apotheosis:music_disc_shimmer"
+}

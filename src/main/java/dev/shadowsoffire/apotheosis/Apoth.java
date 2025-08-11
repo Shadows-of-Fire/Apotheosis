@@ -100,6 +100,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
@@ -112,6 +113,7 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.JukeboxSong;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.TridentItem;
@@ -313,6 +315,12 @@ public class Apoth {
 
         public static final Holder<Item> DIAMOND_UPGRADE_SMITHING_TEMPLATE = R.item("diamond_upgrade_smithing_template", () -> createVanillaUpgradeTemplate("diamond"));
 
+        public static final Holder<Item> MUSIC_DISC_FLASH = R.item("music_disc_flash", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.FLASH));
+
+        public static final Holder<Item> MUSIC_DISC_GLIMMER = R.item("music_disc_glimmer", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.GLIMMER));
+
+        public static final Holder<Item> MUSIC_DISC_SHIMMER = R.item("music_disc_shimmer", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.SHIMMER));
+
         private static Holder<Item> rarityMat(String id) {
             return R.item(id + "_material", () -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(id)), new Item.Properties()));
         }
@@ -372,7 +380,23 @@ public class Apoth {
 
         public static final Holder<SoundEvent> MALICE = R.sound("malice");
 
+        public static final Holder<SoundEvent> MUSIC_DISC_FLASH = R.sound("music_disc_flash");
+
+        public static final Holder<SoundEvent> MUSIC_DISC_GLIMMER = R.sound("music_disc_glimmer");
+
+        public static final Holder<SoundEvent> MUSIC_DISC_SHIMMER = R.sound("music_disc_shimmer");
+
         private static void bootstrap() {}
+    }
+
+    public static final class Songs {
+        public static final ResourceKey<JukeboxSong> FLASH = key("flash");
+        public static final ResourceKey<JukeboxSong> GLIMMER = key("glimmer");
+        public static final ResourceKey<JukeboxSong> SHIMMER = key("shimmer");
+
+        private static ResourceKey<JukeboxSong> key(String name) {
+            return ResourceKey.create(Registries.JUKEBOX_SONG, Apotheosis.loc(name));
+        }
     }
 
     public static final class RecipeTypes {
@@ -483,6 +507,7 @@ public class Apoth {
         public static final TagKey<Block> SANDFORMING_CANDIDATES = BlockTags.create(Apotheosis.loc("sandforming_candidates"));
         public static final TagKey<Block> LEAFFORMING_CANDIDATES = BlockTags.create(Apotheosis.loc("leafforming_candidates"));
         public static final TagKey<Block> GARDENING_CANDIDATES = BlockTags.create(Apotheosis.loc("gardening_candidates"));
+        public static final TagKey<Item> BOSS_MUSIC_DISCS = ItemTags.create(Apotheosis.loc("boss_music_discs"));
 
         /**
          * List of {@link Potion}s that cannot be converted into Potion Charms using {@link PotionCharmRecipe}.
@@ -593,12 +618,12 @@ public class Apoth {
         BuiltInRegs.bootstrap();
         Attachments.bootstrap();
         Components.bootstrap();
+        Sounds.bootstrap();
         Blocks.bootstrap();
         Items.bootstrap();
         Tiles.bootstrap();
         Menus.bootstrap();
         Tabs.bootstrap();
-        Sounds.bootstrap();
         Triggers.bootstrap();
         Features.bootstrap();
         Ingredients.bootstrap();

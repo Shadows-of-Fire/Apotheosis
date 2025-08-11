@@ -874,6 +874,18 @@
     "config.jade.plugin_apotheosis.adventure": "Apoth Adventure Module",
     "message.apotheosis.item_linking_disabled": "Item Linking has been disabled by the server.",
     "text.apotheosis.equipped": "Equipped",
+    
+    "item.apotheosis.music_disc_flash": "Music Disc",
+    "jukebox_song.apotheosis.flash": "Renren - Flash",
+    "subtitle.apotheosis.music_disc.flash": "Renren - Flash",
+
+    "item.apotheosis.music_disc_glimmer": "Music Disc",
+    "jukebox_song.apotheosis.glimmer": "Caner Crebes - Glimmer",
+    "subtitle.apotheosis.music_disc.glimmer": "Caner Crebes - Glimmer",
+
+    "item.apotheosis.music_disc_shimmer": "Music Disc",
+    "jukebox_song.apotheosis.shimmer": "Chamberlain Kaifry - Shimmer",
+    "subtitle.apotheosis.music_disc.shimmer": "Chamberlain Kaifry - Shimmer",
 
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Chronicle of Shadows",
