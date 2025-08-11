@@ -67,6 +67,7 @@ public class AffixLootPoolEntry extends ContextualLootPoolEntry {
     @Override
     protected void createItemStack(Consumer<ItemStack> list, LootContext ctx, GenContext gCtx) {
         if (!this.validated) {
+            this.rarities.forEach(AffixLootPoolEntry::checkBound);
             this.entries.forEach(AffixLootPoolEntry::checkBound);
             this.validated = true;
         }
@@ -93,9 +94,9 @@ public class AffixLootPoolEntry extends ContextualLootPoolEntry {
     /**
      * Unwraps the holder to its object, if present, otherwise returns null and logs an error.
      */
-    private static void checkBound(DynamicHolder<AffixLootEntry> holder) {
+    private static void checkBound(DynamicHolder<?> holder) {
         if (!holder.isBound()) {
-            Apotheosis.LOGGER.error("An AffixLootPoolEntry failed to resolve the Affix Loot Entry {}!", holder.getId());
+            Apotheosis.LOGGER.error("An AffixLootPoolEntry failed to resolve {}!", holder.toString());
         }
     }
 
