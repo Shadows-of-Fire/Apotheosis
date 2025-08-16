@@ -11,6 +11,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
 import dev.shadowsoffire.gateways.gate.Reward;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
@@ -79,6 +80,18 @@ public class GemReward implements Reward {
             MutableComponent text = Apotheosis.lang("reward", "gem", rarities);
             list.accept(text);
         }
+    }
+
+    public static GemReward create(Set<Purity> purities, Set<DynamicHolder<Gem>> gems) {
+        return new GemReward(purities, gems);
+    }
+
+    public static GemReward create(Purity... purities) {
+        return new GemReward(ApothMiscUtil.linkedSet(purities), Set.of());
+    }
+
+    public static GemReward create() {
+        return new GemReward(Set.of(), Set.of());
     }
 
     private static void checkBound(DynamicHolder<?> holder) {

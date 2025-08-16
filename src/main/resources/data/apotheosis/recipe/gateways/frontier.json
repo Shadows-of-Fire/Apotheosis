@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "gateways"
+    }
+  ],
+  "type": "gateways:gate_recipe",
+  "group": "gateways",
+  "pattern": [
+    "EIE",
+    "BPB",
+    "FFF"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+	"E": {
+      "item": "minecraft:spider_eye"
+    },
+	"B": {
+      "tag": "c:bones"
+    },
+	"P": {
+      "item": "minecraft:ender_pearl"
+    },
+	"F": {
+      "item": "minecraft:rotten_flesh"
+    }
+  },
+  "result": {
+    "id": "gateways:gate_pearl"
+  },
+  "gateway": "apotheosis:tiered/frontier"
+}

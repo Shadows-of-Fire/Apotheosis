@@ -32,6 +32,7 @@ import dev.shadowsoffire.apotheosis.data.RogueSpawnerProvider;
 import dev.shadowsoffire.apotheosis.data.SongProvider;
 import dev.shadowsoffire.apotheosis.data.TierAugmentProvider;
 import dev.shadowsoffire.apotheosis.data.WandererTradesProvider;
+import dev.shadowsoffire.apotheosis.data.gateways.ApothGateProvider;
 import dev.shadowsoffire.apotheosis.data.twilight.TwilightAffixLootProvider;
 import dev.shadowsoffire.apotheosis.data.twilight.TwilightGearSetProvider;
 import dev.shadowsoffire.apotheosis.data.twilight.TwilightInvaderProvider;
@@ -108,7 +109,7 @@ public class Apotheosis {
         EntityModifier.initCodecs();
         GemBonus.initCodecs();
         if (ModList.get().isLoaded("gateways")) {
-            GatewaysCompat.register();
+            GatewaysCompat.register(bus);
         }
 
         if (ModList.get().isLoaded("twilightforest")) {
@@ -195,6 +196,7 @@ public class Apotheosis {
             .provider(TwilightInvaderProvider::new)
             .provider(ApothDataMapProvider::new)
             .provider(AugmentationProvider::new)
+            .provider(ApothGateProvider::new)
             .build(e);
 
         Object2IntOpenHashMap<String> map = (Object2IntOpenHashMap<String>) DataProvider.FIXED_ORDER_FIELDS;

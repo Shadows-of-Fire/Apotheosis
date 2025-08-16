@@ -86,7 +86,15 @@ public record InvaderWaveEntity(DynamicHolder<Invader> invader, int count, Optio
         return this.invader().getOptional().orElse(null);
     }
 
-    public static String resolveInvaderDesc(DynamicHolder<Invader> invader) {
+    public static InvaderWaveEntity create(DynamicHolder<Invader> invader, int count, @Nullable String desc) {
+        return new InvaderWaveEntity(invader, count, Optional.ofNullable(desc));
+    }
+
+    public static InvaderWaveEntity createRandom(int count) {
+        return new InvaderWaveEntity(InvaderRegistry.INSTANCE.emptyHolder(), count, Optional.empty());
+    }
+
+    private static String resolveInvaderDesc(DynamicHolder<Invader> invader) {
         return invader.isBound() ? invader.get().entity().getDescriptionId() : "misc.apotheosis.random";
     }
 }

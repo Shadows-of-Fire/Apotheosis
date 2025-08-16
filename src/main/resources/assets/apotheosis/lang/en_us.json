@@ -716,6 +716,15 @@
     "reward.apotheosis.random_affix_item": "Affix Item (Random)",
     "reward.apotheosis.gem": "Apothic Gem (%s)",
     "reward.apotheosis.random_gem": "Apothic Gem (Random)",
+    "error.apotheosis.gate_tier_incorrect": "This Gateway can only be opened in World Tier: %s",
+    "modifier.apotheosis.affix": "Receives an Affix Item",
+
+    "wave_entity.apotheosis.affixed_armored_zombie": "Affixed Armored Zombie",
+    "wave_entity.apotheosis.affixed_armored_husk": "Affixed Armored Husk",
+    "wave_entity.apotheosis.affixed_armored_skeleton": "Affixed Armored Skeleton",
+    "wave_entity.apotheosis.affixed_armored_stray": "Affixed Armored Stray",
+
+    "apotheosis.tiered/frontier": "Gateway of the First Frontier",
 
     "comment_id": "/Advancements",
 

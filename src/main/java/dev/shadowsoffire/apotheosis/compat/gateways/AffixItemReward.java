@@ -13,6 +13,7 @@ import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
 import dev.shadowsoffire.gateways.gate.Reward;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
@@ -75,6 +76,19 @@ public class AffixItemReward implements Reward {
             MutableComponent text = Apotheosis.lang("reward", "affix_item", rarities);
             list.accept(text);
         }
+    }
+
+    public static AffixItemReward create(Set<DynamicHolder<LootRarity>> rarities, Set<DynamicHolder<AffixLootEntry>> entries) {
+        return new AffixItemReward(rarities, entries);
+    }
+
+    @SafeVarargs
+    public static AffixItemReward create(DynamicHolder<LootRarity>... rarities) {
+        return new AffixItemReward(ApothMiscUtil.linkedSet(rarities), Set.of());
+    }
+
+    public static AffixItemReward create() {
+        return new AffixItemReward(Set.of(), Set.of());
     }
 
     private static void checkBound(DynamicHolder<?> holder) {

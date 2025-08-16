@@ -255,7 +255,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
 
             if (s == guaranteed) {
                 mob.setDropChance(s, 2F);
-                mob.setItemSlot(s, modifyBossItem(stack, mob.getName(), ctx, rarity, stats, mob.level().registryAccess()));
+                mob.setItemSlot(s, modifyBossItem(stack, mob.getName(), ctx, rarity, stats.enchLevels().primary(), mob.level().registryAccess()));
                 mob.setCustomName(mob.getName().copy().withStyle(Style.EMPTY.withColor(rarity.color())));
             }
             else if (rand.nextFloat() < stats.enchantChance()) {
@@ -293,9 +293,11 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         EnchantmentHelper.setEnchantments(stack, builder.toImmutable());
     }
 
-    public static ItemStack modifyBossItem(ItemStack stack, Component bossName, GenContext ctx, LootRarity rarity, BossStats stats, RegistryAccess reg) {
+    public static ItemStack modifyBossItem(ItemStack stack, Component bossName, GenContext ctx, LootRarity rarity, int enchLevel, RegistryAccess reg) {
         RandomSource rand = ctx.rand();
-        enchantBossItem(rand, stack, stats.enchLevels().primary(), true, reg);
+        if (enchLevel > 0) {
+            enchantBossItem(rand, stack, enchLevel, true, reg);
+        }
         NameHelper.setItemName(rand, stack);
         stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, ctx);
 
