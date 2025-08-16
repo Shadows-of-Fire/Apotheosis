@@ -723,8 +723,17 @@
     "wave_entity.apotheosis.affixed_armored_husk": "Affixed Armored Husk",
     "wave_entity.apotheosis.affixed_armored_skeleton": "Affixed Armored Skeleton",
     "wave_entity.apotheosis.affixed_armored_stray": "Affixed Armored Stray",
+    "wave_entity.apotheosis.affixed_polar_bear": "Affixed Polar Bear",
+    "wave_entity.apotheosis.affixed_wolf": "Affixed Wolf",
+    "wave_entity.apotheosis.affixed_armored_bogged": "Affixed Armored Bogged",
+    "wave_entity.apotheosis.vampiric_phantom": "Vampiric Phantom",
+    "wave_entity.apotheosis.nether_herald": "Herald of the Nether",
+
+    "reward.apotheosis.desert_pyramid_loot": "Desert Pyramid Loot",
+    "reward.apotheosis.woodland_mansion_loot": "Woodland Mansion Loot",
 
     "apotheosis.tiered/frontier": "Gateway of the First Frontier",
+    "apotheosis.tiered/ascent": "Gateway of the Arduous Ascent",
 
     "comment_id": "/Advancements",
 

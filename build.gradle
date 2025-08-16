@@ -159,6 +159,7 @@ tasks.named("generateModMetadata") {
     if (project.hasProperty('curiosVersion'))        replaceProperties.put 'curiosVersion', curiosVersion
     if (project.hasProperty('topVersion'))           replaceProperties.put 'topVersion', topVersion
     if (project.hasProperty('patchouliVersion'))     replaceProperties.put 'patchouliVersion', patchouliVersion
+    if (project.hasProperty('gatewaysVersion'))      replaceProperties.put 'gatewaysVersion', gatewaysVersion
 
     replaceProperties.put 'mixinConfig', project.mixin.toBoolean() ? "[[mixins]]\nconfig=\"${modid}.mixins.json\"" : ""
 

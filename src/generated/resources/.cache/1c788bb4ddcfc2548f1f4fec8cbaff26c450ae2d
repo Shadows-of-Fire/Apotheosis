@@ -1,4 +1,4 @@
-// 1.21.1	2025-01-06T23:55:14.1095585	Gear Sets
+// 1.21.1	2025-08-16T14:25:34.2762114	Gear Sets
 7db6ddffe4ddd1299f228efd0d7c1d76bfecd42f data/apotheosis/gear_sets/ascent/diamond.json
 b7351473d45c4243e58ff7f337da2ef803ebc9cc data/apotheosis/gear_sets/ascent/enchanted_gold.json
 f1ce67abd81ca45bde88274635c59b6f78079641 data/apotheosis/gear_sets/ascent/iron.json
@@ -10,6 +10,7 @@ aa09eaf3d1ca58009497719386bdd3bbaf842eec data/apotheosis/gear_sets/ascent/ranged
 56f48f99dc97330d6e3e3f60181c104192afe1ee data/apotheosis/gear_sets/frontier/iron.json
 81489aeb22301c8fb5936447329bc62f7d4c39b8 data/apotheosis/gear_sets/frontier/ranged/chain.json
 892cc02491aadbce74ff7285230525f0793e0873 data/apotheosis/gear_sets/frontier/ranged/iron.json
+38458c1c9fb5bd6811695e1e230d8d7b490b9e87 data/apotheosis/gear_sets/gateway_only/nether_herald.json
 1a91d6ad88a3a125c5db06342e0d2e4ee7370229 data/apotheosis/gear_sets/haven/chain.json
 1db0894dff66e5de076ed386ad30ac0feeea1b8f data/apotheosis/gear_sets/haven/leather.json
 94c302983290b99b90f31f91770b1dc99fc4a1b3 data/apotheosis/gear_sets/haven/ranged/chain.json
