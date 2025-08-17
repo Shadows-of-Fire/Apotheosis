@@ -1,0 +1,81 @@
+{
+    "type": "placebo:gear_set",
+    "boots": [
+        {
+            "stack": {
+                "count": 1,
+                "id": "minecraft:netherite_boots"
+            },
+            "weight": 1
+        }
+    ],
+    "chestplates": [
+        {
+            "stack": {
+                "count": 1,
+                "id": "minecraft:netherite_chestplate"
+            },
+            "weight": 1
+        }
+    ],
+    "helmets": [
+        {
+            "stack": {
+                "components": {
+                    "minecraft:banner_patterns": [
+                        {
+                            "color": "black",
+                            "pattern": "minecraft:circle"
+                        },
+                        {
+                            "color": "yellow",
+                            "pattern": "minecraft:curly_border"
+                        }
+                    ],
+                    "minecraft:hide_additional_tooltip": {},
+                    "minecraft:item_name": "{\"color\":\"red\",\"translate\":\"banner.apotheosis.bastion_guard\"}"
+                },
+                "count": 1,
+                "id": "minecraft:brown_banner"
+            },
+            "weight": 1
+        }
+    ],
+    "leggings": [
+        {
+            "stack": {
+                "count": 1,
+                "id": "minecraft:netherite_leggings"
+            },
+            "weight": 1
+        }
+    ],
+    "mainhands": [
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.175,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:sharpness": 3
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_axe"
+            },
+            "weight": 1
+        }
+    ],
+    "offhands": [
+        {
+            "stack": {
+                "count": 1,
+                "id": "minecraft:shield"
+            },
+            "weight": 1
+        }
+    ],
+    "tags": [],
+    "weight": 0
+}

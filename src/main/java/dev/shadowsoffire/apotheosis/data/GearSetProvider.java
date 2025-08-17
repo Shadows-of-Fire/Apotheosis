@@ -319,6 +319,14 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         addSet("gateway_only/nether_herald", 0, 0, c -> c
             .helmet(getNetherHeraldBannerInstance(registries.lookupOrThrow(Registries.BANNER_PATTERN)), 1)
             .mainhand(buffedItem(Items.DIAMOND_AXE, enchants, 0.5F), 1));
+
+        addSet("gateway_only/bastion_guard", 0, 0, c -> c
+            .helmet(getBastionGuardBannerInstance(registries.lookupOrThrow(Registries.BANNER_PATTERN)), 1)
+            .mainhand(buffedItem(Items.NETHERITE_AXE, enchants, 0.5F), 1)
+            .offhand(new ItemStack(Items.SHIELD), 1)
+            .chestplate(new ItemStack(Items.NETHERITE_CHESTPLATE), 1)
+            .leggings(new ItemStack(Items.NETHERITE_LEGGINGS), 1)
+            .boots(new ItemStack(Items.NETHERITE_BOOTS), 1));
     }
 
     @SuppressWarnings("removal")
@@ -369,6 +377,19 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         itemstack.set(DataComponents.BANNER_PATTERNS, bannerpatternlayers);
         itemstack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
         itemstack.set(DataComponents.ITEM_NAME, Apotheosis.lang("banner", "nether_herald").withStyle(ChatFormatting.RED));
+        return itemstack;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static ItemStack getBastionGuardBannerInstance(HolderGetter<BannerPattern> patternRegistry) {
+        ItemStack itemstack = new ItemStack(Items.BROWN_BANNER);
+        BannerPatternLayers bannerpatternlayers = new BannerPatternLayers.Builder()
+            .addIfRegistered(patternRegistry, BannerPatterns.CIRCLE_MIDDLE, DyeColor.BLACK)
+            .addIfRegistered(patternRegistry, BannerPatterns.CURLY_BORDER, DyeColor.YELLOW)
+            .build();
+        itemstack.set(DataComponents.BANNER_PATTERNS, bannerpatternlayers);
+        itemstack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+        itemstack.set(DataComponents.ITEM_NAME, Apotheosis.lang("banner", "bastion_guard").withStyle(ChatFormatting.RED));
         return itemstack;
     }
 

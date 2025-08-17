@@ -35,6 +35,7 @@ public class GatewaysCompat {
         Reward.CODEC.register(Apotheosis.loc("affix_item"), AffixItemReward.CODEC);
         Reward.CODEC.register(Apotheosis.loc("gem"), GemReward.CODEC);
         WaveModifier.CODEC.register(Apotheosis.loc("affix"), AffixWaveModifier.CODEC);
+        WaveModifier.CODEC.register(Apotheosis.loc("passenger"), PassengerWaveModifier.CODEC);
         GatewayRegistry.INSTANCE.registerCodec(Apotheosis.loc("tiered"), TieredGateway.CODEC);
         bus.register(R);
         if (FMLEnvironment.dist.isClient()) {

@@ -728,12 +728,20 @@
     "wave_entity.apotheosis.affixed_armored_bogged": "Affixed Armored Bogged",
     "wave_entity.apotheosis.vampiric_phantom": "Vampiric Phantom",
     "wave_entity.apotheosis.nether_herald": "Herald of the Nether",
+    "wave_entity.apotheosis.affixed_armored_zombified_piglin": "Affixed Armored Zombified Piglin",
+    "wave_entity.apotheosis.affixed_armored_wither_skeleton": "Affixed Armored Wither Skeleton",
+    "wave_entity.apotheosis.ghast_rider": "Ghast Rider",
+    "wave_entity.apotheosis.affixed_armored_piglin_brute": "Affixed Armored Piglin Brute",
+    "wave_entity.apotheosis.bastion_guard": "Bastion Elite Guard",
 
     "reward.apotheosis.desert_pyramid_loot": "Desert Pyramid Loot",
     "reward.apotheosis.woodland_mansion_loot": "Woodland Mansion Loot",
 
     "apotheosis.tiered/frontier": "Gateway of the First Frontier",
-    "apotheosis.tiered/ascent": "Gateway of the Arduous Ascent",
+    "apotheosis.tiered/ascent": "Gateway of the Sunlit Ascent",
+    "apotheosis.tiered/summit": "Gateway of the Thundering Summit",
+    "apotheosis.tiered/pinnacle": "Gateway of the Apothic Pinnacle",
+    "apotheosis.endless/invader": "Endless Gateway of Apothic Invaders",
 
     "comment_id": "/Advancements",
 

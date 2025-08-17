@@ -9,6 +9,7 @@ import dev.shadowsoffire.apotheosis.compat.gateways.AffixItemReward;
 import dev.shadowsoffire.apotheosis.compat.gateways.AffixWaveModifier;
 import dev.shadowsoffire.apotheosis.compat.gateways.GemReward;
 import dev.shadowsoffire.apotheosis.compat.gateways.InvaderWaveEntity;
+import dev.shadowsoffire.apotheosis.compat.gateways.PassengerWaveModifier;
 import dev.shadowsoffire.apotheosis.compat.gateways.tiered_gate.TieredGateway;
 import dev.shadowsoffire.apotheosis.data.Rarities;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
@@ -171,7 +172,6 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .build())
                 .reward(new ExperienceReward(450, 25))
                 .modifier(LootTableModifier.createEmpty()))
-
             .wave(w -> w
                 .maxWaveTime(3200)
                 .setupTime(200)
@@ -243,6 +243,120 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new StackReward(new ItemStack(Apoth.Items.RARE_MATERIAL, 12)))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SOCKETING, 2)))
             .keyReward(new StackReward(new ItemStack(Items.WITHER_SKELETON_SKULL, 3))));
+
+        tieredGateway("tiered/summit", b -> b
+            .settings(c -> c
+                .tier(WorldTier.SUMMIT)
+                .size(NormalGateway.Size.MEDIUM)
+                .color(0xBB00BB))
+            .rules(c -> c
+                .lives(3)
+                .requiresNearbyPlayer(true)
+                .spawnRange(24)
+                .leashRange(48))
+            .wave(w -> w
+                .maxWaveTime(3000)
+                .setupTime(100)
+                .entity(StandardWaveEntity
+                    .builder(EntityType.GHAST)
+                    .count(3)
+                    .addModifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_VALUE, 12F))
+                    .addModifier(AttributeModifier.create(ALObjects.Attributes.PROJECTILE_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.55F))
+                    .build())
+                .entity(StandardWaveEntity
+                    .builder(EntityType.ZOMBIFIED_PIGLIN)
+                    .count(3)
+                    .finalizeSpawn(false)
+                    .addModifier(GearSetModifier.create(Apotheosis.loc("summit/enchanted_diamond")))
+                    .addModifier(AffixWaveModifier.create())
+                    .desc("wave_entity.apotheosis.affixed_armored_zombified_piglin")
+                    .build())
+                .entity(StandardWaveEntity
+                    .builder(EntityType.WITHER_SKELETON)
+                    .count(2)
+                    .finalizeSpawn(false)
+                    .addModifier(GearSetModifier.create(Apotheosis.loc("summit/ranged/enchanted_iron")))
+                    .addModifier(AffixWaveModifier.create())
+                    .desc("wave_entity.apotheosis.affixed_armored_wither_skeleton")
+                    .build())
+                .reward(new ExperienceReward(1050, 50))
+                .modifier(LootTableModifier.createEmpty()))
+            .wave(w -> w
+                .maxWaveTime(3200)
+                .setupTime(200)
+                .entity(StandardWaveEntity
+                    .builder(EntityType.GHAST)
+                    .count(2)
+                    .addModifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_VALUE, 12F))
+                    .addModifier(AttributeModifier.create(ALObjects.Attributes.PROJECTILE_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.55F))
+                    .addModifier(AttributeModifier.create(Attributes.SCALE, Operation.ADD_MULTIPLIED_TOTAL, -0.75F))
+                    .addModifier(PassengerWaveModifier.create(EntityType.STRAY, c -> c
+                        .finalizeSpawn(false)
+                        .addModifier(GearSetModifier.create(Apotheosis.loc("summit/ranged/enchanted_iron")))
+                        .addModifier(AffixWaveModifier.create())))
+                    .desc("wave_entity.apotheosis.ghast_rider")
+                    .build())
+                .entity(StandardWaveEntity
+                    .builder(EntityType.PIGLIN_BRUTE) // Brutes will try to kill wither skeletons, so don't use them here.
+                    .count(3)
+                    .finalizeSpawn(false)
+                    .addModifier(GearSetModifier.create(Apotheosis.loc("summit/netherite")))
+                    .addModifier(AffixWaveModifier.create())
+                    .desc("wave_entity.apotheosis.affixed_armored_piglin_brute")
+                    .nbt(c -> {
+                        c.putBoolean("IsImmuneToZombification", true);
+                        return c;
+                    })
+                    .build())
+                .entity(StandardWaveEntity
+                    .builder(EntityType.STRAY)
+                    .count(2)
+                    .finalizeSpawn(false)
+                    .addModifier(GearSetModifier.create(Apotheosis.loc("summit/ranged/enchanted_iron")))
+                    .addModifier(AffixWaveModifier.create())
+                    .desc("wave_entity.apotheosis.affixed_armored_stray")
+                    .build())
+                .reward(new ExperienceReward(1250, 50))
+                .modifier(LootTableModifier.createEmpty())
+                .modifier(AttributeModifier.create(Attributes.MAX_HEALTH, Operation.ADD_MULTIPLIED_TOTAL, 0.20F))
+                .modifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_VALUE, 4F))
+                .modifier(AttributeModifier.create(Attributes.ATTACK_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.25F))
+                .modifier(AttributeModifier.create(ALObjects.Attributes.PROJECTILE_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.25F))
+                .modifier(AttributeModifier.create(ALObjects.Attributes.ARMOR_SHRED, Operation.ADD_VALUE, 0.35F))
+                .modifier(AttributeModifier.create(Attributes.KNOCKBACK_RESISTANCE, Operation.ADD_VALUE, 0.30F))
+                .modifier(AttributeModifier.create(Attributes.MOVEMENT_SPEED, Operation.ADD_MULTIPLIED_TOTAL, 0.10F)))
+            .wave(w -> w
+                .maxWaveTime(6400)
+                .setupTime(240)
+                .entity(InvaderWaveEntity.createRandom(3))
+                .entity(StandardWaveEntity
+                    .builder(EntityType.PIGLIN_BRUTE)
+                    .count(5)
+                    .finalizeSpawn(false)
+                    .addModifier(GearSetModifier.create(Apotheosis.loc("gateway_only/bastion_guard")))
+                    .addModifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_VALUE, 20F))
+                    .addModifier(AffixWaveModifier.create())
+                    .desc("wave_entity.apotheosis.bastion_guard")
+                    .nbt(c -> {
+                        c.putBoolean("IsImmuneToZombification", true);
+                        return c;
+                    })
+                    .build())
+                .reward(new ExperienceReward(1550, 50))
+                .modifier(LootTableModifier.createEmpty())
+                .modifier(AttributeModifier.create(Attributes.MAX_HEALTH, Operation.ADD_MULTIPLIED_TOTAL, 0.25F))
+                .modifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_VALUE, 5F))
+                .modifier(AttributeModifier.create(Attributes.ATTACK_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.25F))
+                .modifier(AttributeModifier.create(ALObjects.Attributes.PROJECTILE_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.25F))
+                .modifier(AttributeModifier.create(ALObjects.Attributes.ARMOR_SHRED, Operation.ADD_VALUE, 0.40F))
+                .modifier(AttributeModifier.create(Attributes.KNOCKBACK_RESISTANCE, Operation.ADD_VALUE, 0.30F))
+                .modifier(AttributeModifier.create(Attributes.MOVEMENT_SPEED, Operation.ADD_MULTIPLIED_TOTAL, 0.10F)))
+            .keyReward(new CountedReward(AffixItemReward.create(Rarities.EPIC, Rarities.MYTHIC), 3))
+            .keyReward(new CountedReward(GemReward.create(Purity.NORMAL, Purity.FLAWLESS), 5))
+            .keyReward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 48)))
+            .keyReward(new StackReward(new ItemStack(Apoth.Items.EPIC_MATERIAL, 24)))
+            .keyReward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SOCKETING, 6)))
+            .keyReward(new StackReward(new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1))));
     }
 
     private void tieredGateway(String path, UnaryOperator<TieredGateway.Builder> config) {
