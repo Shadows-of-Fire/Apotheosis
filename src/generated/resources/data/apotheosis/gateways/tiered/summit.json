@@ -1,70 +1,14 @@
 {
     "type": "apotheosis:tiered",
-    "rewards": [
-        {
-            "type": "gateways:counted",
-            "count": 3,
-            "reward": {
-                "type": "apotheosis:affix_item",
-                "rarities": [
-                    "apotheosis:epic",
-                    "apotheosis:mythic"
-                ]
-            }
-        },
-        {
-            "type": "gateways:counted",
-            "count": 5,
-            "reward": {
-                "type": "apotheosis:gem",
-                "purities": [
-                    "normal",
-                    "flawless"
-                ]
-            }
-        },
-        {
-            "type": "gateways:stack",
-            "stack": {
-                "count": 48,
-                "id": "apotheosis:gem_dust"
-            }
-        },
-        {
-            "type": "gateways:stack",
-            "stack": {
-                "count": 24,
-                "id": "apotheosis:epic_material"
-            }
-        },
-        {
-            "type": "gateways:stack",
-            "stack": {
-                "count": 6,
-                "id": "apotheosis:sigil_of_socketing"
-            }
-        },
-        {
-            "type": "gateways:stack",
-            "stack": {
-                "count": 1,
-                "id": "minecraft:netherite_upgrade_smithing_template"
-            }
-        }
-    ],
-    "rules": {
-        "leash_range": 48.0,
-        "lives": 3,
-        "requires_nearby_player": true,
-        "spawn_range": 24.0
-    },
     "settings": {
-        "color": "#BB00BB",
+        "tier": "summit",
         "size": "medium",
-        "tier": "summit"
+        "color": "#BB00BB"
     },
     "waves": [
         {
+            "max_wave_time": 3000,
+            "setup_time": 100,
             "entities": [
                 {
                     "type": "gateways:standard",
@@ -120,7 +64,6 @@
                     ]
                 }
             ],
-            "max_wave_time": 3000,
             "modifiers": [
                 {
                     "type": "gateways:loot_table",
@@ -133,10 +76,11 @@
                     "experience": 1050,
                     "orb_size": 50
                 }
-            ],
-            "setup_time": 100
+            ]
         },
         {
+            "max_wave_time": 3200,
+            "setup_time": 200,
             "entities": [
                 {
                     "type": "gateways:standard",
@@ -188,6 +132,9 @@
                     "desc": "wave_entity.apotheosis.affixed_armored_piglin_brute",
                     "entity": "minecraft:piglin_brute",
                     "finalize_spawn": false,
+                    "nbt": {
+                        "IsImmuneToZombification": 1
+                    },
                     "modifiers": [
                         {
                             "type": "gateways:gear_set",
@@ -197,10 +144,7 @@
                             "type": "apotheosis:affix",
                             "affix_chance": 1.0
                         }
-                    ],
-                    "nbt": {
-                        "IsImmuneToZombification": 1
-                    }
+                    ]
                 },
                 {
                     "type": "gateways:standard",
@@ -220,7 +164,6 @@
                     ]
                 }
             ],
-            "max_wave_time": 3200,
             "modifiers": [
                 {
                     "type": "gateways:loot_table",
@@ -275,10 +218,11 @@
                     "experience": 1250,
                     "orb_size": 50
                 }
-            ],
-            "setup_time": 200
+            ]
         },
         {
+            "max_wave_time": 6400,
+            "setup_time": 240,
             "entities": [
                 {
                     "type": "apotheosis:invader",
@@ -290,6 +234,9 @@
                     "desc": "wave_entity.apotheosis.bastion_guard",
                     "entity": "minecraft:piglin_brute",
                     "finalize_spawn": false,
+                    "nbt": {
+                        "IsImmuneToZombification": 1
+                    },
                     "modifiers": [
                         {
                             "type": "gateways:gear_set",
@@ -305,13 +252,9 @@
                             "type": "apotheosis:affix",
                             "affix_chance": 1.0
                         }
-                    ],
-                    "nbt": {
-                        "IsImmuneToZombification": 1
-                    }
+                    ]
                 }
             ],
-            "max_wave_time": 6400,
             "modifiers": [
                 {
                     "type": "gateways:loot_table",
@@ -366,8 +309,66 @@
                     "experience": 1550,
                     "orb_size": 50
                 }
-            ],
-            "setup_time": 240
+            ]
         }
-    ]
+    ],
+    "rewards": [
+        {
+            "type": "gateways:counted",
+            "count": 3,
+            "reward": {
+                "type": "apotheosis:affix_item",
+                "rarities": [
+                    "apotheosis:epic",
+                    "apotheosis:mythic"
+                ]
+            }
+        },
+        {
+            "type": "gateways:counted",
+            "count": 5,
+            "reward": {
+                "type": "apotheosis:gem",
+                "purities": [
+                    "normal",
+                    "flawless"
+                ]
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 48,
+                "id": "apotheosis:gem_dust"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 24,
+                "id": "apotheosis:epic_material"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 6,
+                "id": "apotheosis:sigil_of_socketing"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "desc": "reward.apotheosis.netherite_smithing_template",
+            "stack": {
+                "count": 1,
+                "id": "minecraft:netherite_upgrade_smithing_template"
+            }
+        }
+    ],
+    "rules": {
+        "leash_range": 48.0,
+        "lives": 3,
+        "requires_nearby_player": true,
+        "spawn_range": 24.0
+    }
 }

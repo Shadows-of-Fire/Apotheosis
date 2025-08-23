@@ -1,68 +1,14 @@
 {
     "type": "apotheosis:tiered",
-    "rewards": [
-        {
-            "type": "gateways:counted",
-            "count": 3,
-            "reward": {
-                "type": "apotheosis:affix_item",
-                "rarities": [
-                    "apotheosis:rare",
-                    "apotheosis:epic"
-                ]
-            }
-        },
-        {
-            "type": "gateways:counted",
-            "count": 5,
-            "reward": {
-                "type": "apotheosis:gem",
-                "purities": [
-                    "flawed",
-                    "normal"
-                ]
-            }
-        },
-        {
-            "type": "gateways:stack",
-            "stack": {
-                "count": 24,
-                "id": "apotheosis:gem_dust"
-            }
-        },
-        {
-            "type": "gateways:stack",
-            "stack": {
-                "count": 12,
-                "id": "apotheosis:rare_material"
-            }
-        },
-        {
-            "type": "gateways:stack",
-            "stack": {
-                "count": 2,
-                "id": "apotheosis:sigil_of_socketing"
-            }
-        },
-        {
-            "type": "gateways:stack",
-            "stack": {
-                "count": 3,
-                "id": "minecraft:wither_skeleton_skull"
-            }
-        }
-    ],
-    "rules": {
-        "lives": 3,
-        "requires_nearby_player": true
-    },
     "settings": {
-        "color": "#5555FF",
+        "tier": "ascent",
         "size": "medium",
-        "tier": "ascent"
+        "color": "#5555FF"
     },
     "waves": [
         {
+            "max_wave_time": 2400,
+            "setup_time": 100,
             "entities": [
                 {
                     "type": "gateways:standard",
@@ -111,7 +57,6 @@
                     ]
                 }
             ],
-            "max_wave_time": 2400,
             "modifiers": [
                 {
                     "type": "gateways:loot_table",
@@ -124,10 +69,11 @@
                     "experience": 450,
                     "orb_size": 25
                 }
-            ],
-            "setup_time": 100
+            ]
         },
         {
+            "max_wave_time": 3200,
+            "setup_time": 200,
             "entities": [
                 {
                     "type": "gateways:standard",
@@ -200,7 +146,6 @@
                     ]
                 }
             ],
-            "max_wave_time": 3200,
             "modifiers": [
                 {
                     "type": "gateways:loot_table",
@@ -255,10 +200,11 @@
                     "experience": 650,
                     "orb_size": 25
                 }
-            ],
-            "setup_time": 200
+            ]
         },
         {
+            "max_wave_time": 4800,
+            "setup_time": 240,
             "entities": [
                 {
                     "type": "apotheosis:invader",
@@ -288,7 +234,6 @@
                     ]
                 }
             ],
-            "max_wave_time": 4800,
             "modifiers": [
                 {
                     "type": "gateways:loot_table",
@@ -343,8 +288,63 @@
                     "experience": 850,
                     "orb_size": 25
                 }
-            ],
-            "setup_time": 240
+            ]
         }
-    ]
+    ],
+    "rewards": [
+        {
+            "type": "gateways:counted",
+            "count": 3,
+            "reward": {
+                "type": "apotheosis:affix_item",
+                "rarities": [
+                    "apotheosis:rare",
+                    "apotheosis:epic"
+                ]
+            }
+        },
+        {
+            "type": "gateways:counted",
+            "count": 5,
+            "reward": {
+                "type": "apotheosis:gem",
+                "purities": [
+                    "flawed",
+                    "normal"
+                ]
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 24,
+                "id": "apotheosis:gem_dust"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 12,
+                "id": "apotheosis:rare_material"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 2,
+                "id": "apotheosis:sigil_of_socketing"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 3,
+                "id": "minecraft:wither_skeleton_skull"
+            }
+        }
+    ],
+    "rules": {
+        "lives": 3,
+        "requires_nearby_player": true
+    }
 }

@@ -64,7 +64,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("frontier/iron")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_zombie")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_zombie"))
                     .build())
                 .entity(StandardWaveEntity
                     .builder(EntityType.SKELETON)
@@ -72,7 +72,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("frontier/ranged/chain")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_skeleton")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_skeleton"))
                     .build())
                 .modifier(LootTableModifier.createEmpty())
                 .reward(AffixItemReward.create())
@@ -86,7 +86,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("frontier/iron")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_zombie")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_zombie"))
                     .build())
                 .entity(StandardWaveEntity
                     .builder(EntityType.SKELETON)
@@ -94,7 +94,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("frontier/ranged/chain")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_skeleton")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_skeleton"))
                     .build())
                 .reward(new ExperienceReward(350, 25))
                 .modifier(LootTableModifier.createEmpty())
@@ -114,7 +114,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("frontier/iron")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_zombie")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_zombie"))
                     .build())
                 .entity(StandardWaveEntity
                     .builder(EntityType.SKELETON)
@@ -122,7 +122,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("frontier/ranged/chain")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_skeleton")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_skeleton"))
                     .build())
                 .reward(new ExperienceReward(650, 25))
                 .modifier(LootTableModifier.createEmpty())
@@ -160,7 +160,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("ascent/diamond")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_husk")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_husk"))
                     .build())
                 .entity(StandardWaveEntity
                     .builder(EntityType.STRAY)
@@ -168,7 +168,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("ascent/ranged/iron")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_stray")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_stray"))
                     .build())
                 .reward(new ExperienceReward(450, 25))
                 .modifier(LootTableModifier.createEmpty()))
@@ -181,7 +181,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("ascent/diamond")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_polar_bear")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_polar_bear"))
                     .build())
                 .entity(StandardWaveEntity
                     .builder(EntityType.WOLF)
@@ -189,7 +189,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("ascent/iron")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_wolf")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_wolf"))
                     .build())
                 .entity(StandardWaveEntity
                     .builder(EntityType.BOGGED)
@@ -197,14 +197,14 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("ascent/ranged/iron")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_bogged")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_bogged"))
                     .build())
                 .entity(StandardWaveEntity
                     .builder(EntityType.PHANTOM)
                     .count(2)
                     .addModifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_VALUE, 6F))
                     .addModifier(AttributeModifier.create(ALObjects.Attributes.LIFE_STEAL, Operation.ADD_VALUE, 0.25F))
-                    .desc("wave_entity.apotheosis.vampiric_phantom")
+                    .desc(Apotheosis.langKey("wave_entity", "vampiric_phantom"))
                     .build())
                 .reward(new ExperienceReward(650, 25))
                 .modifier(LootTableModifier.createEmpty())
@@ -226,7 +226,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .addModifier(GearSetModifier.create(Apotheosis.loc("gateway_only/nether_herald")))
                     .addModifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_VALUE, 20F))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.nether_herald")
+                    .desc(Apotheosis.langKey("wave_entity", "nether_herald"))
                     .build())
                 .reward(new ExperienceReward(850, 25))
                 .modifier(LootTableModifier.createEmpty())
@@ -269,7 +269,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("summit/enchanted_diamond")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_zombified_piglin")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_zombified_piglin"))
                     .build())
                 .entity(StandardWaveEntity
                     .builder(EntityType.WITHER_SKELETON)
@@ -277,7 +277,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("summit/ranged/enchanted_iron")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_wither_skeleton")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_wither_skeleton"))
                     .build())
                 .reward(new ExperienceReward(1050, 50))
                 .modifier(LootTableModifier.createEmpty()))
@@ -294,7 +294,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                         .finalizeSpawn(false)
                         .addModifier(GearSetModifier.create(Apotheosis.loc("summit/ranged/enchanted_iron")))
                         .addModifier(AffixWaveModifier.create())))
-                    .desc("wave_entity.apotheosis.ghast_rider")
+                    .desc(Apotheosis.langKey("wave_entity", "ghast_rider"))
                     .build())
                 .entity(StandardWaveEntity
                     .builder(EntityType.PIGLIN_BRUTE) // Brutes will try to kill wither skeletons, so don't use them here.
@@ -302,7 +302,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("summit/netherite")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_piglin_brute")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_piglin_brute"))
                     .nbt(c -> {
                         c.putBoolean("IsImmuneToZombification", true);
                         return c;
@@ -314,7 +314,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(GearSetModifier.create(Apotheosis.loc("summit/ranged/enchanted_iron")))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.affixed_armored_stray")
+                    .desc(Apotheosis.langKey("wave_entity", "affixed_armored_stray"))
                     .build())
                 .reward(new ExperienceReward(1250, 50))
                 .modifier(LootTableModifier.createEmpty())
@@ -336,7 +336,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .addModifier(GearSetModifier.create(Apotheosis.loc("gateway_only/bastion_guard")))
                     .addModifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_VALUE, 20F))
                     .addModifier(AffixWaveModifier.create())
-                    .desc("wave_entity.apotheosis.bastion_guard")
+                    .desc(Apotheosis.langKey("wave_entity", "bastion_guard"))
                     .nbt(c -> {
                         c.putBoolean("IsImmuneToZombification", true);
                         return c;
@@ -356,7 +356,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 48)))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.EPIC_MATERIAL, 24)))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SOCKETING, 6)))
-            .keyReward(new StackReward(new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1))));
+            .keyReward(new StackReward(new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1), Apotheosis.langKey("reward", "netherite_smithing_template"))));
     }
 
     private void tieredGateway(String path, UnaryOperator<TieredGateway.Builder> config) {

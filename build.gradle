@@ -163,6 +163,13 @@ tasks.named("generateModMetadata") {
 
     replaceProperties.put 'mixinConfig', project.mixin.toBoolean() ? "[[mixins]]\nconfig=\"${modid}.mixins.json\"" : ""
 
+    // Remove trailing '+' from versions. While we may use unpinned dependencies, we need to erase that from the mods.toml dependency declaration.
+    replaceProperties.each { key, value ->
+        if (value instanceof String && value.endsWith('+')) {
+            replaceProperties.put(key, value.substring(0, value.length() - 1))
+        }
+    }
+
     inputs.properties replaceProperties
 
     from("src/templates")

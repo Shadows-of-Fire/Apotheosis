@@ -61,6 +61,7 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
+import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.datagen.DataGenBuilder;
 import dev.shadowsoffire.placebo.network.PayloadHelper;
@@ -225,6 +226,8 @@ public class Apotheosis {
 
         // Place gem bonus lists below everything else in the gem file.
         map.put("bonuses", 5);
+
+        Gateways.setupDatagenFieldOrder();
     }
 
     public static void loadConfig(boolean firstLoad) {
