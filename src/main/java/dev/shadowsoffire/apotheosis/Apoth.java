@@ -293,6 +293,9 @@ public class Apoth {
         public static final Holder<Item> SIGIL_OF_MALICE = R.item("sigil_of_malice", TooltipItem::new, p -> p
             .component(DataComponents.ITEM_NAME, Apotheosis.lang("item", "sigil_of_malice").withStyle(ChatFormatting.RED)));
 
+        public static final Holder<Item> SIGIL_OF_SUPREMACY = R.item("sigil_of_supremacy", TooltipItem::new, p -> p
+            .component(DataComponents.ITEM_NAME, Apotheosis.lang("item", "sigil_of_supremacy").withStyle(ChatFormatting.GOLD)));
+
         public static final Holder<Item> BOSS_SUMMONER = R.item("boss_summoner", BossSummonerItem::new);
 
         public static final Holder<Item> SIMPLE_REFORGING_TABLE = R.blockItem("simple_reforging_table", Blocks.SIMPLE_REFORGING_TABLE);

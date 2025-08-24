@@ -10,21 +10,29 @@ import dev.shadowsoffire.apotheosis.compat.gateways.AffixWaveModifier;
 import dev.shadowsoffire.apotheosis.compat.gateways.GemReward;
 import dev.shadowsoffire.apotheosis.compat.gateways.InvaderWaveEntity;
 import dev.shadowsoffire.apotheosis.compat.gateways.PassengerWaveModifier;
+import dev.shadowsoffire.apotheosis.compat.gateways.TrueRandomGemReward;
+import dev.shadowsoffire.apotheosis.compat.gateways.TrueRandomInvaderWaveEntity;
 import dev.shadowsoffire.apotheosis.compat.gateways.tiered_gate.TieredGateway;
 import dev.shadowsoffire.apotheosis.data.Rarities;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
+import dev.shadowsoffire.gateways.gate.BossEventSettings;
 import dev.shadowsoffire.gateways.gate.Gateway;
 import dev.shadowsoffire.gateways.gate.GatewayRegistry;
 import dev.shadowsoffire.gateways.gate.Reward.CountedReward;
 import dev.shadowsoffire.gateways.gate.Reward.ExperienceReward;
 import dev.shadowsoffire.gateways.gate.Reward.StackReward;
+import dev.shadowsoffire.gateways.gate.SpawnAlgorithms;
 import dev.shadowsoffire.gateways.gate.StandardWaveEntity;
 import dev.shadowsoffire.gateways.gate.WaveModifier.AttributeModifier;
 import dev.shadowsoffire.gateways.gate.WaveModifier.GearSetModifier;
 import dev.shadowsoffire.gateways.gate.WaveModifier.LootTableModifier;
+import dev.shadowsoffire.gateways.gate.endless.ApplicationMode.AfterEveryNWaves;
+import dev.shadowsoffire.gateways.gate.endless.ApplicationMode.AfterWave;
+import dev.shadowsoffire.gateways.gate.endless.EndlessGateway;
 import dev.shadowsoffire.gateways.gate.normal.NormalGateway;
+import dev.shadowsoffire.placebo.color.GradientColor;
 import dev.shadowsoffire.placebo.util.data.DynamicRegistryProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
@@ -357,10 +365,57 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new StackReward(new ItemStack(Apoth.Items.EPIC_MATERIAL, 24)))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SOCKETING, 6)))
             .keyReward(new StackReward(new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1), Apotheosis.langKey("reward", "netherite_smithing_template"))));
+
+        endlessGateway("endless_invader", b -> b
+            .color(GradientColor.RAINBOW)
+            .size(Gateway.Size.LARGE)
+            .bossSettings(new BossEventSettings(BossEventSettings.Mode.NAME_PLATE, false))
+            .spawnAlgo(SpawnAlgorithms.INWARD_SPIRAL)
+            .rules(c -> c
+                .lives(3)
+                .requiresNearbyPlayer(true)
+                .spacing(128))
+            .baseWave(w -> w
+                .maxWaveTime(3600)
+                .setupTime(200)
+                .entity(TrueRandomInvaderWaveEntity.createRandom(3))
+                .modifier(AttributeModifier.create(ALObjects.Attributes.ARMOR_SHRED, Operation.ADD_VALUE, 0.40F))
+                .modifier(AttributeModifier.create(ALObjects.Attributes.PROT_SHRED, Operation.ADD_VALUE, 0.20F))
+                .modifier(AttributeModifier.create(Attributes.MOVEMENT_SPEED, Operation.ADD_MULTIPLIED_TOTAL, 0.10F))
+                .reward(new CountedReward(AffixItemReward.create(Rarities.MYTHIC), 1))
+                .reward(new CountedReward(TrueRandomGemReward.create(Purity.PERFECT), 3))
+                .reward(new ExperienceReward(2500, 250)))
+            .modifier(m -> m
+                .applicationMode(new AfterEveryNWaves(3, 100))
+                .entity(TrueRandomInvaderWaveEntity.createRandom(1))
+                .modifier(LootTableModifier.createEmpty())
+                .modifier(AttributeModifier.create(Attributes.MAX_HEALTH, Operation.ADD_MULTIPLIED_TOTAL, 0.25F))
+                .modifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_MULTIPLIED_TOTAL, 0.10F))
+                .modifier(AttributeModifier.create(Attributes.ARMOR_TOUGHNESS, Operation.ADD_MULTIPLIED_TOTAL, 0.03F))
+                .modifier(AttributeModifier.create(Attributes.ATTACK_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.25F))
+                .modifier(AttributeModifier.create(ALObjects.Attributes.PROJECTILE_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.25F))
+                .modifier(AttributeModifier.create(ALObjects.Attributes.ARMOR_SHRED, Operation.ADD_MULTIPLIED_TOTAL, 0.08F))
+                .modifier(AttributeModifier.create(ALObjects.Attributes.PROT_SHRED, Operation.ADD_MULTIPLIED_TOTAL, 0.08F))
+                .modifier(AttributeModifier.create(Attributes.KNOCKBACK_RESISTANCE, Operation.ADD_MULTIPLIED_TOTAL, 0.05F))
+                .reward(new StackReward(new ItemStack(Apoth.Items.MYTHIC_MATERIAL, 16)))
+                .reward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 16)))
+                .reward(new ExperienceReward(2500, 250))
+                .setupTime(-5)
+                .maxWaveTime(-25))
+            .modifier(m -> m
+                .applicationMode(new AfterWave(100))
+                .reward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SUPREMACY)))
+                .modifier(AttributeModifier.create(Attributes.MAX_HEALTH, Operation.ADD_MULTIPLIED_TOTAL, 1F)))
+
+        );
     }
 
     private void tieredGateway(String path, UnaryOperator<TieredGateway.Builder> config) {
         this.add(Apotheosis.loc(path), config.apply(TieredGateway.builder()).build());
+    }
+
+    private void endlessGateway(String path, UnaryOperator<EndlessGateway.Builder> config) {
+        this.add(Apotheosis.loc(path), config.apply(EndlessGateway.builder()).build());
     }
 
 }

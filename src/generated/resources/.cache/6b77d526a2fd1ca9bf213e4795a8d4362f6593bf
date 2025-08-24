@@ -1,7 +1,7 @@
-// 1.21.1	2025-03-27T23:21:02.3845611	Apothic Invaders
+// 1.21.1	2025-08-23T22:57:07.9976083	Apothic Invaders
 814ea543b4b135947e23cc9ed470fdc6387c39ef data/apotheosis/apothic_invaders/overworld/bogged.json
 1af7a7562e1fc8b6e4ac26933d8c5d272268cd5f data/apotheosis/apothic_invaders/overworld/bogged_in_wet.json
-55b9ad3522ec0361c4db45712b6ba72ab3fed20d data/apotheosis/apothic_invaders/overworld/breeze.json
+2c9129348c6232be4a8848bd6b92111ab803960f data/apotheosis/apothic_invaders/overworld/breeze.json
 fca9a76b61b8561823d5da58913a71a5823143e2 data/apotheosis/apothic_invaders/overworld/enderman.json
 62a10eeccd606acd4e21abef54a18e8a945351b3 data/apotheosis/apothic_invaders/overworld/husk.json
 bb70112aa3211c5eacd58f34b613d386e6dab1f4 data/apotheosis/apothic_invaders/overworld/husk_in_dry.json
@@ -17,8 +17,8 @@ c1e1f9c53f7d7dae9510e85f0533b775c1606d9b data/apotheosis/apothic_invaders/the_en
 caa1dabf0ddb147d0bc99efededbf283cd90b9b7 data/apotheosis/apothic_invaders/the_end/phantom.json
 62034a464dfb55875d983801bfb2f52facac5f92 data/apotheosis/apothic_invaders/the_end/shulker.json
 eb55d667d062b0e686d41eabe1a54af58d35c444 data/apotheosis/apothic_invaders/the_nether/blaze.json
-7bbbe4bb5d570e96bee573de22bcd52da144916d data/apotheosis/apothic_invaders/the_nether/piglin.json
-24d4e06225c2a0d68f0a655df18b7c34b37b14ef data/apotheosis/apothic_invaders/the_nether/piglin_brute.json
+ecbe99bcf53165d0722351205273a75d12ab7bf9 data/apotheosis/apothic_invaders/the_nether/piglin.json
+596c0166bc95f01389e74ca7cc6e03bd43ed34c3 data/apotheosis/apothic_invaders/the_nether/piglin_brute.json
 a3faf2f5bb386e24f8d1f63764de150484dce10e data/apotheosis/apothic_invaders/the_nether/wither_skeleton.json
 97608122ac1fa1b187df4a985a98aa04fbfc40d8 data/apotheosis/apothic_invaders/the_nether/zoglin.json
 792cc6db75d8ed62df50f8c55cd2bea6106aedd6 data/apotheosis/apothic_invaders/the_nether/zombified_piglin.json

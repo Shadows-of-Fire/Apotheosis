@@ -31,11 +31,11 @@
         "weights": {
             "summit": {
                 "quality": 1.5,
-                "weight": 100
+                "weight": 40
             },
             "pinnacle": {
                 "quality": 1.5,
-                "weight": 100
+                "weight": 40
             }
         }
     },

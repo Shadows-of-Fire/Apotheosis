@@ -32,8 +32,10 @@ public class GatewaysCompat {
     public static void register(IEventBus bus) {
         WaveEntity.CODEC.register(Apotheosis.loc("invader"), InvaderWaveEntity.CODEC);
         WaveEntity.CODEC.register(Apotheosis.loc("elite"), EliteWaveEntity.CODEC);
+        WaveEntity.CODEC.register(Apotheosis.loc("true_random_invader"), TrueRandomInvaderWaveEntity.CODEC);
         Reward.CODEC.register(Apotheosis.loc("affix_item"), AffixItemReward.CODEC);
         Reward.CODEC.register(Apotheosis.loc("gem"), GemReward.CODEC);
+        Reward.CODEC.register(Apotheosis.loc("true_random_gem"), TrueRandomGemReward.CODEC);
         WaveModifier.CODEC.register(Apotheosis.loc("affix"), AffixWaveModifier.CODEC);
         WaveModifier.CODEC.register(Apotheosis.loc("passenger"), PassengerWaveModifier.CODEC);
         GatewayRegistry.INSTANCE.registerCodec(Apotheosis.loc("tiered"), TieredGateway.CODEC);

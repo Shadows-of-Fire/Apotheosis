@@ -574,6 +574,9 @@
     "item.apotheosis.sigil_of_malice": "Sigil of Malice",
     "item.apotheosis.sigil_of_malice.desc": "Applies Touch of Malice to an Affix Item",
 
+    "item.apotheosis.sigil_of_supremacy": "Sigil of Supremacy",
+    "item.apotheosis.sigil_of_supremacy.desc": "Overcharges every Affix on an Affix Item",
+
     "item.apotheosis.iron_upgrade_smithing_template": "Smithing Template",
     "upgrade.apotheosis.iron": "Iron Upgrade ",
     "item.apotheosis.iron_upgrade_smithing_template.applies_to": "Stone and Chain Equipment",
@@ -712,10 +715,12 @@
     "misc.apotheosis.random": "Random",
     "wave_entity.apotheosis.invader": "%s Apothic Invader",
     "wave_entity.apotheosis.elite": "Apothic Elite - %s",
+    "wave_entity.apotheosis.true_random_invader": "Truly Random Apothic Invader",
     "reward.apotheosis.affix_item": "Affix Item (%s)",
     "reward.apotheosis.random_affix_item": "Affix Item (Random)",
     "reward.apotheosis.gem": "Apothic Gem (%s)",
     "reward.apotheosis.random_gem": "Apothic Gem (Random)",
+    "reward.apotheosis.true_random_gem": "Truly Random Apothic Gem",
     "reward.apotheosis.netherite_smithing_template": "Netherite Smiting Template",
     "error.apotheosis.gate_tier_incorrect": "This Gateway can only be opened in World Tier: %s",
     "modifier.apotheosis.affix": "Receives an Affix Item",
@@ -742,7 +747,7 @@
     "apotheosis.tiered/ascent": "Gateway of the Sunlit Ascent",
     "apotheosis.tiered/summit": "Gateway of the Thundering Summit",
     "apotheosis.tiered/pinnacle": "Gateway of the Apothic Pinnacle",
-    "apotheosis.endless/invader": "Endless Gateway of Apothic Invaders",
+    "apotheosis.endless_invader": "Endless Gateway of Apothic Invaders",
 
     "comment_id": "/Advancements",
 
