@@ -17,8 +17,9 @@ import dev.shadowsoffire.apotheosis.data.AffixProvider;
 import dev.shadowsoffire.apotheosis.data.ApothAdvancementProvider;
 import dev.shadowsoffire.apotheosis.data.ApothDataMapProvider;
 import dev.shadowsoffire.apotheosis.data.ApothLootProvider;
+import dev.shadowsoffire.apotheosis.data.ApothPaintingTagsProvider;
+import dev.shadowsoffire.apotheosis.data.ApothPaintingsProvider;
 import dev.shadowsoffire.apotheosis.data.ApothRecipeProvider;
-import dev.shadowsoffire.apotheosis.data.ApothTagsProvider;
 import dev.shadowsoffire.apotheosis.data.AugmentationProvider;
 import dev.shadowsoffire.apotheosis.data.EliteProvider;
 import dev.shadowsoffire.apotheosis.data.GLMProvider;
@@ -179,9 +180,10 @@ public class Apotheosis {
         DataProvider.INDENT_WIDTH.set(4);
         DataGenBuilder.create(Apotheosis.MODID)
             .registry(Registries.JUKEBOX_SONG, SongProvider::bootstrap)
+            .registry(Registries.PAINTING_VARIANT, ApothPaintingsProvider::bootstrap)
             .provider(ApothLootProvider::create)
             .provider(ApothRecipeProvider::new)
-            .provider(ApothTagsProvider::new)
+            .provider(ApothPaintingTagsProvider::new)
             .provider(RarityProvider::new)
             .provider(RarityOverrideProvider::new)
             .provider(AffixLootEntryProvider::new)
