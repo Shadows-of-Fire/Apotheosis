@@ -16,6 +16,10 @@ authors="${author}"
 
 description='''${desc}'''
 
+logoFile="${logo}"
+
+displayURL="${homepage}"
+
 ${mixinConfig}
 
 [[dependencies.${modid}]]

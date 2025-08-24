@@ -2,19 +2,23 @@ modLoader="javafml"
 
 loaderVersion="[2,)"
 
-license="MIT License"
+license="MIT License (code) / All Rights Reserved (assets)"
 
 [[mods]] #mandatory
 
 modId="apotheosis"
 
-version="8.3.6"
+version="8.4.0-beta0"
 
 displayName="Apotheosis"
 
 authors="Shadows_of_Fire"
 
 description='''All things that should have been'''
+
+logoFile="logo_transparent.png"
+
+displayURL="https://www.curseforge.com/minecraft/mc-mods/apotheosis"
 
 [[mixins]]
 config="apotheosis.mixins.json"

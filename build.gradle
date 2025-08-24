@@ -141,6 +141,8 @@ tasks.named("generateModMetadata") {
         modName: modName,
         author: author,
         desc: desc,
+        logo: logo,
+        homepage: homepage,
         mcVersion: mcVersion,
         javaVersion: javaVersion,
         forgeVersion: forgeVersion
@@ -150,16 +152,22 @@ tasks.named("generateModMetadata") {
     if (!licenseFile.exists()) {
         throw new Exception('Missing LICENSE file in repository root.')
     }
-    replaceProperties.put 'license', file('LICENSE').readLines().get(0)
+    
+    def licenseText = file('LICENSE').readLines().get(0)
+    
+    def licenseAssetsFile = file('LICENSE_ASSETS')
+    if (licenseAssetsFile.exists()) {
+        licenseText += ' (code) / ' + file('LICENSE_ASSETS').readLines().get(0) + ' (assets)'
+    }
 
-    if (project.hasProperty('placeboVersion'))       replaceProperties.put 'placeboVersion', placeboVersion
-    if (project.hasProperty('apothicAttributesVersion')) replaceProperties.put 'apothicAttributesVersion', apothicAttributesVersion
-    if (project.hasProperty('apothicSpawnersVersion')) replaceProperties.put 'apothicSpawnersVersion', apothicSpawnersVersion
-    if (project.hasProperty('apothicEnchantingVersion')) replaceProperties.put 'apothicEnchantingVersion', apothicEnchantingVersion
-    if (project.hasProperty('curiosVersion'))        replaceProperties.put 'curiosVersion', curiosVersion
-    if (project.hasProperty('topVersion'))           replaceProperties.put 'topVersion', topVersion
-    if (project.hasProperty('patchouliVersion'))     replaceProperties.put 'patchouliVersion', patchouliVersion
-    if (project.hasProperty('gatewaysVersion'))      replaceProperties.put 'gatewaysVersion', gatewaysVersion
+    replaceProperties.put 'license', licenseText
+
+    // Iterate over all properties that end with 'Version' and add them to the replaceProperties map if they exist.
+    for (def prop : project.properties) {
+        if (prop.key.endsWith('Version')) {
+            replaceProperties.put prop.key, prop.value
+        }
+    }
 
     replaceProperties.put 'mixinConfig', project.mixin.toBoolean() ? "[[mixins]]\nconfig=\"${modid}.mixins.json\"" : ""
 
