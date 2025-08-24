@@ -14,6 +14,7 @@ import dev.shadowsoffire.apotheosis.compat.jei.PotionCharmExtension.PotionCharmS
 import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
+import dev.shadowsoffire.apotheosis.recipe.SupremacyRecipe;
 import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
 import dev.shadowsoffire.apotheosis.socket.WithdrawalRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
@@ -111,6 +112,7 @@ public class AdventureJEIPlugin implements IModPlugin {
         reg.getSmithingCategory().addExtension(WithdrawalRecipe.class, new WithdrawalExtension());
         reg.getSmithingCategory().addExtension(UnnamingRecipe.class, new UnnamingExtension());
         reg.getSmithingCategory().addExtension(MaliceRecipe.class, new MaliceExtension());
+        reg.getSmithingCategory().addExtension(SupremacyRecipe.class, new SupremacyExtension());
     }
 
     /**

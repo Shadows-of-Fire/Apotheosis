@@ -20,6 +20,7 @@ import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
+import dev.shadowsoffire.apotheosis.recipe.SupremacyRecipe;
 import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
 import dev.shadowsoffire.apotheosis.socket.SocketingRecipe;
 import dev.shadowsoffire.apotheosis.socket.WithdrawalRecipe;
@@ -61,6 +62,7 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         out.accept(Apotheosis.loc("unnaming"), new UnnamingRecipe(), null);
         out.accept(Apotheosis.loc("widthdrawal"), new WithdrawalRecipe(), null);
         out.accept(Apotheosis.loc("malice"), new MaliceRecipe(), null);
+        out.accept(Apotheosis.loc("supremacy"), new SupremacyRecipe(), null);
         addSockets("sigil_add_sockets", ingredient(Items.SIGIL_OF_SOCKETING), 2);
         addAffixSalvaging("common", Items.COMMON_MATERIAL);
         addAffixSalvaging("uncommon", Items.UNCOMMON_MATERIAL);

@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-11T23:56:10.764834	Recipes
+// 1.21.1	2025-08-23T23:25:24.3183541	Recipes
 bab664def1f01400bfe3a7cf432385247dcd847d data/apotheosis/recipe/augmenting_table.json
 09ba3d6cf5c8648fcf8b628cffa3ab3b4df2fd98 data/apotheosis/recipe/diamond_upgrade_smithing_template.json
 cfc46608a868f8e622a46d07c0b0d2d642bec035 data/apotheosis/recipe/gem_cutting/chipped.json
@@ -83,5 +83,6 @@ ae17d40d7a3714839113b46697d35bde3ed85017 data/apotheosis/recipe/smithing/upgrade
 c2ba4b51d0c4e6b03444c280c621e69b843eab7e data/apotheosis/recipe/smithing/upgrade_stone_shovel_to_iron_shovel.json
 6ad30c90ecdc7c0522ebb60824754ef5c643286e data/apotheosis/recipe/smithing/upgrade_stone_sword_to_iron_sword.json
 2d71eac2e3c3ed51f3e4e95fb8809f4523c1be83 data/apotheosis/recipe/socketing.json
+7e6e90af737a83ade8359176e16a185d3140322b data/apotheosis/recipe/supremacy.json
 a9fa55145091e693c059c64a8d7208257d51f272 data/apotheosis/recipe/unnaming.json
 3767211558babc3efaa157c84ba8c64f9f301c8c data/apotheosis/recipe/widthdrawal.json

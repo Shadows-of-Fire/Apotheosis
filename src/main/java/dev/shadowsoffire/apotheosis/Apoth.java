@@ -58,6 +58,7 @@ import dev.shadowsoffire.apotheosis.particle.RarityParticleData;
 import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
+import dev.shadowsoffire.apotheosis.recipe.SupremacyRecipe;
 import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
 import dev.shadowsoffire.apotheosis.socket.SocketingRecipe;
 import dev.shadowsoffire.apotheosis.socket.WithdrawalRecipe;
@@ -413,6 +414,7 @@ public class Apoth {
     public static final class RecipeSerializers {
         public static final Holder<RecipeSerializer<?>> WITHDRAWAL = R.recipeSerializer("withdrawal", () -> new SingletonRecipeSerializer<>(WithdrawalRecipe::new));
         public static final Holder<RecipeSerializer<?>> SOCKETING = R.recipeSerializer("socketing", () -> new SingletonRecipeSerializer<>(SocketingRecipe::new));
+        public static final Holder<RecipeSerializer<?>> SUPREMACY = R.recipeSerializer("supremacy", () -> new SingletonRecipeSerializer<>(SupremacyRecipe::new));
         public static final Holder<RecipeSerializer<?>> UNNAMING = R.recipeSerializer("unnaming", () -> new SingletonRecipeSerializer<>(UnnamingRecipe::new));
         public static final Holder<RecipeSerializer<?>> MALICE = R.recipeSerializer("malice", () -> new SingletonRecipeSerializer<>(MaliceRecipe::new));
         public static final Holder<RecipeSerializer<?>> ADD_SOCKETS = R.recipeSerializer("add_sockets", () -> AddSocketsRecipe.Serializer.INSTANCE);
