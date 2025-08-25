@@ -97,6 +97,9 @@
                     "desc": "wave_entity.apotheosis.affixed_wolf",
                     "entity": "minecraft:wolf",
                     "finalize_spawn": false,
+                    "nbt": {
+                        "AngerTime": 9999999
+                    },
                     "modifiers": [
                         {
                             "type": "gateways:gear_set",
@@ -273,13 +276,7 @@
                     "type": "gateways:attribute",
                     "attribute": "minecraft:generic.knockback_resistance",
                     "operation": "add_value",
-                    "value": 0.3
-                },
-                {
-                    "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.movement_speed",
-                    "operation": "add_multiplied_total",
-                    "value": 0.1
+                    "value": 0.08
                 }
             ],
             "rewards": [

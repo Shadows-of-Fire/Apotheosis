@@ -90,7 +90,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(0.75, 3.7)
             .basicData(c -> meleeGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, DEFAULT_WEIGHT, 1.5F))
+                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 1.5F))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS)));
 

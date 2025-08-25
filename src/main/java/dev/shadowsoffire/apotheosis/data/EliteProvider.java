@@ -54,14 +54,14 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
             .chance(0.005F)
             .entities(EntityType.GOAT)
             .basicData(c -> c
-                .name(Component.literal("Craig the Eternal").withStyle(s -> s.withColor(GradientColor.RAINBOW)))
+                .name(Apotheosis.lang("elite", "craig").withStyle(s -> s.withColor(GradientColor.RAINBOW)))
                 .weights(TieredWeights.onlyFor(WorldTier.PINNACLE, DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .exclusion(excludedSpawnTypes(MobSpawnType.SPAWN_EGG))
                 .gearSets(WorldTier.PINNACLE, "#pinnacle_melee")
                 .nbt(t -> t.putBoolean("IsScreamingGoat", true))
                 .nbt(t -> t.putBoolean("HasLeftHorn", true))
-                .nbt(t -> t.putBoolean("HasRightHorn", true))
+                .nbt(t -> t.putBoolean("HasRightHorn", false))
                 .support(s -> s.entity(EntityType.SHEEP).nbt(t -> t.putString("CustomName", "jeb_"))))
             .stats(c -> c
                 .enchantChance(1)

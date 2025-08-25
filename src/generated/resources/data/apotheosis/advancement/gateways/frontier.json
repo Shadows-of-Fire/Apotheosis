@@ -1,0 +1,39 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "gateways"
+        }
+    ],
+    "parent": "apotheosis:progression/frontier",
+    "criteria": {
+        "complete_frontier_gate": {
+            "conditions": {
+                "gateway": "apotheosis:tiered/frontier"
+            },
+            "trigger": "gateways:finish_gateway"
+        }
+    },
+    "display": {
+        "background": "apotheosis:textures/advancements/bg/apoth.png",
+        "description": {
+            "translate": "advancements.apotheosis.challenge_gates.frontier.desc"
+        },
+        "icon": {
+            "components": {
+                "gateways:gateway": "apotheosis:tiered/frontier"
+            },
+            "count": 1,
+            "id": "gateways:gate_pearl"
+        },
+        "title": {
+            "translate": "advancements.apotheosis.challenge_gates.frontier.title"
+        }
+    },
+    "requirements": [
+        [
+            "complete_frontier_gate"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

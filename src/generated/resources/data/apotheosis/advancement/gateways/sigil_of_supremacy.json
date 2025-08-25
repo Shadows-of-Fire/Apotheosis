@@ -1,0 +1,41 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "gateways"
+        }
+    ],
+    "parent": "apotheosis:gateways/pinnacle",
+    "criteria": {
+        "obtain_sigil_of_supremacy": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "apotheosis:sigil_of_supremacy"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+    "display": {
+        "background": "apotheosis:textures/advancements/bg/apoth.png",
+        "description": {
+            "translate": "advancements.apotheosis.challenge_gates.sigil_of_supremacy.desc"
+        },
+        "frame": "challenge",
+        "icon": {
+            "count": 1,
+            "id": "apotheosis:sigil_of_supremacy"
+        },
+        "title": {
+            "translate": "advancements.apotheosis.challenge_gates.sigil_of_supremacy.title"
+        }
+    },
+    "requirements": [
+        [
+            "obtain_sigil_of_supremacy"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

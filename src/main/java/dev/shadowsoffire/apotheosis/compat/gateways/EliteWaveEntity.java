@@ -8,7 +8,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry;
 import dev.shadowsoffire.apotheosis.mobs.types.Elite;
-import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
 import dev.shadowsoffire.gateways.gate.WaveEntity;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -36,7 +35,6 @@ public record EliteWaveEntity(WaveEntity base, DynamicHolder<Elite> elite, Optio
 
     @Override
     public LivingEntity createEntity(ServerLevel level, GatewayEntity gate) {
-        GenContext ctx = GenContext.forPlayer(gate.summonerOrClosest());
         LivingEntity baseEntity = this.base.createEntity(level, gate);
         if (baseEntity == null) {
             return null;
@@ -48,8 +46,8 @@ public record EliteWaveEntity(WaveEntity base, DynamicHolder<Elite> elite, Optio
         }
 
         if (baseEntity instanceof Mob mob) {
-            Elite elite = this.elite.get();
-            elite.initElite(mob, ctx);
+            mob.getPersistentData().putString(Elite.MINIBOSS_KEY, this.elite.getId().toString());
+            mob.getPersistentData().putString(Elite.PLAYER_KEY, gate.summonerOrClosest().getUUID().toString());
             return baseEntity;
         }
         else {

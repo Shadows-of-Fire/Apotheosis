@@ -1,0 +1,40 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "gateways"
+        }
+    ],
+    "parent": "apotheosis:progression/pinnacle",
+    "criteria": {
+        "complete_pinnacle_gate": {
+            "conditions": {
+                "gateway": "apotheosis:tiered/pinnacle"
+            },
+            "trigger": "gateways:finish_gateway"
+        }
+    },
+    "display": {
+        "background": "apotheosis:textures/advancements/bg/apoth.png",
+        "description": {
+            "translate": "advancements.apotheosis.challenge_gates.pinnacle.desc"
+        },
+        "frame": "goal",
+        "icon": {
+            "components": {
+                "gateways:gateway": "apotheosis:tiered/pinnacle"
+            },
+            "count": 1,
+            "id": "gateways:gate_pearl"
+        },
+        "title": {
+            "translate": "advancements.apotheosis.challenge_gates.pinnacle.title"
+        }
+    },
+    "requirements": [
+        [
+            "complete_pinnacle_gate"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

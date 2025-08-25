@@ -28,7 +28,7 @@
                 "type": "gateways:attribute",
                 "attribute": "minecraft:generic.movement_speed",
                 "operation": "add_multiplied_total",
-                "value": 0.1
+                "value": 0.02
             }
         ],
         "rewards": [
@@ -54,8 +54,8 @@
             },
             {
                 "type": "gateways:experience",
-                "experience": 2500,
-                "orb_size": 250
+                "experience": 25000,
+                "orb_size": 1000
             }
         ]
     },
@@ -144,8 +144,8 @@
                 },
                 {
                     "type": "gateways:experience",
-                    "experience": 2500,
-                    "orb_size": 250
+                    "experience": 25000,
+                    "orb_size": 1000
                 }
             ]
         },

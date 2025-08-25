@@ -1,6 +1,10 @@
-// 1.21.1	2025-08-23T23:25:24.3183541	Recipes
+// 1.21.1	2025-08-25T00:38:58.1239945	Recipes
 bab664def1f01400bfe3a7cf432385247dcd847d data/apotheosis/recipe/augmenting_table.json
 09ba3d6cf5c8648fcf8b628cffa3ab3b4df2fd98 data/apotheosis/recipe/diamond_upgrade_smithing_template.json
+92d874d0ec69b36f6b66529d0b73d91d96a43e11 data/apotheosis/recipe/gate_pearl.json
+d5286dde309bfbe3dfafa3f061d7d1d006acd0c9 data/apotheosis/recipe/gate_pearl_.json
+507bc50b8657436578770274fece459c2c8c85bf data/apotheosis/recipe/gate_pearl__.json
+9b25545273b6f7534c14fb867ce044badd580498 data/apotheosis/recipe/gate_pearl___.json
 cfc46608a868f8e622a46d07c0b0d2d642bec035 data/apotheosis/recipe/gem_cutting/chipped.json
 527c22d6be2eb2dbc699e129a7db9313980d97a5 data/apotheosis/recipe/gem_cutting/cracked.json
 352695987a105286de394eb61d74bbee833181ad data/apotheosis/recipe/gem_cutting/flawed.json

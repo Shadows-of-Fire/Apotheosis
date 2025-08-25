@@ -29,7 +29,11 @@ import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
+import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.apothic_enchanting.table.EnchantingStatRegistry.Stats;
+import dev.shadowsoffire.gateways.GatewayObjects;
+import dev.shadowsoffire.gateways.gate.GatewayRegistry;
+import dev.shadowsoffire.gateways.item.GatePearlItem;
 import dev.shadowsoffire.placebo.datagen.LegacyRecipeProvider;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.Holder;
@@ -173,6 +177,26 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_CHESTPLATE, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_CHESTPLATE);
         addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_LEGGINGS, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_LEGGINGS);
         addSizedUpgrade(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, Items.GOLDEN_BOOTS, Tags.Items.GEMS_DIAMOND, 4, Items.DIAMOND_BOOTS);
+
+        gateRecipe("tiered/frontier",
+            Items.SPIDER_EYE, Tags.Items.INGOTS_IRON, Items.SPIDER_EYE,
+            Tags.Items.BONES, Tags.Items.ENDER_PEARLS, Tags.Items.BONES,
+            Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH);
+
+        gateRecipe("tiered/ascent",
+            Tags.Items.INGOTS_GOLD, Items.RARE_MATERIAL, Tags.Items.INGOTS_GOLD,
+            Items.RARE_MATERIAL, Tags.Items.ENDER_PEARLS, Items.RARE_MATERIAL,
+            Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
+
+        gateRecipe("tiered/summit",
+            Items.BLAZE_POWDER, Items.GHAST_TEAR, Items.BLAZE_POWDER,
+            Items.EPIC_MATERIAL, Items.ENDER_EYE, Items.EPIC_MATERIAL,
+            Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
+
+        gateRecipe("tiered/pinnacle",
+            Items.SIGIL_OF_MALICE, Ench.Items.WARDEN_TENDRIL, Items.SIGIL_OF_MALICE,
+            Ench.Items.INFUSED_BREATH, Items.MYTHIC_MATERIAL, Ench.Items.INFUSED_BREATH,
+            Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
     }
 
     private ShapedRecipePattern charmPattern() {
@@ -238,4 +262,11 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         this.recipeOutput.accept(Apotheosis.loc("smithing/upgrade_%s_to_%s".formatted(path1, path2)),
             new SizedUpgradeRecipe(Ingredient.of(template.value()), Ingredient.of(base), SizedIngredient.of(addition, size), output.getDefaultInstance()), null);
     }
+
+    private void gateRecipe(String gatePath, Object... pattern) {
+        ItemStack output = new ItemStack(GatewayObjects.GATE_PEARL);
+        GatePearlItem.setGate(output, GatewayRegistry.INSTANCE.holder(Apotheosis.loc(gatePath)));
+        addShaped(output, 3, 3, pattern);
+    }
+
 }

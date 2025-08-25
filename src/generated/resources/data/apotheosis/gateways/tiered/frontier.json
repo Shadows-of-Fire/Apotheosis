@@ -24,6 +24,10 @@
                         {
                             "type": "apotheosis:affix",
                             "affix_chance": 1.0
+                        },
+                        {
+                            "type": "gateways:loot_table",
+                            "loot_table": "minecraft:empty"
                         }
                     ]
                 },
@@ -41,22 +45,12 @@
                         {
                             "type": "apotheosis:affix",
                             "affix_chance": 1.0
+                        },
+                        {
+                            "type": "gateways:loot_table",
+                            "loot_table": "minecraft:empty"
                         }
                     ]
-                }
-            ],
-            "modifiers": [
-                {
-                    "type": "gateways:loot_table",
-                    "loot_table": "minecraft:empty"
-                }
-            ],
-            "rewards": [
-                {
-                    "type": "apotheosis:affix_item"
-                },
-                {
-                    "type": "apotheosis:gem"
                 }
             ]
         },
@@ -150,7 +144,7 @@
             ]
         },
         {
-            "max_wave_time": 2400,
+            "max_wave_time": 3200,
             "setup_time": 160,
             "entities": [
                 {
