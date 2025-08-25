@@ -152,8 +152,8 @@
         },
         {
             "application_mode": {
-                "type": "gateways:after_wave",
-                "wave": 100
+                "type": "gateways:only_on_every_n_waves",
+                "waves": 100
             },
             "modifiers": [
                 {

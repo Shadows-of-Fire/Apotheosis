@@ -36,7 +36,7 @@ import dev.shadowsoffire.gateways.gate.WaveModifier.EffectModifier;
 import dev.shadowsoffire.gateways.gate.WaveModifier.GearSetModifier;
 import dev.shadowsoffire.gateways.gate.WaveModifier.LootTableModifier;
 import dev.shadowsoffire.gateways.gate.endless.ApplicationMode.AfterEveryNWaves;
-import dev.shadowsoffire.gateways.gate.endless.ApplicationMode.AfterWave;
+import dev.shadowsoffire.gateways.gate.endless.ApplicationMode.OnlyOnEveryNWaves;
 import dev.shadowsoffire.gateways.gate.endless.EndlessGateway;
 import dev.shadowsoffire.gateways.gate.normal.NormalGateway;
 import dev.shadowsoffire.gateways.item.GatePearlItem;
@@ -424,7 +424,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .setupTime(-5)
                 .maxWaveTime(-25))
             .modifier(m -> m
-                .applicationMode(new AfterWave(100))
+                .applicationMode(new OnlyOnEveryNWaves(100))
                 .reward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SUPREMACY)))
                 .modifier(AttributeModifier.create(Attributes.MAX_HEALTH, Operation.ADD_MULTIPLIED_TOTAL, 1F))));
 
