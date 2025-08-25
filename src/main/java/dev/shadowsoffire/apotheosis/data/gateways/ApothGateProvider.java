@@ -21,6 +21,7 @@ import dev.shadowsoffire.apotheosis.mobs.types.Elite;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
+import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.gateways.GatewayObjects;
 import dev.shadowsoffire.gateways.gate.BossEventSettings;
 import dev.shadowsoffire.gateways.gate.Gateway;
@@ -72,7 +73,8 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .settings(c -> c
                 .tier(WorldTier.FRONTIER)
                 .size(NormalGateway.Size.SMALL)
-                .color(0x33FF33))
+                .color(0x33FF33)
+                .soundtrack(Apoth.Sounds.MUSIC_DISC_SHIMMER))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true))
@@ -162,7 +164,8 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .settings(c -> c
                 .tier(WorldTier.ASCENT)
                 .size(NormalGateway.Size.MEDIUM)
-                .color(0x5555FF))
+                .color(0x5555FF)
+                .soundtrack(Apoth.Sounds.MUSIC_DISC_FLASH))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true))
@@ -271,7 +274,8 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .settings(c -> c
                 .tier(WorldTier.SUMMIT)
                 .size(NormalGateway.Size.MEDIUM)
-                .color(0xBB00BB))
+                .color(0xBB00BB)
+                .soundtrack(Ench.Sounds.MUSIC_DISC_ARCANA))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true)
@@ -387,10 +391,11 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .size(Gateway.Size.LARGE)
             .bossSettings(new BossEventSettings(BossEventSettings.Mode.NAME_PLATE, false))
             .spawnAlgo(SpawnAlgorithms.INWARD_SPIRAL)
+            .soundtrack(Apoth.Sounds.MUSIC_DISC_GLIMMER)
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true)
-                .spacing(128))
+                .spacing(32))
             .baseWave(w -> w
                 .maxWaveTime(3600)
                 .setupTime(200)
@@ -427,7 +432,8 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .settings(c -> c
                 .tier(WorldTier.PINNACLE)
                 .size(NormalGateway.Size.LARGE)
-                .color(0xED7014))
+                .color(0xED7014)
+                .soundtrack(Ench.Sounds.MUSIC_DISC_QUANTA))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true)
@@ -464,6 +470,15 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .addModifier(AttributeModifier.create(Attributes.ARMOR_TOUGHNESS, Operation.ADD_VALUE, 25F))
                     .addModifier(AttributeModifier.create(ALObjects.Attributes.PROJECTILE_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.55F))
                     .addModifier(GearSetModifier.create(Apotheosis.loc("pinnacle/ranged/enchanted_netherite")))
+                    .addModifier(AffixWaveModifier.create())
+                    .build())
+                .entity(StandardWaveEntity
+                    .builder(EntityType.EVOKER)
+                    .count(2)
+                    .addModifier(AttributeModifier.create(Attributes.ARMOR_TOUGHNESS, Operation.ADD_VALUE, 25F))
+                    .addModifier(AttributeModifier.create(ALObjects.Attributes.PROJECTILE_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.55F))
+                    .addModifier(GearSetModifier.create(Apotheosis.loc("pinnacle/ranged/enchanted_netherite")))
+                    .addModifier(AffixWaveModifier.create())
                     .build())
                 .entity(StandardWaveEntity
                     .builder(EntityType.RABBIT)
@@ -471,6 +486,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .finalizeSpawn(false)
                     .addModifier(AttributeModifier.create(Attributes.MAX_HEALTH, Operation.ADD_VALUE, 15F))
                     .addModifier(GearSetModifier.create(Apotheosis.loc("pinnacle/enchanted_netherite")))
+                    .addModifier(AffixWaveModifier.create())
                     .addModifier(AffixWaveModifier.create())
                     .desc(Apotheosis.langKey("wave_entity", "killer_bunny"))
                     .nbt(c -> {
@@ -480,14 +496,14 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                     .build())
                 .reward(new ExperienceReward(2000, 100))
                 .modifier(LootTableModifier.createEmpty())
-                .modifier(AttributeModifier.create(Attributes.MAX_HEALTH, Operation.ADD_MULTIPLIED_TOTAL, 0.30F))
-                .modifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_VALUE, 12F))
+                .modifier(AttributeModifier.create(Attributes.MAX_HEALTH, Operation.ADD_MULTIPLIED_TOTAL, 1.30F))
+                .modifier(AttributeModifier.create(Attributes.ARMOR, Operation.ADD_VALUE, 30F))
                 .modifier(AttributeModifier.create(Attributes.ATTACK_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.35F))
                 .modifier(AttributeModifier.create(ALObjects.Attributes.PROJECTILE_DAMAGE, Operation.ADD_MULTIPLIED_TOTAL, 0.35F))
                 .modifier(AttributeModifier.create(ALObjects.Attributes.ARMOR_SHRED, Operation.ADD_VALUE, 0.45F))
                 .modifier(AttributeModifier.create(ALObjects.Attributes.PROT_SHRED, Operation.ADD_VALUE, 0.35F))
                 .modifier(AttributeModifier.create(Attributes.KNOCKBACK_RESISTANCE, Operation.ADD_VALUE, 0.30F))
-                .modifier(AttributeModifier.create(Attributes.MOVEMENT_SPEED, Operation.ADD_MULTIPLIED_TOTAL, 0.10F)))
+                .modifier(AttributeModifier.create(Attributes.MOVEMENT_SPEED, Operation.ADD_MULTIPLIED_TOTAL, 0.15F)))
             .wave(w -> w
                 .maxWaveTime(6400)
                 .setupTime(240)

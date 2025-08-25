@@ -1,6 +1,7 @@
 {
     "type": "apotheosis:tiered",
     "settings": {
+        "soundtrack": "apotheosis:music_disc_shimmer",
         "tier": "frontier",
         "size": "small",
         "color": "#33FF33"

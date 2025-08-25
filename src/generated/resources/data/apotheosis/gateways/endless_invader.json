@@ -1,5 +1,6 @@
 {
     "type": "gateways:endless",
+    "soundtrack": "apotheosis:music_disc_glimmer",
     "size": "large",
     "color": "rainbow",
     "base_wave": {
@@ -177,7 +178,7 @@
     "rules": {
         "lives": 3,
         "requires_nearby_player": true,
-        "spacing": 128.0
+        "spacing": 32.0
     },
     "boss_event": {
         "fog": false,

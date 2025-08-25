@@ -1,6 +1,7 @@
 {
     "type": "apotheosis:tiered",
     "settings": {
+        "soundtrack": "apotheosis:music_disc_flash",
         "tier": "ascent",
         "size": "medium",
         "color": "#5555FF"

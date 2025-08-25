@@ -79,7 +79,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
     }
 
     @Override
-    public Holder<SoundEvent> getSoundtrack() {
+    public Holder<SoundEvent> soundtrack() {
         return this.settings.soundtrack();
     }
 

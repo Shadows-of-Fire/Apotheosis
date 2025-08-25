@@ -1,6 +1,7 @@
 {
     "type": "apotheosis:tiered",
     "settings": {
+        "soundtrack": "apothic_enchanting:music_disc.quanta",
         "tier": "pinnacle",
         "size": "large",
         "color": "#ED7014"
@@ -98,6 +99,37 @@
                         {
                             "type": "gateways:gear_set",
                             "gear_set": "apotheosis:pinnacle/ranged/enchanted_netherite"
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        }
+                    ]
+                },
+                {
+                    "type": "gateways:standard",
+                    "count": 2,
+                    "entity": "minecraft:evoker",
+                    "modifiers": [
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.armor_toughness",
+                            "operation": "add_value",
+                            "value": 25.0
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "apothic_attributes:projectile_damage",
+                            "operation": "add_multiplied_total",
+                            "value": 0.55
+                        },
+                        {
+                            "type": "gateways:gear_set",
+                            "gear_set": "apotheosis:pinnacle/ranged/enchanted_netherite"
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
                         }
                     ]
                 },
@@ -124,6 +156,10 @@
                         {
                             "type": "apotheosis:affix",
                             "affix_chance": 1.0
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
                         }
                     ]
                 }
@@ -137,13 +173,13 @@
                     "type": "gateways:attribute",
                     "attribute": "minecraft:generic.max_health",
                     "operation": "add_multiplied_total",
-                    "value": 0.3
+                    "value": 1.3
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:generic.armor",
                     "operation": "add_value",
-                    "value": 12.0
+                    "value": 30.0
                 },
                 {
                     "type": "gateways:attribute",
@@ -179,7 +215,7 @@
                     "type": "gateways:attribute",
                     "attribute": "minecraft:generic.movement_speed",
                     "operation": "add_multiplied_total",
-                    "value": 0.1
+                    "value": 0.15
                 }
             ],
             "rewards": [
