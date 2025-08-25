@@ -5,6 +5,8 @@ import java.util.List;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apothic_attributes.api.AttributeHelper;
 import dev.shadowsoffire.gateways.client.GatewaysClient;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
@@ -38,6 +40,11 @@ public class TieredGateClient {
 
         int waveIdx = PlaceboClient.getTooltipScrollIndex(gate.getNumWaves());
         Wave wave = gate.getWave(waveIdx);
+
+        WorldTier tier = gate.settings().tier();
+        if (WorldTier.getTier(Minecraft.getInstance().player) != tier) {
+            tooltips.add(Apotheosis.lang("tooltip", "requires_world_tier", tier.toComponent()).withStyle(ChatFormatting.RED));
+        }
 
         if (Screen.hasShiftDown()) {
             comp = Component.translatable("tooltip.gateways.wave", waveIdx + 1, gate.getNumWaves()).withStyle(ChatFormatting.GRAY);

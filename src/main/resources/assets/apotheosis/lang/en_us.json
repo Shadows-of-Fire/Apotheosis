@@ -726,6 +726,7 @@
     "reward.apotheosis.netherite_smithing_template": "Netherite Smiting Template",
     "error.apotheosis.gate_tier_incorrect": "This Gateway can only be opened in World Tier: %s",
     "modifier.apotheosis.affix": "Receives an Affix Item",
+    "tooltip.apotheosis.requires_world_tier": "Requires World Tier: %s",
 
     "wave_entity.apotheosis.affixed_armored_zombie": "Affixed Armored Zombie",
     "wave_entity.apotheosis.affixed_armored_husk": "Affixed Armored Husk",
