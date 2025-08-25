@@ -1,3 +1,47 @@
+## 8.4.0
+Welcome to Apotheosis 8.4.0 - Gateways Through the Tiers!
+
+![](https://i.imgur.com/wPntUEo.jpeg)
+
+### Features
+#### Gateways
+This update adds compatibility with [Gateways to Eternity](https://www.curseforge.com/minecraft/mc-mods/gateways-to-eternity) to provide more progression through Apotheosis' World Tiers.
+
+Each tier above Haven now has a corresponding Gateway, intended to be completed when you are nearing the end of that World Tier. These gateways will help you complete the requirements needed to progress to the next tier.
+
+Once you reach Pinnacle, the tier-end Gateway will reward a new gate pearl, allowing you to access the Endless Gateway of Apothic Invaders.
+
+This Gateway is an exceptional challenge, though it may prove to be worthwhile. Completing Wave 100 of this gateway will reward you with the Sigil of Supremacy, which allows you to supercharge any affix item far beyond it's normal limits.
+
+#### Music
+In addition to the three music discs added to Apothic Enchanting, Apotheosis now has three more music discs of its own.
+* Renren - Flash
+* Caner Crebes - Glimmer
+* Chamberlain Kaifry - Shimmer
+
+#### Paintings
+Apotheosis now adds custom paintings!
+* Faellynna - Gems
+* Astrel - Craig the Eternal
+* Faellynna - The Tower
+* Faellynna - Apothic Enchanting
+* Faellynna - A View Beyond
+
+#### Other Content
+The following features have been added:
+* The amount of loot provided by the Festive affix is now data-driven.
+* Level-Independent affixes (those which do not change when upgraded) can no longer be upgraded in the Augmenting Table.
+* Added a loot function for reforging items (`apotheosis:reforge_item`).
+* Added a config to disable manual world tier changes. This can be used by pack authors who want to control the progression more tightly.
+* Added the `apotheosis:has_world_tier` loot condition.
+* Wandering Traders will now sell affixed items once more.
+* PrincessStellar, t0piy: Updated Brazilian Translation
+
+### Bugfixes
+* Fixed extra gem bonuses being applied twice (which led to log errors).
+* Fixed the Salvaging Table always giving the best random outputs when fed through automation.
+* Fixed the Equipment Comparison keybind erroring when unbound.
+
 ## 8.3.6
 * Fixed `GuiGraphicsAccessor` not being in the client package.
 * Fixed the Sigil of Malice not working when shift-clicking the output item.
