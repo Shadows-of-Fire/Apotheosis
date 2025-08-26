@@ -1,0 +1,187 @@
+{
+    "type": "gateways:endless",
+    "soundtrack": "apotheosis:music_disc_glimmer",
+    "size": "large",
+    "color": "rainbow",
+    "base_wave": {
+        "max_wave_time": 3600,
+        "setup_time": 200,
+        "entities": [
+            {
+                "type": "apotheosis:true_random_invader",
+                "count": 3
+            }
+        ],
+        "modifiers": [
+            {
+                "type": "gateways:attribute",
+                "attribute": "apothic_attributes:armor_shred",
+                "operation": "add_value",
+                "value": 0.4
+            },
+            {
+                "type": "gateways:attribute",
+                "attribute": "apothic_attributes:prot_shred",
+                "operation": "add_value",
+                "value": 0.2
+            },
+            {
+                "type": "gateways:attribute",
+                "attribute": "minecraft:generic.movement_speed",
+                "operation": "add_multiplied_total",
+                "value": 0.02
+            }
+        ],
+        "rewards": [
+            {
+                "type": "gateways:counted",
+                "count": 1,
+                "reward": {
+                    "type": "apotheosis:affix_item",
+                    "rarities": [
+                        "apotheosis:mythic"
+                    ]
+                }
+            },
+            {
+                "type": "gateways:counted",
+                "count": 3,
+                "reward": {
+                    "type": "apotheosis:true_random_gem",
+                    "purities": [
+                        "perfect"
+                    ]
+                }
+            },
+            {
+                "type": "gateways:experience",
+                "experience": 25000,
+                "orb_size": 1000
+            }
+        ]
+    },
+    "modifiers": [
+        {
+            "application_mode": {
+                "type": "gateways:after_every_n_waves",
+                "max": 100,
+                "waves": 3
+            },
+            "max_wave_time": -25,
+            "setup_time": -5,
+            "entities": [
+                {
+                    "type": "apotheosis:true_random_invader"
+                }
+            ],
+            "modifiers": [
+                {
+                    "type": "gateways:loot_table",
+                    "loot_table": "minecraft:empty"
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.max_health",
+                    "operation": "add_multiplied_total",
+                    "value": 0.25
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.armor",
+                    "operation": "add_multiplied_total",
+                    "value": 0.1
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.armor_toughness",
+                    "operation": "add_multiplied_total",
+                    "value": 0.03
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.attack_damage",
+                    "operation": "add_multiplied_total",
+                    "value": 0.25
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:projectile_damage",
+                    "operation": "add_multiplied_total",
+                    "value": 0.25
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:armor_shred",
+                    "operation": "add_multiplied_total",
+                    "value": 0.08
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:prot_shred",
+                    "operation": "add_multiplied_total",
+                    "value": 0.08
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.knockback_resistance",
+                    "operation": "add_multiplied_total",
+                    "value": 0.05
+                }
+            ],
+            "rewards": [
+                {
+                    "type": "gateways:stack",
+                    "stack": {
+                        "count": 16,
+                        "id": "apotheosis:mythic_material"
+                    }
+                },
+                {
+                    "type": "gateways:stack",
+                    "stack": {
+                        "count": 16,
+                        "id": "apotheosis:gem_dust"
+                    }
+                },
+                {
+                    "type": "gateways:experience",
+                    "experience": 25000,
+                    "orb_size": 1000
+                }
+            ]
+        },
+        {
+            "application_mode": {
+                "type": "gateways:only_on_every_n_waves",
+                "waves": 100
+            },
+            "modifiers": [
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.max_health",
+                    "operation": "add_multiplied_total",
+                    "value": 1.0
+                }
+            ],
+            "rewards": [
+                {
+                    "type": "gateways:stack",
+                    "stack": {
+                        "count": 1,
+                        "id": "apotheosis:sigil_of_supremacy"
+                    }
+                }
+            ]
+        }
+    ],
+    "spawn_algorithm": "gateways:inward_spiral",
+    "rules": {
+        "lives": 3,
+        "requires_nearby_player": true,
+        "spacing": 32.0
+    },
+    "boss_event": {
+        "fog": false,
+        "mode": "name_plate"
+    }
+}

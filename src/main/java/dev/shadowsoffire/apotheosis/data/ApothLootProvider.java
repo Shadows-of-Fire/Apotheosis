@@ -7,10 +7,10 @@ import java.util.function.BiConsumer;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.loot.AffixLootPoolEntry;
-import dev.shadowsoffire.apotheosis.loot.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.loot.entry.AffixLootPoolEntry;
+import dev.shadowsoffire.apotheosis.loot.entry.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
@@ -39,6 +39,7 @@ import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.entries.TagEntry;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -111,7 +112,8 @@ public class ApothLootProvider extends LootTableProvider {
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(GemLootPoolEntry.builder(Set.of(), Set.of()).setWeight(45).setQuality(1))
                         .add(item(Apoth.Items.SIGIL_OF_MALICE.value(), 1, 1).setWeight(30).setQuality(1))
-                        .add(EmptyLootItem.emptyItem().setWeight(25))));
+                        .add(TagEntry.expandTag(Apoth.Tags.BOSS_MUSIC_DISCS).setWeight(5))
+                        .add(EmptyLootItem.emptyItem().setWeight(20))));
 
             DynamicHolder<LootRarity> rare = RarityRegistry.INSTANCE.holder(Apotheosis.loc("rare"));
             DynamicHolder<LootRarity> epic = RarityRegistry.INSTANCE.holder(Apotheosis.loc("epic"));

@@ -1,0 +1,442 @@
+{
+    "type": "apotheosis:tiered",
+    "settings": {
+        "soundtrack": "apothic_enchanting:music_disc.quanta",
+        "tier": "pinnacle",
+        "size": "large",
+        "color": "#ED7014"
+    },
+    "waves": [
+        {
+            "max_wave_time": 3000,
+            "setup_time": 100,
+            "entities": [
+                {
+                    "type": "gateways:standard",
+                    "count": 3,
+                    "desc": "entity.minecraft.giant",
+                    "entity": "minecraft:zombie",
+                    "nbt": {
+                        "CustomName": {
+                            "translate": "entity.minecraft.giant"
+                        }
+                    },
+                    "modifiers": [
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.max_health",
+                            "operation": "add_value",
+                            "value": 80.0
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.armor",
+                            "operation": "add_value",
+                            "value": 12.0
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.attack_damage",
+                            "operation": "add_multiplied_total",
+                            "value": 0.55
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.scale",
+                            "operation": "add_multiplied_total",
+                            "value": 5.0
+                        },
+                        {
+                            "type": "gateways:mob_effect",
+                            "effect": {
+                                "effect": "minecraft:fire_resistance"
+                            }
+                        },
+                        {
+                            "type": "gateways:gear_set",
+                            "gear_set": "apotheosis:pinnacle/enchanted_netherite"
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        },
+                        {
+                            "type": "gateways:loot_table",
+                            "loot_table": "minecraft:empty"
+                        }
+                    ]
+                }
+            ],
+            "rewards": [
+                {
+                    "type": "gateways:experience",
+                    "experience": 2000,
+                    "orb_size": 100
+                }
+            ]
+        },
+        {
+            "max_wave_time": 3200,
+            "setup_time": 200,
+            "entities": [
+                {
+                    "type": "gateways:standard",
+                    "count": 2,
+                    "entity": "minecraft:illusioner",
+                    "modifiers": [
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.armor_toughness",
+                            "operation": "add_value",
+                            "value": 25.0
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "apothic_attributes:projectile_damage",
+                            "operation": "add_multiplied_total",
+                            "value": 0.55
+                        },
+                        {
+                            "type": "gateways:gear_set",
+                            "gear_set": "apotheosis:pinnacle/ranged/enchanted_netherite"
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        }
+                    ]
+                },
+                {
+                    "type": "gateways:standard",
+                    "count": 2,
+                    "entity": "minecraft:evoker",
+                    "modifiers": [
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.armor_toughness",
+                            "operation": "add_value",
+                            "value": 25.0
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "apothic_attributes:projectile_damage",
+                            "operation": "add_multiplied_total",
+                            "value": 0.55
+                        },
+                        {
+                            "type": "gateways:gear_set",
+                            "gear_set": "apotheosis:pinnacle/ranged/enchanted_netherite"
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        }
+                    ]
+                },
+                {
+                    "type": "gateways:standard",
+                    "count": 3,
+                    "desc": "wave_entity.apotheosis.killer_bunny",
+                    "entity": "minecraft:rabbit",
+                    "finalize_spawn": false,
+                    "nbt": {
+                        "RabbitType": 99
+                    },
+                    "modifiers": [
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.max_health",
+                            "operation": "add_value",
+                            "value": 15.0
+                        },
+                        {
+                            "type": "gateways:gear_set",
+                            "gear_set": "apotheosis:pinnacle/enchanted_netherite"
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        }
+                    ]
+                }
+            ],
+            "modifiers": [
+                {
+                    "type": "gateways:loot_table",
+                    "loot_table": "minecraft:empty"
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.max_health",
+                    "operation": "add_multiplied_total",
+                    "value": 1.3
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.armor",
+                    "operation": "add_value",
+                    "value": 30.0
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.attack_damage",
+                    "operation": "add_multiplied_total",
+                    "value": 0.35
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:projectile_damage",
+                    "operation": "add_multiplied_total",
+                    "value": 0.35
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:armor_shred",
+                    "operation": "add_value",
+                    "value": 0.45
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:prot_shred",
+                    "operation": "add_value",
+                    "value": 0.35
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.knockback_resistance",
+                    "operation": "add_value",
+                    "value": 0.3
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.movement_speed",
+                    "operation": "add_multiplied_total",
+                    "value": 0.15
+                }
+            ],
+            "rewards": [
+                {
+                    "type": "gateways:experience",
+                    "experience": 2000,
+                    "orb_size": 100
+                }
+            ]
+        },
+        {
+            "max_wave_time": 6400,
+            "setup_time": 240,
+            "entities": [
+                {
+                    "type": "apotheosis:invader",
+                    "count": 3
+                },
+                {
+                    "type": "gateways:standard",
+                    "count": 2,
+                    "entity": "minecraft:vex",
+                    "modifiers": [
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.armor",
+                            "operation": "add_value",
+                            "value": 30.0
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.armor_toughness",
+                            "operation": "add_value",
+                            "value": 20.0
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        }
+                    ]
+                }
+            ],
+            "modifiers": [
+                {
+                    "type": "gateways:loot_table",
+                    "loot_table": "minecraft:empty"
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.max_health",
+                    "operation": "add_multiplied_total",
+                    "value": 0.35
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.armor",
+                    "operation": "add_value",
+                    "value": 15.0
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.attack_damage",
+                    "operation": "add_multiplied_total",
+                    "value": 0.4
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:projectile_damage",
+                    "operation": "add_multiplied_total",
+                    "value": 0.4
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:armor_shred",
+                    "operation": "add_value",
+                    "value": 0.5
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:prot_shred",
+                    "operation": "add_value",
+                    "value": 0.5
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.knockback_resistance",
+                    "operation": "add_value",
+                    "value": 0.08
+                }
+            ],
+            "rewards": [
+                {
+                    "type": "gateways:experience",
+                    "experience": 2500,
+                    "orb_size": 125
+                }
+            ]
+        },
+        {
+            "max_wave_time": 2000,
+            "setup_time": 300,
+            "entities": [
+                {
+                    "type": "apotheosis:elite",
+                    "base_entity": {
+                        "type": "gateways:standard",
+                        "entity": "minecraft:goat",
+                        "finalize_spawn": false,
+                        "modifiers": [
+                            {
+                                "type": "gateways:attribute",
+                                "attribute": "minecraft:generic.max_health",
+                                "operation": "add_multiplied_total",
+                                "value": 5.0
+                            },
+                            {
+                                "type": "gateways:attribute",
+                                "attribute": "minecraft:generic.armor",
+                                "operation": "add_value",
+                                "value": 50.0
+                            },
+                            {
+                                "type": "gateways:attribute",
+                                "attribute": "minecraft:generic.armor_toughness",
+                                "operation": "add_value",
+                                "value": 25.0
+                            },
+                            {
+                                "type": "gateways:attribute",
+                                "attribute": "minecraft:generic.attack_damage",
+                                "operation": "add_multiplied_total",
+                                "value": 0.5
+                            },
+                            {
+                                "type": "gateways:attribute",
+                                "attribute": "apothic_attributes:projectile_damage",
+                                "operation": "add_multiplied_total",
+                                "value": 0.5
+                            },
+                            {
+                                "type": "gateways:attribute",
+                                "attribute": "apothic_attributes:armor_shred",
+                                "operation": "add_value",
+                                "value": 0.75
+                            },
+                            {
+                                "type": "gateways:attribute",
+                                "attribute": "apothic_attributes:prot_shred",
+                                "operation": "add_value",
+                                "value": 0.5
+                            },
+                            {
+                                "type": "gateways:attribute",
+                                "attribute": "minecraft:generic.knockback_resistance",
+                                "operation": "add_value",
+                                "value": 0.5
+                            },
+                            {
+                                "type": "gateways:attribute",
+                                "attribute": "minecraft:generic.movement_speed",
+                                "operation": "add_multiplied_total",
+                                "value": 0.2
+                            }
+                        ]
+                    },
+                    "desc": "elite.apotheosis.craig",
+                    "elite": "apotheosis:overworld/craig"
+                }
+            ]
+        }
+    ],
+    "rewards": [
+        {
+            "type": "gateways:counted",
+            "count": 5,
+            "reward": {
+                "type": "apotheosis:affix_item",
+                "rarities": [
+                    "apotheosis:mythic"
+                ]
+            }
+        },
+        {
+            "type": "gateways:counted",
+            "count": 10,
+            "reward": {
+                "type": "apotheosis:gem",
+                "purities": [
+                    "perfect"
+                ]
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 64,
+                "id": "apotheosis:gem_dust"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 64,
+                "id": "apotheosis:mythic_material"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "components": {
+                    "gateways:gateway": "apotheosis:endless_invader"
+                },
+                "count": 1,
+                "id": "gateways:gate_pearl"
+            }
+        }
+    ],
+    "rules": {
+        "leash_range": 48.0,
+        "lives": 3,
+        "requires_nearby_player": true,
+        "spawn_range": 24.0
+    }
+}

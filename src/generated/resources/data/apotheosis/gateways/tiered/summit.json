@@ -1,0 +1,381 @@
+{
+    "type": "apotheosis:tiered",
+    "settings": {
+        "soundtrack": "apothic_enchanting:music_disc.arcana",
+        "tier": "summit",
+        "size": "medium",
+        "color": "#BB00BB"
+    },
+    "waves": [
+        {
+            "max_wave_time": 3000,
+            "setup_time": 100,
+            "entities": [
+                {
+                    "type": "gateways:standard",
+                    "count": 3,
+                    "entity": "minecraft:ghast",
+                    "modifiers": [
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.max_health",
+                            "operation": "add_value",
+                            "value": 35.0
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.armor_toughness",
+                            "operation": "add_value",
+                            "value": 10.0
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.armor",
+                            "operation": "add_value",
+                            "value": 12.0
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "apothic_attributes:projectile_damage",
+                            "operation": "add_multiplied_total",
+                            "value": 0.55
+                        }
+                    ]
+                },
+                {
+                    "type": "gateways:standard",
+                    "count": 3,
+                    "desc": "wave_entity.apotheosis.affixed_armored_zombified_piglin",
+                    "entity": "minecraft:zombified_piglin",
+                    "finalize_spawn": false,
+                    "modifiers": [
+                        {
+                            "type": "gateways:gear_set",
+                            "gear_set": "apotheosis:summit/enchanted_diamond"
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        }
+                    ]
+                },
+                {
+                    "type": "gateways:standard",
+                    "count": 2,
+                    "desc": "wave_entity.apotheosis.affixed_armored_wither_skeleton",
+                    "entity": "minecraft:wither_skeleton",
+                    "finalize_spawn": false,
+                    "modifiers": [
+                        {
+                            "type": "gateways:gear_set",
+                            "gear_set": "apotheosis:summit/ranged/enchanted_iron"
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        }
+                    ]
+                }
+            ],
+            "modifiers": [
+                {
+                    "type": "gateways:loot_table",
+                    "loot_table": "minecraft:empty"
+                }
+            ],
+            "rewards": [
+                {
+                    "type": "gateways:experience",
+                    "experience": 1050,
+                    "orb_size": 50
+                }
+            ]
+        },
+        {
+            "max_wave_time": 3200,
+            "setup_time": 200,
+            "entities": [
+                {
+                    "type": "gateways:standard",
+                    "count": 2,
+                    "desc": "wave_entity.apotheosis.ghast_rider",
+                    "entity": "minecraft:ghast",
+                    "modifiers": [
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.armor",
+                            "operation": "add_value",
+                            "value": 12.0
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "apothic_attributes:projectile_damage",
+                            "operation": "add_multiplied_total",
+                            "value": 0.55
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.scale",
+                            "operation": "add_multiplied_total",
+                            "value": -0.75
+                        },
+                        {
+                            "type": "apotheosis:passenger",
+                            "entity": {
+                                "type": "gateways:standard",
+                                "entity": "minecraft:stray",
+                                "finalize_spawn": false,
+                                "modifiers": [
+                                    {
+                                        "type": "gateways:gear_set",
+                                        "gear_set": "apotheosis:summit/ranged/enchanted_iron"
+                                    },
+                                    {
+                                        "type": "apotheosis:affix",
+                                        "affix_chance": 1.0
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "gateways:standard",
+                    "count": 3,
+                    "desc": "wave_entity.apotheosis.affixed_armored_piglin_brute",
+                    "entity": "minecraft:piglin_brute",
+                    "finalize_spawn": false,
+                    "nbt": {
+                        "IsImmuneToZombification": 1
+                    },
+                    "modifiers": [
+                        {
+                            "type": "gateways:gear_set",
+                            "gear_set": "apotheosis:summit/netherite"
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        }
+                    ]
+                },
+                {
+                    "type": "gateways:standard",
+                    "count": 2,
+                    "desc": "wave_entity.apotheosis.affixed_armored_stray",
+                    "entity": "minecraft:stray",
+                    "finalize_spawn": false,
+                    "modifiers": [
+                        {
+                            "type": "gateways:gear_set",
+                            "gear_set": "apotheosis:summit/ranged/enchanted_iron"
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        }
+                    ]
+                }
+            ],
+            "modifiers": [
+                {
+                    "type": "gateways:loot_table",
+                    "loot_table": "minecraft:empty"
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.max_health",
+                    "operation": "add_multiplied_total",
+                    "value": 0.2
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.armor",
+                    "operation": "add_value",
+                    "value": 4.0
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.attack_damage",
+                    "operation": "add_multiplied_total",
+                    "value": 0.25
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:projectile_damage",
+                    "operation": "add_multiplied_total",
+                    "value": 0.25
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:armor_shred",
+                    "operation": "add_value",
+                    "value": 0.35
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.knockback_resistance",
+                    "operation": "add_value",
+                    "value": 0.3
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.movement_speed",
+                    "operation": "add_multiplied_total",
+                    "value": 0.1
+                }
+            ],
+            "rewards": [
+                {
+                    "type": "gateways:experience",
+                    "experience": 1250,
+                    "orb_size": 50
+                }
+            ]
+        },
+        {
+            "max_wave_time": 6400,
+            "setup_time": 240,
+            "entities": [
+                {
+                    "type": "apotheosis:invader",
+                    "count": 3
+                },
+                {
+                    "type": "gateways:standard",
+                    "count": 5,
+                    "desc": "wave_entity.apotheosis.bastion_guard",
+                    "entity": "minecraft:piglin_brute",
+                    "finalize_spawn": false,
+                    "nbt": {
+                        "IsImmuneToZombification": 1
+                    },
+                    "modifiers": [
+                        {
+                            "type": "gateways:gear_set",
+                            "gear_set": "apotheosis:gateway_only/bastion_guard"
+                        },
+                        {
+                            "type": "gateways:attribute",
+                            "attribute": "minecraft:generic.armor",
+                            "operation": "add_value",
+                            "value": 20.0
+                        },
+                        {
+                            "type": "apotheosis:affix",
+                            "affix_chance": 1.0
+                        }
+                    ]
+                }
+            ],
+            "modifiers": [
+                {
+                    "type": "gateways:loot_table",
+                    "loot_table": "minecraft:empty"
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.max_health",
+                    "operation": "add_multiplied_total",
+                    "value": 0.25
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.armor",
+                    "operation": "add_value",
+                    "value": 5.0
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.attack_damage",
+                    "operation": "add_multiplied_total",
+                    "value": 0.15
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:projectile_damage",
+                    "operation": "add_multiplied_total",
+                    "value": 0.25
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "apothic_attributes:armor_shred",
+                    "operation": "add_value",
+                    "value": 0.4
+                },
+                {
+                    "type": "gateways:attribute",
+                    "attribute": "minecraft:generic.knockback_resistance",
+                    "operation": "add_value",
+                    "value": 0.08
+                }
+            ],
+            "rewards": [
+                {
+                    "type": "gateways:experience",
+                    "experience": 1550,
+                    "orb_size": 50
+                }
+            ]
+        }
+    ],
+    "rewards": [
+        {
+            "type": "gateways:counted",
+            "count": 3,
+            "reward": {
+                "type": "apotheosis:affix_item",
+                "rarities": [
+                    "apotheosis:epic",
+                    "apotheosis:mythic"
+                ]
+            }
+        },
+        {
+            "type": "gateways:counted",
+            "count": 5,
+            "reward": {
+                "type": "apotheosis:gem",
+                "purities": [
+                    "normal",
+                    "flawless"
+                ]
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 48,
+                "id": "apotheosis:gem_dust"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 24,
+                "id": "apotheosis:epic_material"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "stack": {
+                "count": 6,
+                "id": "apotheosis:sigil_of_socketing"
+            }
+        },
+        {
+            "type": "gateways:stack",
+            "desc": "reward.apotheosis.netherite_smithing_template",
+            "stack": {
+                "count": 1,
+                "id": "minecraft:netherite_upgrade_smithing_template"
+            }
+        }
+    ],
+    "rules": {
+        "leash_range": 48.0,
+        "lives": 3,
+        "requires_nearby_player": true,
+        "spawn_range": 24.0
+    }
+}

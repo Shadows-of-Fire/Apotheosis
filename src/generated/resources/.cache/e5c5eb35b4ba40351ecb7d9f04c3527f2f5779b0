@@ -1,4 +1,9 @@
-// 1.21.1	2025-04-09T21:42:09.2735305	Advancements
+// 1.21.1	2025-08-25T01:03:20.7830901	Advancements
+0bca8c6e2df3e48fedf139501916cc1c7560b09c data/apotheosis/advancement/gateways/ascent.json
+9cc6fa9f9d59aabc89cd00d71db59767f765c178 data/apotheosis/advancement/gateways/frontier.json
+355fa0edc1ccb27898a2b68cc041a5d37fa6f9c8 data/apotheosis/advancement/gateways/pinnacle.json
+e42976770fa7896976b5c9025d7990a680fdf34a data/apotheosis/advancement/gateways/sigil_of_supremacy.json
+45e66a6abfb6ae2130f0fe1b09e31e32aaf23241 data/apotheosis/advancement/gateways/summit.json
 e8ebe401542935754e76d6d4f01dfda4d2c12e5b data/apotheosis/advancement/progression/ascent.json
 187df157bee844ced1a8e3bb5e77d6f463007f58 data/apotheosis/advancement/progression/frontier.json
 73b87afd23a6f143166d097c150826acf2a50108 data/apotheosis/advancement/progression/haven.json

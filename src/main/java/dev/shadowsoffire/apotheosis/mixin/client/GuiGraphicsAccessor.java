@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.mixin;
+package dev.shadowsoffire.apotheosis.mixin.client;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

@@ -1,0 +1,40 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "gateways"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "B": {
+            "tag": "c:bones"
+        },
+        "E": {
+            "tag": "c:ender_pearls"
+        },
+        "I": {
+            "tag": "c:ingots/iron"
+        },
+        "R": {
+            "item": "minecraft:rotten_flesh"
+        },
+        "S": {
+            "item": "minecraft:spider_eye"
+        }
+    },
+    "pattern": [
+        "SIS",
+        "BEB",
+        "RRR"
+    ],
+    "result": {
+        "components": {
+            "gateways:gateway": "apotheosis:tiered/frontier"
+        },
+        "count": 1,
+        "id": "gateways:gate_pearl"
+    }
+}

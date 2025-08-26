@@ -33,6 +33,8 @@
     "button.apotheosis.already_activated": "This World Tier is currently active",
     "button.apotheosis.activate": "Activate",
     "button.apotheosis.activated": "Activated",
+    "button.apotheosis.disabled": "Disabled",
+    "button.apotheosis.tier_changes_disabled": "Manual World Tier changes are disabled in the config.",
     "button.apotheosis.show_detailed_info": "Detailed Info",
     "button.apotheosis.show_detailed_info.desc": "View Mob Buffs, Player Buffs, and Rarities",
     "button.apotheosis.return": "X",
@@ -62,7 +64,8 @@
     
     "tutorial.apotheosis.world_tier.activate.title": "Activating World Tiers",
     "tutorial.apotheosis.world_tier.activate.desc": "This button allows you to activate the selected world tier, if it is not already active.\n\nClicking \"Done\" will automatically activate World Tier: Haven. For all other World Tiers, you need to return here and activate them yourself.",
-    
+    "tutorial.apotheosis.world_tier.activate_disabled.desc": "Normally, this button allows you to activate the selected world tier.\n\nHowever, in this modpack, World Tiers are automatically activated and cannot be manually changed. You can still view the details of each World Tier, but you cannot activate or deactivate them.",
+
     "text.apotheosis.tier_info": "World Tier Information",
     "text.apotheosis.monster_augments": "Monster Augments",
     "text.apotheosis.player_augments": "Player Augments",
@@ -293,7 +296,7 @@
     "affix.apotheosis:ranged/mob_effect/acidic": "Acidic",
     "affix.apotheosis:ranged/mob_effect/acidic.suffix": "of Corrosion",
 
-    "affix.apotheosis:melee/mob_effect/bloodletting": "Caustic",
+    "affix.apotheosis:melee/mob_effect/bloodletting": "Bloodletting",
     "affix.apotheosis:melee/mob_effect/bloodletting.suffix": "of the Slayer",
 
     "affix.apotheosis:melee/mob_effect/caustic": "Caustic",
@@ -571,6 +574,9 @@
     "item.apotheosis.sigil_of_malice": "Sigil of Malice",
     "item.apotheosis.sigil_of_malice.desc": "Applies Touch of Malice to an Affix Item",
 
+    "item.apotheosis.sigil_of_supremacy": "Sigil of Supremacy",
+    "item.apotheosis.sigil_of_supremacy.desc": "Overcharges every Affix on an Affix Item",
+
     "item.apotheosis.iron_upgrade_smithing_template": "Smithing Template",
     "upgrade.apotheosis.iron": "Iron Upgrade ",
     "item.apotheosis.iron_upgrade_smithing_template.applies_to": "Stone and Chain Equipment",
@@ -702,12 +708,50 @@
     "death.attack.apotheosis:execute": "%s was executed.",
     "death.attack.apotheosis:execute.player": "%s was executed by %s.",
 
+    "disconnect.apotheosis.tier_changes_disabled": "Manual world tier changes are disabled in the config.",
+
+    "elite.apotheosis.craig": "Craig the Eternal",
+
     "comment_id": "/Adventure + Gateways Compat",
 
-    "misc.apotheosis.invader": "%s Apothic Invader",
     "misc.apotheosis.random": "Random",
-    "reward.apotheosis.affix": "%s Affix Item",
-    "reward.apotheosis.random_affix": "Random Affix Item",
+    "wave_entity.apotheosis.invader": "%s Apothic Invader",
+    "wave_entity.apotheosis.elite": "Apothic Elite - %s",
+    "wave_entity.apotheosis.true_random_invader": "Truly Random Apothic Invader",
+    "reward.apotheosis.affix_item": "Affix Item (%s)",
+    "reward.apotheosis.random_affix_item": "Affix Item (Random)",
+    "reward.apotheosis.gem": "Apothic Gem (%s)",
+    "reward.apotheosis.random_gem": "Apothic Gem (Random)",
+    "reward.apotheosis.true_random_gem": "Truly Random Apothic Gem",
+    "reward.apotheosis.netherite_smithing_template": "Netherite Smiting Template",
+    "error.apotheosis.gate_tier_incorrect": "This Gateway can only be opened in World Tier: %s",
+    "modifier.apotheosis.affix": "Receives an Affix Item",
+    "tooltip.apotheosis.requires_world_tier": "Requires World Tier: %s",
+
+    "wave_entity.apotheosis.affixed_armored_zombie": "Affixed Armored Zombie",
+    "wave_entity.apotheosis.affixed_armored_husk": "Affixed Armored Husk",
+    "wave_entity.apotheosis.affixed_armored_skeleton": "Affixed Armored Skeleton",
+    "wave_entity.apotheosis.affixed_armored_stray": "Affixed Armored Stray",
+    "wave_entity.apotheosis.affixed_polar_bear": "Affixed Polar Bear",
+    "wave_entity.apotheosis.affixed_wolf": "Affixed Wolf",
+    "wave_entity.apotheosis.affixed_armored_bogged": "Affixed Armored Bogged",
+    "wave_entity.apotheosis.vampiric_phantom": "Vampiric Phantom",
+    "wave_entity.apotheosis.nether_herald": "Herald of the Nether",
+    "wave_entity.apotheosis.affixed_armored_zombified_piglin": "Affixed Armored Zombified Piglin",
+    "wave_entity.apotheosis.affixed_armored_wither_skeleton": "Affixed Armored Wither Skeleton",
+    "wave_entity.apotheosis.ghast_rider": "Ghast Rider",
+    "wave_entity.apotheosis.affixed_armored_piglin_brute": "Affixed Armored Piglin Brute",
+    "wave_entity.apotheosis.bastion_guard": "Bastion Elite Guard",
+    "wave_entity.apotheosis.killer_bunny": "Killer Bunny",
+
+    "reward.apotheosis.desert_pyramid_loot": "Desert Pyramid Loot",
+    "reward.apotheosis.woodland_mansion_loot": "Woodland Mansion Loot",
+
+    "apotheosis.tiered/frontier": "Gateway of the First Frontier",
+    "apotheosis.tiered/ascent": "Gateway of the Sunlit Ascent",
+    "apotheosis.tiered/summit": "Gateway of the Thundering Summit",
+    "apotheosis.tiered/pinnacle": "Gateway of the Apothic Pinnacle",
+    "apotheosis.endless_invader": "Endless Gateway of Apothic Invaders",
 
     "comment_id": "/Advancements",
 
@@ -715,11 +759,11 @@
     "advancements.apotheosis.progression.root.desc": "Milestones for unlocking World Tiers in Apotheosis.\nPress CTRL+T to open the select screen",
 
     "advancements.apotheosis.progression.haven.title": "World Tier: Haven",
-    "advancements.apotheosis.progression.haven.desc": "Haven is unlocked when you find your first affix item and is activated by default.",
+    "advancements.apotheosis.progression.haven.desc": "Haven is unlocked when you find your first affix item and is activated by default",
     "advancements.apotheosis.progression.haven.criteria.affixed": "Pick up an affix item",
 
     "advancements.apotheosis.progression.frontier.title": "World Tier: Frontier",
-    "advancements.apotheosis.progression.frontier.desc": "Equip a full set of Affix items to progress into the Frontier.\nOnce unlocked, use CTRL+T to activate it.",
+    "advancements.apotheosis.progression.frontier.desc": "Equip a full set of Affix items to progress into the Frontier.\nOnce unlocked, use CTRL+T to activate it",
     "advancements.apotheosis.progression.frontier.criteria.common_helm": "Equip a Common Helmet",
     "advancements.apotheosis.progression.frontier.criteria.common_chest": "Equip a Common Chestplate",
     "advancements.apotheosis.progression.frontier.criteria.common_legs": "Equip Common Leggings",
@@ -754,79 +798,61 @@
     "advancements.apotheosis.progression.pinnacle.criteria.kill_ender_dragon": "Slay the Ender Dragon",
 
     "advancements.apotheosis.affix": "Apothic Affixes",
-    "advancements.apotheosis.affix.desc": "Find an item with an Apothic Affix.",
+    "advancements.apotheosis.affix.desc": "Find an item with an Apothic Affix",
 
     "advancements.apotheosis.rare": "Worthy Equipment",
-    "advancements.apotheosis.rare.desc": "Find a rare affix item.",
+    "advancements.apotheosis.rare.desc": "Find a rare affix item",
 
     "advancements.apotheosis.epic": "Epic!",
-    "advancements.apotheosis.epic.desc": "Find an epic affix item.",
+    "advancements.apotheosis.epic.desc": "Find an epic affix item",
 
     "advancements.apotheosis.mythic": "Titan-Forged",
-    "advancements.apotheosis.mythic.desc": "Find a mythic affix item.",
+    "advancements.apotheosis.mythic.desc": "Find a mythic affix item",
 
     "advancements.apotheosis.ancient": "Lost Treasures of the Gods",
-    "advancements.apotheosis.ancient.desc": "Find an Ancient item.",
+    "advancements.apotheosis.ancient.desc": "Find an Ancient item",
 
     "advancements.apotheosis.boss": "He Wasn't So Strong",
-    "advancements.apotheosis.boss.desc": "Slay an Apothic Boss, and retrieve their affix item.",
+    "advancements.apotheosis.boss.desc": "Slay an Apothic Boss, and retrieve their affix item",
     "advancements.apotheosis.chests": "I Found It Underground",
-    "advancements.apotheosis.chests.desc": "Find an affix item in a chest.",
+    "advancements.apotheosis.chests.desc": "Find an affix item in a chest",
     "advancements.apotheosis.merchant": "I Got Deals",
-    "advancements.apotheosis.merchant.desc": "Purchase an affix item from the wandering trader.",
+    "advancements.apotheosis.merchant.desc": "Purchase an affix item from the wandering trader",
     "advancements.apotheosis.random": "How'd You Get This?",
-    "advancements.apotheosis.random.desc": "Retrieve an affix item from a random monster.",
+    "advancements.apotheosis.random.desc": "Retrieve an affix item from a random monster",
     
     "advancements.apotheosis.gem": "Not a Diamond",
-    "advancements.apotheosis.gem.desc": "Find a Apothic Gem, which can be socketed into Affix Items.",
+    "advancements.apotheosis.gem.desc": "Find a Apothic Gem, which can be socketed into Affix Items",
     
     "advancements.apotheosis.rare_gem": "Far From Perfect",
-    "advancements.apotheosis.rare_gem.desc": "Acquire a Flawed Gem.",
+    "advancements.apotheosis.rare_gem.desc": "Acquire a Flawed Gem",
     
     "advancements.apotheosis.mythic_gem": "Flawless Crystals",
-    "advancements.apotheosis.mythic_gem.desc": "Acquire a Flawless Gem.",
+    "advancements.apotheosis.mythic_gem.desc": "Acquire a Flawless Gem",
     
     "advancements.apotheosis.ancient_gem": "Infinity Stones",
-    "advancements.apotheosis.ancient_gem.desc": "Using the Gem Cutting Table, create a Perfect Gemstone.",
+    "advancements.apotheosis.ancient_gem.desc": "Using the Gem Cutting Table, create a Perfect Gemstone",
     
     "advancements.apotheosis.socket": "The Jeweler",
-    "advancements.apotheosis.socket.desc": "Using a Smithing Table, socket a Gem into an item.",
+    "advancements.apotheosis.socket.desc": "Using a Smithing Table, socket a Gem into an item",
 
     "advancements.apotheosis.gem_cut": "The Lapidary",
-    "advancements.apotheosis.gem_cut.desc": "Use the Gem Cutting Table to upgrade an Apothic Gem.",
-    
-    "advancements.apotheosis.spawner.root": "Apotheosis Spawners",
-    "advancements.apotheosis.spawner.root.desc": "Spawners can be collected and modified, see JEI for info.",
-    "advancements.apotheosis.spawner": "Apothic Spawners",
-    "advancements.apotheosis.spawner.desc": "Collect a mob spawner using Silk Touch.",
-    "advancements.apotheosis.capturing": "Captured!",
-    "advancements.apotheosis.capturing.desc": "Get a spawn egg from a mob using the Capturing enchantment",
-    "advancements.apotheosis.modifier": "Just a Few Tweaks...",
-    "advancements.apotheosis.modifier.desc": "Use a spawner modifier to change the stats of a spawner.",
-    "advancements.apotheosis.spawncount": "Look at the Size of His Spawner!",
-    "advancements.apotheosis.spawncount.desc": "Raise the spawn count of a spawner to 16",
-    "advancements.apotheosis.maxdelay": "Time-Warped Spawner",
-    "advancements.apotheosis.maxdelay.desc": "Decrease the maximum spawn delay of a spawner to 20",
-    "advancements.apotheosis.mindelay": "I Am The Fast",
-    "advancements.apotheosis.mindelay.desc": "Decrease the minimum spawn delay of a spawner to 20",
-    "advancements.apotheosis.nearbyents": "Creating a Horde",
-    "advancements.apotheosis.nearbyents.desc": "Raise the max nearby entities of a spawner to 32",
-    "advancements.apotheosis.playerrange": "Far from the Fight",
-    "advancements.apotheosis.playerrange.desc": "Raise the player activation range of a spawner to 48",
-    "advancements.apotheosis.spawnrange": "Mobs for Miles",
-    "advancements.apotheosis.spawnrange.desc": "Raise the spawn range of a spawner to 32",
-    "advancements.apotheosis.conditions": "Unchecked Spawning",
-    "advancements.apotheosis.conditions.desc": "Disable spawn conditions for a spawner",
-    "advancements.apotheosis.players": "Factory-Ready",
-    "advancements.apotheosis.players.desc": "Disable the need for nearby players for a spawner",
-    "advancements.apotheosis.redstone": "Adding a Switch",
-    "advancements.apotheosis.redstone.desc": "Enable redstone control for a spawner",
-    "advancements.apotheosis.light": "Who Needs Darkness?",
-    "advancements.apotheosis.light.desc": "Make your spawner work in any light level.",
-    "advancements.apotheosis.noai": "Brain Drain",
-    "advancements.apotheosis.noai.desc": "Disable Mob AI for a spawner.",
-    "advancements.apotheosis.ultimate_spawner": "The Ultimate Spawner",
-    "advancements.apotheosis.ultimate_spawner.desc": "Create a spawner with minimal delays that has redstone control, no AI, ignores spawn conditions, and ignores players.",
+    "advancements.apotheosis.gem_cut.desc": "Use the Gem Cutting Table to upgrade an Apothic Gem",
+
+    "advancements.apotheosis.challenge_gates.frontier.title": "Leave the Frontier",
+    "advancements.apotheosis.challenge_gates.frontier.desc": "Complete the Gateway of the First Frontier",
+
+    "advancements.apotheosis.challenge_gates.ascent.title": "Finish your Ascent",
+    "advancements.apotheosis.challenge_gates.ascent.desc": "Complete the Gateway of the Sunlit Ascent",
+
+    "advancements.apotheosis.challenge_gates.summit.title": "Reach the Summit",
+    "advancements.apotheosis.challenge_gates.summit.desc": "Complete the Gateway of the Thundering Summit",
+
+    "advancements.apotheosis.challenge_gates.pinnacle.title": "At the Pinnacle",
+    "advancements.apotheosis.challenge_gates.pinnacle.desc": "Complete the Gateway of the Apothic Pinnacle",
+
+    "advancements.apotheosis.challenge_gates.sigil_of_supremacy.title": "Supremacy!                    ",
+    "advancements.apotheosis.challenge_gates.sigil_of_supremacy.desc": "Acquire a Sigil of Supremacy from Wave 100 of the Endless Gateway of Apothic Invaders",
 
     "comment_id": "/Potion Module",
 
@@ -869,6 +895,33 @@
     "config.jade.plugin_apotheosis.adventure": "Apoth Adventure Module",
     "message.apotheosis.item_linking_disabled": "Item Linking has been disabled by the server.",
     "text.apotheosis.equipped": "Equipped",
+    
+    "item.apotheosis.music_disc_flash": "Music Disc",
+    "jukebox_song.apotheosis.flash": "Renren - Flash",
+    "subtitle.apotheosis.music_disc.flash": "Renren - Flash",
+
+    "item.apotheosis.music_disc_glimmer": "Music Disc",
+    "jukebox_song.apotheosis.glimmer": "Caner Crebes - Glimmer",
+    "subtitle.apotheosis.music_disc.glimmer": "Caner Crebes - Glimmer",
+
+    "item.apotheosis.music_disc_shimmer": "Music Disc",
+    "jukebox_song.apotheosis.shimmer": "Chamberlain Kaifry - Shimmer",
+    "subtitle.apotheosis.music_disc.shimmer": "Chamberlain Kaifry - Shimmer",
+
+    "painting.apotheosis.gems.title": "Gems",
+    "painting.apotheosis.gems.author": "Faellynna",
+
+    "painting.apotheosis.craig.title": "Craig the Eternal",
+    "painting.apotheosis.craig.author": "Astrel",
+
+    "painting.apotheosis.tower.title": "The Tower",
+    "painting.apotheosis.tower.author": "Faellynna",
+
+    "painting.apotheosis.enchanting_table.title": "Apothic Enchanting",
+    "painting.apotheosis.enchanting_table.author": "Faellynna",
+
+    "painting.apotheosis.window.title": "A View Beyond",
+    "painting.apotheosis.window.author": "Faellynna",
 
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Chronicle of Shadows",

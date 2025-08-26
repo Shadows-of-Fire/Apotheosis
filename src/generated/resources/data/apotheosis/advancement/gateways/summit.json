@@ -1,0 +1,40 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "gateways"
+        }
+    ],
+    "parent": "apotheosis:progression/summit",
+    "criteria": {
+        "complete_summit_gate": {
+            "conditions": {
+                "gateway": "apotheosis:tiered/summit"
+            },
+            "trigger": "gateways:finish_gateway"
+        }
+    },
+    "display": {
+        "background": "apotheosis:textures/advancements/bg/apoth.png",
+        "description": {
+            "translate": "advancements.apotheosis.challenge_gates.summit.desc"
+        },
+        "frame": "goal",
+        "icon": {
+            "components": {
+                "gateways:gateway": "apotheosis:tiered/summit"
+            },
+            "count": 1,
+            "id": "gateways:gate_pearl"
+        },
+        "title": {
+            "translate": "advancements.apotheosis.challenge_gates.summit.title"
+        }
+    },
+    "requirements": [
+        [
+            "complete_summit_gate"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

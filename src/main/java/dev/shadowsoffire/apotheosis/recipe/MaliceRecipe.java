@@ -44,7 +44,7 @@ public class MaliceRecipe extends ApothSmithingRecipe implements ReactiveSmithin
 
     @Override
     public void onCraft(Container inv, Player player, ItemStack output) {
-        if (!player.level().isClientSide) {
+        if (!player.level().isClientSide && !output.isEmpty()) {
             AffixHelper.applyMalice(player, output);
             output.remove(Components.MALICE_MARKER);
         }

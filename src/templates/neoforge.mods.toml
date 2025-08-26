@@ -16,6 +16,10 @@ authors="${author}"
 
 description='''${desc}'''
 
+logoFile="${logo}"
+
+displayURL="${homepage}"
+
 ${mixinConfig}
 
 [[dependencies.${modid}]]
@@ -64,5 +68,12 @@ ${mixinConfig}
     modId="curios"
     type="optional"
     versionRange="[${curiosVersion},)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${modid}]]
+    modId="gateways"
+    type="optional"
+    versionRange="[${gatewaysVersion},)"
     ordering="AFTER"
     side="BOTH"

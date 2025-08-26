@@ -16,7 +16,6 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -164,8 +163,8 @@ public class RadialUtil {
 
         List<BlockPos> broken = getBrokenBlocks(player, face, srcPos, data);
         for (BlockPos pos : broken) {
-            if (!player.level().isClientSide) {
-                PlaceboUtil.tryHarvestBlock((ServerPlayer) player, pos);
+            if (player instanceof ServerPlayer sp) {
+                sp.gameMode.destroyBlock(pos);
             }
             else {
                 // TODO: This should be used when BreakEvent is fired on the client, but currently this is unreachable.

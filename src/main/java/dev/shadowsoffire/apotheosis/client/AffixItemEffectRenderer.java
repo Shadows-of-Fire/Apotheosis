@@ -24,11 +24,10 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
 
-@EventBusSubscriber(modid = Apotheosis.MODID, bus = Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT)
 public class AffixItemEffectRenderer {
 
     @SubscribeEvent

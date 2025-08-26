@@ -1,0 +1,37 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "gateways"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "E": {
+            "tag": "c:ender_pearls"
+        },
+        "G": {
+            "item": "apotheosis:gem_dust"
+        },
+        "I": {
+            "tag": "c:ingots/gold"
+        },
+        "R": {
+            "item": "apotheosis:rare_material"
+        }
+    },
+    "pattern": [
+        "IRI",
+        "RER",
+        "GGG"
+    ],
+    "result": {
+        "components": {
+            "gateways:gateway": "apotheosis:tiered/ascent"
+        },
+        "count": 1,
+        "id": "gateways:gate_pearl"
+    }
+}

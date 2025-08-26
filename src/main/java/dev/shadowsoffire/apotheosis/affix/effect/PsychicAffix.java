@@ -76,6 +76,11 @@ public class PsychicAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).isConstant();
+    }
+
     private float getTrueLevel(AffixInstance inst) {
         return this.getTrueLevel(inst.getRarity(), inst.level());
     }

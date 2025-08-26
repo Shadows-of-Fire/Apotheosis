@@ -58,4 +58,9 @@ public class RetreatingAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return true;
+    }
+
 }

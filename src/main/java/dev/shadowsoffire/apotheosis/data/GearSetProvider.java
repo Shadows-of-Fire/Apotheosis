@@ -14,18 +14,26 @@ import dev.shadowsoffire.placebo.json.WeightedItemStack;
 import dev.shadowsoffire.placebo.systems.gear.GearSet;
 import dev.shadowsoffire.placebo.systems.gear.GearSetRegistry;
 import dev.shadowsoffire.placebo.util.data.DynamicRegistryProvider;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderLookup.RegistryLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Unit;
 import net.minecraft.util.random.Weight;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 
 public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
 
@@ -307,6 +315,18 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .leggings(buffedItem(Items.NETHERITE_LEGGINGS, enchants, 2F), 10)
             .boots(buffedItem(Items.NETHERITE_BOOTS, enchants, 2F), 10)
             .tag("pinnacle_ranged"));
+
+        addSet("gateway_only/nether_herald", 0, 0, c -> c
+            .helmet(getNetherHeraldBannerInstance(registries.lookupOrThrow(Registries.BANNER_PATTERN)), 1)
+            .mainhand(buffedItem(Items.DIAMOND_AXE, enchants, 0.5F), 1));
+
+        addSet("gateway_only/bastion_guard", 0, 0, c -> c
+            .helmet(getBastionGuardBannerInstance(registries.lookupOrThrow(Registries.BANNER_PATTERN)), 1)
+            .mainhand(buffedItem(Items.NETHERITE_AXE, enchants, 0.5F), 1)
+            .offhand(new ItemStack(Items.SHIELD), 1)
+            .chestplate(new ItemStack(Items.NETHERITE_CHESTPLATE), 1)
+            .leggings(new ItemStack(Items.NETHERITE_LEGGINGS), 1)
+            .boots(new ItemStack(Items.NETHERITE_BOOTS), 1));
     }
 
     @SuppressWarnings("removal")
@@ -344,6 +364,33 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             stack.enchant(enchants.getOrThrow(Enchantments.FORTUNE), 5);
         }
         return stack;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static ItemStack getNetherHeraldBannerInstance(HolderGetter<BannerPattern> patternRegistry) {
+        ItemStack itemstack = new ItemStack(Items.BLACK_BANNER);
+        BannerPatternLayers bannerpatternlayers = new BannerPatternLayers.Builder()
+            .addIfRegistered(patternRegistry, BannerPatterns.SKULL, DyeColor.YELLOW)
+            .addIfRegistered(patternRegistry, BannerPatterns.BORDER, DyeColor.RED)
+            .addIfRegistered(patternRegistry, BannerPatterns.GRADIENT_UP, DyeColor.BLACK)
+            .build();
+        itemstack.set(DataComponents.BANNER_PATTERNS, bannerpatternlayers);
+        itemstack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+        itemstack.set(DataComponents.ITEM_NAME, Apotheosis.lang("banner", "nether_herald").withStyle(ChatFormatting.RED));
+        return itemstack;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static ItemStack getBastionGuardBannerInstance(HolderGetter<BannerPattern> patternRegistry) {
+        ItemStack itemstack = new ItemStack(Items.BROWN_BANNER);
+        BannerPatternLayers bannerpatternlayers = new BannerPatternLayers.Builder()
+            .addIfRegistered(patternRegistry, BannerPatterns.CIRCLE_MIDDLE, DyeColor.BLACK)
+            .addIfRegistered(patternRegistry, BannerPatterns.CURLY_BORDER, DyeColor.YELLOW)
+            .build();
+        itemstack.set(DataComponents.BANNER_PATTERNS, bannerpatternlayers);
+        itemstack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+        itemstack.set(DataComponents.ITEM_NAME, Apotheosis.lang("banner", "bastion_guard").withStyle(ChatFormatting.RED));
+        return itemstack;
     }
 
     protected void addSet(String name, int weight, float quality, UnaryOperator<GSBuilder> config) {

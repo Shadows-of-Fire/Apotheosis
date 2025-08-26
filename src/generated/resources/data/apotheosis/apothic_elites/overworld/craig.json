@@ -8,11 +8,11 @@
         },
         "name": {
             "color": "rainbow",
-            "text": "Craig the Eternal"
+            "translate": "elite.apotheosis.craig"
         },
         "nbt": {
             "HasLeftHorn": 1,
-            "HasRightHorn": 1,
+            "HasRightHorn": 0,
             "IsScreamingGoat": 1
         },
         "spawn_conditions": [

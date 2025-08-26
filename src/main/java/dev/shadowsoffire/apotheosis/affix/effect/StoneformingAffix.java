@@ -61,6 +61,11 @@ public class StoneformingAffix extends Affix {
     }
 
     @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return true;
+    }
+
+    @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
         return this.categories.contains(cat);
     }

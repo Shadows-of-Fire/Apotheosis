@@ -1,13 +1,17 @@
 package dev.shadowsoffire.apotheosis.affix.effect;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.affix.Affix;
+import dev.shadowsoffire.apotheosis.affix.AffixBuilder;
 import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
@@ -39,13 +43,16 @@ public class FestiveAffix extends Affix {
     public static Codec<FestiveAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             affixDef(),
-            LootRarity.mapCodec(StepFunction.CODEC).fieldOf("values").forGetter(a -> a.values))
+            LootCategory.SET_CODEC.fieldOf("categories").forGetter(a -> a.categories),
+            LootRarity.mapCodec(FestiveData.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, FestiveAffix::new));
 
-    protected final Map<LootRarity, StepFunction> values;
+    protected final Set<LootCategory> categories;
+    protected final Map<LootRarity, FestiveData> values;
 
-    public FestiveAffix(AffixDefinition def, Map<LootRarity, StepFunction> values) {
+    public FestiveAffix(AffixDefinition def, Set<LootCategory> categories, Map<LootRarity, FestiveData> values) {
         super(def);
+        this.categories = categories;
         this.values = values;
     }
 
@@ -65,11 +72,11 @@ public class FestiveAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat.isMelee() && this.values.containsKey(rarity);
+        return this.categories.contains(cat) && this.values.containsKey(rarity);
     }
 
     private float getTrueLevel(LootRarity rarity, float level) {
-        return this.values.get(rarity).get(level);
+        return this.values.get(rarity).chance().get(level);
     }
 
     // EventPriority.LOW
@@ -105,7 +112,6 @@ public class FestiveAffix extends Affix {
         }
         if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty()) {
             if (inst != null && inst.isValid() && player.level().random.nextFloat() < this.getTrueLevel(inst.rarity().get(), inst.level())) {
-
                 player.level().playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F,
                     (1.0F + (player.level().random.nextFloat() - player.level().random.nextFloat()) * 0.2F) * 0.7F);
                 ((ServerLevel) player.level()).sendParticles(ParticleTypes.EXPLOSION_EMITTER, dead.getX(), dead.getY(), dead.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
@@ -115,7 +121,9 @@ public class FestiveAffix extends Affix {
                     if (((IFestiveMarker) (Object) item.getItem()).isMarked()) {
                         continue;
                     }
-                    for (int i = 0; i < 20; i++) {
+
+                    int rolls = this.values.get(inst.rarity().get()).rolls();
+                    for (int i = 0; i < rolls; i++) {
                         e.getDrops().add(new ItemEntity(player.level(), item.getX(), item.getY(), item.getZ(), item.getItem().copy()));
                     }
                 }
@@ -141,4 +149,51 @@ public class FestiveAffix extends Affix {
     public Codec<? extends Affix> getCodec() {
         return CODEC;
     }
+
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).chance.isConstant();
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Data for the Festive Affix.
+     * 
+     * @param chance The chance of the festive affix triggering, as a step function.
+     * @param rolls  The number of extra copies of items to drop when the affix triggers.
+     */
+    public static record FestiveData(StepFunction chance, int rolls) {
+
+        public static final Codec<FestiveData> CODEC = RecordCodecBuilder.create(inst -> inst
+            .group(
+                StepFunction.CODEC.fieldOf("chance").forGetter(FestiveData::chance),
+                Codec.INT.fieldOf("rolls").forGetter(FestiveData::rolls))
+            .apply(inst, FestiveData::new));
+    }
+
+    public static class Builder extends AffixBuilder<Builder> {
+
+        protected final Set<LootCategory> categories = new LinkedHashSet<>();
+        protected final Map<LootRarity, FestiveData> values = new HashMap<>();
+
+        public Builder categories(LootCategory... cats) {
+            for (LootCategory cat : cats) {
+                this.categories.add(cat);
+            }
+            return this;
+        }
+
+        public Builder value(LootRarity rarity, StepFunction chance, int rolls) {
+            this.values.put(rarity, new FestiveData(chance, rolls));
+            return this;
+        }
+
+        public FestiveAffix build() {
+            return new FestiveAffix(this.definition, this.categories, this.values);
+        }
+    }
+
 }

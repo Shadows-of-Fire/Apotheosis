@@ -44,19 +44,21 @@ public class GemRegistry extends TieredDynamicRegistry<Gem> {
     }
 
     @Override
-    protected void onReload() {
-        super.onReload();
-        for (Gem gem : this.getValues()) {
-            DynamicHolder<Gem> holder = this.holder(gem);
-            for (ExtraGemBonus extraBonus : ExtraGemBonusRegistry.getBonusesFor(holder)) {
-                for (GemBonus bonus : extraBonus.bonuses()) {
-                    try {
-                        gem.appendExtraBonus(bonus);
-                    }
-                    catch (Exception ex) {
-                        ResourceLocation extraBonusKey = ExtraGemBonusRegistry.INSTANCE.getKey(extraBonus);
-                        this.logger.warn("Failed to apply extra gem bonus for class {} to gem {}.", bonus.getGemClass().key(), holder.getId());
-                        this.logger.warn("Exception while applying ExtraGemBonus %s: ".formatted(extraBonusKey), ex);
+    protected void onReload(ReloadType type) {
+        super.onReload(type);
+        if (type != ReloadType.INTEGRATED_CLIENT) {
+            for (Gem gem : this.getValues()) {
+                DynamicHolder<Gem> holder = this.holder(gem);
+                for (ExtraGemBonus extraBonus : ExtraGemBonusRegistry.getBonusesFor(holder)) {
+                    for (GemBonus bonus : extraBonus.bonuses()) {
+                        try {
+                            gem.appendExtraBonus(bonus);
+                        }
+                        catch (Exception ex) {
+                            ResourceLocation extraBonusKey = ExtraGemBonusRegistry.INSTANCE.getKey(extraBonus);
+                            this.logger.warn("Failed to apply extra gem bonus for class {} to gem {}.", bonus.getGemClass().key(), holder.getId());
+                            this.logger.warn("Exception while applying ExtraGemBonus %s: ".formatted(extraBonusKey), ex);
+                        }
                     }
                 }
             }

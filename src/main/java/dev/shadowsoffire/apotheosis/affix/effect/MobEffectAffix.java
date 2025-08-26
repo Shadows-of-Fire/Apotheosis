@@ -232,6 +232,11 @@ public class MobEffectAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).isConstant();
+    }
+
     public static Component toComponent(MobEffectInstance inst, float tickRate) {
         MutableComponent mutablecomponent = Component.translatable(inst.getDescriptionId());
         Holder<MobEffect> mobeffect = inst.getEffect();
@@ -258,6 +263,10 @@ public class MobEffectAffix extends Affix {
 
         public MobEffectInstance build(Holder<MobEffect> effect, float level) {
             return new MobEffectInstance(effect, this.duration.getInt(level), this.amplifier.getInt(level));
+        }
+
+        public boolean isConstant() {
+            return this.duration.isConstant() && this.amplifier.isConstant();
         }
     }
 

@@ -8,9 +8,6 @@ import java.util.function.UnaryOperator;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
-import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry.IEntityMatch;
@@ -33,7 +30,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
@@ -164,40 +160,11 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
 
         this.basicData.applyGearSet(mob, ctx);
 
-        int guaranteed = -1;
-        if (rand.nextFloat() <= this.afxData.chance()) {
-            boolean anyValid = false;
-
-            for (EquipmentSlot t : EquipmentSlot.values()) {
-                ItemStack s = mob.getItemBySlot(t);
-                if (!s.isEmpty() && !LootCategory.forItem(s).isNone()) {
-                    anyValid = true;
-                    break;
-                }
-            }
-
-            if (!anyValid) {
-                Apotheosis.LOGGER.error("Attempted to affix a miniboss with ID " + EliteRegistry.INSTANCE.getKey(this) + " but it is not wearing any affixable items!");
-            }
-            else {
-                guaranteed = rand.nextInt(6);
-
-                ItemStack temp = mob.getItemBySlot(EquipmentSlot.values()[guaranteed]);
-                while (temp.isEmpty() || LootCategory.forItem(temp) == LootCategories.NONE) {
-                    guaranteed = rand.nextInt(6);
-                    temp = mob.getItemBySlot(EquipmentSlot.values()[guaranteed]);
-                }
-
-                var rarity = LootRarity.random(ctx, this.afxData.rarities());
-                mob.setCustomName(mob.getCustomName().plainCopy().withStyle(Style.EMPTY.withColor(rarity.color())));
-                Invader.modifyBossItem(temp, mob.getName(), ctx, rarity, this.stats, mob.level().registryAccess());
-                mob.setDropChance(EquipmentSlot.values()[guaranteed], 2F);
-            }
-        }
+        EquipmentSlot affixedSlot = this.afxData.applyTo(mob, ctx, this.stats.enchLevels().primary(), true);
 
         for (EquipmentSlot s : EquipmentSlot.values()) {
             ItemStack stack = mob.getItemBySlot(s);
-            if (!stack.isEmpty() && s.ordinal() != guaranteed && rand.nextFloat() < this.stats.enchantChance()) {
+            if (!stack.isEmpty() && s != affixedSlot && rand.nextFloat() < this.stats.enchantChance()) {
                 Invader.enchantBossItem(rand, stack, this.stats.enchLevels().secondary(), true, mob.level().registryAccess());
                 mob.setItemSlot(s, stack);
             }

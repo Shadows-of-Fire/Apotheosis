@@ -1,5 +1,9 @@
 {
     "type": "apotheosis:festive",
+    "categories": [
+        "apotheosis:melee_weapon",
+        "apotheosis:trident"
+    ],
     "definition": {
         "affix_type": "basic_effect",
         "exclusive_set": [],
@@ -10,14 +14,20 @@
     },
     "values": {
         "apotheosis:epic": {
-            "min": 0.02,
-            "max": 0.05,
-            "step": 0.005
+            "chance": {
+                "min": 0.02,
+                "max": 0.05,
+                "step": 0.005
+            },
+            "rolls": 20
         },
         "apotheosis:mythic": {
-            "min": 0.03,
-            "max": 0.06,
-            "step": 0.005
+            "chance": {
+                "min": 0.03,
+                "max": 0.06,
+                "step": 0.005
+            },
+            "rolls": 20
         }
     }
 }

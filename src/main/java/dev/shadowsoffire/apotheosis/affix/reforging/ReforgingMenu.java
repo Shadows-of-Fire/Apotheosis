@@ -4,7 +4,6 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
-import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apoth.Menus;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
@@ -136,7 +135,6 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
                 rand.setSeed(this.seed ^ BuiltInRegistries.ITEM.getKey(input.getItem()).hashCode() + slot);
                 GenContext ctx = GenContext.forPlayer(rand, this.player);
                 ItemStack output = LootController.createLootItem(input.copy(), rarity, ctx);
-                output.remove(Components.TOUCHED_BY_MALICE);
                 this.choicesInv.setStackInSlot(slot, output);
             }
             else {

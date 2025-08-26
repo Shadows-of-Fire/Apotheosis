@@ -58,4 +58,9 @@ public class CatalyzingAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).isConstant();
+    }
+
 }

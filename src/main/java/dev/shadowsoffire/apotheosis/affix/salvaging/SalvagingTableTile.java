@@ -66,10 +66,12 @@ public class SalvagingTableTile extends BlockEntity {
             if (slot != 0) {
                 return stack;
             }
-            List<ItemStack> outputs = SalvagingMenu.getBestPossibleSalvageResults(SalvagingTableTile.this.level, stack);
+
+            List<ItemStack> outputs = SalvagingMenu.getSalvageResults(SalvagingTableTile.this.level, stack);
             if (outputs.isEmpty()) {
                 return stack;
             }
+
             IntSet skipSlots = new IntOpenHashSet();
             // Simulate inserting all outputs.
             for (ItemStack out : outputs) {

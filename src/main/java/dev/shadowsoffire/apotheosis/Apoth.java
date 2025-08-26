@@ -38,13 +38,15 @@ import dev.shadowsoffire.apotheosis.gen.RogueSpawnerFeature;
 import dev.shadowsoffire.apotheosis.item.BossSummonerItem;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
 import dev.shadowsoffire.apotheosis.item.TooltipItem;
-import dev.shadowsoffire.apotheosis.loot.AffixLootPoolEntry;
-import dev.shadowsoffire.apotheosis.loot.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.loot.conditions.KilledByRealPlayerCondition;
 import dev.shadowsoffire.apotheosis.loot.conditions.MatchesBlockCondition;
+import dev.shadowsoffire.apotheosis.loot.conditions.WorldTierCondition;
+import dev.shadowsoffire.apotheosis.loot.entry.AffixLootPoolEntry;
+import dev.shadowsoffire.apotheosis.loot.entry.GemLootPoolEntry;
+import dev.shadowsoffire.apotheosis.loot.functions.ReforgeItemFunction;
 import dev.shadowsoffire.apotheosis.loot.modifiers.AffixConvertLootModifier;
 import dev.shadowsoffire.apotheosis.loot.modifiers.AffixHookLootModifier;
 import dev.shadowsoffire.apotheosis.loot.modifiers.AffixLootModifier;
@@ -56,6 +58,7 @@ import dev.shadowsoffire.apotheosis.particle.RarityParticleData;
 import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
+import dev.shadowsoffire.apotheosis.recipe.SupremacyRecipe;
 import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
 import dev.shadowsoffire.apotheosis.socket.SocketingRecipe;
 import dev.shadowsoffire.apotheosis.socket.WithdrawalRecipe;
@@ -98,6 +101,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
@@ -110,6 +114,7 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.JukeboxSong;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.TridentItem;
@@ -127,6 +132,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -288,6 +294,9 @@ public class Apoth {
         public static final Holder<Item> SIGIL_OF_MALICE = R.item("sigil_of_malice", TooltipItem::new, p -> p
             .component(DataComponents.ITEM_NAME, Apotheosis.lang("item", "sigil_of_malice").withStyle(ChatFormatting.RED)));
 
+        public static final Holder<Item> SIGIL_OF_SUPREMACY = R.item("sigil_of_supremacy", TooltipItem::new, p -> p
+            .component(DataComponents.ITEM_NAME, Apotheosis.lang("item", "sigil_of_supremacy").withStyle(ChatFormatting.GOLD)));
+
         public static final Holder<Item> BOSS_SUMMONER = R.item("boss_summoner", BossSummonerItem::new);
 
         public static final Holder<Item> SIMPLE_REFORGING_TABLE = R.blockItem("simple_reforging_table", Blocks.SIMPLE_REFORGING_TABLE);
@@ -309,6 +318,12 @@ public class Apoth {
         public static final Holder<Item> GOLD_UPGRADE_SMITHING_TEMPLATE = R.item("gold_upgrade_smithing_template", () -> createVanillaUpgradeTemplate("gold"));
 
         public static final Holder<Item> DIAMOND_UPGRADE_SMITHING_TEMPLATE = R.item("diamond_upgrade_smithing_template", () -> createVanillaUpgradeTemplate("diamond"));
+
+        public static final Holder<Item> MUSIC_DISC_FLASH = R.item("music_disc_flash", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.FLASH));
+
+        public static final Holder<Item> MUSIC_DISC_GLIMMER = R.item("music_disc_glimmer", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.GLIMMER));
+
+        public static final Holder<Item> MUSIC_DISC_SHIMMER = R.item("music_disc_shimmer", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.SHIMMER));
 
         private static Holder<Item> rarityMat(String id) {
             return R.item(id + "_material", () -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(id)), new Item.Properties()));
@@ -369,7 +384,23 @@ public class Apoth {
 
         public static final Holder<SoundEvent> MALICE = R.sound("malice");
 
+        public static final Holder<SoundEvent> MUSIC_DISC_FLASH = R.sound("music_disc_flash");
+
+        public static final Holder<SoundEvent> MUSIC_DISC_GLIMMER = R.sound("music_disc_glimmer");
+
+        public static final Holder<SoundEvent> MUSIC_DISC_SHIMMER = R.sound("music_disc_shimmer");
+
         private static void bootstrap() {}
+    }
+
+    public static final class Songs {
+        public static final ResourceKey<JukeboxSong> FLASH = key("flash");
+        public static final ResourceKey<JukeboxSong> GLIMMER = key("glimmer");
+        public static final ResourceKey<JukeboxSong> SHIMMER = key("shimmer");
+
+        private static ResourceKey<JukeboxSong> key(String name) {
+            return ResourceKey.create(Registries.JUKEBOX_SONG, Apotheosis.loc(name));
+        }
     }
 
     public static final class RecipeTypes {
@@ -383,6 +414,7 @@ public class Apoth {
     public static final class RecipeSerializers {
         public static final Holder<RecipeSerializer<?>> WITHDRAWAL = R.recipeSerializer("withdrawal", () -> new SingletonRecipeSerializer<>(WithdrawalRecipe::new));
         public static final Holder<RecipeSerializer<?>> SOCKETING = R.recipeSerializer("socketing", () -> new SingletonRecipeSerializer<>(SocketingRecipe::new));
+        public static final Holder<RecipeSerializer<?>> SUPREMACY = R.recipeSerializer("supremacy", () -> new SingletonRecipeSerializer<>(SupremacyRecipe::new));
         public static final Holder<RecipeSerializer<?>> UNNAMING = R.recipeSerializer("unnaming", () -> new SingletonRecipeSerializer<>(UnnamingRecipe::new));
         public static final Holder<RecipeSerializer<?>> MALICE = R.recipeSerializer("malice", () -> new SingletonRecipeSerializer<>(MaliceRecipe::new));
         public static final Holder<RecipeSerializer<?>> ADD_SOCKETS = R.recipeSerializer("add_sockets", () -> AddSocketsRecipe.Serializer.INSTANCE);
@@ -424,6 +456,14 @@ public class Apoth {
         public static final LootItemConditionType MATCHES_BLOCK = R.lootCondition("matches_block", MatchesBlockCondition.CODEC);
 
         public static final LootItemConditionType KILLED_BY_REAL_PLAYER = R.lootCondition("killed_by_real_player", KilledByRealPlayerCondition.CODEC);
+
+        public static final LootItemConditionType HAS_WORLD_TIER = R.lootCondition("has_world_tier", WorldTierCondition.CODEC);
+
+        private static void bootstrap() {}
+    }
+
+    public static final class LootFunctions {
+        public static final LootItemFunctionType<ReforgeItemFunction> MATCHES_BLOCK = R.custom("reforge_item", Registries.LOOT_FUNCTION_TYPE, ReforgeItemFunction.TYPE);
 
         private static void bootstrap() {}
     }
@@ -472,6 +512,7 @@ public class Apoth {
         public static final TagKey<Block> SANDFORMING_CANDIDATES = BlockTags.create(Apotheosis.loc("sandforming_candidates"));
         public static final TagKey<Block> LEAFFORMING_CANDIDATES = BlockTags.create(Apotheosis.loc("leafforming_candidates"));
         public static final TagKey<Block> GARDENING_CANDIDATES = BlockTags.create(Apotheosis.loc("gardening_candidates"));
+        public static final TagKey<Item> BOSS_MUSIC_DISCS = ItemTags.create(Apotheosis.loc("boss_music_discs"));
 
         /**
          * List of {@link Potion}s that cannot be converted into Potion Charms using {@link PotionCharmRecipe}.
@@ -582,17 +623,18 @@ public class Apoth {
         BuiltInRegs.bootstrap();
         Attachments.bootstrap();
         Components.bootstrap();
+        Sounds.bootstrap();
         Blocks.bootstrap();
         Items.bootstrap();
         Tiles.bootstrap();
         Menus.bootstrap();
         Tabs.bootstrap();
-        Sounds.bootstrap();
         Triggers.bootstrap();
         Features.bootstrap();
         Ingredients.bootstrap();
         RecipeTypes.bootstrap();
         LootModifiers.bootstrap();
+        LootFunctions.bootstrap();
         LootConditions.bootstrap();
         LootPoolEntries.bootstrap();
         RecipeSerializers.bootstrap();

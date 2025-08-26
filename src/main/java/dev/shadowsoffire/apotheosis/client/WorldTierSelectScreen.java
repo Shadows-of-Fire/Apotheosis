@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
@@ -220,6 +221,12 @@ public class WorldTierSelectScreen extends Screen {
             this.activateButton.setButtonText(Apotheosis.lang("button", "activate").withColor(0xFAA8FF));
             Component tierName = Apotheosis.lang("text", "world_tier." + this.displayedTier.getSerializedName()).withStyle(ChatFormatting.GOLD);
             this.activateButton.setMessage(Apotheosis.lang("button", "activate_tier", tierName));
+
+            if (!AdventureConfig.enableManualWorldTierChanges) {
+                this.activateButton.active = false;
+                this.activateButton.setButtonText(Apotheosis.lang("button", "disabled").withStyle(ChatFormatting.RED));
+                this.activateButton.setMessage(Apotheosis.lang("button", "tier_changes_disabled").withStyle(ChatFormatting.RED));
+            }
         }
         else if (WorldTier.isTutorialActive(player) && !WorldTier.isUnlocked(player, displayedTier)) {
             this.activateButton.setButtonText(Apotheosis.lang("button", "inactive").withStyle(ChatFormatting.RED));
@@ -227,7 +234,7 @@ public class WorldTierSelectScreen extends Screen {
         }
         else {
             this.activateButton.setButtonText(Apotheosis.lang("button", "activated").withColor(0x9A669C));
-            this.activateButton.setMessage(Apotheosis.lang("button", "already_activated").withStyle(ChatFormatting.RED));
+            this.activateButton.setMessage(Apotheosis.lang("button", "already_activated").withStyle(ChatFormatting.GOLD));
         }
     }
 

@@ -7,7 +7,9 @@ import org.jetbrains.annotations.Nullable;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -73,6 +75,7 @@ public class WorldTierTutorialScreen extends Screen {
                 .buttonText(Apotheosis.lang("button", "next_tutorial"))
                 .build());
 
+        this.updateButtons();
     }
 
     @Override
@@ -98,7 +101,12 @@ public class WorldTierTutorialScreen extends Screen {
         gfx.drawString(font, title.getVisualOrderText(), (imgLeft + 380 - font.width(title) * scale / 2) / scale, (imgTop + 107) / scale, 0xFFFFFF, true);
         pose.popPose();
 
-        List<FormattedCharSequence> split = this.font.split(stage.description, 200);
+        Component desc = stage.description;
+        if (stage == TutorialStage.ACTIVATE && !AdventureConfig.enableManualWorldTierChanges) {
+            desc = Apotheosis.lang("tutorial", "world_tier.activate_disabled.desc").withStyle(ChatFormatting.DARK_AQUA);
+        }
+
+        List<FormattedCharSequence> split = this.font.split(desc, 200);
 
         for (int i = 0; i < split.size(); i++) {
             FormattedCharSequence line = split.get(i);
@@ -144,9 +152,9 @@ public class WorldTierTutorialScreen extends Screen {
         DETAILED_INFO("detailed_info"),
         ACTIVATE("activate");
 
-        private ResourceLocation overlay;
-        private Component title;
-        private Component description;
+        private final ResourceLocation overlay;
+        private final Component title;
+        private final Component description;
 
         private TutorialStage(String name) {
             this.overlay = Apotheosis.loc("textures/gui/tutorial/" + name + ".png");

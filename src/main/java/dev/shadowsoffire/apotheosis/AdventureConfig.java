@@ -22,6 +22,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.WorldGenLevel;
+import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class AdventureConfig {
@@ -60,6 +61,8 @@ public class AdventureConfig {
     public static boolean enableAffixItemEffects = true;
 
     public static boolean enableEquipmentCompare = true;
+
+    public static boolean enableManualWorldTierChanges = true;
 
     public static void load(Configuration c) {
         c.setTitle("Apotheosis Adventure Module Config");
@@ -118,6 +121,9 @@ public class AdventureConfig {
         itemLinkingCooldown = c.getInt("Item Linking Cooldown", "quality_of_life", itemLinkingCooldown, 0, 65536, "The cooldown, in ticks, between player item links.\nServer-Authoritative.");
         enableEquipmentCompare = c.getBoolean("Enable Equipment Comparisons", "quality_of_life", enableEquipmentCompare, "If equipment comparison popups are enabled when the hotkey is held.\nClientside.");
         enableAffixItemEffects = c.getBoolean("Enable Affix Item Effects", "flair", enableAffixItemEffects, "If affix item effects (custom shadows, beams, particles, etc) are enabled.\nClientside.");
+
+        enableManualWorldTierChanges = c.getBoolean("Enable Manual World Tier Changes", "world_tiers", enableManualWorldTierChanges,
+            "If players can change their world tier manually in the World Tier Selection Screen.\nNote: Disabling this does NOT automatically change world tiers when unlocked. You will need to set that up yourself.\nServer-Authoritative.");
     }
 
     public static boolean canGenerateIn(WorldGenLevel world) {
@@ -125,21 +131,23 @@ public class AdventureConfig {
         return DIM_WHITELIST.contains(key.location());
     }
 
-    public static record ConfigPayload(Item affixTorch, int upgradeSigilCost, int upgradeLevelCost, int rerollSigilCost, int rerollLevelCost, boolean charmsInCuriosOnly) implements CustomPacketPayload {
+    public static record ConfigPayload(Item affixTorch, int upgradeSigilCost, int upgradeLevelCost, int rerollSigilCost, int rerollLevelCost, boolean charmsInCuriosOnly, boolean manualWorldTierChanges) implements CustomPacketPayload {
 
         public static final Type<ConfigPayload> TYPE = new Type<>(Apotheosis.loc("config"));
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, ConfigPayload> CODEC = StreamCodec.composite(
+        public static final StreamCodec<RegistryFriendlyByteBuf, ConfigPayload> CODEC = NeoForgeStreamCodecs.composite(
             ByteBufCodecs.registry(Registries.ITEM), ConfigPayload::affixTorch,
             ByteBufCodecs.VAR_INT, ConfigPayload::upgradeSigilCost,
             ByteBufCodecs.VAR_INT, ConfigPayload::upgradeLevelCost,
             ByteBufCodecs.VAR_INT, ConfigPayload::rerollSigilCost,
             ByteBufCodecs.VAR_INT, ConfigPayload::rerollLevelCost,
             ByteBufCodecs.BOOL, ConfigPayload::charmsInCuriosOnly,
+            ByteBufCodecs.BOOL, ConfigPayload::manualWorldTierChanges,
             ConfigPayload::new);
 
         public ConfigPayload() {
-            this(AdventureConfig.torchItem, AdventureConfig.upgradeSigilCost, AdventureConfig.upgradeLevelCost, AdventureConfig.rerollSigilCost, AdventureConfig.rerollLevelCost, AdventureConfig.charmsInCuriosOnly);
+            this(AdventureConfig.torchItem, AdventureConfig.upgradeSigilCost, AdventureConfig.upgradeLevelCost, AdventureConfig.rerollSigilCost, AdventureConfig.rerollLevelCost, AdventureConfig.charmsInCuriosOnly,
+                AdventureConfig.enableManualWorldTierChanges);
         }
 
         @Override
@@ -166,6 +174,7 @@ public class AdventureConfig {
                 AdventureConfig.upgradeLevelCost = msg.upgradeLevelCost;
                 AdventureConfig.rerollSigilCost = msg.rerollSigilCost;
                 AdventureConfig.rerollLevelCost = msg.rerollLevelCost;
+                AdventureConfig.enableManualWorldTierChanges = msg.manualWorldTierChanges;
             }
 
             @Override
@@ -180,7 +189,7 @@ public class AdventureConfig {
 
             @Override
             public String getVersion() {
-                return "3";
+                return "4";
             }
 
         }

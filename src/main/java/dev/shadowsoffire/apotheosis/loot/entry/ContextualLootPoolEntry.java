@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.loot;
+package dev.shadowsoffire.apotheosis.loot.entry;
 
 import java.util.List;
 import java.util.function.Consumer;

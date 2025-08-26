@@ -75,6 +75,11 @@ public class EnlightenedAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).isConstant();
+    }
+
     protected int getTrueLevel(LootRarity rarity, float level) {
         return this.values.get(rarity).getInt(level);
     }

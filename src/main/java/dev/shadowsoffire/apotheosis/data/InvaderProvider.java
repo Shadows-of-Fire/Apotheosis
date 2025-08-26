@@ -90,7 +90,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(0.75, 3.7)
             .basicData(c -> meleeGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, DEFAULT_WEIGHT, 1.5F))
+                .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 1.5F))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS)));
 
@@ -198,7 +198,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .size(1.2, 3.6)
             .basicData(c -> rangedGear(c)
                 .name(Component.literal(BasicBossData.NAME_GEN))
-                .weights(TieredWeights.forTiersAbove(WorldTier.SUMMIT, DEFAULT_WEIGHT, 1.5F))
+                .weights(TieredWeights.forTiersAbove(WorldTier.SUMMIT, 40, 1.5F))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS))
             .stats(mythic, c -> c
@@ -234,7 +234,10 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .weights(TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .constraints(Constraints.forDimension(Level.NETHER))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)
-                .nbt(t -> t.putInt("AngerTime", 99999999))));
+                .nbt(t -> {
+                    t.putBoolean("CannotHunt", true);
+                    t.putBoolean("ImmuneToZombification", true);
+                })));
 
         addBoss("the_nether/piglin_brute", b -> basicMeleeStats(b)
             .entity(EntityType.PIGLIN_BRUTE)
@@ -243,7 +246,10 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .name(Component.literal(BasicBossData.NAME_GEN))
                 .weights(TieredWeights.forTiersAbove(WorldTier.ASCENT, DEFAULT_WEIGHT, 1.5F))
                 .constraints(Constraints.forDimension(Level.NETHER))
-                .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS)));
+                .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS)
+                .nbt(t -> {
+                    t.putBoolean("ImmuneToZombification", true);
+                })));
 
         addBoss("the_nether/zoglin", b -> basicMeleeStats(b)
             .entity(EntityType.ZOGLIN)

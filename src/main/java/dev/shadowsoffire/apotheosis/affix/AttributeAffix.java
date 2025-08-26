@@ -135,6 +135,11 @@ public class AttributeAffix extends Affix implements AttributeProvidingAffix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).isConstant();
+    }
+
     public static record ModifierInst(Holder<Attribute> attr, Operation op, StepFunction valueFactory) {
 
         public AttributeModifier build(AffixInstance inst) {

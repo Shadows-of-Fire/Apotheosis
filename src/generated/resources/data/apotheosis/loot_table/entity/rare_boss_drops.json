@@ -21,8 +21,14 @@
                     "weight": 30
                 },
                 {
+                    "type": "minecraft:tag",
+                    "expand": true,
+                    "name": "apotheosis:boss_music_discs",
+                    "weight": 5
+                },
+                {
                     "type": "minecraft:empty",
-                    "weight": 25
+                    "weight": 20
                 }
             ],
             "rolls": 1.0

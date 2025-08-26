@@ -1,0 +1,49 @@
+{
+    "type": "placebo:gear_set",
+    "helmets": [
+        {
+            "stack": {
+                "components": {
+                    "minecraft:banner_patterns": [
+                        {
+                            "color": "yellow",
+                            "pattern": "minecraft:skull"
+                        },
+                        {
+                            "color": "red",
+                            "pattern": "minecraft:border"
+                        },
+                        {
+                            "color": "black",
+                            "pattern": "minecraft:gradient_up"
+                        }
+                    ],
+                    "minecraft:hide_additional_tooltip": {},
+                    "minecraft:item_name": "{\"color\":\"red\",\"translate\":\"banner.apotheosis.nether_herald\"}"
+                },
+                "count": 1,
+                "id": "minecraft:black_banner"
+            },
+            "weight": 1
+        }
+    ],
+    "mainhands": [
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.175,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:sharpness": 3
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:diamond_axe"
+            },
+            "weight": 1
+        }
+    ],
+    "tags": [],
+    "weight": 0
+}

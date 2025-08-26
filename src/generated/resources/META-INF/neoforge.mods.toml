@@ -2,19 +2,23 @@ modLoader="javafml"
 
 loaderVersion="[2,)"
 
-license="MIT License"
+license="MIT License (code) / All Rights Reserved (assets)"
 
 [[mods]] #mandatory
 
 modId="apotheosis"
 
-version="8.3.4"
+version="8.4.0"
 
 displayName="Apotheosis"
 
 authors="Shadows_of_Fire"
 
 description='''All things that should have been'''
+
+logoFile="logo_transparent.png"
+
+displayURL="https://www.curseforge.com/minecraft/mc-mods/apotheosis"
 
 [[mixins]]
 config="apotheosis.mixins.json"
@@ -29,14 +33,14 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="neoforge"
     type="required"
-    versionRange="[21.1.144,)"
+    versionRange="[21.1.187,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="placebo"
     type="required"
-    versionRange="[9.8.1,)"
+    versionRange="[9.9.1,)"
     ordering="AFTER"
     side="BOTH"
 
@@ -57,13 +61,20 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="apothic_enchanting"
     type="required"
-    versionRange="[1.4.0,)"
+    versionRange="[1.5.0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="curios"
     type="optional"
-    versionRange="[9.3.1+1.21.1,)"
+    versionRange="[9.5.1+1.21.1,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.apotheosis]]
+    modId="gateways"
+    type="optional"
+    versionRange="[5.1.0,)"
     ordering="AFTER"
     side="BOTH"

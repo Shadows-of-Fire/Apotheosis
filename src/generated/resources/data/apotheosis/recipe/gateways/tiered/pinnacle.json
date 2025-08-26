@@ -1,0 +1,40 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "gateways"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "G": {
+            "item": "apotheosis:gem_dust"
+        },
+        "I": {
+            "item": "apothic_enchanting:infused_breath"
+        },
+        "M": {
+            "item": "apotheosis:mythic_material"
+        },
+        "S": {
+            "item": "apotheosis:sigil_of_malice"
+        },
+        "W": {
+            "item": "apothic_enchanting:warden_tendril"
+        }
+    },
+    "pattern": [
+        "SWS",
+        "IMI",
+        "GGG"
+    ],
+    "result": {
+        "components": {
+            "gateways:gateway": "apotheosis:tiered/pinnacle"
+        },
+        "count": 1,
+        "id": "gateways:gate_pearl"
+    }
+}

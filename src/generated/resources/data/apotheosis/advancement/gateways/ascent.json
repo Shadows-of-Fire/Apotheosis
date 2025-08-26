@@ -1,0 +1,40 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "gateways"
+        }
+    ],
+    "parent": "apotheosis:progression/ascent",
+    "criteria": {
+        "complete_ascent_gate": {
+            "conditions": {
+                "gateway": "apotheosis:tiered/ascent"
+            },
+            "trigger": "gateways:finish_gateway"
+        }
+    },
+    "display": {
+        "background": "apotheosis:textures/advancements/bg/apoth.png",
+        "description": {
+            "translate": "advancements.apotheosis.challenge_gates.ascent.desc"
+        },
+        "frame": "goal",
+        "icon": {
+            "components": {
+                "gateways:gateway": "apotheosis:tiered/ascent"
+            },
+            "count": 1,
+            "id": "gateways:gate_pearl"
+        },
+        "title": {
+            "translate": "advancements.apotheosis.challenge_gates.ascent.title"
+        }
+    },
+    "requirements": [
+        [
+            "complete_ascent_gate"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

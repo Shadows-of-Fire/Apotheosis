@@ -8,6 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
+import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.util.DamageSourceExtension;
@@ -54,6 +55,11 @@ public class MagicalArrowAffix extends Affix {
     @Override
     public Codec<? extends Affix> getCodec() {
         return CODEC;
+    }
+
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return true;
     }
 
 }

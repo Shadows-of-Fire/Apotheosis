@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.10-beta'
+    id 'net.neoforged.moddev' version '2.0.80'
     id 'com.diffplug.eclipse.apt' version '3.42.2'
     id 'net.darkhax.curseforgegradle' version '1.1.18'
 }
@@ -57,11 +57,6 @@ neoForge {
     }
 
     ideSyncTask generateModMetadata
-
-    neoFormRuntime {
-        useEclipseCompiler = false // Allows for parallelism on recompile - disabled due to a bug.
-        version = "1.0.3"
-    }
 }
 
 repositories {
@@ -146,6 +141,8 @@ tasks.named("generateModMetadata") {
         modName: modName,
         author: author,
         desc: desc,
+        logo: logo,
+        homepage: homepage,
         mcVersion: mcVersion,
         javaVersion: javaVersion,
         forgeVersion: forgeVersion
@@ -155,17 +152,31 @@ tasks.named("generateModMetadata") {
     if (!licenseFile.exists()) {
         throw new Exception('Missing LICENSE file in repository root.')
     }
-    replaceProperties.put 'license', file('LICENSE').readLines().get(0)
+    
+    def licenseText = file('LICENSE').readLines().get(0)
+    
+    def licenseAssetsFile = file('LICENSE_ASSETS')
+    if (licenseAssetsFile.exists()) {
+        licenseText += ' (code) / ' + file('LICENSE_ASSETS').readLines().get(0) + ' (assets)'
+    }
 
-    if (project.hasProperty('placeboVersion'))       replaceProperties.put 'placeboVersion', placeboVersion
-    if (project.hasProperty('apothicAttributesVersion')) replaceProperties.put 'apothicAttributesVersion', apothicAttributesVersion
-    if (project.hasProperty('apothicSpawnersVersion')) replaceProperties.put 'apothicSpawnersVersion', apothicSpawnersVersion
-    if (project.hasProperty('apothicEnchantingVersion')) replaceProperties.put 'apothicEnchantingVersion', apothicEnchantingVersion
-    if (project.hasProperty('curiosVersion'))        replaceProperties.put 'curiosVersion', curiosVersion
-    if (project.hasProperty('topVersion'))           replaceProperties.put 'topVersion', topVersion
-    if (project.hasProperty('patchouliVersion'))     replaceProperties.put 'patchouliVersion', patchouliVersion
+    replaceProperties.put 'license', licenseText
+
+    // Iterate over all properties that end with 'Version' and add them to the replaceProperties map if they exist.
+    for (def prop : project.properties) {
+        if (prop.key.endsWith('Version')) {
+            replaceProperties.put prop.key, prop.value
+        }
+    }
 
     replaceProperties.put 'mixinConfig', project.mixin.toBoolean() ? "[[mixins]]\nconfig=\"${modid}.mixins.json\"" : ""
+
+    // Remove trailing '+' from versions. While we may use unpinned dependencies, we need to erase that from the mods.toml dependency declaration.
+    replaceProperties.each { key, value ->
+        if (value instanceof String && value.endsWith('+')) {
+            replaceProperties.put(key, value.substring(0, value.length() - 1))
+        }
+    }
 
     inputs.properties replaceProperties
 
@@ -297,7 +308,7 @@ java {
 tasks.register('stockDataPack', Zip) {
     doFirst {
         def packMcMeta = new File(temporaryDir, 'pack.mcmeta')
-        packMcMeta.text = '{"pack":{"description":"This is among the top 10 most useless metadata files!","pack_format":1}}'
+        packMcMeta.text = '{"pack":{"description":"No, it\'s not Diablo II. It may as well be, though.","pack_format":1}}'
     }
 
     archiveVersion = "${version}"

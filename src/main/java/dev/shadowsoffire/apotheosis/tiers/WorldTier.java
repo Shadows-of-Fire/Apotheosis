@@ -10,6 +10,7 @@ import com.mojang.serialization.MapCodec;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Attachments;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
@@ -17,6 +18,7 @@ import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
@@ -57,6 +59,10 @@ public enum WorldTier implements StringRepresentable {
     @Override
     public String getSerializedName() {
         return this.name;
+    }
+
+    public MutableComponent toComponent() {
+        return Apotheosis.lang("text", "world_tier." + this.getSerializedName());
     }
 
     public ResourceLocation getUnlockAdvancement() {

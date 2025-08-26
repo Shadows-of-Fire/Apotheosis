@@ -11,6 +11,9 @@
             ]
         },
         "name": "use_name_generation",
+        "nbt": {
+            "ImmuneToZombification": 1
+        },
         "valid_gear_sets": {
             "haven": [
                 "#haven_melee"

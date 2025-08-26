@@ -40,14 +40,14 @@ public final class PurityWeightsRegistry extends DynamicRegistry<PurityWeights> 
     }
 
     @Override
-    protected void beginReload() {
-        super.beginReload();
+    protected void beginReload(ReloadType type) {
+        super.beginReload(type);
         this.parsedWeights = Map.of();
     }
 
     @Override
-    protected void onReload() {
-        super.onReload();
+    protected void onReload(ReloadType type) {
+        super.onReload(type);
         if (this.registry.size() > 1) {
             this.logger.error("Additional purity weights files have been loaded. Only {} will be parsed.", TARGET_FILE);
         }

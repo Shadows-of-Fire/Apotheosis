@@ -1,8 +1,13 @@
 package dev.shadowsoffire.apotheosis.data;
 
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -16,6 +21,12 @@ import dev.shadowsoffire.apotheosis.advancements.predicates.TypeAwareISP;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
+import dev.shadowsoffire.gateways.GatewayObjects;
+import dev.shadowsoffire.gateways.Gateways;
+import dev.shadowsoffire.gateways.advancements.FinishGatewayTrigger;
+import dev.shadowsoffire.gateways.gate.Gateway;
+import dev.shadowsoffire.gateways.gate.GatewayRegistry;
+import dev.shadowsoffire.gateways.item.GatePearlItem;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -30,18 +41,63 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.PlayerTrigger;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.component.DataComponentPredicate;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.conditions.ConditionalOps;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import net.neoforged.neoforge.common.conditions.WithConditions;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class ApothAdvancementProvider extends AdvancementProvider {
 
+    private final Map<ResourceLocation, List<ICondition>> conditions = new HashMap<>();
+
     private ApothAdvancementProvider(PackOutput output, CompletableFuture<Provider> registries, ExistingFileHelper existingFileHelper, List<AdvancementGenerator> subProviders) {
         super(output, registries, existingFileHelper, subProviders);
+
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public final CompletableFuture<?> run(CachedOutput output) {
+        return this.registries.thenCompose(regs -> {
+            var conditionalCodec = ConditionalOps.createConditionalCodecWithConditions(Advancement.CODEC);
+
+            Set<ResourceLocation> set = new HashSet<>();
+            List<CompletableFuture<?>> list = new ArrayList<>();
+            ConditionalConsumer<AdvancementHolder> consumer = wrap(holder -> {
+                if (!set.add(holder.id())) {
+                    throw new IllegalStateException("Duplicate advancement " + holder.id());
+                }
+                else {
+                    Path path = this.pathProvider.json(holder.id());
+                    List<ICondition> conds = this.conditions.getOrDefault(holder.id(), List.of());
+                    if (conds.isEmpty()) {
+                        list.add(DataProvider.saveStable(output, regs, Advancement.CODEC, holder.value(), path));
+                    }
+                    else {
+                        WithConditions<Advancement> withConds = new WithConditions<>(conds, holder.value());
+                        list.add(DataProvider.saveStable(output, regs, conditionalCodec, Optional.of(withConds), path));
+                    }
+                }
+            });
+
+            for (AdvancementSubProvider advancementsubprovider : this.subProviders) {
+                advancementsubprovider.generate(regs, consumer);
+            }
+
+            return CompletableFuture.allOf(list.toArray(CompletableFuture[]::new));
+        });
     }
 
     public static ApothAdvancementProvider create(PackOutput output, CompletableFuture<Provider> registries, ExistingFileHelper existingFileHelper) {
@@ -60,6 +116,8 @@ public class ApothAdvancementProvider extends AdvancementProvider {
         @Override
         @SuppressWarnings("unused")
         public void generate(Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
+
+            ConditionalConsumer<AdvancementHolder> consumer = (ConditionalConsumer<AdvancementHolder>) saver;
 
             DynamicHolder<LootRarity> common = rarity("common");
             DynamicHolder<LootRarity> uncommon = rarity("uncommon");
@@ -175,11 +233,104 @@ public class ApothAdvancementProvider extends AdvancementProvider {
                 .parent(summit)
                 .save(saver, loc("progression/pinnacle"));
 
+            DynamicHolder<Gateway> frontierGate = gateway("tiered/frontier");
+            DynamicHolder<Gateway> ascentGate = gateway("tiered/ascent");
+            DynamicHolder<Gateway> summitGate = gateway("tiered/summit");
+            DynamicHolder<Gateway> pinnacleGate = gateway("tiered/pinnacle");
+
+            AdvancementHolder completeFrontierGate = Advancement.Builder.advancement()
+                .display(
+                    gatePearl(frontierGate),
+                    title("challenge_gates.frontier"),
+                    desc("challenge_gates.frontier"),
+                    Apotheosis.loc("textures/advancements/bg/apoth.png"),
+                    AdvancementType.TASK,
+                    true,
+                    true,
+                    false)
+                .requirements(AdvancementRequirements.Strategy.AND)
+                .addCriterion("complete_frontier_gate", completeGateway(frontierGate))
+                .parent(frontier)
+                .build(Apotheosis.loc("gateways/frontier"));
+
+            consumer.saveConditionally(completeFrontierGate, new ModLoadedCondition(Gateways.MODID));
+
+            AdvancementHolder completeAscentGate = Advancement.Builder.advancement()
+                .display(
+                    gatePearl(ascentGate),
+                    title("challenge_gates.ascent"),
+                    desc("challenge_gates.ascent"),
+                    Apotheosis.loc("textures/advancements/bg/apoth.png"),
+                    AdvancementType.GOAL,
+                    true,
+                    true,
+                    false)
+                .requirements(AdvancementRequirements.Strategy.AND)
+                .addCriterion("complete_ascent_gate", completeGateway(ascentGate))
+                .parent(ascent)
+                .build(Apotheosis.loc("gateways/ascent"));
+
+            consumer.saveConditionally(completeAscentGate, new ModLoadedCondition(Gateways.MODID));
+
+            AdvancementHolder completeSummitGate = Advancement.Builder.advancement()
+                .display(
+                    gatePearl(summitGate),
+                    title("challenge_gates.summit"),
+                    desc("challenge_gates.summit"),
+                    Apotheosis.loc("textures/advancements/bg/apoth.png"),
+                    AdvancementType.GOAL,
+                    true,
+                    true,
+                    false)
+                .requirements(AdvancementRequirements.Strategy.AND)
+                .addCriterion("complete_summit_gate", completeGateway(summitGate))
+                .parent(summit)
+                .build(Apotheosis.loc("gateways/summit"));
+
+            consumer.saveConditionally(completeSummitGate, new ModLoadedCondition(Gateways.MODID));
+
+            AdvancementHolder completePinnacleGate = Advancement.Builder.advancement()
+                .display(
+                    gatePearl(pinnacleGate),
+                    title("challenge_gates.pinnacle"),
+                    desc("challenge_gates.pinnacle"),
+                    Apotheosis.loc("textures/advancements/bg/apoth.png"),
+                    AdvancementType.GOAL,
+                    true,
+                    true,
+                    false)
+                .requirements(AdvancementRequirements.Strategy.AND)
+                .addCriterion("complete_pinnacle_gate", completeGateway(pinnacleGate))
+                .parent(pinnacle)
+                .build(Apotheosis.loc("gateways/pinnacle"));
+
+            consumer.saveConditionally(completePinnacleGate, new ModLoadedCondition(Gateways.MODID));
+
+            AdvancementHolder obtainSigilOfSupremacy = Advancement.Builder.advancement()
+                .display(
+                    Apoth.Items.SIGIL_OF_SUPREMACY.value(),
+                    title("challenge_gates.sigil_of_supremacy"),
+                    desc("challenge_gates.sigil_of_supremacy"),
+                    Apotheosis.loc("textures/advancements/bg/apoth.png"),
+                    AdvancementType.CHALLENGE,
+                    true,
+                    true,
+                    false)
+                .requirements(AdvancementRequirements.Strategy.AND)
+                .addCriterion("obtain_sigil_of_supremacy", InventoryChangeTrigger.TriggerInstance.hasItems(Apoth.Items.SIGIL_OF_SUPREMACY.value()))
+                .parent(completePinnacleGate)
+                .build(Apotheosis.loc("gateways/sigil_of_supremacy"));
+
+            consumer.saveConditionally(obtainSigilOfSupremacy, new ModLoadedCondition(Gateways.MODID));
         }
 
         @SafeVarargs
         private static Criterion<?> rarityInSlot(EquipmentSlotGroup slot, DynamicHolder<LootRarity>... rarities) {
             return EquippedItemTrigger.TriggerInstance.hasItems(slot, ip(new RarityItemPredicate(ApothMiscUtil.linkedSet(rarities))));
+        }
+
+        private static Criterion<?> completeGateway(DynamicHolder<Gateway> gate) {
+            return GatewayObjects.FINISH_GATEWAY.createCriterion(new FinishGatewayTrigger.Instance(Optional.empty(), gate));
         }
     }
 
@@ -201,5 +352,40 @@ public class ApothAdvancementProvider extends AdvancementProvider {
 
     private static DynamicHolder<LootRarity> rarity(String path) {
         return RarityRegistry.INSTANCE.holder(Apotheosis.loc(path));
+    }
+
+    private static DynamicHolder<Gateway> gateway(String path) {
+        return GatewayRegistry.INSTANCE.holder(Apotheosis.loc(path));
+    }
+
+    private static ItemStack gatePearl(DynamicHolder<Gateway> gate) {
+        ItemStack stack = new ItemStack(GatewayObjects.GATE_PEARL);
+        GatePearlItem.setGate(stack, gate);
+        return stack;
+    }
+
+    private static interface ConditionalConsumer<T> extends Consumer<T> {
+        void saveConditionally(T adv, ICondition... conditions);
+    }
+
+    private void addCondition(AdvancementHolder adv, ICondition cond) {
+        this.conditions.computeIfAbsent(adv.id(), a -> new ArrayList<>()).add(cond);
+    }
+
+    private <T> ConditionalConsumer<T> wrap(Consumer<T> consumer) {
+        return new ConditionalConsumer<>(){
+            @Override
+            public void accept(T t) {
+                consumer.accept(t);
+            }
+
+            @Override
+            public void saveConditionally(T adv, ICondition... conditions) {
+                for (ICondition cond : conditions) {
+                    ApothAdvancementProvider.this.addCondition((AdvancementHolder) adv, cond);
+                }
+                this.accept(adv);
+            }
+        };
     }
 }

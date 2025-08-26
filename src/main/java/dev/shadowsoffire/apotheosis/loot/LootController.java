@@ -72,6 +72,7 @@ public class LootController {
         String key = nameList.size() > 1 ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.two";
         MutableComponent name = Component.translatable(key, nameList.get(0).getName(true), "", nameList.size() > 1 ? nameList.get(1).getName(false) : "").withStyle(Style.EMPTY.withColor(rarity.color()).withItalic(false));
         AffixHelper.setName(stack, name);
+        stack.remove(Components.TOUCHED_BY_MALICE);
 
         return stack;
     }

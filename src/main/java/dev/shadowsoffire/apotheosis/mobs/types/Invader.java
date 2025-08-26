@@ -16,7 +16,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig;
-import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -35,9 +34,6 @@ import dev.shadowsoffire.apotheosis.tiers.Constraints.Constrained;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
-import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
-import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
-import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import dev.shadowsoffire.apothic_enchanting.asm.EnchHooks;
@@ -173,12 +169,6 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
 
         entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, ctx.rand().nextFloat() * 360.0F, 0.0F);
 
-        // Apply the tier augments, since invaders will not receive them otherwise.
-        for (TierAugment aug : TierAugmentRegistry.getAugments(ctx.tier(), Target.MONSTERS)) {
-            aug.apply(level, entity);
-        }
-        entity.setData(Attachments.TIER_AUGMENTS_APPLIED, true);
-
         // TODO: Implement supporting entities here. Need to return the boss *and* the supports for spawning.
         return entity;
     }
@@ -194,10 +184,6 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
 
         if (rarity == null) {
             rarity = LootRarity.random(ctx, this.stats.keySet());
-        }
-
-        if (rarity == null) {
-            rarity = this.stats.keySet().stream().findAny().orElseThrow();
         }
 
         BossStats stats = this.stats.get(rarity);
@@ -269,7 +255,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
 
             if (s == guaranteed) {
                 mob.setDropChance(s, 2F);
-                mob.setItemSlot(s, modifyBossItem(stack, mob.getName(), ctx, rarity, stats, mob.level().registryAccess()));
+                mob.setItemSlot(s, modifyBossItem(stack, mob.getName(), ctx, rarity, stats.enchLevels().primary(), mob.level().registryAccess()));
                 mob.setCustomName(mob.getName().copy().withStyle(Style.EMPTY.withColor(rarity.color())));
             }
             else if (rand.nextFloat() < stats.enchantChance()) {
@@ -307,9 +293,11 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         EnchantmentHelper.setEnchantments(stack, builder.toImmutable());
     }
 
-    public static ItemStack modifyBossItem(ItemStack stack, Component bossName, GenContext ctx, LootRarity rarity, BossStats stats, RegistryAccess reg) {
+    public static ItemStack modifyBossItem(ItemStack stack, Component bossName, GenContext ctx, LootRarity rarity, int enchLevel, RegistryAccess reg) {
         RandomSource rand = ctx.rand();
-        enchantBossItem(rand, stack, stats.enchLevels().primary(), true, reg);
+        if (enchLevel > 0) {
+            enchantBossItem(rand, stack, enchLevel, true, reg);
+        }
         NameHelper.setItemName(rand, stack);
         stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, ctx);
 

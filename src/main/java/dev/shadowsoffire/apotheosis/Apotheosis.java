@@ -6,17 +6,20 @@ import org.apache.logging.log4j.Logger;
 import dev.shadowsoffire.apotheosis.AdventureConfig.ConfigPayload;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
-import dev.shadowsoffire.apotheosis.compat.GatewaysCompat;
+import dev.shadowsoffire.apotheosis.affix.trades.AffixTrade;
+import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
 import dev.shadowsoffire.apotheosis.compat.curios.CuriosCompat;
+import dev.shadowsoffire.apotheosis.compat.gateways.GatewaysCompat;
 import dev.shadowsoffire.apotheosis.compat.twilight.AdventureTwilightCompat;
 import dev.shadowsoffire.apotheosis.data.AffixLootEntryProvider;
 import dev.shadowsoffire.apotheosis.data.AffixProvider;
 import dev.shadowsoffire.apotheosis.data.ApothAdvancementProvider;
 import dev.shadowsoffire.apotheosis.data.ApothDataMapProvider;
 import dev.shadowsoffire.apotheosis.data.ApothLootProvider;
+import dev.shadowsoffire.apotheosis.data.ApothPaintingTagsProvider;
+import dev.shadowsoffire.apotheosis.data.ApothPaintingsProvider;
 import dev.shadowsoffire.apotheosis.data.ApothRecipeProvider;
-import dev.shadowsoffire.apotheosis.data.ApothTagsProvider;
 import dev.shadowsoffire.apotheosis.data.AugmentationProvider;
 import dev.shadowsoffire.apotheosis.data.EliteProvider;
 import dev.shadowsoffire.apotheosis.data.GLMProvider;
@@ -27,8 +30,10 @@ import dev.shadowsoffire.apotheosis.data.PurityWeightsProvider;
 import dev.shadowsoffire.apotheosis.data.RarityOverrideProvider;
 import dev.shadowsoffire.apotheosis.data.RarityProvider;
 import dev.shadowsoffire.apotheosis.data.RogueSpawnerProvider;
+import dev.shadowsoffire.apotheosis.data.SongProvider;
 import dev.shadowsoffire.apotheosis.data.TierAugmentProvider;
 import dev.shadowsoffire.apotheosis.data.WandererTradesProvider;
+import dev.shadowsoffire.apotheosis.data.gateways.ApothGateProvider;
 import dev.shadowsoffire.apotheosis.data.twilight.TwilightAffixLootProvider;
 import dev.shadowsoffire.apotheosis.data.twilight.TwilightGearSetProvider;
 import dev.shadowsoffire.apotheosis.data.twilight.TwilightInvaderProvider;
@@ -57,14 +62,17 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
+import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.datagen.DataGenBuilder;
 import dev.shadowsoffire.placebo.network.PayloadHelper;
+import dev.shadowsoffire.placebo.systems.wanderer.WandererTradesRegistry;
 import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
 import dev.shadowsoffire.placebo.util.RunnableReloader;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -103,7 +111,7 @@ public class Apotheosis {
         EntityModifier.initCodecs();
         GemBonus.initCodecs();
         if (ModList.get().isLoaded("gateways")) {
-            GatewaysCompat.register();
+            GatewaysCompat.register(bus);
         }
 
         if (ModList.get().isLoaded("twilightforest")) {
@@ -117,15 +125,23 @@ public class Apotheosis {
         if (ModList.get().isLoaded("curios")) {
             CuriosCompat.register(bus);
         }
+
+        WandererTradesRegistry.INSTANCE.registerCodec(loc("affix_trade"), AffixTrade.CODEC);
+        WandererTradesRegistry.INSTANCE.registerCodec(loc("automatic_affix_trade"), AutomaticAffixTrade.CODEC);
     }
 
     @SubscribeEvent
     public void setup(FMLCommonSetupEvent e) {
         e.enqueueWork(() -> {
-            TabFillingRegistry.register(Apoth.Tabs.ADVENTURE.getKey(), Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST,
-                Items.GEM_FUSED_SLATE, Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_WITHDRAWAL, Items.SIGIL_OF_REBIRTH, Items.SIGIL_OF_ENHANCEMENT, Items.SIGIL_OF_UNNAMING, Items.SIGIL_OF_MALICE,
-                Items.BOSS_SUMMONER, Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE, Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.AUGMENTING_TABLE, Items.GEM,
-                Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE);
+            TabFillingRegistry.register(Apoth.Tabs.ADVENTURE.getKey(),
+                Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
+                Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_WITHDRAWAL, Items.SIGIL_OF_REBIRTH, Items.SIGIL_OF_ENHANCEMENT, Items.SIGIL_OF_UNNAMING, Items.SIGIL_OF_MALICE, Items.SIGIL_OF_SUPREMACY,
+                Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE, Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.AUGMENTING_TABLE,
+                Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE,
+                Items.MUSIC_DISC_FLASH, Items.MUSIC_DISC_GLIMMER, Items.MUSIC_DISC_SHIMMER,
+                Items.GEM, // Gem is at the end because it also generates all the dynamic variants.
+                Items.BOSS_SUMMONER // Except this stupid little creature
+            );
 
             TabFillingRegistry.register(CreativeModeTabs.FOOD_AND_DRINKS, Items.POTION_CHARM);
         });
@@ -163,9 +179,11 @@ public class Apotheosis {
     public void data(GatherDataEvent e) {
         DataProvider.INDENT_WIDTH.set(4);
         DataGenBuilder.create(Apotheosis.MODID)
+            .registry(Registries.JUKEBOX_SONG, SongProvider::bootstrap)
+            .registry(Registries.PAINTING_VARIANT, ApothPaintingsProvider::bootstrap)
             .provider(ApothLootProvider::create)
             .provider(ApothRecipeProvider::new)
-            .provider(ApothTagsProvider::new)
+            .provider(ApothPaintingTagsProvider::new)
             .provider(RarityProvider::new)
             .provider(RarityOverrideProvider::new)
             .provider(AffixLootEntryProvider::new)
@@ -185,6 +203,7 @@ public class Apotheosis {
             .provider(TwilightInvaderProvider::new)
             .provider(ApothDataMapProvider::new)
             .provider(AugmentationProvider::new)
+            .provider(ApothGateProvider::new)
             .build(e);
 
         Object2IntOpenHashMap<String> map = (Object2IntOpenHashMap<String>) DataProvider.FIXED_ORDER_FIELDS;
@@ -213,6 +232,8 @@ public class Apotheosis {
 
         // Place gem bonus lists below everything else in the gem file.
         map.put("bonuses", 5);
+
+        Gateways.setupDatagenFieldOrder();
     }
 
     public static void loadConfig(boolean firstLoad) {

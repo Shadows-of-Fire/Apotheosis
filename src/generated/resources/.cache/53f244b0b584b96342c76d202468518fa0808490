@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-09T23:24:35.4153478	Affixes
+// 1.21.1	2025-07-04T15:21:40.5130185	Affixes
 25581ee0a1d84bdbe5eadaa04ac02e33ba182b0e data/apotheosis/affixes/armor/attribute/adamantine.json
 6df2683685c5934ff580ef1d3901e1c593c48fde data/apotheosis/affixes/armor/attribute/aquatic.json
 a08886d35608a8ff9f1f79282f5f9beb203ddd47 data/apotheosis/affixes/armor/attribute/blessed.json
@@ -55,7 +55,7 @@ af06f472cef5a9869fdb6c6e30c6ba0379096816 data/apotheosis/affixes/melee/attribute
 f39950d51915407d74b355381b0739af91b64c6e data/apotheosis/affixes/melee/attribute/violent.json
 2dfbc6965063f8fa3ec39876423c0dccc1ecf2d2 data/apotheosis/affixes/melee/cleaving.json
 749b38f6581b30610b4112dcdd94f7d1d42b4040 data/apotheosis/affixes/melee/executing.json
-04841a3527e513d595fa4e8a9cb6f009e7535d65 data/apotheosis/affixes/melee/festive.json
+68198d688ed864b8a3775bcdea97c53c0d9d8516 data/apotheosis/affixes/melee/festive.json
 7fcac7511979a98d4bb8c02ca8bb486598ca9ae8 data/apotheosis/affixes/melee/mob_effect/bloodletting.json
 29138f7717a1c0aa76571042301e031df7828096 data/apotheosis/affixes/melee/mob_effect/caustic.json
 d1b7b6e470fd5326f126ff1c7c50254ca95816ca data/apotheosis/affixes/melee/mob_effect/elusive.json

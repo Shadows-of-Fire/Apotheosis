@@ -90,6 +90,11 @@ public class DamageReductionAffix extends Affix {
         return CODEC;
     }
 
+    @Override
+    public boolean isLevelIndependent(AffixInstance inst) {
+        return this.values.get(inst.getRarity()).isConstant();
+    }
+
     public static enum DamageType implements Predicate<DamageSource>, StringRepresentable {
         PHYSICAL("physical", AttributesUtil::isPhysicalDamage),
         MAGIC("magic", d -> d.is(Tags.DamageTypes.IS_MAGIC)),

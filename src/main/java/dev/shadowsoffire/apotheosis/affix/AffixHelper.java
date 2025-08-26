@@ -227,6 +227,8 @@ public class AffixHelper {
         ItemAffixes.Builder builder = affixes.toBuilder();
         List<DynamicHolder<Affix>> afxList = new ArrayList<>(affixes.keySet());
 
+        // TODO: Should we filter out affixes that are level-independent?
+
         // Choose two distinct indices
         int size = afxList.size();
         int firstIndex = rand.nextInt(size);
@@ -260,6 +262,29 @@ public class AffixHelper {
 
         Component msg = Apotheosis.lang("text", "malice_notice", buffedName, removedName);
         player.sendSystemMessage(msg);
+    }
+
+    /**
+     * Applies the effect of the Sigil of Supremacy to the given item stack.
+     * <p>
+     * The sigil increases the effective level of all affixes on the item to 1.5F.
+     * 
+     * @param stack The input stack. The stack is modified in place.
+     */
+    public static void applySupremacy(ItemStack stack) {
+        ItemAffixes affixes = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY);
+        if (affixes.isEmpty()) {
+            return;
+        }
+
+        ItemAffixes.Builder builder = affixes.toBuilder();
+        List<DynamicHolder<Affix>> afxList = new ArrayList<>(affixes.keySet());
+
+        for (DynamicHolder<Affix> affix : afxList) {
+            builder.upgrade(affix, 1.5F);
+        }
+
+        setAffixes(stack, builder.build());
     }
 
     @Deprecated

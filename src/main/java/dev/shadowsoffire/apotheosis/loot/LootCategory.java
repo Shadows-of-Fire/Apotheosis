@@ -38,7 +38,7 @@ public final class LootCategory {
 
     public static final Codec<LootCategory> CODEC = Codec.lazyInitialized(() -> legacyResolverCodec());
     public static final Codec<LootCategory> OPTIONAL_CODEC = Codec.lazyInitialized(() -> Apoth.BuiltInRegs.LOOT_CATEGORY.byNameCodec());
-    public static final Codec<Set<LootCategory>> SET_CODEC = PlaceboCodecs.setOf(CODEC);
+    public static final Codec<Set<LootCategory>> SET_CODEC = PlaceboCodecs.setOf(CODEC); // TODO: Make this into a HolderSet.
     public static final StreamCodec<RegistryFriendlyByteBuf, LootCategory> STREAM_CODEC = ByteBufCodecs.registry(Apoth.BuiltInRegs.LOOT_CATEGORY.key());
 
     private static List<LootCategory> sortedCategories = new ArrayList<>();
@@ -190,7 +190,7 @@ public final class LootCategory {
     @Nullable
     private static ResourceLocation readLocWithApothNamespace(String path) {
         try {
-            return Apotheosis.loc(path);
+            return path.contains(":") ? ResourceLocation.parse(path) : Apotheosis.loc(path);
         }
         catch (ResourceLocationException resourcelocationexception) {
             return null;

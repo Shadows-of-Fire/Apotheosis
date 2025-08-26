@@ -200,6 +200,13 @@ public record AffixInstance(DynamicHolder<Affix> affix, float level, DynamicHold
         this.getAffix().modifyEntityLoot(this, e);
     }
 
+    /**
+     * @see Affix#isLevelIndependent(AffixInstance)
+     */
+    public boolean isLevelIndependent() {
+        return this.getAffix().isLevelIndependent(this);
+    }
+
     public AffixInstance withNewLevel(float level) {
         return new AffixInstance(this.affix, Mth.clamp(level, 0, Affix.MAX_LEVEL), this.rarity, this.stack);
     }

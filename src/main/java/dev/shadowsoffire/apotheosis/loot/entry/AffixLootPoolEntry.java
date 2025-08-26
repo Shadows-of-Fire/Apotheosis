@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.loot;
+package dev.shadowsoffire.apotheosis.loot.entry;
 
 import java.util.List;
 import java.util.Set;
@@ -8,6 +8,12 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.loot.AffixLootEntry;
+import dev.shadowsoffire.apotheosis.loot.AffixLootRegistry;
+import dev.shadowsoffire.apotheosis.loot.LootController;
+import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.loot.functions.ReforgeItemFunction;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -23,6 +29,9 @@ import net.neoforged.neoforge.common.loot.LootModifier;
  * An Affix Loot Pool Entry allows explicit injection of affix loot into a loot table.
  * <p>
  * This is independent of any {@link LootModifier}s that may apply affix loot into loot tables.
+ * <p>
+ * Note, this class requires that you go through {@link AffixLootEntry} to create the underlying items.
+ * If you want to manage the generation of items yourself, and directly reforge them, use {@link ReforgeItemFunction}.
  */
 public class AffixLootPoolEntry extends ContextualLootPoolEntry {
 
@@ -58,6 +67,7 @@ public class AffixLootPoolEntry extends ContextualLootPoolEntry {
     @Override
     protected void createItemStack(Consumer<ItemStack> list, LootContext ctx, GenContext gCtx) {
         if (!this.validated) {
+            this.rarities.forEach(AffixLootPoolEntry::checkBound);
             this.entries.forEach(AffixLootPoolEntry::checkBound);
             this.validated = true;
         }
@@ -84,12 +94,10 @@ public class AffixLootPoolEntry extends ContextualLootPoolEntry {
     /**
      * Unwraps the holder to its object, if present, otherwise returns null and logs an error.
      */
-    private static boolean checkBound(DynamicHolder<AffixLootEntry> holder) {
+    private static void checkBound(DynamicHolder<?> holder) {
         if (!holder.isBound()) {
-            Apotheosis.LOGGER.error("An AffixLootPoolEntry failed to resolve the Affix Loot Entry {}!", holder.getId());
-            return false;
+            Apotheosis.LOGGER.error("An AffixLootPoolEntry failed to resolve {}!", holder.toString());
         }
-        return true;
     }
 
 }
