@@ -683,6 +683,7 @@
     "loot_category.apotheosis.boots.plural": "Boots",
 
     "info.apotheosis.boss_spawn": "%s has awoken nearby!",
+    "info.apotheosis.boss_spawn_exact": "%s has awoken at %d, %d, %d!",
     "info.apotheosis.boss": "%s Apothic Boss",
     "info.apotheosis.boss_item": "Will Drop: %s",
     "info.apotheosis.boss_modifiers": "Boss Modifiers:",
