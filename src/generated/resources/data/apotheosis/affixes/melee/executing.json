@@ -1,5 +1,9 @@
 {
     "type": "apotheosis:executing",
+    "categories": [
+        "apotheosis:melee_weapon",
+        "apotheosis:trident"
+    ],
     "definition": {
         "affix_type": "ability",
         "exclusive_set": [],

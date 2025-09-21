@@ -1,5 +1,8 @@
 {
     "type": "apotheosis:omnetic",
+    "categories": [
+        "apotheosis:breaker"
+    ],
     "definition": {
         "affix_type": "basic_effect",
         "exclusive_set": [],

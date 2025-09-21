@@ -2,7 +2,9 @@ package dev.shadowsoffire.apotheosis.affix.effect;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.spongepowered.include.com.google.common.base.Preconditions;
 
@@ -31,19 +33,22 @@ public class OmneticAffix extends Affix {
     public static final Codec<OmneticAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             affixDef(),
+            LootCategory.SET_CODEC.fieldOf("categories").forGetter(a -> a.categories),
             LootRarity.mapCodec(OmneticData.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, OmneticAffix::new));
 
+    protected final Set<LootCategory> categories;
     protected final Map<LootRarity, OmneticData> values;
 
-    public OmneticAffix(AffixDefinition def, Map<LootRarity, OmneticData> values) {
+    public OmneticAffix(AffixDefinition def, Set<LootCategory> categories, Map<LootRarity, OmneticData> values) {
         super(def);
+        this.categories = categories;
         this.values = values;
     }
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat.isBreaker() && this.values.containsKey(rarity);
+        return this.categories.contains(cat) && this.values.containsKey(rarity);
     }
 
     @Override
@@ -86,7 +91,15 @@ public class OmneticAffix extends Affix {
 
     public static class Builder extends AffixBuilder<Builder> {
 
+        protected final Set<LootCategory> categories = new LinkedHashSet<>();
         private final Map<LootRarity, OmneticData> values = new HashMap<>();
+
+        public Builder categories(LootCategory... cats) {
+            for (LootCategory cat : cats) {
+                this.categories.add(cat);
+            }
+            return this;
+        }
 
         public Builder value(LootRarity rarity, String name, Item... items) {
             OmneticData data = new OmneticData(name, Arrays.stream(items).map(Item::getDefaultInstance).toArray(ItemStack[]::new));
@@ -96,7 +109,7 @@ public class OmneticAffix extends Affix {
 
         public OmneticAffix build() {
             Preconditions.checkNotNull(this.definition);
-            return new OmneticAffix(this.definition, this.values);
+            return new OmneticAffix(this.definition, this.categories, this.values);
         }
 
     }

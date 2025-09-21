@@ -83,8 +83,8 @@
 
     "info.apotheosis.affix_item": "어포틱 접사 아이템",
 
-    "death.attack.apotheosis.execute": "%s이(가) %s에게 처형되었습니다.",
-    "death.attack.apotheosis.execute.item": "%s이(가) %s의 %s에 의해 처형되었습니다",
+    "death.attack.apotheosis:execute": "%s이(가) %s에게 처형되었습니다.",
+    "death.attack.apotheosis:execute.item": "%s이(가) %s의 %s에 의해 처형되었습니다",
 
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",
@@ -94,6 +94,7 @@
     "misc.apotheosis.radial_state_updated": "방사형 채굴 모드 : \"%s\"",
     "misc.apotheosis.radial_state.require_not_sneaking": "웅크리고 있는 동안 비활성화",
     "misc.apotheosis.radial_state.require_sneaking": "웅크리고 있는 동안 활성화",
+
     "misc.apotheosis.radial_state.enabled": "활성화",
     "misc.apotheosis.radial_state.disabled": "비활성화",
     "misc.apotheosis.right_click_to_socket": "오른쪽 클릭으로 %s을(를) %s에 삽입합니다.",

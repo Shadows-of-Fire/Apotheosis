@@ -616,6 +616,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
 
         this.add(Apotheosis.loc("breaker/effect/omnetic"),
             new OmneticAffix.Builder()
+                .categories(LootCategories.BREAKER)
                 .definition(AffixType.BASIC_EFFECT, DEFAULT_WEIGHT, 5)
                 .value(rare, "iron", Items.IRON_AXE, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_SWORD, Items.IRON_HOE)
                 .value(epic, "diamond", Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_SWORD, Items.DIAMOND_HOE)
@@ -896,7 +897,8 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .build());
 
         this.add(Apotheosis.loc("melee/executing"),
-            AffixBuilder.simple(ExecutingAffix::new)
+            AffixBuilder.categorized(ExecutingAffix::new)
+                .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT)
                 .definition(AffixType.ABILITY, DEFAULT_WEIGHT, DEFAULT_QUALITY)
                 .value(epic, 0.10F, 0.20F)
                 .value(mythic, 0.15F, 0.25F)

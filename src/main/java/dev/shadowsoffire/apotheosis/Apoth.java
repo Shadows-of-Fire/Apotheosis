@@ -76,6 +76,7 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
+import dev.shadowsoffire.apotheosis.util.LootPatternMatcher;
 import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialState;
 import dev.shadowsoffire.apotheosis.util.SingletonRecipeSerializer;
 import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
@@ -458,6 +459,8 @@ public class Apoth {
         public static final LootItemConditionType KILLED_BY_REAL_PLAYER = R.lootCondition("killed_by_real_player", KilledByRealPlayerCondition.CODEC);
 
         public static final LootItemConditionType HAS_WORLD_TIER = R.lootCondition("has_world_tier", WorldTierCondition.CODEC);
+
+        public static final LootItemConditionType LOOT_TABLE_PATTERN_MATCHER = R.lootCondition("loot_table_pattern_matcher", LootPatternMatcher.CODEC);
 
         private static void bootstrap() {}
     }

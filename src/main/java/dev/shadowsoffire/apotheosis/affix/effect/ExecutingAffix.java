@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.affix.effect;
 
 import java.util.Map;
+import java.util.Set;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -29,19 +30,22 @@ public class ExecutingAffix extends Affix {
     public static final Codec<ExecutingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             affixDef(),
+            LootCategory.SET_CODEC.fieldOf("categories").forGetter(a -> a.categories),
             LootRarity.mapCodec(StepFunction.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, ExecutingAffix::new));
 
+    protected final Set<LootCategory> categories;
     protected final Map<LootRarity, StepFunction> values;
 
-    public ExecutingAffix(AffixDefinition def, Map<LootRarity, StepFunction> values) {
+    public ExecutingAffix(AffixDefinition def, Set<LootCategory> categories, Map<LootRarity, StepFunction> values) {
         super(def);
+        this.categories = categories;
         this.values = values;
     }
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat.isMelee() && this.values.containsKey(rarity);
+        return this.categories.contains(cat) && this.values.containsKey(rarity);
     }
 
     @Override
@@ -66,7 +70,7 @@ public class ExecutingAffix extends Affix {
     public void doPostAttack(AffixInstance inst, LivingEntity user, Entity target) {
         float threshold = this.getTrueLevel(inst.getRarity(), inst.level());
         if (ApothicAttributes.getLocalAtkStrength(user) >= 0.98 && target instanceof LivingEntity living && !living.level().isClientSide) {
-            if (living.getHealth() / living.getMaxHealth() < threshold) {
+            if (!living.isDeadOrDying() && living.getHealth() / living.getMaxHealth() < threshold) {
                 DamageSource src = living.damageSources().source(Apoth.DamageTypes.EXECUTE, user);
                 if (!((LivingEntityInvoker) living).callCheckTotemDeathProtection(src)) {
                     SoundEvent soundevent = ((LivingEntityInvoker) living).callGetDeathSound();
