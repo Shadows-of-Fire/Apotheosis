@@ -1,6 +1,6 @@
 {
     "comment_id": "/Adventure Module",
-	
+
     "key.categories.apotheosis": "Apotheosis",
 
     "text.apotheosis.world_tier.haven": "Refúgio",
@@ -49,23 +49,23 @@
 
     "tutorial.apotheosis.world_tier.introduction.title": "Introdução",
     "tutorial.apotheosis.world_tier.introduction.desc": "Bem-vindo ao tutorial para os Níveis de Mundo Apóticos! Neste tutorial, você aprenderá sobre o novo sistema de Níveis de Mundo e como progredir nele. Clique em \"Avançar\" para continuar ou em \"Pular Tutorial\" para pular este tutorial.",
-    
+
     "tutorial.apotheosis.world_tier.world_tiers.title": "Níveis do Mundo",
     "tutorial.apotheosis.world_tier.world_tiers.desc": "Níveis de Mundo são o sistema de progressão de Apotheosis. Desbloquear e Ativar novos Níveis de Mundo aumentará a dificuldade do jogo, mas também aumentará a qualidade dos itens encontrados no mundo.\n\nPasse o cursor sobre o ícone de um Nível Mundial para ver os requisitos de desbloqueio e clique nele para focar em um que já esteja desbloqueado.",
-    
+
     "tutorial.apotheosis.world_tier.tier_name.title": "Nome do Nível Mundial",
     "tutorial.apotheosis.world_tier.tier_name.desc": "Este é o nome do Nível Mundial selecionado, assim como uma breve descrição do nível.",
-    
+
     "tutorial.apotheosis.world_tier.tier_difficulty.title": "Dificuldade de Nível Mundial",
     "tutorial.apotheosis.world_tier.tier_difficulty.desc": "Esta é a dificuldade do Nível Mundial selecionado. Dificuldades mais altas significam inimigos mais fortes, mas também recompensas melhores.\n\nNo nível mundial: Fronteira e acima, Invasores Apóticos começarão a aparecer no seu mundo.",
-    
+
     "tutorial.apotheosis.world_tier.detailed_info.title": "Informação Detalhada",
     "tutorial.apotheosis.world_tier.detailed_info.desc": "Este botão mostrará informações detalhadas sobre o Nível Mundial, incluindo os bônus e penalidades para jogadores e criaturas, além das chances de obtenção para cada raridade e pureza de gema.\n\nSe você não tiver certeza do que são Raridades ou Purezas, consulte a Crônica das Sombras (o livro guia dentro do jogo).",
-    
+
     "tutorial.apotheosis.world_tier.activate.title": "Ativando Níveis de Mundo",
     "tutorial.apotheosis.world_tier.activate.desc": "Este botão permite ativar o nível de mundo selecionado, caso ainda não esteja ativo.\n\nClicar em \"Concluir\" ativará automaticamente o Nível de Mundo: Refúgio. Para todos os outros Níveis de Mundo, você precisará voltar aqui e ativá-los manualmente.",
     "tutorial.apotheosis.world_tier.activate_disabled.desc": "Normalmente, este botão permite ativar o Nível de Mundo selecionado.\n\nNo entanto, neste modpack, os Níveis de Mundo são ativados automaticamente e não podem ser alterados manualmente. Você ainda pode visualizar os detalhes de cada Nível de Mundo, mas não pode ativá-los ou desativá-los.",
-    
+
     "text.apotheosis.tier_info": "Informações de Nível Mundial",
     "text.apotheosis.monster_augments": "Melhorias de Monstros",
     "text.apotheosis.player_augments": "Melhorias do Jogador",
@@ -75,7 +75,7 @@
     "text.apotheosis.unidentified": "%s Não Identificado",
     "text.apotheosis.world_tier_tutorial": "Este item tem um poder desconhecido",
     "text.apotheosis.world_tier_tutorial.2": "Pressione %s e ative o Nível Mundial: Refúgio para desbloquear",
-    
+
     "key.apotheosis.toggle_radial_mining": "Alterar modo de mineração radial",
     "key.apotheosis.open_world_tier_select": "Abrir Seleção de Nível de Mundo",
     "key.apotheosis.compare_equipment": "Comparar Equipamento Apontado",
@@ -461,7 +461,7 @@
     "text.apotheosis.when_socketed_in": "Quando Encaixado em:",
     "text.apotheosis.when_socketed_typed": "Quando Encaixado em %s:",
     "info.apotheosis.socketing": "Gemas podem ser encaixadas com uma Bancada de Ferraria. O item fica à esquerda e a gema à direita.\n\nEscolha com sabedoria, pois remover uma gema é caro.",
-    
+
     "purity.apotheosis.cracked": "Rachado",
     "purity.apotheosis.chipped": "Lascada",
     "purity.apotheosis.flawed": "Imperfeito",
@@ -506,11 +506,11 @@
     "bonus.apotheosis:twilight_treasure_goblin.desc": "Atacar uma entidade tem %s%% de chance de invocar um Goblin do Tesouro. %s",
     "bonus.apotheosis:twilight_fortification.desc": "Levar dano tem %s%% de chance de fortificar você com Escudos do Twilight. %s",
     "bonus.apotheosis:frozen_drops.desc": "Matar um inimigo com %s aumenta a quantidade de saques por %s%%.",
-    
+
     "misc.apotheosis.level": "nível",
     "misc.apotheosis.level.many": "níveis",
-    "name.apotheosis.treasure_goblin": "Goblin do Tesouro",
 
+    "name.apotheosis.treasure_goblin": "Goblin do Tesouro",
     "item.apotheosis.gem.apotheosis:legacy": "Gema do Legado",
     "item.apotheosis.gem.apotheosis:core/guardian": "Gema do Guardião",
     "item.apotheosis.gem.apotheosis:core/ballast": "Gema do Lastro",
@@ -574,27 +574,30 @@
     "item.apotheosis.sigil_of_malice": "Sigilo da Malícia",
     "item.apotheosis.sigil_of_malice.desc": "Aplica Toque de Malícia a um item com afixo",
 
+    "item.apotheosis.sigil_of_supremacy": "Sigilo da Supremacia",
+    "item.apotheosis.sigil_of_supremacy.desc": "Sobrecarrega todos os Afixos em um Item com Afixo",
+
     "item.apotheosis.iron_upgrade_smithing_template": "Molde de Ferraria",
     "upgrade.apotheosis.iron": "Melhoria de Ferro ",
     "item.apotheosis.iron_upgrade_smithing_template.applies_to": "Equipamento de Pedra e Malha",
     "item.apotheosis.iron_upgrade_smithing_template.ingredients": "4 Barras de Ferro",
     "item.apotheosis.iron_upgrade_smithing_template.base_slot_description": "Adicione armadura de malha ou equipamento de pedra",
     "item.apotheosis.iron_upgrade_smithing_template.additions_slot_description": "Adicione quatro barras de ferro",
-    
+
     "item.apotheosis.gold_upgrade_smithing_template": "Molde de Ferraria",
     "upgrade.apotheosis.gold": "Melhoria de Ouro ",
     "item.apotheosis.gold_upgrade_smithing_template.applies_to": "Equipamento de Ferro",
     "item.apotheosis.gold_upgrade_smithing_template.ingredients": "4 Barras de Ouro",
     "item.apotheosis.gold_upgrade_smithing_template.base_slot_description": "Adicione armadura de ferro, arma ou ferramentas",
     "item.apotheosis.gold_upgrade_smithing_template.additions_slot_description": "Adicione quatro barras de ouro",
-    
+
     "item.apotheosis.diamond_upgrade_smithing_template": "Molde de Ferraria",
     "upgrade.apotheosis.diamond": "Melhoria de Diamante ",
     "item.apotheosis.diamond_upgrade_smithing_template.applies_to": "Equipamento Dourado",
     "item.apotheosis.diamond_upgrade_smithing_template.ingredients": "4 Diamantes",
     "item.apotheosis.diamond_upgrade_smithing_template.base_slot_description": "Adicionar armadura dourada, arma ou ferramentas",
     "item.apotheosis.diamond_upgrade_smithing_template.additions_slot_description": "Adicionar quatro diamantes",
-    
+
     "block.apotheosis.boss_spawner": "Gerador de Chefe",
     "block.apotheosis.gem_cutting_table": "Bancada de Lapidação de Gema",
     "block.apotheosis.gem_cutting_table.desc": "Usa Pó de Gema e Materiais Raros para aprimorar Gemas",
@@ -606,7 +609,7 @@
     "block.apotheosis.reforging_table.desc2": "Raridade máxima: %s",
     "block.apotheosis.augmenting_table": "Bancada de Aprimoramento",
     "block.apotheosis.augmenting_table.desc": "Usa Sigilos de Aprimoramento para aprimorar afixos individualmente",
-    
+
     "button.apotheosis.salvage": "Reciclar Itens",
     "button.apotheosis.no_salvage": "Nenhum item selecionado",
     "button.apotheosis.no_salvage_all": "Nenhum item válido no inventário",
@@ -619,7 +622,7 @@
     "button.apotheosis.augmenting.no_alternatives": "Sem Afixos Alternativos",
     "button.apotheosis.augmenting.upgrade.cost": "Custo: %sx %s",
     "button.apotheosis.augmenting.upgrade.exp_cost": "Custo de Experiência: %s níveis",
-    
+
     "menu.apotheosis.gem_cutting": "Lapidação de Gema",
     "container.apotheosis.salvage": "Reciclar",
     "container.apotheosis.reforge": "Reforjar",
@@ -645,7 +648,7 @@
     "text.apotheosis.malice_marker": "Malícia será aplicada na fabricação",
     "text.apotheosis.touched_by_malice": "Tocado por Malícia",
     "text.apotheosis.malice_notice": "Malícia: %s consumiu a força de %s",
-    
+
     "title.apotheosis.smithing": "Ferraria Apótica",
     "title.apotheosis.salvaging": "Reciclagem",
 
@@ -706,23 +709,59 @@
     "death.attack.apotheosis:execute.player": "%s foi executado por %s.",
 
     "disconnect.apotheosis.tier_changes_disabled": "Mudanças manuais nos tiers de mundo estão desabilitadas nas configurações.",
-    
+
+    "elite.apotheosis.craig": "Craig o Eterno",
+
     "comment_id": "/Adventure + Gateways Compat",
 
-	"misc.apotheosis.invader": "%s Invasor Apotico",
     "misc.apotheosis.random": "Aleatório",
-    "reward.apotheosis.affix": "Item de Afixo %s",
-    "reward.apotheosis.random_affix": "Item de Afixo Aleatório",
+    "wave_entity.apotheosis.invader": "Invasor Apótico %s",
+    "wave_entity.apotheosis.elite": "Elite Apótico - %s",
+    "wave_entity.apotheosis.true_random_invader": "Verdadeiramente Aleatório Invasor Apótico",
+    "reward.apotheosis.affix_item": "Item com Afixo (%s)",
+    "reward.apotheosis.random_affix_item": "Item com Afixo (Aleatório)",
+    "reward.apotheosis.gem": "Gema Apótica (%s)",
+    "reward.apotheosis.random_gem": "Gema Apótica (Aleatória)",
+    "reward.apotheosis.true_random_gem": "Verdadeiramente Aleatória Gema Apótica",
+    "reward.apotheosis.netherite_smithing_template": "Molde de Forja de Netherita",
+    "error.apotheosis.gate_tier_incorrect": "Este Portal só pode ser aberto no Nível Mundial: %s",
+    "modifier.apotheosis.affix": "Recebe um Item com Afixo",
+    "tooltip.apotheosis.requires_world_tier": "Requer Nível Mundial: %s",
 
-	"comment_id": "/Advancements",
+    "wave_entity.apotheosis.affixed_armored_zombie": "Zumbi Armadurado com Afixo",
+    "wave_entity.apotheosis.affixed_armored_husk": "Zumbi-Múmia Armadurado com Afixo",
+    "wave_entity.apotheosis.affixed_armored_skeleton": "Esqueleto Armadurado com Afixo",
+    "wave_entity.apotheosis.affixed_armored_stray": "Errante Armadurado com Afixo",
+    "wave_entity.apotheosis.affixed_polar_bear": "Urso Polar com Afixo",
+    "wave_entity.apotheosis.affixed_wolf": "Lobo com Afixo",
+    "wave_entity.apotheosis.affixed_armored_bogged": "Pantanoso Armadurado com Afixo",
+    "wave_entity.apotheosis.vampiric_phantom": "Phantom Vampírico",
+    "wave_entity.apotheosis.nether_herald": "Arauto do Nether",
+    "wave_entity.apotheosis.affixed_armored_zombified_piglin": "Piglin-Zumbi Armadurado com Afixo",
+    "wave_entity.apotheosis.affixed_armored_wither_skeleton": "Esqueleto Wither Armadurado com Afixo",
+    "wave_entity.apotheosis.ghast_rider": "Cavaleiro Ghast",
+    "wave_entity.apotheosis.affixed_armored_piglin_brute": "Piglin Bruto Armadurado com Afixo",
+    "wave_entity.apotheosis.bastion_guard": "Bastião Guarda Elite",
+    "wave_entity.apotheosis.killer_bunny": "Coelho Assassino",
+
+    "reward.apotheosis.desert_pyramid_loot": "Tesouro da Pirâmide do Deserto",
+    "reward.apotheosis.woodland_mansion_loot": "Tesouro da Mansão da Floresta",
+
+    "apotheosis.tiered/frontier": "Portal da Primeira Fronteira",
+    "apotheosis.tiered/ascent": "Portal da Ascensão Iluminada",
+    "apotheosis.tiered/summit": "Portal do Cume Trovejante",
+    "apotheosis.tiered/pinnacle": "Portal do Pináculo Apótico",
+    "apotheosis.endless_invader": "Portal Infinito dos Invasores Apóticos",
+
+    "comment_id": "/Advancements",
 
     "advancements.apotheosis.progression.root.title": "Níveis Apóticos do Mundo",
     "advancements.apotheosis.progression.root.desc": "Marcos para desbloquear Níveis Mundiais em Apotheosis.\nPressione CTRL+T para abrir a tela de seleção.",
-    
+
     "advancements.apotheosis.progression.haven.title": "Nível Mundial: Refúgio",
     "advancements.apotheosis.progression.haven.desc": "Refúgio é desbloqueado quando você encontra seu primeiro item com afixo e é ativado por padrão.",
     "advancements.apotheosis.progression.haven.criteria.affixed": "Pegar um item do Afixo",
-    
+
     "advancements.apotheosis.progression.frontier.title": "Nível Mundial: Fronteira",
     "advancements.apotheosis.progression.frontier.desc": "Equipe um conjunto completo de itens com Afixo para avançar na Fronteira.\nApós desbloquear, use CTRL+T para ativá-lo.",
     "advancements.apotheosis.progression.frontier.criteria.common_helm": "Equipar um Capacete Comum",
@@ -730,7 +769,7 @@
     "advancements.apotheosis.progression.frontier.criteria.common_legs": "Equipar Calças Comuns",
     "advancements.apotheosis.progression.frontier.criteria.common_feet": "Equipar Botas Comuns",
     "advancements.apotheosis.progression.frontier.criteria.common_hand": "Equipar Arma Comum",
-    
+
     "advancements.apotheosis.progression.ascent.title": "Nível Mundial: Ascensão",
     "advancements.apotheosis.progression.ascent.desc": "Equipe um conjunto completo de Equipamentos Incomuns e mate um Invasor para começar a sua Ascensão",
     "advancements.apotheosis.progression.ascent.criteria.uncommon_helm": "Equipe um Capacete Incomum",
@@ -739,7 +778,7 @@
     "advancements.apotheosis.progression.ascent.criteria.uncommon_feet": "Equipar Botas Incomum",
     "advancements.apotheosis.progression.ascent.criteria.uncommon_hand": "Equipar Arma Incomum",
     "advancements.apotheosis.progression.ascent.criteria.kill_apothic_invader": "Mate um Invasor Apótico",
-    
+
     "advancements.apotheosis.progression.summit.title": "Nível Mundial: Cume",
     "advancements.apotheosis.progression.summit.desc": "Para chegar ao Cume, mate o Wither e equipe um conjunto completo de Equipamentos Raros",
     "advancements.apotheosis.progression.summit.criteria.rare_helm": "Equipar um Capacete Raro",
@@ -748,7 +787,7 @@
     "advancements.apotheosis.progression.summit.criteria.rare_feet": "Equipar Botas Raras",
     "advancements.apotheosis.progression.summit.criteria.rare_hand": "Equipar Arma Rara",
     "advancements.apotheosis.progression.summit.criteria.kill_wither": "Mate o Wither",
-    
+
     "advancements.apotheosis.progression.pinnacle.title": "Nível Mundial: Pináculo",
     "advancements.apotheosis.progression.pinnacle.desc": "Entrar no Pináculo é preciso libertar o End e adquirir um conjunto completo de Equipamentos Épicos.",
     "advancements.apotheosis.progression.pinnacle.criteria.epic_helm": "Equipar um Capacete Épico",
@@ -757,7 +796,7 @@
     "advancements.apotheosis.progression.pinnacle.criteria.epic_feet": "Equipar Botas Épicas",
     "advancements.apotheosis.progression.pinnacle.criteria.epic_hand": "Equipar Arma Épica",
     "advancements.apotheosis.progression.pinnacle.criteria.kill_ender_dragon": "Mate o Dragão do End",
-    
+
     "advancements.apotheosis.affix": "Uma Fixação Impressionante",
     "advancements.apotheosis.affix.desc": "Encontre um item com um Afixo Apótico.",
 
@@ -781,7 +820,7 @@
     "advancements.apotheosis.merchant.desc": "Compre um item de Afixo do Vendedor Ambulante.",
     "advancements.apotheosis.random": "Como você conseguiu isso?",
     "advancements.apotheosis.random.desc": "Recupere um item de afixo de um Monstro aleatório.",
-    
+
     "advancements.apotheosis.gem": "Não é um Diamante",
     "advancements.apotheosis.gem.desc": "Encontre uma Gema Apótica, que pode ser encaixada em Itens de Afixo.",
 
@@ -800,42 +839,24 @@
     "advancements.apotheosis.gem_cut": "O Lapidário",
     "advancements.apotheosis.gem_cut.desc": "Use uma Bancada de Lapidação de Gema para melhorar uma Gema Apótica.",
 
-    "advancements.apotheosis.spawner.root": "Geradores do Apotheosis",
-    "advancements.apotheosis.spawner.root.desc": "Geradores podem ser coletados e modificados, consulte o JEI para obter informações.",
-    "advancements.apotheosis.spawner": "Geradores Apóticos",
-    "advancements.apotheosis.spawner.desc": "Colete um Gerador de Mobs usando Toque Suave.",
-    "advancements.apotheosis.capturing": "Capturado!",
-    "advancements.apotheosis.capturing.desc": "Obtenha um Ovo Gerador de uma criatura usando o Encantamento de Captura.",
-    "advancements.apotheosis.modifier": "Apenas Algumas Modificações...",
-    "advancements.apotheosis.modifier.desc": "Use um Modificador de Gerador para alterar os Status de um Gerador.",
-    "advancements.apotheosis.spawncount": "Olhe o Tamanho do seu Gerador!",
-    "advancements.apotheosis.spawncount.desc": "Aumente a quantidade de surgimento de um Gerador para 16.",
-    "advancements.apotheosis.maxdelay": "Gerador Temporal",
-    "advancements.apotheosis.maxdelay.desc": "Diminua o atraso máximo de surgimento de um Gerador para 20.",
-    "advancements.apotheosis.mindelay": "Eu sou a Velocidade!",
-    "advancements.apotheosis.mindelay.desc": "Diminua o atraso mínimo de surgimento de um Gerador para 20.",
-    "advancements.apotheosis.nearbyents": "Criando uma Horda",
-    "advancements.apotheosis.nearbyents.desc": "Aumente o número máximo de Entidades próximas de um Gerador para 32.",
-    "advancements.apotheosis.playerrange": "Longe da Luta",
-    "advancements.apotheosis.playerrange.desc": "Aumente o alcance de ativação do jogador de um Gerador para 48.",
-    "advancements.apotheosis.spawnrange": "Criaturas por Milhas",
-    "advancements.apotheosis.spawnrange.desc": "Aumente o alcance de surgimento de um Gerador para 32.",
-    "advancements.apotheosis.conditions": "Geração sem Verificação",
-    "advancements.apotheosis.conditions.desc": "Desative as condições de surgimento para um Gerador.",
-    "advancements.apotheosis.players": "Pronto de Fábrica",
-    "advancements.apotheosis.players.desc": "Desative a necessidade de jogadores próximos para um Gerador.",
-    "advancements.apotheosis.redstone": "Adicionando um Interruptor",
-    "advancements.apotheosis.redstone.desc": "Habilite o controle por redstone para um Gerador.",
-    "advancements.apotheosis.light": "Quem Precisa da Escuridão?",
-    "advancements.apotheosis.light.desc": "Faça seu Gerador funcionar em qualquer nível de luz.",
-    "advancements.apotheosis.noai": "Esvaziamento Cerebral",
-    "advancements.apotheosis.noai.desc": "Desative a IA das criaturas para um gerador.",
-    "advancements.apotheosis.ultimate_spawner": "O Gerador Definitivo",
-    "advancements.apotheosis.ultimate_spawner.desc": "Crie um gerador com atrasos mínimos, controle por redstone, sem IA, que ignora condições de spawn e jogadores.",
-    
+    "advancements.apotheosis.challenge_gates.frontier.title": "Deixar a Fronteira",
+    "advancements.apotheosis.challenge_gates.frontier.desc": "Complete o Portal da Primeira Fronteira",
+
+    "advancements.apotheosis.challenge_gates.ascent.title": "Conclua sua Ascensão",
+    "advancements.apotheosis.challenge_gates.ascent.desc": "Complete o Portal da Ascensão Iluminada",
+
+    "advancements.apotheosis.challenge_gates.summit.title": "Alcance o Cume",
+    "advancements.apotheosis.challenge_gates.summit.desc": "Complete o Portal do Cume Trovejante",
+
+    "advancements.apotheosis.challenge_gates.pinnacle.title": "No Pináculo",
+    "advancements.apotheosis.challenge_gates.pinnacle.desc": "Complete o Portal do Pináculo Apótico",
+
+    "advancements.apotheosis.challenge_gates.sigil_of_supremacy.title": "Supremacia!                    ",
+    "advancements.apotheosis.challenge_gates.sigil_of_supremacy.desc": "Adquira um Sigilo da Supremacia na Onda 100 do Portal Infinito dos Invasores Apóticos",
+
     "comment_id": "/Potion Module",
 
-	"item.apotheosis.lucky_foot": "Pé de Coelho da Sorte",
+    "item.apotheosis.lucky_foot": "Pé de Coelho da Sorte",
 
     "item.apotheosis.potion_charm_broke": "Amuleto de poção inválida",
     "item.apotheosis.potion_charm": "Amuleto de %s",
@@ -848,13 +869,13 @@
     "misc.apotheosis.blacklisted_potion": "Não pode ser convertido em um Amuleto de Poção.",
 
     "comment_id": "/Garden Module",
-	"item.apotheosis.ender_lead": "Laço do Ender",
+    "item.apotheosis.ender_lead": "Laço do Ender",
     "info.apotheosis.noentity": "Entidade Guardada: nada",
     "info.apotheosis.containedentity": "Entidade Guardada: %s",
     "info.apotheosis.ender_lead": "O Laço do Ender é um item que pode ser usado para mover animais.  Dê um soco em um animal para capturá-lo e clique com o botão direito para liberá-lo.  A guia não funciona em outros tipos de entidades.",
-    
+
     "comment_id": "/Wanderer Trades",
-	"name.apotheosis.captive_dreams": "Sonhos Aprisionados",
+    "name.apotheosis.captive_dreams": "Sonhos Aprisionados",
     "name.apotheosis.stonebreaker": "Quebra-pedra",
     "name.apotheosis.treecapitator": "Corta-árvores",
     "name.apotheosis.bonesplitter": "Quebra-ossos",
@@ -864,9 +885,9 @@
     "name.apotheosis.thunder_forged_legguards": "Guardiões de Calças Forjados pelo Trovão",
     "name.apotheosis.rune_forged_greaves": "Grevas Forjadas em Runas",
     "name.apotheosis.eternal_vigilance": "Vigilância Eterna",
-    
+
     "comment_id": "/Misc",
-	"info.apoth.modifier_disabled": "Este Modificador está desativado",
+    "info.apoth.modifier_disabled": "Este Modificador está desativado",
     "itemGroup.apotheosis.adventure": "Apotheosis: Módulo de Aventura",
     "itemGroup.apotheosis.ench": "Apotheosis: Módulo de Encantamento",
     "config.jade.plugin_apotheosis.spawner": "Módulo de Gerador Apótico",
@@ -874,9 +895,36 @@
     "config.jade.plugin_apotheosis.adventure": "Módulo de Aventura Apótico",
     "message.apotheosis.item_linking_disabled": "Ligação de Item foi desabilitado pelo servidor.",
     "text.apotheosis.equipped": "Equipado",
-    
+
+    "item.apotheosis.music_disc_flash": "Disco Musical",
+    "jukebox_song.apotheosis.flash": "Renren - Relâmpago",
+    "subtitle.apotheosis.music_disc.flash": "Renren - Relâmpago",
+
+    "item.apotheosis.music_disc_glimmer": "Disco de Música",
+    "jukebox_song.apotheosis.glimmer": "Caner Crebes - Brilho",
+    "subtitle.apotheosis.music_disc.glimmer": "Caner Crebes - Brilho",
+
+    "item.apotheosis.music_disc_shimmer": "Disco de Música",
+    "jukebox_song.apotheosis.shimmer": "Camareiro Kaifry - Cintilar",
+    "subtitle.apotheosis.music_disc.shimmer": "Camareiro Kaifry - Cintilar",
+
+    "painting.apotheosis.gems.title": "Gemas",
+    "painting.apotheosis.gems.author": "Faellynna",
+
+    "painting.apotheosis.craig.title": "Craig o Eterno",
+    "painting.apotheosis.craig.author": "Astrel",
+
+    "painting.apotheosis.tower.title": "A Torre",
+    "painting.apotheosis.tower.author": "Faellynna",
+
+    "painting.apotheosis.enchanting_table.title": "Encantamento Apótico",
+    "painting.apotheosis.enchanting_table.author": "Faellynna",
+
+    "painting.apotheosis.window.title": "Uma Visão Além",
+    "painting.apotheosis.window.author": "Faellynna",
+
     "comment_id": "Guidebook",
-	"book.apotheosis.name": "Crônica das Sombras",
+    "book.apotheosis.name": "Crônica das Sombras",
     "book.apotheosis.subtitle": "Guia Apótico",
     "book.apotheosis.landing": "Bem-vindo ao mundo do Apotheosis.$(br2)O Apotheosis é organizado em $(#8080FF)módulos$(), assim como o conteúdo deste livro.$(br2)Os módulos desabilitados estão ocultos."
 }
