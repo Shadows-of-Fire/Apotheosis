@@ -6,8 +6,8 @@
 
     "info.apotheosis.affix_item": "Article d'affixe Apotheosis",
     
-    "death.attack.apotheosis.execute": "%s a été exécuté par %s",
-    "death.attack.apotheosis.execute.item": "%s a été exécuté par %s en utilisant %s",
+    "death.attack.apotheosis:execute": "%s a été exécuté par %s",
+    "death.attack.apotheosis:execute.item": "%s a été exécuté par %s en utilisant %s",
     
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",

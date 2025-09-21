@@ -6,8 +6,8 @@
 
     "info.apotheosis.affix_item": "어포틱 접사 아이템",
 	
-	"death.attack.apotheosis.execute": "%s이(가) %s에 의해 처형 당했습니다.",
-	"death.attack.apotheosis.execute.item": "%s이(가) %s을(를) 사용하여 %s에 의해 처형 당했습니다.",
+	"death.attack.apotheosis:execute": "%s이(가) %s에 의해 처형 당했습니다.",
+	"death.attack.apotheosis:execute.item": "%s이(가) %s을(를) 사용하여 %s에 의해 처형 당했습니다.",
 	
 	"misc.apotheosis.affix_name.two": "%s %s",
 	"misc.apotheosis.affix_name.three": "%s %s %s",

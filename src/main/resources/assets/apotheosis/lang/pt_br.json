@@ -83,8 +83,8 @@
 
     "info.apotheosis.affix_item": "Item de afixo apótico",
 
-    "death.attack.apotheosis.execute": "%s foi executado por %s",
-    "death.attack.apotheosis.execute.item": "%s foi executado por %s usando %s",
+    "death.attack.apotheosis:execute": "%s foi executado por %s",
+    "death.attack.apotheosis:execute.item": "%s foi executado por %s usando %s",
 
     "misc.apotheosis.affix_name.two": "%2$s %1$s",
     "misc.apotheosis.affix_name.three": "%2$s %1$s %3$s",

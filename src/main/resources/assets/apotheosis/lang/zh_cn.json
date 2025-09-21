@@ -80,8 +80,8 @@
 
     "info.apotheosis.affix_item": "神化词缀物品",
 
-    "death.attack.apotheosis.execute": "%s被%s处决了",
-    "death.attack.apotheosis.execute.item": "%s被%s用%s处决了",
+    "death.attack.apotheosis:execute": "%s被%s处决了",
+    "death.attack.apotheosis:execute.item": "%s被%s用%s处决了",
 
     "misc.apotheosis.affix_name.two": "%s的%s",
     "misc.apotheosis.affix_name.three": "%s的%s（%s）",

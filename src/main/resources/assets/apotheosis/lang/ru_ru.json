@@ -152,8 +152,8 @@
 
     "info.apotheosis.affix_item": "Апофеозный предмет с усилением",
     
-    "death.attack.apotheosis.execute": "%s был казнён %s",
-    "death.attack.apotheosis.execute.item": "%s был казнён %s используя %s",
+    "death.attack.apotheosis:execute": "%s был казнён %s",
+    "death.attack.apotheosis:execute.item": "%s был казнён %s используя %s",
     
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",

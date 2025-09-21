@@ -48,8 +48,8 @@
 	
     "info.apotheosis.affix_item": "Apothic Ek Özellik Eşyası",
 	
-    "death.attack.apotheosis.execute": "%s, %s tarafından idam edildi",
-    "death.attack.apotheosis.execute.item": "%s, %s tarafından %s kullanılarak idam edildi",
+    "death.attack.apotheosis:execute": "%s, %s tarafından idam edildi",
+    "death.attack.apotheosis:execute.item": "%s, %s tarafından %s kullanılarak idam edildi",
 	
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",

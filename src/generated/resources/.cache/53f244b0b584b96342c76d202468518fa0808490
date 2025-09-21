@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-04T15:21:40.5130185	Affixes
+// 1.21.1	2025-09-21T16:08:09.5707544	Affixes
 25581ee0a1d84bdbe5eadaa04ac02e33ba182b0e data/apotheosis/affixes/armor/attribute/adamantine.json
 6df2683685c5934ff580ef1d3901e1c593c48fde data/apotheosis/affixes/armor/attribute/aquatic.json
 a08886d35608a8ff9f1f79282f5f9beb203ddd47 data/apotheosis/affixes/armor/attribute/blessed.json
@@ -33,7 +33,7 @@ e2afe0a073e7e10342c61daf8f4dc58af1705a7e data/apotheosis/affixes/breaker/attribu
 3b3ae49e9495ddcae849c6ed522b4ac109fe10a1 data/apotheosis/affixes/breaker/attribute/experienced.json
 a0e5a8b37adbdcb25b4a13c40695c0327a1af304 data/apotheosis/affixes/breaker/attribute/lengthy.json
 76f826141c463eb58d5ae36a944bd7cd432d9965 data/apotheosis/affixes/breaker/attribute/submerged.json
-9165c8b197b6ec2f3f0a0367464d779b7534500b data/apotheosis/affixes/breaker/effect/omnetic.json
+e87818df4239897588cd9b6c95e4e214ba8eb292 data/apotheosis/affixes/breaker/effect/omnetic.json
 1566d6d74a6cf64dca72d7e6f9cfec7f96d8b3a7 data/apotheosis/affixes/breaker/effect/radial.json
 3561dab6262cde825be5b30fa71a96c5161dcbbf data/apotheosis/affixes/breaker/enchantment/prosperous.json
 1d5bae23ff4d1777156b9120b9fdf6982a14fd8e data/apotheosis/affixes/breaker/mob_effect/spelunkers.json
@@ -54,7 +54,7 @@ af06f472cef5a9869fdb6c6e30c6ba0379096816 data/apotheosis/affixes/melee/attribute
 3ab47dfb8c5ebd12f64258b62216df84d0986342 data/apotheosis/affixes/melee/attribute/vampiric.json
 f39950d51915407d74b355381b0739af91b64c6e data/apotheosis/affixes/melee/attribute/violent.json
 2dfbc6965063f8fa3ec39876423c0dccc1ecf2d2 data/apotheosis/affixes/melee/cleaving.json
-749b38f6581b30610b4112dcdd94f7d1d42b4040 data/apotheosis/affixes/melee/executing.json
+397f3f52814a9a7ae7eda725df1c67be4d713257 data/apotheosis/affixes/melee/executing.json
 68198d688ed864b8a3775bcdea97c53c0d9d8516 data/apotheosis/affixes/melee/festive.json
 7fcac7511979a98d4bb8c02ca8bb486598ca9ae8 data/apotheosis/affixes/melee/mob_effect/bloodletting.json
 29138f7717a1c0aa76571042301e031df7828096 data/apotheosis/affixes/melee/mob_effect/caustic.json

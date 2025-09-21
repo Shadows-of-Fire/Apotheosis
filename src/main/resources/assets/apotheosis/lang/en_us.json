@@ -82,9 +82,9 @@
     "key.apotheosis.link_item_to_chat": "Link Hovered Item to Chat",
 
     "info.apotheosis.affix_item": "Apothic Affix Item",
-    
-    "death.attack.apotheosis.execute": "%s was executed by %s",
-    "death.attack.apotheosis.execute.item": "%s was executed by %s using %s",
+
+    "death.attack.apotheosis:execute": "%s was executed by %s",
+    "death.attack.apotheosis:execute.item": "%s was executed by %s using %s",
 
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",
