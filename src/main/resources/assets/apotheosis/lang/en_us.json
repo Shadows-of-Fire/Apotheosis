@@ -480,6 +480,7 @@
     "gem_class.light_ranged": "Light or Ranged Weapons",
     "gem_class.weapon_or_tool": "Weapons or Tools",
     "gem_class.weapons": "Weapons",
+    "gem_class.tools": "Tools",
 
     "gem_class.helmet": "Helmets",
     "gem_class.chestplate": "Chestplates",

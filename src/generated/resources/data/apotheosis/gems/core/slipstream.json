@@ -23,7 +23,13 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:mining_speed",
-            "gem_class": "apotheosis:breaker",
+            "gem_class": {
+                "key": "tools",
+                "types": [
+                    "apotheosis:breaker",
+                    "apotheosis:shears"
+                ]
+            },
             "operation": "add_multiplied_base",
             "values": {
                 "cracked": 0.1,

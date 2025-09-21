@@ -27,7 +27,13 @@
         },
         {
             "type": "apotheosis:durability",
-            "gem_class": "apotheosis:breaker",
+            "gem_class": {
+                "key": "tools",
+                "types": [
+                    "apotheosis:breaker",
+                    "apotheosis:shears"
+                ]
+            },
             "values": {
                 "cracked": 0.1,
                 "chipped": 0.15,

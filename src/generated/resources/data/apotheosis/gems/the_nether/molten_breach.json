@@ -105,7 +105,13 @@
         },
         {
             "type": "apotheosis:omnetic",
-            "gem_class": "apotheosis:breaker",
+            "gem_class": {
+                "key": "tools",
+                "types": [
+                    "apotheosis:breaker",
+                    "apotheosis:shears"
+                ]
+            },
             "values": {
                 "flawed": {
                     "items": [

@@ -77,6 +77,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
     public static final GemClass WEAPONS = new GemClass("weapons", LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW);
     public static final GemClass WEAPON_OR_TOOL = new GemClass("weapon_or_tool", LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW, LootCategories.BREAKER);
     public static final GemClass NON_TRIDENT_WEAPONS = new GemClass("weapons", LootCategories.MELEE_WEAPON, LootCategories.BOW);
+    public static final GemClass TOOLS = new GemClass("tools", LootCategories.BREAKER, LootCategories.SHEARS);
     public static final GemClass ANYTHING = new GemClass("anything", new AnyHolderSet<>(BuiltInRegs.LOOT_CATEGORY.asLookup()));
 
     public static final Holder<MobEffect> TW_FROSTED = DeferredHolder.create(Registries.MOB_EFFECT, ResourceLocation.parse("twilightforest:frosted"));
@@ -105,7 +106,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 5)
                 .value(Purity.FLAWLESS, 7)
                 .value(Purity.PERFECT, 10))
-            .bonus(LootCategories.BREAKER, DurabilityBonus.builder()
+            .bonus(TOOLS, DurabilityBonus.builder()
                 .value(Purity.CRACKED, 0.10F)
                 .value(Purity.CHIPPED, 0.15F)
                 .value(Purity.FLAWED, 0.25F)
@@ -162,7 +163,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 7)
                 .value(Purity.FLAWLESS, 9)
                 .value(Purity.PERFECT, 12))
-            .bonus(LootCategories.BREAKER, AttributeBonus.builder()
+            .bonus(TOOLS, AttributeBonus.builder()
                 .attr(Attributes.BLOCK_INTERACTION_RANGE)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 0.5)
@@ -247,7 +248,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.35)
                 .value(Purity.FLAWLESS, 0.425)
                 .value(Purity.PERFECT, 0.55))
-            .bonus(LootCategories.BREAKER, AttributeBonus.builder()
+            .bonus(TOOLS, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.MINING_SPEED)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 0.05)
@@ -356,7 +357,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.45)
                 .value(Purity.FLAWLESS, 0.5)
                 .value(Purity.PERFECT, 0.60))
-            .bonus(LootCategories.BREAKER, AttributeBonus.builder()
+            .bonus(TOOLS, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.MINING_SPEED)
                 .op(Operation.ADD_MULTIPLIED_BASE)
                 .value(Purity.CRACKED, 0.10)
@@ -535,7 +536,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 2)
                 .value(Purity.FLAWLESS, 3)
                 .value(Purity.PERFECT, 4))
-            .bonus(LootCategories.BREAKER, EnchantmentBonus.builder()
+            .bonus(TOOLS, EnchantmentBonus.builder()
                 .enchantment(enchants.getOrThrow(Enchantments.FORTUNE))
                 .mode(Mode.EXISTING)
                 .value(Purity.FLAWED, 1)
@@ -815,7 +816,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.125)
                 .value(Purity.FLAWLESS, 0.15)
                 .value(Purity.PERFECT, 0.25))
-            .bonus(LootCategories.BREAKER, OmneticBonus.builder()
+            .bonus(TOOLS, OmneticBonus.builder()
                 .value(Purity.FLAWED, "diamond", Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_SWORD, Items.DIAMOND_HOE)
                 .value(Purity.NORMAL, "diamond", Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_SWORD, Items.DIAMOND_HOE)
                 .value(Purity.FLAWLESS, "netherite", Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_HOE)

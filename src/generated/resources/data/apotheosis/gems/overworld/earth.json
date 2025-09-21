@@ -65,7 +65,13 @@
         {
             "type": "apotheosis:enchantment",
             "enchantment": "minecraft:fortune",
-            "gem_class": "apotheosis:breaker",
+            "gem_class": {
+                "key": "tools",
+                "types": [
+                    "apotheosis:breaker",
+                    "apotheosis:shears"
+                ]
+            },
             "mode": "existing",
             "values": {
                 "flawed": 1,

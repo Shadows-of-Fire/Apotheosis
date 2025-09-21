@@ -29,7 +29,13 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "minecraft:player.block_interaction_range",
-            "gem_class": "apotheosis:breaker",
+            "gem_class": {
+                "key": "tools",
+                "types": [
+                    "apotheosis:breaker",
+                    "apotheosis:shears"
+                ]
+            },
             "operation": "add_value",
             "values": {
                 "cracked": 0.5,
