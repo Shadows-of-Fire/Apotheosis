@@ -33,6 +33,8 @@
     "button.apotheosis.already_activated": "该世界层级目前处于激活状态",
     "button.apotheosis.activate": "激活",
     "button.apotheosis.activated": "已激活",
+    "button.apotheosis.disabled": "已禁用",
+    "button.apotheosis.tier_changes_disabled": "已在配置文件禁用手动更改世界层级。",
     "button.apotheosis.show_detailed_info": "详细信息",
     "button.apotheosis.show_detailed_info.desc": "查看生物增益、玩家增益和稀有度",
     "button.apotheosis.return": "X",
@@ -50,7 +52,7 @@
 
     "tutorial.apotheosis.world_tier.world_tiers.title": "世界层级",
     "tutorial.apotheosis.world_tier.world_tiers.desc": "世界层级是神化的进阶系统，解锁并激活新的世界层级会提高游戏难度，但同时也会提高世界中战利品的品质。\n\n将鼠标放在世界层级的图标上可查看解锁条件，点击图标以选中已解锁的层级。",
-    
+
     "tutorial.apotheosis.world_tier.tier_name.title": "世界层级名称",
     "tutorial.apotheosis.world_tier.tier_name.desc": "这是所选世界层级的名称，以及对该层级的简短描述。",
     
@@ -62,7 +64,8 @@
     
     "tutorial.apotheosis.world_tier.activate.title": "激活世界层级",
     "tutorial.apotheosis.world_tier.activate.desc": "如果所选世界层级尚未激活，则可以通过点击该按钮激活选择的层级。\n\n点击“完成”将自动激活世界层级：居所。至于所有其他世界层级，你需要回到这里手动激活它们。",
-    
+    "tutorial.apotheosis.world_tier.activate_disabled.desc": "通常情况下，此按钮可用于激活所选的世界层级。\n\n然而，在该整合包中，世界层级是自动激活的，且无法手动更改。你仍然可以查看每个世界层级的详细信息，但无法激活或停用它们。",
+
     "text.apotheosis.tier_info": "世界层级信息",
     "text.apotheosis.monster_augments": "怪物强化",
     "text.apotheosis.player_augments": "玩家强化",
@@ -293,7 +296,7 @@
     "affix.apotheosis:ranged/mob_effect/acidic": "酸蚀",
     "affix.apotheosis:ranged/mob_effect/acidic.suffix": "侵蚀",
 
-    "affix.apotheosis:melee/mob_effect/bloodletting": "腐蚀",
+    "affix.apotheosis:melee/mob_effect/bloodletting": "放血",
     "affix.apotheosis:melee/mob_effect/bloodletting.suffix": "杀戮者",
 
     "affix.apotheosis:melee/mob_effect/caustic": "腐蚀",
@@ -571,6 +574,9 @@
     "item.apotheosis.sigil_of_malice": "恶意符石",
     "item.apotheosis.sigil_of_malice.desc": "将恶意之触施加于词缀物品",
 
+    "item.apotheosis.sigil_of_supremacy": "至高符石",
+    "item.apotheosis.sigil_of_supremacy.desc": "对词缀物品上的每个词缀进行过度充能",
+
     "item.apotheosis.iron_upgrade_smithing_template": "锻造模板",
     "upgrade.apotheosis.iron": "铁升级",
     "item.apotheosis.iron_upgrade_smithing_template.applies_to": "石制和锁链装备",
@@ -702,12 +708,50 @@
     "death.attack.apotheosis:execute": "%s被处决了。",
     "death.attack.apotheosis:execute.player": "%s被%s处决了。",
 
+    "disconnect.apotheosis.tier_changes_disabled": "已在配置文件禁用手动更改世界层级。",
+
+    "elite.apotheosis.craig": "永恒克雷格",
+
     "comment_id": "/Adventure + Gateways Compat",
 
-    "misc.apotheosis.invader": "%s神化入侵者",
     "misc.apotheosis.random": "随机",
-    "reward.apotheosis.affix": "%s词缀物品",
+    "wave_entity.apotheosis.invader": "%s神化入侵者",
+    "wave_entity.apotheosis.elite": "神化精英怪 - %s",
+    "wave_entity.apotheosis.true_random_invader": "真随机神化入侵者",
+    "reward.apotheosis.affix_item": "词缀物品（%s）",
     "reward.apotheosis.random_affix": "随机词缀物品",
+    "reward.apotheosis.gem": "神化宝石（%s）",
+    "reward.apotheosis.random_gem": "神化宝石（随机）",
+    "reward.apotheosis.true_random_gem": "真随机神化宝石",
+    "reward.apotheosis.netherite_smithing_template": "下界合金锻造模板",
+    "error.apotheosis.gate_tier_incorrect": "该传送门只能在以下世界层级中打开：%s",
+    "modifier.apotheosis.affix": "收到一个词缀物品",
+    "tooltip.apotheosis.requires_world_tier": "需要世界层级：%s",
+
+    "wave_entity.apotheosis.affixed_armored_zombie": "词缀附加的武装僵尸",
+    "wave_entity.apotheosis.affixed_armored_husk": "词缀附加的武装尸壳",
+    "wave_entity.apotheosis.affixed_armored_skeleton": "词缀附加的武装骷髅",
+    "wave_entity.apotheosis.affixed_armored_stray": "词缀附加的武装流浪者",
+    "wave_entity.apotheosis.affixed_polar_bear": "词缀附加的北极熊",
+    "wave_entity.apotheosis.affixed_wolf": "词缀附加的狼",
+    "wave_entity.apotheosis.affixed_armored_bogged": "词缀附加的武装沼骸",
+    "wave_entity.apotheosis.vampiric_phantom": "吸血鬼幻翼",
+    "wave_entity.apotheosis.nether_herald": "下界先驱",
+    "wave_entity.apotheosis.affixed_armored_zombified_piglin": "词缀附加的武装僵尸猪灵",
+    "wave_entity.apotheosis.affixed_armored_wither_skeleton": "词缀附加的武装凋灵骷髅",
+    "wave_entity.apotheosis.ghast_rider": "恶魂骑士",
+    "wave_entity.apotheosis.affixed_armored_piglin_brute": "词缀附加的武装猪灵蛮兵",
+    "wave_entity.apotheosis.bastion_guard": "堡垒精英守卫",
+    "wave_entity.apotheosis.killer_bunny": "杀手兔",
+
+    "reward.apotheosis.desert_pyramid_loot": "沙漠神殿战利品",
+    "reward.apotheosis.woodland_mansion_loot": "林地府邸战利品",
+
+    "apotheosis.tiered/frontier": "第一边境传送门",
+    "apotheosis.tiered/ascent": "日耀攀升传送门",
+    "apotheosis.tiered/summit": "雷霆高峰传送门",
+    "apotheosis.tiered/pinnacle": "神化顶点传送门",
+    "apotheosis.endless_invader": "神化入侵者无尽传送门",
 
     "comment_id": "/进度",
 
@@ -795,38 +839,20 @@
     "advancements.apotheosis.gem_cut": "宝石雕琢工",
     "advancements.apotheosis.gem_cut.desc": "使用宝石切割台升级神化宝石。",
 
-    "advancements.apotheosis.spawner.root": "神化刷怪笼",
-    "advancements.apotheosis.spawner.root.desc": "刷怪笼可以被收集并调节属性，更多信息可以在JEI中查看。",
-    "advancements.apotheosis.spawner": "神化刷怪笼",
-    "advancements.apotheosis.spawner.desc": "利用精准采集魔咒获得一个生物的刷怪笼。",
-    "advancements.apotheosis.capturing": "捉住了！",
-    "advancements.apotheosis.capturing.desc": "利用捕捉魔咒获得一个生物的刷怪蛋。",
-    "advancements.apotheosis.modifier": "只是一些技术性调整……",
-    "advancements.apotheosis.modifier.desc": "使用调节器更改刷怪笼的属性。",
-    "advancements.apotheosis.spawncount": "看看他的刷怪笼尺寸！",
-    "advancements.apotheosis.spawncount.desc": "将刷怪笼的刷怪数量增加至16。",
-    "advancements.apotheosis.maxdelay": "时间扭曲刷怪笼",
-    "advancements.apotheosis.maxdelay.desc": "将刷怪笼的最大刷怪延迟减少至20。",
-    "advancements.apotheosis.mindelay": "我是最快的",
-    "advancements.apotheosis.mindelay.desc": "将刷怪笼的最小刷怪延迟减少至20。",
-    "advancements.apotheosis.nearbyents": "成群结队",
-    "advancements.apotheosis.nearbyents.desc": "将刷怪笼的最大实体数量增加至32。",
-    "advancements.apotheosis.playerrange": "远眺敌军",
-    "advancements.apotheosis.playerrange.desc": "将刷怪笼的激活范围增加至48。",
-    "advancements.apotheosis.spawnrange": "宽阔战场",
-    "advancements.apotheosis.spawnrange.desc": "将刷怪笼的刷怪范围增加至32。",
-    "advancements.apotheosis.conditions": "混乱战场",
-    "advancements.apotheosis.conditions.desc": "为刷怪笼禁用生成区环境限制。",
-    "advancements.apotheosis.players": "工厂就绪",
-    "advancements.apotheosis.players.desc": "禁用刷怪笼附近玩家需求。",
-    "advancements.apotheosis.redstone": "安装开关",
-    "advancements.apotheosis.redstone.desc": "为刷怪笼开启红石控制。",
-    "advancements.apotheosis.light": "谁需要黑暗？",
-    "advancements.apotheosis.light.desc": "使刷怪笼可在任何亮度等级下工作。",
-    "advancements.apotheosis.noai": "脑力外流",
-    "advancements.apotheosis.noai.desc": "禁用刷怪笼的生物AI。",
-    "advancements.apotheosis.ultimate_spawner": "究极刷怪笼",
-    "advancements.apotheosis.ultimate_spawner.desc": "放置并调节出一个刷怪延迟最小、能用红石控制、无AI、无视刷怪条件与玩家的刷怪笼。",
+    "advancements.apotheosis.challenge_gates.frontier.title": "离开边境",
+    "advancements.apotheosis.challenge_gates.frontier.desc": "完成第一边境传送门挑战",
+
+    "advancements.apotheosis.challenge_gates.ascent.title": "完成攀升",
+    "advancements.apotheosis.challenge_gates.ascent.desc": "完成日耀攀升传送门挑战",
+
+    "advancements.apotheosis.challenge_gates.summit.title": "到达高峰",
+    "advancements.apotheosis.challenge_gates.summit.desc": "完成雷霆高峰传送门挑战",
+
+    "advancements.apotheosis.challenge_gates.pinnacle.title": "在顶点",
+    "advancements.apotheosis.challenge_gates.pinnacle.desc": "完成神化顶点传送门挑战",
+
+    "advancements.apotheosis.challenge_gates.sigil_of_supremacy.title": "至高无上！",
+    "advancements.apotheosis.challenge_gates.sigil_of_supremacy.desc": "从神化入侵者无尽传送门第100波获得一个至高符石",
 
     "comment_id": "/药水模块",
 
@@ -869,6 +895,33 @@
     "config.jade.plugin_apotheosis.adventure": "神化冒险模块",
     "message.apotheosis.item_linking_disabled": "物品链接已被服务器禁用。",
     "text.apotheosis.equipped": "当前装备",
+
+    "item.apotheosis.music_disc_flash": "音乐唱片",
+    "jukebox_song.apotheosis.flash": "Renren - Flash",
+    "subtitle.apotheosis.music_disc.flash": "Renren - Flash",
+
+    "item.apotheosis.music_disc_glimmer": "音乐唱片",
+    "jukebox_song.apotheosis.glimmer": "Caner Crebes - Glimmer",
+    "subtitle.apotheosis.music_disc.glimmer": "Caner Crebes - Glimmer",
+
+    "item.apotheosis.music_disc_shimmer": "音乐唱片",
+    "jukebox_song.apotheosis.shimmer": "Chamberlain Kaifry - Shimmer",
+    "subtitle.apotheosis.music_disc.shimmer": "Chamberlain Kaifry - Shimmer",
+
+    "painting.apotheosis.gems.title": "宝石",
+    "painting.apotheosis.gems.author": "Faellynna",
+
+    "painting.apotheosis.craig.title": "永恒克雷格",
+    "painting.apotheosis.craig.author": "Astrel",
+
+    "painting.apotheosis.tower.title": "高塔",
+    "painting.apotheosis.tower.author": "Faellynna",
+
+    "painting.apotheosis.enchanting_table.title": "神化附魔",
+    "painting.apotheosis.enchanting_table.author": "Faellynna",
+
+    "painting.apotheosis.window.title": "超越视野",
+    "painting.apotheosis.window.author": "Faellynna",
 
     "comment_id": "指南书",
     "book.apotheosis.name": "阴影编年史",
