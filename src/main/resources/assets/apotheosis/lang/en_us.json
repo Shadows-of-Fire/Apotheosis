@@ -81,6 +81,8 @@
     "key.apotheosis.compare_equipment": "Compare Hovered Equipment",
     "key.apotheosis.link_item_to_chat": "Link Hovered Item to Chat",
 
+    "chat.apotheosis.link_item_with_count": "%sx %s",
+
     "info.apotheosis.affix_item": "Apothic Affix Item",
 
     "death.attack.apotheosis:execute": "%s was executed by %s",

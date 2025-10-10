@@ -69,13 +69,18 @@ public record LinkItemToChatPayload(int containerId, int slot, Item intendedItem
                 Slot slot = menu.getSlot(msg.slot);
                 ItemStack stack = slot.getItem();
 
+                int count = stack.getCount();
+
                 // Stacks with a count higher than 99 cannot be serialized, so we have to clamp them.
-                if (stack.getCount() > 99) {
+                if (count > 99) {
                     stack = stack.copyWithCount(99);
                 }
 
                 if (stack.getItem() == msg.intendedItem) {
                     Component comp = stack.getDisplayName();
+                    if (count > 1) {
+                        comp = Apotheosis.lang("chat", "link_item_with_count", String.valueOf(count), comp);
+                    }
                     PlayerChatMessage chatMsg = PlayerChatMessage.system("").withUnsignedContent(comp);
                     player.getServer().getPlayerList().broadcastChatMessage(chatMsg, (ServerPlayer) player, ChatType.bind(ChatType.CHAT, player));
                     ItemLinking.startCooldown(player.getUUID(), player.level().getGameTime());
