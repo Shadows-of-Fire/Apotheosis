@@ -50,7 +50,14 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
 
         List<List<ItemStack>> recipeInputs = recipeHolder.value().getIngredients().stream()
             .map(Ingredient::getItems)
-            .map(Arrays::asList)
+            .map(a -> {
+                // Copy the stacks, as we modify them later, and we don't want to modify the ingredients' cached stacks.
+                List<ItemStack> list = new ArrayList<>(a.length);
+                for (ItemStack s : a) {
+                    list.add(s.copy());
+                }
+                return list;
+            })
             .collect(Collectors.toCollection(ArrayList::new));
 
         // If we have a focus, we need to manipulate the potion-contents having input items to match that focus.
