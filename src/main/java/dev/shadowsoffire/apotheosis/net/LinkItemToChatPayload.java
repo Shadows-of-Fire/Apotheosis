@@ -68,6 +68,12 @@ public record LinkItemToChatPayload(int containerId, int slot, Item intendedItem
             if (menu.containerId == msg.containerId && menu.slots.size() > msg.slot) {
                 Slot slot = menu.getSlot(msg.slot);
                 ItemStack stack = slot.getItem();
+
+                // Stacks with a count higher than 99 cannot be serialized, so we have to clamp them.
+                if (stack.getCount() > 99) {
+                    stack = stack.copyWithCount(99);
+                }
+
                 if (stack.getItem() == msg.intendedItem) {
                     Component comp = stack.getDisplayName();
                     PlayerChatMessage chatMsg = PlayerChatMessage.system("").withUnsignedContent(comp);
