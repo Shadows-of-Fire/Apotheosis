@@ -48,8 +48,8 @@
 
     "info.apotheosis.affix_item": "Apothic称号アイテム",
     
-    "death.attack.apotheosis.execute": "%sは%sに殺された",
-    "death.attack.apotheosis.execute.item": "%sは%s%sを使用し殺された",
+    "death.attack.apotheosis:execute": "%sは%sに殺された",
+    "death.attack.apotheosis:execute.item": "%sは%s%sを使用し殺された",
 
     "misc.apotheosis.affix_name.two": "%s%s",
     "misc.apotheosis.affix_name.three": "%1$s%3$s%2$s",
