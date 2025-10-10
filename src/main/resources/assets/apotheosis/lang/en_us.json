@@ -274,7 +274,7 @@
 
     "affix.apotheosis:breaker/ability/enlightened": "Enlightened",
     "affix.apotheosis:breaker/ability/enlightened.suffix": "of the Lightbringer",
-    "affix.apotheosis:breaker/ability/enlightened.desc": "This tool can place a torch at the cost of %s durability.",
+    "affix.apotheosis:breaker/ability/enlightened.desc": "This tool can place a light source at the cost of %s durability.",
 
     "affix.apotheosis:shield/psychic": "Psychic",
     "affix.apotheosis:shield/psychic.suffix": "of the Vengeful",
