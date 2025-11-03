@@ -87,6 +87,7 @@
 
     "death.attack.apotheosis:execute": "%s was executed by %s",
     "death.attack.apotheosis:execute.item": "%s was executed by %s using %s",
+    "death.attack.apotheosis:execute.player": "%s was executed by %s",
 
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",
@@ -708,8 +709,6 @@
     
     "death.attack.apotheosis:psychic": "%s was slain by a reflection.",
     "death.attack.apotheosis:psychic.player": "%s attack was reflected by %s.",
-    "death.attack.apotheosis:execute": "%s was executed.",
-    "death.attack.apotheosis:execute.player": "%s was executed by %s.",
 
     "disconnect.apotheosis.tier_changes_disabled": "Manual world tier changes are disabled in the config.",
 
@@ -925,6 +924,10 @@
 
     "painting.apotheosis.window.title": "A View Beyond",
     "painting.apotheosis.window.author": "Faellynna",
+
+    "stat.apotheosis.world_tiers_activated": "World Tier Changed",
+    "apotheosis.subtitle.reforge": "Reforging Table reforges",
+    "apotheosis.subtitle.malice": "Sigil of Malice applies malice",    
 
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Chronicle of Shadows",
