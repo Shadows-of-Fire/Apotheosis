@@ -395,6 +395,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true)
+                .allowDiscarding(true)
                 .spacing(32))
             .baseWave(w -> w
                 .maxWaveTime(3600)
