@@ -134,9 +134,6 @@
     "affix.apotheosis:breaker/attribute/experienced": "Experienced",
     "affix.apotheosis:breaker/attribute/experienced.suffix": "of the Scholar",
 
-    "affix.apotheosis:melee/attribute/elongated": "Elongated",
-    "affix.apotheosis:melee/attribute/elongated.suffix": "of Distant Battles",
-
     "affix.apotheosis:ranged/attribute/agile": "Agile",
     "affix.apotheosis:ranged/attribute/agile.suffix": "of Dexterity",
 
@@ -515,7 +512,6 @@
     "misc.apotheosis.level.many": "levels",
     "name.apotheosis.treasure_goblin": "Treasure Goblin",
 
-    "item.apotheosis.gem.apotheosis:legacy": "Legacy Gem",
     "item.apotheosis.gem.apotheosis:core/guardian": "Guardian Gem",
     "item.apotheosis.gem.apotheosis:core/ballast": "Ballast Gem",
     "item.apotheosis.gem.apotheosis:core/solar": "Solar Gem",
