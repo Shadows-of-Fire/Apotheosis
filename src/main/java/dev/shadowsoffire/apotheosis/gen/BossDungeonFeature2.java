@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -22,7 +21,7 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
 /**
  * Boss Dungeon Feature (Variant 2) - Credit to BigAl607 on discord for the structure.
  */
-public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
+public class BossDungeonFeature2 extends Feature<SuccessChanceFeatureConfig> {
 
     public static final ResourceLocation TEMPLATE_ID = Apotheosis.loc("boss_1");
 
@@ -33,18 +32,18 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
     protected static int zRadius = 4;
 
     public BossDungeonFeature2() {
-        super(NoneFeatureConfiguration.CODEC);
+        super(SuccessChanceFeatureConfig.CODEC);
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+    public boolean place(FeaturePlaceContext<SuccessChanceFeatureConfig> ctx) {
         WorldGenLevel world = ctx.level();
-        if (!AdventureConfig.canGenerateIn(world)) {
-            return false;
-        }
         BlockPos pos = ctx.origin();
         RandomSource rand = ctx.random();
+        if (!AdventureConfig.canGenerateIn(world) || rand.nextFloat() > ctx.config().successChance()) {
+            return false;
+        }
 
         BlockState[][][] states = new BlockState[9][8][9];
 
@@ -94,6 +93,7 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
             Apotheosis.debugLog(pos, "Boss Dungeon (Variant 2)");
             return true;
         }
+
         return false;
 
     }

@@ -12,11 +12,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 
-public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
+public class BossDungeonFeature extends Feature<SuccessChanceFeatureConfig> {
 
     private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
     private static final BlockState BRICK = Blocks.STONE_BRICKS.defaultBlockState();
@@ -25,18 +24,19 @@ public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
     private static final BlockState[] BRICKS = { BRICK, MOSSY_BRICK, CRACKED_BRICK };
 
     public BossDungeonFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+        super(SuccessChanceFeatureConfig.CODEC);
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+    public boolean place(FeaturePlaceContext<SuccessChanceFeatureConfig> ctx) {
         WorldGenLevel world = ctx.level();
-        if (!AdventureConfig.canGenerateIn(world)) {
-            return false;
-        }
         BlockPos pos = ctx.origin();
         RandomSource rand = ctx.random();
+        if (!AdventureConfig.canGenerateIn(world) || rand.nextFloat() > ctx.config().successChance()) {
+            return false;
+        }
+
         int xRadius = 3 + rand.nextInt(3);
         int floor = -1;
         int roof = 4;

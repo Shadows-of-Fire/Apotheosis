@@ -1,8 +1,6 @@
 {
-	"forge:conditions": [{
-		"type": "apotheosis:module",
-		"module": "adventure"
-	}],
-	"type": "apotheosis:boss_dungeon",
-	"config": {}
+    "type": "apotheosis:boss_dungeon",
+    "config": {
+        "success_chance": 1.0
+    }
 }
