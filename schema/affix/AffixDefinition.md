@@ -1,5 +1,5 @@
 # Description
-The AffixDefinition defines the core properties of an Affix, including its type, exclusivity rules, and tier-specific weights. This is used in conjunction with specific Affix implementations to create a complete Affix configuration.
+An affix definition defines the core properties of an Affix, including its type, exclusivity rules, and weights. Each Affix will always specify an affix definition in its json schema.
 
 # Dependencies
 This object references the following objects:
@@ -11,7 +11,7 @@ This object references the following objects:
 {
     "affix_type": AffixType,             // [Mandatory] || The type of affix (STAT, BASIC_EFFECT, or ABILITY)
     "exclusive_set": [                   // [Mandatory] || Set of affix IDs that cannot be applied alongside this affix
-        string
+        "string"
     ],
     "weights": TieredWeights             // [Mandatory] || Tier-specific weights determining how often this affix appears
 }
@@ -20,7 +20,7 @@ This object references the following objects:
 # Examples
 
 ## Basic Definition
-A basic affix definition for a stat-based affix that appears in all world tiers.
+A basic affix definition for a stat-type affix that appears in all world tiers.
 
 ```json
 {

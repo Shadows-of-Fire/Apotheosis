@@ -1,5 +1,7 @@
 # Description
-AffixType defines the category of an affix, which determines how it behaves and is used by the Affix system. This is an enumeration with three possible values that classify affixes by their general functionality.
+An affix type is a preset category name, used by loot rules to gather affixes of a specific type when generating items.
+
+Currently, affix type is hardcoded with three entries, but in the future, it will become dynamic (so new types can be added).
 
 # Schema
 AffixType is a string enum with the following possible values:

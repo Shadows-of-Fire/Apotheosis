@@ -1,23 +1,21 @@
 # Description
-StoneformingAffix allows tools to convert between different types of blocks when mining. When you mine a block with this affix, it will drop a different block from the candidate set. You can shift-right-click with the tool on a candidate block to set that as the target conversion block.
+StoneformingAffix allows tools to convert between different types of blocks when mining. When you mine a block while using this affix, it will drop a different block from the candidate set. You can shift-right-click with the tool on a candidate block to set that as the target conversion block.
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootCategory](../../loot/LootCategory.md)
-4. [Block](../../../../../Minecraft/blob/-/schema/Block.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootCategory](../../loot/LootCategory.md)
 
 # Schema
 ```js
 {
-    "type": "apotheosis:stoneforming",   // [Mandatory] || The affix type identifier
+    "type": "apotheosis:stoneforming",    // [Mandatory] || The affix type identifier
     "definition": AffixDefinition,        // [Mandatory] || The affix definition
     "categories": [                       // [Mandatory] || The item categories this affix can be applied to
         LootCategory
     ],
     "candidates": [                       // [Mandatory] || The list of blocks that can be converted between
-        Block
+        Block                             //                This is a HolderSet, and accepts tags and Neo extensions as well.
     ]
 }
 ```
@@ -39,7 +37,7 @@ An affix that allows converting between stone, cobblestone, and other stone vari
         }
     },
     "categories": [
-        "pickaxe"
+        "apotheosis:breaker"
     ],
     "candidates": [
         "minecraft:stone",
@@ -67,7 +65,7 @@ An affix that allows converting between different wood types.
         }
     },
     "categories": [
-        "axe"
+        "apotheosis:breaker"
     ],
     "candidates": [
         "minecraft:oak_planks",

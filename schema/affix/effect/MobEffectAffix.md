@@ -3,13 +3,11 @@ The MobEffectAffix applies potion effects under specific conditions, such as whe
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootCategory](../../loot/LootCategory.md)
-4. [LootRarity](../../loot/LootRarity.md)
-5. [MobEffect](../../../../../../Minecraft/blob/-/schema/MobEffect.md)
-6. [StepFunction](../../../../../../Placebo/blob/-/schema/StepFunction.md)
-7. [Target](../../util/Target.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootCategory](../../loot/LootCategory.md)
+3. [LootRarity](../../loot/LootRarity.md)
+4. [StepFunction](../../../../../../Placebo/blob/-/schema/StepFunction.md)
+5. [Target](../../util/Target.md)
 
 # Schema
 ```js
@@ -20,9 +18,9 @@ This object references the following objects:
     "target": Target,                    // [Mandatory] || When and to whom the effect applies
     "values": {                          // [Mandatory] || Per-rarity effect configuration
         LootRarity: {
-            "duration": StepFunction,    // Duration of the effect in ticks
-            "amplifier": StepFunction,   // Amplifier (level) of the effect
-            "cooldown": int              // [Optional] || Cooldown in ticks before the effect can be applied again (0 = no cooldown)
+            "duration": StepFunction,    // [Mandatory] || Duration of the effect in ticks
+            "amplifier": StepFunction,   // [Mandatory] || Amplifier (level) of the effect. An amplifier of zero is level 1.
+            "cooldown": int              // [Optional]  || Cooldown in ticks before the effect can be applied again (0 = no cooldown)
         }
     },
     "types": [                           // [Mandatory] || List of item categories this affix can be applied to
@@ -93,7 +91,7 @@ A basic affix that grants the wielder strength when they attack an enemy.
         }
     },
     "types": [
-        "weapon"
+        "apotheosis:melee_weapon"
     ]
 }
 ```
@@ -106,9 +104,7 @@ An affix that applies the wither effect to enemies when hit, with stacking capab
     "type": "apotheosis:mob_effect",
     "definition": {
         "affix_type": "ability",
-        "exclusive_set": [
-            "apotheosis:poison_hit"
-        ],
+        "exclusive_set": [],
         "weights": {
             "summit": {
                 "weight": 5,
@@ -145,9 +141,8 @@ An affix that applies the wither effect to enemies when hit, with stacking capab
         }
     },
     "types": [
-        "weapon",
-        "bow",
-        "crossbow"
+        "apotheosis:melee_weapon",
+        "apotheosis:bow"
     ],
     "stack_on_reapply": true,
     "stacking_limit": 4

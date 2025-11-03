@@ -3,14 +3,13 @@ MagicalArrowAffix makes arrows fired from ranged weapons count as magical damage
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootRarity](../../loot/LootRarity.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootRarity](../../loot/LootRarity.md)
 
 # Schema
 ```js
 {
-    "type": "apotheosis:magical_arrow",  // [Mandatory] || The affix type identifier
+    "type": "apotheosis:magical_arrow",   // [Mandatory] || The affix type identifier
     "definition": AffixDefinition,        // [Mandatory] || The affix definition
     "rarities": [                         // [Mandatory] || The list of rarities this affix can spawn with
         LootRarity
@@ -27,7 +26,7 @@ An affix that makes arrows bypass armor and deal magical damage.
 {
     "type": "apotheosis:magical_arrow",
     "definition": {
-        "affix_type": "special",
+        "affix_type": "ability",
         "exclusive_set": [],
         "weights": {
             "weight": 5,
@@ -35,10 +34,9 @@ An affix that makes arrows bypass armor and deal magical damage.
         }
     },
     "rarities": [
-        "rare",
-        "epic",
-        "mythic",
-        "ancient"
+        "apotheosis:rare",
+        "apotheosis:epic",
+        "apotheosis:mythic"
     ]
 }
 ```

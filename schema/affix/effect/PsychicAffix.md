@@ -3,16 +3,15 @@ PsychicAffix allows shields to reflect damage back to projectile attackers. When
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootRarity](../../loot/LootRarity.md)
-4. [StepFunction](../../../../../Placebo/blob/-/schema/StepFunction.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootRarity](../../loot/LootRarity.md)
+3. [StepFunction](../../../../../Placebo/blob/-/schema/StepFunction.md)
 
 # Schema
 ```js
 {
     "type": "apotheosis:psychic",        // [Mandatory] || The affix type identifier
-    "definition": AffixDefinition,        // [Mandatory] || The affix definition
+    "definition": AffixDefinition,       // [Mandatory] || The affix definition
     "values": {                          // [Mandatory] || Per-rarity damage reflection percentages
         LootRarity: StepFunction
     }
@@ -28,7 +27,7 @@ An affix that reflects damage back to projectile attackers when blocking with a 
 {
     "type": "apotheosis:psychic",
     "definition": {
-        "affix_type": "shield_effect",
+        "affix_type": "ability",
         "exclusive_set": [],
         "weights": {
             "weight": 6,
@@ -37,19 +36,16 @@ An affix that reflects damage back to projectile attackers when blocking with a 
     },
     "values": {
         "rare": {
-            "type": "placebo:step",
-            "steps": [0.25, 0.35],
-            "y_interp": "linear"
+            "min": 0.15,
+            "max": 0.25
         },
         "epic": {
-            "type": "placebo:step",
-            "steps": [0.40, 0.50],
-            "y_interp": "linear"
+            "min": 0.35,
+            "max": 0.45
         },
         "mythic": {
-            "type": "placebo:step",
-            "steps": [0.60, 0.75],
-            "y_interp": "linear"
+            "min": 0.60,
+            "max": 0.75
         }
     }
 }

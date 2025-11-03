@@ -1,18 +1,17 @@
 # Description
-RetreatingAffix (also known as "Disengage") allows shields to knock the holder backward when blocking an attack from nearby entities. This can help create distance between the shield user and their attacker.
+The Retreating Affix allows the user to jump backwards when blocking an attack from nearby enemies. This can help create distance between the shield user and their attacker.
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootRarity](../../loot/LootRarity.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootRarity](../../loot/LootRarity.md)
 
 # Schema
 ```js
 {
-    "type": "apotheosis:retreating",    // [Mandatory] || The affix type identifier
+    "type": "apotheosis:retreating",     // [Mandatory] || The affix type identifier
     "definition": AffixDefinition,       // [Mandatory] || The affix definition
-    "rarities": [                        // [Mandatory] || The list of rarities this affix can spawn with
+    "rarities": [                        // [Mandatory] || The set of rarities this affix can spawn on
         LootRarity
     ]
 }
@@ -27,7 +26,7 @@ An affix that pushes the shield user backward when blocking an attack.
 {
     "type": "apotheosis:retreating",
     "definition": {
-        "affix_type": "shield_effect",
+        "affix_type": "basic_effect",
         "exclusive_set": [],
         "weights": {
             "weight": 7,
@@ -35,9 +34,9 @@ An affix that pushes the shield user backward when blocking an attack.
         }
     },
     "rarities": [
-        "uncommon",
-        "rare",
-        "epic"
+        "apotheosis:uncommon",
+        "apotheosis:rare",
+        "apotheosis:epic"
     ]
 }
 ```

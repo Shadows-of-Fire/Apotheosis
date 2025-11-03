@@ -3,10 +3,9 @@ The CatalyzingAffix is a shield-specific affix that grants a Strength effect whe
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootRarity](../../loot/LootRarity.md)
-4. [StepFunction](../../../../../../Placebo/blob/-/schema/StepFunction.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootRarity](../../loot/LootRarity.md)
+3. [StepFunction](../../../../../../Placebo/blob/-/schema/StepFunction.md)
 
 # Schema
 ```js
@@ -54,41 +53,6 @@ A basic catalyzing affix that grants short-duration strength when blocking explo
         "mythic": {
             "min": 200,
             "max": 300
-        }
-    }
-}
-```
-
-## Powerful Catalyzing Affix
-A more powerful catalyzing affix that grants longer duration strength effects.
-
-```json
-{
-    "type": "apotheosis:catalyzing",
-    "definition": {
-        "affix_type": "ability",
-        "exclusive_set": [
-            "apotheosis:reflecting"
-        ],
-        "weights": {
-            "summit": {
-                "weight": 5,
-                "quality": 1.2
-            },
-            "pinnacle": {
-                "weight": 8,
-                "quality": 1.5
-            }
-        }
-    },
-    "values": {
-        "epic": {
-            "min": 200,
-            "max": 300
-        },
-        "mythic": {
-            "min": 300,
-            "max": 600
         }
     }
 }

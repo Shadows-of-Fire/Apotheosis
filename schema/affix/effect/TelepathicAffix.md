@@ -1,11 +1,10 @@
 # Description
-The TelepathicAffix is a utility affix that teleports item drops directly to the player. When a player breaks blocks with a tool that has this affix, or when they kill entities with a weapon that has this affix, the drops will be teleported directly to the player's position instead of dropping at the target location.
+The TelepathicAffix is a utility affix that teleports item drops directly to the player. While using this affix, breaking blocks or killing entities will teleport the drops directly to the player's position.
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootRarity](../../loot/LootRarity.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootRarity](../../loot/LootRarity.md)
 
 # Schema
 ```js
@@ -27,56 +26,16 @@ A basic telepathic affix that can appear on rare or higher rarity items.
 {
     "type": "apotheosis:telepathic",
     "definition": {
-        "affix_type": "ability",
+        "affix_type": "basic_effect",
         "exclusive_set": [],
         "weights": {
-            "rare": {
-                "weight": 5,
-                "quality": 1.0
-            },
-            "epic": {
-                "weight": 10,
-                "quality": 1.0
-            },
-            "mythic": {
-                "weight": 15,
-                "quality": 1.0
-            }
+            "quality": 0.1,
+            "weight": 25
         }
     },
     "rarities": [
-        "rare",
-        "epic",
-        "mythic"
+        "apotheosis:rare",
+        "apotheosis:epic",
+        "apotheosis:mythic"
     ]
 }
-```
-
-## Late-Game Telepathic Affix
-A telepathic affix that only appears on mythic items in the highest world tiers.
-
-```json
-{
-    "type": "apotheosis:telepathic",
-    "definition": {
-        "affix_type": "ability",
-        "exclusive_set": [
-            "apotheosis:excavating",
-            "apotheosis:stonebreaking"
-        ],
-        "weights": {
-            "summit": {
-                "weight": 5,
-                "quality": 1.0
-            },
-            "pinnacle": {
-                "weight": 10,
-                "quality": 1.2
-            }
-        }
-    },
-    "rarities": [
-        "mythic"
-    ]
-}
-```

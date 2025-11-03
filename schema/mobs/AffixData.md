@@ -1,5 +1,5 @@
 # Description
-AffixData defines whether and how boss equipment receives special affixes (magical properties). When affixes are enabled, one of the boss's equipped items will become an affix item with the specified rarity.
+AffixData defines how entity equipment is affixed. Currently this is only used by Elites to determine if their equipment is affixed.
 
 # Dependencies
 This object references the following objects:
@@ -8,7 +8,7 @@ This object references the following objects:
 # Schema
 ```js
 {
-    "affix_chance": float,              // [Mandatory] || The chance (0-1) that one of the boss's items will become an affix item.
+    "affix_chance": float,              // [Mandatory] || The chance (0-1) that one of the entity's items will be affixed.
     "rarities": [                       // [Optional]  || A pool of rarities that can be used; if empty, all rarities will be considered.
         LootRarity
     ]
@@ -27,15 +27,15 @@ A simple configuration with a 50% chance to create an affix item, with no restri
 ```
 
 ## Advanced Affix Data with Specific Rarities
-A configuration that always creates an affix item, but only with rare or higher rarity.
+A configuration that always creates an affix item, but only with rare/epic/mythic rarity. Weights are based on current world tier. One is selected at random if all weights are zero.
 
 ```json
 {
     "affix_chance": 1.0,
     "rarities": [
-        "rare",
-        "epic",
-        "mythic"
+        "apotheosis:rare",
+        "apotheosis:epic",
+        "apotheosis:mythic"
     ]
 }
 ```

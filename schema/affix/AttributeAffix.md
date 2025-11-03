@@ -3,24 +3,22 @@ AttributeAffix is one of the most common Affix implementations, which adds attri
 
 # Dependencies
 This object references the following objects:
-1. [Affix](./Affix.md)
-2. [AffixDefinition](./AffixDefinition.md)
-3. [LootCategory](../loot/LootCategory.md)
-4. [LootRarity](../loot/LootRarity.md)
-5. [Attribute](../../../../../Minecraft/blob/-/schema/Attribute.md)
-6. [StepFunction](../../../../../Placebo/blob/-/schema/StepFunction.md)
+1. [AffixDefinition](./AffixDefinition.md)
+2. [LootCategory](../loot/LootCategory.md)
+3. [LootRarity](../loot/LootRarity.md)
+4. [StepFunction](../../../../../Placebo/blob/-/schema/StepFunction.md)
 
 # Schema
 ```js
 {
     "type": "apotheosis:attribute",      // [Mandatory] || The affix type identifier
     "definition": AffixDefinition,       // [Mandatory] || The affix definition
-    "attribute": Attribute,              // [Mandatory] || The attribute to modify
+    "attribute": "string",              // [Mandatory] || The resource location of the attribute to modify
     "operation": Operation,              // [Mandatory] || The attribute modifier operation
-    "values": {                          // [Mandatory] || Per-rarity attribute value ranges
+    "values": {                          // [Mandatory] || A map of rarity IDs to the value functions for that rarity.
         LootRarity: StepFunction
     },
-    "categories": [                      // [Mandatory] || The item categories this affix can be applied to
+    "categories": [                      // [Mandatory] || The supported loot categories.
         LootCategory
     ]
 }
@@ -72,8 +70,7 @@ A basic attribute affix that increases attack damage by a percentage.
         }
     },
     "categories": [
-        "weapon",
-        "tool"
+        "apotheosis:melee_weapon"
     ]
 }
 ```
@@ -117,10 +114,10 @@ An attribute affix that adds flat armor toughness values to armor pieces.
         }
     },
     "categories": [
-        "helmet",
-        "chestplate",
-        "leggings",
-        "boots"
+        "apotheosis:helmet",
+        "apotheosis:chestplate",
+        "apotheosis:leggings",
+        "apotheosis:boots"
     ]
 }
 ```

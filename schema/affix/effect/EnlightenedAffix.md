@@ -3,16 +3,15 @@ EnlightenedAffix allows tools to place torches without consuming them from the p
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootRarity](../../loot/LootRarity.md)
-4. [StepFunction](../../../../../Placebo/blob/-/schema/StepFunction.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootRarity](../../loot/LootRarity.md)
+3. [StepFunction](../../../../../Placebo/blob/-/schema/StepFunction.md)
 
 # Schema
 ```js
 {
     "type": "apotheosis:enlightened",     // [Mandatory] || The affix type identifier
-    "definition": AffixDefinition,         // [Mandatory] || The affix definition
+    "definition": AffixDefinition,        // [Mandatory] || The affix definition
     "values": {                           // [Mandatory] || Per-rarity durability cost values
         LootRarity: StepFunction
     }
@@ -36,25 +35,20 @@ An affix that allows placing torches at the cost of tool durability.
         }
     },
     "values": {
-        "common": {
-            "type": "placebo:step",
-            "steps": [5, 4, 3, 2],
-            "y_interp": "nearest"
+        "apotheosis:rare": {
+            "min": 12.0,
+            "max": 8.0,
+            "step": -1.0
         },
-        "uncommon": {
-            "type": "placebo:step",
-            "steps": [3, 2, 1],
-            "y_interp": "nearest"
+        "apotheosis:epic": {
+            "min": 10.0,
+            "max": 5.0,
+            "step": -1.0
         },
-        "rare": {
-            "type": "placebo:step",
-            "steps": [2, 1],
-            "y_interp": "nearest"
-        },
-        "epic": {
-            "type": "placebo:step",
-            "steps": [1],
-            "y_interp": "nearest"
+        "apotheosis:mythic": {
+            "min": 5.0,
+            "max": 0.0,
+            "step": -1.0
         }
     }
 }

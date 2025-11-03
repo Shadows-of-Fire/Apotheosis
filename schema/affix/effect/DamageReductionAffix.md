@@ -3,11 +3,10 @@ The DamageReductionAffix is a defensive affix that reduces damage of a specific 
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootCategory](../../loot/LootCategory.md)
-4. [LootRarity](../../loot/LootRarity.md)
-5. [StepFunction](../../../../../../Placebo/blob/-/schema/StepFunction.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootCategory](../../loot/LootCategory.md)
+3. [LootRarity](../../loot/LootRarity.md)
+4. [StepFunction](../../../../../../Placebo/blob/-/schema/StepFunction.md)
 
 # Schema
 ```js
@@ -72,51 +71,10 @@ A basic affix that reduces fire damage when applied to armor pieces.
         }
     },
     "categories": [
-        "helmet",
-        "chestplate",
-        "leggings",
-        "boots"
-    ]
-}
-```
-
-## Advanced Projectile Protection Affix
-A more powerful affix that provides significant protection against projectiles.
-
-```json
-{
-    "type": "apotheosis:damage_reduction",
-    "definition": {
-        "affix_type": "basic_effect",
-        "exclusive_set": [
-            "apotheosis:damage_reduction_explosion"
-        ],
-        "weights": {
-            "summit": {
-                "weight": 8,
-                "quality": 1.2
-            },
-            "pinnacle": {
-                "weight": 12,
-                "quality": 1.5
-            }
-        }
-    },
-    "damage_type": "projectile",
-    "values": {
-        "epic": {
-            "min": 0.25,
-            "max": 0.35
-        },
-        "mythic": {
-            "min": 0.35,
-            "max": 0.5
-        }
-    },
-    "categories": [
-        "helmet",
-        "chestplate",
-        "shield"
+        "apotheosis:helmet",
+        "apotheosis:chestplate",
+        "apotheosis:leggings",
+        "apotheosis:boots"
     ]
 }
 ```

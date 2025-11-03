@@ -14,17 +14,11 @@ All affixes share common properties defined in their definition:
 
 ```js
 {
-    "type": string,                       // [Mandatory] || The type of affix (Java class name)
+    "type": string,                       // [Mandatory] || The type of the affix (the registry name of the affix codec)
     "definition": AffixDefinition,        // [Mandatory] || The affix definition that controls type, exclusivity, and weights
     // Additional properties based on affix subtype
 }
 ```
-
-# Affix Types
-Affixes are categorized into three main types:
-1. **STAT** - Provides attribute bonuses like increasing damage, attack speed, or health
-2. **BASIC_EFFECT** - Applies status effects or simple bonuses
-3. **ABILITY** - Adds complex abilities and functionality
 
 # Common Implementations
 Affixes come in many different forms, each with their own unique schemas and functionality:

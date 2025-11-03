@@ -3,10 +3,9 @@ The CleavingAffix is a powerful ability affix that allows melee weapons to hit m
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootRarity](../../loot/LootRarity.md)
-4. [StepFunction](../../../../../../Placebo/blob/-/schema/StepFunction.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootRarity](../../loot/LootRarity.md)
+3. [StepFunction](../../../../../../Placebo/blob/-/schema/StepFunction.md)
 
 # Schema
 ```js
@@ -76,40 +75,6 @@ A basic cleaving affix that has a chance to hit additional enemies.
             "targets": {
                 "min": 2,
                 "max": 3
-            }
-        }
-    }
-}
-```
-
-## Advanced Cleaving Affix
-A more powerful cleaving affix with higher chances and more targets.
-
-```json
-{
-    "type": "apotheosis:cleaving",
-    "definition": {
-        "affix_type": "ability",
-        "exclusive_set": [
-            "apotheosis:executing",
-            "apotheosis:berserking"
-        ],
-        "weights": {
-            "pinnacle": {
-                "weight": 5,
-                "quality": 1.5
-            }
-        }
-    },
-    "values": {
-        "mythic": {
-            "chance": {
-                "min": 0.6,
-                "max": 0.8
-            },
-            "targets": {
-                "min": 3,
-                "max": 5
             }
         }
     }

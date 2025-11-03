@@ -3,17 +3,15 @@ MultiAttrAffix is a complex affix that applies multiple attribute modifiers to a
 
 # Dependencies
 This object references the following objects:
-1. [Affix](../Affix.md)
-2. [AffixDefinition](../AffixDefinition.md)
-3. [LootCategory](../../loot/LootCategory.md)
-4. [LootRarity](../../loot/LootRarity.md)
-5. [Attribute](../../../../../Minecraft/blob/-/schema/Attribute.md)
-6. [StepFunction](../../../../../Placebo/blob/-/schema/StepFunction.md)
+1. [AffixDefinition](../AffixDefinition.md)
+2. [LootCategory](../../loot/LootCategory.md)
+3. [LootRarity](../../loot/LootRarity.md)
+4. [StepFunction](../../../../../Placebo/blob/-/schema/StepFunction.md)
 
 # Schema
 ```js
 {
-    "type": "apotheosis:multi_attr",     // [Mandatory] || The affix type identifier
+    "type": "apotheosis:multi_attr",      // [Mandatory] || The affix type identifier
     "definition": AffixDefinition,        // [Mandatory] || The affix definition
     "modifiers": [                        // [Mandatory] || The list of attribute modifiers
         {
@@ -24,7 +22,7 @@ This object references the following objects:
             }
         }
     ],
-    "desc": string,                       // [Mandatory] || The description format string with %s placeholders for each modifier
+    "desc": string,                       // [Mandatory] || A language key for the description. %s placeholders are replaced with each modifier.
     "categories": [                       // [Mandatory] || The item categories this affix can be applied to
         LootCategory
     ]
@@ -57,20 +55,25 @@ An affix that increases both attack damage and attack speed.
             "attribute": "minecraft:generic.attack_damage",
             "operation": "add_multiplied_base",
             "values": {
-                "rare": {
-                    "type": "placebo:step",
-                    "steps": [0.15, 0.20, 0.25],
-                    "y_interp": "linear"
+                "apotheosis:common": {
+                    "min": 0.2,
+                    "max": 0.3
                 },
-                "epic": {
-                    "type": "placebo:step",
-                    "steps": [0.25, 0.30, 0.35],
-                    "y_interp": "linear"
+                "apotheosis:uncommon": {
+                    "min": 0.2,
+                    "max": 0.3
                 },
-                "mythic": {
-                    "type": "placebo:step",
-                    "steps": [0.35, 0.40, 0.45],
-                    "y_interp": "linear"
+                "apotheosis:rare": {
+                    "min": 0.3,
+                    "max": 0.5
+                },
+                "apotheosis:epic": {
+                    "min": 0.3,
+                    "max": 0.5
+                },
+                "apotheosis:mythic": {
+                    "min": 0.4,
+                    "max": 0.7
                 }
             }
         },
@@ -78,29 +81,32 @@ An affix that increases both attack damage and attack speed.
             "attribute": "minecraft:generic.attack_speed",
             "operation": "add_value",
             "values": {
-                "rare": {
-                    "type": "placebo:step",
-                    "steps": [0.2, 0.3, 0.4],
-                    "y_interp": "linear"
+                "apotheosis:common": {
+                    "min": 0.2,
+                    "max": 0.3
                 },
-                "epic": {
-                    "type": "placebo:step",
-                    "steps": [0.4, 0.5, 0.6],
-                    "y_interp": "linear"
+                "apotheosis:uncommon": {
+                    "min": 0.2,
+                    "max": 0.3
                 },
-                "mythic": {
-                    "type": "placebo:step",
-                    "steps": [0.6, 0.7, 0.8],
-                    "y_interp": "linear"
+                "apotheosis:rare": {
+                    "min": 0.3,
+                    "max": 0.5
+                },
+                "apotheosis:epic": {
+                    "min": 0.3,
+                    "max": 0.5
+                },
+                "apotheosis:mythic": {
+                    "min": 0.4,
+                    "max": 0.7
                 }
             }
         }
     ],
     "desc": "Increases damage and attack speed by %s and %s",
     "categories": [
-        "sword",
-        "trident",
-        "melee_weapon"
+        "apotheosis:melee_weapon"
     ]
 }
 ```
