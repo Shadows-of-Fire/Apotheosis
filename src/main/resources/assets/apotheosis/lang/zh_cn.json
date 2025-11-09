@@ -134,9 +134,6 @@
     "affix.apotheosis:breaker/attribute/experienced": "经验",
     "affix.apotheosis:breaker/attribute/experienced.suffix": "学者",
 
-    "affix.apotheosis:melee/attribute/elongated": "延展",
-    "affix.apotheosis:melee/attribute/elongated.suffix": "远战",
-
     "affix.apotheosis:ranged/attribute/agile": "敏捷",
     "affix.apotheosis:ranged/attribute/agile.suffix": "迅敏",
 
@@ -515,7 +512,6 @@
     "misc.apotheosis.level.many": "级",
     "name.apotheosis.treasure_goblin": "宝藏哥布林",
 
-    "item.apotheosis.gem.apotheosis:legacy": "经典宝石",
     "item.apotheosis.gem.apotheosis:core/guardian": "护卫宝石",
     "item.apotheosis.gem.apotheosis:core/ballast": "稳定宝石",
     "item.apotheosis.gem.apotheosis:core/solar": "阳炎宝石",
@@ -685,6 +681,8 @@
     "loot_category.apotheosis.leggings.plural": "护腿",
     "loot_category.apotheosis.boots": "靴子",
     "loot_category.apotheosis.boots.plural": "靴子",
+    "loot_category.apotheosis.shears": "剪刀",
+    "loot_category.apotheosis.shears.plural": "剪刀",
 
     "info.apotheosis.boss_spawn": "%s在附近苏醒了！",
     "info.apotheosis.boss": "神化Boss（%s）",
