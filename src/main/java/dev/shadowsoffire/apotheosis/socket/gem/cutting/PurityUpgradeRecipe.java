@@ -1,10 +1,7 @@
 package dev.shadowsoffire.apotheosis.socket.gem.cutting;
 
-import java.util.List;
-
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
@@ -16,6 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
+
+import java.util.List;
 
 public record PurityUpgradeRecipe(Purity purity, List<SizedIngredient> left, List<SizedIngredient> right) implements GemCuttingRecipe {
 
@@ -60,12 +59,28 @@ public record PurityUpgradeRecipe(Purity purity, List<SizedIngredient> left, Lis
 
     @Override
     public boolean matches(CuttingRecipeInput input, Level level) {
-        UnsocketedGem baseInst = UnsocketedGem.of(input.getBase());
-        UnsocketedGem topInst = UnsocketedGem.of(input.getTop());
+        ItemStack baseStack = input.getBase();
+        ItemStack topStack = input.getTop();
+
+        // Hard guard: no gem in base OR top => no match
+        if (baseStack.isEmpty() || topStack.isEmpty()) {
+            return false;
+        }
+
+        UnsocketedGem baseInst = UnsocketedGem.of(baseStack);
+        UnsocketedGem topInst = UnsocketedGem.of(topStack);
+
+        // Must be valid unsocketed gems, and not perfect
+        if (!baseInst.isValid() || !topInst.isValid() || baseInst.isPerfect()) {
+            return false;
+        }
+
+        // Must be the SAME gem, and at the expected purity
         if (baseInst.purity() != this.purity || !baseInst.equals(topInst)) {
             return false;
         }
 
+        // And left/right ingredients must match
         return GemCuttingRecipe.anyMatch(input.getLeft(), this.left) && GemCuttingRecipe.anyMatch(input.getRight(), this.right);
     }
 
