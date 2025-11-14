@@ -172,6 +172,7 @@ public class Apotheosis {
     @SubscribeEvent
     public void caps(RegisterCapabilitiesEvent e) {
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.SALVAGING_TABLE, (be, side) -> be.getItemHandler());
+        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.GEM_CUTTING_TABLE, (be, side) -> be.getItemHandler());
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.REFORGING_TABLE, (be, side) -> be.getInventory());
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.AUGMENTING_TABLE, (be, side) -> be.getInventory());
     }

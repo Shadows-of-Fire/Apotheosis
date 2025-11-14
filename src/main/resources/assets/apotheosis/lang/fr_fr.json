@@ -413,6 +413,10 @@
     "button.apotheosis.no_salvage_all": "Aucun objet valide dans l'inventaire",
     "button.apotheosis.upgrade": "Améliorer la gemme",
     "button.apotheosis.upgrade.no": "Entrées manquantes",
+    "button.apotheosis.gem_cutting.auto": "A",
+    "button.apotheosis.gem_cutting.manual": "M",
+    "button.apotheosis.gem_cutting.auto.tooltip": "Passer en Manuel",
+    "button.apotheosis.gem_cutting.manual.tooltip": "Passer en Automatique",
 
     "menu.apotheosis.gem_cutting": "Taille de gemme",
     "container.apotheosis.salvage": "Récupération",

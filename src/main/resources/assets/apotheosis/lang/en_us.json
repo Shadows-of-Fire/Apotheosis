@@ -622,6 +622,10 @@
     "button.apotheosis.augmenting.no_alternatives": "No Alternative Affixes",
     "button.apotheosis.augmenting.upgrade.cost": "Cost: %sx %s",
     "button.apotheosis.augmenting.upgrade.exp_cost": "Experience Cost: %s Levels",
+    "button.apotheosis.gem_cutting.auto": "A",
+    "button.apotheosis.gem_cutting.manual": "M",
+    "button.apotheosis.gem_cutting.auto.tooltip": "Switch to Manual",
+    "button.apotheosis.gem_cutting.manual.tooltip": "Switch to Automatic",
 
     "menu.apotheosis.gem_cutting": "Gem Cutting",
     "container.apotheosis.salvage": "Salvage",

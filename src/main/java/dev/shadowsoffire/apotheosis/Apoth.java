@@ -67,11 +67,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.FrozenDropsBonus;
-import dev.shadowsoffire.apotheosis.socket.gem.cutting.BasicGemCuttingRecipe;
-import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingBlock;
-import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingMenu;
-import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
-import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.socket.gem.cutting.*;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
@@ -350,6 +346,7 @@ public class Apoth {
         public static final BlockEntityType<ReforgingTableTile> REFORGING_TABLE = R.tickingBlockEntity("reforging_table", ReforgingTableTile::new, TickSide.CLIENT, Blocks.REFORGING_TABLE, Blocks.SIMPLE_REFORGING_TABLE);
         public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = R.blockEntity("salvaging_table", SalvagingTableTile::new, Blocks.SALVAGING_TABLE);
         public static final BlockEntityType<AugmentingTableTile> AUGMENTING_TABLE = R.tickingBlockEntity("augmenting_table", AugmentingTableTile::new, TickSide.CLIENT, Blocks.AUGMENTING_TABLE);
+        public static final BlockEntityType<GemCuttingTableTile> GEM_CUTTING_TABLE = R.blockEntity("gem_cutting_table", GemCuttingTableTile::new, Blocks.GEM_CUTTING_TABLE);
 
         private static void bootstrap() {}
     }
@@ -357,7 +354,7 @@ public class Apoth {
     public static final class Menus {
         public static final MenuType<ReforgingMenu> REFORGING = R.menuWithPos("reforging", ReforgingMenu::new);
         public static final MenuType<SalvagingMenu> SALVAGE = R.menuWithPos("salvage", SalvagingMenu::new);
-        public static final MenuType<GemCuttingMenu> GEM_CUTTING = R.menu("gem_cutting", GemCuttingMenu::new);
+        public static final MenuType<GemCuttingMenu> GEM_CUTTING = R.menuWithPos("gem_cutting", GemCuttingMenu::new);
         public static final MenuType<AugmentingMenu> AUGMENTING = R.menuWithPos("augmenting", AugmentingMenu::new);
 
         private static void bootstrap() {}

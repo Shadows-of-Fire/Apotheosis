@@ -7,6 +7,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
@@ -22,6 +23,7 @@ public class GemCuttingScreen extends AdventureContainerScreen<GemCuttingMenu> {
     public static final ResourceLocation TEXTURE = Apotheosis.loc("textures/gui/gem_cutting.png");
 
     protected SimpleTexButton upgradeBtn;
+    protected Button autoBtn;
 
     public GemCuttingScreen(GemCuttingMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -38,12 +40,47 @@ public class GemCuttingScreen extends AdventureContainerScreen<GemCuttingMenu> {
         int top = this.getGuiTop();
 
         this.upgradeBtn = this.addRenderableWidget(
-            new SimpleTexButton(left + 135, top + 44, 18, 18, 238, 0, TEXTURE, 256, 256,
-                this::clickUpgradeBtn,
-                Component.translatable("button.apotheosis.upgrade"))
-                .setInactiveMessage(Component.translatable("button.apotheosis.upgrade.no").withStyle(ChatFormatting.RED)));
+                new SimpleTexButton(left + 135, top + 44, 18, 18, 238, 0, TEXTURE, 256, 256,
+                        this::clickUpgradeBtn,
+                        Component.translatable("button.apotheosis.upgrade"))
+                        .setInactiveMessage(Component.translatable("button.apotheosis.upgrade.no").withStyle(ChatFormatting.RED)));
+
+        this.autoBtn = this.addRenderableWidget(
+                Button.builder(getAutoLabel(), this::clickAutoBtn)
+                        .bounds(left + 135, top + 20, 18, 18)   // position/size
+                        .tooltip(getAutoTooltip())
+                        .build()
+        );
 
         this.updateBtnStatus();
+        this.updateAutoButton();
+    }
+
+    private Component getAutoLabel() {
+        return this.menu.isAutoMode()
+                ? Component.translatable("button.apotheosis.gem_cutting.auto").withStyle(ChatFormatting.GREEN)
+                : Component.translatable("button.apotheosis.gem_cutting.manual").withStyle(ChatFormatting.YELLOW);
+    }
+
+    private Tooltip getAutoTooltip() {
+        return Tooltip.create(this.menu.isAutoMode()
+                ? Component.translatable("button.apotheosis.gem_cutting.auto.tooltip")
+                : Component.translatable("button.apotheosis.gem_cutting.manual.tooltip"));
+    }
+
+    protected void clickAutoBtn(Button btn) {
+        // Client -> server toggle
+        this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, 1);
+        this.menu.inverseAutoMode();
+        btn.setMessage(getAutoLabel());
+        btn.setTooltip(getAutoTooltip());
+    }
+
+    private void updateAutoButton() {
+        if (this.autoBtn != null) {
+            this.autoBtn.setMessage(getAutoLabel());
+            this.autoBtn.setTooltip(getAutoTooltip());
+        }
     }
 
     protected void clickUpgradeBtn(Button btn) {
@@ -87,20 +124,20 @@ public class GemCuttingScreen extends AdventureContainerScreen<GemCuttingMenu> {
             this.delay = 999;
         }
 
+        public static void start(BlockPos pos) {
+            Minecraft.getInstance().getSoundManager().play(new GemUpgradeSound(pos));
+        }
+
         @Override
         public void tick() {
             if (this.ticks == 4 || this.ticks == 9) {
-                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMETHYST_BLOCK_BREAK, this.pitch + this.pitchOff, 1.5F));
+                Minecraft.getInstance().getSoundManager().play(
+                        SimpleSoundInstance.forUI(SoundEvents.AMETHYST_BLOCK_BREAK, this.pitch + this.pitchOff, 1.5F));
                 this.pitchOff = -this.pitchOff;
             }
             if (this.ticks++ > 8) {
                 this.stop();
             }
         }
-
-        public static void start(BlockPos pos) {
-            Minecraft.getInstance().getSoundManager().play(new GemUpgradeSound(pos));
-        }
     }
-
 }
