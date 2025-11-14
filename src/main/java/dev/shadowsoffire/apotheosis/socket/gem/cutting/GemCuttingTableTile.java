@@ -111,7 +111,7 @@ public class GemCuttingTableTile extends BlockEntity {
         if (tag.contains("inv")) {
             this.inv.deserializeNBT(regs, tag.getCompound("inv"));
         }
-        if (tag.contains("autoMode")) {                 // <--- new
+        if (tag.contains("autoMode")) {
             this.autoMode = tag.getBoolean("autoMode");
         }
         super.loadAdditional(tag, regs);

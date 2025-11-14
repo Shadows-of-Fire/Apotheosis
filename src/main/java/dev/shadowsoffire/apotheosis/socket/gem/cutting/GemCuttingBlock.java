@@ -58,13 +58,11 @@ public class GemCuttingBlock extends HorizontalDirectionalBlock implements Entit
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
-        // Same pattern as SalvagingTableBlock – opens a menu bound to the BlockPos.
         return MenuUtil.openGui(player, pos, GemCuttingMenu::new);
     }
 
     @Override
     public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-        // For generic menu opening, mirrors SalvagingTableBlock.
         return new SimplerMenuProvider<>(world, pos, GemCuttingMenu::new);
     }
 
@@ -87,10 +85,6 @@ public class GemCuttingBlock extends HorizontalDirectionalBlock implements Entit
     protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return null;
     }
-
-    // ------------------------------------------------------------------------
-    // BlockEntity / ticking / drops
-    // ------------------------------------------------------------------------
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
