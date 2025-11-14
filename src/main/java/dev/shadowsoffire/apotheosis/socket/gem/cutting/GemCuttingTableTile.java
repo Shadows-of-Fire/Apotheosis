@@ -243,15 +243,13 @@ public class GemCuttingTableTile extends BlockEntity {
             }
 
             ItemStack base = GemCuttingTableTile.this.inv.getStackInSlot(GemCuttingMenu.BASE_SLOT);
-            if (base.isEmpty()) {
-                return ItemStack.EMPTY;
-            }
-
             ItemStack top = GemCuttingTableTile.this.inv.getStackInSlot(GemCuttingMenu.TOP_SLOT);
 
-            // If there is no top gem, nothing is being upgraded -> safe to extract.
-            if (top.isEmpty()) {
-                return GemCuttingTableTile.this.inv.extractItem(slot, amount, simulate);
+            // With slower extractors, the base is extracted before the top can be filled.
+            // So if either of the base or the top is empty, then just don't extract anything.
+            // TODO: Add a new config option (button) to block or not extract when top is empty
+            if (base.isEmpty() || top.isEmpty()) {
+                return ItemStack.EMPTY;
             }
 
             // Interpret both as UnsocketedGem metadata.
