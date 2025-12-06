@@ -1,6 +1,6 @@
 {
     "name": "Fragmentação de armadura",
-    "icon": "apotheosis:textures/mob_effect/sundering.png",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
 	"sortnum": 0,

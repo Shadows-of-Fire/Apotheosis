@@ -1,0 +1,17 @@
+{
+    "name": "Itens de Invasor",
+    "icon": "minecraft:ender_chest",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Cada Invasor é fortalecido com exatamente um Item de Afixo, juntamente com o restante de seu equipamento totalmente encantado.$(p)Este Item de Afixo é garantido de ser derrubado na morte, e será da mesma raridade que o Invasor.$(p)Os afixos nele tendem a ser mais fortes que o normal."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Este item por si só é o troféu que você receberá ao matar um invasor, e provavelmente valerá a pena.$(p)Como uma lembrança do proprietário original, todo item terá o nome do invasor prefixado no nome do item."
+		}
+	]
+}

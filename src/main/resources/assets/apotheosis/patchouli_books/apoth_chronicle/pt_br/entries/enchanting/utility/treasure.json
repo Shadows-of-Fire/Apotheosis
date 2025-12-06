@@ -1,6 +1,6 @@
 {
     "name": "Encantamentos de tesouro",
-    "icon": "apotheosis:treasure_shelf",
+    "icon": "apothic_enchanting:treasure_shelf",
     "category": "apotheosis:enchanting/utility",
     "flag": "apotheosis:enchanting",
     "sortnum": 0,
