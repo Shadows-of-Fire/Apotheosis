@@ -1,3 +1,22 @@
+## 8.4.1
+* Made `LootPatternMatcher` a `LootItemCondition`, allowing it to be used in loot tables.
+  * Has the ID `apotheosis:loot_table_pattern_matcher`.
+* Fixed a bug where the executing affix could kill an already dead entity.
+* Made more gems applicable to shears.
+* Fixed a bug where linking an item to chat with a stack size > 99 would crash the game.
+* Item stack sizes will now be reflected in item links.
+* twigtarsier: Fixed the Augmenting Table missing its capability registration.
+  * Sigils of Enhancement can now be added via hoppers or other automation.
+* Updated boss dungeon configured features to have a `success_chance` value.
+  * This allows reducing the effective generation rate to below once per chunk.
+* Enabled the `allow_discarding` rule for the Gateway of Endless Invaders.
+  * For various reasons, this gateway has a high failure rate in the presence of other mods. Hopefully this helps.
+* Moved all towers into a single `structure_set`. This means that towers of different types cannot spawn next to eachother.
+* PODOB: Updated Korean translation.
+* mc-kaishixiaxue, rtxyd: Updated Chinese translation.
+* PrincessStelllar: Updated Brazilian translation.
+* Wokashi0801: Updated Japanese translation.
+
 ## 8.4.0
 Welcome to Apotheosis 8.4.0 - Gateways Through the Tiers!
 

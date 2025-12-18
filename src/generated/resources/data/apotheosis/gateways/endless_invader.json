@@ -176,6 +176,7 @@
     ],
     "spawn_algorithm": "gateways:inward_spiral",
     "rules": {
+        "allow_discarding": true,
         "lives": 3,
         "requires_nearby_player": true,
         "spacing": 32.0

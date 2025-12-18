@@ -1,30 +1,26 @@
 {
-	"forge:conditions": [{
-		"type": "apotheosis:module",
-		"module": "adventure"
-	}],
-	"feature": "apotheosis:rogue_spawner",
-	"placement": [{
-			"type": "minecraft:count",
-			"count": 65
-		},
-		{
-			"type": "minecraft:in_square"
-		},
-		{
-			"type": "minecraft:height_range",
-			"height": {
-				"type": "minecraft:uniform",
-				"max_inclusive": {
-					"below_top": 0
-				},
-				"min_inclusive": {
-					"absolute": 10
-				}
-			}
-		},
-		{
-			"type": "minecraft:biome"
-		}
-	]
+    "feature": "apotheosis:rogue_spawner",
+    "placement": [{
+            "type": "minecraft:count",
+            "count": 65
+        },
+        {
+            "type": "minecraft:in_square"
+        },
+        {
+            "type": "minecraft:height_range",
+            "height": {
+                "type": "minecraft:uniform",
+                "max_inclusive": {
+                    "below_top": 0
+                },
+                "min_inclusive": {
+                    "absolute": 10
+                }
+            }
+        },
+        {
+            "type": "minecraft:biome"
+        }
+    ]
 }

@@ -342,7 +342,7 @@ public class AdventureEvents {
 
     @SubscribeEvent
     public void applyMissedTierAugments(EntityJoinLevelEvent e) {
-        if (e.getLevel().isClientSide) {
+        if (!(e.getLevel() instanceof ServerLevelAccessor)) {
             return;
         }
 
