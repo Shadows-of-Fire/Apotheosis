@@ -91,7 +91,7 @@ public interface LootRule extends CodecProvider<LootRule> {
         public void execute(ItemStack stack, LootRarity rarity, GenContext ctx) {
             List<WeightedEntry.Wrapper<Affix>> available = LootController.getWeightedAffixes(stack, rarity, this.type, ctx);
             int weight = WeightedRandom.getTotalWeight(available);
-            if (available.size() == 0 && weight == 0) {
+            if (available.size() == 0 || weight == 0) {
                 Apotheosis.LOGGER.error("Failed to execute AffixLootRule (no affixes available) {}/{}/{}/{}!", BuiltInRegistries.ITEM.getKey(stack.getItem()), RarityRegistry.INSTANCE.getKey(rarity), this.type);
                 return;
             }
