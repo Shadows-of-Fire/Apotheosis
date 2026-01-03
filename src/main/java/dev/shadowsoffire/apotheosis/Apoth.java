@@ -466,7 +466,7 @@ public class Apoth {
     }
 
     public static final class LootFunctions {
-        public static final LootItemFunctionType<ReforgeItemFunction> MATCHES_BLOCK = R.custom("reforge_item", Registries.LOOT_FUNCTION_TYPE, ReforgeItemFunction.TYPE);
+        public static final LootItemFunctionType<ReforgeItemFunction> REFORGE_ITEM = R.custom("reforge_item", Registries.LOOT_FUNCTION_TYPE, ReforgeItemFunction.TYPE);
 
         private static void bootstrap() {}
     }
