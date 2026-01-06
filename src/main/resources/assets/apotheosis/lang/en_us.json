@@ -681,6 +681,8 @@
     "loot_category.apotheosis.leggings.plural": "Leggings",
     "loot_category.apotheosis.boots": "Boots",
     "loot_category.apotheosis.boots.plural": "Boots",
+    "loot_category.apotheosis.shears": "Shears",
+    "loot_category.apotheosis.shears.plural": "Shears",
 
     "info.apotheosis.boss_spawn": "%s has awoken nearby!",
     "info.apotheosis.boss": "%s Apothic Boss",
@@ -721,7 +723,7 @@
     "reward.apotheosis.gem": "Apothic Gem (%s)",
     "reward.apotheosis.random_gem": "Apothic Gem (Random)",
     "reward.apotheosis.true_random_gem": "Truly Random Apothic Gem",
-    "reward.apotheosis.netherite_smithing_template": "Netherite Smiting Template",
+    "reward.apotheosis.netherite_smithing_template": "Netherite Smithing Template",
     "error.apotheosis.gate_tier_incorrect": "This Gateway can only be opened in World Tier: %s",
     "modifier.apotheosis.affix": "Receives an Affix Item",
     "tooltip.apotheosis.requires_world_tier": "Requires World Tier: %s",
