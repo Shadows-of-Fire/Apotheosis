@@ -62,7 +62,7 @@ public record PurityUpgradeRecipe(Purity purity, List<SizedIngredient> left, Lis
     public boolean matches(CuttingRecipeInput input, Level level) {
         UnsocketedGem baseInst = UnsocketedGem.of(input.getBase());
         UnsocketedGem topInst = UnsocketedGem.of(input.getTop());
-        if (baseInst.purity() != this.purity || !baseInst.equals(topInst)) {
+        if (!baseInst.isValid() || baseInst.purity() != this.purity || !baseInst.equals(topInst)) {
             return false;
         }
 
