@@ -1,0 +1,37 @@
+{
+    "name": "Níveis Mundiais",
+    "icon": "apotheosis:textures/gui/book/summit_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Um $(6)Nível Mundial$() é um modificador de força do mundo por jogador. Cada nível controla o tipo de conteúdo que aparecerá, quão fortes os inimigos serão, que tipo de bônus você pode receber e muito mais."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Os Níveis",
+            "text": "Existem cinco níveis, cada um aumentando a dificuldade do mundo e as recompensas disponíveis mais do que o anterior.$(p)Os níveis são $(9)Refúgio$(), $(9)Fronteira$(), $(9)Ascensão$(), $(9)Cume$() e $(9)Pináculo$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Aprimoramentos de Nível",
+            "text": "Cada nível tem seus próprios aprimoramentos, modificadores que são aplicados aos jogadores no nível, bem como aos monstros que surgiram nesse nível.$(p)Você pode ver todos os aprimoramentos de nível para cada nível na $(l:apotheosis:adventure/world_tiers/select_screen)Tela de Seleção de Nível Mundial$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Chances de Drop de Raridade",
+            "text": "Os Níveis Mundiais também controlam os pesos para cada raridade.$(p)À medida que você progride, itens de raridade maior (e Invasores) se tornarão mais comuns.$(p)As chances exatas de drop são mostradas na $(l:apotheosis:adventure/world_tiers/select_screen)Tela de Seleção de Nível Mundial$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Gemas",
+            "text": "Os Níveis Mundiais também ajustam quais gemas podem surgir, bem como com quais Purezas elas podem surgir.$(p)Como antes, as chances detalhadas de pureza podem ser encontradas na tela de seleção."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Outras Notas",
+            "text": "Os Níveis Mundiais também podem ajustar as taxas de surgimento de outros objetos, como afixos, entradas de saque de afixo e elites.$(p)Essas taxas não são mostradas em lugar nenhum, mas geralmente você pode esperar que conteúdo de nível superior apareça com mais frequência em níveis mundiais mais altos."
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "name": "Pó de Gema",
+    "icon": "apotheosis:gem_dust",
+    "category": "apotheosis:adventure/gems",
+    "flag": "apotheosis:adventure",
+    "sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:gem_dust",
+            "link_recipe": true,
+            "text": "Todas as Gemas Apóticas podem ser reduzidas a $(br)$(9)Pó de Gema$() através do esmagamento.$(p)Um método é esmagá-las com uma bigorna $(br)no mundo."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:salvaging_table",
+            "title": "Reciclando Gemas",
+            "text": "Depois de esmagar algumas Gemas com uma bigorna, você pode criar e usar a $(9)Mesa de Reciclagem$() em vez disso."
+        }
+    ]
+}

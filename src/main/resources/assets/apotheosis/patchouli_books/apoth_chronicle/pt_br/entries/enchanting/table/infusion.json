@@ -1,7 +1,7 @@
 {
     "name": "Encantamento de infusão",
     "icon": "apotheosis:infused_hellshelf",
-    "category": "apotheosis:enchanting/table",
+    "category": "apothic_enchanting:infused_hellshelf",
 	"flag": "apotheosis:enchanting",
     "pages": [
         {

@@ -1,6 +1,6 @@
 {
     "name": "Teias de aranha",
-    "icon": "minecraft:cobweb",
+    "icon": "apothic_enchanting:prismatic_web",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
     "pages": [

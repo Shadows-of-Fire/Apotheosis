@@ -653,8 +653,8 @@
     "title.apotheosis.salvaging": "Reciclagem",
 
     "text.apotheosis.anything": "Qualquer coisa",
-    "loot_category.apotheosis.none": "Nada",
-    "loot_category.apotheosis.none.plural": "Nada",
+    "loot_category.apotheosis.shears": "Tesoura",
+    "loot_category.apotheosis.shears.plural": "Tesouras",
     "loot_category.apotheosis.bow": "Arco",
     "loot_category.apotheosis.bow.plural": "Arcos",
     "loot_category.apotheosis.crossbow": "Besta",

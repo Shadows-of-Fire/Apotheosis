@@ -1,0 +1,19 @@
+{
+    "name": "Lapidação de Gema",
+    "icon": "apotheosis:gem_cutting_table",
+    "category": "apotheosis:adventure/gems",
+    "flag": "apotheosis:adventure",
+    "sortnum": 6,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:gem_cutting_table",
+            "text": "A $(9)Mesa de Lapidação de Gema$() é usada para melhorar $(l:apotheosis:adventure/gems/gems)Gemas$().$(p)Melhorar uma Gema geralmente custa $(9)Pó de Gema$(), $(9)Materiais de Raridade$(), e uma segunda Gema da mesma pureza."
+        },
+        {
+            "title": "Custos de Melhoria",
+            "type": "patchouli:text",
+            "text": "O custo de melhorar uma Gema aumenta com sua Pureza.$(p)Gemas mais fortes requerem mais $(9)Pó de Gema$() e $(9)Materiais de Raridade$() de nível superior.$(p)O custo exato para melhorar uma gema pode ser visto no JEI."
+        }
+    ]
+}
