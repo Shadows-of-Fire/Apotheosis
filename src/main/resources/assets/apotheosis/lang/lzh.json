@@ -1,0 +1,877 @@
+{
+    "comment_id": "/勇部",
+
+    "key.categories.apotheosis": "羽化",
+
+    "text.apotheosis.world_tier.haven": "鄉里",
+    "text.apotheosis.world_tier.haven.desc": "少小離家老大回，鄉音無改鬢毛衰",
+
+    "text.apotheosis.world_tier.frontier": "邊塞",
+    "text.apotheosis.world_tier.frontier.desc": "勸君更盡一杯酒，西出陽關無故人",
+
+    "text.apotheosis.world_tier.ascent": "天涯",
+    "text.apotheosis.world_tier.ascent.desc": "莫愁前路無知己，天下誰人不識君",
+
+    "text.apotheosis.world_tier.summit": "蒼穹",
+    "text.apotheosis.world_tier.summit.desc": "大鵬一日同風起，摶搖直上九萬裏",
+
+    "text.apotheosis.world_tier.pinnacle": "寰宇",
+    "text.apotheosis.world_tier.pinnacle.desc": "不畏浮雲遮望眼，自緣身在最高層",
+
+    "title.apotheosis.select_world_tier": "擇界階",
+    "title.apotheosis.world_tier_details": "界階詳訊",
+
+    "button.apotheosis.haven": "鄉里",
+    "button.apotheosis.frontier": "邊塞",
+    "button.apotheosis.ascent": "天涯",
+    "button.apotheosis.summit": "蒼穹",
+    "button.apotheosis.pinnacle": "寰宇",
+    "button.apotheosis.tier_locked": "%s（既鎖）",
+    "button.apotheosis.tier_advancement": "立%s功以解。",
+    "button.apotheosis.tier_advancement_criteria": "",
+    "button.apotheosis.activate_tier": "激界階：%s",
+    "button.apotheosis.already_activated": "是界階方激也",
+    "button.apotheosis.activate": "激",
+    "button.apotheosis.activated": "既激",
+    "button.apotheosis.show_detailed_info": "詳訊",
+    "button.apotheosis.show_detailed_info.desc": "覽生靈與戲者之益、所落之罕",
+    "button.apotheosis.return": "回",
+    "button.apotheosis.return.desc": "回界階之所擇",
+    "button.apotheosis.inactive": "未激",
+    "button.apotheosis.locked": "是界階既鎖也",
+    "button.apotheosis.skip_tutorial": "略教章",
+    "button.apotheosis.prev_tutorial": "往步",
+    "button.apotheosis.next_tutorial": "來步",
+    "button.apotheosis.done": "畢",
+    "button.apotheosis.open_world_tier_tutorial": "啟界階教章",
+
+    "tutorial.apotheosis.world_tier.introduction.title": "述",
+    "tutorial.apotheosis.world_tier.introduction.desc": "恭迎至羽化界階教章！君可學界階之系、解進階之灋焉。擊「來步」以繼，抑擊「略教章」以過之。",
+
+    "tutorial.apotheosis.world_tier.world_tiers.title": "界階",
+    "tutorial.apotheosis.world_tier.world_tiers.desc": "界階者，羽化之昇系者也，解則昇而難戲，亦增所掠之品也。\n\n滑鼠置其圖示則覽解所求，擊以擇既解者也。",
+    
+    "tutorial.apotheosis.world_tier.tier_name.title": "界階之名",
+    "tutorial.apotheosis.world_tier.tier_name.desc": "此為斯界階之名，亦為其簡述。",
+    
+    "tutorial.apotheosis.world_tier.tier_difficulty.title": "界階之難",
+    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "此為所擇之難，難則魔彊而獎佳。\n\n邊塞之上則羽化犯寇將至。",
+    
+    "tutorial.apotheosis.world_tier.detailed_info.title": "詳訊", 
+    "tutorial.apotheosis.world_tier.detailed_info.desc": "是擊則顯其詳訊，囊戲者與魔之益害，並異罕之物、異純之璧之落率焉。\n\n不知何為罕純，則閱《蚶書》。",
+    
+    "tutorial.apotheosis.world_tier.activate.title": "激界階",
+    "tutorial.apotheosis.world_tier.activate.desc": "未激則擊鈕以之。\n\n擊「畢」則自激鄉里者，他則需手以之焉。",
+    
+    "text.apotheosis.tier_info": "界階詳訊",
+    "text.apotheosis.monster_augments": "魔之所彊",
+    "text.apotheosis.player_augments": "戲者所彊",
+    "text.apotheosis.drop_chances": "落率",
+    "text.apotheosis.rarities": "罕",
+    "text.apotheosis.purities": "純",
+    "text.apotheosis.unidentified": "未明%s",
+    "text.apotheosis.world_tier_tutorial": "是物有未明之力",
+    "text.apotheosis.world_tier_tutorial.2": "擊%s並激界階曰鄉里者以解之",
+
+    "key.apotheosis.toggle_radial_mining": "易域掘之式",
+    "key.apotheosis.open_world_tier_select": "啟界階擇葉",
+    "key.apotheosis.compare_equipment": "較滑鼠所指",
+    "key.apotheosis.link_item_to_chat": "鏈接滑鼠所指於論板",
+
+    "info.apotheosis.affix_item": "羽化綴物",
+
+    "death.attack.apotheosis.execute": "%s為%s所處決",
+    "death.attack.apotheosis.execute.item": "%s為%s所處決以%s",
+
+    "misc.apotheosis.affix_name.two": "%s之%s",
+    "misc.apotheosis.affix_name.three": "%s之%s%s者",
+    "misc.apotheosis.affix_name.four": "%s%s之%s%s者",
+    "misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
+
+    "misc.apotheosis.radial_state_updated": "域掘之式已易為「%s」",
+    "misc.apotheosis.radial_state.require_not_sneaking": "潛則禁",
+    "misc.apotheosis.radial_state.require_sneaking": "潛則啟",
+    "misc.apotheosis.radial_state.enabled": "啟",
+    "misc.apotheosis.radial_state.disabled": "閉",
+    "misc.apotheosis.right_click_to_socket": "右擊以鑲%s於%s",
+
+    "affix.apotheosis:armor/attribute/blessed": "天佑",
+    "affix.apotheosis:armor/attribute/blessed.suffix": "福壽",
+
+    "affix.apotheosis:armor/attribute/windswept": "風掃",
+    "affix.apotheosis:armor/attribute/windswept.suffix": "氣流",
+
+    "affix.apotheosis:armor/attribute/ironforged": "鐵鑄",
+    "affix.apotheosis:armor/attribute/ironforged.suffix": "如鐵",
+
+    "affix.apotheosis:melee/attribute/violent": "暴力",
+    "affix.apotheosis:melee/attribute/violent.suffix": "屠戮",
+
+    "affix.apotheosis:ranged/attribute/windswept": "風掃",
+    "affix.apotheosis:ranged/attribute/windswept.suffix": "氣流",
+
+    "affix.apotheosis:melee/attribute/graceful": "儒雅",
+    "affix.apotheosis:melee/attribute/graceful.suffix": "決鬥",
+
+    "affix.apotheosis:melee/attribute/forceful": "彊力",
+    "affix.apotheosis:melee/attribute/forceful.suffix": "雄牛",
+
+    "affix.apotheosis:armor/attribute/aquatic": "水行",
+    "affix.apotheosis:armor/attribute/aquatic.suffix": "東海",
+
+    "affix.apotheosis:armor/attribute/gravitational": "重力",
+    "affix.apotheosis:armor/attribute/gravitational.suffix": "重力",
+
+    "affix.apotheosis:breaker/attribute/lengthy": "長邈",
+    "affix.apotheosis:breaker/attribute/lengthy.suffix": "持握",
+
+    "affix.apotheosis:breaker/attribute/experienced": "經驗",
+    "affix.apotheosis:breaker/attribute/experienced.suffix": "翰林",
+
+    "affix.apotheosis:melee/attribute/elongated": "延展",
+    "affix.apotheosis:melee/attribute/elongated.suffix": "遠戰",
+
+    "affix.apotheosis:ranged/attribute/agile": "敏捷",
+    "affix.apotheosis:ranged/attribute/agile.suffix": "迅敏",
+
+    "affix.apotheosis:armor/attribute/steel_touched": "鋼觸",
+    "affix.apotheosis:armor/attribute/steel_touched.suffix": "拱衛",
+
+    "affix.apotheosis:armor/attribute/stalwart": "鐵骨",
+    "affix.apotheosis:armor/attribute/stalwart.suffix": "錚錚",
+
+    "affix.apotheosis:armor/attribute/elastic": "靈活",
+    "affix.apotheosis:armor/attribute/elastic.suffix": "攀凌",
+
+    "affix.apotheosis:armor/attribute/fortunate": "有運",
+    "affix.apotheosis:armor/attribute/fortunate.suffix": "吉瑞",
+
+    "affix.apotheosis:armor/attribute/winged": "有翼",
+    "affix.apotheosis:armor/attribute/winged.suffix": "天高",
+
+    "affix.apotheosis:melee/attribute/intricate": "繁縟",
+    "affix.apotheosis:melee/attribute/intricate.suffix": "批判",
+
+    "affix.apotheosis:melee/attribute/lacerating": "分裂",
+    "affix.apotheosis:melee/attribute/lacerating.suffix": "穿楊",
+
+    "affix.apotheosis:melee/attribute/glacial": "雪域",
+    "affix.apotheosis:melee/attribute/glacial.suffix": "凍土",
+
+    "affix.apotheosis:melee/attribute/infernal": "焱界",
+    "affix.apotheosis:melee/attribute/infernal.suffix": "朝陽",
+
+    "affix.apotheosis:melee/attribute/vampiric": "汲血",
+    "affix.apotheosis:melee/attribute/vampiric.suffix": "放血",
+
+    "affix.apotheosis:melee/attribute/piercing": "穿刺",
+    "affix.apotheosis:melee/attribute/piercing.suffix": "有裂",
+
+    "affix.apotheosis:weapon/attribute/shredding": "粉骨",
+    "affix.apotheosis:weapon/attribute/shredding.suffix": "漩渦",
+
+    "affix.apotheosis:melee/attribute/giant_slaying": "彊殺",
+    "affix.apotheosis:melee/attribute/giant_slaying.suffix": "巨擊",
+
+    "affix.apotheosis:melee/attribute/berserking": "狂暴",
+    "affix.apotheosis:melee/attribute/berserking.suffix": "狂生",
+
+    "affix.apotheosis:breaker/attribute/destructive": "破滅",
+    "affix.apotheosis:breaker/attribute/destructive.suffix": "鑿石",
+
+    "affix.apotheosis:ranged/attribute/elven": "精靈",
+    "affix.apotheosis:ranged/attribute/elven.suffix": "射魁",
+
+    "affix.apotheosis:ranged/attribute/streamlined": "流綫",
+    "affix.apotheosis:ranged/attribute/streamlined.suffix": "狙手",
+
+    "affix.apotheosis:melee/mob_effect/elusive": "靈巧",
+    "affix.apotheosis:melee/mob_effect/elusive.suffix": "閃避",
+
+    "affix.apotheosis:breaker/mob_effect/swift": "迅捷",
+    "affix.apotheosis:breaker/mob_effect/swift.suffix": "粉骨",
+
+    "affix.apotheosis:breaker/mob_effect/spelunkers": "探穴",
+    "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "穴探",
+
+    "affix.apotheosis:ranged/mob_effect/ensnaring": "誘捕",
+    "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "黃雀",
+
+    "affix.apotheosis:shield/mob_effect/venomous": "淬毒",
+    "affix.apotheosis:shield/mob_effect/venomous.suffix": "大蟲",
+
+    "affix.apotheosis:ranged/mob_effect/fleeting": "疾馳",
+    "affix.apotheosis:ranged/mob_effect/fleeting.suffix": "江湖",
+
+    "affix.apotheosis:melee/mob_effect/weakening": "弱者",
+    "affix.apotheosis:melee/mob_effect/weakening.suffix": "虛羸",
+
+    "affix.apotheosis:armor/mob_effect/bolstering": "砥柱",
+    "affix.apotheosis:armor/mob_effect/bolstering.suffix": "礪韌",
+
+    "affix.apotheosis:armor/mob_effect/revitalizing": "新生",
+    "affix.apotheosis:armor/mob_effect/revitalizing.suffix": "生泉",
+
+    "affix.apotheosis:armor/mob_effect/nimble": "靈敏",
+    "affix.apotheosis:armor/mob_effect/nimble.suffix": "靈狐",
+
+    "affix.apotheosis:armor/mob_effect/blinding": "盲目",
+    "affix.apotheosis:armor/mob_effect/blinding.suffix": "黯然",
+
+    "affix.apotheosis:ranged/mob_effect/shulkers": "匿贆",
+    "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "浮雲",
+
+    "affix.apotheosis:shield/mob_effect/withering": "凋零",
+    "affix.apotheosis:shield/mob_effect/withering.suffix": "黯髑",
+
+    "affix.apotheosis:shield/attribute/ironforged": "鐵鑄",
+    "affix.apotheosis:shield/attribute/ironforged.suffix": "如鐵",
+
+    "affix.apotheosis:shield/attribute/steel_touched": "鋼觸",
+    "affix.apotheosis:shield/attribute/steel_touched.suffix": "拱衛",
+
+    "affix.apotheosis:ranged/mob_effect/ivy_laced": "藤縈",
+    "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "天毒",
+
+    "affix.apotheosis:ranged/mob_effect/satanic": "惡道",
+    "affix.apotheosis:ranged/mob_effect/satanic.suffix": "咒然",
+
+    "affix.apotheosis:ranged/spectral": "光靈",
+    "affix.apotheosis:ranged/spectral.suffix": "見棄",
+    "affix.apotheosis:ranged/spectral.desc": "%s%%之率射另矢",
+
+    "affix.apotheosis:ranged/magical": "灋術",
+    "affix.apotheosis:ranged/magical.suffix": "奧術",
+    "affix.apotheosis:ranged/magical.desc": "出矢行灋傷",
+
+    "affix.apotheosis:melee/festive": "佳節",
+    "affix.apotheosis:melee/festive.suffix": "宴飲",
+    "affix.apotheosis:melee/festive.desc": "殺敵%s%%之率出爆落",
+
+    "affix.apotheosis:melee/thunderstruck": "雷鳴",
+    "affix.apotheosis:melee/thunderstruck.suffix": "風暴",
+    "affix.apotheosis:melee/thunderstruck.desc": "擊則傷敵%s",
+
+    "affix.apotheosis:shield/retreating": "後撤",
+    "affix.apotheosis:shield/retreating.suffix": "奸臣",
+    "affix.apotheosis:shield/retreating.desc": "當近擊則後躍",
+
+    "affix.apotheosis:generic/telepathic": "念動",
+    "affix.apotheosis:generic/telepathic.suffix": "流年",
+    "affix.apotheosis:generic/telepathic.desc.weapon": "生靈之所落上身",
+    "affix.apotheosis:generic/telepathic.desc.tool": "掘之所落上身",
+
+    "affix.apotheosis:melee/executing": "行刑",
+    "affix.apotheosis:melee/executing.suffix": "劊手",
+    "affix.apotheosis:melee/executing.desc": "命低%s%%則直處決",
+
+    "affix.apotheosis:melee/cleaving": "揮劈",
+    "affix.apotheosis:melee/cleaving.suffix": "屠戶",
+    "affix.apotheosis:melee/cleaving.desc": "擊則%s%%之率同於圍至多%s敵",
+
+    "affix.apotheosis:breaker/ability/enlightened": "啟明",
+    "affix.apotheosis:breaker/ability/enlightened.suffix": "攜光",
+    "affix.apotheosis:breaker/ability/enlightened.desc": "可損%s以置炬",
+
+    "affix.apotheosis:shield/psychic": "通靈",
+    "affix.apotheosis:shield/psychic.suffix": "睚眥",
+    "affix.apotheosis:shield/psychic.desc": "當彈則傷其所傷之%s%%",
+
+    "affix.apotheosis:shield/catalyzing": "催化",
+    "affix.apotheosis:shield/catalyzing.suffix": "轉化",
+    "affix.apotheosis:shield/catalyzing.desc": "當爆則得力之態效",
+
+    "affix.apotheosis:melee/attribute/annihilating": "殲滅",
+    "affix.apotheosis:melee/attribute/annihilating.suffix": "巨魔",
+
+    "affix.apotheosis:melee/attribute/decimating": "屠戮",
+    "affix.apotheosis:melee/attribute/decimating.suffix": "神王",
+
+    "affix.apotheosis:melee/attribute/murderous": "殘暴",
+    "affix.apotheosis:melee/attribute/murderous.suffix": "牛人",
+
+    "affix.apotheosis:ranged/mob_effect/acidic": "酸蝕",
+    "affix.apotheosis:ranged/mob_effect/acidic.suffix": "侵蝕",
+
+    "affix.apotheosis:melee/mob_effect/bloodletting": "腐蝕",
+    "affix.apotheosis:melee/mob_effect/bloodletting.suffix": "戮者",
+
+    "affix.apotheosis:melee/mob_effect/caustic": "腐蝕",
+    "affix.apotheosis:melee/mob_effect/caustic.suffix": "腐域",
+
+    "affix.apotheosis:melee/mob_effect/sophisticated": "手熟",
+    "affix.apotheosis:melee/mob_effect/sophisticated.suffix": "經綸",
+
+    "affix.apotheosis:shield/mob_effect/devilish": "殘忍",
+    "affix.apotheosis:shield/mob_effect/devilish.suffix": "壯士",
+
+    "affix.apotheosis:breaker/effect/radial": "大域",
+    "affix.apotheosis:breaker/effect/radial.suffix": "地裂",
+    "affix.apotheosis:breaker/effect/radial.desc": "可破%s乘%s域之塊方",
+
+    "affix.apotheosis:breaker/ability/supermassive": "大質",
+    "affix.apotheosis:breaker/ability/supermassive.suffix": "破界",
+    "affix.apotheosis:breaker/ability/supermassive.desc": "可破%s乘%s域之塊方",
+
+    "affix.apotheosis:melee_weapon/mob_effect/detonating": "爆灹",
+    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "火素",
+
+    "affix.apotheosis:armor/attribute/oxygenated": "吐納",
+    "affix.apotheosis:armor/attribute/oxygenated.suffix": "騰淵",
+
+    "affix.apotheosis:melee/mob_effect/omniscient": "全知",
+    "affix.apotheosis:melee/mob_effect/omniscient.suffix": "聖賢",
+
+    "affix.apotheosis:breaker/attribute/submerged": "沉落",
+    "affix.apotheosis:breaker/attribute/submerged.suffix": "淵礦",
+
+    "affix.apotheosis:shield/mob_effect/galvanizing": "電鍍",
+    "affix.apotheosis:shield/mob_effect/galvanizing.suffix": "堅層",
+
+    "affix.apotheosis:armor/dmg_reduction/grounded": "立地",
+    "affix.apotheosis:armor/dmg_reduction/grounded.suffix": "司雷",
+
+    "affix.apotheosis:ranged/mob_effect/deathbound": "亡約",
+    "affix.apotheosis:ranged/mob_effect/deathbound.suffix": "凋主",
+
+    "affix.apotheosis:shield/mob_effect/reinforcing": "彊力",
+    "affix.apotheosis:shield/mob_effect/reinforcing.suffix": "鋼鐵",
+
+    "affix.apotheosis:melee/attribute/lengthy": "冗長",
+    "affix.apotheosis:melee/attribute/lengthy.suffix": "極長",
+
+    "affix.apotheosis:ranged/mob_effect/blighted": "萎靡",
+    "affix.apotheosis:ranged/mob_effect/blighted.suffix": "萎地",
+
+    "affix.apotheosis:armor/attribute/unbound": "無束",
+    "affix.apotheosis:armor/attribute/unbound.suffix": "有待",
+
+    "affix.apotheosis:armor/attribute/fireproof": "禦焱",
+    "affix.apotheosis:armor/attribute/fireproof.suffix": "禦焱",
+
+    "affix.apotheosis:armor/attribute/adamantine": "精金",
+    "affix.apotheosis:armor/attribute/adamantine.suffix": "精金",
+
+    "affix.apotheosis:breaker/enchantment/prosperous": "繁華",
+    "affix.apotheosis:breaker/enchantment/prosperous.suffix": "吉利",
+
+    "affix.apotheosis:ranged/enchantment/prosperous": "塵世",
+    "affix.apotheosis:ranged/enchantment/prosperous.suffix": "尋寶",
+
+    "affix.apotheosis:armor/dmg_reduction/deflective": "偏轉",
+    "affix.apotheosis:armor/dmg_reduction/deflective.suffix": "偏轉",
+
+    "misc.apotheosis.iron": "鐵",
+    "misc.apotheosis.diamond": "金剛石",
+    "misc.apotheosis.netherite": "玄鈺",
+
+    "affix.apotheosis:breaker/effect/omnetic": "全能",
+    "affix.apotheosis:breaker/effect/omnetic.suffix": "奇點",
+    "affix.apotheosis:breaker/effect/omnetic.desc": "於全塊方皆有%s階之效",
+
+    "misc.apotheosis.physical": "物",
+    "misc.apotheosis.magic": "灋",
+    "misc.apotheosis.fire": "焱",
+    "misc.apotheosis.fall": "墜",
+    "misc.apotheosis.explosion": "爆",
+    "misc.apotheosis.projectile": "彈",
+    "misc.apotheosis.lightning": "雷",
+    "affix.apotheosis:damage_reduction.desc": "受%s傷降%s%%",
+
+    "affix.apotheosis:armor/dmg_reduction/blockading": "閉關",
+    "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "長城",
+
+    "affix.apotheosis:armor/dmg_reduction/runed": "符節",
+    "affix.apotheosis:armor/dmg_reduction/runed.suffix": "咒監",
+
+    "affix.apotheosis:armor/dmg_reduction/blast_forged": "灹誕",
+    "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "鍛神",
+
+    "affix.apotheosis:armor/dmg_reduction/dwarven": "矮人",
+    "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "火山",
+
+    "affix.apotheosis:armor/dmg_reduction/feathery": "豐羽",
+    "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "鷹擊",
+
+    "affix.apotheosis:shield/attribute/stalwart": "堅毅",
+    "affix.apotheosis:shield/attribute/stalwart.suffix": "不屈",
+
+    "affix.apotheosis:armor/attribute/spiritual": "靈魂",
+    "affix.apotheosis:armor/attribute/spiritual.suffix": "巫醫",
+
+    "affix.apotheosis:generic/attribute/lucky": "運然",
+    "affix.apotheosis:generic/attribute/lucky.suffix": "偶然",
+
+    "affix.apotheosis:melee/attribute/nullifying": "抹除",
+    "affix.apotheosis:melee/attribute/nullifying.suffix": "破灋",
+
+    "affix.apotheosis:melee/attribute/spellbreaking": "破灋",
+    "affix.apotheosis:melee/attribute/spellbreaking.suffix": "石俑",
+
+    "affix.apotheosis:ranged/mob_effect/grievous": "重創",
+    "affix.apotheosis:ranged/mob_effect/grievous.suffix": "有傷",
+
+    "affix.apotheosis:armor/mob_effect/bursting": "迸發",
+    "affix.apotheosis:armor/mob_effect/bursting.suffix": "活力",
+
+    "affix.apotheosis:durable": "耐用",
+    "affix.apotheosis:durable.suffix": "耐損",
+
+    "affix.apotheosis:breaker/ability/stoneforming": "塑石",
+    "affix.apotheosis:breaker/ability/stoneforming.suffix": "石工",
+    "affix.apotheosis:breaker/ability/stoneforming.desc": "蓋天石互化",
+
+    "affix.apotheosis:breaker/ability/sandforming": "塑沙",
+    "affix.apotheosis:breaker/ability/sandforming.suffix": "沙工",
+    "affix.apotheosis:breaker/ability/sandforming.desc": "蓋沙土互化",
+
+    "affix.apotheosis.stoneforming.desc": "破[%s]則化為%s，Shift並右擊可擇的",
+    "affix.apotheosis.stoneforming.target_updated": "更的為%s",
+
+    "affix.apotheosis:shears/effect/leafforming": "塑葉",
+    "affix.apotheosis:shears/effect/leafforming.suffix": "樹藝",
+    "affix.apotheosis:shears/effect/leafforming.desc": "蓋葉互化",
+
+    "affix.apotheosis:shears/effect/gardening": "塑芳",
+    "affix.apotheosis:shears/effect/gardening.suffix": "園藝",
+    "affix.apotheosis:shears/effect/gardening.desc": "蓋花互化",
+
+    "affix.apotheosis.target.attack_self": "擊中則得%s",
+    "affix.apotheosis.target.attack_target": "擊中則施%s",
+    "affix.apotheosis.target.hurt_self": "受傷則得%s",
+    "affix.apotheosis.target.hurt_attacker": "受傷則施%s",
+    "affix.apotheosis.target.break_self": "破塊則得%s",
+    "affix.apotheosis.target.arrow_self": "矢中則得%s",
+    "affix.apotheosis.target.arrow_target": "矢中則施%s",
+    "affix.apotheosis.target.block_self": "當則得%s",
+    "affix.apotheosis.target.block_attacker": "當則施%s",
+    "affix.apotheosis.target.projectile_self": "彈中則得%s",
+    "affix.apotheosis.target.projectile_target": "彈中則施%s",
+    "affix.apotheosis.cooldown": "[⌛ %s]",
+    "affix.apotheosis.stacking": "[疊增]",
+
+    "affix.apotheosis:durable.desc": "略%s%%損",
+    "affix.apotheosis:socket.desc": "既出鑲孔%s",
+
+    "socket.apotheosis.empty": "空",
+    "text.apotheosis.when_socketed": "鑲則：",
+    "text.apotheosis.when_socketed_in": "鑲則：",
+    "text.apotheosis.when_socketed_typed": "鑲於%s則：",
+    "info.apotheosis.socketing": "鍛案鑲璧，物左璧右。\n\n擇宜慎重，以出難負。",
+
+    "purity.apotheosis.cracked": "碎",
+    "purity.apotheosis.chipped": "裂",
+    "purity.apotheosis.flawed": "瑕",
+    "purity.apotheosis.normal": "常",
+    "purity.apotheosis.flawless": "瑜",
+    "purity.apotheosis.perfect": "璇",
+
+    "gem_class.melee_weapon": "近武",
+    "gem_class.ranged_weapon": "遠武",
+    "gem_class.light_weapon": "輕武",
+    "gem_class.core_armor": "中重甲胄",
+    "gem_class.lower_armor": "下體甲胄",
+    "gem_class.armor": "甲胄",
+    "gem_class.breaker": "掘具",
+    "gem_class.pickaxe": "鎬",
+    "gem_class.light_ranged": "輕武抑遠武",
+    "gem_class.weapon_or_tool": "武抑掘具",
+    "gem_class.weapons": "武",
+
+    "gem_class.helmet": "鎧",
+    "gem_class.chestplate": "胄",
+    "gem_class.leggings": "護腿",
+    "gem_class.boots": "鞾",
+    "gem_class.shield": "盾",
+    "gem_class.bow": "弓",
+    "gem_class.trident": "三叉戟",
+    "gem_class.anything": "任",
+
+    "bonus.apotheosis:durability.desc": "略%s%%損",
+    "bonus.apotheosis:enchantment.desc": "+%s%s%s",
+    "bonus.apotheosis:enchantment.desc.mustExist": "+%s%s於今%s",
+    "bonus.apotheosis:enchantment.desc.global": "+%s%s於今靈",
+    "bonus.apotheosis:multi_attr.desc.and": "%s與%s",
+    "bonus.apotheosis:multi_attr.desc.and_but": "%s與%s而%s",
+    "bonus.apotheosis:multi_attr.desc.but_and": "%s而%s與%s",
+    "bonus.apotheosis:bloody_arrow.desc": "射則失%s%%命極而傷%s%%。%s",
+    "bonus.apotheosis:leech_block.desc": "當則甦%s%%之傷。%s",
+    "bonus.apotheosis:all_stats.desc": "+%s%%於全性",
+    "gem.apotheosis:overworld/royalty.bonus.pickaxe": "破銅礦%s%%之率落金石",
+    "bonus.apotheosis:mageslayer.desc": "略%s%%灋傷而甦同",
+    "bonus.apotheosis:twilight_ore_magnet.desc": "可以礦礠，外損%s",
+    "bonus.apotheosis:twilight_treasure_goblin.desc": "擊實體則%s%%之率喚寶蛤靈。%s",
+    "bonus.apotheosis:twilight_fortification.desc": "受傷則%s%%之率喚暮光盾護駕。%s",
+    "bonus.apotheosis:frozen_drops.desc": "殺有%s之敵則增%s%%之落",
+
+    "misc.apotheosis.level": "階",
+    "misc.apotheosis.level.many": "階",
+    "name.apotheosis.treasure_goblin": "寶蛤靈",
+
+    "item.apotheosis.gem.apotheosis:legacy": "常璧",
+    "item.apotheosis.gem.apotheosis:core/guardian": "衛璧",
+    "item.apotheosis.gem.apotheosis:core/ballast": "安璧",
+    "item.apotheosis.gem.apotheosis:core/solar": "陽炎璧",
+    "item.apotheosis.gem.apotheosis:core/lunar": "陰華璧",
+    "item.apotheosis.gem.apotheosis:core/samurai": "武士璧",
+    "item.apotheosis.gem.apotheosis:core/warlord": "戰神璧",
+    "item.apotheosis.gem.apotheosis:core/splendor": "輝煌璧",
+    "item.apotheosis.gem.apotheosis:core/tyrannical": "暴君璧",
+    "item.apotheosis.gem.apotheosis:core/breach": "破陣璧",
+    "item.apotheosis.gem.apotheosis:core/lightning": "雷璧",
+    "item.apotheosis.gem.apotheosis:core/slipstream": "逸流璧",
+    "item.apotheosis.gem.apotheosis:core/brawlers": "鬥爭璧",
+    "item.apotheosis.gem.apotheosis:core/combatant": "戰璧",
+    "item.apotheosis.gem.apotheosis:overworld/earth": "坤輿璧",
+    "item.apotheosis.gem.apotheosis:overworld/royalty": "王室璧",
+    "item.apotheosis.gem.apotheosis:overworld/verdant_ruin": "翠殞璧",
+    "item.apotheosis.gem.apotheosis:the_nether/inferno": "熾焱璧",
+    "item.apotheosis.gem.apotheosis:the_nether/blood_lord": "血君璧",
+    "item.apotheosis.gem.apotheosis:the_nether/molten_breach": "熔破璧",
+    "item.apotheosis.gem.apotheosis:the_end/endersurge": "影激璧",
+    "item.apotheosis.gem.apotheosis:the_end/mageslayer": "剋灋璧",
+    "item.apotheosis.gem.apotheosis:twilight/forest": "暮林璧",
+    "item.apotheosis.gem.apotheosis:twilight/queen": "雪女王璧",
+
+    "item.apotheosis.boss_summoner": "孳羽化帥之卵",
+    "item.apotheosis.gem.cracked": "碎%s",
+    "item.apotheosis.gem.chipped": "裂%s",
+    "item.apotheosis.gem.flawed": "瑕%s",
+    "item.apotheosis.gem.normal": "%s",
+    "item.apotheosis.gem.flawless": "瑜%s",
+    "item.apotheosis.gem.perfect": "璇%s",
+    "item.apotheosis.vial_of_extraction": "奧術取劑",
+    "item.apotheosis.vial_of_expulsion": "灼熱驅劑",
+    "item.apotheosis.vial_of_unnaming": "除名劑",
+    "item.apotheosis.gem_dust": "璧末",
+    "item.apotheosis.gem_dust.desc": "碾碎之羽化璧",
+    "item.apotheosis.common_material": "廢鋼",
+    "item.apotheosis.uncommon_material": "舊布",
+    "item.apotheosis.rare_material": "熒水玉片",
+    "item.apotheosis.epic_material": "玄奧沙",
+    "item.apotheosis.mythic_material": "神鑄玥",
+    "item.apotheosis.ancient_material": "無窮所見",
+    "item.apotheosis.gem_fused_slate": "璧合板石",
+
+    "item.apotheosis.sigil_of_socketing": "鑲孔符石",
+    "item.apotheosis.sigil_of_socketing.desc": "物增一鑲孔",
+
+    "item.apotheosis.sigil_of_withdrawal": "除璧符石",
+    "item.apotheosis.sigil_of_withdrawal.desc": "物除全璧",
+
+    "item.apotheosis.sigil_of_rebirth": "復生符石",
+    "item.apotheosis.sigil_of_rebirth.desc": "薪於復鑄案",
+
+    "item.apotheosis.sigil_of_enhancement": "所彊符石",
+    "item.apotheosis.sigil_of_enhancement.desc": "薪於彊案",
+
+    "item.apotheosis.sigil_of_unnaming": "除名符石",
+    "item.apotheosis.sigil_of_unnaming.desc": "物除其綴稱",
+
+    "item.apotheosis.sigil_of_malice": "惡意符石",
+    "item.apotheosis.sigil_of_malice.desc": "綴物得惡觸",
+
+    "item.apotheosis.iron_upgrade_smithing_template": "鍛模",
+    "upgrade.apotheosis.iron": "鐵之昇",
+    "item.apotheosis.iron_upgrade_smithing_template.applies_to": "石兵革器具、環鎖甲胄",
+    "item.apotheosis.iron_upgrade_smithing_template.ingredients": "四鐵錠",
+    "item.apotheosis.iron_upgrade_smithing_template.base_slot_description": "置石兵革器具抑環鎖甲胄",
+    "item.apotheosis.iron_upgrade_smithing_template.additions_slot_description": "置四鐵錠",
+
+    "item.apotheosis.gold_upgrade_smithing_template": "鍛模",
+    "upgrade.apotheosis.gold": "金之昇",
+    "item.apotheosis.gold_upgrade_smithing_template.applies_to": "鐵兵革器具",
+    "item.apotheosis.gold_upgrade_smithing_template.ingredients": "四金錠",
+    "item.apotheosis.gold_upgrade_smithing_template.base_slot_description": "置鐵兵革器具",
+    "item.apotheosis.gold_upgrade_smithing_template.additions_slot_description": "置四金錠",
+
+    "item.apotheosis.diamond_upgrade_smithing_template": "鍛模",
+    "upgrade.apotheosis.diamond": "金剛石之昇",
+    "item.apotheosis.diamond_upgrade_smithing_template.applies_to": "金兵革器具",
+    "item.apotheosis.diamond_upgrade_smithing_template.ingredients": "四金剛石",
+    "item.apotheosis.diamond_upgrade_smithing_template.base_slot_description": "置金兵革器具",
+    "item.apotheosis.diamond_upgrade_smithing_template.additions_slot_description": "置四金剛石",
+
+    "block.apotheosis.boss_spawner": "孳羽化帥籠",
+    "block.apotheosis.gem_cutting_table": "割璧案",
+    "block.apotheosis.gem_cutting_table.desc": "昇璧以璧末並珍寶",
+    "block.apotheosis.salvaging_table": "解離案",
+    "block.apotheosis.salvaging_table.desc": "解綴物為珍寶",
+    "block.apotheosis.simple_reforging_table": "易簡復鑄案",
+    "block.apotheosis.reforging_table": "復鑄案",
+    "block.apotheosis.reforging_table.desc": "復鑄物以復生符石並珍寶",
+    "block.apotheosis.reforging_table.desc2": "至高之罕：%s",
+    "block.apotheosis.augmenting_table": "彊案",
+    "block.apotheosis.augmenting_table.desc": "所彊案以彊一綴",
+
+    "button.apotheosis.salvage": "解離所置",
+    "button.apotheosis.no_salvage": "未置物焉",
+    "button.apotheosis.no_salvage_all": "行囊無可解離者",
+    "button.apotheosis.upgrade": "昇璧",
+    "button.apotheosis.upgrade.no": "缺所入",
+    "button.apotheosis.augmenting.upgrade": "昇所擇",
+    "button.apotheosis.augmenting.reroll": "更所擇",
+    "button.apotheosis.augmenting.no_selection": "未擇一綴",
+    "button.apotheosis.augmenting.max_level": "已達至高之階",
+    "button.apotheosis.augmenting.no_alternatives": "無可代者",
+    "button.apotheosis.augmenting.upgrade.cost": "昇綴所需：%s之%s",
+    "button.apotheosis.augmenting.upgrade.exp_cost": "經驗所需：%s階",
+
+    "menu.apotheosis.gem_cutting": "割璧",
+    "container.apotheosis.salvage": "解離",
+    "container.apotheosis.reforge": "復鑄",
+    "text.apotheosis.cost": "%s%s",
+    "text.apotheosis.reforge_cost": "復鑄所需",
+    "text.apotheosis.salvage_results": "解離之果",
+    "text.apotheosis.unique": "惟一",
+    "text.apotheosis.results": "果",
+    "text.apotheosis.facets": "刻面：%s",
+    "text.apotheosis.socketable_into": "宜於：",
+    "text.apotheosis.dot_prefix": "• %s",
+    "text.apotheosis.star_prefix": "🌟 %s",
+    "text.apotheosis.socket_limit": "鑲孔至多施以：%s",
+    "text.apotheosis.gems_returned": "璧將還行囊",
+    "text.apotheosis.no_upgrade": "已達至高之階",
+    "text.apotheosis.cut_cost": "割璧所需",
+    "text.apotheosis.one_rarity_mat": "珍寶之一",
+    "text.apotheosis.potential_rerolls": "潛之更果",
+    "text.apotheosis.upgraded_form": "昇果",
+    "text.apotheosis.alternative_page": "%s葉共%s（輪以翻書）",
+    "text.apotheosis.any_x_item": "任%s綴物",
+    "text.apotheosis.any_affix_item": "任綴物",
+    "text.apotheosis.malice_marker": "製則施惡意",
+    "text.apotheosis.touched_by_malice": "見蝕於惡意",
+    "text.apotheosis.malice_notice": "惡意：%s吞%s之力",
+
+    "title.apotheosis.smithing": "羽化鍛",
+    "title.apotheosis.salvaging": "解離",
+
+    "text.apotheosis.anything": "任",
+    "loot_category.apotheosis.none": "無",
+    "loot_category.apotheosis.none.plural": "無",
+    "loot_category.apotheosis.bow": "弓",
+    "loot_category.apotheosis.bow.plural": "弓",
+    "loot_category.apotheosis.crossbow": "弩",
+    "loot_category.apotheosis.crossbow.plural": "弩",
+    "loot_category.apotheosis.breaker": "掘具",
+    "loot_category.apotheosis.breaker.plural": "掘具",
+    "loot_category.apotheosis.pickaxe": "鎬",
+    "loot_category.apotheosis.pickaxe.plural": "鎬",
+    "loot_category.apotheosis.shovel": "鍁",
+    "loot_category.apotheosis.shovel.plural": "鍁",
+    "loot_category.apotheosis.armor": "甲胄",
+    "loot_category.apotheosis.armor.plural": "甲胄",
+    "loot_category.apotheosis.shield": "盾",
+    "loot_category.apotheosis.shield.plural": "盾",
+    "loot_category.apotheosis.trident": "三叉戟",
+    "loot_category.apotheosis.trident.plural": "三叉戟",
+    "loot_category.apotheosis.melee_weapon": "近武",
+    "loot_category.apotheosis.melee_weapon.plural": "近武",
+    "loot_category.apotheosis.helmet": "鎧",
+    "loot_category.apotheosis.helmet.plural": "鎧",
+    "loot_category.apotheosis.chestplate": "胄",
+    "loot_category.apotheosis.chestplate.plural": "胄",
+    "loot_category.apotheosis.leggings": "護腿",
+    "loot_category.apotheosis.leggings.plural": "護腿",
+    "loot_category.apotheosis.boots": "鞾",
+    "loot_category.apotheosis.boots.plural": "鞾",
+
+    "info.apotheosis.boss_spawn": "%s甦於近地焉！",
+    "info.apotheosis.boss": "羽化帥%s",
+    "info.apotheosis.boss_item": "將落：%s",
+    "info.apotheosis.boss_modifiers": "帥性：",
+    "info.apotheosis.rarity_material": "珍寶%s",
+    "info.apotheosis.gem_crushing": "首者可以鐵砧墜任羽化璧而得，後則以解離案。",
+    "info.apotheosis.gem_extraction": "鍛案以出羽化璧。\n\n物將銷。",
+    "info.apotheosis.gem_expulsion": "鍛案以出羽化璧。\n\n璧將銷。",
+    "info.apotheosis.unnaming": "鍛案以除物之綴。",
+    "info.apotheosis.salvaging": "珍寶者，可得以解離綴物也。",
+    "info.apotheosis.criteria_done": "☑ %s",
+    "info.apotheosis.criteria_unfinished": "☐ %s",
+    "info.apotheosis.criteria_unknown": "❓ %s",
+
+    "rarity.apotheosis:common": "常",
+    "rarity.apotheosis:uncommon": "罕",
+    "rarity.apotheosis:rare": "稀",
+    "rarity.apotheosis:epic": "史載",
+    "rarity.apotheosis:mythic": "神話",
+    "rarity.apotheosis:ancient": "上古",
+
+    "death.attack.apotheosis:psychic": "%s亡於反擊",
+    "death.attack.apotheosis:psychic.player": "%s之擊見反於%s",
+    "death.attack.apotheosis:execute": "%s見處決",
+    "death.attack.apotheosis:execute.player": "%s為%s所處決",
+
+    "comment_id": "/Adventure + Gateways Compat",
+
+    "misc.apotheosis.invader": "%s羽化犯寇",
+    "misc.apotheosis.random": "任",
+    "reward.apotheosis.affix": "%s綴物",
+    "reward.apotheosis.random_affix": "無定綴物",
+
+    "comment_id": "/功",
+
+    "advancements.apotheosis.progression.root.title": "羽化界階",
+    "advancements.apotheosis.progression.root.desc": "羽化界階之程碑也。\n擊[Ctrl]並[T]以啟則葉。",
+
+    "advancements.apotheosis.progression.haven.title": "鄉里",
+    "advancements.apotheosis.progression.haven.desc": "尋得一綴物則解之，而本激也。",
+    "advancements.apotheosis.progression.haven.criteria.affixed": "得一綴物",
+
+    "advancements.apotheosis.progression.frontier.title": "邊塞",
+    "advancements.apotheosis.progression.frontier.desc": "持著全綴兵革器具以解之。\n解則擊[Ctrl]並[T]以激之。",
+    "advancements.apotheosis.progression.frontier.criteria.common_helm": "著常鎧",
+    "advancements.apotheosis.progression.frontier.criteria.common_chest": "著常胄",
+    "advancements.apotheosis.progression.frontier.criteria.common_legs": "著常護腿",
+    "advancements.apotheosis.progression.frontier.criteria.common_feet": "著常鞾", 
+    "advancements.apotheosis.progression.frontier.criteria.common_hand": "持常武",
+
+    "advancements.apotheosis.progression.ascent.title": "天涯",
+    "advancements.apotheosis.progression.ascent.desc": "持著全罕兵革器具、殺羽化犯寇，天涯未邈耳。",
+    "advancements.apotheosis.progression.ascent.criteria.uncommon_helm": "著罕鎧",
+    "advancements.apotheosis.progression.ascent.criteria.uncommon_chest": "著罕胄",
+    "advancements.apotheosis.progression.ascent.criteria.uncommon_legs": "著罕護腿",
+    "advancements.apotheosis.progression.ascent.criteria.uncommon_feet": "著罕鞾",
+    "advancements.apotheosis.progression.ascent.criteria.uncommon_hand": "持罕武",
+    "advancements.apotheosis.progression.ascent.criteria.kill_apothic_invader": "殺羽化犯寇",
+
+    "advancements.apotheosis.progression.summit.title": "蒼穹",
+    "advancements.apotheosis.progression.summit.desc": "持著全稀兵革器具、殺凋靈，可問鼎蒼穹也。",
+    "advancements.apotheosis.progression.summit.criteria.rare_helm": "著稀鎧",
+    "advancements.apotheosis.progression.summit.criteria.rare_chest": "著稀胄",
+    "advancements.apotheosis.progression.summit.criteria.rare_legs": "著稀護腿",
+    "advancements.apotheosis.progression.summit.criteria.rare_feet": "著稀鞾",
+    "advancements.apotheosis.progression.summit.criteria.rare_hand": "持稀武",
+    "advancements.apotheosis.progression.summit.criteria.kill_wither": "殺凋靈",
+
+    "advancements.apotheosis.progression.pinnacle.title": "寰宇",
+    "advancements.apotheosis.progression.pinnacle.desc": "持著全史載兵革器具、龍戰玄黃，則可比三皇五帝焉。",
+    "advancements.apotheosis.progression.pinnacle.criteria.epic_helm": "著史載鎧",
+    "advancements.apotheosis.progression.pinnacle.criteria.epic_chest": "著史載胄",
+    "advancements.apotheosis.progression.pinnacle.criteria.epic_legs": "著史載護腿",
+    "advancements.apotheosis.progression.pinnacle.criteria.epic_feet": "著史載鞾",
+    "advancements.apotheosis.progression.pinnacle.criteria.epic_hand": "持史載武",
+    "advancements.apotheosis.progression.pinnacle.criteria.kill_ender_dragon": "殺終眇龍",
+
+    "advancements.apotheosis.affix": "羽化綴",
+    "advancements.apotheosis.affix.desc": "得一神化綴之物。",
+
+    "advancements.apotheosis.rare": "兵革器具有直者",
+    "advancements.apotheosis.rare.desc": "尋得一物綴罕者。",
+
+    "advancements.apotheosis.epic": "史載！",
+    "advancements.apotheosis.epic.desc": "尋得一物綴史載者。",
+
+    "advancements.apotheosis.mythic": "鬼斧神工",
+    "advancements.apotheosis.mythic.desc": "尋得一物綴神話者。",
+
+    "advancements.apotheosis.ancient": "天下奪寶",
+    "advancements.apotheosis.ancient.desc": "尋得一物綴上古者。",
+
+    "advancements.apotheosis.boss": "虛張聲勢",
+    "advancements.apotheosis.boss.desc": "殺一羽化帥而奪其綴物。",
+    "advancements.apotheosis.chests": "掘地三尺",
+    "advancements.apotheosis.chests.desc": "箱中尋得一綴物。",
+    "advancements.apotheosis.merchant": "得來全不費工夫",
+    "advancements.apotheosis.merchant.desc": "遊商賈而得一綴物。",
+    "advancements.apotheosis.random": "何以得邪？",
+    "advancements.apotheosis.random.desc": "得綴物於無定之魔。",
+
+    "advancements.apotheosis.gem": "非金剛石！",
+    "advancements.apotheosis.gem.desc": "得一羽化璧者，可以鑲兵革器具也。",
+
+    "advancements.apotheosis.rare_gem": "美中不足",
+    "advancements.apotheosis.rare_gem.desc": "得一瑕璧。",
+
+    "advancements.apotheosis.mythic_gem": "拋磚引玉",
+    "advancements.apotheosis.mythic_gem.desc": "得一瑜璧。",
+
+    "advancements.apotheosis.ancient_gem": "完璧歸趙",
+    "advancements.apotheosis.ancient_gem.desc": "割璧案製一璇璧。",
+
+    "advancements.apotheosis.socket": "如琢如磨",
+    "advancements.apotheosis.socket.desc": "鍛案鑲一璧。",
+
+    "advancements.apotheosis.gem_cut": "如切如磋",
+    "advancements.apotheosis.gem_cut.desc": "割璧案昇一璧。",
+
+    "advancements.apotheosis.spawner.root": "羽化孳衍籠",
+    "advancements.apotheosis.spawner.root.desc": "孳衍籠者，可得也、可調也，覽之物足焉。",
+    "advancements.apotheosis.spawner": "孳衍籠",
+    "advancements.apotheosis.spawner.desc": "完璧得一孳衍籠。",
+    "advancements.apotheosis.capturing": "得捕！",
+    "advancements.apotheosis.capturing.desc": "捕咒得一生靈之孳卵",
+    "advancements.apotheosis.modifier": "玄妙之術",
+    "advancements.apotheosis.modifier.desc": "更孳衍籠之性。",
+    "advancements.apotheosis.spawncount": "得寸進尺",
+    "advancements.apotheosis.spawncount.desc": "孳衍之數達十六。",
+    "advancements.apotheosis.maxdelay": "分秒必爭",
+    "advancements.apotheosis.maxdelay.desc": "極大孳衍之滯降達廿。",
+    "advancements.apotheosis.mindelay": "勤能補拙",
+    "advancements.apotheosis.mindelay.desc": "極小孳衍之滯降達廿。",
+    "advancements.apotheosis.nearbyents": "成群結隊",
+    "advancements.apotheosis.nearbyents.desc": "極大實體數昇達卅二。",
+    "advancements.apotheosis.playerrange": "排兵布陣",
+    "advancements.apotheosis.playerrange.desc": "孳衍激域昇達卌八。",
+    "advancements.apotheosis.spawnrange": "萬裏江山",
+    "advancements.apotheosis.spawnrange.desc": "孳衍域昇達卅二。",
+    "advancements.apotheosis.conditions": "背井離鄉",
+    "advancements.apotheosis.conditions.desc": "禁孳衍之生態域所限。",
+    "advancements.apotheosis.players": "工廠具備",
+    "advancements.apotheosis.players.desc": "禁孳衍之戲者所求。",
+    "advancements.apotheosis.redstone": "收放自如",
+    "advancements.apotheosis.redstone.desc": "孳衍籠入赭。",
+    "advancements.apotheosis.light": "光天化日",
+    "advancements.apotheosis.light.desc": "禁孳衍之晦明所求。",
+    "advancements.apotheosis.noai": "麻木不仁",
+    "advancements.apotheosis.noai.desc": "禁所孳之思。",
+    "advancements.apotheosis.ultimate_spawner": "孳衍至極",
+    "advancements.apotheosis.ultimate_spawner.desc": "置調一孳衍籠者，滯極小、入赭、無思、無限、無求者也。",
+
+    "comment_id": "/劑部",
+
+    "item.apotheosis.lucky_foot": "運兔足",
+
+    "item.apotheosis.potion_charm_broke": "空劑符",
+    "item.apotheosis.potion_charm": "%s符",
+    "item.apotheosis.potion_charm.desc": "啟而入行囊以續施%s態效",
+    "item.apotheosis.potion_charm.desc2": "%s - 右擊啟禁",
+    "item.apotheosis.potion_charm.desc3": "態效：%s",
+    "item.apotheosis.potion_charm.enabled": "既啟",
+    "item.apotheosis.potion_charm.disabled": "既禁",
+    "item.apotheosis.potion_charm.curios_only": "惟作於飾囊",
+    "misc.apotheosis.blacklisted_potion": "不可為劑符",
+
+    "comment_id": "/園部",
+    "item.apotheosis.ender_lead": "終眇韁",
+    "info.apotheosis.noentity": "所韁：無",
+    "info.apotheosis.containedentity": "所韁：%s",
+    "info.apotheosis.ender_lead": "終眇韁者，動畜者也。左擊捕而右擊釋，他生靈無用。",
+
+    "comment_id": "/浪子部",
+    "name.apotheosis.captive_dreams": "奴役妄夢",
+    "name.apotheosis.stonebreaker": "碎石械",
+    "name.apotheosis.treecapitator": "樵夫",
+    "name.apotheosis.bonesplitter": "粉骨手",
+    "name.apotheosis.arachnids_fear": "蟲之所懼",
+    "name.apotheosis.timeworn_visage": "熟人",
+    "name.apotheosis.greatplate_of_eternity": "亙古胄",
+    "name.apotheosis.thunder_forged_legguards": "雷鳴護腿",
+    "name.apotheosis.rune_forged_greaves": "符鞾",
+    "name.apotheosis.eternal_vigilance": "警鐘長鳴",
+
+    "comment_id": "/雜物",
+    "info.apoth.modifier_disabled": "是調既禁",
+    "itemGroup.apotheosis.adventure": "羽化 | 勇部",
+    "itemGroup.apotheosis.ench": "羽化 | 淬靈部",
+    "config.jade.plugin_apotheosis.spawner": "羽化之孳衍籠部",
+    "config.jade.plugin_apotheosis.ench": "羽化之淬靈部",
+    "config.jade.plugin_apotheosis.adventure": "羽化之勇部",
+    "message.apotheosis.item_linking_disabled": "物鏈既為伺服器所禁",
+    "text.apotheosis.equipped": "時之所著",
+
+    "comment_id": "導書",
+    "book.apotheosis.name": "《蚶書》",
+    "book.apotheosis.subtitle": "羽化先生",
+    "book.apotheosis.landing": "恭迎至羽化之界！$(br2)羽化之改囊者，分蕃$(#8080FF)部$()也，斯書亦也。$(br2)禁者將隱焉。"
+}
