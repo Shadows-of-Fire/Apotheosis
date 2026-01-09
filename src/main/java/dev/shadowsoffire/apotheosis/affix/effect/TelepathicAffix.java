@@ -86,7 +86,7 @@ public class TelepathicAffix extends Affix {
             targetPos = living.position();
         }
 
-        if (canTeleport) {
+        if (canTeleport && !targetPos.equals(Vec3.ZERO)) {
             for (ItemEntity item : e.getDrops()) {
                 item.setPos(targetPos.x, targetPos.y, targetPos.z);
                 item.setPickUpDelay(0);
@@ -96,7 +96,7 @@ public class TelepathicAffix extends Affix {
 
     // EventPriority.LOWEST
     public static void drops(BlockDropsEvent e) {
-        if (e.getBreaker() instanceof LivingEntity living) {
+        if (e.getBreaker() instanceof LivingEntity living && !living.position().equals(Vec3.ZERO)) {
             ItemStack tool = living.getMainHandItem();
             if (AffixHelper.streamAffixes(tool).anyMatch(AffixInstance::enablesTelepathy)) {
                 Vec3 targetPos = living.position();
