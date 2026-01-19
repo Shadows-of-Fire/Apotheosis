@@ -44,7 +44,7 @@ public class GatewaysCompat {
 
     public static class BossWaveEntity implements WaveEntity {
 
-        public static Codec<BossWaveEntity> CODEC = RecordCodecBuilder.create(inst -> inst
+        public static final Codec<BossWaveEntity> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 PlaceboCodecs.nullableField(ResourceLocation.CODEC, "boss").forGetter(b -> b.bossId))
             .apply(inst, BossWaveEntity::new));
@@ -66,7 +66,14 @@ public class GatewaysCompat {
 
         @Override
         public MutableComponent getDescription() {
-            return Component.translatable("misc.apotheosis.boss", Component.translatable(this.bossId.isEmpty() ? "misc.apotheosis.random" : this.boss.get().getEntity().getDescriptionId()));
+			String name = "misc.apotheosis.random";
+			if(!this.bossId.isEmpty()) {
+				ApothBoss apothBoss = this.boss.get();
+				if(apothBoss != null) {
+					name = apothBoss.getEntity().getDescriptionId();
+				}
+			}
+			return Component.translatable("misc.apotheosis.boss", Component.translatable(name));
         }
 
         @Override
@@ -90,7 +97,7 @@ public class GatewaysCompat {
      */
     public static record RarityAffixItemReward(DynamicHolder<LootRarity> rarity) implements Reward {
 
-        public static Codec<RarityAffixItemReward> CODEC = RecordCodecBuilder.create(inst -> inst
+        public static final Codec<RarityAffixItemReward> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 RarityRegistry.INSTANCE.holderCodec().fieldOf("rarity").forGetter(RarityAffixItemReward::rarity))
             .apply(inst, RarityAffixItemReward::new));
