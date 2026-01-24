@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.data;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.UnaryOperator;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -26,6 +27,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.Unbreakable;
 
@@ -54,6 +56,7 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
                 .with(WorldTier.PINNACLE, 0, 0))
             .rule(new AffixLootRule(AffixType.STAT))
             .rule(new ChancedLootRule(0.25F, new AffixLootRule(AffixType.STAT)))
+            .invaderSound(SoundEvents.EMPTY)
             .renderData(c -> c
                 .beamHeight(0)));
 
@@ -71,6 +74,7 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
             .rule(new AffixLootRule(AffixType.STAT))
             .rule(new ChancedLootRule(0.5F, new AffixLootRule(AffixType.BASIC_EFFECT)))
             .rule(new SocketLootRule(0, 1))
+            .invaderSound(Apoth.Sounds.INVADER_UNCOMMON.value())
             .renderData(c -> c
                 .beamHeight(0)
                 .shadow(d -> d
@@ -96,6 +100,7 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
             .rule(new ChancedLootRule(0.35F, new AffixLootRule(AffixType.BASIC_EFFECT)))
             .rule(new SocketLootRule(0, 2))
             .rule(new DurabilityLootRule(0.1F, 0.25F))
+            .invaderSound(Apoth.Sounds.INVADER_RARE.value())
             .renderData(c -> c
                 .beamHeight(2.5F)
                 .glowRadius(0)
@@ -126,6 +131,7 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
             .rule(new AffixLootRule(AffixType.ABILITY))
             .rule(new SocketLootRule(1, 3))
             .rule(new DurabilityLootRule(0.25F, 0.55F))
+            .invaderSound(Apoth.Sounds.INVADER_EPIC.value())
             .renderData(c -> c
                 .beamHeight(3F)
                 .shadow(d -> d
@@ -164,6 +170,7 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
                     .set(DataComponents.UNBREAKABLE, new Unbreakable(true))
                     .remove(Components.DURABILITY_BONUS)
                     .build())))
+            .invaderSound(Apoth.Sounds.INVADER_MYTHIC.value())
             .renderData(c -> c
                 .shadow(d -> d
                     .texture(Apotheosis.loc("textures/rarity/shadow_t4.png"))

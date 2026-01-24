@@ -386,10 +386,13 @@ public class Apoth {
         public static final Holder<SoundEvent> MALICE = R.sound("malice");
 
         public static final Holder<SoundEvent> MUSIC_DISC_FLASH = R.sound("music_disc_flash");
-
         public static final Holder<SoundEvent> MUSIC_DISC_GLIMMER = R.sound("music_disc_glimmer");
-
         public static final Holder<SoundEvent> MUSIC_DISC_SHIMMER = R.sound("music_disc_shimmer");
+
+        public static final Holder<SoundEvent> INVADER_UNCOMMON = R.sound("invader_uncommon");
+        public static final Holder<SoundEvent> INVADER_RARE = R.sound("invader_rare");
+        public static final Holder<SoundEvent> INVADER_EPIC = R.sound("invader_epic");
+        public static final Holder<SoundEvent> INVADER_MYTHIC = R.sound("invader_mythic");
 
         private static void bootstrap() {}
     }

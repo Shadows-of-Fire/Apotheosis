@@ -1,6 +1,7 @@
 {
     "type": "apotheosis:rarity",
     "color": "#33FF33",
+    "invader_sound": "apotheosis:invader_uncommon",
     "material": "apotheosis:uncommon_material",
     "render_data": {
         "beam_height": 0.0,
