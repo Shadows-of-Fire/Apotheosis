@@ -18,6 +18,7 @@ import dev.shadowsoffire.placebo.codec.CodecMap;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandom;
@@ -92,7 +93,8 @@ public interface LootRule extends CodecProvider<LootRule> {
             List<WeightedEntry.Wrapper<Affix>> available = LootController.getWeightedAffixes(stack, rarity, this.type, ctx);
             int weight = WeightedRandom.getTotalWeight(available);
             if (available.size() == 0 || weight == 0) {
-                Apotheosis.LOGGER.error("Failed to execute AffixLootRule (no affixes available) {}/{}/{}/{}!", BuiltInRegistries.ITEM.getKey(stack.getItem()), RarityRegistry.INSTANCE.getKey(rarity), this.type);
+                ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
+                Apotheosis.LOGGER.error("Failed to execute AffixLootRule (no affixes available) {}/{}/{}/{}!", id, RarityRegistry.INSTANCE.getKey(rarity), this.type, LootCategory.forItem(stack));
                 return;
             }
             Affix selected = WeightedRandom.getRandomItem(ctx.rand(), available, weight).get().data();
