@@ -4,6 +4,8 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jetbrains.annotations.Nullable;
+
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Tiles;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
@@ -24,6 +26,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -90,6 +93,30 @@ public abstract class GemSafeTile extends BlockEntity {
         this.setChanged();
 
         return stack;
+    }
+
+    public boolean upgradeGem(DynamicHolder<Gem> gem, Purity purity, Container matInv) {
+        GemUpgradeMatch match = this.getUpgradeMatch(gem, purity, matInv);
+        if (match != null) {
+            match.execute(matInv, this.getGems(gem));
+
+            if (!this.level.isClientSide()) {
+                VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
+            }
+
+            this.setChanged();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Nullable
+    public GemUpgradeMatch getUpgradeMatch(DynamicHolder<Gem> gem, Purity purity, Container matInv) {
+        EnumMap<Purity, Integer> map = this.getGems(gem);
+        if (map.get(purity) >= maxCount) return null;
+        return GemUpgradeMatch.findMatch(this.level, purity, map, matInv);
     }
 
     public int getCount(DynamicHolder<Gem> gem, Purity purity) {

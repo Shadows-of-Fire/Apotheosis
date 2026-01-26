@@ -3,6 +3,8 @@ package dev.shadowsoffire.apotheosis.client;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import org.spongepowered.include.com.google.common.base.Preconditions;
 
@@ -34,6 +36,7 @@ public class SimpleTexButton extends Button {
     protected final int textureWidth;
     protected final int textureHeight;
     protected List<Component> inactiveMessage = List.of();
+    protected BiConsumer<SimpleTexButton, Consumer<Component>> tooltipProvider = (btn, consumer) -> {};
     protected Component buttonText = CommonComponents.EMPTY;
     protected boolean forceHovered = false;
 
@@ -71,6 +74,11 @@ public class SimpleTexButton extends Button {
 
     public SimpleTexButton setInactiveMessage(List<Component> msg) {
         this.inactiveMessage = msg;
+        return this;
+    }
+
+    public SimpleTexButton setTooltipProvider(BiConsumer<SimpleTexButton, Consumer<Component>> provider) {
+        this.tooltipProvider = provider;
         return this;
     }
 
@@ -126,7 +134,10 @@ public class SimpleTexButton extends Button {
             }
             List<Component> tooltips = new ArrayList<>();
             tooltips.add(primary);
-            if (!this.active && !this.inactiveMessage.isEmpty()) {
+            if (this.active) {
+                this.tooltipProvider.accept(this, tooltips::add);
+            }
+            else {
                 tooltips.addAll(this.inactiveMessage);
             }
             gfx.renderComponentTooltip(Minecraft.getInstance().font, tooltips, pMouseX, pMouseY);
@@ -155,6 +166,7 @@ public class SimpleTexButton extends Button {
         protected int textureHeight = 256;
         protected Component message = CommonComponents.EMPTY;
         protected List<Component> inactiveMessage = new ArrayList<>();
+        protected BiConsumer<SimpleTexButton, Consumer<Component>> provider = (btn, consumer) -> {};
         protected Component buttonText = CommonComponents.EMPTY;
         protected Either<ResourceLocation, WidgetSprites> texture = null;
         protected OnPress action = btn -> {};
@@ -198,6 +210,11 @@ public class SimpleTexButton extends Button {
             return this;
         }
 
+        public Builder tooltipProvider(BiConsumer<SimpleTexButton, Consumer<Component>> provider) {
+            this.provider = provider;
+            return this;
+        }
+
         public Builder buttonText(Component message) {
             this.buttonText = message;
             return this;
@@ -223,6 +240,7 @@ public class SimpleTexButton extends Button {
             Preconditions.checkNotNull(this.texture, "Texture must bet set");
             return new SimpleTexButton(this.x, this.y, this.width, this.height, this.u, this.v, this.texture, this.textureWidth, this.textureHeight, action, DEFAULT_NARRATION, message)
                 .setInactiveMessage(this.inactiveMessage)
+                .setTooltipProvider(this.provider)
                 .setButtonText(this.buttonText);
         }
     }

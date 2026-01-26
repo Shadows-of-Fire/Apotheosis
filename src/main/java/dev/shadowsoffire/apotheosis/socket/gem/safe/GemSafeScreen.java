@@ -18,18 +18,22 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.client.GhostVertexBuilder;
+import dev.shadowsoffire.apotheosis.client.SimpleTexButton;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apothic_enchanting.library.EnchLibraryScreen;
+import dev.shadowsoffire.placebo.payloads.ButtonClickPayload;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.DrawsOnLeft;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button.OnPress;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
@@ -38,6 +42,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implements DrawsOnLeft {
 
@@ -53,7 +58,7 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
      * List of gems matching the current name and item filter(s) that are to be displayed.
      */
     protected List<SafeSlot> data = new ArrayList<>();
-    protected List<GemSafeSelectButton> buttons = new ArrayList<>();
+    protected List<SimpleTexButton> upgradeButtons = new ArrayList<>();
 
     @Nullable
     protected EditBox filter = null;
@@ -73,13 +78,31 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
         this.filter.setTextColor(0x97714F);
         this.filter.setResponder(t -> this.containerChanged());
         this.setFocused(this.filter);
-        this.containerChanged();
-        this.buttons.clear();
         for (int i = 0; i < MAX_ROWS * SLOTS_PER_ROW; i++) {
             var btn = new GemSafeSelectButton(this, i, this.getGuiLeft() + 21 + (i % SLOTS_PER_ROW) * 18, this.getGuiTop() + 31 + (i / SLOTS_PER_ROW) * 18);
-            this.buttons.add(btn);
             this.addRenderableWidget(btn);
         }
+
+        this.upgradeButtons.clear();
+        Purity[] purities = Purity.values();
+        for (int i = 1; i < purities.length; i++) {
+            Purity prev = purities[i - 1];
+            Purity purity = purities[i];
+            var btn = SimpleTexButton.builder()
+                .size(16, 16)
+                .texture(TEXTURES)
+                .texSize(307, 256)
+                .texPos(291, 29)
+                .pos(this.getGuiLeft() + 39 + (i - 1) * 18, this.getGuiTop() + 112)
+                .message(Apotheosis.lang("button", "gem_safe.upgrade", prev.toComponent(), purity.toComponent()))
+                .inactiveMessage(Apotheosis.lang("button", "gem_safe.upgrade_no_materials"))
+                .action(tryUpgrade(purity))
+                .build();
+            this.upgradeButtons.add(btn);
+            this.addRenderableWidget(btn);
+        }
+
+        this.containerChanged();
     }
 
     @Override
@@ -110,22 +133,22 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
         gfx.blit(TEXTURES, left, top, 0, 0, this.imageWidth, this.imageHeight, 307, 256);
         int scrollbarPos = (int) (90F * this.scrollOffs);
         gfx.blit(TEXTURES, left + 13, top + 29 + scrollbarPos, 303, this.isScrollBarActive() ? 0 : 12, 4, 12, 307, 256);
+        gfx.blit(TEXTURES, left - 65, top + 16, 198, 0, 65, 193, 307, 256);
 
         // Render the stack for each purity of the selected gem in the "selected" slots.
         // TODO: Probably make a dedicated button for this instead of packing it into the Screen
         if (this.getSelectedGem() != null) {
             for (Purity p : Purity.ALL_PURITIES) {
                 if (!p.isAtLeast(this.getSelectedGem().getMinPurity())) continue;
-                ItemStack stack = new ItemStack(Apoth.Items.GEM);
-                GemItem.setGem(stack, this.getSelectedGem());
-                GemItem.setPurity(stack, p);
-                int slotIndex = p.ordinal();
                 int count = this.menu.getGemCount(this.getSelectedGem(), p);
-                Function<MultiBufferSource, MultiBufferSource> wrapper = Function.identity();
                 if (count == 0) {
-                    wrapper = GhostVertexBuilder.wrapper(0x44);
+                    ItemStack stack = new ItemStack(Apoth.Items.GEM);
+                    GemItem.setGem(stack, this.getSelectedGem());
+                    GemItem.setPurity(stack, p);
+                    int slotIndex = p.ordinal();
+                    Function<MultiBufferSource, MultiBufferSource> wrapper = GhostVertexBuilder.wrapper(0x44);
+                    SalvagingScreen.renderGuiItem(gfx, stack, this.getGuiLeft() + 21 + slotIndex * 18, this.getGuiTop() + 94, wrapper);
                 }
-                SalvagingScreen.renderGuiItem(gfx, stack, this.getGuiLeft() + 21 + slotIndex * 18, this.getGuiTop() + 94, wrapper);
             }
         }
     }
@@ -133,14 +156,10 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
     @Override
     protected void renderSlotContents(GuiGraphics gfx, ItemStack stack, Slot slot, @Nullable String stackCount) {
         if (slot instanceof GemSafeSlot gss) {
-            int count = this.menu.getGemCount(this.menu.selectedGem, gss.purity);
-            Function<MultiBufferSource, MultiBufferSource> wrapper = Function.identity();
-            if (count == 0) {
-                wrapper = GhostVertexBuilder.wrapper(0x44);
-            }
-            SalvagingScreen.renderGuiItem(gfx, stack, slot.x, slot.y, wrapper);
+            gfx.renderFakeItem(stack, slot.x, slot.y);
 
             // Render dynamically scaled count number showing the sum of this gem in the safe
+            int count = this.menu.getGemCount(this.menu.selectedGem, gss.purity);
             if (count > 1) {
                 String countStr = EnchLibraryScreen.format(count);
                 float scale = 1.0f;
@@ -152,7 +171,7 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
                 gfx.pose().translate(0.0f, 0.0f, 200.0f);
                 float textX = (slot.x + 16 - (this.font.width(countStr) - 1) * scale) / scale;
                 float textY = (slot.y + 16 - (this.font.lineHeight - 2) * scale) / scale;
-                gfx.drawString(this.font, countStr, textX, textY, 0xAAFFFFFF, true);
+                gfx.drawString(this.font, countStr, textX, textY, 0xFFFFFF, true);
                 gfx.pose().popPose();
             }
         }
@@ -232,6 +251,35 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
             this.startIndex = 0;
         }
         Collections.sort(this.data, Comparator.<SafeSlot, Boolean>comparing(slot -> slot.count <= 0).thenComparing(Comparator.comparing(slot -> slot.gem.getId().toString())));
+
+        for (int i = 0; i < upgradeButtons.size(); i++) {
+            Purity prev = Purity.values()[i];
+            Purity purity = prev.next();
+            GemUpgradeMatch match = this.menu.getUpgradeMatch(purity);
+            SimpleTexButton button = this.upgradeButtons.get(i);
+            if (match != null) {
+                button.active = true;
+                ItemStack leftMat = this.menu.upgradeMatInv.getItem(match.leftSlot());
+                ItemStack rightMat = this.menu.upgradeMatInv.getItem(match.rightSlot());
+                int leftCount = match.leftIng().count(), rightCount = match.rightIng().count();
+
+                button.setTooltipProvider((btn, tooltip) -> {
+                    tooltip.accept(Apotheosis.lang("button", "gem_safe.upgrade_cost", leftCount, leftMat.getHoverName(), rightCount, rightMat.getHoverName()));
+                    if (Screen.hasShiftDown()) {
+                        tooltip.accept(Apotheosis.lang("button", "gem_safe.upgrade_all").withStyle(ChatFormatting.YELLOW));
+                    }
+                });
+            }
+            else {
+                button.active = false;
+                if (this.menu.getGemCount(this.getSelectedGem(), prev) < 2) {
+                    button.setInactiveMessage(Apotheosis.lang("button", "gem_safe.upgrade_no_gems").withStyle(ChatFormatting.RED));
+                }
+                else {
+                    button.setInactiveMessage(Apotheosis.lang("button", "gem_safe.upgrade_no_materials").withStyle(ChatFormatting.RED));
+                }
+            }
+        }
     }
 
     private List<SafeSlot> filter(List<SafeSlot> list) {
@@ -255,6 +303,14 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
         String name = slot.displayStack.getDisplayName().getString().toLowerCase(Locale.ROOT);
         String search = this.filter == null ? "" : this.filter.getValue().trim().toLowerCase(Locale.ROOT);
         return Strings.isNullOrEmpty(search) || ChatFormatting.stripFormatting(name).contains(search);
+    }
+
+    private OnPress tryUpgrade(Purity purity) {
+        return btn -> {
+            boolean shift = Screen.hasShiftDown();
+            int value = purity.ordinal() | (shift ? 0x1000 : 0x0000);
+            PacketDistributor.sendToServer(new ButtonClickPayload(value));
+        };
     }
 
     @Override

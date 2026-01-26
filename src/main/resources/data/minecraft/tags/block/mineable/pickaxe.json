@@ -9,6 +9,9 @@
 		},
 		{
 			"id": "apotheosis:augmenting_table"
-		}
+        },
+        {
+            "id": "apotheosis:basic_gem_safe"
+        }
 	]
 }

@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.socket.gem.safe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
@@ -10,7 +9,11 @@ import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
+import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingMenu;
+import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
+import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
+import dev.shadowsoffire.placebo.payloads.ButtonClickPayload.IButtonContainer;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -20,19 +23,27 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> {
+public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> implements IButtonContainer {
 
     public static final int INPUT_SLOT = 0;
     public static final int FILTER_SLOT = 1;
+    public static final int FIRST_GEM_SLOT = 2;
+    public static final int FIRST_UPGRADE_MAT_SLOT = 8;
 
     protected SimpleContainer ioInv = new SimpleContainer(2);
+    protected SimpleContainer upgradeMatInv = new SimpleContainer(6){
+        @Override
+        public void setChanged() {
+            super.setChanged();
+            GemSafeMenu.this.onChanged();
+        }
+    };
     protected Runnable notifier = null;
 
     @Nullable
     protected Gem selectedGem = null;
-
-    protected List<GemSafeSlot> gemSlots = new ArrayList<>();
 
     public GemSafeMenu(int id, Inventory inv, BlockPos pos) {
         super(Apoth.Menus.GEM_SAFE, id, inv, pos);
@@ -50,6 +61,7 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> {
         super.removed(player);
         if (!this.level.isClientSide) this.tile.removeListener(this);
         this.clearContainer(player, this.ioInv);
+        this.clearContainer(player, this.upgradeMatInv);
     }
 
     void initCommon(Inventory inv) {
@@ -71,7 +83,7 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> {
                     GemSafeMenu.this.tile.depositGem(this.getItem());
                 }
                 if (!this.getItem().isEmpty() && GemSafeMenu.this.level.isClientSide) {
-                    inv.player.level().playSound(inv.player, GemSafeMenu.this.pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.NEUTRAL, 0.5F, 0.7F);
+                    inv.player.level().playSound(inv.player, GemSafeMenu.this.pos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.NEUTRAL, 0.5F, 0.7F);
                 }
                 GemSafeMenu.this.ioInv.setItem(0, ItemStack.EMPTY);
             }
@@ -93,18 +105,37 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> {
             }
         });
 
-        this.gemSlots.clear();
         for (Purity p : Purity.ALL_PURITIES) {
-            GemSafeSlot slot = new GemSafeSlot(this, p, 21 + p.ordinal() * 18, 94);
-            this.gemSlots.add(slot);
-            this.addSlot(slot);
+            this.addSlot(new GemSafeSlot(this, p, 21 + p.ordinal() * 18, 94));
+        }
+
+        for (int i = 0; i < this.upgradeMatInv.getContainerSize(); i++) {
+            this.addSlot(new Slot(this.upgradeMatInv, i, -45 + 18 * (i % 2), 37 + 18 * (i / 2)){
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return GemSafeMenu.this.isValidUpgradeMaterial(stack);
+                }
+
+                @Override
+                public int getMaxStackSize() {
+                    return 64;
+                }
+
+                @Override
+                public void setChanged() {
+                    super.setChanged();
+                    GemSafeMenu.this.onChanged();
+                }
+            });
         }
 
         this.addPlayerSlots(inv, 8, 148);
 
         this.mover.registerRule((stack, slot) -> slot == FILTER_SLOT, this.playerInvStart, this.slots.size());
-        this.mover.registerRule((stack, slot) -> slot > 1 && slot < 8, this.playerInvStart, this.slots.size());
+        this.mover.registerRule((stack, slot) -> slot >= FIRST_GEM_SLOT && slot < FIRST_UPGRADE_MAT_SLOT, this.playerInvStart, this.slots.size());
+        this.mover.registerRule((stack, slot) -> slot >= FIRST_UPGRADE_MAT_SLOT && slot < FIRST_UPGRADE_MAT_SLOT + 6, this.playerInvStart, this.slots.size());
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.is(Apoth.Items.GEM), INPUT_SLOT, INPUT_SLOT + 1);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && isValidUpgradeMaterial(stack), FIRST_UPGRADE_MAT_SLOT, FIRST_UPGRADE_MAT_SLOT + 6);
         this.mover.registerRule((stack, slot) -> !LootCategory.forItem(stack).isNone(), FILTER_SLOT, FILTER_SLOT + 1);
         this.registerInvShuffleRules();
     }
@@ -140,6 +171,12 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> {
         return this.tile.extractGem(holder, p, count);
     }
 
+    @Nullable
+    public GemUpgradeMatch getUpgradeMatch(Purity purity) {
+        if (this.selectedGem == null) return null;
+        return this.tile.getUpgradeMatch(GemRegistry.INSTANCE.holder(this.selectedGem), purity, upgradeMatInv);
+    }
+
     @Override
     public void onQuickMove(ItemStack original, ItemStack remaining, Slot slot) {
         if (slot instanceof GemSafeSlot gss) {
@@ -157,5 +194,37 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> {
             return ItemStack.EMPTY; // Always abort after a single operation so we don't extract the entire inventory at once.
         }
         return this.mover.quickMoveStack(this, pPlayer, pIndex);
+    }
+
+    public boolean isValidUpgradeMaterial(ItemStack stack) {
+        List<RecipeHolder<GemCuttingRecipe>> recipes = GemCuttingMenu.getRecipes(this.level);
+        for (RecipeHolder<GemCuttingRecipe> rec : recipes) {
+            if (rec.value() instanceof PurityUpgradeRecipe purRec) {
+                if (purRec.isValidLeftItem(null, stack) || purRec.isValidRightItem(null, stack)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onButtonClick(int id) {
+        // Try to upgrade the purity of the clicked gem. Do as many as possible if a shift-click is encoded in the button press.
+        boolean shift = (id & 0x1000) != 0;
+        Purity purity = Purity.BY_ID.apply(id & 0xFFF);
+
+        if (this.selectedGem == null || purity == Purity.CRACKED) return;
+
+        DynamicHolder<Gem> holder = GemRegistry.INSTANCE.holder(this.selectedGem);
+        int tries = shift ? 64 : 1;
+
+        while (tries-- > 0) {
+            boolean result = this.tile.upgradeGem(holder, purity, this.upgradeMatInv);
+            if (!result) break;
+
+            this.level.playSound(null, this.pos, SoundEvents.AMETHYST_BLOCK_HIT, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.random.nextFloat()));
+        }
+
     }
 }
