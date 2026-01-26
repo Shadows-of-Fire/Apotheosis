@@ -48,6 +48,7 @@ import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
 import dev.shadowsoffire.apotheosis.mobs.util.EntityModifier;
 import dev.shadowsoffire.apotheosis.mobs.util.SpawnCondition;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
+import dev.shadowsoffire.apotheosis.net.GemSafePayload;
 import dev.shadowsoffire.apotheosis.net.LinkItemToChatPayload;
 import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
 import dev.shadowsoffire.apotheosis.net.RerollResultPayload;
@@ -57,6 +58,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.PurityWeightsRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
+import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeTile;
 import dev.shadowsoffire.apotheosis.spawner.RogueSpawnerRegistry;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
@@ -151,6 +153,7 @@ public class Apotheosis {
         PayloadHelper.registerPayload(new WorldTierPayload.Provider());
         PayloadHelper.registerPayload(new ConfigPayload.Provider());
         PayloadHelper.registerPayload(new LinkItemToChatPayload.Provider());
+        PayloadHelper.registerPayload(new GemSafePayload.Provider());
         NeoForge.EVENT_BUS.register(new AdventureEvents());
         NeoForge.EVENT_BUS.register(new ApothMobEvents());
         RarityRegistry.INSTANCE.registerToBus();
@@ -174,6 +177,7 @@ public class Apotheosis {
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.SALVAGING_TABLE, (be, side) -> be.getItemHandler());
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.REFORGING_TABLE, (be, side) -> be.getInventory());
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.AUGMENTING_TABLE, (be, side) -> be.getInventory());
+        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.BASIC_GEM_SAFE, GemSafeTile::getItemHandler);
     }
 
     @SubscribeEvent

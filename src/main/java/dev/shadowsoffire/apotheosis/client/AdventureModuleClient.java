@@ -47,6 +47,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingScreen;
+import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeScreen;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apotheosis.util.EquipmentComparePositioner;
@@ -157,6 +158,7 @@ public class AdventureModuleClient {
         e.register(Menus.SALVAGE, SalvagingScreen::new);
         e.register(Menus.GEM_CUTTING, GemCuttingScreen::new);
         e.register(Menus.AUGMENTING, AugmentingScreen::new);
+        e.register(Menus.GEM_SAFE, GemSafeScreen::new);
     }
 
     @SubscribeEvent

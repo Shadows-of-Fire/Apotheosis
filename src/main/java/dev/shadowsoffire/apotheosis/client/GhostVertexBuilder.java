@@ -46,7 +46,7 @@ public class GhostVertexBuilder implements VertexConsumer {
         return this.wrapped.setNormal(normalX, normalY, normalZ);
     }
 
-    public static Function<MultiBufferSource, MultiBufferSource> makeGhostBuffer(int alpha) {
+    public static Function<MultiBufferSource, MultiBufferSource> wrapper(int alpha) {
         return mbs -> new GhostBufferSource(mbs, alpha);
     }
 
