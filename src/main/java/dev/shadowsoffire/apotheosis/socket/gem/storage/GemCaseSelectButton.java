@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.socket.gem.safe;
+package dev.shadowsoffire.apotheosis.socket.gem.storage;
 
 import java.util.function.Function;
 
@@ -9,7 +9,7 @@ import dev.shadowsoffire.apotheosis.client.GhostVertexBuilder;
 import dev.shadowsoffire.apotheosis.net.GemSafePayload;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
-import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeScreen.SafeSlot;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseScreen.SafeSlot;
 import dev.shadowsoffire.apothic_enchanting.library.EnchLibraryScreen;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.client.Minecraft;
@@ -27,12 +27,12 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * These slots do not actually hold any items, but are used to select which gem is currently
  * active in the Gem Safe.
  */
-public class GemSafeSelectButton extends AbstractButton {
+public class GemCaseSelectButton extends AbstractButton {
 
-    protected final GemSafeScreen screen;
+    protected final GemCaseScreen screen;
     protected final int index;
 
-    public GemSafeSelectButton(GemSafeScreen screen, int index, int x, int y) {
+    public GemCaseSelectButton(GemCaseScreen screen, int index, int x, int y) {
         super(x, y, 16, 16, CommonComponents.EMPTY);
         this.screen = screen;
         this.index = index;
@@ -97,7 +97,7 @@ public class GemSafeSelectButton extends AbstractButton {
 
     @Nullable
     private SafeSlot getSafeSlot() {
-        int idx = this.screen.startIndex * GemSafeScreen.SLOTS_PER_ROW + this.index;
+        int idx = this.screen.startIndex * GemCaseScreen.SLOTS_PER_ROW + this.index;
         if (idx >= 0 && idx < this.screen.data.size()) {
             return this.screen.data.get(idx);
         }

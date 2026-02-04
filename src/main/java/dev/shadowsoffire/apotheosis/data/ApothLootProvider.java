@@ -79,6 +79,7 @@ public class ApothLootProvider extends LootTableProvider {
             this.dropSelf(Apoth.Blocks.SALVAGING_TABLE);
             this.dropSelf(Apoth.Blocks.GEM_CUTTING_TABLE);
             this.dropSelf(Apoth.Blocks.AUGMENTING_TABLE);
+            this.dropSelf(Apoth.Blocks.BASIC_GEM_CASE);
         }
 
         @Override

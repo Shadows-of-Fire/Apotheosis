@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.socket.gem.safe;
+package dev.shadowsoffire.apotheosis.socket.gem.storage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,9 +44,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implements DrawsOnLeft {
+public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implements DrawsOnLeft {
 
-    public static final ResourceLocation TEXTURES = Apotheosis.loc("textures/gui/gem_safe.png");
+    public static final ResourceLocation TEXTURES = Apotheosis.loc("textures/gui/gem_case.png");
     public static final int MAX_ROWS = 3;
     public static final int SLOTS_PER_ROW = 6;
 
@@ -63,7 +63,7 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
     @Nullable
     protected EditBox filter = null;
 
-    public GemSafeScreen(GemSafeMenu container, Inventory inv, Component title) {
+    public GemCaseScreen(GemCaseMenu container, Inventory inv, Component title) {
         super(container, inv, title);
         this.imageHeight = 230;
         this.containerChanged();
@@ -79,7 +79,7 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
         this.filter.setResponder(t -> this.containerChanged());
         this.setFocused(this.filter);
         for (int i = 0; i < MAX_ROWS * SLOTS_PER_ROW; i++) {
-            var btn = new GemSafeSelectButton(this, i, this.getGuiLeft() + 21 + (i % SLOTS_PER_ROW) * 18, this.getGuiTop() + 31 + (i / SLOTS_PER_ROW) * 18);
+            var btn = new GemCaseSelectButton(this, i, this.getGuiLeft() + 21 + (i % SLOTS_PER_ROW) * 18, this.getGuiTop() + 31 + (i / SLOTS_PER_ROW) * 18);
             this.addRenderableWidget(btn);
         }
 
@@ -94,8 +94,8 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
                 .texSize(307, 256)
                 .texPos(291, 29)
                 .pos(this.getGuiLeft() + 39 + (i - 1) * 18, this.getGuiTop() + 112)
-                .message(Apotheosis.lang("button", "gem_safe.upgrade", prev.toComponent(), purity.toComponent()))
-                .inactiveMessage(Apotheosis.lang("button", "gem_safe.upgrade_no_materials"))
+                .message(Apotheosis.lang("button", "gem_case.upgrade", prev.toComponent(), purity.toComponent()))
+                .inactiveMessage(Apotheosis.lang("button", "gem_case.upgrade_no_materials"))
                 .action(tryUpgrade(purity))
                 .build();
             this.upgradeButtons.add(btn);
@@ -155,7 +155,7 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
 
     @Override
     protected void renderSlotContents(GuiGraphics gfx, ItemStack stack, Slot slot, @Nullable String stackCount) {
-        if (slot instanceof GemSafeSlot gss) {
+        if (slot instanceof GemCaseSlot gss) {
             gfx.renderFakeItem(stack, slot.x, slot.y);
 
             // Render dynamically scaled count number showing the sum of this gem in the safe
@@ -264,19 +264,19 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
                 int leftCount = match.leftIng().count(), rightCount = match.rightIng().count();
 
                 button.setTooltipProvider((btn, tooltip) -> {
-                    tooltip.accept(Apotheosis.lang("button", "gem_safe.upgrade_cost", leftCount, leftMat.getHoverName(), rightCount, rightMat.getHoverName()));
+                    tooltip.accept(Apotheosis.lang("button", "gem_case.upgrade_cost", leftCount, leftMat.getHoverName(), rightCount, rightMat.getHoverName()));
                     if (Screen.hasShiftDown()) {
-                        tooltip.accept(Apotheosis.lang("button", "gem_safe.upgrade_all").withStyle(ChatFormatting.YELLOW));
+                        tooltip.accept(Apotheosis.lang("button", "gem_case.upgrade_all").withStyle(ChatFormatting.YELLOW));
                     }
                 });
             }
             else {
                 button.active = false;
                 if (this.menu.getGemCount(this.getSelectedGem(), prev) < 2) {
-                    button.setInactiveMessage(Apotheosis.lang("button", "gem_safe.upgrade_no_gems").withStyle(ChatFormatting.RED));
+                    button.setInactiveMessage(Apotheosis.lang("button", "gem_case.upgrade_no_gems").withStyle(ChatFormatting.RED));
                 }
                 else {
-                    button.setInactiveMessage(Apotheosis.lang("button", "gem_safe.upgrade_no_materials").withStyle(ChatFormatting.RED));
+                    button.setInactiveMessage(Apotheosis.lang("button", "gem_case.upgrade_no_materials").withStyle(ChatFormatting.RED));
                 }
             }
         }
@@ -323,7 +323,7 @@ public class GemSafeScreen extends AbstractContainerScreen<GemSafeMenu> implemen
 
     public static void handleSelectedGem(DynamicHolder<Gem> gem) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.screen instanceof GemSafeScreen screen) {
+        if (mc.screen instanceof GemCaseScreen screen) {
             screen.menu.setSelectedGem(gem);
         }
     }

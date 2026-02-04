@@ -58,7 +58,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.PurityWeightsRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
-import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeTile;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile;
 import dev.shadowsoffire.apotheosis.spawner.RogueSpawnerRegistry;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
@@ -177,7 +177,7 @@ public class Apotheosis {
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.SALVAGING_TABLE, (be, side) -> be.getItemHandler());
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.REFORGING_TABLE, (be, side) -> be.getInventory());
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.AUGMENTING_TABLE, (be, side) -> be.getInventory());
-        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.BASIC_GEM_SAFE, GemSafeTile::getItemHandler);
+        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.BASIC_GEM_CASE, GemCaseTile::getItemHandler);
     }
 
     @SubscribeEvent

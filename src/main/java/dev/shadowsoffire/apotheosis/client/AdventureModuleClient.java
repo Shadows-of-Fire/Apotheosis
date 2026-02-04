@@ -47,7 +47,8 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingScreen;
-import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeScreen;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTileRenderer;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseScreen;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apotheosis.util.EquipmentComparePositioner;
@@ -137,6 +138,7 @@ public class AdventureModuleClient {
         e.enqueueWork(() -> {
             BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE, k -> new ReforgingTableTileRenderer());
             BlockEntityRenderers.register(Apoth.Tiles.AUGMENTING_TABLE, k -> new AugmentingTableTileRenderer());
+            BlockEntityRenderers.register(Apoth.Tiles.BASIC_GEM_CASE, k -> new GemCaseTileRenderer());
 
             ItemProperties.register(Apoth.Items.GEM.value(), Apotheosis.loc("purity"), (stack, level, entity, tint) -> {
                 DynamicHolder<Gem> gem = GemItem.getGem(stack);
@@ -158,13 +160,14 @@ public class AdventureModuleClient {
         e.register(Menus.SALVAGE, SalvagingScreen::new);
         e.register(Menus.GEM_CUTTING, GemCuttingScreen::new);
         e.register(Menus.AUGMENTING, AugmentingScreen::new);
-        e.register(Menus.GEM_SAFE, GemSafeScreen::new);
+        e.register(Menus.GEM_CASE, GemCaseScreen::new);
     }
 
     @SubscribeEvent
     public static void models(ModelEvent.RegisterAdditional e) {
         e.register(ReforgingTableTileRenderer.HAMMER);
         e.register(AugmentingTableTileRenderer.STAR_CUBE);
+        e.register(GemCaseTileRenderer.GLASS_TOP);
     }
 
     @SubscribeEvent
@@ -185,7 +188,7 @@ public class AdventureModuleClient {
 
     @SubscribeEvent
     public static void replaceGemModel(ModelEvent.ModifyBakingResult e) {
-        ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
+        ModelResourceLocation key = ModelResourceLocation.inventory(Apotheosis.loc("gem"));
         BakedModel oldModel = e.getModels().get(key);
         if (oldModel != null) {
             e.getModels().put(key, new GemModel(oldModel, e.getModelBakery()));

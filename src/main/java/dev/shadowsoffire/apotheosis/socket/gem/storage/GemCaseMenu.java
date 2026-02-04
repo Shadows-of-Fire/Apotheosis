@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.socket.gem.safe;
+package dev.shadowsoffire.apotheosis.socket.gem.storage;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> implements IButtonContainer {
+public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButtonContainer {
 
     public static final int INPUT_SLOT = 0;
     public static final int FILTER_SLOT = 1;
@@ -37,7 +37,7 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> implements IButton
         @Override
         public void setChanged() {
             super.setChanged();
-            GemSafeMenu.this.onChanged();
+            GemCaseMenu.this.onChanged();
         }
     };
     protected Runnable notifier = null;
@@ -45,8 +45,8 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> implements IButton
     @Nullable
     protected Gem selectedGem = null;
 
-    public GemSafeMenu(int id, Inventory inv, BlockPos pos) {
-        super(Apoth.Menus.GEM_SAFE, id, inv, pos);
+    public GemCaseMenu(int id, Inventory inv, BlockPos pos) {
+        super(Apoth.Menus.GEM_CASE, id, inv, pos);
         this.tile.addListener(this);
         this.initCommon(inv);
     }
@@ -79,13 +79,13 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> implements IButton
             @Override
             public void setChanged() {
                 super.setChanged();
-                if (!GemSafeMenu.this.level.isClientSide && !this.getItem().isEmpty()) {
-                    GemSafeMenu.this.tile.depositGem(this.getItem());
+                if (!GemCaseMenu.this.level.isClientSide && !this.getItem().isEmpty()) {
+                    GemCaseMenu.this.tile.depositGem(this.getItem());
                 }
-                if (!this.getItem().isEmpty() && GemSafeMenu.this.level.isClientSide) {
-                    inv.player.level().playSound(inv.player, GemSafeMenu.this.pos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.NEUTRAL, 0.5F, 0.7F);
+                if (!this.getItem().isEmpty() && GemCaseMenu.this.level.isClientSide) {
+                    inv.player.level().playSound(inv.player, GemCaseMenu.this.pos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.NEUTRAL, 0.5F, 0.7F);
                 }
-                GemSafeMenu.this.ioInv.setItem(0, ItemStack.EMPTY);
+                GemCaseMenu.this.ioInv.setItem(0, ItemStack.EMPTY);
             }
         });
         this.addSlot(new Slot(this.ioInv, 1, 142, 18){
@@ -101,19 +101,19 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> implements IButton
 
             @Override
             public void setChanged() {
-                GemSafeMenu.this.onChanged();
+                GemCaseMenu.this.onChanged();
             }
         });
 
         for (Purity p : Purity.ALL_PURITIES) {
-            this.addSlot(new GemSafeSlot(this, p, 21 + p.ordinal() * 18, 94));
+            this.addSlot(new GemCaseSlot(this, p, 21 + p.ordinal() * 18, 94));
         }
 
         for (int i = 0; i < this.upgradeMatInv.getContainerSize(); i++) {
             this.addSlot(new Slot(this.upgradeMatInv, i, -45 + 18 * (i % 2), 37 + 18 * (i / 2)){
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return GemSafeMenu.this.isValidUpgradeMaterial(stack);
+                    return GemCaseMenu.this.isValidUpgradeMaterial(stack);
                 }
 
                 @Override
@@ -124,7 +124,7 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> implements IButton
                 @Override
                 public void setChanged() {
                     super.setChanged();
-                    GemSafeMenu.this.onChanged();
+                    GemCaseMenu.this.onChanged();
                 }
             });
         }
@@ -179,7 +179,7 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> implements IButton
 
     @Override
     public void onQuickMove(ItemStack original, ItemStack remaining, Slot slot) {
-        if (slot instanceof GemSafeSlot gss) {
+        if (slot instanceof GemCaseSlot gss) {
             int amount = original.getCount() - remaining.getCount();
             this.tile.extractGem(GemRegistry.INSTANCE.holder(this.selectedGem), gss.purity, amount);
         }
@@ -189,7 +189,7 @@ public class GemSafeMenu extends BlockEntityMenu<GemSafeTile> implements IButton
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
         Slot slot = this.getSlot(pIndex);
-        if (slot instanceof GemSafeSlot) {
+        if (slot instanceof GemCaseSlot) {
             this.mover.quickMoveStack(this, pPlayer, pIndex);
             return ItemStack.EMPTY; // Always abort after a single operation so we don't extract the entire inventory at once.
         }

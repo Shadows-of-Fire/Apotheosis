@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.socket.gem.safe;
+package dev.shadowsoffire.apotheosis.socket.gem.storage;
 
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -33,15 +33,15 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 
-public abstract class GemSafeTile extends BlockEntity {
+public abstract class GemCaseTile extends BlockEntity {
 
     protected final Object2ObjectMap<DynamicHolder<Gem>, EnumMap<Purity, Integer>> gems = new Object2ObjectLinkedOpenHashMap<>();
-    protected final Set<GemSafeMenu> activeContainers = new HashSet<>();
+    protected final Set<GemCaseMenu> activeContainers = new HashSet<>();
     protected final IItemHandler itemHandler = new GemSafeItemHandler();
     protected final int maxCount;
     private final Int2ObjectMap<UnsocketedGem> slotIndicies = new Int2ObjectOpenHashMap<>();
 
-    public GemSafeTile(BlockEntityType<?> type, BlockPos pos, BlockState state, int maxCount) {
+    public GemCaseTile(BlockEntityType<?> type, BlockPos pos, BlockState state, int maxCount) {
         super(type, pos, state);
         this.maxCount = maxCount;
     }
@@ -199,7 +199,7 @@ public abstract class GemSafeTile extends BlockEntity {
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
         CompoundTag tag = pkt.getTag();
         loadGemData(tag);
-        this.activeContainers.forEach(GemSafeMenu::onChanged);
+        this.activeContainers.forEach(GemCaseMenu::onChanged);
     }
 
     @Override
@@ -207,11 +207,11 @@ public abstract class GemSafeTile extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    public void addListener(GemSafeMenu ctr) {
+    public void addListener(GemCaseMenu ctr) {
         this.activeContainers.add(ctr);
     }
 
-    public void removeListener(GemSafeMenu ctr) {
+    public void removeListener(GemCaseMenu ctr) {
         this.activeContainers.remove(ctr);
     }
 
@@ -239,14 +239,14 @@ public abstract class GemSafeTile extends BlockEntity {
          */
         @Override
         public int getSlots() {
-            return 1 + GemSafeTile.this.gems.size() * Purity.values().length;
+            return 1 + GemCaseTile.this.gems.size() * Purity.values().length;
         }
 
         @Override
         public ItemStack getStackInSlot(int slot) {
             if (slot < 0 || slot >= this.getSlots()) return ItemStack.EMPTY;
-            UnsocketedGem gem = GemSafeTile.this.getGemForSlot(slot);
-            int count = GemSafeTile.this.getCount(gem.gem(), gem.purity());
+            UnsocketedGem gem = GemCaseTile.this.getGemForSlot(slot);
+            int count = GemCaseTile.this.getCount(gem.gem(), gem.purity());
             if (count <= 0) return ItemStack.EMPTY;
             ItemStack stack = new ItemStack(Apoth.Items.GEM, count);
             GemItem.setGem(stack, gem.gem().get());
@@ -260,7 +260,7 @@ public abstract class GemSafeTile extends BlockEntity {
             if (!gem.isValid()) return stack;
 
             if (!simulate) {
-                GemSafeTile.this.depositGem(stack);
+                GemCaseTile.this.depositGem(stack);
             }
             return ItemStack.EMPTY;
         }
@@ -268,20 +268,20 @@ public abstract class GemSafeTile extends BlockEntity {
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
             if (slot < 0 || slot >= this.getSlots() || amount <= 0) return ItemStack.EMPTY;
-            UnsocketedGem gem = GemSafeTile.this.getGemForSlot(slot);
+            UnsocketedGem gem = GemCaseTile.this.getGemForSlot(slot);
 
             if (simulate) {
-                int count = GemSafeTile.this.getCount(gem.gem(), gem.purity());
+                int count = GemCaseTile.this.getCount(gem.gem(), gem.purity());
                 return getStackInSlot(slot).copyWithCount(Math.min(count, amount));
             }
             else {
-                return GemSafeTile.this.extractGem(gem.gem(), gem.purity(), amount);
+                return GemCaseTile.this.extractGem(gem.gem(), gem.purity(), amount);
             }
         }
 
         @Override
         public int getSlotLimit(int slot) {
-            return GemSafeTile.this.maxCount;
+            return GemCaseTile.this.maxCount;
         }
 
         @Override
@@ -291,10 +291,10 @@ public abstract class GemSafeTile extends BlockEntity {
 
     }
 
-    public static class BasicGemSafeTile extends GemSafeTile {
+    public static class BasicGemCaseTile extends GemCaseTile {
 
-        public BasicGemSafeTile(BlockPos pos, BlockState state) {
-            super(Tiles.BASIC_GEM_SAFE, pos, state, 1024);
+        public BasicGemCaseTile(BlockPos pos, BlockState state) {
+            super(Tiles.BASIC_GEM_CASE, pos, state, 512);
         }
 
     }

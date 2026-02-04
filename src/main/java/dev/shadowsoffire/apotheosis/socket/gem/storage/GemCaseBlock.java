@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.socket.gem.safe;
+package dev.shadowsoffire.apotheosis.socket.gem.storage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +9,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -20,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -34,26 +36,35 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class GemSafeBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class GemCaseBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
     public static final Component NAME = Apotheosis.lang("menu", "gem_safe");
 
-    protected final BlockEntitySupplier<? extends GemSafeTile> tileSupplier;
+    protected static final VoxelShape NORTH_AABB = Block.box(0.0, 0.0, 1.0, 16.0, 17.0, 16.0);
+    protected static final VoxelShape SOUTH_AABB = Block.box(0.0, 0.0, 0.0, 16.0, 17.0, 15.0);
+    protected static final VoxelShape WEST_AABB = Block.box(1.0, 0.0, 0.0, 16.0, 17.0, 16.0);
+    protected static final VoxelShape EAST_AABB = Block.box(0.0, 0.0, 0.0, 15.0, 17.0, 16.0);
 
-    public GemSafeBlock(BlockEntitySupplier<? extends GemSafeTile> tileSupplier, BlockBehaviour.Properties props) {
+    protected final BlockEntitySupplier<? extends GemCaseTile> tileSupplier;
+    protected final int maxCount;
+
+    public GemCaseBlock(BlockEntitySupplier<? extends GemCaseTile> tileSupplier, BlockBehaviour.Properties props, int maxCount) {
         super(props);
         this.tileSupplier = tileSupplier;
+        this.maxCount = maxCount;
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        return MenuUtil.openGui(player, pos, GemSafeMenu::new);
+        return MenuUtil.openGui(player, pos, GemCaseMenu::new);
     }
 
     @Override
     public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-        return new SimplerMenuProvider<>(world, pos, GemSafeMenu::new);
+        return new SimplerMenuProvider<>(world, pos, GemCaseMenu::new);
     }
 
     @Override
@@ -85,7 +96,7 @@ public class GemSafeBlock extends HorizontalDirectionalBlock implements EntityBl
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         CustomData data = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
         BlockEntity be = level.getBlockEntity(pos);
-        if (!data.isEmpty() && be instanceof GemSafeTile lib) {
+        if (!data.isEmpty() && be instanceof GemCaseTile lib) {
             data.loadInto(lib, level.registryAccess());
         }
     }
@@ -110,6 +121,23 @@ public class GemSafeBlock extends HorizontalDirectionalBlock implements EntityBl
         if (newState.getBlock() != this) {
             world.removeBlockEntity(pos);
         }
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        Direction dir = state.getValue(FACING);
+        return switch (dir) {
+            case NORTH -> NORTH_AABB;
+            case SOUTH -> SOUTH_AABB;
+            case WEST -> WEST_AABB;
+            case EAST -> EAST_AABB;
+            default -> NORTH_AABB;
+        };
+    }
+
+    @Override
+    public boolean useShapeForLightOcclusion(BlockState pState) {
+        return true;
     }
 
     @Override

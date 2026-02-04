@@ -72,10 +72,10 @@ import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingBlock;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
-import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeBlock;
-import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeMenu;
-import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeTile;
-import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeTile.BasicGemSafeTile;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseBlock;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseMenu;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile.BasicGemCaseTile;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
@@ -267,8 +267,8 @@ public class Apoth {
         public static final Holder<Block> AUGMENTING_TABLE = R.block("augmenting_table", AugmentingTableBlock::new,
             p -> p.requiresCorrectToolForDrops().strength(4, 1000F));
 
-        public static final Holder<Block> BASIC_GEM_SAFE = R.block("basic_gem_safe", p -> new GemSafeBlock(BasicGemSafeTile::new, p),
-            p -> p.requiresCorrectToolForDrops().strength(5, 1200F).sound(SoundType.METAL).noOcclusion());
+        public static final Holder<Block> BASIC_GEM_CASE = R.block("basic_gem_case", p -> new GemCaseBlock(BasicGemCaseTile::new, p, 512),
+            p -> p.requiresCorrectToolForDrops().strength(5, 1200F).sound(SoundType.METAL).noOcclusion().lightLevel(s -> 2));
 
         private static void bootstrap() {}
     }
@@ -317,7 +317,7 @@ public class Apoth {
 
         public static final Holder<Item> AUGMENTING_TABLE = R.blockItem("augmenting_table", Blocks.AUGMENTING_TABLE, p -> p.rarity(Rarity.UNCOMMON));
 
-        public static final Holder<Item> BASIC_GEM_SAFE = R.blockItem("basic_gem_safe", Blocks.BASIC_GEM_SAFE);
+        public static final Holder<Item> BASIC_GEM_CASE = R.blockItem("basic_gem_case", Blocks.BASIC_GEM_CASE);
 
         public static final Holder<Item> GEM = R.item("gem", GemItem::new);
 
@@ -360,7 +360,7 @@ public class Apoth {
         public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = R.blockEntity("salvaging_table", SalvagingTableTile::new, Blocks.SALVAGING_TABLE);
         public static final BlockEntityType<AugmentingTableTile> AUGMENTING_TABLE = R.tickingBlockEntity("augmenting_table", AugmentingTableTile::new, TickSide.CLIENT, Blocks.AUGMENTING_TABLE);
 
-        public static final BlockEntityType<GemSafeTile> BASIC_GEM_SAFE = R.blockEntity("basic_gem_safe", BasicGemSafeTile::new, Blocks.BASIC_GEM_SAFE);
+        public static final BlockEntityType<GemCaseTile> BASIC_GEM_CASE = R.blockEntity("basic_gem_case", BasicGemCaseTile::new, Blocks.BASIC_GEM_CASE);
 
         private static void bootstrap() {}
     }
@@ -370,7 +370,7 @@ public class Apoth {
         public static final MenuType<SalvagingMenu> SALVAGE = R.menuWithPos("salvage", SalvagingMenu::new);
         public static final MenuType<GemCuttingMenu> GEM_CUTTING = R.menu("gem_cutting", GemCuttingMenu::new);
         public static final MenuType<AugmentingMenu> AUGMENTING = R.menuWithPos("augmenting", AugmentingMenu::new);
-        public static final MenuType<GemSafeMenu> GEM_SAFE = R.menuWithPos("gem_safe", GemSafeMenu::new);
+        public static final MenuType<GemCaseMenu> GEM_CASE = R.menuWithPos("gem_case", GemCaseMenu::new);
 
         private static void bootstrap() {}
     }

@@ -6,8 +6,8 @@ import java.util.Optional;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
-import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeMenu;
-import dev.shadowsoffire.apotheosis.socket.gem.safe.GemSafeScreen;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseMenu;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseScreen;
 import dev.shadowsoffire.placebo.network.PayloadProvider;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import io.netty.buffer.ByteBuf;
@@ -49,10 +49,10 @@ public record GemSafePayload(DynamicHolder<Gem> gem) implements CustomPacketPayl
         @Override
         public void handle(GemSafePayload msg, IPayloadContext ctx) {
             if (ctx.flow().isClientbound()) {
-                GemSafeScreen.handleSelectedGem(msg.gem());
+                GemCaseScreen.handleSelectedGem(msg.gem());
             }
             else {
-                if (ctx.player().containerMenu instanceof GemSafeMenu menu) {
+                if (ctx.player().containerMenu instanceof GemCaseMenu menu) {
                     menu.setSelectedGem(msg.gem());
                 }
             }

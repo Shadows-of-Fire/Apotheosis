@@ -1,0 +1,12 @@
+{
+    "loader": "neoforge:composite",
+    "parent": "block/block",
+    "children": {
+        "base": {
+            "parent": "apotheosis:block/basic_gem_case_base"
+        },
+        "top": {
+            "parent": "apotheosis:block/glass_top"
+        }
+    }
+}

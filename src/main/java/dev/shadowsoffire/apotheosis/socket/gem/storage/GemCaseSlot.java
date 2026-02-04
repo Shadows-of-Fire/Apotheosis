@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.socket.gem.safe;
+package dev.shadowsoffire.apotheosis.socket.gem.storage;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
@@ -10,14 +10,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class GemSafeSlot extends Slot {
+public class GemCaseSlot extends Slot {
 
     private static Container emptyContainer = new SimpleContainer(0);
 
-    private final GemSafeMenu menu;
+    private final GemCaseMenu menu;
     final Purity purity;
 
-    public GemSafeSlot(GemSafeMenu menu, Purity purity, int x, int y) {
+    public GemCaseSlot(GemCaseMenu menu, Purity purity, int x, int y) {
         super(emptyContainer, -1, x, y);
         this.menu = menu;
         this.purity = purity;
