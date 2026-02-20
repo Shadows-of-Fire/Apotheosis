@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.socket.gem.storage;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -103,8 +105,16 @@ public class GemCaseBlock extends HorizontalDirectionalBlock implements TickingE
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag tooltipFlag) {
-
+        list.add(Apotheosis.lang("tooltip", "gem_case.capacity", format(this.maxCount)).withStyle(ChatFormatting.GOLD));
+        CustomData data = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        if (!data.isEmpty() && data.contains("gems")) {
+            int gems = data.getUnsafe().getCompound("gems").size();
+            if (gems > 0) {
+                list.add(Apotheosis.lang("tooltip", "gem_case.unique_gems", gems).withStyle(ChatFormatting.GRAY));
+            }
+        }
     }
 
     @Override
@@ -117,6 +127,16 @@ public class GemCaseBlock extends HorizontalDirectionalBlock implements TickingE
     @Override
     protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return null;
+    }
+
+    private static DecimalFormat f = new DecimalFormat("##.#");
+
+    private static String format(int n) {
+        int log = (int) StrictMath.log10(n);
+        if (log <= 3) return String.valueOf(n);
+        else if (log <= 6) return f.format(n / 1000D) + "K";
+        else if (log <= 8) return f.format(n / 1000000D) + "M";
+        else return f.format(n / 1000000000D) + "B";
     }
 
 }

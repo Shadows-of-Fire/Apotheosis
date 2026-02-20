@@ -610,6 +610,8 @@
     "block.apotheosis.augmenting_table": "Augmenting Table",
     "block.apotheosis.augmenting_table.desc": "Uses Sigils of Enhancement to augment individual affixes",
     "block.apotheosis.gem_case": "Gem Case",
+    "tooltip.apotheosis.gem_case.capacity": "Capacity: %s Gems",
+    "tooltip.apotheosis.gem_case.unique_gems": "Contains %s different gems",
     "block.apotheosis.ender_gem_case": "Gem Case of House Fabergé",
 
     "button.apotheosis.salvage": "Salvage Items",
