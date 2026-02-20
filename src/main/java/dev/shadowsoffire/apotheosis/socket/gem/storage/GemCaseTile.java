@@ -332,17 +332,17 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
     public static class BasicGemCaseTile extends GemCaseTile {
 
         public BasicGemCaseTile(BlockPos pos, BlockState state) {
-            super(Tiles.BASIC_GEM_CASE, pos, state, 512);
+            super(Tiles.GEM_CASE, pos, state, Short.MAX_VALUE);
         }
 
     }
-    //
-    // public static class EnderLibraryTile extends GemSafeTile {
-    //
-    // public EnderLibraryTile(BlockPos pos, BlockState state) {
-    // super(Tiles.ENDER_LIBRARY.get(), pos, state, 31);
-    // }
-    //
-    // }
+
+    public static class EnderGemCaseTile extends GemCaseTile {
+
+        public EnderGemCaseTile(BlockPos pos, BlockState state) {
+            super(Tiles.ENDER_GEM_CASE, pos, state, Integer.MAX_VALUE);
+        }
+
+    }
 
 }

@@ -47,8 +47,8 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingScreen;
-import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTileRenderer;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseScreen;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTileRenderer;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apotheosis.util.EquipmentComparePositioner;
@@ -138,7 +138,8 @@ public class AdventureModuleClient {
         e.enqueueWork(() -> {
             BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE, k -> new ReforgingTableTileRenderer());
             BlockEntityRenderers.register(Apoth.Tiles.AUGMENTING_TABLE, k -> new AugmentingTableTileRenderer());
-            BlockEntityRenderers.register(Apoth.Tiles.BASIC_GEM_CASE, k -> new GemCaseTileRenderer());
+            BlockEntityRenderers.register(Apoth.Tiles.GEM_CASE, k -> new GemCaseTileRenderer());
+            BlockEntityRenderers.register(Apoth.Tiles.ENDER_GEM_CASE, k -> new GemCaseTileRenderer());
 
             ItemProperties.register(Apoth.Items.GEM.value(), Apotheosis.loc("purity"), (stack, level, entity, tint) -> {
                 DynamicHolder<Gem> gem = GemItem.getGem(stack);

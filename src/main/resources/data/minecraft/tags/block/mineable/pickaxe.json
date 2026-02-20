@@ -11,7 +11,10 @@
 			"id": "apotheosis:augmenting_table"
         },
         {
-            "id": "apotheosis:basic_gem_case"
+            "id": "apotheosis:gem_case"
+        },
+        {
+            "id": "apotheosis:ender_gem_case"
         }
 	]
 }

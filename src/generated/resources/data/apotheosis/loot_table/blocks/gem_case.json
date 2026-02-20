@@ -11,11 +11,11 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "apotheosis:basic_gem_case"
+                    "name": "apotheosis:gem_case"
                 }
             ],
             "rolls": 1.0
         }
     ],
-    "random_sequence": "apotheosis:blocks/basic_gem_case"
+    "random_sequence": "apotheosis:blocks/gem_case"
 }

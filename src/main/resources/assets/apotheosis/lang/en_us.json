@@ -609,7 +609,8 @@
     "block.apotheosis.reforging_table.desc2": "Max Rarity: %s",
     "block.apotheosis.augmenting_table": "Augmenting Table",
     "block.apotheosis.augmenting_table.desc": "Uses Sigils of Enhancement to augment individual affixes",
-    "block.apotheosis.basic_gem_case": "Basic Gem Case",
+    "block.apotheosis.gem_case": "Gem Case",
+    "block.apotheosis.ender_gem_case": "Gem Case of House Fabergé",
 
     "button.apotheosis.salvage": "Salvage Items",
     "button.apotheosis.no_salvage": "No items selected",

@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "apotheosis:block/gem_case",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "apotheosis:block/gem_case",
+      "y": 0
+    },
+    "facing=south": {
+      "model": "apotheosis:block/gem_case",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "apotheosis:block/gem_case",
+      "y": 270
+    }
+  }
+}

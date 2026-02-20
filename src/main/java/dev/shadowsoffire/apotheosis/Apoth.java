@@ -76,6 +76,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseBlock;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseMenu;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile.BasicGemCaseTile;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile.EnderGemCaseTile;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
@@ -267,7 +268,10 @@ public class Apoth {
         public static final Holder<Block> AUGMENTING_TABLE = R.block("augmenting_table", AugmentingTableBlock::new,
             p -> p.requiresCorrectToolForDrops().strength(4, 1000F));
 
-        public static final Holder<Block> BASIC_GEM_CASE = R.block("basic_gem_case", p -> new GemCaseBlock(BasicGemCaseTile::new, p, 512),
+        public static final Holder<Block> GEM_CASE = R.block("gem_case", p -> new GemCaseBlock(BasicGemCaseTile::new, p, Short.MAX_VALUE),
+            p -> p.requiresCorrectToolForDrops().strength(5, 1200F).sound(SoundType.GLASS).noOcclusion().lightLevel(s -> 2));
+
+        public static final Holder<Block> ENDER_GEM_CASE = R.block("ender_gem_case", p -> new GemCaseBlock(EnderGemCaseTile::new, p, Integer.MAX_VALUE),
             p -> p.requiresCorrectToolForDrops().strength(5, 1200F).sound(SoundType.GLASS).noOcclusion().lightLevel(s -> 2));
 
         private static void bootstrap() {}
@@ -317,7 +321,9 @@ public class Apoth {
 
         public static final Holder<Item> AUGMENTING_TABLE = R.blockItem("augmenting_table", Blocks.AUGMENTING_TABLE, p -> p.rarity(Rarity.UNCOMMON));
 
-        public static final Holder<Item> BASIC_GEM_CASE = R.blockItem("basic_gem_case", Blocks.BASIC_GEM_CASE);
+        public static final Holder<Item> GEM_CASE = R.blockItem("gem_case", Blocks.GEM_CASE);
+
+        public static final Holder<Item> ENDER_GEM_CASE = R.blockItem("ender_gem_case", Blocks.ENDER_GEM_CASE);
 
         public static final Holder<Item> GEM = R.item("gem", GemItem::new);
 
@@ -360,7 +366,8 @@ public class Apoth {
         public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = R.blockEntity("salvaging_table", SalvagingTableTile::new, Blocks.SALVAGING_TABLE);
         public static final BlockEntityType<AugmentingTableTile> AUGMENTING_TABLE = R.tickingBlockEntity("augmenting_table", AugmentingTableTile::new, TickSide.CLIENT, Blocks.AUGMENTING_TABLE);
 
-        public static final BlockEntityType<GemCaseTile> BASIC_GEM_CASE = R.tickingBlockEntity("basic_gem_case", BasicGemCaseTile::new, TickSide.CLIENT, Blocks.BASIC_GEM_CASE);
+        public static final BlockEntityType<GemCaseTile> GEM_CASE = R.tickingBlockEntity("gem_case", BasicGemCaseTile::new, TickSide.CLIENT, Blocks.GEM_CASE);
+        public static final BlockEntityType<GemCaseTile> ENDER_GEM_CASE = R.tickingBlockEntity("ender_gem_case", EnderGemCaseTile::new, TickSide.CLIENT, Blocks.GEM_CASE);
 
         private static void bootstrap() {}
     }
