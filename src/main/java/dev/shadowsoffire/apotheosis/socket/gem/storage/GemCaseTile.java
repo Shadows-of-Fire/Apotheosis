@@ -13,6 +13,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
+import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
 import dev.shadowsoffire.placebo.network.VanillaPacketDispatcher;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -27,19 +28,24 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 
-public abstract class GemCaseTile extends BlockEntity {
+public abstract class GemCaseTile extends BlockEntity implements TickingBlockEntity {
 
     protected final Object2ObjectMap<DynamicHolder<Gem>, EnumMap<Purity, Integer>> gems = new Object2ObjectLinkedOpenHashMap<>();
     protected final Set<GemCaseMenu> activeContainers = new HashSet<>();
     protected final IItemHandler itemHandler = new GemSafeItemHandler();
     protected final int maxCount;
     private final Int2ObjectMap<UnsocketedGem> slotIndicies = new Int2ObjectOpenHashMap<>();
+
+    // Client-side only: Animation state for gem position switching
+    private GemCaseAnimationState animationState;
 
     public GemCaseTile(BlockEntityType<?> type, BlockPos pos, BlockState state, int maxCount) {
         super(type, pos, state);
@@ -140,6 +146,17 @@ public abstract class GemCaseTile extends BlockEntity {
         });
     }
 
+    /**
+     * Gets the animation state for this gem case, lazily initializing it on the client.
+     * Should only be called on the client side.
+     */
+    public GemCaseAnimationState getAnimationState() {
+        if (this.animationState == null) {
+            this.animationState = new GemCaseAnimationState(this.level.getRandom());
+        }
+        return this.animationState;
+    }
+
     public void saveGemData(CompoundTag tag) {
         CompoundTag gems = new CompoundTag();
         for (DynamicHolder<Gem> gem : this.gems.keySet()) {
@@ -205,6 +222,27 @@ public abstract class GemCaseTile extends BlockEntity {
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public void clientTick(Level level, BlockPos pos, BlockState state) {
+        GemCaseAnimationState animState = this.getAnimationState();
+
+        int uniqueGems = 0;
+        for (DynamicHolder<Gem> gem : this.gems.keySet()) {
+            int count = 0;
+            for (Purity p : Purity.ALL_PURITIES) {
+                count += this.getCount(gem, p);
+            }
+
+            if (count > 0) {
+                uniqueGems++;
+            }
+        }
+
+        Player player = level.getNearestPlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 4, false);
+
+        animState.tick(Math.min(uniqueGems, 16), player != null);
     }
 
     public void addListener(GemCaseMenu ctr) {

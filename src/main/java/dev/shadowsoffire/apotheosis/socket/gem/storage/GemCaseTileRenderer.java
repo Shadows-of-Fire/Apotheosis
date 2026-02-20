@@ -43,22 +43,9 @@ public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile> {
             default -> 0;
         };
 
+        GemCaseAnimationState animState = tile.getAnimationState();
+
         int i = 0;
-
-        int seed = tile.getBlockPos().hashCode();
-
-        // Randomize the positions by creating an array of values from 0-15 and shuffling it based on the tile position.
-        int[] slots = new int[16];
-        for (int j = 0; j < 16; j++) {
-            slots[j] = j;
-        }
-
-        for (int j = 0; j < 16; j++) {
-            int k = (j * seed) % 16;
-            int l = slots[j];
-            slots[j] = slots[k];
-            slots[k] = l;
-        }
 
         for (DynamicHolder<Gem> gem : tile.gems.keySet()) {
             int count = 0;
@@ -86,12 +73,17 @@ public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile> {
 
             pose.scale(scale, scale, scale);
 
-            int slot = slots[i];
+            // Get the animated position for this gem
+            GemCaseAnimationState.PositionInfo posInfo = animState.getPosition(i, partials);
+
+            // Calculate the actual slot position including animation offset
+            float gridX = (posInfo.baseSlot() % 4) + posInfo.offsetX();
+            float gridZ = (posInfo.baseSlot() / 4) + posInfo.offsetZ();
 
             // Position the gems in a 4x4 grid within the case, which is itself a 1x1 block using 14px of internal space.
-            float offsetX = (2.5F + (slot % 4) * 3.75F) / scale;
-            float offsetZ = (3.5F + (slot / 4) * 3.25F) / scale;
-            pose.translate(offsetX * px, -2 * px / scale, offsetZ * px);
+            float offsetX = (2.5F + gridX * 3.75F) / scale;
+            float offsetZ = (3.5F + gridZ * 3.25F) / scale;
+            pose.translate(offsetX * px, -2 * px / scale + 0.01 * i, offsetZ * px);
 
             pose.mulPose(Axis.XP.rotationDegrees(90));
 

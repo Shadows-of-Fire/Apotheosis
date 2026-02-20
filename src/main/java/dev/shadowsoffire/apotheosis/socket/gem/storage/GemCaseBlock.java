@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.serialization.MapCodec;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier;
@@ -35,7 +35,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class GemCaseBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class GemCaseBlock extends HorizontalDirectionalBlock implements TickingEntityBlock {
 
     public static final Component NAME = Apotheosis.lang("menu", "gem_safe");
 

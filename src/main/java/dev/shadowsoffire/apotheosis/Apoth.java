@@ -360,7 +360,7 @@ public class Apoth {
         public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = R.blockEntity("salvaging_table", SalvagingTableTile::new, Blocks.SALVAGING_TABLE);
         public static final BlockEntityType<AugmentingTableTile> AUGMENTING_TABLE = R.tickingBlockEntity("augmenting_table", AugmentingTableTile::new, TickSide.CLIENT, Blocks.AUGMENTING_TABLE);
 
-        public static final BlockEntityType<GemCaseTile> BASIC_GEM_CASE = R.blockEntity("basic_gem_case", BasicGemCaseTile::new, Blocks.BASIC_GEM_CASE);
+        public static final BlockEntityType<GemCaseTile> BASIC_GEM_CASE = R.tickingBlockEntity("basic_gem_case", BasicGemCaseTile::new, TickSide.CLIENT, Blocks.BASIC_GEM_CASE);
 
         private static void bootstrap() {}
     }
