@@ -79,7 +79,7 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
         this.filter.setResponder(t -> this.containerChanged());
         this.setFocused(this.filter);
         for (int i = 0; i < MAX_ROWS * SLOTS_PER_ROW; i++) {
-            var btn = new GemCaseSelectButton(this, i, this.getGuiLeft() + 21 + (i % SLOTS_PER_ROW) * 18, this.getGuiTop() + 31 + (i / SLOTS_PER_ROW) * 18);
+            var btn = new GemCaseSelectButton(this, i, this.getGuiLeft() + 21 + (i % SLOTS_PER_ROW) * 18, this.getGuiTop() + 31 + (i / SLOTS_PER_ROW) * 19);
             this.addRenderableWidget(btn);
         }
 
@@ -93,7 +93,7 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
                 .texture(TEXTURES)
                 .texSize(307, 256)
                 .texPos(291, 29)
-                .pos(this.getGuiLeft() + 39 + (i - 1) * 18, this.getGuiTop() + 112)
+                .pos(this.getGuiLeft() + 30 + (i - 1) * 18, this.getGuiTop() + 109)
                 .message(Apotheosis.lang("button", "gem_case.upgrade", prev.toComponent(), purity.toComponent()))
                 .inactiveMessage(Apotheosis.lang("button", "gem_case.upgrade_no_materials"))
                 .action(tryUpgrade(purity))
@@ -147,7 +147,7 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
                     GemItem.setPurity(stack, p);
                     int slotIndex = p.ordinal();
                     Function<MultiBufferSource, MultiBufferSource> wrapper = GhostVertexBuilder.wrapper(0x44);
-                    SalvagingScreen.renderGuiItem(gfx, stack, this.getGuiLeft() + 21 + slotIndex * 18, this.getGuiTop() + 94, wrapper);
+                    SalvagingScreen.renderGuiItem(gfx, stack, this.getGuiLeft() + 21 + slotIndex * 18, this.getGuiTop() + 91, wrapper);
                 }
             }
         }

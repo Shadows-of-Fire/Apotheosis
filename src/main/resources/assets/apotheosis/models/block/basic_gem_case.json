@@ -8,5 +8,8 @@
         "top": {
             "parent": "apotheosis:block/glass_top"
         }
+    },
+    "textures": {
+        "particle": "minecraft:block/dark_oak_planks"
     }
 }

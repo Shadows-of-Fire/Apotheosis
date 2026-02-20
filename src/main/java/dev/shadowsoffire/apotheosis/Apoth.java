@@ -268,7 +268,7 @@ public class Apoth {
             p -> p.requiresCorrectToolForDrops().strength(4, 1000F));
 
         public static final Holder<Block> BASIC_GEM_CASE = R.block("basic_gem_case", p -> new GemCaseBlock(BasicGemCaseTile::new, p, 512),
-            p -> p.requiresCorrectToolForDrops().strength(5, 1200F).sound(SoundType.METAL).noOcclusion().lightLevel(s -> 2));
+            p -> p.requiresCorrectToolForDrops().strength(5, 1200F).sound(SoundType.GLASS).noOcclusion().lightLevel(s -> 2));
 
         private static void bootstrap() {}
     }

@@ -9,7 +9,6 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -21,7 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -36,17 +34,10 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class GemCaseBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
     public static final Component NAME = Apotheosis.lang("menu", "gem_safe");
-
-    protected static final VoxelShape NORTH_AABB = Block.box(0.0, 0.0, 1.0, 16.0, 17.0, 16.0);
-    protected static final VoxelShape SOUTH_AABB = Block.box(0.0, 0.0, 0.0, 16.0, 17.0, 15.0);
-    protected static final VoxelShape WEST_AABB = Block.box(1.0, 0.0, 0.0, 16.0, 17.0, 16.0);
-    protected static final VoxelShape EAST_AABB = Block.box(0.0, 0.0, 0.0, 15.0, 17.0, 16.0);
 
     protected final BlockEntitySupplier<? extends GemCaseTile> tileSupplier;
     protected final int maxCount;
@@ -121,23 +112,6 @@ public class GemCaseBlock extends HorizontalDirectionalBlock implements EntityBl
         if (newState.getBlock() != this) {
             world.removeBlockEntity(pos);
         }
-    }
-
-    @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        Direction dir = state.getValue(FACING);
-        return switch (dir) {
-            case NORTH -> NORTH_AABB;
-            case SOUTH -> SOUTH_AABB;
-            case WEST -> WEST_AABB;
-            case EAST -> EAST_AABB;
-            default -> NORTH_AABB;
-        };
-    }
-
-    @Override
-    public boolean useShapeForLightOcclusion(BlockState pState) {
-        return true;
     }
 
     @Override

@@ -65,7 +65,7 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
     }
 
     void initCommon(Inventory inv) {
-        this.addSlot(new Slot(this.ioInv, 0, 142, 106){
+        this.addSlot(new Slot(this.ioInv, 0, 142, 99){
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.is(Apoth.Items.GEM);
@@ -106,7 +106,7 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
         });
 
         for (Purity p : Purity.ALL_PURITIES) {
-            this.addSlot(new GemCaseSlot(this, p, 21 + p.ordinal() * 18, 94));
+            this.addSlot(new GemCaseSlot(this, p, 21 + p.ordinal() * 18, 91));
         }
 
         for (int i = 0; i < this.upgradeMatInv.getContainerSize(); i++) {

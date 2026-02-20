@@ -16,7 +16,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -92,7 +91,7 @@ public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile> {
             // Position the gems in a 4x4 grid within the case, which is itself a 1x1 block using 14px of internal space.
             float offsetX = (2.5F + (slot % 4) * 3.75F) / scale;
             float offsetZ = (3.5F + (slot / 4) * 3.25F) / scale;
-            pose.translate(offsetX * px, -1 * px / scale, offsetZ * px);
+            pose.translate(offsetX * px, -2 * px / scale, offsetZ * px);
 
             pose.mulPose(Axis.XP.rotationDegrees(90));
 
