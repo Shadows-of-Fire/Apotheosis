@@ -10,7 +10,6 @@ import dev.shadowsoffire.apotheosis.net.GemCaseSelectPayload;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseScreen.SafeSlot;
-import dev.shadowsoffire.apothic_enchanting.library.EnchLibraryScreen;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -55,7 +54,7 @@ public class GemCaseSelectButton extends AbstractButton {
 
         // Render dynamically scaled count number showing the sum of this gem in the safe
         if (count > 1) {
-            String countStr = EnchLibraryScreen.format(count);
+            String countStr = GemCaseBlock.format(count);
             float scale = 1.0f;
             if (countStr.length() > 2) {
                 scale = 2.0f / countStr.length();
