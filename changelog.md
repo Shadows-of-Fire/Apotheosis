@@ -1,3 +1,13 @@
+## 8.5.0
+![](https://i.imgur.com/ioEjD2r.png)
+
+* Added the Gem Case, a block similar to the Enchantment Library that allows you to store and manage your Gems!
+* Added new Invader spawn noises, finally replacing the `end_portal_spawn` noise that has been in use since the beginning of time.
+  * The new sounds increase in intensity based on the rarity of the invader.
+* Gems will no longer be converted by Knowledge of the Ages.
+* Updated many GUI textures.
+* Added a salvaging recipe for Pneumaticcraft Compressed Iron Armor.
+
 ## 8.4.2
 * Fixed a failure condition for `AffixLootRule` that caused a crash when an error message should have been emitted.
 * BeiDou114514: Added classical chinese translation.
