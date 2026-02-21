@@ -610,7 +610,7 @@
     "block.apotheosis.augmenting_table": "强化台",
     "block.apotheosis.augmenting_table.desc": "使用强化符石来强化单个词缀",
     "block.apotheosis.gem_case": "宝石柜",
-    "tooltip.apotheosis.gem_case.capacity": "容量：%s个宝石",
+    "tooltip.apotheosis.gem_case.capacity": "容量：%s宝石",
     "tooltip.apotheosis.gem_case.unique_gems": "装有：%s种不同宝石",
     "tooltip.apotheosis.gem_case.none_owned": "尚未拥有",
     "block.apotheosis.ender_gem_case": "法贝热公司宝石柜",
