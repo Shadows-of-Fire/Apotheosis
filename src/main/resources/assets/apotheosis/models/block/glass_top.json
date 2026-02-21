@@ -4,21 +4,20 @@
     "credit": "Made with Blockbench",
     "texture_size": [64, 64],
     "textures": {
-        "1": "apotheosis:blocks/gem_case",
+        "1": "apotheosis:blocks/basic_gem_case",
         "particle": "minecraft:block/glass"
     },
     "render_type": "translucent",
-    "ambientocclusion": false,
     "elements": [
         {
-            "from": [0, 13, 0],
+            "from": [0, 14, 0],
             "to": [16, 16, 16],
-            "rotation": {"angle": 0, "axis": "y", "origin": [0, 12, 2]},
+            "rotation": {"angle": 0, "axis": "y", "origin": [0, 11, 2]},
             "faces": {
-                "north": {"uv": [12, 5.75, 8, 6.5], "texture": "#1"},
-                "east": {"uv": [12, 8, 8, 8.75], "texture": "#1"},
-                "south": {"uv": [12, 7.25, 8, 8], "texture": "#1"},
-                "west": {"uv": [12, 6.5, 8, 7.25], "texture": "#1"},
+                "north": {"uv": [12, 5.75, 8, 6.25], "texture": "#1"},
+                "east": {"uv": [12, 8, 8, 8.5], "texture": "#1"},
+                "south": {"uv": [12, 7.25, 8, 7.75], "texture": "#1"},
+                "west": {"uv": [12, 6.5, 8, 7], "texture": "#1"},
                 "up": {"uv": [16, 8, 12, 12], "texture": "#1"},
                 "down": {"uv": [16, 12, 12, 16], "texture": "#1"}
             }

@@ -36,12 +36,15 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implements DrawsOnLeft {
@@ -123,7 +126,29 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
     @Override
     protected void renderTooltip(GuiGraphics gfx, int mouseX, int mouseY) {
         super.renderTooltip(gfx, mouseX, mouseY);
-
+        if (this.getSelectedGem() != null) {
+            for (Purity p : Purity.ALL_PURITIES) {
+                if (!p.isAtLeast(this.getSelectedGem().getMinPurity())) continue;
+                int count = this.menu.getGemCount(this.getSelectedGem(), p);
+                if (count == 0) {
+                    int slotIndex = p.ordinal();
+                    int x = this.getGuiLeft() + 21 + slotIndex * 18;
+                    int y = this.getGuiTop() + 91;
+                    if (this.isHovering(x - this.getGuiLeft(), y - this.getGuiTop(), 16, 16, mouseX, mouseY)
+                        && this.menu.getCarried().isEmpty()) {
+                        ItemStack stack = new ItemStack(Apoth.Items.GEM);
+                        GemItem.setGem(stack, this.getSelectedGem());
+                        GemItem.setPurity(stack, p);
+                        List<Component> tooltip = new ArrayList<>();
+                        tooltip.add(stack.getHoverName());
+                        tooltip.add(Apotheosis.lang("tooltip", "gem_case.none_owned").withStyle(ChatFormatting.RED));
+                        tooltip.add(CommonComponents.SPACE);
+                        stack.getItem().appendHoverText(stack, TooltipContext.of(Minecraft.getInstance().level), tooltip, TooltipFlag.NORMAL);
+                        gfx.renderComponentTooltip(this.font, tooltip, mouseX, mouseY);
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -136,7 +161,6 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
         gfx.blit(TEXTURES, left - 65, top + 16, 198, 0, 65, 193, 307, 256);
 
         // Render the stack for each purity of the selected gem in the "selected" slots.
-        // TODO: Probably make a dedicated button for this instead of packing it into the Screen
         if (this.getSelectedGem() != null) {
             for (Purity p : Purity.ALL_PURITIES) {
                 if (!p.isAtLeast(this.getSelectedGem().getMinPurity())) continue;
@@ -147,7 +171,9 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
                     GemItem.setPurity(stack, p);
                     int slotIndex = p.ordinal();
                     Function<MultiBufferSource, MultiBufferSource> wrapper = GhostVertexBuilder.wrapper(0x44);
-                    SalvagingScreen.renderGuiItem(gfx, stack, this.getGuiLeft() + 21 + slotIndex * 18, this.getGuiTop() + 91, wrapper);
+                    int x = this.getGuiLeft() + 21 + slotIndex * 18;
+                    int y = this.getGuiTop() + 91;
+                    SalvagingScreen.renderGuiItem(gfx, stack, x, y, wrapper);
                 }
             }
         }

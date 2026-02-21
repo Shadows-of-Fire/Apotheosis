@@ -7,7 +7,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
 import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
@@ -16,14 +15,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile> {
-
-    public static final ModelResourceLocation GLASS_TOP = ModelResourceLocation.standalone(Apotheosis.loc("block/glass_top"));
 
     private Map<DynamicHolder<Gem>, ItemStack> gemCache = new HashMap<>();
 
@@ -67,9 +63,9 @@ public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile> {
             pose.mulPose(Axis.YP.rotationDegrees(angle));
             pose.translate(-8 * px, 0 * px, -8 * px);
 
-            pose.translate(0, 14 * px, 0);
+            pose.translate(0, 16 * px, 0);
 
-            float scale = 0.125F;
+            float scale = 1 / 6F;
 
             pose.scale(scale, scale, scale);
 
@@ -85,9 +81,10 @@ public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile> {
             float offsetZ = (3.5F + gridZ * 3.25F) / scale;
             pose.translate(offsetX * px, -2 * px / scale + 0.01 * i, offsetZ * px);
 
-            pose.mulPose(Axis.XP.rotationDegrees(90));
+            pose.mulPose(Axis.XP.rotationDegrees(45));
 
             irenderer.renderStatic(stack, ItemDisplayContext.FIXED, light, overlay, pose, bufferSrc, Minecraft.getInstance().level, 0);
+
             pose.popPose();
 
             if (++i >= 16) break;

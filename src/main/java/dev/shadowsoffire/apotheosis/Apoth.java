@@ -367,7 +367,7 @@ public class Apoth {
         public static final BlockEntityType<AugmentingTableTile> AUGMENTING_TABLE = R.tickingBlockEntity("augmenting_table", AugmentingTableTile::new, TickSide.CLIENT, Blocks.AUGMENTING_TABLE);
 
         public static final BlockEntityType<GemCaseTile> GEM_CASE = R.tickingBlockEntity("gem_case", BasicGemCaseTile::new, TickSide.CLIENT, Blocks.GEM_CASE);
-        public static final BlockEntityType<GemCaseTile> ENDER_GEM_CASE = R.tickingBlockEntity("ender_gem_case", EnderGemCaseTile::new, TickSide.CLIENT, Blocks.GEM_CASE);
+        public static final BlockEntityType<GemCaseTile> ENDER_GEM_CASE = R.tickingBlockEntity("ender_gem_case", EnderGemCaseTile::new, TickSide.CLIENT, Blocks.ENDER_GEM_CASE);
 
         private static void bootstrap() {}
     }

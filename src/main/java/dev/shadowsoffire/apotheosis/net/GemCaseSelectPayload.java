@@ -23,31 +23,31 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
  * <p>
  * When the client makes a selection, the client sends this payload to the server. The server will reply with the same payload if it accepts the change.
  */
-public record GemSafePayload(DynamicHolder<Gem> gem) implements CustomPacketPayload {
+public record GemCaseSelectPayload(DynamicHolder<Gem> gem) implements CustomPacketPayload {
 
-    public static final Type<GemSafePayload> TYPE = new Type<>(Apotheosis.loc("gem_safe_select"));
+    public static final Type<GemCaseSelectPayload> TYPE = new Type<>(Apotheosis.loc("gem_case_select"));
 
-    public static final StreamCodec<ByteBuf, GemSafePayload> CODEC = GemRegistry.INSTANCE.holderStreamCodec().map(GemSafePayload::new, GemSafePayload::gem);
+    public static final StreamCodec<ByteBuf, GemCaseSelectPayload> CODEC = GemRegistry.INSTANCE.holderStreamCodec().map(GemCaseSelectPayload::new, GemCaseSelectPayload::gem);
 
     @Override
     public Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 
-    public static class Provider implements PayloadProvider<GemSafePayload> {
+    public static class Provider implements PayloadProvider<GemCaseSelectPayload> {
 
         @Override
-        public Type<GemSafePayload> getType() {
+        public Type<GemCaseSelectPayload> getType() {
             return TYPE;
         }
 
         @Override
-        public StreamCodec<? super RegistryFriendlyByteBuf, GemSafePayload> getCodec() {
+        public StreamCodec<? super RegistryFriendlyByteBuf, GemCaseSelectPayload> getCodec() {
             return CODEC;
         }
 
         @Override
-        public void handle(GemSafePayload msg, IPayloadContext ctx) {
+        public void handle(GemCaseSelectPayload msg, IPayloadContext ctx) {
             if (ctx.flow().isClientbound()) {
                 GemCaseScreen.handleSelectedGem(msg.gem());
             }

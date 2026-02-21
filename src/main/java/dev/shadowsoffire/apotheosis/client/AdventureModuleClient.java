@@ -168,7 +168,6 @@ public class AdventureModuleClient {
     public static void models(ModelEvent.RegisterAdditional e) {
         e.register(ReforgingTableTileRenderer.HAMMER);
         e.register(AugmentingTableTileRenderer.STAR_CUBE);
-        e.register(GemCaseTileRenderer.GLASS_TOP);
     }
 
     @SubscribeEvent

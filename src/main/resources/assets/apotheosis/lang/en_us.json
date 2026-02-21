@@ -612,6 +612,7 @@
     "block.apotheosis.gem_case": "Gem Case",
     "tooltip.apotheosis.gem_case.capacity": "Capacity: %s Gems",
     "tooltip.apotheosis.gem_case.unique_gems": "Contains %s different gems",
+    "tooltip.apotheosis.gem_case.none_owned": "None Owned",
     "block.apotheosis.ender_gem_case": "Gem Case of House Fabergé",
 
     "button.apotheosis.salvage": "Salvage Items",

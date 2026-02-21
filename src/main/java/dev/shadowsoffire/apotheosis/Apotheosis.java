@@ -48,7 +48,7 @@ import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
 import dev.shadowsoffire.apotheosis.mobs.util.EntityModifier;
 import dev.shadowsoffire.apotheosis.mobs.util.SpawnCondition;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
-import dev.shadowsoffire.apotheosis.net.GemSafePayload;
+import dev.shadowsoffire.apotheosis.net.GemCaseSelectPayload;
 import dev.shadowsoffire.apotheosis.net.LinkItemToChatPayload;
 import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
 import dev.shadowsoffire.apotheosis.net.RerollResultPayload;
@@ -153,7 +153,7 @@ public class Apotheosis {
         PayloadHelper.registerPayload(new WorldTierPayload.Provider());
         PayloadHelper.registerPayload(new ConfigPayload.Provider());
         PayloadHelper.registerPayload(new LinkItemToChatPayload.Provider());
-        PayloadHelper.registerPayload(new GemSafePayload.Provider());
+        PayloadHelper.registerPayload(new GemCaseSelectPayload.Provider());
         NeoForge.EVENT_BUS.register(new AdventureEvents());
         NeoForge.EVENT_BUS.register(new ApothMobEvents());
         RarityRegistry.INSTANCE.registerToBus();

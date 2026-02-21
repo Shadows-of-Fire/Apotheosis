@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.client.GhostVertexBuilder;
-import dev.shadowsoffire.apotheosis.net.GemSafePayload;
+import dev.shadowsoffire.apotheosis.net.GemCaseSelectPayload;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseScreen.SafeSlot;
@@ -88,7 +88,7 @@ public class GemCaseSelectButton extends AbstractButton {
         if (slot != null) {
             DynamicHolder<Gem> holder = GemRegistry.INSTANCE.holder(this.getSafeSlot().gem());
             this.screen.getMenu().setSelectedGem(holder);
-            PacketDistributor.sendToServer(new GemSafePayload(holder));
+            PacketDistributor.sendToServer(new GemCaseSelectPayload(holder));
         }
     }
 

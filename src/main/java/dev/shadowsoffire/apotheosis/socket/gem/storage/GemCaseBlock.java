@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -36,10 +37,16 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class GemCaseBlock extends HorizontalDirectionalBlock implements TickingEntityBlock {
 
     public static final Component NAME = Apotheosis.lang("menu", "gem_safe");
+
+    public static final VoxelShape SHAPE = Shapes.join(box(0, 0, 0, 16, 16, 16), box(1, 13, 1, 15, 15, 15), BooleanOp.ONLY_FIRST);
 
     protected final BlockEntitySupplier<? extends GemCaseTile> tileSupplier;
     protected final int maxCount;
@@ -122,6 +129,16 @@ public class GemCaseBlock extends HorizontalDirectionalBlock implements TickingE
         if (newState.getBlock() != this) {
             world.removeBlockEntity(pos);
         }
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
+    }
+
+    @Override
+    protected boolean useShapeForLightOcclusion(BlockState state) {
+        return true;
     }
 
     @Override

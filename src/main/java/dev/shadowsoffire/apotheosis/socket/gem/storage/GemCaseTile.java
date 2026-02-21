@@ -40,7 +40,7 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
 
     protected final Object2ObjectMap<DynamicHolder<Gem>, EnumMap<Purity, Integer>> gems = new Object2ObjectLinkedOpenHashMap<>();
     protected final Set<GemCaseMenu> activeContainers = new HashSet<>();
-    protected final IItemHandler itemHandler = new GemSafeItemHandler();
+    protected final IItemHandler itemHandler = new GemCaseItemHandler();
     protected final int maxCount;
     private final Int2ObjectMap<UnsocketedGem> slotIndicies = new Int2ObjectOpenHashMap<>();
 
@@ -270,7 +270,7 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
         return this.slotIndicies.getOrDefault(slot, new UnsocketedGem(GemRegistry.INSTANCE.emptyHolder(), Purity.CRACKED, ItemStack.EMPTY));
     }
 
-    private class GemSafeItemHandler implements IItemHandler {
+    private class GemCaseItemHandler implements IItemHandler {
 
         /**
          * We have to account for every possible gem+purity combination as a slot.
