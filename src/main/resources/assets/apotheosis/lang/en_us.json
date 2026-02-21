@@ -663,8 +663,8 @@
     "title.apotheosis.salvaging": "Salvaging",
 
     "text.apotheosis.anything": "Anything",
-    "loot_category.apotheosis.shears": "Shear",
-    "loot_category.apotheosis.shears.plural": "Shears",
+    "loot_category.apotheosis.none": "Nothing",
+    "loot_category.apotheosis.none.plural": "Nothing",
     "loot_category.apotheosis.bow": "Bow",
     "loot_category.apotheosis.bow.plural": "Bows",
     "loot_category.apotheosis.crossbow": "Crossbow",
