@@ -40,7 +40,7 @@
     "button.apotheosis.return": "X",
     "button.apotheosis.return.desc": "월드 티어 선택 화면으로 돌아가기",
     "button.apotheosis.inactive": "비활성",
-    "button.apotheosis.locked": "이 월드 티어는 잠겨있다",
+    "button.apotheosis.locked": "이 월드 티어는 잠겨있습니다",
     "button.apotheosis.skip_tutorial": "튜토리얼 생략",
     "button.apotheosis.prev_tutorial": "이전",
     "button.apotheosis.next_tutorial": "다음",
@@ -48,7 +48,7 @@
     "button.apotheosis.open_world_tier_tutorial": "월드 티어 튜토리얼 열기",
 
     "tutorial.apotheosis.world_tier.introduction.title": "소개",
-    "tutorial.apotheosis.world_tier.introduction.desc": "아포틱 월드 티어 튜토리얼에 오신 것을 환영합니다! 이 튜토리얼에서는 새로운 월드 티어 시스템에 대해서 배우고, 이를 진행하는 법을 가르쳐 드릴 것입니다. \"다음\" 을 눌러 계속하거나, \"튜토리얼 생략\" 을 눌러 튜토리얼을 생략하세요.",
+    "tutorial.apotheosis.world_tier.introduction.desc": "어포틱 월드 티어 튜토리얼에 오신 것을 환영합니다! 이 튜토리얼에서는 새로운 월드 티어 시스템에 대해서 배우고, 이를 진행하는 법을 가르쳐 드릴 것입니다. \"다음\" 을 눌러 계속하거나, \"튜토리얼 생략\" 을 눌러 튜토리얼을 생략하세요.",
 
     "tutorial.apotheosis.world_tier.world_tiers.title": "세계 티어",
     "tutorial.apotheosis.world_tier.world_tiers.desc": "월드 티어는 어포시오시스의 진행 시스템입니다. 새로운 월드티어를 해금하고 활성화하면 게임의 난이도가 오르지만, 얻을 수 있는 전리품의 수준도 향상됩니다.\n\n월드 티어 아이콘 위에 마우스를 올려 해금 조건을 확인할 수 있고, 클릭하면 해금된 티어에 집중할 수 있습니다.",
@@ -63,7 +63,7 @@
     "tutorial.apotheosis.world_tier.detailed_info.desc": "이 버튼은 플레이어와 몹이 받는 버프와 디버프, 각 희귀도와 보석 순도별 드롭 확률 같은 각 월드 티어에 대한 자세한 설명을 보여줍니다.\n\n만약 희귀도 또는 순도에 대해 잘 모르겠다면 그림자의 연대기(인게임 가이드북)을 참조하세요.",
 
     "tutorial.apotheosis.world_tier.activate.title": "월드 티어 활성화",
-    "tutorial.apotheosis.world_tier.activate.desc": "이 버튼은 선택한 월드 티어가 아직 활성화되지 않은 경우 해당 티어를 활성화할 수 있습니다. \n\n\"Done\"을 클릭하면 세계 계층이 자동으로 활성화됩니다.",
+    "tutorial.apotheosis.world_tier.activate.desc": "이 버튼을 사용하면 선택한 월드 티어가 활성화되어 있지 않은 경우 활성화할 수 있습니다.\n\n\"완료\"를 클릭하면 월드 티어가 자동으로 활성화됩니다.",
     "tutorial.apotheosis.world_tier.activate_disabled.desc": "일반적으로 이 버튼을 통해 선택한 월드 티어를 활성화할 수 있습니다.\n\n하지만 이 모드팩에서는 월드 티어가 자동으로 활성화되며 수동으로 변경할 수 없습니다. 각 월드 티어의 세부 정보는 볼 수 있지만, 활성화하거나 비활성화할 수는 없습니다.",
 
     "text.apotheosis.tier_info": "월드 티어 설명",
@@ -81,10 +81,13 @@
     "key.apotheosis.compare_equipment": "장비 비교 띄우기",
     "key.apotheosis.link_item_to_chat": "채팅에 들고 있는 아이템 링크하기",
 
+    "chat.apotheosis.link_item_with_count": "%s %s",
+
     "info.apotheosis.affix_item": "어포틱 접사 아이템",
 
     "death.attack.apotheosis:execute": "%s이(가) %s에게 처형되었습니다.",
     "death.attack.apotheosis:execute.item": "%s이(가) %s의 %s에 의해 처형되었습니다",
+    "death.attack.apotheosis:execute.player": "%s이(가) %s에게 처형되었습니다.",
 
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",
@@ -94,7 +97,6 @@
     "misc.apotheosis.radial_state_updated": "방사형 채굴 모드 : \"%s\"",
     "misc.apotheosis.radial_state.require_not_sneaking": "웅크리고 있는 동안 비활성화",
     "misc.apotheosis.radial_state.require_sneaking": "웅크리고 있는 동안 활성화",
-
     "misc.apotheosis.radial_state.enabled": "활성화",
     "misc.apotheosis.radial_state.disabled": "비활성화",
     "misc.apotheosis.right_click_to_socket": "오른쪽 클릭으로 %s을(를) %s에 삽입합니다.",
@@ -131,9 +133,6 @@
 
     "affix.apotheosis:breaker/attribute/experienced": "경험있는",
     "affix.apotheosis:breaker/attribute/experienced.suffix": "- 학자",
-
-    "affix.apotheosis:melee/attribute/elongated": "길쭉한",
-    "affix.apotheosis:melee/attribute/elongated.suffix": "- 원거리 전투",
 
     "affix.apotheosis:ranged/attribute/agile": "민첩한",
     "affix.apotheosis:ranged/attribute/agile.suffix": "- 손재주",
@@ -250,7 +249,7 @@
 
     "affix.apotheosis:melee/festive": "축제의",
     "affix.apotheosis:melee/festive.suffix": "- 파티",
-    "affix.apotheosis:melee/festive.desc": "적을 처치하면 %s%% 확률로 보상 피냐타",
+    "affix.apotheosis:melee/festive.desc": "적을 처치하면 %s%% 확률로 보상 피냐타를 발동합니다.",
 
     "affix.apotheosis:melee/thunderstruck": "천둥소리의",
     "affix.apotheosis:melee/thunderstruck.suffix": "- 폭풍",
@@ -275,7 +274,7 @@
 
     "affix.apotheosis:breaker/ability/enlightened": "계몽된",
     "affix.apotheosis:breaker/ability/enlightened.suffix": "- 빛의 인도자",
-    "affix.apotheosis:breaker/ability/enlightened.desc": "이 도구는 %s의 내구도를 소모해 횃불을 설치할 수 있습니다.",
+    "affix.apotheosis:breaker/ability/enlightened.desc": "이 도구는 %s의 내구도를 소모해 광원을 설치할 수 있습니다.",
 
     "affix.apotheosis:shield/psychic": "사이킥의",
     "affix.apotheosis:shield/psychic.suffix": "- 복수자",
@@ -481,6 +480,7 @@
     "gem_class.light_ranged": "한손/원거리 무기",
     "gem_class.weapon_or_tool": "무기/도구",
     "gem_class.weapons": "무기",
+    "gem_class.tools": "도구",
 
     "gem_class.helmet": "투구",
     "gem_class.chestplate": "흉갑",
@@ -492,9 +492,9 @@
     "gem_class.anything": "모든 장비",
 
     "bonus.apotheosis:durability.desc": "내구도 피해를 %s%% 무시합니다",
-    "bonus.apotheosis:enchantment.desc": "=+%s %s : %s",
-    "bonus.apotheosis:enchantment.desc.mustExist": "=+%s %s : 기존 %s",
-    "bonus.apotheosis:enchantment.desc.global": "=+%s %s : 모든 기존 마법부여",
+    "bonus.apotheosis:enchantment.desc": "+%1$s %2$s : %3$s",
+    "bonus.apotheosis:enchantment.desc.mustExist": "+%1$s %2$s : 기존 %3%s",
+    "bonus.apotheosis:enchantment.desc.global": "+%1$s %2$s : 모든 기존 마법부여",
     "bonus.apotheosis:multi_attr.desc.and": "%s, %s",
     "bonus.apotheosis:multi_attr.desc.and_but": "%s, %s 단, %s",
     "bonus.apotheosis:multi_attr.desc.but_and": "%s 단, %s, %s",
@@ -512,7 +512,6 @@
     "misc.apotheosis.level.many": "레벨",
     "name.apotheosis.treasure_goblin": "보물 고블린",
 
-    "item.apotheosis.gem.apotheosis:legacy": "레거시 보석",
     "item.apotheosis.gem.apotheosis:core/guardian": "수호자의 보석",
     "item.apotheosis.gem.apotheosis:core/ballast": "안정함의 보석",
     "item.apotheosis.gem.apotheosis:core/solar": "태양의 보석",
@@ -567,7 +566,7 @@
     "item.apotheosis.sigil_of_rebirth.desc": "재단조 작업대에서 재료로 사용합니다",
 
     "item.apotheosis.sigil_of_enhancement": "향상의 인장",
-    "item.apotheosis.sigil_of_enhancement.desc": "증강 테이블에서 재료로 사용됩니다",
+    "item.apotheosis.sigil_of_enhancement.desc": "증강 작업대에서 재료로 사용됩니다",
 
     "item.apotheosis.sigil_of_unnaming": "무명의 인장",
     "item.apotheosis.sigil_of_unnaming.desc": "아이템의 이름에서 접사를 제거합니다.",
@@ -610,6 +609,11 @@
     "block.apotheosis.reforging_table.desc2": "최대 희귀도: %s",
     "block.apotheosis.augmenting_table": "증강 작업대",
     "block.apotheosis.augmenting_table.desc": "향상의 인장을 사용해 각각의 접사를 강화합니다",
+    "block.apotheosis.gem_case": "보석 보관함",
+    "tooltip.apotheosis.gem_case.capacity": "용량: %s 보석",
+    "tooltip.apotheosis.gem_case.unique_gems": "%s개의 서로 다른 보석이 보관되어 있습니다.",
+    "tooltip.apotheosis.gem_case.none_owned": "아무도 소유하지 않음",
+    "block.apotheosis.ender_gem_case": "파베르제 가문의 보석 케이스",
 
     "button.apotheosis.salvage": "아이템 분해",
     "button.apotheosis.no_salvage": "선택된 아이템이 없습니다",
@@ -623,6 +627,11 @@
     "button.apotheosis.augmenting.no_alternatives": "교체할 수 있는 접사가 없습니다",
     "button.apotheosis.augmenting.upgrade.cost": "비용: %sx %s",
     "button.apotheosis.augmenting.upgrade.exp_cost": "경험치 비용: %s 레벨",
+    "button.apotheosis.gem_case.upgrade": "2개의 %s 보석을 %s으로 강화",
+    "button.apotheosis.gem_case.upgrade_no_gems": "보석이 부족합니다",
+    "button.apotheosis.gem_case.upgrade_no_materials": "재료가 부족합니다",
+    "button.apotheosis.gem_case.upgrade_cost": "비용: %s %s 및 %s %s",
+    "button.apotheosis.gem_case.upgrade_all": "가능한 한 많은 보석을 업그레이드하기!",
 
     "menu.apotheosis.gem_cutting": "보석 세공",
     "container.apotheosis.salvage": "분해",
@@ -682,6 +691,8 @@
     "loot_category.apotheosis.leggings.plural": "각반",
     "loot_category.apotheosis.boots": "신발",
     "loot_category.apotheosis.boots.plural": "신발",
+    "loot_category.apotheosis.shears": "가위",
+    "loot_category.apotheosis.shears.plural": "가위",
 
     "info.apotheosis.boss_spawn": "%s가 근처에 깨어났습니다!",
     "info.apotheosis.boss": "%s 어포틱 보스",
@@ -701,15 +712,13 @@
     "rarity.apotheosis:uncommon": "고급",
     "rarity.apotheosis:rare": "희귀",
     "rarity.apotheosis:epic": "영웅",
-    "rarity.apotheosis:mythic": "전설",
+    "rarity.apotheosis:mythic": "신화",
     "rarity.apotheosis:ancient": "고대",
 
     "death.attack.apotheosis:psychic": "%s이(가) 반사에 의해 죽었습니다.",
     "death.attack.apotheosis:psychic.player": "%s의 공격이 %s에 의해 반사되었습니다.",
-    "death.attack.apotheosis:execute": "%s이(가) 처형되었습니다.",
-    "death.attack.apotheosis:execute.player": "%s이(가) %s에게 처형 되었습니다.",
 
-    "disconnect.apotheosis.tier_changes_disabled": "설정에 의해 월드 티어 수동 변경이 불가능합니다.",
+    "disconnect.apotheosis.tier_changes_disabled": "설정에서 수동 월드 티어 변경이 비활성화되어 있습니다.",
 
     "elite.apotheosis.craig": "영원한 크레이그",
 
@@ -724,7 +733,7 @@
     "reward.apotheosis.gem": "어포틱 보석 (%s)",
     "reward.apotheosis.random_gem": "어포틱 보석 (무작위)",
     "reward.apotheosis.true_random_gem": "완전 무작위 어포틱 보석",
-    "reward.apotheosis.netherite_smithing_template": "네더라이트 형판",
+    "reward.apotheosis.netherite_smithing_template": "네더라이트 대장장이 형판",
     "error.apotheosis.gate_tier_incorrect": "이 게이트웨이는 월드 티어 : %s에서만 열 수 있습니다.",
     "modifier.apotheosis.affix": "접사 아이템을 받습니다.",
     "tooltip.apotheosis.requires_world_tier": "필요 월드 티어: %s",
@@ -749,7 +758,7 @@
     "reward.apotheosis.woodland_mansion_loot": "삼림 대저택 보상",
 
     "apotheosis.tiered/frontier": "첫번째 개척지의 게이트",
-    "apotheosis.tiered/ascent": "햇볕쬐는 오르막의 게이트",
+    "apotheosis.tiered/ascent": "햇볕이 내리쬐는 오르막의 게이트",
     "apotheosis.tiered/summit": "천둥치는 정상의 게이트",
     "apotheosis.tiered/pinnacle": "신적인 봉우리의 게이트",
     "apotheosis.endless_invader": "어포틱 침략자의 끝없는 게이트",
@@ -771,7 +780,7 @@
     "advancements.apotheosis.progression.frontier.criteria.common_feet": "일반 이상의 신발을 장착하세요",
     "advancements.apotheosis.progression.frontier.criteria.common_hand": "일반 이상의 무기를 장착하세요",
 
-    "advancements.apotheosis.progression.ascent.title": "세계 티어: 어센트",
+    "advancements.apotheosis.progression.ascent.title": "세계 티어: 오르막",
     "advancements.apotheosis.progression.ascent.desc": "고급 장비 풀 세트를 장착하고 어포틱 보스를 처치해 당신의 향상을 시작하세요",
     "advancements.apotheosis.progression.ascent.criteria.uncommon_helm": "고급 이상의 헬멧을 장착하세요",
     "advancements.apotheosis.progression.ascent.criteria.uncommon_chest": "고급 이상의 흉갑을 장착하세요",
@@ -798,8 +807,8 @@
     "advancements.apotheosis.progression.pinnacle.criteria.epic_hand": "영웅 이상의 무기를 장착하세요",
     "advancements.apotheosis.progression.pinnacle.criteria.kill_ender_dragon": "엔더 드래곤을 처치하세요",
 
-    "advancements.apotheosis.affix": "아포틱 접사",
-    "advancements.apotheosis.affix.desc": "아포틱 접사가 붙은 아이템을 찾으세요.",
+    "advancements.apotheosis.affix": "어포틱 접사",
+    "advancements.apotheosis.affix.desc": "어포틱 접사가 붙은 아이템을 찾으세요.",
 
     "advancements.apotheosis.rare": "가치있는 장비",
     "advancements.apotheosis.rare.desc": "희귀 접사 아이템을 찾으세요.",
@@ -808,7 +817,7 @@
     "advancements.apotheosis.epic.desc": "영웅 접사 아이템을 찾으세요.",
 
     "advancements.apotheosis.mythic": "티탄벼림",
-    "advancements.apotheosis.mythic.desc": "전설 접사 아이템을 찾으세요.",
+    "advancements.apotheosis.mythic.desc": "신화 접사 아이템을 찾으세요.",
 
     "advancements.apotheosis.ancient": "신들의 잃어버린 보물",
     "advancements.apotheosis.ancient.desc": "고대 접사 아이템을 찾으세요.",
@@ -844,7 +853,7 @@
     "advancements.apotheosis.challenge_gates.frontier.desc": "첫번째 개척지의 게이트를 완료하세요",
 
     "advancements.apotheosis.challenge_gates.ascent.title": "오르막을 넘어",
-    "advancements.apotheosis.challenge_gates.ascent.desc": "햇볕쬐는 오르막의 게이트를 완료하세요",
+    "advancements.apotheosis.challenge_gates.ascent.desc": "햇볕이 내리쬐는 오르막의 게이트를 완료하세요",
 
     "advancements.apotheosis.challenge_gates.summit.title": "정상에 도달해",
     "advancements.apotheosis.challenge_gates.summit.desc": "천둥치는 정상의 게이트를 완료하세요",
@@ -891,9 +900,9 @@
     "info.apoth.modifier_disabled": "이 수정자는 비활성화 되었습니다.",
     "itemGroup.apotheosis.adventure": "어포시오시스: 모험 모듈",
     "itemGroup.apotheosis.ench": "어포시오시스: 마법 부여 모듈",
-    "config.jade.plugin_apotheosis.spawner": "Apoth Spawner Module",
-    "config.jade.plugin_apotheosis.ench": "Apoth Ench Module",
-    "config.jade.plugin_apotheosis.adventure": "Apoth Adventure Module",
+    "config.jade.plugin_apotheosis.spawner": "어포스 스포너 모듈",
+    "config.jade.plugin_apotheosis.ench": "어포스 인챈트 모듈",
+    "config.jade.plugin_apotheosis.adventure": "어포스 모험 모듈",
     "message.apotheosis.item_linking_disabled": "서버가 아이템 링크를 비활성화했습니다.",
     "text.apotheosis.equipped": "장착됨",
 
@@ -919,10 +928,19 @@
     "painting.apotheosis.tower.author": "Faellynna",
 
     "painting.apotheosis.enchanting_table.title": "어포틱 인챈팅",
-    "painting.apotheosis.enchanting_table.author": "Faellynna",
+
 
     "painting.apotheosis.window.title": "저 너머의 풍경",
     "painting.apotheosis.window.author": "Faellynna",
+
+    "stat.apotheosis.world_tiers_activated": "세계 티어 변경됨",
+    "apotheosis.subtitle.reforge": "재단조 작업대에서 재단조함",
+    "apotheosis.subtitle.malice": "악의의 인장이 악의를 적용함",
+
+    "apotheosis.subtitle.invader_uncommon": "고급 어포틱 침략자 생성됨",
+    "apotheosis.subtitle.invader_rare": "희귀 어포틱 침략자 생성됨",
+    "apotheosis.subtitle.invader_epic": "영웅 어포틱 침략자 생성됨",
+    "apotheosis.subtitle.invader_mythic": "신화 어포틱 침략자 생성됨",
 
     "comment_id": "가이드북",
     "book.apotheosis.name": "그림자의 연대기",
