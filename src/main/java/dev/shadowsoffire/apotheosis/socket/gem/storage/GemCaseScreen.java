@@ -24,7 +24,6 @@ import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
-import dev.shadowsoffire.apothic_enchanting.library.EnchLibraryScreen;
 import dev.shadowsoffire.placebo.payloads.ButtonClickPayload;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.DrawsOnLeft;
@@ -187,7 +186,7 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
             // Render dynamically scaled count number showing the sum of this gem in the safe
             int count = this.menu.getGemCount(this.menu.selectedGem, gss.purity);
             if (count > 1) {
-                String countStr = EnchLibraryScreen.format(count);
+                String countStr = GemCaseBlock.format(count);
                 float scale = 1.0f;
                 if (countStr.length() > 2) {
                     scale = 2.0f / countStr.length();

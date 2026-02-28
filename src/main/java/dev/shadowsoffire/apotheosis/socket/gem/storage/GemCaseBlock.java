@@ -148,7 +148,7 @@ public class GemCaseBlock extends HorizontalDirectionalBlock implements TickingE
 
     private static DecimalFormat f = new DecimalFormat("##.#");
 
-    private static String format(int n) {
+    static String format(int n) {
         int log = (int) StrictMath.log10(n);
         if (log <= 3) return String.valueOf(n);
         else if (log <= 6) return f.format(n / 1000D) + "K";

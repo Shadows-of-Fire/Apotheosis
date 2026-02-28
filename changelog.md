@@ -1,3 +1,6 @@
+## 8.5.1
+* Fixed a crash with Apothic Enchanting 1.5.2 caused by an access modifier change.
+
 ## 8.5.0
 ![](https://i.imgur.com/ioEjD2r.png)
 
