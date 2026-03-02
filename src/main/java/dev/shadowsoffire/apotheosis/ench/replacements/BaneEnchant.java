@@ -53,7 +53,7 @@ public class BaneEnchant extends DamageEnchantment {
      */
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
-        if (target instanceof LivingEntity livingentity) {
+        if (target instanceof LivingEntity livingentity && level > 0) {
             if (this.attrib != MobType.UNDEFINED && livingentity.getMobType() == this.attrib) {
                 int i = 20 + user.getRandom().nextInt(10 * level);
                 livingentity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, i, 3));
