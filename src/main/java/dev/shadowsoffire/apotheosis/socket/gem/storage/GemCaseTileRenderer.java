@@ -6,9 +6,7 @@ import java.util.Map;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.client.Minecraft;
@@ -52,9 +50,7 @@ public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile> {
             if (count == 0) continue;
 
             ItemStack stack = this.gemCache.computeIfAbsent(gem, g -> {
-                ItemStack s = new ItemStack(Apoth.Items.GEM);
-                GemItem.setGem(s, gem.get());
-                return s;
+                return gem.get().toStack(Purity.FLAWLESS);
             });
 
             pose.pushPose();

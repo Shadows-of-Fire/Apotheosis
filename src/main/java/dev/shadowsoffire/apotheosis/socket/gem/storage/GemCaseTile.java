@@ -88,9 +88,7 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
 
         map.put(purity, stored - count);
 
-        ItemStack stack = new ItemStack(Apoth.Items.GEM, count);
-        GemItem.setGem(stack, gem.get());
-        GemItem.setPurity(stack, purity);
+        ItemStack stack = GemItem.createStack(gem.get(), purity, count);
 
         if (!this.level.isClientSide()) {
             VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
@@ -286,10 +284,7 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
             UnsocketedGem gem = GemCaseTile.this.getGemForSlot(slot);
             int count = GemCaseTile.this.getCount(gem.gem(), gem.purity());
             if (count <= 0) return ItemStack.EMPTY;
-            ItemStack stack = new ItemStack(Apoth.Items.GEM, count);
-            GemItem.setGem(stack, gem.gem().get());
-            GemItem.setPurity(stack, gem.purity());
-            return stack;
+            return GemItem.createStack(gem.gem().get(), gem.purity(), count);
         }
 
         @Override

@@ -135,9 +135,7 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
                     int y = this.getGuiTop() + 91;
                     if (this.isHovering(x - this.getGuiLeft(), y - this.getGuiTop(), 16, 16, mouseX, mouseY)
                         && this.menu.getCarried().isEmpty()) {
-                        ItemStack stack = new ItemStack(Apoth.Items.GEM);
-                        GemItem.setGem(stack, this.getSelectedGem());
-                        GemItem.setPurity(stack, p);
+                        ItemStack stack = getSelectedGem().toStack(p);
                         List<Component> tooltip = new ArrayList<>();
                         tooltip.add(stack.getHoverName());
                         tooltip.add(Apotheosis.lang("tooltip", "gem_case.none_owned").withStyle(ChatFormatting.RED));
@@ -165,9 +163,7 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
                 if (!p.isAtLeast(this.getSelectedGem().getMinPurity())) continue;
                 int count = this.menu.getGemCount(this.getSelectedGem(), p);
                 if (count == 0) {
-                    ItemStack stack = new ItemStack(Apoth.Items.GEM);
-                    GemItem.setGem(stack, this.getSelectedGem());
-                    GemItem.setPurity(stack, p);
+                    ItemStack stack = getSelectedGem().toStack(p);
                     int slotIndex = p.ordinal();
                     Function<MultiBufferSource, MultiBufferSource> wrapper = GhostVertexBuilder.wrapper(0x44);
                     int x = this.getGuiLeft() + 21 + slotIndex * 18;
