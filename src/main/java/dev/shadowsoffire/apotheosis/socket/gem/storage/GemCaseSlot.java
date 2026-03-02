@@ -1,9 +1,10 @@
 package dev.shadowsoffire.apotheosis.socket.gem.storage;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +25,15 @@ public class GemCaseSlot extends Slot {
     }
 
     public void onTake(Player player, ItemStack stack) {
+        if (!stack.isEmpty()) { // Technically empty should trigger some warnings, but shift-click always submits an empty stack.
+            DynamicHolder<Gem> gem = GemItem.getGem(stack);
+            Purity purity = GemItem.getPurity(stack);
+            if (!gem.isBound() || gem.get() != this.menu.selectedGem || purity != this.purity) {
+                Apotheosis.LOGGER.warn("Player {} tried to take a gem that doesn't match the selected gem or purity! (gem: {}, purity: {})", player.getName().getString(), gem.getId(), purity);
+                return;
+            }
+            this.menu.extractGem(this.purity, stack.getCount());
+        }
         this.setChanged();
     }
 
@@ -39,10 +49,7 @@ public class GemCaseSlot extends Slot {
         }
 
         int count = this.menu.getGemCount(gem, purity);
-        ItemStack stack = new ItemStack(Apoth.Items.GEM);
-        GemItem.setGem(stack, gem);
-        GemItem.setPurity(stack, purity);
-        stack.setCount(Math.min(count, stack.getMaxStackSize()));
+        ItemStack stack = GemItem.createStack(gem, purity, Math.min(count, 64));
         return stack;
     }
 
@@ -73,13 +80,21 @@ public class GemCaseSlot extends Slot {
         return Math.min(this.getMaxStackSize(), stack.getMaxStackSize());
     }
 
+    /**
+     * This remove impl is not able to actually do the removals, and instead relies on the eventual call to `onTake` to do that.
+     */
     public ItemStack remove(int amount) {
         Gem gem = this.menu.selectedGem;
         if (gem == null) {
             return ItemStack.EMPTY;
         }
 
-        return this.menu.extractGem(purity, amount);
+        int count = this.menu.getGemCount(gem, purity);
+        int toExtract = Math.min(count, amount);
+        if (toExtract <= 0) {
+            return ItemStack.EMPTY;
+        }
+        return GemItem.createStack(gem, purity, toExtract);
     }
 
     /**
