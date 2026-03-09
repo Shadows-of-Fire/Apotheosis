@@ -1,0 +1,31 @@
+{
+    "name": "Gem Case",
+    "icon": "apotheosis:gem_case",
+    "category": "apotheosis:adventure/gems",
+	"flag": "apotheosis:adventure",
+	"sortnum": 6,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_case",
+			"text": "The $(9)Gem Case$() is a storage device for $(l:apotheosis:adventure/gems/gems)Gems$().$(p)It can hold up to thirty two thousand gems of each type and purity, and can be upgraded to hold more."
+		},
+        {
+            "title": "Filtering",
+            "type": "patchouli:text",
+            "text": "The Gem Case has two filters: a name filter and an item filter.$(p)The name filter allows you to search for a gem by name, while the item filter allows you to search for gems that fit in a specific item."
+        },
+		{
+			"title": "Gem Cutting",
+            "type": "patchouli:text",
+            "text": "The Gem Case also has six auxiliary slots that can be used to hold upgrade materials.$(p)If enough materials and gems are present, following the purity upgrade recipes, you can upgrade Gems directly in the case.$(p)This effectively obsoletes the $(l:apotheosis:adventure/gems/gem_cutting)Gem Cutting Table$()."
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:ender_gem_case",
+            "title": "A Supreme Gem Case",
+            "link_recipe": true,
+            "text": "The $(9)Gem Case of House Fabergé$() has a $(6)Storage Capacity$() of two billion.$(p)It cannot be crafted directly, and must be created using $(l:apotheosis:enchanting/table/infusion)Infusion Enchanting$()."
+        }
+	]
+}

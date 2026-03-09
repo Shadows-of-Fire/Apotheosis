@@ -33,5 +33,21 @@
                 "stream": true
             }
         ]
+    },
+    "invader_uncommon": {
+        "subtitle": "apotheosis.subtitle.invader_uncommon",
+        "sounds": ["apotheosis:invader_uncommon"]
+    },
+    "invader_rare": {
+        "subtitle": "apotheosis.subtitle.invader_rare",
+        "sounds": ["apotheosis:invader_rare"]
+    },
+    "invader_epic": {
+        "subtitle": "apotheosis.subtitle.invader_epic",
+        "sounds": ["apotheosis:invader_epic"]
+    },
+    "invader_mythic": {
+        "subtitle": "apotheosis.subtitle.invader_mythic",
+        "sounds": ["apotheosis:invader_mythic"]
     }
 }

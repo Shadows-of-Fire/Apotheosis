@@ -38,6 +38,7 @@ import dev.shadowsoffire.apotheosis.client.SocketTooltipRenderer.SocketComponent
 import dev.shadowsoffire.apotheosis.client.StoneformingTooltipRenderer.StoneformingComponent;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
+import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.mixin.client.GuiGraphicsAccessor;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload.BossSpawnData;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
@@ -46,6 +47,8 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingScreen;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseScreen;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTileRenderer;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apotheosis.util.EquipmentComparePositioner;
@@ -82,7 +85,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.PlainTextContents;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -136,6 +138,8 @@ public class AdventureModuleClient {
         e.enqueueWork(() -> {
             BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE, k -> new ReforgingTableTileRenderer());
             BlockEntityRenderers.register(Apoth.Tiles.AUGMENTING_TABLE, k -> new AugmentingTableTileRenderer());
+            BlockEntityRenderers.register(Apoth.Tiles.GEM_CASE, k -> new GemCaseTileRenderer());
+            BlockEntityRenderers.register(Apoth.Tiles.ENDER_GEM_CASE, k -> new GemCaseTileRenderer());
 
             ItemProperties.register(Apoth.Items.GEM.value(), Apotheosis.loc("purity"), (stack, level, entity, tint) -> {
                 DynamicHolder<Gem> gem = GemItem.getGem(stack);
@@ -157,6 +161,7 @@ public class AdventureModuleClient {
         e.register(Menus.SALVAGE, SalvagingScreen::new);
         e.register(Menus.GEM_CUTTING, GemCuttingScreen::new);
         e.register(Menus.AUGMENTING, AugmentingScreen::new);
+        e.register(Menus.GEM_CASE, GemCaseScreen::new);
     }
 
     @SubscribeEvent
@@ -183,7 +188,7 @@ public class AdventureModuleClient {
 
     @SubscribeEvent
     public static void replaceGemModel(ModelEvent.ModifyBakingResult e) {
-        ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
+        ModelResourceLocation key = ModelResourceLocation.inventory(Apotheosis.loc("gem"));
         BakedModel oldModel = e.getModels().get(key);
         if (oldModel != null) {
             e.getModels().put(key, new GemModel(oldModel, e.getModelBakery()));
@@ -218,10 +223,13 @@ public class AdventureModuleClient {
         e.registerSprite(Apoth.Particles.RARITY_GLOW, RarityParticle::new);
     }
 
-    public static void onBossSpawn(BlockPos pos, int color) {
-        BOSS_SPAWNS.add(new BossSpawnData(pos, color, new MutableInt()));
-        Minecraft.getInstance().getSoundManager()
-            .play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.getRandom(), Minecraft.getInstance().player.blockPosition()));
+    public static void onBossSpawn(BlockPos pos, DynamicHolder<LootRarity> rarityHolder) {
+        if (rarityHolder.isBound()) {
+            LootRarity rarity = rarityHolder.get();
+            BOSS_SPAWNS.add(new BossSpawnData(pos, rarity, new MutableInt()));
+            Minecraft.getInstance().getSoundManager()
+                .play(new SimpleSoundInstance(rarity.invaderSound(), SoundSource.HOSTILE, AdventureConfig.bossAnnounceRange / 16F, 1.0F, Minecraft.getInstance().player.getRandom(), pos));
+        }
     }
 
     public static void checkAffixLangKeys() {
@@ -279,7 +287,7 @@ public class AdventureModuleClient {
             Vec3 vec = e.getCamera().getPosition();
             stack.translate(-vec.x, -vec.y, -vec.z);
             stack.translate(data.pos().getX(), data.pos().getY(), data.pos().getZ());
-            BeaconRenderer.renderBeaconBeam(stack, buf, BeaconRenderer.BEAM_LOCATION, partials, 1, p.level().getGameTime(), 0, 64, data.color(), 0.166F, 0.33F);
+            BeaconRenderer.renderBeaconBeam(stack, buf, BeaconRenderer.BEAM_LOCATION, partials, 1, p.level().getGameTime(), 0, 64, data.rarity().color().getValue(), 0.166F, 0.33F);
             stack.popPose();
         }
     }

@@ -1,0 +1,17 @@
+{
+    "name": "Elites",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Ocasionalmente, você pode ver criaturas nomeadas ou com poderes em todo o seu mundo.$(p)Esses são provavelmente $(9)Elites Apóticos$()."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Essas criaturas aparecerão aleatoriamente no lugar de suas contrapartes normais.$(p)Eles não têm entradas chamativas como os Invasores, então fique atento.$(p)Eles também podem derrubar Itens de Afixo."
+		}
+	]
+}

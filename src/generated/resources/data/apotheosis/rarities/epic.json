@@ -1,6 +1,7 @@
 {
     "type": "apotheosis:rarity",
     "color": "#BB00BB",
+    "invader_sound": "apotheosis:invader_epic",
     "material": "apotheosis:epic_material",
     "render_data": {
         "beam_height": 3.0,

@@ -7,24 +7,26 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.client.AdventureModuleClient;
+import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.network.PayloadProvider;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.ConnectionProtocol;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record BossSpawnPayload(BlockPos pos, int color) implements CustomPacketPayload {
+public record BossSpawnPayload(BlockPos pos, DynamicHolder<LootRarity> rarity) implements CustomPacketPayload {
 
     public static final Type<BossSpawnPayload> TYPE = new Type<>(Apotheosis.loc("boss_spawn"));
 
     public static final StreamCodec<ByteBuf, BossSpawnPayload> CODEC = StreamCodec.composite(
         BlockPos.STREAM_CODEC, BossSpawnPayload::pos,
-        ByteBufCodecs.INT, BossSpawnPayload::color,
+        RarityRegistry.INSTANCE.holderStreamCodec(), BossSpawnPayload::rarity,
         BossSpawnPayload::new);
 
     @Override
@@ -46,7 +48,7 @@ public record BossSpawnPayload(BlockPos pos, int color) implements CustomPacketP
 
         @Override
         public void handle(BossSpawnPayload msg, IPayloadContext ctx) {
-            AdventureModuleClient.onBossSpawn(msg.pos, msg.color);
+            AdventureModuleClient.onBossSpawn(msg.pos, msg.rarity);
         }
 
         @Override
@@ -61,12 +63,12 @@ public record BossSpawnPayload(BlockPos pos, int color) implements CustomPacketP
 
         @Override
         public String getVersion() {
-            return "1";
+            return "2";
         }
 
     }
 
-    public static record BossSpawnData(BlockPos pos, int color, MutableInt ticks) {
+    public static record BossSpawnData(BlockPos pos, LootRarity rarity, MutableInt ticks) {
 
     }
 

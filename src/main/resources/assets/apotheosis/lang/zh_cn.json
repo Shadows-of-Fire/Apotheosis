@@ -134,9 +134,6 @@
     "affix.apotheosis:breaker/attribute/experienced": "经验",
     "affix.apotheosis:breaker/attribute/experienced.suffix": "学者",
 
-    "affix.apotheosis:melee/attribute/elongated": "延展",
-    "affix.apotheosis:melee/attribute/elongated.suffix": "远战",
-
     "affix.apotheosis:ranged/attribute/agile": "敏捷",
     "affix.apotheosis:ranged/attribute/agile.suffix": "迅敏",
 
@@ -475,7 +472,7 @@
     "gem_class.melee_weapon": "近战武器",
     "gem_class.ranged_weapon": "远程武器",
     "gem_class.light_weapon": "轻型武器",
-    "gem_class.core_armor": "核心盔甲",
+    "gem_class.core_armor": "主体盔甲",
     "gem_class.lower_armor": "下身盔甲",
     "gem_class.armor": "盔甲",
     "gem_class.breaker": "挖掘工具",
@@ -515,7 +512,6 @@
     "misc.apotheosis.level.many": "级",
     "name.apotheosis.treasure_goblin": "宝藏哥布林",
 
-    "item.apotheosis.gem.apotheosis:legacy": "经典宝石",
     "item.apotheosis.gem.apotheosis:core/guardian": "护卫宝石",
     "item.apotheosis.gem.apotheosis:core/ballast": "稳定宝石",
     "item.apotheosis.gem.apotheosis:core/solar": "阳炎宝石",
@@ -529,7 +525,7 @@
     "item.apotheosis.gem.apotheosis:core/slipstream": "逸流宝石",
     "item.apotheosis.gem.apotheosis:core/brawlers": "斗争宝石",
     "item.apotheosis.gem.apotheosis:core/combatant": "战斗宝石",
-    "item.apotheosis.gem.apotheosis:overworld/earth": "地球宝石",
+    "item.apotheosis.gem.apotheosis:overworld/earth": "大地宝石",
     "item.apotheosis.gem.apotheosis:overworld/royalty": "王室宝石",
     "item.apotheosis.gem.apotheosis:overworld/verdant_ruin": "翠殒宝石",
     "item.apotheosis.gem.apotheosis:the_nether/inferno": "炽狱宝石",
@@ -685,6 +681,8 @@
     "loot_category.apotheosis.leggings.plural": "护腿",
     "loot_category.apotheosis.boots": "靴子",
     "loot_category.apotheosis.boots.plural": "靴子",
+    "loot_category.apotheosis.shears": "剪刀",
+    "loot_category.apotheosis.shears.plural": "剪刀",
 
     "info.apotheosis.boss_spawn": "%s在附近苏醒了！",
     "info.apotheosis.boss": "神化Boss（%s）",

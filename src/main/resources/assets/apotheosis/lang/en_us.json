@@ -609,6 +609,11 @@
     "block.apotheosis.reforging_table.desc2": "Max Rarity: %s",
     "block.apotheosis.augmenting_table": "Augmenting Table",
     "block.apotheosis.augmenting_table.desc": "Uses Sigils of Enhancement to augment individual affixes",
+    "block.apotheosis.gem_case": "Gem Case",
+    "tooltip.apotheosis.gem_case.capacity": "Capacity: %s Gems",
+    "tooltip.apotheosis.gem_case.unique_gems": "Contains %s different gems",
+    "tooltip.apotheosis.gem_case.none_owned": "None Owned",
+    "block.apotheosis.ender_gem_case": "Gem Case of House Fabergé",
 
     "button.apotheosis.salvage": "Salvage Items",
     "button.apotheosis.no_salvage": "No items selected",
@@ -622,6 +627,11 @@
     "button.apotheosis.augmenting.no_alternatives": "No Alternative Affixes",
     "button.apotheosis.augmenting.upgrade.cost": "Cost: %sx %s",
     "button.apotheosis.augmenting.upgrade.exp_cost": "Experience Cost: %s Levels",
+    "button.apotheosis.gem_case.upgrade": "Upgrade 2 %s gems to %s",
+    "button.apotheosis.gem_case.upgrade_no_gems": "Insufficient Gems",
+    "button.apotheosis.gem_case.upgrade_no_materials": "Insufficient Materials",
+    "button.apotheosis.gem_case.upgrade_cost": "Cost: %s %s and %s %s",
+    "button.apotheosis.gem_case.upgrade_all": "Will upgrade as many gems as possible!",
 
     "menu.apotheosis.gem_cutting": "Gem Cutting",
     "container.apotheosis.salvage": "Salvage",
@@ -681,6 +691,8 @@
     "loot_category.apotheosis.leggings.plural": "Leggings",
     "loot_category.apotheosis.boots": "Boots",
     "loot_category.apotheosis.boots.plural": "Boots",
+    "loot_category.apotheosis.shears": "Shears",
+    "loot_category.apotheosis.shears.plural": "Shears",
 
     "info.apotheosis.boss_spawn": "%s has awoken nearby!",
     "info.apotheosis.boss": "%s Apothic Boss",
@@ -721,7 +733,7 @@
     "reward.apotheosis.gem": "Apothic Gem (%s)",
     "reward.apotheosis.random_gem": "Apothic Gem (Random)",
     "reward.apotheosis.true_random_gem": "Truly Random Apothic Gem",
-    "reward.apotheosis.netherite_smithing_template": "Netherite Smiting Template",
+    "reward.apotheosis.netherite_smithing_template": "Netherite Smithing Template",
     "error.apotheosis.gate_tier_incorrect": "This Gateway can only be opened in World Tier: %s",
     "modifier.apotheosis.affix": "Receives an Affix Item",
     "tooltip.apotheosis.requires_world_tier": "Requires World Tier: %s",
@@ -923,7 +935,12 @@
 
     "stat.apotheosis.world_tiers_activated": "World Tier Changed",
     "apotheosis.subtitle.reforge": "Reforging Table reforges",
-    "apotheosis.subtitle.malice": "Sigil of Malice applies malice",    
+    "apotheosis.subtitle.malice": "Sigil of Malice applies malice",
+
+    "apotheosis.subtitle.invader_uncommon": "Uncommon Apothic Invader spawns",
+    "apotheosis.subtitle.invader_rare": "Rare Apothic Invader spawns",
+    "apotheosis.subtitle.invader_epic": "Epic Apothic Invader spawns",
+    "apotheosis.subtitle.invader_mythic": "Mythic Apothic Invader spawns",
 
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Chronicle of Shadows",

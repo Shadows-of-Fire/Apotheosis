@@ -1,5 +1,5 @@
 {
-    "name": "岁月学识",
+    "name": "亘古智慧",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)岁月学识$()是一个极品魔咒，可以应用于剑。$(p)当你杀死一个生物时，所有的掉落物都会转化为经验。$(p)每个单独的物品都价值相同的经验。"
+            "text": "$(2)亘古智慧$()是一个极品魔咒，可以应用于剑。$(p)当你杀死一个生物时，所有的掉落物都会转化为经验。$(p)每个单独的物品都价值相同的经验。"
         },
 		{
 			"type": "patchouli:text",

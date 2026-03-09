@@ -1,6 +1,6 @@
 {
     "name": "Roubo de vida",
-    "icon": "apotheosis:textures/mob_effect/bleeding.png",
+    "icon": "apothic_attributes:textures/mob_effect/bleeding.png",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
 	"sortnum": 0,

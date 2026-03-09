@@ -48,6 +48,7 @@ import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
 import dev.shadowsoffire.apotheosis.mobs.util.EntityModifier;
 import dev.shadowsoffire.apotheosis.mobs.util.SpawnCondition;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
+import dev.shadowsoffire.apotheosis.net.GemCaseSelectPayload;
 import dev.shadowsoffire.apotheosis.net.LinkItemToChatPayload;
 import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
 import dev.shadowsoffire.apotheosis.net.RerollResultPayload;
@@ -57,6 +58,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.PurityWeightsRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile;
 import dev.shadowsoffire.apotheosis.spawner.RogueSpawnerRegistry;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
@@ -136,7 +138,7 @@ public class Apotheosis {
             TabFillingRegistry.register(Apoth.Tabs.ADVENTURE.getKey(),
                 Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
                 Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_WITHDRAWAL, Items.SIGIL_OF_REBIRTH, Items.SIGIL_OF_ENHANCEMENT, Items.SIGIL_OF_UNNAMING, Items.SIGIL_OF_MALICE, Items.SIGIL_OF_SUPREMACY,
-                Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE, Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.AUGMENTING_TABLE,
+                Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE, Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.AUGMENTING_TABLE, Items.GEM_CASE, Items.ENDER_GEM_CASE,
                 Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE,
                 Items.MUSIC_DISC_FLASH, Items.MUSIC_DISC_GLIMMER, Items.MUSIC_DISC_SHIMMER,
                 Items.GEM, // Gem is at the end because it also generates all the dynamic variants.
@@ -151,6 +153,7 @@ public class Apotheosis {
         PayloadHelper.registerPayload(new WorldTierPayload.Provider());
         PayloadHelper.registerPayload(new ConfigPayload.Provider());
         PayloadHelper.registerPayload(new LinkItemToChatPayload.Provider());
+        PayloadHelper.registerPayload(new GemCaseSelectPayload.Provider());
         NeoForge.EVENT_BUS.register(new AdventureEvents());
         NeoForge.EVENT_BUS.register(new ApothMobEvents());
         RarityRegistry.INSTANCE.registerToBus();
@@ -174,6 +177,8 @@ public class Apotheosis {
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.SALVAGING_TABLE, (be, side) -> be.getItemHandler());
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.REFORGING_TABLE, (be, side) -> be.getInventory());
         e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.AUGMENTING_TABLE, (be, side) -> be.getInventory());
+        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.GEM_CASE, GemCaseTile::getItemHandler);
+        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.ENDER_GEM_CASE, GemCaseTile::getItemHandler);
     }
 
     @SubscribeEvent

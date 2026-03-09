@@ -11,6 +11,7 @@ import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 
 /**
  * Represents an unsocketed {@link GemItem}. This class retrieves the relevant data components into one convenient object.
+ * TODO: Remove gemStack from here so this is an immutable record.
  */
 public record UnsocketedGem(DynamicHolder<Gem> gem, Purity purity, ItemStack gemStack) implements GemView {
 
@@ -25,7 +26,7 @@ public record UnsocketedGem(DynamicHolder<Gem> gem, Purity purity, ItemStack gem
             purity = Purity.max(gem.get().getMinPurity(), purity);
         }
 
-        return new UnsocketedGem(gem, purity, gemStack);
+        return new UnsocketedGem(gem, purity, gemStack.copy());
     }
 
     /**
@@ -91,5 +92,13 @@ public record UnsocketedGem(DynamicHolder<Gem> gem, Purity purity, ItemStack gem
     @Override
     public final int hashCode() {
         return this.isValid() ? Objects.hash(this.gem, this.purity) : -1;
+    }
+
+    /**
+     * @deprecated Do not rely on retrieving the original ItemStack. This will be removed in a future update.
+     */
+    @Deprecated
+    public ItemStack gemStack() {
+        return this.gemStack;
     }
 }

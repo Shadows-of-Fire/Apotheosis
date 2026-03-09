@@ -1,0 +1,17 @@
+{
+    "name": "Masmorras de Invasores",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Localizadas nas profundezas das antigas cavernas da terra, existem estruturas ocultas, abrigando o poder incalculável dos afixos. Seria uma boa surpresa se esse poder estivesse livre para ser pego, mas, infelizmente, ele é defendido por um Invasor Engaiolado."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Encontradas no subsolo, existem algumas variantes diferentes dessas estruturas. Cada masmorra contém um Invasor Engaiolado e alguns baús de saque. A gaiola será acionada ao se aproximar dela, libertando o Invasor."
+		}
+	]
+}

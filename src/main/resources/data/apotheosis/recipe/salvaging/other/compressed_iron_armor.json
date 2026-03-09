@@ -1,0 +1,41 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "pneumaticcraft"
+        }
+    ],
+    "type": "apotheosis:salvaging",
+    "input": [
+        {
+            "item": "pneumaticcraft:compressed_iron_helmet"
+        },
+        {
+            "item": "pneumaticcraft:compressed_iron_chestplate"
+        },
+        {
+            "item": "pneumaticcraft:compressed_iron_leggings"
+        },
+        {
+            "item": "pneumaticcraft:compressed_iron_boots"
+        }
+    ],
+    "outputs": [
+        {
+            "max_count": 2,
+            "min_count": 0,
+            "stack": {
+                "count": 1,
+                "id": "minecraft:leather"
+            }
+        },
+        {
+            "max_count": 3,
+            "min_count": 1,
+            "stack": {
+                "count": 1,
+                "id": "pneumaticcraft:ingot_iron_compressed"
+            }
+        }
+    ]
+}

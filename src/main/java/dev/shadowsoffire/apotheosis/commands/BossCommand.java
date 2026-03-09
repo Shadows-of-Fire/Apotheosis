@@ -2,12 +2,14 @@ package dev.shadowsoffire.apotheosis.commands;
 
 import javax.annotation.Nullable;
 
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.mobs.ApothMobEvents;
 import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
 import dev.shadowsoffire.apotheosis.mobs.types.Invader;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
@@ -39,6 +41,8 @@ public class BossCommand {
             Commands.argument("pos", Vec3Argument.vec3())
                 .then(Commands.argument("boss", ResourceLocationArgument.id()).suggests(SUGGEST_BOSS)
                     .then(Commands.argument("rarity", ResourceLocationArgument.id()).suggests(RarityCommand.SUGGEST_RARITY)
+                        .then(Commands.argument("send_notification", BoolArgumentType.bool())
+                            .executes(c -> spawnBoss(c, Vec3Argument.getVec3(c, "pos"), ResourceLocationArgument.getId(c, "boss"), ResourceLocationArgument.getId(c, "rarity"), BoolArgumentType.getBool(c, "send_notification"))))
                         .executes(c -> spawnBoss(c, Vec3Argument.getVec3(c, "pos"), ResourceLocationArgument.getId(c, "boss"), ResourceLocationArgument.getId(c, "rarity"))))
                     .executes(c -> spawnBoss(c, Vec3Argument.getVec3(c, "pos"), ResourceLocationArgument.getId(c, "boss"), null)))
                 .executes(c -> spawnBoss(c, Vec3Argument.getVec3(c, "pos"), null, null)));
@@ -47,6 +51,8 @@ public class BossCommand {
             Commands.argument("entity", EntityArgument.entity())
                 .then(Commands.argument("boss", ResourceLocationArgument.id()).suggests(SUGGEST_BOSS)
                     .then(Commands.argument("rarity", ResourceLocationArgument.id()).suggests(RarityCommand.SUGGEST_RARITY)
+                        .then(Commands.argument("send_notification", BoolArgumentType.bool())
+                            .executes(c -> spawnBoss(c, Vec3Argument.getVec3(c, "pos"), ResourceLocationArgument.getId(c, "boss"), ResourceLocationArgument.getId(c, "rarity"), BoolArgumentType.getBool(c, "send_notification"))))
                         .executes(c -> spawnBoss(c, EntityArgument.getEntity(c, "entity").position(), ResourceLocationArgument.getId(c, "boss"), ResourceLocationArgument.getId(c, "rarity"))))
                     .executes(c -> spawnBoss(c, EntityArgument.getEntity(c, "entity").position(), ResourceLocationArgument.getId(c, "boss"), null)))
                 .executes(c -> spawnBoss(c, EntityArgument.getEntity(c, "entity").position(), null, null)));
@@ -55,6 +61,10 @@ public class BossCommand {
     }
 
     public static int spawnBoss(CommandContext<CommandSourceStack> c, Vec3 pos, @Nullable ResourceLocation bossId, @Nullable ResourceLocation rarityId) {
+        return spawnBoss(c, pos, bossId, rarityId, false);
+    }
+
+    public static int spawnBoss(CommandContext<CommandSourceStack> c, Vec3 pos, @Nullable ResourceLocation bossId, @Nullable ResourceLocation rarityId, boolean sendNotification) {
         Entity nullableSummoner = c.getSource().getEntity();
         Player summoner = nullableSummoner instanceof Player ? (Player) nullableSummoner : c.getSource().getLevel().getNearestPlayer(pos.x(), pos.y(), pos.z(), 64, false);
         if (summoner == null) {
@@ -89,6 +99,11 @@ public class BossCommand {
         }
 
         c.getSource().getLevel().addFreshEntityWithPassengers(bossEntity);
+
+        if (sendNotification) {
+            ApothMobEvents.sendInvaderSpawnNotification(c.getSource().getLevel(), bossEntity);
+        }
+
         return 0;
     }
 

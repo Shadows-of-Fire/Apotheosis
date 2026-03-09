@@ -1,10 +1,11 @@
-// 1.21.1	2025-08-25T03:40:15.5892624	Recipes
+// 1.21.1	2026-02-20T01:51:26.3567276	Recipes
 bab664def1f01400bfe3a7cf432385247dcd847d data/apotheosis/recipe/augmenting_table.json
 09ba3d6cf5c8648fcf8b628cffa3ab3b4df2fd98 data/apotheosis/recipe/diamond_upgrade_smithing_template.json
 e92f1d1d31f66ca7c2df06d187ba97832ffd0ff2 data/apotheosis/recipe/gateways/tiered/ascent.json
 930ebcf3e17a99d9669de0eb86336e2bda17f988 data/apotheosis/recipe/gateways/tiered/frontier.json
 eed26c889278d1f67f801e95fb4603c51f8c5c67 data/apotheosis/recipe/gateways/tiered/pinnacle.json
 6ecf383f44c38d299e2c67cf59aa7ff7fe43ca24 data/apotheosis/recipe/gateways/tiered/summit.json
+ae8f035f8a670396f87024ad5f7abb75e4688b4a data/apotheosis/recipe/gem_case.json
 cfc46608a868f8e622a46d07c0b0d2d642bec035 data/apotheosis/recipe/gem_cutting/chipped.json
 527c22d6be2eb2dbc699e129a7db9313980d97a5 data/apotheosis/recipe/gem_cutting/cracked.json
 352695987a105286de394eb61d74bbee833181ad data/apotheosis/recipe/gem_cutting/flawed.json

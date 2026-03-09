@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -138,6 +140,11 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
      */
     public Optional<GemBonus> getBonus(LootCategory cat, Purity purity) {
         return Optional.ofNullable(this.bonusMap.get(cat)).filter(b -> b.supports(purity));
+    }
+
+    @Nullable
+    public GemBonus getBonus(LootCategory cat) {
+        return this.bonusMap.get(cat);
     }
 
     @Override

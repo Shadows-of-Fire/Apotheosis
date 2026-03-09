@@ -1,0 +1,20 @@
+{
+	"type": "apothic_enchanting:keep_nbt_infusion",
+	"input": {
+		"item": "apotheosis:gem_case"
+	},
+	"requirements": {
+		"eterna": 100,
+		"quanta": 100,
+		"arcana": 45
+	},
+	"max_requirements": {
+		"eterna": 100,
+		"quanta": 100,
+		"arcana": 50
+	},
+	"result": {
+		"id": "apotheosis:ender_gem_case",
+		"count": 1
+	}
+}

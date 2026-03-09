@@ -72,6 +72,11 @@ import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingBlock;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseBlock;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseMenu;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile.BasicGemCaseTile;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile.EnderGemCaseTile;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
@@ -263,6 +268,12 @@ public class Apoth {
         public static final Holder<Block> AUGMENTING_TABLE = R.block("augmenting_table", AugmentingTableBlock::new,
             p -> p.requiresCorrectToolForDrops().strength(4, 1000F));
 
+        public static final Holder<Block> GEM_CASE = R.block("gem_case", p -> new GemCaseBlock(BasicGemCaseTile::new, p, Short.MAX_VALUE),
+            p -> p.requiresCorrectToolForDrops().strength(5, 1200F).sound(SoundType.GLASS).noOcclusion().lightLevel(s -> 2));
+
+        public static final Holder<Block> ENDER_GEM_CASE = R.block("ender_gem_case", p -> new GemCaseBlock(EnderGemCaseTile::new, p, Integer.MAX_VALUE),
+            p -> p.requiresCorrectToolForDrops().strength(5, 1200F).sound(SoundType.GLASS).noOcclusion().lightLevel(s -> 2));
+
         private static void bootstrap() {}
     }
 
@@ -310,6 +321,10 @@ public class Apoth {
 
         public static final Holder<Item> AUGMENTING_TABLE = R.blockItem("augmenting_table", Blocks.AUGMENTING_TABLE, p -> p.rarity(Rarity.UNCOMMON));
 
+        public static final Holder<Item> GEM_CASE = R.blockItem("gem_case", Blocks.GEM_CASE);
+
+        public static final Holder<Item> ENDER_GEM_CASE = R.blockItem("ender_gem_case", Blocks.ENDER_GEM_CASE);
+
         public static final Holder<Item> GEM = R.item("gem", GemItem::new);
 
         public static final Holder<Item> POTION_CHARM = R.item("potion_charm", PotionCharmItem::new);
@@ -351,6 +366,9 @@ public class Apoth {
         public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = R.blockEntity("salvaging_table", SalvagingTableTile::new, Blocks.SALVAGING_TABLE);
         public static final BlockEntityType<AugmentingTableTile> AUGMENTING_TABLE = R.tickingBlockEntity("augmenting_table", AugmentingTableTile::new, TickSide.CLIENT, Blocks.AUGMENTING_TABLE);
 
+        public static final BlockEntityType<GemCaseTile> GEM_CASE = R.tickingBlockEntity("gem_case", BasicGemCaseTile::new, TickSide.CLIENT, Blocks.GEM_CASE);
+        public static final BlockEntityType<GemCaseTile> ENDER_GEM_CASE = R.tickingBlockEntity("ender_gem_case", EnderGemCaseTile::new, TickSide.CLIENT, Blocks.ENDER_GEM_CASE);
+
         private static void bootstrap() {}
     }
 
@@ -359,6 +377,7 @@ public class Apoth {
         public static final MenuType<SalvagingMenu> SALVAGE = R.menuWithPos("salvage", SalvagingMenu::new);
         public static final MenuType<GemCuttingMenu> GEM_CUTTING = R.menu("gem_cutting", GemCuttingMenu::new);
         public static final MenuType<AugmentingMenu> AUGMENTING = R.menuWithPos("augmenting", AugmentingMenu::new);
+        public static final MenuType<GemCaseMenu> GEM_CASE = R.menuWithPos("gem_case", GemCaseMenu::new);
 
         private static void bootstrap() {}
     }
@@ -386,10 +405,13 @@ public class Apoth {
         public static final Holder<SoundEvent> MALICE = R.sound("malice");
 
         public static final Holder<SoundEvent> MUSIC_DISC_FLASH = R.sound("music_disc_flash");
-
         public static final Holder<SoundEvent> MUSIC_DISC_GLIMMER = R.sound("music_disc_glimmer");
-
         public static final Holder<SoundEvent> MUSIC_DISC_SHIMMER = R.sound("music_disc_shimmer");
+
+        public static final Holder<SoundEvent> INVADER_UNCOMMON = R.sound("invader_uncommon");
+        public static final Holder<SoundEvent> INVADER_RARE = R.sound("invader_rare");
+        public static final Holder<SoundEvent> INVADER_EPIC = R.sound("invader_epic");
+        public static final Holder<SoundEvent> INVADER_MYTHIC = R.sound("invader_mythic");
 
         private static void bootstrap() {}
     }
@@ -466,7 +488,7 @@ public class Apoth {
     }
 
     public static final class LootFunctions {
-        public static final LootItemFunctionType<ReforgeItemFunction> MATCHES_BLOCK = R.custom("reforge_item", Registries.LOOT_FUNCTION_TYPE, ReforgeItemFunction.TYPE);
+        public static final LootItemFunctionType<ReforgeItemFunction> REFORGE_ITEM = R.custom("reforge_item", Registries.LOOT_FUNCTION_TYPE, ReforgeItemFunction.TYPE);
 
         private static void bootstrap() {}
     }

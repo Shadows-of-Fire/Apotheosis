@@ -1,0 +1,19 @@
+{
+    "loader": "neoforge:composite",
+    "parent": "block/block",
+    "children": {
+        "base": {
+            "parent": "apotheosis:block/gem_case_base",
+            "textures": {
+                "1": "apotheosis:blocks/ender_gem_case",
+                "particle": "minecraft:block/dark_oak_planks"
+            }
+        },
+        "top": {
+            "parent": "apotheosis:block/glass_top"
+        }
+    },
+    "textures": {
+        "particle": "minecraft:block/dark_oak_planks"
+    }
+}

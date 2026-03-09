@@ -1,6 +1,6 @@
 {
     "name": "Biblioteca de encantamentos",
-    "icon": "apotheosis:library",
+    "icon": "apothic_enchanting:library",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
 	"sortnum": 2,

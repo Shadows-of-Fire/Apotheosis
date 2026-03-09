@@ -9,6 +9,12 @@
 		},
 		{
 			"id": "apotheosis:augmenting_table"
-		}
+        },
+        {
+            "id": "apotheosis:gem_case"
+        },
+        {
+            "id": "apotheosis:ender_gem_case"
+        }
 	]
 }

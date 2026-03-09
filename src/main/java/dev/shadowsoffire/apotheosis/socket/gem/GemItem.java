@@ -79,9 +79,7 @@ public class GemItem extends Item implements ITabFiller {
         GemRegistry.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
             Arrays.stream(Purity.values()).forEach(purity -> {
                 if (purity.isAtLeast(gem.getMinPurity())) {
-                    ItemStack stack = new ItemStack(this);
-                    setGem(stack, gem);
-                    setPurity(stack, purity);
+                    ItemStack stack = gem.toStack(purity);
                     out.accept(stack);
                 }
             });
@@ -125,4 +123,15 @@ public class GemItem extends Item implements ITabFiller {
     public static void setPurity(ItemStack stack, Purity purity) {
         stack.set(Components.PURITY, purity);
     }
+
+    public static ItemStack createStack(Gem gem, Purity purity, int count) {
+        ItemStack stack = gem.toStack(purity);
+        stack.setCount(count);
+        return stack;
+    }
+
+    public static ItemStack createStack(Gem gem, Purity purity) {
+        return createStack(gem, purity, 1);
+    }
+
 }

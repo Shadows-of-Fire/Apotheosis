@@ -1,6 +1,7 @@
 {
     "type": "apotheosis:rarity",
     "color": "#808080",
+    "invader_sound": "minecraft:intentionally_empty",
     "material": "apotheosis:common_material",
     "render_data": {
         "beam_height": 0.0,

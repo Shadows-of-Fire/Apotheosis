@@ -47,7 +47,6 @@ public class AffixLootModifier extends ContextualLootModifier {
         for (AffixTableEntry entry : this.entries) {
             if (entry.pattern.matches(ctx.getQueriedLootTableId())) {
                 if (ctx.getRandom().nextFloat() <= entry.chance()) {
-                    LootRarity rarity = LootRarity.randomFromHolders(gCtx, entry.rarities);
 
                     AffixLootEntry lootEntry;
                     if (!entry.entries.isEmpty()) {
@@ -56,6 +55,15 @@ public class AffixLootModifier extends ContextualLootModifier {
                     }
                     else {
                         lootEntry = AffixLootRegistry.INSTANCE.getRandomItem(gCtx);
+                    }
+
+                    // Resolve the rarity for the entry, preferring a rarity from this loot modifier if available, but using the loot entry otherwise.
+                    LootRarity rarity;
+                    if (!entry.rarities.isEmpty()) {
+                        rarity = LootRarity.randomFromHolders(gCtx, entry.rarities);
+                    }
+                    else {
+                        rarity = LootRarity.random(gCtx, lootEntry.rarities());
                     }
 
                     ItemStack affixItem = LootController.createLootItem(lootEntry.stack(), rarity, gCtx);

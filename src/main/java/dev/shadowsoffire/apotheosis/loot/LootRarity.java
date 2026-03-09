@@ -18,14 +18,17 @@ import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public record LootRarity(TextColor color, Holder<Item> material, TieredWeights weights, List<LootRule> rules, int sortIndex, RarityRenderData renderData) implements CodecProvider<LootRarity>, Weighted {
+public record LootRarity(TextColor color, Holder<Item> material, TieredWeights weights, List<LootRule> rules, int sortIndex, RarityRenderData renderData, SoundEvent invaderSound) implements CodecProvider<LootRarity>, Weighted {
 
     public static final Codec<LootRarity> LOAD_CODEC = RecordCodecBuilder.create(inst -> inst.group(
         TextColor.CODEC.fieldOf("color").forGetter(LootRarity::color),
@@ -33,7 +36,8 @@ public record LootRarity(TextColor color, Holder<Item> material, TieredWeights w
         TieredWeights.CODEC.fieldOf("weights").forGetter(Weighted::weights),
         LootRule.CODEC.listOf().fieldOf("rules").forGetter(LootRarity::rules),
         Codec.intRange(0, 2000).optionalFieldOf("sort_index", 1000).forGetter(LootRarity::sortIndex),
-        RarityRenderData.CODEC.optionalFieldOf("render_data", RarityRenderData.DEFAULT).forGetter(LootRarity::renderData))
+        RarityRenderData.CODEC.optionalFieldOf("render_data", RarityRenderData.DEFAULT).forGetter(LootRarity::renderData),
+        BuiltInRegistries.SOUND_EVENT.byNameCodec().optionalFieldOf("invader_sound", SoundEvents.END_PORTAL_SPAWN).forGetter(LootRarity::invaderSound))
         .apply(inst, LootRarity::new));
 
     /**
@@ -97,6 +101,7 @@ public record LootRarity(TextColor color, Holder<Item> material, TieredWeights w
         private final List<LootRule> rules = new ArrayList<>();
         private int index = 1000;
         private RarityRenderData renderData = RarityRenderData.DEFAULT;
+        private SoundEvent invaderSound = SoundEvents.END_PORTAL_SPAWN;
 
         public Builder(TextColor color, Holder<Item> material) {
             this.color = color;
@@ -123,10 +128,15 @@ public record LootRarity(TextColor color, Holder<Item> material, TieredWeights w
             return this;
         }
 
+        public Builder invaderSound(SoundEvent sound) {
+            this.invaderSound = sound;
+            return this;
+        }
+
         public LootRarity build() {
             Preconditions.checkNotNull(this.weights);
             Preconditions.checkArgument(this.rules.size() > 0);
-            return new LootRarity(this.color, this.material, this.weights, this.rules, this.index, this.renderData);
+            return new LootRarity(this.color, this.material, this.weights, this.rules, this.index, this.renderData, this.invaderSound);
         }
 
     }

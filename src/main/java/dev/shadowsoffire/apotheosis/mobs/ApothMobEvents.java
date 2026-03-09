@@ -11,6 +11,8 @@ import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.Apoth.DataMaps;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.AugmentRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
@@ -24,11 +26,11 @@ import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -154,23 +156,11 @@ public class ApothMobEvents {
                 sLevel.addFreshEntityWithPassengers(boss);
                 e.setCanceled(true);
                 e.setSpawnCancelled(true);
-                Component name = getName(boss);
-                if (name == null || name.getStyle().getColor() == null) {
-                    Apotheosis.LOGGER.warn("A Boss {} ({}) has spawned without a custom name!", boss.getName().getString(), EntityType.getKey(boss.getType()));
-                }
-                else {
-                    sLevel.players().forEach(p -> {
-                        Vec3 tPos = new Vec3(boss.getX(), p.getY(), boss.getZ());
-                        if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
-                            ((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) boss.getX(), (int) boss.getY())));
-                            TextColor color = name.getStyle().getColor();
-                            PacketDistributor.sendToPlayer((ServerPlayer) player, new BossSpawnPayload(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()));
-                        }
-                    });
-                }
+
+                sendInvaderSpawnNotification((ServerLevel) sLevel, boss);
 
                 this.cooldownData.startCooldown(mob.level(), rules.cooldown().orElse(AdventureConfig.bossSpawnCooldown));
-                debugLog("[Invaders]: Successfully spawned an invader {} at {}", name, boss.blockPosition());
+                debugLog("[Invaders]: Successfully spawned an invader {} at {}", boss.getName().getString(), boss.blockPosition());
                 return true;
             }
             else {
@@ -182,6 +172,24 @@ public class ApothMobEvents {
         }
 
         return false;
+    }
+
+    public static void sendInvaderSpawnNotification(ServerLevel sLevel, Mob invader) {
+        Component name = getName(invader);
+        DynamicHolder<LootRarity> rarity = getRarity(invader);
+
+        if (name == null || !rarity.isBound()) {
+            Apotheosis.LOGGER.warn("An Invader {} ({}) has spawned without a name ({}) or rarity ({})!", invader.getName().getString(), EntityType.getKey(invader.getType()), name, rarity);
+        }
+        else {
+            sLevel.players().forEach(p -> {
+                Vec3 tPos = new Vec3(invader.getX(), p.getY(), invader.getZ());
+                if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
+                    ((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) invader.getX(), (int) invader.getY())));
+                    PacketDistributor.sendToPlayer((ServerPlayer) p, new BossSpawnPayload(invader.blockPosition(), rarity));
+                }
+            });
+        }
     }
 
     /**
@@ -298,6 +306,13 @@ public class ApothMobEvents {
     @Nullable
     private static Component getName(Mob boss) {
         return boss.getSelfAndPassengers().filter(e -> e.getPersistentData().contains(Invader.BOSS_KEY)).findFirst().map(Entity::getCustomName).orElse(null);
+    }
+
+    @Nullable
+    private static DynamicHolder<LootRarity> getRarity(Mob boss) {
+        return boss.getSelfAndPassengers().filter(e -> e.getPersistentData().contains(Invader.BOSS_KEY)).findFirst().map(ent -> {
+            return RarityRegistry.INSTANCE.holder(ResourceLocation.tryParse(ent.getPersistentData().getString(Invader.RARITY_KEY)));
+        }).orElse(RarityRegistry.INSTANCE.emptyHolder());
     }
 
     private static final Marker MARKER = MarkerManager.getMarker(ApothMobEvents.class.getSimpleName());

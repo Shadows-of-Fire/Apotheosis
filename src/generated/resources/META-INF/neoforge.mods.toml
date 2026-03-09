@@ -8,7 +8,7 @@ license="MIT License (code) / All Rights Reserved (assets)"
 
 modId="apotheosis"
 
-version="8.4.1"
+version="8.5.2"
 
 displayName="Apotheosis"
 
@@ -61,7 +61,7 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="apothic_enchanting"
     type="required"
-    versionRange="[1.5.0,)"
+    versionRange="[1.5.2,)"
     ordering="AFTER"
     side="BOTH"
 

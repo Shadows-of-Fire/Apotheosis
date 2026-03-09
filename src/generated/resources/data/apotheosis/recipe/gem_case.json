@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "B": {
+            "item": "minecraft:basalt"
+        },
+        "E": {
+            "item": "apotheosis:gem_cutting_table"
+        },
+        "G": {
+            "tag": "c:glass_blocks"
+        },
+        "N": {
+            "item": "minecraft:ender_chest"
+        }
+    },
+    "pattern": [
+        "GGG",
+        "BEB",
+        "BNB"
+    ],
+    "result": {
+        "count": 1,
+        "id": "apotheosis:gem_case"
+    }
+}
