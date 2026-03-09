@@ -1,0 +1,13 @@
+{
+    "name": "Швидкість плавання",
+    "icon": "minecraft:kelp",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Швидкість плавання$() - це модифікатор вашої фактичної швидкости плавання. Маючи значення 200%, ви будете плисти вдвічі швидше ніж зазвичай.$(p)Притаманне лише чоботам."
+        }
+	]
+}

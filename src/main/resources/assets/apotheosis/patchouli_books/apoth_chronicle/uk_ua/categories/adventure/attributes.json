@@ -1,0 +1,7 @@
+{
+    "name": "Атрибути",
+    "description": "На додаток до ванільних атрибутів, Apotheosis додає широкий спектр нових.$(p)Цей розділ пояснює за них усіх.",
+    "icon": "minecraft:diamond_chestplate",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

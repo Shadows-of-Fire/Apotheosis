@@ -1,0 +1,19 @@
+{
+    "name": "Поглинання",
+    "icon": "minecraft:textures/mob_effect/absorption.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Поглинання$() – цікавий ефект.$(p)Кожен рівень надає 2 додаткові тимчасові серця.$(p)Однак ці серця не оновлюються протягом дії, а тому $(l:apotheosis:potion/charms/charm)зіллєвий амулет$() із цим ефектом робить його набагато потужнішим."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Рецепт варіння",
+			"item": "minecraft:golden_apple",
+            "text": "Це зілля можна виготовити за допомогою незграбного зілля та золотого яблука.$(p)Його можна подовжити, посилити або перетворити на вибухове зілля за допомогою звичайних інгредієнтів."
+        }
+	]
+}

@@ -1,0 +1,19 @@
+{
+    "name": "Квапливість",
+    "icon": "minecraft:textures/mob_effect/haste.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Квапливість$() – ще один корисний ефект, що не має рецепта у звичайній грі.$(p)Кожен рівень дає +20% до швидкості видобутку."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Рецепт варіння",
+			"item": "minecraft:mushroom_stew",
+            "text": "Це зілля можна виготовити за допомогою незграбного зілля та тушкованих грибів.$(p)Його можна подовжити, посилити або перетворити на вибухове зілля за допомогою звичайних інгредієнтів."
+        }
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Критична шкода",
+    "icon": "minecraft:netherite_axe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Шкода від критичних атак$() - це модифікатор шкоди для ваших критичних атак.$(p)Критичні атаки у стрибку також застосовують цю характеристику замість звичайного множника 1.5.$(p)Притаманне зброї."
+        }
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Дальність взаємодії із сутностями",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Ваша $(9)дальність взаємодії із сутностями$() - це максимальна відстань, на якій ви можете атакувати (або взаємодіяти) цілі у ближньому бою.$(p)Зазвичай цю характеристику надає зброя."
+        }
+	]
+}

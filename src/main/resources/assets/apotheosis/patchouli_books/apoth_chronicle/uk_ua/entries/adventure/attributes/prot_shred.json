@@ -1,0 +1,13 @@
+{
+    "name": "Розбиття захисту",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Розбиття захисту$() дозволяє вам під час атаки ігнорувати процентну кількість очок захисту цілі.$(p)$(9)Розбиття захисту$() застосовується перед $(9)Пробиттям захисту$()."
+        }
+	]
+}

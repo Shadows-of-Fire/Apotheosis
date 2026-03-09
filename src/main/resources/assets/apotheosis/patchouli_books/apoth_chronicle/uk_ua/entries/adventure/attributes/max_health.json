@@ -1,0 +1,13 @@
+{
+    "name": "Максимальне здоров'я",
+    "icon": "minecraft:apple",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Максимальне здоров'я$() визначає кількість очок здоров'я (HP), яку ви можете мати. Одне очко дорівнює половині серця смужки здоров'я.$(p)Зазвичай забезпечується обладунками та щитами."
+        }
+	]
+}

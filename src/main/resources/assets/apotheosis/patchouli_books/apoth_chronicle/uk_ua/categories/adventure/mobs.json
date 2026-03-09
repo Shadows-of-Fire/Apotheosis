@@ -1,0 +1,7 @@
+{
+    "name": "Апофеотичні моби",
+    "description": "Apotheosis вводить різні підтипи мобів, які з'являться у вашому світі.$(p)У цьому розділі розглядаються види мобів та місця, де їх можна знайти.",
+    "icon": "apotheosis:boss_summoner",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Хроматична аберація",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Хроматична аберація$() це чари для ножиць.$(p)Вони змушують будь-яку стрижену вовну набувати випадкового кольору."
+        }
+	]
+}

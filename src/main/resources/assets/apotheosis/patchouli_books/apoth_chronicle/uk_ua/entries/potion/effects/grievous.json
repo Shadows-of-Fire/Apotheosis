@@ -1,0 +1,17 @@
+{
+    "name": "Важкі рани",
+    "icon": "apothic_attributes:textures/mob_effect/grievous.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)Важкі рани$() – це шкідливий ефект.$(p)Під впливом цього ефекту будь-яке зцілення слабшає."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Зменшення зцілення дорівнює 40% за рівень.$(p)На рівні III чи вище усе зцілення зводиться нанівець."
+        }
+	]
+}

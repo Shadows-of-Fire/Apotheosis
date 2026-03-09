@@ -1,0 +1,17 @@
+{
+    "name": "Павутиння",
+    "icon": "apothic_enchanting:prismatic_web",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Призматичну павутину можна поєднати з предметом у ковадлі, щоб зняти всі прокляття."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:prismatic_web"
+		}
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Розбиття обладунків",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Розбиття обладунків$() дає можливість ігнорувати процентну кількість очок захисту цілі під час атаки.$(p)$(9)Розбиття обладунків$() застосовується перед $(9)Пробиттям обладунків$()."
+        }
+	]
+}

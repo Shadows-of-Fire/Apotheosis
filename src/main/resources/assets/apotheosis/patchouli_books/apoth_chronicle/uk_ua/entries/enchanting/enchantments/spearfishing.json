@@ -1,0 +1,13 @@
+{
+    "name": "Підводне полювання",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Підводне полювання$() – це чари для тризуба$(p)Вони дають 3,5% шанс за рівень отримати кілька випадкових рибин при вбивстві кинутим тризубом."
+        }
+	]
+}

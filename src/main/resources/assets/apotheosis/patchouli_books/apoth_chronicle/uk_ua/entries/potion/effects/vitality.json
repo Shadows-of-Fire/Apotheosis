@@ -1,0 +1,17 @@
+{
+    "name": "Спалах життєвої сили",
+    "icon": "apothic_attributes:textures/mob_effect/vitality.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Спалах життєвої сили$() – це корисний ефект.$(p)Під його впливом усе зцілення посилюється."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Посилення зцілення дорівнює 20% на рівень."
+        }
+	]
+}
