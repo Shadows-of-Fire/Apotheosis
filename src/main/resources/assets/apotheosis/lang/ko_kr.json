@@ -459,7 +459,7 @@
     "socket.apotheosis.empty": "빈 소켓",
     "text.apotheosis.when_socketed": "소켓을 장착 시:",
     "text.apotheosis.when_socketed_in": "소켓에 장착 시:",
-    "text.apotheosis.when_socketed_typed": "%s에 소켓장:",
+    "text.apotheosis.when_socketed_typed": "%s 소켓에 장착 시:",
     "info.apotheosis.socketing": "소켓이 있는 장비에 보석을 드래그하여 장착할 수 있습니다. 보석을 드래그하여 아이템 위에 우클릭하면 됩니다.\n\n현명하게 선택하세요, 장착된 보석을 제거하는데는 비용이 듭니다.",
 
     "purity.apotheosis.cracked": "갈라진",
@@ -492,9 +492,9 @@
     "gem_class.anything": "모든 장비",
 
     "bonus.apotheosis:durability.desc": "내구도 피해를 %s%% 무시합니다",
-    "bonus.apotheosis:enchantment.desc": "+%1$s %2$s : %3$s",
-    "bonus.apotheosis:enchantment.desc.mustExist": "+%1$s %2$s : 기존 %3%s",
-    "bonus.apotheosis:enchantment.desc.global": "+%1$s %2$s : 모든 기존 마법부여",
+    "bonus.apotheosis:enchantment.desc": "+%s %s : %s",
+    "bonus.apotheosis:enchantment.desc.mustExist": "+%s %s : 기존 %s",
+    "bonus.apotheosis:enchantment.desc.global": "모든 기존 마법부여에 +%s %s",
     "bonus.apotheosis:multi_attr.desc.and": "%s, %s",
     "bonus.apotheosis:multi_attr.desc.and_but": "%s, %s 단, %s",
     "bonus.apotheosis:multi_attr.desc.but_and": "%s 단, %s, %s",
