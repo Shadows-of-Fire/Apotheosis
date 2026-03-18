@@ -114,7 +114,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
             }
             case REROLL -> {
                 AffixInstance inst = affixes.get(selected);
-                List<DynamicHolder<Affix>> alternatives = computeAlternatives(mainItem, inst);
+                List<DynamicHolder<Affix>> alternatives = computeAlternatives(player, mainItem, inst);
                 if (alternatives.isEmpty()) {
                     return false;
                 }
@@ -193,8 +193,8 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
         return !inst.isLevelIndependent() && inst.level() < Affix.STANDARD_MAX_LEVEL;
     }
 
-    protected static List<DynamicHolder<Affix>> computeAlternatives(ItemStack stack, AffixInstance selected) {
-        return LootController.getAlternativeAffixes(stack, selected.getRarity(), selected.affix()).toList();
+    protected static List<DynamicHolder<Affix>> computeAlternatives(Player player, ItemStack stack, AffixInstance selected) {
+        return LootController.getAlternativeAffixes(player, stack, selected.getRarity(), selected.affix()).toList();
     }
 
     protected static List<WeightedEntry.Wrapper<Affix>> getWeightedAffixes(List<DynamicHolder<Affix>> affixes, GenContext ctx) {
