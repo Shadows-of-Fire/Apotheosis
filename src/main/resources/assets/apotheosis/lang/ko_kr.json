@@ -613,7 +613,7 @@
     "tooltip.apotheosis.gem_case.capacity": "용량: %s 보석",
     "tooltip.apotheosis.gem_case.unique_gems": "%s개의 서로 다른 보석이 보관되어 있습니다.",
     "tooltip.apotheosis.gem_case.none_owned": "아무도 소유하지 않음",
-    "block.apotheosis.ender_gem_case": "파베르제 가문의 보석 케이스",
+    "block.apotheosis.ender_gem_case": "파베르제 가문의 보석 보관함",
 
     "button.apotheosis.salvage": "아이템 분해",
     "button.apotheosis.no_salvage": "선택된 아이템이 없습니다",
