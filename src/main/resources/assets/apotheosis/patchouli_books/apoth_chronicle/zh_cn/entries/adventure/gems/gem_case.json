@@ -8,7 +8,7 @@
         {
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:gem_case",
-			"text": "$(9)宝石柜$()是用于存放$(l:apotheosis:adventure/gems/gems)宝石$()的存储设备。$(p)每种类型与纯度的宝石最多可存放三万两千颗，宝石盒还可升级为容量更大的版本。"
+			"text": "$(9)宝石柜$()是用于存放$(l:apotheosis:adventure/gems/gems)宝石$()的存储设备。$(p)每种类型与纯度的宝石最多可存放三万两千颗，还可升级为容量更大的版本。"
 		},
         {
             "title": "筛选器",
