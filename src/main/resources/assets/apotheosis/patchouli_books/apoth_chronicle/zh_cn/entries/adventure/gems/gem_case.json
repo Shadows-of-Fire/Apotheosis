@@ -18,7 +18,7 @@
 		{
 			"title": "宝石切割",
             "type": "patchouli:text",
-            "text": "宝石柜还具备六个辅助槽位，用于容纳升级材料。$(p)若材料与宝石数量足够，可按照纯度升级配方，在宝石柜内直接升级宝石。$(p)这一功能实际上完全淘汰了$(l:apotheosis:adventure/gems/gem_cutting)宝石切割台$()。"
+            "text": "宝石柜还拥有六个辅助槽位，用于容纳升级材料。$(p)若材料与宝石数量足够，可按照纯度升级配方，在宝石柜内直接升级宝石。$(p)这一功能实际上完全淘汰了$(l:apotheosis:adventure/gems/gem_cutting)宝石切割台$()。"
         },
         {
             "type": "patchouli:spotlight",
