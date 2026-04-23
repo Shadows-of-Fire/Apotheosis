@@ -113,11 +113,15 @@ public class RadialProgressTracker {
     @SubscribeEvent
     public static void submitOutlines(SubmitCustomGeometryEvent e) {
         Set<BlockPos> blocks = getAOEBlocks();
-        if (blocks.isEmpty()) return;
+        if (blocks.isEmpty()) {
+            return;
+        }
 
         Minecraft mc = Minecraft.getInstance();
         Level level = mc.level;
-        if (level == null) return;
+        if (level == null) {
+            return;
+        }
 
         Vec3 camPos = e.getLevelRenderState().cameraRenderState.pos;
         PoseStack pose = e.getPoseStack();
@@ -125,10 +129,14 @@ public class RadialProgressTracker {
 
         for (BlockPos pos : blocks) {
             BlockState state = level.getBlockState(pos);
-            if (state.isAir()) continue;
+            if (state.isAir()) {
+                continue;
+            }
 
             VoxelShape shape = state.getShape(level, pos);
-            if (shape.isEmpty()) continue;
+            if (shape.isEmpty()) {
+                continue;
+            }
 
             double x = pos.getX() - camPos.x;
             double y = pos.getY() - camPos.y;
@@ -154,10 +162,14 @@ public class RadialProgressTracker {
      */
     private static void submitCrumbling(SubmitCustomGeometryEvent e, Set<BlockPos> blocks, Minecraft mc, Level level, Vec3 camPos, PoseStack pose, SubmitNodeCollector collector) {
         MultiPlayerGameMode controller = mc.gameMode;
-        if (controller == null || !controller.isDestroying()) return;
+        if (controller == null || !controller.isDestroying()) {
+            return;
+        }
 
         Player player = mc.player;
-        if (player == null || lastKey == null) return;
+        if (player == null || lastKey == null) {
+            return;
+        }
 
         BlockPos target = lastKey.pos;
         int progress = -1;
@@ -167,16 +179,22 @@ public class RadialProgressTracker {
                 break;
             }
         }
-        if (progress < 0) return;
+        if (progress < 0) {
+            return;
+        }
 
         BlockState targetState = level.getBlockState(target);
-        if (!RadialUtil.isEffective(targetState, player, target)) return;
+        if (!RadialUtil.isEffective(targetState, player, target)) {
+            return;
+        }
 
         BlockStateModelSet models = mc.getModelManager().getBlockStateModelSet();
 
         for (BlockPos pos : blocks) {
             BlockState state = level.getBlockState(pos);
-            if (state.isAir()) continue;
+            if (state.isAir()) {
+                continue;
+            }
 
             BlockStateModel model = models.get(state);
             pose.pushPose();
@@ -201,7 +219,9 @@ public class RadialProgressTracker {
 
         @Override
         public boolean equals(Object o) {
-            if (!(o instanceof CacheKey other)) return false;
+            if (!(o instanceof CacheKey other)) {
+                return false;
+            }
             return this.pos.equals(other.pos)
                 && this.hitDir == other.hitDir
                 && this.playerDir == other.playerDir

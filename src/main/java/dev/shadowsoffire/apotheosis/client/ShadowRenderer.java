@@ -35,15 +35,15 @@ public class ShadowRenderer {
             return;
         }
 
-        final double x = Mth.lerp((double) partialTicks, entity.xOld, entity.getX());
-        final double y = Mth.lerp((double) partialTicks, entity.yOld, entity.getY());
-        final double z = Mth.lerp((double) partialTicks, entity.zOld, entity.getZ());
-        final int xMin = Mth.floor(x - (double) size);
-        final int xMax = Mth.floor(x + (double) size);
+        final double x = Mth.lerp(partialTicks, entity.xOld, entity.getX());
+        final double y = Mth.lerp(partialTicks, entity.yOld, entity.getY());
+        final double z = Mth.lerp(partialTicks, entity.zOld, entity.getZ());
+        final int xMin = Mth.floor(x - size);
+        final int xMax = Mth.floor(x + size);
         final int yMin = Mth.floor(y - 2); // Discard the concept of weight and always check 2 blocks down.
         final int yMax = Mth.floor(y);
-        final int zMin = Mth.floor(z - (double) size);
-        final int zMax = Mth.floor(z + (double) size);
+        final int zMin = Mth.floor(z - size);
+        final int zMax = Mth.floor(z + size);
 
         // Use a custom render type instead of SHADOW_RENDER_TYPE to replace the texture
         collector.submitCustomGeometry(poseStack, ApothRenderTypes.affixShadow(data.texture()), (pose, vtx) -> {
@@ -91,11 +91,11 @@ public class ShadowRenderer {
                 // That works, until you add animation frames into the texture, at which point those off-texture quads are no longer off-texture.
                 // This call locks the AABB into the intersection of the top of the block with the entity's BB, so only the real shadow is drawn.
                 aabb = aabb.intersect(new AABB(entity.getX() - pos.getX() - size, 0, entity.getZ() - pos.getZ() - size, entity.getX() - pos.getX() + size, aabb.maxY, entity.getZ() - pos.getZ() + size));
-                double minX = (double) pos.getX() + aabb.minX;
-                double maxX = (double) pos.getX() + aabb.maxX;
-                double minY = (double) pos.getY() + aabb.maxY;
-                double minZ = (double) pos.getZ() + aabb.minZ;
-                double maxZ = (double) pos.getZ() + aabb.maxZ;
+                double minX = pos.getX() + aabb.minX;
+                double maxX = pos.getX() + aabb.maxX;
+                double minY = pos.getY() + aabb.maxY;
+                double minZ = pos.getZ() + aabb.minZ;
+                double maxZ = pos.getZ() + aabb.maxZ;
                 float xi = (float) (minX - x);
                 float xp = (float) (maxX - x);
                 float yi = (float) (minY - y) + 0.001F; // Apply a slight offset to avoid Z-clipping with the block [Fixes flickering with BSL]

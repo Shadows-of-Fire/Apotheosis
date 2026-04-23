@@ -111,7 +111,7 @@ public class GemCaseAnimationState {
         }
 
         // Calculate animation progress (0.0 to 1.0)
-        float progress = (this.animationTicks + partialTicks) / (float) ANIMATION_DURATION;
+        float progress = (this.animationTicks + partialTicks) / ANIMATION_DURATION;
         progress = Mth.clamp(progress, 0.0F, 1.0F);
 
         // Smooth easing function (ease-in-out)

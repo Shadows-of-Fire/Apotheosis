@@ -43,10 +43,14 @@ public class AugmentingTableTileRenderer implements BlockEntityRenderer<Augmenti
 
     @Override
     public void submit(State state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
-        if (state.stage == AnimationStage.HIDING) return;
+        if (state.stage == AnimationStage.HIDING) {
+            return;
+        }
 
         BlockStateModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(AdventureModuleClient.STAR_CUBE_MODEL);
-        if (model == null) return;
+        if (model == null) {
+            return;
+        }
 
         float px = 1F / 16F;
 
@@ -61,7 +65,7 @@ public class AugmentingTableTileRenderer implements BlockEntityRenderer<Augmenti
                 poseStack.translate(0F, rise, 0F);
             }
             case FALLING -> {
-                float progress = (AugmentingTableTile.RISE_TIME - state.time + state.partialTicks) / (float) AugmentingTableTile.RISE_TIME;
+                float progress = (AugmentingTableTile.RISE_TIME - state.time + state.partialTicks) / AugmentingTableTile.RISE_TIME;
                 float rise = Mth.lerp(progress, 11F * px, 0.1F * px);
                 poseStack.translate(0F, rise, 0F);
             }

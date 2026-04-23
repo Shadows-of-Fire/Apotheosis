@@ -24,10 +24,14 @@ public abstract class AbstractSkeletonRendererMixin {
 
     @Inject(method = "getArmPose", at = @At("HEAD"), cancellable = true)
     private void apoth_overrideCrossbowPose(AbstractSkeleton mob, HumanoidArm arm, CallbackInfoReturnable<HumanoidModel.ArmPose> cir) {
-        if (mob.getMainArm() != arm || !mob.isAggressive()) return;
+        if (mob.getMainArm() != arm || !mob.isAggressive()) {
+            return;
+        }
 
         ItemStack held = mob.getMainHandItem();
-        if (!(held.getItem() instanceof CrossbowItem)) return;
+        if (!(held.getItem() instanceof CrossbowItem)) {
+            return;
+        }
 
         if (mob.isUsingItem() && mob.getUseItem() == held) {
             cir.setReturnValue(HumanoidModel.ArmPose.CROSSBOW_CHARGE);

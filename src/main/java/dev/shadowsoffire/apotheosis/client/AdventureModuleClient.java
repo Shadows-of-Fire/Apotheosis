@@ -292,7 +292,9 @@ public class AdventureModuleClient {
 
     @SubscribeEvent
     public static void renderBossBeams(net.neoforged.neoforge.client.event.SubmitCustomGeometryEvent e) {
-        if (BOSS_SPAWNS.isEmpty()) return;
+        if (BOSS_SPAWNS.isEmpty()) {
+            return;
+        }
 
         net.minecraft.world.phys.Vec3 camPos = e.getLevelRenderState().cameraRenderState.pos;
         com.mojang.blaze3d.vertex.PoseStack poseStack = e.getPoseStack();
@@ -498,14 +500,20 @@ public class AdventureModuleClient {
 
     @SubscribeEvent
     public static void renderCanSocketTooltip(net.neoforged.neoforge.client.event.ScreenEvent.Render.Post e) {
-        if (!(e.getScreen() instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?> screen)) return;
+        if (!(e.getScreen() instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?> screen)) {
+            return;
+        }
 
         ItemStack carried = screen.getMenu().getCarried();
         net.minecraft.world.inventory.Slot slot = screen.getHoveredSlot();
-        if (slot == null) return;
+        if (slot == null) {
+            return;
+        }
 
         ItemStack hover = slot.getItem();
-        if (!carried.is(Apoth.Items.GEM) || !SocketHelper.canSocketGemInItem(hover, carried)) return;
+        if (!carried.is(Apoth.Items.GEM) || !SocketHelper.canSocketGemInItem(hover, carried)) {
+            return;
+        }
 
         Component itemName = Component.translatable("%s", hover.getHoverName()).withStyle(ChatFormatting.WHITE);
         Component line = Apotheosis.lang("misc", "right_click_to_socket", carried.getHoverName(), itemName).withStyle(ChatFormatting.GRAY);
@@ -521,8 +529,9 @@ public class AdventureModuleClient {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void compareItems(net.neoforged.neoforge.client.event.RenderTooltipEvent.Pre e) {
-        if (inComparisonRender) return;
-        if (!AdventureConfig.enableEquipmentCompare) return;
+        if (inComparisonRender || !AdventureConfig.enableEquipmentCompare) {
+            return;
+        }
 
         Minecraft mc = Minecraft.getInstance();
         if (!ApothMiscUtil.ClientInternal.isKeyReallyDown(AdventureKeys.COMPARE_EQUIPMENT) || !(mc.screen instanceof AbstractContainerScreen<?> screen)) {
@@ -530,7 +539,9 @@ public class AdventureModuleClient {
         }
 
         Slot slot = screen.getHoveredSlot();
-        if (slot == null || !slot.hasItem() || slot.getItem() != e.getItemStack()) return;
+        if (slot == null || !slot.hasItem() || slot.getItem() != e.getItemStack()) {
+            return;
+        }
 
         ItemStack stack = e.getItemStack();
         LootCategory cat = LootCategory.forItem(stack);
@@ -547,22 +558,30 @@ public class AdventureModuleClient {
         Equippable equip = stack.get(DataComponents.EQUIPPABLE);
         if (equip != null) {
             ItemStack candidate = player.getItemBySlot(equip.slot());
-            if (!candidate.isEmpty() && stack != candidate) equipped = candidate;
+            if (!candidate.isEmpty() && stack != candidate) {
+                equipped = candidate;
+            }
         }
         else {
             // Otherwise... well, the item lives in a hand, though we don't know which one necessarily.
             // So we need to look at both, and find one with the same loot category to do the comparison.
             if (cat.getSlots().test(ALObjects.EquipmentSlots.MAINHAND)) {
                 ItemStack candidate = player.getMainHandItem();
-                if (LootCategory.forItem(candidate) == cat && stack != candidate) equipped = candidate;
+                if (LootCategory.forItem(candidate) == cat && stack != candidate) {
+                    equipped = candidate;
+                }
             }
             if (equipped.isEmpty() && cat.getSlots().test(ALObjects.EquipmentSlots.OFFHAND)) {
                 ItemStack candidate = player.getOffhandItem();
-                if (LootCategory.forItem(candidate) == cat && stack != candidate) equipped = candidate;
+                if (LootCategory.forItem(candidate) == cat && stack != candidate) {
+                    equipped = candidate;
+                }
             }
         }
 
-        if (equipped.isEmpty()) return;
+        if (equipped.isEmpty()) {
+            return;
+        }
 
         tryRenderComparison(e, mc, equipped);
     }
@@ -606,7 +625,9 @@ public class AdventureModuleClient {
         EquipmentComparePositioner realPositioner = new EquipmentComparePositioner(scnWidth, scnHeight);
         boolean canRender = realPositioner.position(equipPos, equipWidth + 6, equipHeight + 6, compPos, compWidth + 6, compHeight + 6);
 
-        if (!canRender) return;
+        if (!canRender) {
+            return;
+        }
 
         e.setCanceled(true);
 

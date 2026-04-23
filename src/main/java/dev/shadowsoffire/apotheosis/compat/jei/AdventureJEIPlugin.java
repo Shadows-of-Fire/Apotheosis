@@ -1,7 +1,5 @@
 package dev.shadowsoffire.apotheosis.compat.jei;
 
-import java.util.List;
-
 import org.jetbrains.annotations.Nullable;
 
 import dev.shadowsoffire.apotheosis.Apoth;

@@ -10,7 +10,7 @@ import net.minecraft.resources.Identifier;
 
 /**
  * Render Data for {@link LootRarity}, which defines what kinds of effects will be shown when an affix item of that rarity is dropped in-world.
- * 
+ *
  * @param beamHeight  The height of the beam (and the glow) effect. Zero or less will disable both.
  * @param beamRadius  The radius of the beam effect. Zero or less will disable the beam.
  * @param beamTexture The texture of the beam effect. Ignored if {@code beamRadius} is zero or less.
@@ -35,7 +35,7 @@ public record RarityRenderData(float beamHeight, float beamRadius, Identifier be
 
     /**
      * The shadow data for a {@link RarityRenderData}.
-     * 
+     *
      * @param size      The size of the shadow. This is some kind of fixed magic number. If the size is 0, the shadow will not be rendered.
      * @param alpha     The opacity of the shadow (0 is transparent, 1 is opaque).
      * @param texture   The texture of the shadow. The texture should either be a square or an X by N rectangle, where N is the number of frames in the animation.

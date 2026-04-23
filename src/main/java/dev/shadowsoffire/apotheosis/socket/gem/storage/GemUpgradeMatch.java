@@ -28,7 +28,9 @@ record GemUpgradeMatch(PurityUpgradeRecipe recipe, int leftSlot, int rightSlot, 
     @Nullable
     static GemUpgradeMatch findMatch(Level level, Purity purity, EnumMap<Purity, Integer> map, Container matInv) {
         Purity prev = Purity.values()[purity.ordinal() - 1];
-        if (map.get(prev) < 2) return null;
+        if (map.get(prev) < 2) {
+            return null;
+        }
 
         List<RecipeHolder<GemCuttingRecipe>> recipes = GemCuttingMenu.getRecipes(level);
 
@@ -39,7 +41,9 @@ record GemUpgradeMatch(PurityUpgradeRecipe recipe, int leftSlot, int rightSlot, 
 
                 for (int i = 0; i < matInv.getContainerSize(); i++) {
                     ItemStack stack = matInv.getItem(i);
-                    if (stack.isEmpty()) continue;
+                    if (stack.isEmpty()) {
+                        continue;
+                    }
                     if (leftIng == null) {
                         leftIng = GemCuttingRecipe.getMatch(stack, rec.left());
                         if (leftIng != null) {
@@ -57,7 +61,9 @@ record GemUpgradeMatch(PurityUpgradeRecipe recipe, int leftSlot, int rightSlot, 
                     }
                 }
 
-                if (leftIng == null || rightIng == null) continue;
+                if (leftIng == null || rightIng == null) {
+                    continue;
+                }
 
                 return new GemUpgradeMatch(rec, leftSlot, rightSlot, leftIng, rightIng);
             }

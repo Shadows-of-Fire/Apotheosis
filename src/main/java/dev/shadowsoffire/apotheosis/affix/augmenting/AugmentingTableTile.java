@@ -105,7 +105,9 @@ public class AugmentingTableTile extends BlockEntity implements TickingBlockEnti
 
     @Override
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-        if (this.level == null) return;
+        if (this.level == null) {
+            return;
+        }
         for (int i = 0; i < this.inv.size(); i++) {
             ItemResource res = this.inv.getResource(i);
             int amount = this.inv.getAmountAsInt(i);

@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.phys.Vec3;
 
 public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile, GemCaseTileRenderer.State> {
@@ -47,9 +48,11 @@ public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile, Gem
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         state.entries.clear();
 
-        if (blockEntity.getLevel() == null) return;
+        if (blockEntity.getLevel() == null) {
+            return;
+        }
 
-        Direction facing = blockEntity.getBlockState().getValue(GemCaseBlock.FACING);
+        Direction facing = blockEntity.getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         state.facingAngle = switch (facing) {
             case NORTH -> 0F;
             case EAST -> 270F;
@@ -62,9 +65,13 @@ public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile, Gem
         int gemIndex = 0;
 
         for (var entry : blockEntity.gems.entrySet()) {
-            if (gemIndex >= 16) break;
+            if (gemIndex >= 16) {
+                break;
+            }
             DynamicHolder<Gem> holder = entry.getKey();
-            if (!holder.isBound()) continue;
+            if (!holder.isBound()) {
+                continue;
+            }
 
             EnumMap<Purity, Integer> purityMap = entry.getValue();
             Purity highestStocked = null;
@@ -75,7 +82,9 @@ public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile, Gem
                     }
                 }
             }
-            if (highestStocked == null) continue;
+            if (highestStocked == null) {
+                continue;
+            }
 
             ItemStack stack = GemItem.createStack(holder.get(), highestStocked, 1);
             ItemStackRenderState renderState = new ItemStackRenderState();

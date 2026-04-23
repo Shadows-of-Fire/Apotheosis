@@ -101,6 +101,7 @@ public class RadialBonus extends GemBonus {
             return this;
         }
 
+        @Override
         public RadialBonus build(GemClass gClass) {
             return new RadialBonus(gClass, this.values);
         }

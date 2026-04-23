@@ -16,7 +16,7 @@ public class SongProvider {
         BootstrapContext<JukeboxSong> context, ResourceKey<JukeboxSong> key, SoundEvent soundEvent, int lengthInSeconds, int comparatorOutput) {
         context.register(
             key,
-            new JukeboxSong(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(soundEvent), Component.translatable(Util.makeDescriptionId("jukebox_song", key.identifier())), (float) lengthInSeconds, comparatorOutput));
+            new JukeboxSong(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(soundEvent), Component.translatable(Util.makeDescriptionId("jukebox_song", key.identifier())), lengthInSeconds, comparatorOutput));
     }
 
     public static void bootstrap(BootstrapContext<JukeboxSong> context) {

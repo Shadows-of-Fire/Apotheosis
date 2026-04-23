@@ -91,6 +91,7 @@ public class OmneticBonus extends GemBonus {
             return this;
         }
 
+        @Override
         public OmneticBonus build(GemClass gClass) {
             return new OmneticBonus(gClass, this.values);
         }

@@ -36,10 +36,14 @@ public class AffixItemEffectRenderer {
 
     @SubscribeEvent
     public static void submitBeams(SubmitCustomGeometryEvent e) {
-        if (!AdventureConfig.enableAffixItemEffects) return;
+        if (!AdventureConfig.enableAffixItemEffects) {
+            return;
+        }
 
         Minecraft mc = Minecraft.getInstance();
-        if (mc.level == null) return;
+        if (mc.level == null) {
+            return;
+        }
 
         Vec3 camPos = e.getLevelRenderState().cameraRenderState.pos;
         PoseStack pose = e.getPoseStack();
@@ -48,7 +52,9 @@ public class AffixItemEffectRenderer {
         long gameTime = mc.level.getGameTime();
 
         for (Entity ent : mc.level.entitiesForRendering()) {
-            if (!(ent instanceof ItemEntity item)) continue;
+            if (!(ent instanceof ItemEntity item)) {
+                continue;
+            }
 
             ItemStack stack = item.getItem();
             DynamicHolder<LootRarity> rarityHolder = AffixHelper.getRarity(stack);
@@ -118,23 +124,35 @@ public class AffixItemEffectRenderer {
 
     @SubscribeEvent
     public static void spawnParticles(ClientTickEvent.Post e) {
-        if (!AdventureConfig.enableAffixItemEffects) return;
+        if (!AdventureConfig.enableAffixItemEffects) {
+            return;
+        }
 
         Minecraft mc = Minecraft.getInstance();
-        if (mc.level == null || mc.isPaused()) return;
+        if (mc.level == null || mc.isPaused()) {
+            return;
+        }
 
         for (Entity ent : mc.level.entitiesForRendering()) {
-            if (!(ent instanceof ItemEntity item)) continue;
+            if (!(ent instanceof ItemEntity item)) {
+                continue;
+            }
 
             ItemStack stack = item.getItem();
             DynamicHolder<LootRarity> rarityHolder = AffixHelper.getRarity(stack);
-            if (!rarityHolder.isBound() || !item.onGround()) continue;
+            if (!rarityHolder.isBound() || !item.onGround()) {
+                continue;
+            }
 
             LootRarity rarity = rarityHolder.get();
-            if (!rarity.renderData().particle().enabled()) continue;
+            if (!rarity.renderData().particle().enabled()) {
+                continue;
+            }
 
             int delay = item.getData(Apoth.Attachments.AFFIX_EFFECT_NEXT_PARTICLE_TIME);
-            if (item.tickCount - delay <= 0) continue;
+            if (item.tickCount - delay <= 0) {
+                continue;
+            }
 
             int color = rarity.color().getValue();
             RarityParticleData opt = new RarityParticleData(ARGB.red(color) / 255F, ARGB.green(color) / 255F, ARGB.blue(color) / 255F);

@@ -164,7 +164,7 @@ public class FestiveAffix extends Affix {
 
     /**
      * Data for the Festive Affix.
-     * 
+     *
      * @param chance The chance of the festive affix triggering, as a step function.
      * @param rolls  The number of extra copies of items to drop when the affix triggers.
      */

@@ -151,7 +151,7 @@ public class SocketHelper {
      * Checks if a gem can be applied to a given {@link ItemStack}.
      * <p>
      * A gem may be socketed into an item if the item has empty sockets, the gem matches the item, and no other mod changes the rules.
-     * 
+     *
      * @param stack    The item being socketed into
      * @param gemStack The gem to socket
      * @return True if the gem may be socketed into the item.

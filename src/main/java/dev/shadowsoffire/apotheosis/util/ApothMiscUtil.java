@@ -172,7 +172,7 @@ public class ApothMiscUtil {
          * {@link KeyModifier#NONE} works.
          * To properly validate if the key is down, we need to first check if the key is a modifier key, and if so, we need to skip the modifier check (but still do the
          * conflict context check).
-         * 
+         *
          * @param mapping
          * @return
          */
@@ -183,11 +183,7 @@ public class ApothMiscUtil {
             }
 
             IKeyConflictContext context = mapping.getKeyConflictContext();
-            if (!context.isActive()) {
-                return false;
-            }
-
-            if (!InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), key.getValue())) {
+            if (!context.isActive() || !InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), key.getValue())) {
                 return false;
             }
 

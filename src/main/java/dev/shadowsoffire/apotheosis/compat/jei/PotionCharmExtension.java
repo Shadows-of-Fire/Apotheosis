@@ -37,7 +37,7 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
     @Override
     public List<SlotDisplay> getIngredients(RecipeHolder<PotionCharmRecipe> recipeHolder) {
         return recipeHolder.value().getIngredients().stream()
-            .map(opt -> opt.map(Ingredient::display).orElse((SlotDisplay) SlotDisplay.Empty.INSTANCE))
+            .map(opt -> opt.map(Ingredient::display).orElse(SlotDisplay.Empty.INSTANCE))
             .toList();
     }
 

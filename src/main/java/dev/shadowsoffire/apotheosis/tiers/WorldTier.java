@@ -23,7 +23,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ByIdMap;
@@ -86,7 +85,7 @@ public enum WorldTier implements StringRepresentable {
      */
     public static WorldTier getTier(Player player) {
         if (player instanceof FakePlayer fp) {
-            MinecraftServer server = ((ServerLevel) fp.level()).getServer();
+            MinecraftServer server = fp.level().getServer();
             ServerPlayer realPlayer = server.getPlayerList().getPlayer(fp.getUUID());
             if (realPlayer != null) {
                 WorldTier realTier = getTier(realPlayer);
@@ -108,11 +107,11 @@ public enum WorldTier implements StringRepresentable {
             PacketDistributor.sendToPlayer(sp, new WorldTierPayload(tier));
 
             for (TierAugment aug : TierAugmentRegistry.getAugments(oldTier, Target.PLAYERS)) {
-                aug.remove((ServerLevel) sp.level(), player);
+                aug.remove(sp.level(), player);
             }
 
             for (TierAugment aug : TierAugmentRegistry.getAugments(tier, Target.PLAYERS)) {
-                aug.apply((ServerLevel) sp.level(), player);
+                aug.apply(sp.level(), player);
             }
 
             player.setData(Attachments.TIER_AUGMENTS_APPLIED, true);

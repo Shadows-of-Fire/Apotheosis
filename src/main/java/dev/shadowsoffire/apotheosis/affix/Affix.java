@@ -295,7 +295,7 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
 
     /**
      * Checks if the affix is still on cooldown, if a cooldown was set via {@link #startCooldown(Affix, int, LivingEntity)}
-     * 
+     *
      * TODO: Migrate to using an attachment which stores a map of id -> cooldown, since we can sync it.
      */
     public static boolean isOnCooldown(Identifier id, int cooldown, LivingEntity entity) {

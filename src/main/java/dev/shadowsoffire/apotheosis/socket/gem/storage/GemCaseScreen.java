@@ -120,7 +120,9 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
         super.extractTooltip(gfx, mouseX, mouseY);
         if (this.getSelectedGem() != null) {
             for (Purity p : Purity.ALL_PURITIES) {
-                if (!p.isAtLeast(this.getSelectedGem().getMinPurity())) continue;
+                if (!p.isAtLeast(this.getSelectedGem().getMinPurity())) {
+                    continue;
+                }
                 int count = this.menu.getGemCount(this.getSelectedGem(), p);
                 if (count == 0) {
                     int slotIndex = p.ordinal();
@@ -154,7 +156,9 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
 
         if (this.getSelectedGem() != null) {
             for (Purity p : Purity.ALL_PURITIES) {
-                if (!p.isAtLeast(this.getSelectedGem().getMinPurity())) continue;
+                if (!p.isAtLeast(this.getSelectedGem().getMinPurity())) {
+                    continue;
+                }
                 int count = this.menu.getGemCount(this.getSelectedGem(), p);
                 if (count == 0) {
                     ItemStack stack = getSelectedGem().toStack(p);

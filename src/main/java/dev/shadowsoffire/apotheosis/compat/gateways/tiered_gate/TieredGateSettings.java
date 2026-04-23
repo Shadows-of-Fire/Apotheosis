@@ -15,7 +15,7 @@ import net.minecraft.sounds.SoundEvent;
 
 /**
  * Basic settings for a {@link TieredGateway} packed into a record for convenience.
- * 
+ *
  * @param tier       The {@link WorldTier} of the gate. If the summoner's tier does not match, the gate will not open.
  *                   Additionally, if the summoner's tier changes while the gate is open, it will close.
  * @param size       The {@link Size} of the gate. Controls the bounding box and pearl texture.

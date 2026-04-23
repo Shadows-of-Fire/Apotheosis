@@ -24,6 +24,7 @@ public class GemCaseSlot extends Slot {
         this.purity = purity;
     }
 
+    @Override
     public void onTake(Player player, ItemStack stack) {
         if (!stack.isEmpty()) { // Technically empty should trigger some warnings, but shift-click always submits an empty stack.
             DynamicHolder<Gem> gem = GemItem.getGem(stack);
@@ -42,6 +43,7 @@ public class GemCaseSlot extends Slot {
         return false;
     }
 
+    @Override
     public ItemStack getItem() {
         Gem gem = this.menu.selectedGem;
         if (gem == null) {
@@ -53,6 +55,7 @@ public class GemCaseSlot extends Slot {
         return stack;
     }
 
+    @Override
     public boolean hasItem() {
         Gem gem = this.menu.selectedGem;
         if (gem == null) {
@@ -62,20 +65,26 @@ public class GemCaseSlot extends Slot {
         return this.menu.getGemCount(gem, purity) > 0;
     }
 
+    @Override
     public void setByPlayer(ItemStack stack) {}
 
+    @Override
     public void setByPlayer(ItemStack newStack, ItemStack oldStack) {}
 
+    @Override
     public void set(ItemStack stack) {}
 
+    @Override
     public void setChanged() {
         this.container.setChanged();
     }
 
+    @Override
     public int getMaxStackSize() {
         return this.container.getMaxStackSize();
     }
 
+    @Override
     public int getMaxStackSize(ItemStack stack) {
         return Math.min(this.getMaxStackSize(), stack.getMaxStackSize());
     }
@@ -83,6 +92,7 @@ public class GemCaseSlot extends Slot {
     /**
      * This remove impl is not able to actually do the removals, and instead relies on the eventual call to `onTake` to do that.
      */
+    @Override
     public ItemStack remove(int amount) {
         Gem gem = this.menu.selectedGem;
         if (gem == null) {
@@ -100,10 +110,12 @@ public class GemCaseSlot extends Slot {
     /**
      * Return whether this slot's stack can be taken from this slot.
      */
+    @Override
     public boolean mayPickup(Player player) {
         return this.hasItem();
     }
 
+    @Override
     public boolean isActive() {
         Gem gem = this.menu.selectedGem;
         if (gem == null) {
@@ -113,18 +125,22 @@ public class GemCaseSlot extends Slot {
         return this.purity.isAtLeast(gem.getMinPurity());
     }
 
+    @Override
     public boolean isSameInventory(Slot other) {
         return false;
     }
 
+    @Override
     public boolean allowModification(Player player) {
         return false;
     }
 
+    @Override
     public boolean isHighlightable() {
         return true;
     }
 
+    @Override
     public boolean isFake() {
         return false;
     }

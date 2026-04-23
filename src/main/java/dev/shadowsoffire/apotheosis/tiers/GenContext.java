@@ -70,10 +70,18 @@ public record GenContext(RandomSource rand, WorldTier tier, float luck, Resource
 
     @Nullable
     public static Player findPlayer(LootContext ctx) {
-        if (ctx.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof Player p) return p;
-        if (ctx.getOptionalParameter(LootContextParams.ATTACKING_ENTITY) instanceof Player p) return p;
-        if (ctx.getOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY) instanceof Player p) return p;
-        if (ctx.getOptionalParameter(LootContextParams.LAST_DAMAGE_PLAYER) != null) return ctx.getOptionalParameter(LootContextParams.LAST_DAMAGE_PLAYER);
+        if (ctx.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof Player p) {
+            return p;
+        }
+        if (ctx.getOptionalParameter(LootContextParams.ATTACKING_ENTITY) instanceof Player p) {
+            return p;
+        }
+        if (ctx.getOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY) instanceof Player p) {
+            return p;
+        }
+        if (ctx.getOptionalParameter(LootContextParams.LAST_DAMAGE_PLAYER) != null) {
+            return ctx.getOptionalParameter(LootContextParams.LAST_DAMAGE_PLAYER);
+        }
         return null;
     }
 

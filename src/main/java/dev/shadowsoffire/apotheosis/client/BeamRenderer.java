@@ -22,9 +22,9 @@ public class BeamRenderer {
         final float maxY = yOffset + height;
         poseStack.pushPose();
         poseStack.translate(0.5, 0.0, 0.5);
-        float f = (float) Math.floorMod(gameTime, 40) + partialTick;
+        float f = Math.floorMod(gameTime, 40) + partialTick;
         float f1 = height < 0 ? f : -f;
-        float f2 = Mth.frac(f1 * 0.2F - (float) Mth.floor(f1 * 0.1F));
+        float f2 = Mth.frac(f1 * 0.2F - Mth.floor(f1 * 0.1F));
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(f * 2.25F - 45.0F));
         final float f6 = -beamRadius;

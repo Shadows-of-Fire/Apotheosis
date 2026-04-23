@@ -216,7 +216,7 @@ public class AffixHelper {
      * Applies the effect of the Sigil of Malice to the given item stack.
      * <p>
      * The sigil increases the effective level of one affix on the item to 1.5F, and removes another affix at random (based on the reforge seed).
-     * 
+     *
      * @param stack The input stack. The stack is modified in place.
      * @apiNote This cannot be run reliably on the client, as the reforge seed is not guaranteed to be present.
      */
@@ -273,7 +273,7 @@ public class AffixHelper {
      * Applies the effect of the Sigil of Supremacy to the given item stack.
      * <p>
      * The sigil increases the effective level of all affixes on the item to 1.5F.
-     * 
+     *
      * @param stack The input stack. The stack is modified in place.
      */
     public static void applySupremacy(ItemStack stack) {

@@ -16,7 +16,7 @@ public class MultiPlayerGameModeMixin {
      * WAR for the fact that BlockEvent.BreakEvent is not called on the client.
      * <p>
      * Instead, we tell the progress tracker to break all client blocks when the target block is broken.
-     * 
+     *
      * @param pos
      * @param cir
      */

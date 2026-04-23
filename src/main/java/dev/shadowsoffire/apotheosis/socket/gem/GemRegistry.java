@@ -75,7 +75,7 @@ public class GemRegistry extends TieredDynamicRegistry<Gem> {
      * Creates a new {@link ItemStack} containing the provided {@link Gem}.
      * <p>
      * The provided purity will be automatically clamped based on {@link Gem#getMinPurity()}.
-     * 
+     *
      * @deprecated Use {@link Gem#toStack(Purity)} instead.
      */
     @Deprecated

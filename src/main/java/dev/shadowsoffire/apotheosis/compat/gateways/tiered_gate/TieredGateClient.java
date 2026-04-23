@@ -150,7 +150,9 @@ public class TieredGateClient {
 
         float waveProgress = 1F / maxWave;
         float progress = waveProgress * (maxWave - wave + 1);
-        if (gate.isWaveActive()) progress -= waveProgress * ((float) (maxEnemies - enemies) / maxEnemies);
+        if (gate.isWaveActive()) {
+            progress -= waveProgress * ((float) (maxEnemies - enemies) / maxEnemies);
+        }
 
         int i = (int) (progress * 183.0F);
         if (i > 0) {
@@ -193,7 +195,9 @@ public class TieredGateClient {
             if (gate.isLastWave()) {
                 str = I18n.get("boss.gateways.done");
             }
-            else str = I18n.get("boss.gateways.starting", wave, StringUtil.formatTickDuration(time, tps));
+            else {
+                str = I18n.get("boss.gateways.starting", wave, StringUtil.formatTickDuration(time, tps));
+            }
         }
         component = Component.literal(str).withStyle(ChatFormatting.GREEN);
         strWidth = font.width(component);

@@ -25,7 +25,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
  * <p>
  * The entry can be configured with a set of {@link Purity} values, which will be randomly selected when generating the gem,
  * as well as a set of {@link Gem} holders, which will be randomly selected from when generating the gem.
- * 
+ *
  * @apiNote If the effective weights of all gems in the pool are zero, a random one will be selected uniformly.
  */
 public class GemLootPoolEntry extends ContextualLootPoolEntry {

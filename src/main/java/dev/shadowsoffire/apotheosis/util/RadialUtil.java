@@ -95,7 +95,7 @@ public class RadialUtil {
      * Returns a list of all blocks that would be broken by the radial breaking operation.
      * <p>
      * The list of all blocks is eagerly computed and returned, so be careful with large radii.
-     * 
+     *
      * @param player The player breaking the block
      * @param srcPos The position of the originally broken block
      * @param data   The level of this affix, in this case, the mode of operation.

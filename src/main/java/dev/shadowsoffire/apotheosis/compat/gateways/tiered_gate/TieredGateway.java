@@ -34,7 +34,7 @@ import net.minecraft.world.level.Level;
 
 /**
  * A Gateway is the definition of a Gateway Entity.
- * 
+ *
  * @param settings     The {@linkplain TieredGateSettings settings} of the Gateway.
  * @param waves        The {@linkplain Wave waves} of the Gateway.
  * @param rewards      The {@linkplain Reward completion rewards} if the final wave is defeated. Always displayed.
@@ -132,7 +132,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Adds a wave to this gateway.
-         * 
+         *
          * @param wave The wave to add
          * @return This builder for chaining
          */
@@ -143,7 +143,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Adds a wave to this gateway.
-         * 
+         *
          * @param config A unary operator to create the wave.
          * @return This builder for chaining
          */
@@ -153,7 +153,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Adds multiple waves to this gateway.
-         * 
+         *
          * @param waves The waves to add
          * @return This builder for chaining
          */
@@ -164,7 +164,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Adds a reward to this gateway.
-         * 
+         *
          * @param reward The reward to add
          * @return This builder for chaining
          */
@@ -175,7 +175,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Adds multiple rewards to this gateway.
-         * 
+         *
          * @param rewards The rewards to add
          * @return This builder for chaining
          */
@@ -186,7 +186,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Adds a failure condition to this gateway.
-         * 
+         *
          * @param failure The failure to add
          * @return This builder for chaining
          */
@@ -197,7 +197,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Adds multiple failure conditions to this gateway.
-         * 
+         *
          * @param failures The failures to add
          * @return This builder for chaining
          */
@@ -208,7 +208,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Sets the rules for this gateway.
-         * 
+         *
          * @param rules The rules to use
          * @return This builder for chaining
          */
@@ -219,7 +219,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Sets the rules for this gateway using a configuration function.
-         * 
+         *
          * @param config A unary operator to configure the GateRules
          * @return This builder for chaining
          */
@@ -229,7 +229,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Sets the boss event settings for this gateway.
-         * 
+         *
          * @param bossSettings The boss event settings to use
          * @return This builder for chaining
          */
@@ -240,7 +240,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
 
         /**
          * Builds a new NormalGateway with the configured parameters.
-         * 
+         *
          * @return A new NormalGateway instance
          * @throws IllegalStateException if required parameters are missing
          */

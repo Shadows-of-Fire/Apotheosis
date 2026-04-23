@@ -59,7 +59,9 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
     @Override
     public void removed(Player player) {
         super.removed(player);
-        if (!this.level.isClientSide()) this.tile.removeListener(this);
+        if (!this.level.isClientSide()) {
+            this.tile.removeListener(this);
+        }
         this.clearContainer(player, this.ioInv);
         this.clearContainer(player, this.upgradeMatInv);
     }
@@ -150,7 +152,9 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
     }
 
     public void onChanged() {
-        if (this.notifier != null) this.notifier.run();
+        if (this.notifier != null) {
+            this.notifier.run();
+        }
     }
 
     public int getGemCount(Gem gem) {
@@ -166,14 +170,18 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
     }
 
     public ItemStack extractGem(Purity p, int count) {
-        if (this.selectedGem == null) return ItemStack.EMPTY;
+        if (this.selectedGem == null) {
+            return ItemStack.EMPTY;
+        }
         DynamicHolder<Gem> holder = GemRegistry.INSTANCE.holder(this.selectedGem);
         return this.tile.extractGem(holder, p, count);
     }
 
     @Nullable
     public GemUpgradeMatch getUpgradeMatch(Purity purity) {
-        if (this.selectedGem == null) return null;
+        if (this.selectedGem == null) {
+            return null;
+        }
         return this.tile.getUpgradeMatch(GemRegistry.INSTANCE.holder(this.selectedGem), purity, upgradeMatInv);
     }
 
@@ -214,14 +222,18 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
         boolean shift = (id & 0x1000) != 0;
         Purity purity = Purity.BY_ID.apply(id & 0xFFF);
 
-        if (this.selectedGem == null || purity == Purity.CRACKED) return;
+        if (this.selectedGem == null || purity == Purity.CRACKED) {
+            return;
+        }
 
         DynamicHolder<Gem> holder = GemRegistry.INSTANCE.holder(this.selectedGem);
         int tries = shift ? 64 : 1;
 
         while (tries-- > 0) {
             boolean result = this.tile.upgradeGem(holder, purity, this.upgradeMatInv);
-            if (!result) break;
+            if (!result) {
+                break;
+            }
 
             this.level.playSound(null, this.pos, SoundEvents.AMETHYST_BLOCK_HIT, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.getRandom().nextFloat()));
         }

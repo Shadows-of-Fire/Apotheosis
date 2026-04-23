@@ -52,19 +52,25 @@ public class SalvagingTableTile extends BlockEntity {
 
         @Override
         public ItemResource getResource(int index) {
-            if (index == 0) return ItemResource.EMPTY;
+            if (index == 0) {
+                return ItemResource.EMPTY;
+            }
             return SalvagingTableTile.this.output.getResource(index - 1);
         }
 
         @Override
         public long getAmountAsLong(int index) {
-            if (index == 0) return 0;
+            if (index == 0) {
+                return 0;
+            }
             return SalvagingTableTile.this.output.getAmountAsLong(index - 1);
         }
 
         @Override
         public long getCapacityAsLong(int index, ItemResource resource) {
-            if (index == 0) return isValid(index, resource) ? 1 : 0;
+            if (index == 0) {
+                return isValid(index, resource) ? 1 : 0;
+            }
             return SalvagingTableTile.this.output.getCapacityAsLong(index - 1, resource);
         }
 
@@ -78,11 +84,15 @@ public class SalvagingTableTile extends BlockEntity {
 
         @Override
         public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
-            if (index != 0 || amount <= 0) return 0;
+            if (index != 0 || amount <= 0) {
+                return 0;
+            }
 
             ItemStack inStack = resource.toStack(1);
             List<ItemStack> outputs = SalvagingMenu.getSalvageResults(SalvagingTableTile.this.level, inStack);
-            if (outputs.isEmpty()) return 0;
+            if (outputs.isEmpty()) {
+                return 0;
+            }
 
             try (Transaction probe = Transaction.open(transaction)) {
                 for (ItemStack out : outputs) {
@@ -102,7 +112,9 @@ public class SalvagingTableTile extends BlockEntity {
 
         @Override
         public int extract(int index, ItemResource resource, int amount, TransactionContext transaction) {
-            if (index == 0) return 0;
+            if (index == 0) {
+                return 0;
+            }
             return SalvagingTableTile.this.output.extract(index - 1, resource, amount, transaction);
         }
 

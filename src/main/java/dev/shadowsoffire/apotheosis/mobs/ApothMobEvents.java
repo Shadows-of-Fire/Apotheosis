@@ -35,7 +35,6 @@ import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -184,8 +183,8 @@ public class ApothMobEvents {
             sLevel.players().forEach(p -> {
                 Vec3 tPos = new Vec3(invader.getX(), p.getY(), invader.getZ());
                 if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
-                    ((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) invader.getX(), (int) invader.getY())));
-                    PacketDistributor.sendToPlayer((ServerPlayer) p, new BossSpawnPayload(invader.blockPosition(), rarity));
+                    p.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) invader.getX(), (int) invader.getY())));
+                    PacketDistributor.sendToPlayer(p, new BossSpawnPayload(invader.blockPosition(), rarity));
                 }
             });
         }

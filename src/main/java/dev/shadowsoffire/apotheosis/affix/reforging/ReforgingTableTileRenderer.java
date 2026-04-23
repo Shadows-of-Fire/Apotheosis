@@ -42,7 +42,9 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
     @Override
     public void submit(State state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         BlockStateModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(AdventureModuleClient.HAMMER_MODEL);
-        if (model == null) return;
+        if (model == null) {
+            return;
+        }
 
         float px = 1F / 16F;
 

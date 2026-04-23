@@ -61,7 +61,9 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
     @Nullable
     @SuppressWarnings("deprecation")
     public ReforgingRecipe getRecipeFor(LootRarity rarity) {
-        if (this.level == null) return null;
+        if (this.level == null) {
+            return null;
+        }
         Collection<RecipeHolder<ReforgingRecipe>> recipes;
         if (this.level.isClientSide()) {
             recipes = ReforgingRecipeCache.all();
@@ -125,7 +127,9 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 
     @Override
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-        if (this.level == null) return;
+        if (this.level == null) {
+            return;
+        }
         for (int i = 0; i < this.inv.size(); i++) {
             ItemResource res = this.inv.getResource(i);
             int amount = this.inv.getAmountAsInt(i);

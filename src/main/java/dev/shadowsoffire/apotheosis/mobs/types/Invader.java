@@ -158,7 +158,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         // But only mob-specific things, not a full load()
         if (nbt.isPresent()) {
             try (net.minecraft.util.ProblemReporter.ScopedCollector reporter = new net.minecraft.util.ProblemReporter.ScopedCollector(entity.problemPath(), Apotheosis.LOGGER)) {
-                ((dev.shadowsoffire.apotheosis.mixin.EntityInvoker) (Object) entity).callReadAdditionalSaveData(net.minecraft.world.level.storage.TagValueInput.create(reporter, level.registryAccess(), nbt.get()));
+                ((dev.shadowsoffire.apotheosis.mixin.EntityInvoker) entity).callReadAdditionalSaveData(net.minecraft.world.level.storage.TagValueInput.create(reporter, level.registryAccess(), nbt.get()));
             }
         }
 

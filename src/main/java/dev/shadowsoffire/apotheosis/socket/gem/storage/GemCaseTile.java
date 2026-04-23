@@ -62,7 +62,9 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
      */
     public void depositGem(ItemStack stack) {
         UnsocketedGem gem = UnsocketedGem.of(stack);
-        if (!gem.isValid()) return;
+        if (!gem.isValid()) {
+            return;
+        }
 
         Purity purity = gem.purity();
         EnumMap<Purity, Integer> map = this.getGems(gem.gem());
@@ -123,7 +125,9 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
     @Nullable
     public GemUpgradeMatch getUpgradeMatch(DynamicHolder<Gem> gem, Purity purity, Container matInv) {
         EnumMap<Purity, Integer> map = this.getGems(gem);
-        if (map.get(purity) >= maxCount) return null;
+        if (map.get(purity) >= maxCount) {
+            return null;
+        }
         return GemUpgradeMatch.findMatch(this.level, purity, map, matInv);
     }
 
@@ -180,7 +184,9 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
         for (String key : gems.keySet()) {
             Identifier res = Identifier.tryParse(key);
             DynamicHolder<Gem> gem = GemRegistry.INSTANCE.holder(res);
-            if (!gem.isBound()) continue;
+            if (!gem.isBound()) {
+                continue;
+            }
             CompoundTag purityTag = gems.getCompoundOrEmpty(key);
             if (purityTag.isEmpty()) {
                 this.gems.remove(gem);
@@ -295,27 +301,41 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
 
         @Override
         public ItemResource getResource(int index) {
-            if (index <= 0 || index >= this.size()) return ItemResource.EMPTY;
+            if (index <= 0 || index >= this.size()) {
+                return ItemResource.EMPTY;
+            }
             UnsocketedGem gem = GemCaseTile.this.getGemForSlot(index - 1);
-            if (!gem.gem().isBound()) return ItemResource.EMPTY;
+            if (!gem.gem().isBound()) {
+                return ItemResource.EMPTY;
+            }
             int count = GemCaseTile.this.getCount(gem.gem(), gem.purity());
-            if (count <= 0) return ItemResource.EMPTY;
+            if (count <= 0) {
+                return ItemResource.EMPTY;
+            }
             return ItemResource.of(GemItem.createStack(gem.gem().get(), gem.purity(), 1));
         }
 
         @Override
         public long getAmountAsLong(int index) {
-            if (index <= 0 || index >= this.size()) return 0;
+            if (index <= 0 || index >= this.size()) {
+                return 0;
+            }
             UnsocketedGem gem = GemCaseTile.this.getGemForSlot(index - 1);
-            if (!gem.gem().isBound()) return 0;
+            if (!gem.gem().isBound()) {
+                return 0;
+            }
             return GemCaseTile.this.getCount(gem.gem(), gem.purity());
         }
 
         @Override
         public long getCapacityAsLong(int index, ItemResource resource) {
             // Must report general capacity when queried with an empty resource so hopper insertion works.
-            if (resource.isEmpty()) return GemCaseTile.this.maxCount;
-            if (!UnsocketedGem.of(resource.toStack()).isValid()) return 0;
+            if (resource.isEmpty()) {
+                return GemCaseTile.this.maxCount;
+            }
+            if (!UnsocketedGem.of(resource.toStack()).isValid()) {
+                return 0;
+            }
             return GemCaseTile.this.maxCount;
         }
 
@@ -326,15 +346,21 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
 
         @Override
         public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
-            if (amount <= 0 || index != 0) return 0;
+            if (amount <= 0 || index != 0) {
+                return 0;
+            }
             ItemStack stack = resource.toStack(amount);
             UnsocketedGem gem = UnsocketedGem.of(stack);
-            if (!gem.isValid()) return 0;
+            if (!gem.isValid()) {
+                return 0;
+            }
 
             EnumMap<Purity, Integer> map = GemCaseTile.this.getGems(gem.gem());
             int stored = map.get(gem.purity());
             int inserted = Math.min(amount, GemCaseTile.this.maxCount - stored);
-            if (inserted <= 0) return 0;
+            if (inserted <= 0) {
+                return 0;
+            }
 
             updateSnapshots(transaction);
             map.put(gem.purity(), stored + inserted);
@@ -343,16 +369,24 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
 
         @Override
         public int extract(int index, ItemResource resource, int amount, TransactionContext transaction) {
-            if (index <= 0 || index >= this.size() || amount <= 0) return 0;
+            if (index <= 0 || index >= this.size() || amount <= 0) {
+                return 0;
+            }
             UnsocketedGem slotGem = GemCaseTile.this.getGemForSlot(index - 1);
-            if (!slotGem.gem().isBound()) return 0;
+            if (!slotGem.gem().isBound()) {
+                return 0;
+            }
             UnsocketedGem reqGem = UnsocketedGem.of(resource.toStack());
-            if (!reqGem.isValid() || reqGem.gem() != slotGem.gem() || reqGem.purity() != slotGem.purity()) return 0;
+            if (!reqGem.isValid() || reqGem.gem() != slotGem.gem() || reqGem.purity() != slotGem.purity()) {
+                return 0;
+            }
 
             EnumMap<Purity, Integer> map = GemCaseTile.this.getGems(slotGem.gem());
             int stored = map.get(slotGem.purity());
             int extracted = Math.min(amount, stored);
-            if (extracted <= 0) return 0;
+            if (extracted <= 0) {
+                return 0;
+            }
 
             updateSnapshots(transaction);
             map.put(slotGem.purity(), stored - extracted);

@@ -26,7 +26,9 @@ public class ReforgingTableBlockItem extends BlockItem {
         tooltip.accept(Component.translatable("block.apotheosis.reforging_table.desc").withStyle(ChatFormatting.GRAY));
 
         LootRarity max = this.computeMaxRarity();
-        if (max == null) return;
+        if (max == null) {
+            return;
+        }
 
         LootRarity globalMax = RarityRegistry.getSortedRarities().stream()
             .max(Comparator.comparingInt(LootRarity::sortIndex))
@@ -41,8 +43,9 @@ public class ReforgingTableBlockItem extends BlockItem {
         LootRarity best = null;
         for (RecipeHolder<ReforgingRecipe> holder : ReforgingRecipeCache.all()) {
             ReforgingRecipe recipe = holder.value();
-            if (!recipe.tables().contains(this.getBlock().builtInRegistryHolder())) continue;
-            if (!recipe.rarity().isBound()) continue;
+            if (!recipe.tables().contains(this.getBlock().builtInRegistryHolder()) || !recipe.rarity().isBound()) {
+                continue;
+            }
             LootRarity r = recipe.rarity().get();
             if (best == null || r.sortIndex() > best.sortIndex()) {
                 best = r;
