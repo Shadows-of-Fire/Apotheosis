@@ -64,27 +64,27 @@ public class WorldTierSelectScreen extends Screen {
         this.leftPos = Math.max(0, (this.width - GUI_WIDTH) / 2);
         this.topPos = Math.max(0, (this.height - GUI_HEIGHT) / 2);
 
-        addTierButton(WorldTier.HAVEN, b -> b.pos(leftPos + 100, topPos + 215));
-        addTierButton(WorldTier.FRONTIER, b -> b.pos(leftPos + 210, topPos + 205));
-        addTierButton(WorldTier.ASCENT, b -> b.pos(leftPos + 230, topPos + 115));
-        addTierButton(WorldTier.SUMMIT, b -> b.pos(leftPos + 315, topPos + 60));
-        addTierButton(WorldTier.PINNACLE, b -> b.pos(leftPos + 395, topPos));
+        this.addTierButton(WorldTier.HAVEN, b -> b.pos(this.leftPos + 100, this.topPos + 215));
+        this.addTierButton(WorldTier.FRONTIER, b -> b.pos(this.leftPos + 210, this.topPos + 205));
+        this.addTierButton(WorldTier.ASCENT, b -> b.pos(this.leftPos + 230, this.topPos + 115));
+        this.addTierButton(WorldTier.SUMMIT, b -> b.pos(this.leftPos + 315, this.topPos + 60));
+        this.addTierButton(WorldTier.PINNACLE, b -> b.pos(this.leftPos + 395, this.topPos));
 
         this.activateButton = this.addRenderableWidget(
             SimpleTexButton.builder()
                 .size(60, 24)
-                .pos(leftPos + 198, topPos + 15)
+                .pos(this.leftPos + 198, this.topPos + 15)
                 .texture(SimpleTexButton.APOTH_SPRITES)
-                .action(activateSelectedTier())
+                .action(this.activateSelectedTier())
                 .buttonText(Apotheosis.lang("button", "activate_tier"))
                 .build());
 
         this.detailButton = this.addRenderableWidget(
             SimpleTexButton.builder()
                 .size(80, 20)
-                .pos(leftPos + 178, topPos + 75)
+                .pos(this.leftPos + 178, this.topPos + 75)
                 .texture(SimpleTexButton.APOTH_SPRITES)
-                .action(openDetailedInfoScreen())
+                .action(this.openDetailedInfoScreen())
                 .buttonText(Apotheosis.lang("button", "show_detailed_info"))
                 .message(Apotheosis.lang("button", "show_detailed_info.desc"))
                 .build());
@@ -92,7 +92,7 @@ public class WorldTierSelectScreen extends Screen {
         this.tutorialButton = this.addRenderableWidget(
             SimpleTexButton.builder()
                 .size(12, 15)
-                .pos(leftPos + GUI_WIDTH - 14, topPos + GUI_HEIGHT - 17)
+                .pos(this.leftPos + GUI_WIDTH - 14, this.topPos + GUI_HEIGHT - 17)
                 .texture(SimpleTexButton.APOTH_SPRITES)
                 .action(btn -> {
                     this.minecraft.pushGuiLayer(new WorldTierTutorialScreen(this, Apotheosis.lang("title", "world_tier_tutorial")));
@@ -116,7 +116,7 @@ public class WorldTierSelectScreen extends Screen {
         int imgTop = (this.height - IMAGE_HEIGHT) / 2;
 
         gfx.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, imgLeft, imgTop, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT);
-        gfx.blit(RenderPipelines.GUI_TEXTURED, SEPARATOR_LINE, leftPos, topPos + 50, 0, 0, 275, 30, 275, 30);
+        gfx.blit(RenderPipelines.GUI_TEXTURED, SEPARATOR_LINE, this.leftPos, this.topPos + 50, 0, 0, 275, 30, 275, 30);
 
         Matrix3x2fStack pose = gfx.pose();
         pose.pushMatrix();
@@ -125,8 +125,8 @@ public class WorldTierSelectScreen extends Screen {
         Component diffText = Component.literal("Difficulty:").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
         for (int i = 0; i < 5; i++) {
             Identifier tex = this.displayedTier.ordinal() >= i ? SWORD_FULL : SWORD_EMPTY;
-            int swordLeft = leftPos + font.width(diffText) + 20 + i * (int) (30 * scale);
-            gfx.blit(RenderPipelines.GUI_TEXTURED, tex, (int) (swordLeft / scale), (int) ((topPos + 77) / scale), 0, 0, 30, 30, 30, 30);
+            int swordLeft = this.leftPos + this.font.width(diffText) + 20 + i * (int) (30 * scale);
+            gfx.blit(RenderPipelines.GUI_TEXTURED, tex, (int) (swordLeft / scale), (int) ((this.topPos + 77) / scale), 0, 0, 30, 30, 30, 30);
         }
         pose.popMatrix();
 
@@ -138,7 +138,7 @@ public class WorldTierSelectScreen extends Screen {
             case PINNACLE -> PINNACLE_ANIMATION;
         };
 
-        anim.render(gfx, leftPos, topPos, this.animTicks, partialTick);
+        anim.render(gfx, this.leftPos, this.topPos, this.animTicks, partialTick);
     }
 
     @Override
@@ -151,14 +151,14 @@ public class WorldTierSelectScreen extends Screen {
         float scale = 3;
         pose.scale(scale, scale);
         Component title = Apotheosis.lang("text", "world_tier." + this.displayedTier.getSerializedName());
-        gfx.text(font, title.getVisualOrderText(), (int) ((leftPos + 15) / scale), (int) ((topPos + 15) / scale), 0xFFFFFFFF, true);
+        gfx.text(this.font, title.getVisualOrderText(), (int) ((this.leftPos + 15) / scale), (int) ((this.topPos + 15) / scale), 0xFFFFFFFF, true);
         pose.popMatrix();
 
         Component desc = Apotheosis.lang("text", "world_tier." + this.displayedTier.getSerializedName() + ".desc");
-        gfx.text(font, desc, leftPos + 15, topPos + 45, 0xFFC8C86E);
+        gfx.text(this.font, desc, this.leftPos + 15, this.topPos + 45, 0xFFC8C86E);
 
         Component diffText = Component.literal("Difficulty:").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
-        gfx.text(font, diffText.getVisualOrderText(), leftPos + 15, topPos + 80, 0xFFFFFFFF, true);
+        gfx.text(this.font, diffText.getVisualOrderText(), this.leftPos + 15, this.topPos + 80, 0xFFFFFFFF, true);
     }
 
     @Override
@@ -222,7 +222,7 @@ public class WorldTierSelectScreen extends Screen {
 
         this.activateButton.active = WorldTier.getTier(player) != this.displayedTier;
         if (WorldTier.isTutorialActive(player) && this.displayedTier == WorldTier.HAVEN) {
-            this.activateButton.active = WorldTier.isUnlocked(player, displayedTier);
+            this.activateButton.active = WorldTier.isUnlocked(player, this.displayedTier);
         }
 
         if (this.activateButton.active) {
@@ -236,7 +236,7 @@ public class WorldTierSelectScreen extends Screen {
                 this.activateButton.setMessage(Apotheosis.lang("button", "tier_changes_disabled").withStyle(ChatFormatting.RED));
             }
         }
-        else if (WorldTier.isTutorialActive(player) && !WorldTier.isUnlocked(player, displayedTier)) {
+        else if (WorldTier.isTutorialActive(player) && !WorldTier.isUnlocked(player, this.displayedTier)) {
             this.activateButton.setButtonText(Apotheosis.lang("button", "inactive").withStyle(ChatFormatting.RED));
             this.activateButton.setMessage(Apotheosis.lang("button", "locked").withStyle(ChatFormatting.RED));
         }
@@ -252,7 +252,7 @@ public class WorldTierSelectScreen extends Screen {
                 .size(30, 30)
                 .texture(Apotheosis.loc("textures/gui/buttons/" + tier.getSerializedName() + ".png"))
                 .texSize(30, 90)
-                .action(displayTier(tier))
+                .action(this.displayTier(tier))
                 .message(Apotheosis.lang("button", tier.getSerializedName()))
                 .inactiveMessage(tierLocked(tier)))
             .build();
@@ -302,12 +302,12 @@ public class WorldTierSelectScreen extends Screen {
     private static record AnimationData(int x, int y, int width, int height, int frames, Identifier texture) {
 
         private void render(GuiGraphicsExtractor gfx, int left, int top, int time, float partialTick) {
-            int frameHeight = height / frames;
+            int frameHeight = this.height / this.frames;
             int frame = (int) ((time + partialTick) / 2F);
-            if (frame >= frames) {
+            if (frame >= this.frames) {
                 return;
             }
-            gfx.blit(RenderPipelines.GUI_TEXTURED, texture, left + x, top + y, 0, (frame + 1F) * frameHeight, this.width, frameHeight, this.width, this.height);
+            gfx.blit(RenderPipelines.GUI_TEXTURED, this.texture, left + this.x, top + this.y, 0, (frame + 1F) * frameHeight, this.width, frameHeight, this.width, this.height);
         }
 
     }

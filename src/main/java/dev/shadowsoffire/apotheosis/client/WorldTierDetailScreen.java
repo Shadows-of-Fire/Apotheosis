@@ -82,14 +82,14 @@ public class WorldTierDetailScreen extends Screen {
                 int y = topPos;
 
                 Component header = Apotheosis.lang("text", "monster_augments").withStyle(ChatFormatting.RED, ChatFormatting.BOLD);
-                drawCenteredString(gfx, font, header, x + BOX_WIDTH / 2, y + 12, 0xFF000000);
+                drawCenteredString(gfx, this.font, header, x + BOX_WIDTH / 2, y + 12, 0xFF000000);
 
                 y += 20;
 
                 for (TierAugment aug : TierAugmentRegistry.getAugments(this.tier, Target.MONSTERS)) {
                     y += 12;
                     Component comp = aug.getDescription(ctx).plainCopy().withStyle(ChatFormatting.RED);
-                    drawScrollingStringWithoutMoving(gfx, font, comp, x + 12, x + BOX_WIDTH - 12, y, 0xFF000000);
+                    this.drawScrollingStringWithoutMoving(gfx, this.font, comp, x + 12, x + BOX_WIDTH - 12, y, 0xFF000000);
                 }
 
             }
@@ -98,14 +98,14 @@ public class WorldTierDetailScreen extends Screen {
                 int y = topPos;
 
                 Component header = Apotheosis.lang("text", "player_augments").withColor(0x00AAFF).withStyle(ChatFormatting.BOLD);
-                drawCenteredString(gfx, font, header, x + BOX_WIDTH / 2, y + 12, 0xFF000000);
+                drawCenteredString(gfx, this.font, header, x + BOX_WIDTH / 2, y + 12, 0xFF000000);
 
                 y += 20;
 
                 for (TierAugment aug : TierAugmentRegistry.getAugments(this.tier, Target.PLAYERS)) {
                     y += 12;
                     Component comp = aug.getDescription(ctx).plainCopy().withColor(0x00AAFF);
-                    drawScrollingStringWithoutMoving(gfx, font, comp, x + 12, x + BOX_WIDTH - 12, y, 0xFF000000);
+                    this.drawScrollingStringWithoutMoving(gfx, this.font, comp, x + 12, x + BOX_WIDTH - 12, y, 0xFF000000);
                 }
 
             }
@@ -114,35 +114,35 @@ public class WorldTierDetailScreen extends Screen {
                 int y = topPos;
 
                 Component header = Apotheosis.lang("text", "drop_chances").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.BOLD);
-                drawCenteredString(gfx, font, header, x + BOX_WIDTH / 2, y + 12, 0xFF000000);
+                drawCenteredString(gfx, this.font, header, x + BOX_WIDTH / 2, y + 12, 0xFF000000);
 
                 Component rarityHeader = Apotheosis.lang("text", "rarities").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.UNDERLINE);
-                drawCenteredString(gfx, font, rarityHeader, x + BOX_WIDTH / 2, y + 33, 0xFF000000);
+                drawCenteredString(gfx, this.font, rarityHeader, x + BOX_WIDTH / 2, y + 33, 0xFF000000);
 
                 y += 35;
 
-                int totalWeight = RarityRegistry.INSTANCE.getValues().stream().mapToInt(r -> r.weights().getWeight(tier, 0)).sum();
+                int totalWeight = RarityRegistry.INSTANCE.getValues().stream().mapToInt(r -> r.weights().getWeight(this.tier, 0)).sum();
                 for (LootRarity rarity : RarityRegistry.getSortedRarities()) {
                     y += 12;
-                    float percent = rarity.weights().getWeight(tier, 0) / (float) totalWeight;
+                    float percent = rarity.weights().getWeight(this.tier, 0) / (float) totalWeight;
                     MutableComponent comp = rarity.toComponent();
                     comp.append(Component.translatable(": %s", Affix.fmt(100 * percent) + "%").withStyle(s -> s.withColor(rarity.color())));
-                    drawScrollingStringWithoutMoving(gfx, font, comp, x + 12, x + BOX_WIDTH - 12, y, 0xFFFFFFFF);
+                    this.drawScrollingStringWithoutMoving(gfx, this.font, comp, x + 12, x + BOX_WIDTH - 12, y, 0xFFFFFFFF);
                 }
 
                 Component purityHeader = Apotheosis.lang("text", "purities").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.UNDERLINE);
-                drawCenteredString(gfx, font, purityHeader, x + BOX_WIDTH / 2, y + 13, 0xFF000000);
+                drawCenteredString(gfx, this.font, purityHeader, x + BOX_WIDTH / 2, y + 13, 0xFF000000);
 
                 y += 15;
 
                 Purity[] values = Purity.values();
-                totalWeight = Arrays.stream(values).mapToInt(r -> r.weights().getWeight(tier, 0)).sum();
+                totalWeight = Arrays.stream(values).mapToInt(r -> r.weights().getWeight(this.tier, 0)).sum();
                 for (Purity purity : values) {
                     y += 12;
-                    float percent = purity.weights().getWeight(tier, 0) / (float) totalWeight;
+                    float percent = purity.weights().getWeight(this.tier, 0) / (float) totalWeight;
                     MutableComponent comp = purity.toComponent();
                     comp.append(Component.translatable(": %s", Affix.fmt(100 * percent) + "%").withStyle(s -> s.withColor(purity.getColor())));
-                    drawScrollingStringWithoutMoving(gfx, font, comp, x + 12, x + BOX_WIDTH - 12, y, 0xFFFFFFFF);
+                    this.drawScrollingStringWithoutMoving(gfx, this.font, comp, x + 12, x + BOX_WIDTH - 12, y, 0xFFFFFFFF);
                 }
             }
 

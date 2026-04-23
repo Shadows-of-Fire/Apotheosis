@@ -80,7 +80,7 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
         this.filter.setResponder(t -> this.containerChanged());
         this.setFocused(this.filter);
         for (int i = 0; i < MAX_ROWS * SLOTS_PER_ROW; i++) {
-            var btn = new GemCaseSelectButton(this, i, this.getLeftPos() + 21 + (i % SLOTS_PER_ROW) * 18, this.getTopPos() + 31 + (i / SLOTS_PER_ROW) * 19);
+            var btn = new GemCaseSelectButton(this, i, this.getLeftPos() + 21 + i % SLOTS_PER_ROW * 18, this.getTopPos() + 31 + i / SLOTS_PER_ROW * 19);
             this.addRenderableWidget(btn);
         }
 
@@ -97,7 +97,7 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
                 .pos(this.getLeftPos() + 30 + (i - 1) * 18, this.getTopPos() + 109)
                 .message(Apotheosis.lang("button", "gem_case.upgrade", prev.toComponent(), purity.toComponent()))
                 .inactiveMessage(Apotheosis.lang("button", "gem_case.upgrade_no_materials"))
-                .action(tryUpgrade(purity))
+                .action(this.tryUpgrade(purity))
                 .build();
             this.upgradeButtons.add(btn);
             this.addRenderableWidget(btn);
@@ -130,7 +130,7 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
                     int y = this.getTopPos() + 91;
                     if (this.isHovering(x - this.getLeftPos(), y - this.getTopPos(), 16, 16, mouseX, mouseY)
                         && this.menu.getCarried().isEmpty()) {
-                        ItemStack stack = getSelectedGem().toStack(p);
+                        ItemStack stack = this.getSelectedGem().toStack(p);
                         List<Component> tooltip = new ArrayList<>();
                         tooltip.add(stack.getHoverName());
                         tooltip.add(Apotheosis.lang("tooltip", "gem_case.none_owned").withStyle(ChatFormatting.RED));
@@ -161,7 +161,7 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
                 }
                 int count = this.menu.getGemCount(this.getSelectedGem(), p);
                 if (count == 0) {
-                    ItemStack stack = getSelectedGem().toStack(p);
+                    ItemStack stack = this.getSelectedGem().toStack(p);
                     int slotIndex = p.ordinal();
                     int x = this.getLeftPos() + 21 + slotIndex * 18;
                     int y = this.getTopPos() + 91;
@@ -261,7 +261,7 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
             this.data.add(slot);
         }
 
-        this.data = filter(this.data);
+        this.data = this.filter(this.data);
 
         if (!this.isScrollBarActive()) {
             this.scrollOffs = 0.0F;
@@ -269,7 +269,7 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
         }
         Collections.sort(this.data, Comparator.<SafeSlot, Boolean>comparing(slot -> slot.count <= 0).thenComparing(Comparator.comparing(slot -> slot.gem.getId().toString())));
 
-        for (int i = 0; i < upgradeButtons.size(); i++) {
+        for (int i = 0; i < this.upgradeButtons.size(); i++) {
             Purity prev = Purity.values()[i];
             Purity purity = prev.next();
             GemUpgradeMatch match = this.menu.getUpgradeMatch(purity);
@@ -303,7 +303,7 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
         Iterator<SafeSlot> iter = list.iterator();
         while (iter.hasNext()) {
             SafeSlot slot = iter.next();
-            if (!isAllowedByItem(slot) || !isAllowedBySearch(slot)) {
+            if (!this.isAllowedByItem(slot) || !this.isAllowedBySearch(slot)) {
                 iter.remove();
             }
         }

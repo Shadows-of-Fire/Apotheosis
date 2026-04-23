@@ -125,7 +125,7 @@ public class CleavingAffix extends Affix {
             if (e instanceof Animal && !(target instanceof Animal) || e instanceof AbstractVillager && !(target instanceof AbstractVillager)) {
                 return false;
             }
-            if ((!AdventureConfig.cleaveHitsPlayers && e instanceof Player) || (target instanceof Enemy && !(e instanceof Enemy))) {
+            if (!AdventureConfig.cleaveHitsPlayers && e instanceof Player || target instanceof Enemy && !(e instanceof Enemy)) {
                 return false;
             }
             return e != user && e instanceof LivingEntity le && le.isAlive();

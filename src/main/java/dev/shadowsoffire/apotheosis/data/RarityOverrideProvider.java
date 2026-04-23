@@ -46,7 +46,7 @@ public class RarityOverrideProvider extends DynamicRegistryProvider<RarityOverri
         LootRarity epic = rarity("epic");
         LootRarity mythic = rarity("mythic");
 
-        addOverride(LootCategories.SHEARS, b -> b
+        this.addOverride(LootCategories.SHEARS, b -> b
             .override(common, c -> c
                 .rule(new SocketLootRule(0, 1))
                 .rule(new AffixLootRule(AffixType.STAT))

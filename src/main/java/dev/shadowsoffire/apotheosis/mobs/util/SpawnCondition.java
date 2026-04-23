@@ -165,7 +165,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
 
         @Override
         public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason spawnType, CompoundTag entityNbt) {
-            return mob.getType().builtInRegistryHolder().is(tag);
+            return mob.getType().builtInRegistryHolder().is(this.tag);
         }
 
     }

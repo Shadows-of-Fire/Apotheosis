@@ -38,9 +38,9 @@ public record InvaderWaveEntity(DynamicHolder<Invader> invader, int count, Optio
     @Override
     public LivingEntity createEntity(ServerLevel level, GatewayEntity gate) {
         GenContext ctx = GenContext.forPlayer(gate.summonerOrClosest());
-        Invader realBoss = resolveInvader(ctx);
+        Invader realBoss = this.resolveInvader(ctx);
         if (realBoss == null) {
-            if (usingRandomInvader()) {
+            if (this.usingRandomInvader()) {
                 Apotheosis.LOGGER.error("Failed to resolve a random invader when generating an InvaderWaveEntity!");
             }
             else {
@@ -55,7 +55,7 @@ public record InvaderWaveEntity(DynamicHolder<Invader> invader, int count, Optio
     @Override
     public MutableComponent getDescription() {
         Component desc = Apotheosis.lang("wave_entity", "invader", Component.translatable(this.desc.orElse(resolveInvaderDesc(this.invader))));
-        return Gateways.lang("tooltip", "with_count", getCount(), desc);
+        return Gateways.lang("tooltip", "with_count", this.getCount(), desc);
     }
 
     @Override

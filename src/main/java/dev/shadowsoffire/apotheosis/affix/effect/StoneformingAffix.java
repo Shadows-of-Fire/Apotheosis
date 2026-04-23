@@ -84,13 +84,13 @@ public class StoneformingAffix extends Affix {
     public void modifyLoot(AffixInstance inst, ObjectArrayList<ItemStack> loot, LootContext ctx) {
         if (ctx.hasParameter(LootContextParams.BLOCK_STATE)) {
             Block block = ctx.getParameter(LootContextParams.BLOCK_STATE).getBlock();
-            if (isCandidate(block)) {
+            if (this.isCandidate(block)) {
                 // If this action broke a candidate block, try to find that item in the loot list and do the replacement.
                 for (int i = 0; i < loot.size(); i++) {
                     ItemStack stack = loot.get(i);
                     if (stack.getItem() instanceof BlockItem bi) {
                         Block lootBlock = bi.getBlock();
-                        if (isCandidate(lootBlock)) {
+                        if (this.isCandidate(lootBlock)) {
                             loot.set(i, stack.transmuteCopy(this.getTarget(inst)));
                         }
                     }
@@ -103,7 +103,7 @@ public class StoneformingAffix extends Affix {
     public InteractionResult onItemUse(AffixInstance inst, UseOnContext ctx) {
         BlockState state = ctx.getLevel().getBlockState(ctx.getClickedPos());
         Block block = state.getBlock();
-        if (isCandidate(block) && getTarget(inst) != block && ctx.getPlayer().isShiftKeyDown()) {
+        if (this.isCandidate(block) && this.getTarget(inst) != block && ctx.getPlayer().isShiftKeyDown()) {
             if (!ctx.getLevel().isClientSide()) {
                 inst.stack().set(Components.STONEFORMING_TARGET, block);
                 ctx.getPlayer().sendSystemMessage(Apotheosis.lang("affix", "stoneforming.target_updated", block.getName()));
@@ -120,7 +120,7 @@ public class StoneformingAffix extends Affix {
 
     public Block getTarget(AffixInstance inst) {
         Block target = inst.stack().get(Components.STONEFORMING_TARGET);
-        if (target == null || !isCandidate(target)) {
+        if (target == null || !this.isCandidate(target)) {
             return this.candidates.size() > 0 ? this.candidates.get(0).value() : Blocks.AIR;
         }
         return target;

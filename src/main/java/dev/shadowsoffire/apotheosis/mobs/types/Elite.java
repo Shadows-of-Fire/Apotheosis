@@ -243,19 +243,19 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
         }
 
         public Elite build() {
-            if (basicData == null) {
+            if (this.basicData == null) {
                 throw new IllegalStateException("BasicBossData must be set");
             }
-            if (chance <= 0) {
+            if (this.chance <= 0) {
                 throw new IllegalStateException("Chance value must be positive");
             }
             if (this.entities == null) {
                 throw new IllegalStateException("Entities must be set");
             }
-            if (stats == null) {
+            if (this.stats == null) {
                 throw new IllegalStateException("Stats must be set");
             }
-            return new Elite(basicData, chance, entities, stats, afxData);
+            return new Elite(this.basicData, this.chance, this.entities, this.stats, this.afxData);
         }
     }
 

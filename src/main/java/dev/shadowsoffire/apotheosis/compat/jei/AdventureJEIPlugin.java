@@ -124,7 +124,7 @@ public class AdventureJEIPlugin implements IModPlugin {
 
         @Override
         public @Nullable Object getSubtypeData(ItemStack ingredient, UidContext context) {
-            return apply(ingredient, context);
+            return this.apply(ingredient, context);
         }
 
     }

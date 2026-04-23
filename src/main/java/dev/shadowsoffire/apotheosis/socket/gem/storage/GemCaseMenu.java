@@ -137,7 +137,7 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
         this.mover.registerRule((stack, slot) -> slot >= FIRST_GEM_SLOT && slot < FIRST_UPGRADE_MAT_SLOT, this.playerInvStart, this.slots.size());
         this.mover.registerRule((stack, slot) -> slot >= FIRST_UPGRADE_MAT_SLOT && slot < FIRST_UPGRADE_MAT_SLOT + 6, this.playerInvStart, this.slots.size());
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.is(Apoth.Items.GEM), INPUT_SLOT, INPUT_SLOT + 1);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && isValidUpgradeMaterial(stack), FIRST_UPGRADE_MAT_SLOT, FIRST_UPGRADE_MAT_SLOT + 6);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.isValidUpgradeMaterial(stack), FIRST_UPGRADE_MAT_SLOT, FIRST_UPGRADE_MAT_SLOT + 6);
         this.mover.registerRule((stack, slot) -> !LootCategory.forItem(stack).isNone(), FILTER_SLOT, FILTER_SLOT + 1);
         this.registerInvShuffleRules();
     }
@@ -182,7 +182,7 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
         if (this.selectedGem == null) {
             return null;
         }
-        return this.tile.getUpgradeMatch(GemRegistry.INSTANCE.holder(this.selectedGem), purity, upgradeMatInv);
+        return this.tile.getUpgradeMatch(GemRegistry.INSTANCE.holder(this.selectedGem), purity, this.upgradeMatInv);
     }
 
     @Override

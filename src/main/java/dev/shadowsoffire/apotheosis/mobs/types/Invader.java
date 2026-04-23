@@ -381,19 +381,19 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         }
 
         public Invader build() {
-            if (basicData == null) {
+            if (this.basicData == null) {
                 throw new IllegalStateException("BasicBossData must be set");
             }
-            if (entity == null) {
+            if (this.entity == null) {
                 throw new IllegalStateException("Entity type must be set");
             }
-            if (size == null) {
+            if (this.size == null) {
                 throw new IllegalStateException("Size must be set");
             }
-            if (stats.isEmpty()) {
+            if (this.stats.isEmpty()) {
                 throw new IllegalStateException("Stats must not be empty");
             }
-            return new Invader(basicData, entity, size, stats);
+            return new Invader(this.basicData, this.entity, this.size, this.stats);
         }
     }
 

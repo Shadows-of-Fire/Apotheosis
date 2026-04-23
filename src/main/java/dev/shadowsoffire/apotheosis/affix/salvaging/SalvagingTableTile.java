@@ -69,7 +69,7 @@ public class SalvagingTableTile extends BlockEntity {
         @Override
         public long getCapacityAsLong(int index, ItemResource resource) {
             if (index == 0) {
-                return isValid(index, resource) ? 1 : 0;
+                return this.isValid(index, resource) ? 1 : 0;
             }
             return SalvagingTableTile.this.output.getCapacityAsLong(index - 1, resource);
         }

@@ -39,7 +39,7 @@ public final class TierAugmentRegistry extends DynamicRegistry<TierAugment> {
         for (TierAugment aug : this.registry.values()) {
             this.augmentsPerTier.computeIfAbsent(new Key(aug.tier(), aug.target()), t -> new ArrayList<>()).add(aug);
         }
-        for (List<TierAugment> augList : augmentsPerTier.values()) {
+        for (List<TierAugment> augList : this.augmentsPerTier.values()) {
             augList.sort(Comparator.comparing(TierAugment::sortIndex));
         }
     }

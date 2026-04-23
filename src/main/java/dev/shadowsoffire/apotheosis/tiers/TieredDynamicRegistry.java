@@ -71,7 +71,7 @@ public abstract class TieredDynamicRegistry<V extends CodecProvider<? super V> &
      * Similar to {@link #getRandomItem(GenContext, Set)}, but uses a set of {@link DynamicHolder} objects instead of the actual items.
      */
     public final V getRandomItemFromHolders(GenContext ctx, Set<DynamicHolder<V>> pool) {
-        return getRandomItem(ctx, pool.stream().filter(DynamicHolder::isBound).map(DynamicHolder::get).collect(Collectors.toSet()));
+        return this.getRandomItem(ctx, pool.stream().filter(DynamicHolder::isBound).map(DynamicHolder::get).collect(Collectors.toSet()));
     }
 
 }

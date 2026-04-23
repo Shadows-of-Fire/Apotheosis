@@ -54,7 +54,7 @@ public record AttributeAugment(WorldTier tier, Target target, int sortIndex, Ran
     @Override
     public Component getDescription(AttributeTooltipContext ctx) {
         AttributeModifier modif = this.modifier.createDeterministic(this.id);
-        return modifier.attribute().value().toComponent(modif, ctx.flag());
+        return this.modifier.attribute().value().toComponent(modif, ctx.flag());
     }
 
 }

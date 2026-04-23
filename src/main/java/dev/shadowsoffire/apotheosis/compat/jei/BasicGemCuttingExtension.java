@@ -14,7 +14,7 @@ public class BasicGemCuttingExtension implements GemCuttingExtension<BasicGemCut
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, BasicGemCuttingRecipe recipe, IFocusGroup focuses) {
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 48, 37).addIngredients(VanillaTypes.ITEM_STACK, recipe.base().items().map(h -> new ItemStack(h)).toList());
+        builder.addSlot(RecipeIngredientRole.INPUT, 48, 37).addIngredients(VanillaTypes.ITEM_STACK, recipe.base().items().map(ItemStack::new).toList());
 
         builder.addSlot(RecipeIngredientRole.INPUT, 48, 4).addIngredients(VanillaTypes.ITEM_STACK, recipe.top().stream().flatMap(BasicGemCuttingExtension::sizedStacks).toList());
         builder.addSlot(RecipeIngredientRole.INPUT, 19, 56).addIngredients(VanillaTypes.ITEM_STACK, recipe.left().stream().flatMap(BasicGemCuttingExtension::sizedStacks).toList());

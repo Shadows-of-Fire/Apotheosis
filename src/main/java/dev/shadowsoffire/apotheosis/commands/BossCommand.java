@@ -66,7 +66,7 @@ public class BossCommand {
 
     public static int spawnBoss(CommandContext<CommandSourceStack> c, Vec3 pos, @Nullable Identifier bossId, @Nullable Identifier rarityId, boolean sendNotification) {
         Entity nullableSummoner = c.getSource().getEntity();
-        Player summoner = nullableSummoner instanceof Player ? (Player) nullableSummoner : c.getSource().getLevel().getNearestPlayer(pos.x(), pos.y(), pos.z(), 64, false);
+        Player summoner = nullableSummoner instanceof Player p ? p : c.getSource().getLevel().getNearestPlayer(pos.x(), pos.y(), pos.z(), 64, false);
         if (summoner == null) {
             c.getSource().sendFailure(Component.literal("No available player context!"));
             return -1;

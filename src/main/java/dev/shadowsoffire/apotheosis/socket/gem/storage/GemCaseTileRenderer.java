@@ -100,8 +100,8 @@ public class GemCaseTileRenderer implements BlockEntityRenderer<GemCaseTile, Gem
     public void submit(State state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         for (Entry entry : state.entries) {
             int slot = entry.position.baseSlot();
-            float gridX = (slot % 4) + entry.position.offsetX();
-            float gridZ = (slot / 4) + entry.position.offsetZ();
+            float gridX = slot % 4 + entry.position.offsetX();
+            float gridZ = slot / 4 + entry.position.offsetZ();
 
             poseStack.pushPose();
 

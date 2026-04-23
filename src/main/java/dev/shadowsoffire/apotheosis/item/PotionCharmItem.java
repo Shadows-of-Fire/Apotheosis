@@ -52,7 +52,7 @@ public class PotionCharmItem extends Item implements ITabFiller {
 
     @Override
     public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @org.jetbrains.annotations.Nullable EquipmentSlot slot) {
-        if (!hasEffect(stack) || (AdventureConfig.charmsInCuriosOnly && slot != null)) {
+        if (!hasEffect(stack) || AdventureConfig.charmsInCuriosOnly && slot != null) {
             return;
         }
         if (stack.get(Components.CHARM_ENABLED) && entity instanceof ServerPlayer player) {

@@ -124,8 +124,8 @@ public class SimpleTexButton extends Button {
             return;
         }
         Component message = this.buttonText;
-        if (getFGColor() != UNSET_FG_COLOR) {
-            final int fg = getFGColor();
+        if (this.getFGColor() != UNSET_FG_COLOR) {
+            final int fg = this.getFGColor();
             message = message.copy().withStyle(style -> style.withColor(fg));
         }
         this.extractScrollingStringOverContents(output, message, 2);
@@ -236,7 +236,7 @@ public class SimpleTexButton extends Button {
         public SimpleTexButton build() {
             Preconditions.checkArgument(this.width >= 0 && this.height >= 0, "Size must be set");
             Preconditions.checkNotNull(this.texture, "Texture must bet set");
-            return new SimpleTexButton(this.x, this.y, this.width, this.height, this.u, this.v, this.texture, this.textureWidth, this.textureHeight, action, DEFAULT_NARRATION, message)
+            return new SimpleTexButton(this.x, this.y, this.width, this.height, this.u, this.v, this.texture, this.textureWidth, this.textureHeight, this.action, DEFAULT_NARRATION, this.message)
                 .setInactiveMessage(this.inactiveMessage)
                 .setTooltipProvider(this.provider)
                 .setButtonText(this.buttonText);

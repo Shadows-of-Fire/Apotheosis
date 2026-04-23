@@ -105,7 +105,7 @@ public class GemCaseAnimationState {
     public PositionInfo getPosition(int gemIndex, float partialTicks) {
         int baseSlot = this.slotPositions[gemIndex];
 
-        if (!this.isAnimating || (gemIndex != this.swappingIndex1 && gemIndex != this.swappingIndex2)) {
+        if (!this.isAnimating || gemIndex != this.swappingIndex1 && gemIndex != this.swappingIndex2) {
             // No animation for this gem
             return new PositionInfo(baseSlot, 0, 0);
         }

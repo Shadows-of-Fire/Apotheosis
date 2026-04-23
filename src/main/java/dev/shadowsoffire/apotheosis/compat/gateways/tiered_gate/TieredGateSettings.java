@@ -77,9 +77,9 @@ public record TieredGateSettings(WorldTier tier, Size size, TextColor color, Hol
         }
 
         public TieredGateSettings build() {
-            Preconditions.checkNotNull(tier, "Tier must be set");
-            Preconditions.checkNotNull(size, "Size must be set");
-            return new TieredGateSettings(tier, size, color, soundtrack, spawnAlgo);
+            Preconditions.checkNotNull(this.tier, "Tier must be set");
+            Preconditions.checkNotNull(this.size, "Size must be set");
+            return new TieredGateSettings(this.tier, this.size, this.color, this.soundtrack, this.spawnAlgo);
         }
     }
 }

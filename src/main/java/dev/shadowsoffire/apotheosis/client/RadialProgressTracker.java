@@ -230,7 +230,7 @@ public class RadialProgressTracker {
 
         @Override
         public int hashCode() {
-            return Objects.hash(pos, hitDir, playerDir, tool.getItem(), tool.getComponentsPatch());
+            return Objects.hash(this.pos, this.hitDir, this.playerDir, this.tool.getItem(), this.tool.getComponentsPatch());
         }
     }
 

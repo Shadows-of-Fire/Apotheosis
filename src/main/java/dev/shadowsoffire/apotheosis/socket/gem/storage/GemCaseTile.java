@@ -125,7 +125,7 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
     @Nullable
     public GemUpgradeMatch getUpgradeMatch(DynamicHolder<Gem> gem, Purity purity, Container matInv) {
         EnumMap<Purity, Integer> map = this.getGems(gem);
-        if (map.get(purity) >= maxCount) {
+        if (map.get(purity) >= this.maxCount) {
             return null;
         }
         return GemUpgradeMatch.findMatch(this.level, purity, map, matInv);
@@ -205,7 +205,7 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
     public void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         CompoundTag gemTag = new CompoundTag();
-        saveGemData(gemTag);
+        this.saveGemData(gemTag);
         output.store(gemTag);
     }
 
@@ -215,14 +215,14 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
         input.read("gems", CompoundTag.CODEC).ifPresent(gems -> {
             CompoundTag wrapper = new CompoundTag();
             wrapper.put("gems", gems);
-            loadGemData(wrapper);
+            this.loadGemData(wrapper);
         });
     }
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = super.getUpdateTag(registries);
-        saveGemData(tag);
+        this.saveGemData(tag);
         return tag;
     }
 
@@ -231,7 +231,7 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
         valueInput.read("gems", CompoundTag.CODEC).ifPresent(gems -> {
             CompoundTag wrapper = new CompoundTag();
             wrapper.put("gems", gems);
-            loadGemData(wrapper);
+            this.loadGemData(wrapper);
         });
         this.activeContainers.forEach(GemCaseMenu::onChanged);
     }
@@ -362,7 +362,7 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
                 return 0;
             }
 
-            updateSnapshots(transaction);
+            this.updateSnapshots(transaction);
             map.put(gem.purity(), stored + inserted);
             return inserted;
         }
@@ -388,7 +388,7 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
                 return 0;
             }
 
-            updateSnapshots(transaction);
+            this.updateSnapshots(transaction);
             map.put(slotGem.purity(), stored - extracted);
             return extracted;
         }

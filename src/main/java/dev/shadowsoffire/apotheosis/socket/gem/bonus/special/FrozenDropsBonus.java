@@ -70,7 +70,7 @@ public class FrozenDropsBonus extends GemBonus {
             float coldDmgTaken = mob.getData(Attachments.COLD_DAMAGE_TAKEN);
 
             if (coldDmgTaken / mob.getMaxHealth() >= 0.55F) {
-                increaseLootDrops(loot, values.get(inst.purity()), ctx.getRandom());
+                increaseLootDrops(loot, this.values.get(inst.purity()), ctx.getRandom());
             }
 
             // TODO: Spawn some kind of visual effect - can we even do that from within a loot table?
@@ -92,7 +92,7 @@ public class FrozenDropsBonus extends GemBonus {
             float target = stack.getCount() * percent;
             int newCount = (int) target;
             if (target - newCount > 0.001F) {
-                if (rand.nextFloat() <= (target - newCount)) {
+                if (rand.nextFloat() <= target - newCount) {
                     newCount++;
                 }
             }

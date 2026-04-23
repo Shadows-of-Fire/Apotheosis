@@ -33,14 +33,14 @@ public record StoneformingTooltipRenderer(StoneformingComponent comp) implements
 
     @Override
     public void extractImage(Font font, int x, int y, int w, int h, GuiGraphicsExtractor gfx) {
-        if (affix().getCandidates().size() == 0) {
+        if (this.affix().getCandidates().size() == 0) {
             return;
         }
 
         String text = I18n.get("affix.apotheosis.stoneforming.desc", "<M1>", "<M2>");
         int xPos = font.width(text.substring(0, text.indexOf("<M1>") + 1));
 
-        StoneformingAffix affix = affix();
+        StoneformingAffix affix = this.affix();
         Block[] selected = new Block[3];
         int start = (int) (PlaceboClient.ticks / 20) * 3;
         for (int i = 0; i < 3; i++) {
@@ -64,7 +64,7 @@ public record StoneformingTooltipRenderer(StoneformingComponent comp) implements
     }
 
     private StoneformingAffix affix() {
-        return ((StoneformingAffix) this.comp.inst.getAffix());
+        return (StoneformingAffix) this.comp.inst.getAffix();
     }
 
     public static Component getText(AffixInstance inst) {

@@ -58,7 +58,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
 
         // Overworld
 
-        addBoss("overworld/zombie", b -> basicMeleeStats(b)
+        this.addBoss("overworld/zombie", b -> basicMeleeStats(b)
             .entity(EntityType.ZOMBIE)
             .size(0.75, 2.45)
             .basicData(c -> meleeGear(c)
@@ -67,7 +67,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("overworld/husk", b -> basicMeleeStats(b)
+        this.addBoss("overworld/husk", b -> basicMeleeStats(b)
             .entity(EntityType.HUSK)
             .size(0.75, 2.45)
             .basicData(c -> meleeGear(c)
@@ -76,7 +76,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("overworld/husk_in_dry", b -> basicMeleeStats(b)
+        this.addBoss("overworld/husk_in_dry", b -> basicMeleeStats(b)
             .entity(EntityType.HUSK)
             .size(0.75, 2.45)
             .basicData(c -> meleeGear(c)
@@ -85,7 +85,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forBiomes(biomes, Tags.Biomes.IS_DRY_OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("overworld/enderman", b -> basicMeleeStats(b)
+        this.addBoss("overworld/enderman", b -> basicMeleeStats(b)
             .entity(EntityType.ENDERMAN)
             .size(0.75, 3.7)
             .basicData(c -> meleeGear(c)
@@ -94,7 +94,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS)));
 
-        addBoss("overworld/vindicator", b -> basicMeleeStats(b)
+        this.addBoss("overworld/vindicator", b -> basicMeleeStats(b)
             .entity(EntityType.VINDICATOR)
             .size(0.75, 2.45)
             .basicData(c -> meleeGear(c)
@@ -105,7 +105,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
 
         // TODO: Figure out how to make drowned not act stupid...
 
-        addBoss("overworld/wolf", b -> b
+        this.addBoss("overworld/wolf", b -> b
             .entity(EntityType.WOLF)
             .size(1.5, 2.5)
             .basicData(c -> meleeGear(c)
@@ -148,7 +148,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .modifier(Attributes.ARMOR_TOUGHNESS, Operation.ADD_VALUE, StepFunction.constant(20F))
                 .modifier(Attributes.SCALE, Operation.ADD_MULTIPLIED_TOTAL, StepFunction.constant(1.25F))));
 
-        addBoss("overworld/skeleton", b -> basicRangedStats(b)
+        this.addBoss("overworld/skeleton", b -> basicRangedStats(b)
             .entity(EntityType.SKELETON)
             .size(0.75, 2.45)
             .basicData(c -> rangedGear(c)
@@ -157,7 +157,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("overworld/stray", b -> basicRangedStats(b)
+        this.addBoss("overworld/stray", b -> basicRangedStats(b)
             .entity(EntityType.STRAY)
             .size(0.75, 2.45)
             .basicData(c -> rangedGear(c)
@@ -166,7 +166,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("overworld/bogged", b -> basicRangedStats(b)
+        this.addBoss("overworld/bogged", b -> basicRangedStats(b)
             .entity(EntityType.BOGGED)
             .size(0.75, 2.45)
             .basicData(c -> rangedGear(c)
@@ -175,7 +175,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("overworld/stray_in_cold", b -> basicRangedStats(b)
+        this.addBoss("overworld/stray_in_cold", b -> basicRangedStats(b)
             .entity(EntityType.STRAY)
             .size(0.75, 2.45)
             .basicData(c -> rangedGear(c)
@@ -184,7 +184,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forBiomes(biomes, Tags.Biomes.IS_COLD_OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("overworld/bogged_in_wet", b -> basicRangedStats(b)
+        this.addBoss("overworld/bogged_in_wet", b -> basicRangedStats(b)
             .entity(EntityType.BOGGED)
             .size(0.75, 2.45)
             .basicData(c -> rangedGear(c)
@@ -193,7 +193,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forBiomes(biomes, Tags.Biomes.IS_WET_OVERWORLD))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("overworld/breeze", b -> b
+        this.addBoss("overworld/breeze", b -> b
             .entity(EntityType.BREEZE)
             .size(1.2, 3.6)
             .basicData(c -> rangedGear(c)
@@ -217,7 +217,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
 
         // Nether
 
-        addBoss("the_nether/zombified_piglin", b -> basicMeleeStats(b)
+        this.addBoss("the_nether/zombified_piglin", b -> basicMeleeStats(b)
             .entity(EntityType.ZOMBIFIED_PIGLIN)
             .size(0.75, 2.45)
             .basicData(c -> meleeGear(c)
@@ -226,7 +226,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.NETHER))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("the_nether/piglin", b -> basicMeleeStats(b)
+        this.addBoss("the_nether/piglin", b -> basicMeleeStats(b)
             .entity(EntityType.PIGLIN)
             .size(0.75, 2.45)
             .basicData(c -> meleeGear(c)
@@ -239,7 +239,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                     t.putBoolean("ImmuneToZombification", true);
                 })));
 
-        addBoss("the_nether/piglin_brute", b -> basicMeleeStats(b)
+        this.addBoss("the_nether/piglin_brute", b -> basicMeleeStats(b)
             .entity(EntityType.PIGLIN_BRUTE)
             .size(0.75, 2.45)
             .basicData(c -> meleeGear(c)
@@ -251,7 +251,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                     t.putBoolean("ImmuneToZombification", true);
                 })));
 
-        addBoss("the_nether/zoglin", b -> basicMeleeStats(b)
+        this.addBoss("the_nether/zoglin", b -> basicMeleeStats(b)
             .entity(EntityType.ZOGLIN)
             .size(2, 2)
             .basicData(c -> meleeGear(c)
@@ -260,7 +260,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.NETHER))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("the_nether/wither_skeleton", b -> b
+        this.addBoss("the_nether/wither_skeleton", b -> b
             .entity(EntityType.WITHER_SKELETON)
             .size(0.75, 3.7)
             .basicData(c -> rangedGear(meleeGear(c))
@@ -293,7 +293,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .modifier(Attributes.ARMOR_TOUGHNESS, Operation.ADD_VALUE, StepFunction.constant(20F))
                 .modifier(Attributes.SCALE, Operation.ADD_MULTIPLIED_TOTAL, -0.15F, 0.25F)));
 
-        addBoss("the_nether/blaze", b -> b
+        this.addBoss("the_nether/blaze", b -> b
             .entity(EntityType.BLAZE)
             .size(1.2, 3.6)
             .basicData(c -> rangedGear(c)
@@ -316,7 +316,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
 
         // End - TODO: Do something here. They're all using the defaults...
 
-        addBoss("the_end/enderman", b -> basicMeleeStats(b)
+        this.addBoss("the_end/enderman", b -> basicMeleeStats(b)
             .entity(EntityType.ENDERMAN)
             .size(0.75, 3.7)
             .basicData(c -> meleeGear(c)
@@ -325,7 +325,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.END))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("the_end/endermite", b -> basicMeleeStats(b)
+        this.addBoss("the_end/endermite", b -> basicMeleeStats(b)
             .entity(EntityType.ENDERMITE)
             .size(0.5, 0.5)
             .basicData(c -> meleeGear(c)
@@ -334,7 +334,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.END))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("the_end/shulker", b -> basicRangedStats(b)
+        this.addBoss("the_end/shulker", b -> basicRangedStats(b)
             .entity(EntityType.SHULKER)
             .size(1.25, 1.25)
             .basicData(c -> rangedGear(c)
@@ -343,7 +343,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .constraints(Constraints.forDimension(Level.END))
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS)));
 
-        addBoss("the_end/phantom", b -> basicMeleeStats(b)
+        this.addBoss("the_end/phantom", b -> basicMeleeStats(b)
             .entity(EntityType.PHANTOM)
             .size(1.2, 0.75)
             .basicData(c -> meleeGear(c)
@@ -353,7 +353,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .bonusLoot(Apoth.LootTables.BONUS_BOSS_DROPS, Apoth.LootTables.BONUS_RARE_BOSS_DROPS)));
 
         // TODO: Generic Magic Damage attribute in AL? No other way to buff the outgoing evoker fang damage.
-        addBoss("the_end/evoker", b -> basicRangedStats(b)
+        this.addBoss("the_end/evoker", b -> basicRangedStats(b)
             .entity(EntityType.EVOKER)
             .size(0.75, 2.45)
             .basicData(c -> rangedGear(c)

@@ -59,7 +59,7 @@ public record EliteWaveEntity(WaveEntity base, DynamicHolder<Elite> elite, Optio
     @Override
     public MutableComponent getDescription() {
         if (this.desc.isPresent()) {
-            return Component.translatable(desc.get(), this.base.getDescription());
+            return Component.translatable(this.desc.get(), this.base.getDescription());
         }
         return Apotheosis.lang("wave_entity", "elite", this.base.getDescription());
     }

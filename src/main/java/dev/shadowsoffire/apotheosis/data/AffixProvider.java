@@ -836,7 +836,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .exclusiveWith(afx("breaker/ability/sandforming"))
                 .build(),
             Set.of(LootCategories.BREAKER),
-            blockSet(Apoth.Tags.STONEFORMING_CANDIDATES)));
+            this.blockSet(Apoth.Tags.STONEFORMING_CANDIDATES)));
 
         this.add(Apotheosis.loc("breaker/ability/sandforming"), new StoneformingAffix(
             AffixDefinition.builder(AffixType.ABILITY)
@@ -844,7 +844,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .exclusiveWith(afx("breaker/ability/stoneforming"))
                 .build(),
             Set.of(LootCategories.BREAKER),
-            blockSet(Apoth.Tags.SANDFORMING_CANDIDATES)));
+            this.blockSet(Apoth.Tags.SANDFORMING_CANDIDATES)));
 
         // Ranged Abilities
 
@@ -929,7 +929,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .exclusiveWith(afx("shears/effect/gardening"))
                 .build(),
             Set.of(LootCategories.SHEARS),
-            blockSet(Apoth.Tags.LEAFFORMING_CANDIDATES)));
+            this.blockSet(Apoth.Tags.LEAFFORMING_CANDIDATES)));
 
         this.add(Apotheosis.loc("shears/effect/gardening"), new StoneformingAffix(
             AffixDefinition.builder(AffixType.BASIC_EFFECT)
@@ -937,7 +937,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
                 .exclusiveWith(afx("shears/effect/leafforming"))
                 .build(),
             Set.of(LootCategories.SHEARS),
-            blockSet(Apoth.Tags.GARDENING_CANDIDATES)));
+            this.blockSet(Apoth.Tags.GARDENING_CANDIDATES)));
 
         this.futures.add(CompletableFuture.runAsync(RarityRegistry.INSTANCE::validateExistingHolders));
         this.futures.add(CompletableFuture.runAsync(AffixRegistry.INSTANCE::validateExistingHolders));

@@ -32,7 +32,7 @@ public class ApothDataMapProvider extends DataMapProvider {
 
     @Override
     protected void gather(HolderLookup.Provider provider) {
-        Builder<InvaderSpawnRules, DimensionType> invaderRules = builder(DataMaps.INVADER_SPAWN_RULES);
+        Builder<InvaderSpawnRules, DimensionType> invaderRules = this.builder(DataMaps.INVADER_SPAWN_RULES);
 
         invaderRules.add(BuiltinDimensionTypes.OVERWORLD, new InvaderSpawnRules(
             Map.of(
@@ -74,7 +74,7 @@ public class ApothDataMapProvider extends DataMapProvider {
             Optional.empty(),
             SurfaceType.NEEDS_SURFACE), false, new ModLoadedCondition(TWILIGHT_FOREST.getNamespace()));
 
-        Builder<LootCategory, Item> catOverrides = builder(DataMaps.LOOT_CATEGORY_OVERRIDES);
+        Builder<LootCategory, Item> catOverrides = this.builder(DataMaps.LOOT_CATEGORY_OVERRIDES);
 
         catOverrides.add(BuiltInRegistries.ITEM.wrapAsHolder(Items.IRON_SWORD), LootCategories.MELEE_WEAPON, false);
         catOverrides.add(BuiltInRegistries.ITEM.wrapAsHolder(Items.SHULKER_SHELL), LootCategories.NONE, false);

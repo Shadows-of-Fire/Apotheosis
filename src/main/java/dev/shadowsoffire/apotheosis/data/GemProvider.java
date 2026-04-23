@@ -93,7 +93,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
         HolderLookup.Provider registries = this.lookupProvider.join();
         RegistryLookup<Enchantment> enchants = registries.lookup(Registries.ENCHANTMENT).get();
 
-        addGem("core/ballast", c -> c
+        this.addGem("core/ballast", c -> c
             .bonus(LIGHT_WEAPON, AttributeBonus.builder()
                 .attr(Attributes.ATTACK_DAMAGE)
                 .op(Operation.ADD_VALUE)
@@ -120,7 +120,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.5)
                 .value(Purity.PERFECT, 0.7)));
 
-        addGem("core/brawlers", c -> c
+        this.addGem("core/brawlers", c -> c
             .bonus(LIGHT_WEAPON, AttributeBonus.builder()
                 .attr(Attributes.ATTACK_SPEED)
                 .op(Operation.ADD_MULTIPLIED_BASE)
@@ -149,7 +149,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.25)
                 .value(Purity.PERFECT, 0.30)));
 
-        addGem("core/breach", c -> c
+        this.addGem("core/breach", c -> c
             .unique()
             .bonus(LIGHT_WEAPON, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.ARMOR_PIERCE)
@@ -179,7 +179,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 10)
                 .value(Purity.PERFECT, 15)));
 
-        addGem("core/combatant", c -> c
+        this.addGem("core/combatant", c -> c
             .unique()
             .bonus(RANGED_WEAPON, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.ARROW_DAMAGE)
@@ -206,7 +206,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.30F)
                 .value(Purity.PERFECT, 0.40F)));
 
-        addGem("core/guardian", c -> c
+        this.addGem("core/guardian", c -> c
             .bonus(CORE_ARMOR, AttributeBonus.builder()
                 .attr(Attributes.ARMOR)
                 .op(Operation.ADD_VALUE)
@@ -235,7 +235,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.30)
                 .value(Purity.PERFECT, 0.45)));
 
-        addGem("core/lightning", c -> c
+        this.addGem("core/lightning", c -> c
             .bonus(LootCategories.BOW, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.ARROW_VELOCITY)
                 .op(Operation.ADD_MULTIPLIED_BASE)
@@ -264,7 +264,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.55)
                 .value(Purity.PERFECT, 0.70)));
 
-        addGem("core/lunar", c -> c
+        this.addGem("core/lunar", c -> c
             .bonus(LIGHT_WEAPON, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.COLD_DAMAGE)
                 .op(Operation.ADD_VALUE)
@@ -293,7 +293,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.60)
                 .value(Purity.PERFECT, 0.80)));
 
-        addGem("core/samurai", c -> c
+        this.addGem("core/samurai", c -> c
             .unique()
             .bonus(WEAPONS, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.CRIT_CHANCE)
@@ -343,7 +343,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.08)
                 .value(Purity.PERFECT, 0.10)));
 
-        addGem("core/slipstream", c -> c
+        this.addGem("core/slipstream", c -> c
             .unique()
             .bonus(LootCategories.BOW, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.DRAW_SPEED)
@@ -373,7 +373,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.125)
                 .value(Purity.PERFECT, 0.15)));
 
-        addGem("core/solar", c -> c
+        this.addGem("core/solar", c -> c
             .bonus(LIGHT_WEAPON, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.FIRE_DAMAGE)
                 .op(Operation.ADD_VALUE)
@@ -402,7 +402,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 2)
                 .value(Purity.PERFECT, 3)));
 
-        addGem("core/splendor", c -> c
+        this.addGem("core/splendor", c -> c
             .bonus(ARMOR, AttributeBonus.builder()
                 .attr(Attributes.LUCK)
                 .op(Operation.ADD_VALUE)
@@ -422,7 +422,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.40)
                 .value(Purity.PERFECT, 0.60)));
 
-        addGem("core/tyrannical", c -> c
+        this.addGem("core/tyrannical", c -> c
             .unique()
             .bonus(LIGHT_WEAPON, AttributeBonus.builder()
                 .attr(Attributes.ATTACK_KNOCKBACK)
@@ -479,7 +479,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 160, 0, 40)
                 .value(Purity.PERFECT, 160, 1, 40)));
 
-        addGem("core/warlord", c -> c
+        this.addGem("core/warlord", c -> c
             .bonus(NON_TRIDENT_WEAPONS, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.CRIT_DAMAGE)
                 .op(Operation.ADD_MULTIPLIED_BASE)
@@ -515,7 +515,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 200, 0, 40)
                 .value(Purity.PERFECT, 200, 1, 40)));
 
-        addGem("overworld/earth", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 50, 2F), c -> c
+        this.addGem("overworld/earth", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.OVERWORLD))
@@ -541,7 +541,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 3)
                 .value(Purity.PERFECT, 4)));
 
-        addGem("overworld/royalty", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 50, 2F), c -> c
+        this.addGem("overworld/royalty", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.OVERWORLD))
@@ -632,7 +632,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.FLAWLESS, -0.35F)
                     .value(Purity.PERFECT, -0.40F))));
 
-        addGem("overworld/verdant_ruin", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 50, 2F), c -> c
+        this.addGem("overworld/verdant_ruin", TieredWeights.forTiersAbove(WorldTier.FRONTIER, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.OVERWORLD))
@@ -680,7 +680,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 5, 3, 0, 0)
                 .value(Purity.PERFECT, 5, 5, 0, 0)));
 
-        addGem("the_nether/blood_lord", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
+        this.addGem("the_nether/blood_lord", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.NETHER))
@@ -734,7 +734,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 Purity.FLAWLESS, new LeechBlockBonus.Data(0.55F, 450),
                 Purity.PERFECT, new LeechBlockBonus.Data(0.65F, 450)))));
 
-        addGem("the_nether/inferno", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
+        this.addGem("the_nether/inferno", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.NETHER))
@@ -765,7 +765,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.75)
                 .value(Purity.PERFECT, 0.90)));
 
-        addGem("the_nether/molten_breach", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
+        this.addGem("the_nether/molten_breach", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.NETHER))
@@ -819,7 +819,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, "netherite", Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_HOE)
                 .value(Purity.PERFECT, "netherite", Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_HOE)));
 
-        addGem("the_end/endersurge", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
+        this.addGem("the_end/endersurge", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWLESS)
             .contstraints(Constraints.forDimension(Level.END))
@@ -829,7 +829,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 1)
                 .value(Purity.PERFECT, 2)));
 
-        addGem("the_end/mageslayer", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
+        this.addGem("the_end/mageslayer", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.NORMAL)
             .contstraints(Constraints.forDimension(Level.END))
@@ -946,7 +946,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
     }
 
     private void addGem(String name, UnaryOperator<Gem.Builder> config) {
-        addGem(name, TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY), config);
+        this.addGem(name, TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY), config);
     }
 
     private void addGem(String name, TieredWeights weights, UnaryOperator<Gem.Builder> config) {

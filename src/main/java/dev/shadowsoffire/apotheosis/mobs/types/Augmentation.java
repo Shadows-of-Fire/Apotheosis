@@ -89,10 +89,10 @@ public record Augmentation(float chance, Constraints constraints, List<SpawnCond
         }
 
         public Augmentation build() {
-            if (modifiers.isEmpty()) {
+            if (this.modifiers.isEmpty()) {
                 throw new IllegalStateException("At least one modifier must be added");
             }
-            return new Augmentation(chance, constraints, conditions, modifiers);
+            return new Augmentation(this.chance, this.constraints, this.conditions, this.modifiers);
         }
     }
 

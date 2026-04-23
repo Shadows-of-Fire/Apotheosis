@@ -105,10 +105,10 @@ public class SupportingEntity {
         }
 
         public SupportingEntity build() {
-            if (entity == null) {
+            if (this.entity == null) {
                 throw new IllegalStateException("Entity type must be set");
             }
-            return new SupportingEntity(entity, Optional.ofNullable(nbt), x, y, z);
+            return new SupportingEntity(this.entity, Optional.ofNullable(this.nbt), this.x, this.y, this.z);
         }
     }
 

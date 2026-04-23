@@ -50,8 +50,8 @@ public class GemCaseSlot extends Slot {
             return ItemStack.EMPTY;
         }
 
-        int count = this.menu.getGemCount(gem, purity);
-        ItemStack stack = GemItem.createStack(gem, purity, Math.min(count, 64));
+        int count = this.menu.getGemCount(gem, this.purity);
+        ItemStack stack = GemItem.createStack(gem, this.purity, Math.min(count, 64));
         return stack;
     }
 
@@ -62,7 +62,7 @@ public class GemCaseSlot extends Slot {
             return false;
         }
 
-        return this.menu.getGemCount(gem, purity) > 0;
+        return this.menu.getGemCount(gem, this.purity) > 0;
     }
 
     @Override
@@ -99,12 +99,12 @@ public class GemCaseSlot extends Slot {
             return ItemStack.EMPTY;
         }
 
-        int count = this.menu.getGemCount(gem, purity);
+        int count = this.menu.getGemCount(gem, this.purity);
         int toExtract = Math.min(count, amount);
         if (toExtract <= 0) {
             return ItemStack.EMPTY;
         }
-        return GemItem.createStack(gem, purity, toExtract);
+        return GemItem.createStack(gem, this.purity, toExtract);
     }
 
     /**

@@ -649,7 +649,7 @@ public class AdventureModuleClient {
             // Draw the "Currently Equipped" label above the equipped tooltip with a vanilla-style background.
             Component equippedTxt = Apotheosis.lang("text", "equipped");
             int txtWidth = font.width(equippedTxt);
-            int txtX = (finalEquipPos.x() + (equipWidth / 2)) - txtWidth / 2;
+            int txtX = finalEquipPos.x() + equipWidth / 2 - txtWidth / 2;
             int txtY = finalEquipPos.y() - font.lineHeight - 10;
 
             TooltipRenderUtil.extractTooltipBackground(gfx, txtX, txtY, txtWidth, font.lineHeight, COMPARE_TOOLTIP_SPRITES);

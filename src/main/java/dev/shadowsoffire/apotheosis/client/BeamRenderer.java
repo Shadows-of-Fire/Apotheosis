@@ -42,8 +42,8 @@ public class BeamRenderer {
         final float g6 = -glowRadius;
         final float g12 = -1.0F + f2;
         final float g13 = height * textureScale + g12;
-        final int glowBot = (ARGB.alpha(colorBot) / 2) << 24 | (colorBot & 0x00FFFFFF);
-        final int glowTop = (ARGB.alpha(colorTop) / 2) << 24 | (colorTop & 0x00FFFFFF);
+        final int glowBot = ARGB.alpha(colorBot) / 2 << 24 | colorBot & 0x00FFFFFF;
+        final int glowTop = ARGB.alpha(colorTop) / 2 << 24 | colorTop & 0x00FFFFFF;
         collector.submitCustomGeometry(poseStack, ApothRenderTypes.affixBeam(glowLocation, true), (pose, buffer) -> renderPart(
             pose, buffer, glowBot, glowTop, yOffset, maxY,
             g3, g4, glowRadius, g5, g6, glowRadius, glowRadius, glowRadius,

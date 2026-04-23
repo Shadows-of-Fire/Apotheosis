@@ -405,7 +405,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                 List<Component> tooltips = new ArrayList<>();
                 tooltips.add(primary);
 
-                MutableComponent sigilCostMsg = Apotheosis.lang("button", "augmenting.upgrade.cost", sigilCost, sigilName);
+                MutableComponent sigilCostMsg = Apotheosis.lang("button", "augmenting.upgrade.cost", sigilCost, this.sigilName);
                 MutableComponent levelCostMsg = Apotheosis.lang("button", "augmenting.upgrade.exp_cost", levelCost);
 
                 if (this.isActive()) {

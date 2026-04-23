@@ -33,12 +33,12 @@ public abstract class AdventureContainerScreen<T extends AbstractContainerMenu> 
 
     @Override
     protected void extractSlotHighlightBack(GuiGraphicsExtractor gfx) {
-        drawTintedHighlight(gfx, SLOT_HIGHLIGHT_BACK);
+        this.drawTintedHighlight(gfx, SLOT_HIGHLIGHT_BACK);
     }
 
     @Override
     protected void extractSlotHighlightFront(GuiGraphicsExtractor gfx) {
-        drawTintedHighlight(gfx, SLOT_HIGHLIGHT_FRONT);
+        this.drawTintedHighlight(gfx, SLOT_HIGHLIGHT_FRONT);
     }
 
     private void drawTintedHighlight(GuiGraphicsExtractor gfx, Identifier sprite) {

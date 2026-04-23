@@ -95,7 +95,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
 
                 ItemStack sigils = this.getSigils();
                 if (!this.player.isCreative()) {
-                    if (!hasUpgradeCost()) {
+                    if (!this.hasUpgradeCost()) {
                         return false;
                     }
                     else {
@@ -120,7 +120,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
 
                 ItemStack sigils = this.getSigils();
                 if (!this.player.isCreative()) {
-                    if (!hasRerollCost()) {
+                    if (!this.hasRerollCost()) {
                         return false;
                     }
                     else {

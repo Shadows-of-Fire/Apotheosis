@@ -269,10 +269,10 @@ public record BasicBossData(
         }
 
         public BasicBossData build() {
-            if (weights == null) {
+            if (this.weights == null) {
                 throw new IllegalStateException("Weights must be set");
             }
-            return new BasicBossData(weights, constraints, name, bonusLoot, gearSets, nbt, mount, support, finalizeSpawn, exclusions);
+            return new BasicBossData(this.weights, this.constraints, this.name, this.bonusLoot, this.gearSets, this.nbt, this.mount, this.support, this.finalizeSpawn, this.exclusions);
         }
     }
 

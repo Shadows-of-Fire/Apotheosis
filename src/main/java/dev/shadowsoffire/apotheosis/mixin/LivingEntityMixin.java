@@ -22,13 +22,13 @@ public class LivingEntityMixin {
      */
     @Inject(method = "detectEquipmentUpdates", at = @At("HEAD"))
     private void apoth_cacheLastHealthPct(CallbackInfo ci) {
-        if (!isPlayer()) {
+        if (!this.isPlayer()) {
             LivingEntity self = (LivingEntity) (Object) this;
             if (self.getHealth() > 0 && self.getMaxHealth() > 0) {
-                originalHealthPercent = self.getHealth() / self.getMaxHealth();
+                this.originalHealthPercent = self.getHealth() / self.getMaxHealth();
             }
             else {
-                originalHealthPercent = null;
+                this.originalHealthPercent = null;
             }
         }
     }
@@ -40,10 +40,10 @@ public class LivingEntityMixin {
      */
     @Inject(method = "detectEquipmentUpdates", at = @At("TAIL"))
     private void apoth_updateHealthPct(CallbackInfo ci) {
-        if (originalHealthPercent != null) {
+        if (this.originalHealthPercent != null) {
             LivingEntity self = (LivingEntity) (Object) this;
-            self.setHealth(self.getMaxHealth() * originalHealthPercent);
-            originalHealthPercent = null;
+            self.setHealth(self.getMaxHealth() * this.originalHealthPercent);
+            this.originalHealthPercent = null;
         }
     }
 

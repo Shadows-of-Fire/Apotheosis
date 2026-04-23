@@ -31,7 +31,7 @@ public class UnnamingExtension implements ISmithingCategoryExtension<UnnamingRec
 
     @Override
     public <T extends IIngredientAcceptor<T>> void setBase(UnnamingRecipe recipe, T acc) {
-        List<ItemStack> outputs = getDummyItems().toList();
+        List<ItemStack> outputs = this.getDummyItems().toList();
         acc.addItemStacks(outputs);
     }
 
@@ -42,7 +42,7 @@ public class UnnamingExtension implements ISmithingCategoryExtension<UnnamingRec
 
     @Override
     public <T extends IIngredientAcceptor<T>> void setOutput(UnnamingRecipe recipe, T acc) {
-        List<ItemStack> outputs = getDummyItems()
+        List<ItemStack> outputs = this.getDummyItems()
             .map(stack -> {
                 LootRarity rarity = AffixHelper.getRarity(stack).get();
                 Component comp = Component.translatable("%2$s", "", "").withStyle(Style.EMPTY.withColor(rarity.color()).withItalic(false));

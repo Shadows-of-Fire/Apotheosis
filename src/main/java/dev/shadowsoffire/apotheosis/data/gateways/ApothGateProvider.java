@@ -69,7 +69,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
 
     @Override
     public void generate() {
-        tieredGateway("tiered/frontier", b -> b
+        this.tieredGateway("tiered/frontier", b -> b
             .settings(c -> c
                 .tier(WorldTier.FRONTIER)
                 .size(NormalGateway.Size.SMALL)
@@ -160,7 +160,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.UNCOMMON_MATERIAL, 8)))
             .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.SIGIL_OF_SOCKETING, 2))));
 
-        tieredGateway("tiered/ascent", b -> b
+        this.tieredGateway("tiered/ascent", b -> b
             .settings(c -> c
                 .tier(WorldTier.ASCENT)
                 .size(NormalGateway.Size.MEDIUM)
@@ -270,7 +270,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.SIGIL_OF_SOCKETING, 2)))
             .keyReward(new StackReward(new ItemStackTemplate(Items.WITHER_SKELETON_SKULL, 3))));
 
-        tieredGateway("tiered/summit", b -> b
+        this.tieredGateway("tiered/summit", b -> b
             .settings(c -> c
                 .tier(WorldTier.SUMMIT)
                 .size(NormalGateway.Size.MEDIUM)
@@ -386,7 +386,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.SIGIL_OF_SOCKETING, 6)))
             .keyReward(new StackReward(new ItemStackTemplate(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1), Apotheosis.langKey("reward", "netherite_smithing_template"))));
 
-        endlessGateway("endless_invader", b -> b
+        this.endlessGateway("endless_invader", b -> b
             .color(GradientColor.RAINBOW)
             .size(Gateway.Size.LARGE)
             .bossSettings(new BossEventSettings(BossEventSettings.Mode.NAME_PLATE, false))
@@ -429,7 +429,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .reward(new StackReward(new ItemStackTemplate(Apoth.Items.SIGIL_OF_SUPREMACY)))
                 .modifier(AttributeModifier.create(Attributes.MAX_HEALTH, Operation.ADD_MULTIPLIED_TOTAL, 1F))));
 
-        tieredGateway("tiered/pinnacle", b -> b
+        this.tieredGateway("tiered/pinnacle", b -> b
             .settings(c -> c
                 .tier(WorldTier.PINNACLE)
                 .size(NormalGateway.Size.LARGE)
@@ -544,7 +544,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new CountedReward(GemReward.create(Purity.PERFECT), 10))
             .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.GEM_DUST, 64)))
             .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.MYTHIC_MATERIAL, 64)))
-            .keyReward(new StackReward(endlessInvaderGatePearl())));
+            .keyReward(new StackReward(this.endlessInvaderGatePearl())));
     }
 
     private void tieredGateway(String path, UnaryOperator<TieredGateway.Builder> config) {

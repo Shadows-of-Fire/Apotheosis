@@ -55,7 +55,7 @@ public record TrueRandomInvaderWaveEntity(int count, Optional<String> desc) impl
     @Override
     public MutableComponent getDescription() {
         Component desc = Apotheosis.lang("wave_entity", "true_random_invader");
-        return Gateways.lang("tooltip", "with_count", getCount(), desc);
+        return Gateways.lang("tooltip", "with_count", this.getCount(), desc);
     }
 
     @Override

@@ -148,7 +148,7 @@ public class ApothLootProvider extends LootTableProvider {
                         .add(item(Items.LEAD, 1, 2).setWeight(50).setQuality(0))
                         .add(item(Items.SADDLE, 1, 2).setWeight(40).setQuality(0))
                         .add(item(Items.DIAMOND_HORSE_ARMOR, 1, 1).setWeight(40).setQuality(3))
-                        .add(enchanted(Items.BOOK, registries).setWeight(40).setQuality(5))
+                        .add(enchanted(Items.BOOK, this.registries).setWeight(40).setQuality(5))
                         .add(GemLootPoolEntry.builder(Set.of(), Set.of()).setWeight(80).setQuality(3))
                         .add(GemLootPoolEntry.builder(Set.of(), Set.of()).setWeight(80).setQuality(3))
                         .add(AffixLootPoolEntry.builder(ApothMiscUtil.linkedSet(rare), Set.of()).setWeight(60).setQuality(2))
@@ -198,14 +198,14 @@ public class ApothLootProvider extends LootTableProvider {
                         .add(item(Items.DIAMOND_HORSE_ARMOR, 1, 1).setWeight(40).setQuality(3))
                         .add(item(Items.SLIME_BALL, 3, 6).setWeight(50).setQuality(0))
                         .add(item(Items.BUCKET, 1, 2).setWeight(50).setQuality(0))
-                        .add(enchanted(Items.DIAMOND_SWORD, registries).setWeight(30).setQuality(5))
-                        .add(enchanted(Items.DIAMOND_AXE, registries).setWeight(30).setQuality(5))
-                        .add(enchanted(Items.DIAMOND_PICKAXE, registries).setWeight(30).setQuality(5))
-                        .add(enchanted(Items.DIAMOND_BOOTS, registries).setWeight(20).setQuality(5))
-                        .add(enchanted(Items.DIAMOND_LEGGINGS, registries).setWeight(20).setQuality(5))
-                        .add(enchanted(Items.DIAMOND_CHESTPLATE, registries).setWeight(20).setQuality(5))
-                        .add(enchanted(Items.DIAMOND_HELMET, registries).setWeight(20).setQuality(5))
-                        .add(enchanted(Items.BOOK, registries).setWeight(20).setQuality(5))
+                        .add(enchanted(Items.DIAMOND_SWORD, this.registries).setWeight(30).setQuality(5))
+                        .add(enchanted(Items.DIAMOND_AXE, this.registries).setWeight(30).setQuality(5))
+                        .add(enchanted(Items.DIAMOND_PICKAXE, this.registries).setWeight(30).setQuality(5))
+                        .add(enchanted(Items.DIAMOND_BOOTS, this.registries).setWeight(20).setQuality(5))
+                        .add(enchanted(Items.DIAMOND_LEGGINGS, this.registries).setWeight(20).setQuality(5))
+                        .add(enchanted(Items.DIAMOND_CHESTPLATE, this.registries).setWeight(20).setQuality(5))
+                        .add(enchanted(Items.DIAMOND_HELMET, this.registries).setWeight(20).setQuality(5))
+                        .add(enchanted(Items.BOOK, this.registries).setWeight(20).setQuality(5))
                         .add(GemLootPoolEntry.builder(Set.of(Purity.FLAWED), Set.of()).setWeight(20).setQuality(15))
                         .add(AffixLootPoolEntry.builder(ApothMiscUtil.linkedSet(rare, epic), Set.of()).setWeight(20).setQuality(15))));
 
@@ -234,7 +234,7 @@ public class ApothLootProvider extends LootTableProvider {
                         .add(item(Items.ANVIL, 1, 1).setWeight(3).setQuality(5))
                         .add(item(Items.ENCHANTING_TABLE, 1, 1).setWeight(3).setQuality(5))
                         .add(item(Items.IRON_BLOCK, 1, 1).setWeight(3).setQuality(2))
-                        .add(enchanted(Items.BOOK, registries).setWeight(2).setQuality(5))));
+                        .add(enchanted(Items.BOOK, this.registries).setWeight(2).setQuality(5))));
 
             output.accept(Apoth.LootTables.SPAWNER_SWARM,
                 LootTable.lootTable()
@@ -263,7 +263,7 @@ public class ApothLootProvider extends LootTableProvider {
                         .add(item(Items.ANVIL, 1, 1).setWeight(3).setQuality(5))
                         .add(item(Items.OBSIDIAN, 3, 8).setWeight(3).setQuality(5))
                         .add(item(Items.IRON_BLOCK, 1, 1).setWeight(3).setQuality(2))
-                        .add(enchanted(Items.BOOK, registries).setWeight(2).setQuality(5))));
+                        .add(enchanted(Items.BOOK, this.registries).setWeight(2).setQuality(5))));
 
             output.accept(Apoth.LootTables.TOME_TOWER,
                 LootTable.lootTable()
@@ -280,7 +280,7 @@ public class ApothLootProvider extends LootTableProvider {
                         .add(item(Items.DIAMOND_HORSE_ARMOR, 1, 1).setWeight(1).setQuality(5))
                         .add(item(Items.SLIME_BALL, 3, 6).setWeight(20).setQuality(0))
                         .add(item(Items.BUCKET, 1, 1).setWeight(3).setQuality(0))
-                        .add(enchanted(Items.BOOK, registries).setWeight(400).setQuality(0))
+                        .add(enchanted(Items.BOOK, this.registries).setWeight(400).setQuality(0))
                         .add(GemLootPoolEntry.builder(Set.of(Purity.FLAWED), Set.of()).setWeight(80).setQuality(5))
                         .add(AffixLootPoolEntry.builder(ApothMiscUtil.linkedSet(uncommon, rare, epic), Set.of()).setWeight(80).setQuality(5))));
         }

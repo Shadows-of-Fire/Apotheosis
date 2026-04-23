@@ -87,7 +87,7 @@ public record GenContext(RandomSource rand, WorldTier tier, float luck, Resource
 
     @Override
     public final String toString() {
-        return "GenContext[tier=%s, luck=%s, dimension=%s, biome=%s, stages=%s]".formatted(tier.getSerializedName(), luck, dimension.identifier(), biome.getKey().identifier(), stages);
+        return "GenContext[tier=%s, luck=%s, dimension=%s, biome=%s, stages=%s]".formatted(this.tier.getSerializedName(), this.luck, this.dimension.identifier(), this.biome.getKey().identifier(), this.stages);
     }
 
 }

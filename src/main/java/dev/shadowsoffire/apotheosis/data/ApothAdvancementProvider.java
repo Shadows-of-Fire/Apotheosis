@@ -78,7 +78,7 @@ public class ApothAdvancementProvider extends AdvancementProvider {
 
             Set<Identifier> set = new HashSet<>();
             List<CompletableFuture<?>> list = new ArrayList<>();
-            ConditionalConsumer<AdvancementHolder> consumer = wrap(holder -> {
+            ConditionalConsumer<AdvancementHolder> consumer = this.wrap(holder -> {
                 if (!set.add(holder.id())) {
                     throw new IllegalStateException("Duplicate advancement " + holder.id());
                 }

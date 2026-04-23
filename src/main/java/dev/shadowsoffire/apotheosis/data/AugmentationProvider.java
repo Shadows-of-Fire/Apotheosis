@@ -28,7 +28,7 @@ public class AugmentationProvider extends DynamicRegistryProvider<Augmentation> 
 
     @Override
     public void generate() {
-        add("random_affix_items", b -> b
+        this.add("random_affix_items", b -> b
             .chance(0.12F)
             .conditions(
                 new NotCondition(SpawnTypeCondition.of(EntitySpawnReason.SPAWNER, EntitySpawnReason.TRIAL_SPAWNER)),

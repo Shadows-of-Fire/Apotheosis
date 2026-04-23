@@ -63,7 +63,7 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
         this.unique = unique;
         Preconditions.checkArgument(!bonuses.isEmpty(), "No bonuses were provided.");
         for (GemBonus bonus : this.bonuses) {
-            validateBonus(bonus);
+            this.validateBonus(bonus);
             for (Holder<LootCategory> category : bonus.getGemClass().types()) {
                 this.bonusMap.put(category.value(), bonus);
             }
@@ -243,7 +243,7 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
     }
 
     void appendExtraBonus(GemBonus bonus) {
-        validateBonus(bonus);
+        this.validateBonus(bonus);
         this.extraBonuses.add(bonus);
         for (Holder<LootCategory> category : bonus.getGemClass().types()) {
             this.bonusMap.put(category.value(), bonus);

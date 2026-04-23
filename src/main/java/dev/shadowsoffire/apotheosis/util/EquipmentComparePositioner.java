@@ -37,10 +37,10 @@ public class EquipmentComparePositioner {
      * @return True if the rectangles were placed, false otherwise.
      */
     public boolean position(Vector2ic equipPos, int equipW, int equipH, Vector2ic compPos, int compW, int compH) {
-        this.equipped = rect(equipPos, equipW, equipH);
-        this.compareTo = rect(compPos, compW, compH);
+        this.equipped = this.rect(equipPos, equipW, equipH);
+        this.compareTo = this.rect(compPos, compW, compH);
 
-        if (canRenderNow()) {
+        if (this.canRenderNow()) {
             return true;
         }
 
@@ -51,9 +51,9 @@ public class EquipmentComparePositioner {
 
         // Check if horizontal placement is possible.
         // Reduce the padding (down to zero) if necessary.
-        if (totalWidth > scnWidth) {
-            if (totalWidth - padding <= scnWidth) {
-                padding = totalWidth - scnWidth;
+        if (totalWidth > this.scnWidth) {
+            if (totalWidth - padding <= this.scnWidth) {
+                padding = totalWidth - this.scnWidth;
             }
             else {
                 return false;
@@ -61,25 +61,25 @@ public class EquipmentComparePositioner {
         }
 
         // Calculate maximum valid X for equipped (left rectangle)
-        final int maxEquippedX = scnWidth - totalWidth - 6;
+        final int maxEquippedX = this.scnWidth - totalWidth - 6;
         int newEquippedX = Math.min(equipPos.x(), maxEquippedX);
         newEquippedX = Math.max(newEquippedX, 6);  // Minimum left margin
 
         // Calculate compare position (right of equipped with padding)
         int compareX = newEquippedX + equipW + padding;
-        if (compareX + compW >= scnWidth) {
+        if (compareX + compW >= this.scnWidth) {
             // Try to shrink the padding as much as possible so we can still display the tooltip.
             // Anything below 2 and the tooltips start to bleed too hard.
-            padding = Math.max(2, scnWidth - compareX - compW);
+            padding = Math.max(2, this.scnWidth - compareX - compW);
             compareX = newEquippedX + equipW + padding;
-            if (compareX + compW >= scnWidth) {
+            if (compareX + compW >= this.scnWidth) {
                 return false;
             }
         }
 
         // Calculate vertical placement (shared Y)
         final int maxHeight = Math.max(equipH, compH);
-        final int maxY = scnHeight - maxHeight - 1;
+        final int maxY = this.scnHeight - maxHeight - 1;
         if (maxY < 1) {
             return false;
         }
@@ -88,8 +88,8 @@ public class EquipmentComparePositioner {
         sharedY = Math.max(sharedY, 1);  // Minimum top margin
 
         // Update positions with corrected naming
-        this.equipped = rect(newEquippedX, sharedY, equipW, equipH);
-        this.compareTo = rect(compareX, sharedY, compW, compH);
+        this.equipped = this.rect(newEquippedX, sharedY, equipW, equipH);
+        this.compareTo = this.rect(compareX, sharedY, compW, compH);
 
         return !this.equipped.overlaps(this.compareTo);
     }
@@ -103,7 +103,7 @@ public class EquipmentComparePositioner {
     }
 
     private Rect rect(Vector2ic pos, int width, int height) {
-        return rect(pos.x(), pos.y(), width, height);
+        return this.rect(pos.x(), pos.y(), width, height);
     }
 
     private Rect rect(int x, int y, int width, int height) {

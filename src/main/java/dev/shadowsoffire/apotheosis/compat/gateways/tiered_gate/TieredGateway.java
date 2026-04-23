@@ -247,17 +247,17 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
         public TieredGateway build() {
             Preconditions.checkNotNull(this.settings, "Settings must be set before building a TieredGateway");
 
-            if (waves.isEmpty()) {
+            if (this.waves.isEmpty()) {
                 throw new IllegalStateException("Gateway must have at least one wave");
             }
 
             return new TieredGateway(
-                settings,
-                Collections.unmodifiableList(new ArrayList<>(waves)),
-                Collections.unmodifiableList(new ArrayList<>(rewards)),
-                Collections.unmodifiableList(new ArrayList<>(failures)),
-                rules,
-                bossSettings);
+                this.settings,
+                Collections.unmodifiableList(new ArrayList<>(this.waves)),
+                Collections.unmodifiableList(new ArrayList<>(this.rewards)),
+                Collections.unmodifiableList(new ArrayList<>(this.failures)),
+                this.rules,
+                this.bossSettings);
         }
     }
 

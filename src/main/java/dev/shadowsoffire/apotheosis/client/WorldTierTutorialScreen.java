@@ -36,18 +36,18 @@ public class WorldTierTutorialScreen extends Screen {
         int imgLeft = (this.width - WorldTierSelectScreen.IMAGE_WIDTH) / 2;
         int imgTop = (this.height - WorldTierSelectScreen.IMAGE_HEIGHT) / 2;
 
-        skipButton = this.addRenderableWidget(
+        this.skipButton = this.addRenderableWidget(
             SimpleTexButton.builder()
                 .size(80, 20)
                 .pos(imgLeft + 15, imgTop + 250)
                 .texture(SimpleTexButton.APOTH_SPRITES)
                 .action(btn -> {
-                    closeTutorial();
+                    this.closeTutorial();
                 })
                 .buttonText(Apotheosis.lang("button", "skip_tutorial"))
                 .build());
 
-        prevButton = this.addRenderableWidget(
+        this.prevButton = this.addRenderableWidget(
             SimpleTexButton.builder()
                 .size(60, 20)
                 .pos(imgLeft + 340, imgTop + 250)
@@ -59,7 +59,7 @@ public class WorldTierTutorialScreen extends Screen {
                 .buttonText(Apotheosis.lang("button", "prev_tutorial"))
                 .build());
 
-        nextButton = this.addRenderableWidget(
+        this.nextButton = this.addRenderableWidget(
             SimpleTexButton.builder()
                 .size(60, 20)
                 .pos(imgLeft + 420, imgTop + 250)
@@ -68,7 +68,7 @@ public class WorldTierTutorialScreen extends Screen {
                     this.stage = this.stage.next();
                     this.updateButtons();
                     if (this.stage == null) {
-                        closeTutorial();
+                        this.closeTutorial();
                     }
                 })
                 .buttonText(Apotheosis.lang("button", "next_tutorial"))
@@ -82,7 +82,7 @@ public class WorldTierTutorialScreen extends Screen {
         int imgLeft = (this.width - WorldTierSelectScreen.IMAGE_WIDTH) / 2;
         int imgTop = (this.height - WorldTierSelectScreen.IMAGE_HEIGHT) / 2;
 
-        gfx.blit(RenderPipelines.GUI_TEXTURED, stage.overlay, imgLeft, imgTop, 0, 0, WorldTierSelectScreen.IMAGE_WIDTH, WorldTierSelectScreen.IMAGE_HEIGHT, WorldTierSelectScreen.IMAGE_WIDTH, WorldTierSelectScreen.IMAGE_HEIGHT);
+        gfx.blit(RenderPipelines.GUI_TEXTURED, this.stage.overlay, imgLeft, imgTop, 0, 0, WorldTierSelectScreen.IMAGE_WIDTH, WorldTierSelectScreen.IMAGE_HEIGHT, WorldTierSelectScreen.IMAGE_WIDTH, WorldTierSelectScreen.IMAGE_HEIGHT);
     }
 
     @Override
@@ -96,11 +96,11 @@ public class WorldTierTutorialScreen extends Screen {
         pose.pushMatrix();
         pose.scale(scale, scale);
         Component title = this.stage.title;
-        gfx.text(font, title.getVisualOrderText(), (int) ((imgLeft + 380 - font.width(title) * scale / 2) / scale), (int) ((imgTop + 107) / scale), 0xFFFFFFFF, true);
+        gfx.text(this.font, title.getVisualOrderText(), (int) ((imgLeft + 380 - this.font.width(title) * scale / 2) / scale), (int) ((imgTop + 107) / scale), 0xFFFFFFFF, true);
         pose.popMatrix();
 
-        Component desc = stage.description;
-        if (stage == TutorialStage.ACTIVATE && !AdventureConfig.enableManualWorldTierChanges) {
+        Component desc = this.stage.description;
+        if (this.stage == TutorialStage.ACTIVATE && !AdventureConfig.enableManualWorldTierChanges) {
             desc = Apotheosis.lang("tutorial", "world_tier.activate_disabled.desc").withStyle(ChatFormatting.DARK_AQUA);
         }
 
@@ -108,7 +108,7 @@ public class WorldTierTutorialScreen extends Screen {
 
         for (int i = 0; i < split.size(); i++) {
             FormattedCharSequence line = split.get(i);
-            gfx.text(font, line, imgLeft + 280, imgTop + 100 + font.lineHeight * 3 + (2 + font.lineHeight) * i, 0xFFFFFFFF, true);
+            gfx.text(this.font, line, imgLeft + 280, imgTop + 100 + this.font.lineHeight * 3 + (2 + this.font.lineHeight) * i, 0xFFFFFFFF, true);
         }
 
         // Re-render the relevant buttons from the parent so users can see the hovered tooltip when the button is focused.
@@ -127,13 +127,13 @@ public class WorldTierTutorialScreen extends Screen {
     }
 
     private void updateButtons() {
-        skipButton.active = true;
-        prevButton.active = stage != TutorialStage.INTRODUCTION;
-        if (stage == TutorialStage.ACTIVATE) {
-            nextButton.setButtonText(Apotheosis.lang("button", "done"));
+        this.skipButton.active = true;
+        this.prevButton.active = this.stage != TutorialStage.INTRODUCTION;
+        if (this.stage == TutorialStage.ACTIVATE) {
+            this.nextButton.setButtonText(Apotheosis.lang("button", "done"));
         }
         else {
-            nextButton.setButtonText(Apotheosis.lang("button", "next_tutorial"));
+            this.nextButton.setButtonText(Apotheosis.lang("button", "next_tutorial"));
         }
     }
 

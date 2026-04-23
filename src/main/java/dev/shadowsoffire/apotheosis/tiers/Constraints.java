@@ -48,7 +48,7 @@ public record Constraints(Set<WorldTier> tiers, Set<ResourceKey<Level>> dimensio
     }
 
     public boolean test(GenContext ctx) {
-        if ((!this.tiers.isEmpty() && !this.tiers.contains(ctx.tier())) || (!this.dimensions.isEmpty() && !this.dimensions.contains(ctx.dimension()))) {
+        if (!this.tiers.isEmpty() && !this.tiers.contains(ctx.tier()) || !this.dimensions.isEmpty() && !this.dimensions.contains(ctx.dimension())) {
             return false;
         }
 
@@ -109,7 +109,7 @@ public record Constraints(Set<WorldTier> tiers, Set<ResourceKey<Level>> dimensio
         }
 
         public Constraints build() {
-            return new Constraints(tiers, dimensions, biomes, gameStages);
+            return new Constraints(this.tiers, this.dimensions, this.biomes, this.gameStages);
         }
     }
 

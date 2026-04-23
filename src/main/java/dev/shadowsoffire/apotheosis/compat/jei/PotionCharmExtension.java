@@ -120,7 +120,7 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
 
         @Override
         public @Nullable Object getSubtypeData(ItemStack ingredient, UidContext context) {
-            String data = apply(ingredient, context);
+            String data = this.apply(ingredient, context);
             return data.isEmpty() ? null : data;
         }
 

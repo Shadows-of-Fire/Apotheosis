@@ -31,7 +31,7 @@ public class SupremacyExtension implements ISmithingCategoryExtension<SupremacyR
 
     @Override
     public <T extends IIngredientAcceptor<T>> void setBase(SupremacyRecipe recipe, T acc) {
-        List<ItemStack> outputs = getDummyItems().toList();
+        List<ItemStack> outputs = this.getDummyItems().toList();
         acc.addItemStacks(outputs);
     }
 
@@ -42,7 +42,7 @@ public class SupremacyExtension implements ISmithingCategoryExtension<SupremacyR
 
     @Override
     public <T extends IIngredientAcceptor<T>> void setOutput(SupremacyRecipe recipe, T acc) {
-        List<ItemStack> outputs = getDummyItems()
+        List<ItemStack> outputs = this.getDummyItems()
             .map(stack -> {
                 AffixHelper.applySupremacy(stack);
                 return stack;

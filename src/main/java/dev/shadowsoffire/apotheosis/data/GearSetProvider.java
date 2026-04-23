@@ -54,7 +54,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         RegistryLookup<Enchantment> enchants = registries.lookup(Registries.ENCHANTMENT).get();
 
         // Haven Sets
-        addSet("haven/leather", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("haven/leather", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.STONE_SWORD), 10)
             .mainhand(new ItemStackTemplate(Items.STONE_AXE), 10)
             .mainhand(new ItemStackTemplate(Items.STONE_PICKAXE), 10)
@@ -65,7 +65,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.LEATHER_BOOTS), 10)
             .tag("haven_melee"));
 
-        addSet("haven/ranged/leather", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("haven/ranged/leather", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.BOW), 16)
             .mainhand(new ItemStackTemplate(Items.CROSSBOW), 4)
             .helmet(new ItemStackTemplate(Items.LEATHER_HELMET), 10)
@@ -74,7 +74,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.LEATHER_BOOTS), 10)
             .tag("haven_ranged"));
 
-        addSet("haven/chain", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("haven/chain", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.STONE_SWORD), 10)
             .mainhand(new ItemStackTemplate(Items.STONE_AXE), 10)
             .mainhand(new ItemStackTemplate(Items.STONE_PICKAXE), 10)
@@ -85,7 +85,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.CHAINMAIL_BOOTS), 10)
             .tag("haven_melee"));
 
-        addSet("haven/ranged/chain", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("haven/ranged/chain", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.BOW), 16)
             .mainhand(new ItemStackTemplate(Items.CROSSBOW), 4)
             .helmet(new ItemStackTemplate(Items.CHAINMAIL_HELMET), 10)
@@ -95,7 +95,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .tag("haven_ranged"));
 
         // Frontier Sets
-        addSet("frontier/chain", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("frontier/chain", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.IRON_SWORD), 10)
             .mainhand(new ItemStackTemplate(Items.IRON_AXE), 10)
             .mainhand(new ItemStackTemplate(Items.IRON_PICKAXE), 10)
@@ -106,7 +106,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.CHAINMAIL_BOOTS), 10)
             .tag("frontier_melee"));
 
-        addSet("frontier/ranged/chain", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("frontier/ranged/chain", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.BOW), 16)
             .mainhand(new ItemStackTemplate(Items.CROSSBOW), 4)
             .helmet(new ItemStackTemplate(Items.CHAINMAIL_HELMET), 10)
@@ -115,7 +115,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.CHAINMAIL_BOOTS), 10)
             .tag("frontier_ranged"));
 
-        addSet("frontier/iron", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("frontier/iron", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.IRON_SWORD), 10)
             .mainhand(new ItemStackTemplate(Items.IRON_AXE), 10)
             .mainhand(new ItemStackTemplate(Items.IRON_PICKAXE), 10)
@@ -127,7 +127,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.IRON_BOOTS), 10)
             .tag("frontier_melee"));
 
-        addSet("frontier/ranged/iron", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("frontier/ranged/iron", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.BOW), 16)
             .mainhand(new ItemStackTemplate(Items.CROSSBOW), 4)
             .helmet(new ItemStackTemplate(Items.IRON_HELMET), 10)
@@ -136,7 +136,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.IRON_BOOTS), 10)
             .tag("frontier_ranged"));
 
-        addSet("frontier/diamond", 10, 2.5F, c -> c
+        this.addSet("frontier/diamond", 10, 2.5F, c -> c
             .mainhand(new ItemStackTemplate(Items.DIAMOND_SWORD), 10)
             .mainhand(new ItemStackTemplate(Items.DIAMOND_AXE), 10)
             .mainhand(new ItemStackTemplate(Items.DIAMOND_PICKAXE), 10)
@@ -149,7 +149,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .tag("frontier_melee"));
 
         // Ascent Sets
-        addSet("ascent/enchanted_gold", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("ascent/enchanted_gold", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(buffedItem(Items.GOLDEN_SWORD, enchants, Enchantments.SHARPNESS, 5, 0.5F), 10)
             .mainhand(buffedItem(Items.GOLDEN_AXE, enchants, Enchantments.SHARPNESS, 5, 0.5F), 10)
             .mainhand(buffedItem(Items.GOLDEN_PICKAXE, enchants, Enchantments.FORTUNE, 5, 0.5F), 10)
@@ -160,7 +160,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(buffedItem(Items.GOLDEN_BOOTS, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
             .tag("ascent_melee"));
 
-        addSet("ascent/ranged/enchanted_gold", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("ascent/ranged/enchanted_gold", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.BOW), 12)
             .mainhand(new ItemStackTemplate(Items.CROSSBOW), 8)
             .helmet(buffedItem(Items.GOLDEN_HELMET, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
@@ -169,7 +169,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(buffedItem(Items.GOLDEN_BOOTS, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
             .tag("ascent_ranged"));
 
-        addSet("ascent/iron", 80, 0, c -> c
+        this.addSet("ascent/iron", 80, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.IRON_SWORD), 10)
             .mainhand(new ItemStackTemplate(Items.IRON_AXE), 10)
             .mainhand(new ItemStackTemplate(Items.IRON_PICKAXE), 10)
@@ -181,7 +181,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.IRON_BOOTS), 10)
             .tag("ascent_melee"));
 
-        addSet("ascent/ranged/iron", 80, 0, c -> c
+        this.addSet("ascent/ranged/iron", 80, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.BOW), 12)
             .mainhand(new ItemStackTemplate(Items.CROSSBOW), 8)
             .helmet(new ItemStackTemplate(Items.IRON_HELMET), 10)
@@ -190,7 +190,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.IRON_BOOTS), 10)
             .tag("ascent_ranged"));
 
-        addSet("ascent/diamond", DEFAULT_WEIGHT, 5, c -> c
+        this.addSet("ascent/diamond", DEFAULT_WEIGHT, 5, c -> c
             .mainhand(new ItemStackTemplate(Items.DIAMOND_SWORD), 10)
             .mainhand(new ItemStackTemplate(Items.DIAMOND_AXE), 10)
             .mainhand(new ItemStackTemplate(Items.DIAMOND_PICKAXE), 10)
@@ -202,7 +202,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.DIAMOND_BOOTS), 10)
             .tag("ascent_melee"));
 
-        addSet("ascent/ranged/diamond", DEFAULT_WEIGHT, 5, c -> c
+        this.addSet("ascent/ranged/diamond", DEFAULT_WEIGHT, 5, c -> c
             .mainhand(new ItemStackTemplate(Items.BOW), 12)
             .mainhand(new ItemStackTemplate(Items.CROSSBOW), 8)
             .helmet(new ItemStackTemplate(Items.DIAMOND_HELMET), 10)
@@ -212,7 +212,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .tag("ascent_ranged"));
 
         // Summit Sets
-        addSet("summit/enchanted_iron", 30, 0, c -> c
+        this.addSet("summit/enchanted_iron", 30, 0, c -> c
             .mainhand(buffedItem(Items.IRON_SWORD, enchants, Enchantments.SHARPNESS, 5, 0.35F), 10)
             .mainhand(buffedItem(Items.IRON_AXE, enchants, Enchantments.SHARPNESS, 5, 0.35F), 10)
             .mainhand(buffedItem(Items.IRON_PICKAXE, enchants, Enchantments.FORTUNE, 5, 0.35F), 10)
@@ -223,7 +223,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(buffedItem(Items.IRON_BOOTS, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
             .tag("summit_melee"));
 
-        addSet("summit/ranged/enchanted_iron", 30, 0, c -> c
+        this.addSet("summit/ranged/enchanted_iron", 30, 0, c -> c
             .mainhand(buffedItem(Items.BOW, enchants, Enchantments.POWER, 5, 0.35F), 10)
             .mainhand(buffedItem(Items.CROSSBOW, enchants, Enchantments.POWER, 5, 0.35F), 10)
             .helmet(buffedItem(Items.IRON_HELMET, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
@@ -232,7 +232,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(buffedItem(Items.IRON_BOOTS, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
             .tag("summit_ranged"));
 
-        addSet("summit/diamond", 40, 0, c -> c
+        this.addSet("summit/diamond", 40, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.DIAMOND_SWORD), 10)
             .mainhand(new ItemStackTemplate(Items.DIAMOND_AXE), 10)
             .mainhand(new ItemStackTemplate(Items.DIAMOND_PICKAXE), 10)
@@ -244,7 +244,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.DIAMOND_BOOTS), 10)
             .tag("summit_melee"));
 
-        addSet("summit/ranged/diamond", 40, 0, c -> c
+        this.addSet("summit/ranged/diamond", 40, 0, c -> c
             .mainhand(new ItemStackTemplate(Items.BOW), 10)
             .mainhand(new ItemStackTemplate(Items.CROSSBOW), 10)
             .helmet(new ItemStackTemplate(Items.DIAMOND_HELMET), 10)
@@ -253,7 +253,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.DIAMOND_BOOTS), 10)
             .tag("summit_ranged"));
 
-        addSet("summit/enchanted_diamond", 60, 0, c -> c
+        this.addSet("summit/enchanted_diamond", 60, 0, c -> c
             .mainhand(buffedItem(Items.DIAMOND_SWORD, enchants, Enchantments.SHARPNESS, 8, 0.525F), 10)
             .mainhand(buffedItem(Items.DIAMOND_AXE, enchants, Enchantments.SHARPNESS, 8, 0.525F), 10)
             .mainhand(buffedItem(Items.DIAMOND_PICKAXE, enchants, Enchantments.FORTUNE, 8, 0.525F), 10)
@@ -264,7 +264,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(buffedItem(Items.DIAMOND_BOOTS, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
             .tag("summit_melee"));
 
-        addSet("summit/ranged/enchanted_diamond", DEFAULT_WEIGHT, 0, c -> c
+        this.addSet("summit/ranged/enchanted_diamond", DEFAULT_WEIGHT, 0, c -> c
             .mainhand(buffedItem(Items.BOW, enchants, Enchantments.POWER, 6, 0.42F), 10)
             .mainhand(buffedItem(Items.CROSSBOW, enchants, Enchantments.POWER, 6, 0.42F), 10)
             .helmet(buffedItem(Items.DIAMOND_HELMET, enchants, Enchantments.PROTECTION, 2, 0.21F), 10)
@@ -273,7 +273,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(buffedItem(Items.DIAMOND_BOOTS, enchants, Enchantments.PROTECTION, 2, 0.21F), 10)
             .tag("summit_ranged"));
 
-        addSet("summit/netherite", 140, 5, c -> c
+        this.addSet("summit/netherite", 140, 5, c -> c
             .mainhand(new ItemStackTemplate(Items.NETHERITE_SWORD), 10)
             .mainhand(new ItemStackTemplate(Items.NETHERITE_AXE), 10)
             .mainhand(new ItemStackTemplate(Items.NETHERITE_PICKAXE), 10)
@@ -285,7 +285,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(new ItemStackTemplate(Items.NETHERITE_BOOTS), 10)
             .tag("summit_melee"));
 
-        addSet("summit/ranged/netherite", 140, 5, c -> c
+        this.addSet("summit/ranged/netherite", 140, 5, c -> c
             .mainhand(new ItemStackTemplate(Items.BOW), 10)
             .mainhand(new ItemStackTemplate(Items.CROSSBOW), 10)
             .helmet(new ItemStackTemplate(Items.NETHERITE_HELMET), 10)
@@ -295,7 +295,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .tag("summit_ranged"));
 
         // Pinnacle
-        addSet("pinnacle/enchanted_netherite", DEFAULT_WEIGHT, 5, c -> c
+        this.addSet("pinnacle/enchanted_netherite", DEFAULT_WEIGHT, 5, c -> c
             .mainhand(buffedItem(Items.NETHERITE_SWORD, enchants, Enchantments.SHARPNESS, 15, 0.8F), 10)
             .mainhand(buffedItem(Items.NETHERITE_AXE, enchants, Enchantments.SHARPNESS, 15, 0.8F), 10)
             .mainhand(buffedItem(Items.NETHERITE_PICKAXE, enchants, Enchantments.FORTUNE, 15, 0.8F), 10)
@@ -307,7 +307,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(buffedItem(Items.NETHERITE_BOOTS, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
             .tag("pinnacle_melee"));
 
-        addSet("pinnacle/ranged/enchanted_netherite", DEFAULT_WEIGHT, 5, c -> c
+        this.addSet("pinnacle/ranged/enchanted_netherite", DEFAULT_WEIGHT, 5, c -> c
             .mainhand(buffedItem(Items.BOW, enchants, Enchantments.POWER, 15, 0.8F), 10)
             .mainhand(buffedItem(Items.CROSSBOW, enchants, Enchantments.POWER, 15, 0.8F), 10)
             .helmet(buffedItem(Items.NETHERITE_HELMET, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
@@ -316,11 +316,11 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .boots(buffedItem(Items.NETHERITE_BOOTS, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
             .tag("pinnacle_ranged"));
 
-        addSet("gateway_only/nether_herald", 0, 0, c -> c
+        this.addSet("gateway_only/nether_herald", 0, 0, c -> c
             .helmet(getNetherHeraldBannerInstance(registries.lookupOrThrow(Registries.BANNER_PATTERN)), 1)
             .mainhand(buffedItem(Items.DIAMOND_AXE, enchants, Enchantments.SHARPNESS, 3, 0.175F), 1));
 
-        addSet("gateway_only/bastion_guard", 0, 0, c -> c
+        this.addSet("gateway_only/bastion_guard", 0, 0, c -> c
             .helmet(getBastionGuardBannerInstance(registries.lookupOrThrow(Registries.BANNER_PATTERN)), 1)
             .mainhand(buffedItem(Items.NETHERITE_AXE, enchants, Enchantments.SHARPNESS, 3, 0.175F), 1)
             .offhand(new ItemStackTemplate(Items.SHIELD), 1)
@@ -392,7 +392,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         }
 
         public GSBuilder helmet(ItemStackTemplate template, int weight) {
-            return helmet(template, weight, -1);
+            return this.helmet(template, weight, -1);
         }
 
         public GSBuilder chestplate(ItemStackTemplate template, int weight, float dropChance) {
@@ -401,7 +401,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         }
 
         public GSBuilder chestplate(ItemStackTemplate template, int weight) {
-            return chestplate(template, weight, -1);
+            return this.chestplate(template, weight, -1);
         }
 
         public GSBuilder leggings(ItemStackTemplate template, int weight, float dropChance) {
@@ -410,7 +410,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         }
 
         public GSBuilder leggings(ItemStackTemplate template, int weight) {
-            return leggings(template, weight, -1);
+            return this.leggings(template, weight, -1);
         }
 
         public GSBuilder boots(ItemStackTemplate template, int weight, float dropChance) {
@@ -419,7 +419,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         }
 
         public GSBuilder boots(ItemStackTemplate template, int weight) {
-            return boots(template, weight, -1);
+            return this.boots(template, weight, -1);
         }
 
         public GSBuilder mainhand(ItemStackTemplate template, int weight, float dropChance) {
@@ -428,7 +428,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         }
 
         public GSBuilder mainhand(ItemStackTemplate template, int weight) {
-            return mainhand(template, weight, -1);
+            return this.mainhand(template, weight, -1);
         }
 
         public GSBuilder offhand(ItemStackTemplate template, int weight, float dropChance) {
@@ -437,7 +437,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         }
 
         public GSBuilder offhand(ItemStackTemplate template, int weight) {
-            return offhand(template, weight, -1);
+            return this.offhand(template, weight, -1);
         }
 
         public GSBuilder tag(String tag) {
@@ -446,7 +446,7 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         }
 
         public GearSet build() {
-            return new GearSet(weight, quality, mainhands, offhands, boots, leggings, chestplates, helmets, tags);
+            return new GearSet(this.weight, this.quality, this.mainhands, this.offhands, this.boots, this.leggings, this.chestplates, this.helmets, this.tags);
         }
     }
 }

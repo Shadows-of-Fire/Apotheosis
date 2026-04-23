@@ -90,10 +90,10 @@ public record BossStats(float enchantChance, EnchantmentLevels enchLevels, List<
         }
 
         public BossStats build() {
-            if (enchLevels == null) {
+            if (this.enchLevels == null) {
                 throw new IllegalStateException("EnchantmentLevels must be set");
             }
-            return new BossStats(enchantChance, enchLevels, effects, modifiers);
+            return new BossStats(this.enchantChance, this.enchLevels, this.effects, this.modifiers);
         }
     }
 

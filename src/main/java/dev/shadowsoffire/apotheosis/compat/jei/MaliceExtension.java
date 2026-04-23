@@ -31,7 +31,7 @@ public class MaliceExtension implements ISmithingCategoryExtension<MaliceRecipe>
 
     @Override
     public <T extends IIngredientAcceptor<T>> void setBase(MaliceRecipe recipe, T acc) {
-        List<ItemStack> outputs = getDummyItems().toList();
+        List<ItemStack> outputs = this.getDummyItems().toList();
         acc.addItemStacks(outputs);
     }
 
@@ -42,7 +42,7 @@ public class MaliceExtension implements ISmithingCategoryExtension<MaliceRecipe>
 
     @Override
     public <T extends IIngredientAcceptor<T>> void setOutput(MaliceRecipe recipe, T acc) {
-        List<ItemStack> outputs = getDummyItems()
+        List<ItemStack> outputs = this.getDummyItems()
             .map(stack -> {
                 stack.set(Apoth.Components.MALICE_MARKER, true);
                 return stack;

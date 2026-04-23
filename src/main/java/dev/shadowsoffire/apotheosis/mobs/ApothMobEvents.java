@@ -105,7 +105,7 @@ public class ApothMobEvents {
 
     private boolean trySpawnInvader(FinalizeSpawnEvent e, Mob mob, GenContext ctx, Player player) {
         // Invaders can only trigger off of natural spawns (chunk generation is considered "natural")
-        if ((e.getSpawnType() != EntitySpawnReason.NATURAL && e.getSpawnType() != EntitySpawnReason.CHUNK_GENERATION) || !(mob instanceof Monster)) {
+        if (e.getSpawnType() != EntitySpawnReason.NATURAL && e.getSpawnType() != EntitySpawnReason.CHUNK_GENERATION || !(mob instanceof Monster)) {
             debugLog("[Invaders]: Failed invader preconditions.");
             return false;
         }
@@ -308,9 +308,7 @@ public class ApothMobEvents {
 
     @Nullable
     private static DynamicHolder<LootRarity> getRarity(Mob boss) {
-        return boss.getSelfAndPassengers().filter(e -> e.getPersistentData().contains(Invader.BOSS_KEY)).findFirst().<DynamicHolder<LootRarity>>map(ent -> {
-            return RarityRegistry.INSTANCE.holder(Identifier.tryParse(ent.getPersistentData().getString(Invader.RARITY_KEY).orElse("")));
-        }).orElse(RarityRegistry.INSTANCE.emptyHolder());
+        return boss.getSelfAndPassengers().filter(e -> e.getPersistentData().contains(Invader.BOSS_KEY)).findFirst().<DynamicHolder<LootRarity>>map(ent -> RarityRegistry.INSTANCE.holder(Identifier.tryParse(ent.getPersistentData().getString(Invader.RARITY_KEY).orElse("")))).orElse(RarityRegistry.INSTANCE.emptyHolder());
     }
 
     private static final Marker MARKER = MarkerFactory.getMarker(ApothMobEvents.class.getSimpleName());
