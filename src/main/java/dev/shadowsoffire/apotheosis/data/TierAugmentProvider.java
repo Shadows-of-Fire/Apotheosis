@@ -15,7 +15,7 @@ import dev.shadowsoffire.placebo.util.data.DynamicRegistryProvider;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -66,7 +66,7 @@ public class TierAugmentProvider extends DynamicRegistryProvider<TierAugment> {
     }
 
     private void addAttribute(String path, WorldTier tier, Target target, int sortIdx, Holder<Attribute> attr, Operation op, float value) {
-        ResourceLocation id = Apotheosis.loc(path);
+        Identifier id = Apotheosis.loc(path);
         RandomAttributeModifier modif = new RandomAttributeModifier(attr, op, StepFunction.constant(value));
         this.add(id, new AttributeAugment(tier, target, sortIdx, modif, id));
     }

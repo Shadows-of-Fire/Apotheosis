@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.socket.gem;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
+import java.util.function.Consumer;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -34,13 +34,13 @@ public class GemItem extends Item implements ITabFiller {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext ctx, net.minecraft.world.item.component.TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         UnsocketedGem inst = UnsocketedGem.of(stack);
         if (!inst.isValid()) {
-            tooltip.add(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
+            tooltip.accept(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
             return;
         }
-        inst.addInformation(tooltip::add, AttributeTooltipContext.of(ApothMiscUtil.getClientPlayer(), ctx, flag));
+        inst.addInformation(tooltip, AttributeTooltipContext.of(ApothMiscUtil.getClientPlayer(), ctx, display, flag));
     }
 
     @Override
@@ -49,18 +49,17 @@ public class GemItem extends Item implements ITabFiller {
         if (!inst.isValid()) {
             return super.getName(pStack);
         }
-        MutableComponent comp = Component.translatable(this.getDescriptionId(pStack));
+        MutableComponent comp = Component.translatable(this.getGemDescriptionId(pStack));
         comp = Component.translatable("item.apotheosis.gem." + inst.purity().getSerializedName(), comp);
         return comp.withStyle(Style.EMPTY.withColor(inst.purity().getColor()));
     }
 
-    @Override
-    public String getDescriptionId(ItemStack pStack) {
+    public String getGemDescriptionId(ItemStack pStack) {
         DynamicHolder<Gem> gem = getGem(pStack);
         if (!gem.isBound()) {
             return super.getDescriptionId();
         }
-        return super.getDescriptionId(pStack) + "." + gem.getId();
+        return super.getDescriptionId() + "." + gem.getId();
     }
 
     @Override
@@ -88,12 +87,12 @@ public class GemItem extends Item implements ITabFiller {
 
     @Override
     @Nullable
-    public String getCreatorModId(ItemStack stack) {
+    public String getCreatorModId(net.minecraft.core.HolderLookup.Provider registries, ItemStack stack) {
         UnsocketedGem inst = UnsocketedGem.of(stack);
         if (inst.isValid()) {
             return inst.gem().getId().getNamespace();
         }
-        return super.getCreatorModId(stack);
+        return super.getCreatorModId(registries, stack);
     }
 
     /**

@@ -11,7 +11,7 @@ import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.commands.arguments.IdentifierArgument;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -20,10 +20,10 @@ public class ReforgeCommand {
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_RARITY = RarityCommand.SUGGEST_RARITY;
 
     public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
-        root.then(Commands.literal("reforge").requires(c -> c.hasPermission(2)).then(Commands.argument("rarity", ResourceLocationArgument.id()).suggests(SUGGEST_RARITY).executes(c -> {
+        root.then(Commands.literal("reforge").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS)).then(Commands.argument("rarity", IdentifierArgument.id()).suggests(SUGGEST_RARITY).executes(c -> {
             Player p = c.getSource().getPlayerOrException();
             GenContext ctx = GenContext.forPlayer(p);
-            LootRarity rarity = RarityRegistry.INSTANCE.getValue(ResourceLocationArgument.getId(c, "rarity"));
+            LootRarity rarity = RarityRegistry.INSTANCE.getValue(IdentifierArgument.getId(c, "rarity"));
             ItemStack stack = p.getMainHandItem();
             AffixHelper.setAffixes(stack, ItemAffixes.EMPTY);
             LootController.createLootItem(stack, rarity, ctx);

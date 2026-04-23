@@ -9,9 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.storage.ValueInput;
 
 /**
  * This contents of this class are Copyright (c) Darkhax under LGPL v2.1 and used under the terms of that license.
@@ -40,13 +39,11 @@ public abstract class MHFMixinLivingEntity {
      * {@link #actualHealth}. This approach is favoured over attempting to initialize attributes early as there is no
      * standard way to do this that would reasonably account for modded attribute sources.
      */
-    @Inject(method = "readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("HEAD"))
-    private void maxhealthfix$readAdditionalSaveData(CompoundTag tag, CallbackInfo callback) {
-        if (tag.contains("Health", Tag.TAG_ANY_NUMERIC)) {
-            final float savedHealth = tag.getFloat("Health");
-            if (savedHealth > this.getMaxHealth() && savedHealth > 0) {
-                this.actualHealth = savedHealth;
-            }
+    @Inject(method = "readAdditionalSaveData(Lnet/minecraft/world/level/storage/ValueInput;)V", at = @At("HEAD"))
+    private void maxhealthfix$readAdditionalSaveData(ValueInput input, CallbackInfo callback) {
+        final float savedHealth = input.getFloatOr("Health", 0F);
+        if (savedHealth > this.getMaxHealth() && savedHealth > 0) {
+            this.actualHealth = savedHealth;
         }
     }
 

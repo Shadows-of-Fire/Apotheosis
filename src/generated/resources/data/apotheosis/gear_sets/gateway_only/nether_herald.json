@@ -18,8 +18,15 @@
                             "pattern": "minecraft:gradient_up"
                         }
                     ],
-                    "minecraft:hide_additional_tooltip": {},
-                    "minecraft:item_name": "{\"color\":\"red\",\"translate\":\"banner.apotheosis.nether_herald\"}"
+                    "minecraft:item_name": {
+                        "color": "red",
+                        "translate": "banner.apotheosis.nether_herald"
+                    },
+                    "minecraft:tooltip_display": {
+                        "hidden_components": [
+                            "minecraft:banner_patterns"
+                        ]
+                    }
                 },
                 "count": 1,
                 "id": "minecraft:black_banner"
@@ -33,9 +40,7 @@
                 "components": {
                     "apotheosis:durability_bonus": 0.175,
                     "minecraft:enchantments": {
-                        "levels": {
-                            "minecraft:sharpness": 3
-                        }
+                        "minecraft:sharpness": 3
                     }
                 },
                 "count": 1,

@@ -1,12 +1,9 @@
 {
     "type": "apotheosis:potion_charm_crafting",
+    "category": "misc",
     "key": {
-        "B": {
-            "item": "minecraft:blaze_powder"
-        },
-        "P": {
-            "item": "minecraft:potion"
-        }
+        "B": "minecraft:blaze_powder",
+        "P": "minecraft:potion"
     },
     "pattern": [
         "BBB",

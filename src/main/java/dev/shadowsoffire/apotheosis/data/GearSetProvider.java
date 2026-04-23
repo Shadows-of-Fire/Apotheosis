@@ -3,13 +3,13 @@ package dev.shadowsoffire.apotheosis.data;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.UnaryOperator;
 
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.placebo.json.WeightedItemStack;
 import dev.shadowsoffire.placebo.systems.gear.GearSet;
 import dev.shadowsoffire.placebo.systems.gear.GearSetRegistry;
@@ -19,18 +19,18 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderLookup.RegistryLookup;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.util.Mth;
-import net.minecraft.util.Unit;
-import net.minecraft.util.random.Weight;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import net.minecraft.world.level.block.entity.BannerPatterns;
@@ -55,342 +55,315 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
 
         // Haven Sets
         addSet("haven/leather", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(new ItemStack(Items.STONE_SWORD), 10)
-            .mainhand(new ItemStack(Items.STONE_AXE), 10)
-            .mainhand(new ItemStack(Items.STONE_PICKAXE), 10)
-            .mainhand(new ItemStack(Items.STONE_SHOVEL), 10)
-            .helmet(new ItemStack(Items.LEATHER_HELMET), 10)
-            .chestplate(new ItemStack(Items.LEATHER_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.LEATHER_LEGGINGS), 10)
-            .boots(new ItemStack(Items.LEATHER_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.STONE_SWORD), 10)
+            .mainhand(new ItemStackTemplate(Items.STONE_AXE), 10)
+            .mainhand(new ItemStackTemplate(Items.STONE_PICKAXE), 10)
+            .mainhand(new ItemStackTemplate(Items.STONE_SHOVEL), 10)
+            .helmet(new ItemStackTemplate(Items.LEATHER_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.LEATHER_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.LEATHER_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.LEATHER_BOOTS), 10)
             .tag("haven_melee"));
 
         addSet("haven/ranged/leather", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(new ItemStack(Items.BOW), 16)
-            .mainhand(new ItemStack(Items.CROSSBOW), 4)
-            .helmet(new ItemStack(Items.LEATHER_HELMET), 10)
-            .chestplate(new ItemStack(Items.LEATHER_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.LEATHER_LEGGINGS), 10)
-            .boots(new ItemStack(Items.LEATHER_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.BOW), 16)
+            .mainhand(new ItemStackTemplate(Items.CROSSBOW), 4)
+            .helmet(new ItemStackTemplate(Items.LEATHER_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.LEATHER_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.LEATHER_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.LEATHER_BOOTS), 10)
             .tag("haven_ranged"));
 
         addSet("haven/chain", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(new ItemStack(Items.STONE_SWORD), 10)
-            .mainhand(new ItemStack(Items.STONE_AXE), 10)
-            .mainhand(new ItemStack(Items.STONE_PICKAXE), 10)
-            .mainhand(new ItemStack(Items.STONE_SHOVEL), 10)
-            .helmet(new ItemStack(Items.CHAINMAIL_HELMET), 10)
-            .chestplate(new ItemStack(Items.CHAINMAIL_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.CHAINMAIL_LEGGINGS), 10)
-            .boots(new ItemStack(Items.CHAINMAIL_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.STONE_SWORD), 10)
+            .mainhand(new ItemStackTemplate(Items.STONE_AXE), 10)
+            .mainhand(new ItemStackTemplate(Items.STONE_PICKAXE), 10)
+            .mainhand(new ItemStackTemplate(Items.STONE_SHOVEL), 10)
+            .helmet(new ItemStackTemplate(Items.CHAINMAIL_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.CHAINMAIL_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.CHAINMAIL_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.CHAINMAIL_BOOTS), 10)
             .tag("haven_melee"));
 
         addSet("haven/ranged/chain", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(new ItemStack(Items.BOW), 16)
-            .mainhand(new ItemStack(Items.CROSSBOW), 4)
-            .helmet(new ItemStack(Items.CHAINMAIL_HELMET), 10)
-            .chestplate(new ItemStack(Items.CHAINMAIL_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.CHAINMAIL_LEGGINGS), 10)
-            .boots(new ItemStack(Items.CHAINMAIL_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.BOW), 16)
+            .mainhand(new ItemStackTemplate(Items.CROSSBOW), 4)
+            .helmet(new ItemStackTemplate(Items.CHAINMAIL_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.CHAINMAIL_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.CHAINMAIL_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.CHAINMAIL_BOOTS), 10)
             .tag("haven_ranged"));
 
         // Frontier Sets
         addSet("frontier/chain", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(new ItemStack(Items.IRON_SWORD), 10)
-            .mainhand(new ItemStack(Items.IRON_AXE), 10)
-            .mainhand(new ItemStack(Items.IRON_PICKAXE), 10)
-            .mainhand(new ItemStack(Items.IRON_SHOVEL), 10)
-            .helmet(new ItemStack(Items.CHAINMAIL_HELMET), 10)
-            .chestplate(new ItemStack(Items.CHAINMAIL_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.CHAINMAIL_LEGGINGS), 10)
-            .boots(new ItemStack(Items.CHAINMAIL_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_SWORD), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_AXE), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_PICKAXE), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_SHOVEL), 10)
+            .helmet(new ItemStackTemplate(Items.CHAINMAIL_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.CHAINMAIL_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.CHAINMAIL_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.CHAINMAIL_BOOTS), 10)
             .tag("frontier_melee"));
 
         addSet("frontier/ranged/chain", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(new ItemStack(Items.BOW), 16)
-            .mainhand(new ItemStack(Items.CROSSBOW), 4)
-            .helmet(new ItemStack(Items.CHAINMAIL_HELMET), 10)
-            .chestplate(new ItemStack(Items.CHAINMAIL_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.CHAINMAIL_LEGGINGS), 10)
-            .boots(new ItemStack(Items.CHAINMAIL_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.BOW), 16)
+            .mainhand(new ItemStackTemplate(Items.CROSSBOW), 4)
+            .helmet(new ItemStackTemplate(Items.CHAINMAIL_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.CHAINMAIL_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.CHAINMAIL_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.CHAINMAIL_BOOTS), 10)
             .tag("frontier_ranged"));
 
         addSet("frontier/iron", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(new ItemStack(Items.IRON_SWORD), 10)
-            .mainhand(new ItemStack(Items.IRON_AXE), 10)
-            .mainhand(new ItemStack(Items.IRON_PICKAXE), 10)
-            .mainhand(new ItemStack(Items.IRON_SHOVEL), 10)
-            .offhand(new ItemStack(Items.SHIELD), 10)
-            .helmet(new ItemStack(Items.IRON_HELMET), 10)
-            .chestplate(new ItemStack(Items.IRON_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.IRON_LEGGINGS), 10)
-            .boots(new ItemStack(Items.IRON_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_SWORD), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_AXE), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_PICKAXE), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_SHOVEL), 10)
+            .offhand(new ItemStackTemplate(Items.SHIELD), 10)
+            .helmet(new ItemStackTemplate(Items.IRON_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.IRON_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.IRON_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.IRON_BOOTS), 10)
             .tag("frontier_melee"));
 
         addSet("frontier/ranged/iron", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(new ItemStack(Items.BOW), 16)
-            .mainhand(new ItemStack(Items.CROSSBOW), 4)
-            .helmet(new ItemStack(Items.IRON_HELMET), 10)
-            .chestplate(new ItemStack(Items.IRON_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.IRON_LEGGINGS), 10)
-            .boots(new ItemStack(Items.IRON_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.BOW), 16)
+            .mainhand(new ItemStackTemplate(Items.CROSSBOW), 4)
+            .helmet(new ItemStackTemplate(Items.IRON_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.IRON_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.IRON_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.IRON_BOOTS), 10)
             .tag("frontier_ranged"));
 
         addSet("frontier/diamond", 10, 2.5F, c -> c
-            .mainhand(new ItemStack(Items.DIAMOND_SWORD), 10)
-            .mainhand(new ItemStack(Items.DIAMOND_AXE), 10)
-            .mainhand(new ItemStack(Items.DIAMOND_PICKAXE), 10)
-            .mainhand(new ItemStack(Items.DIAMOND_SHOVEL), 10)
-            .offhand(new ItemStack(Items.SHIELD), 10)
-            .helmet(new ItemStack(Items.DIAMOND_HELMET), 10)
-            .chestplate(new ItemStack(Items.DIAMOND_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.DIAMOND_LEGGINGS), 10)
-            .boots(new ItemStack(Items.DIAMOND_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_SWORD), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_AXE), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_PICKAXE), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_SHOVEL), 10)
+            .offhand(new ItemStackTemplate(Items.SHIELD), 10)
+            .helmet(new ItemStackTemplate(Items.DIAMOND_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.DIAMOND_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.DIAMOND_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.DIAMOND_BOOTS), 10)
             .tag("frontier_melee"));
 
         // Ascent Sets
         addSet("ascent/enchanted_gold", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(buffedGoldItem(Items.GOLDEN_SWORD, enchants), 10)
-            .mainhand(buffedGoldItem(Items.GOLDEN_AXE, enchants), 10)
-            .mainhand(buffedGoldItem(Items.GOLDEN_PICKAXE, enchants), 10)
-            .mainhand(buffedGoldItem(Items.GOLDEN_SHOVEL, enchants), 10)
-            .helmet(buffedGoldItem(Items.GOLDEN_HELMET, enchants), 10)
-            .chestplate(buffedGoldItem(Items.GOLDEN_CHESTPLATE, enchants), 10)
-            .leggings(buffedGoldItem(Items.GOLDEN_LEGGINGS, enchants), 10)
-            .boots(buffedGoldItem(Items.GOLDEN_BOOTS, enchants), 10)
+            .mainhand(buffedItem(Items.GOLDEN_SWORD, enchants, Enchantments.SHARPNESS, 5, 0.5F), 10)
+            .mainhand(buffedItem(Items.GOLDEN_AXE, enchants, Enchantments.SHARPNESS, 5, 0.5F), 10)
+            .mainhand(buffedItem(Items.GOLDEN_PICKAXE, enchants, Enchantments.FORTUNE, 5, 0.5F), 10)
+            .mainhand(buffedItem(Items.GOLDEN_SHOVEL, enchants, Enchantments.FORTUNE, 5, 0.5F), 10)
+            .helmet(buffedItem(Items.GOLDEN_HELMET, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
+            .chestplate(buffedItem(Items.GOLDEN_CHESTPLATE, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
+            .leggings(buffedItem(Items.GOLDEN_LEGGINGS, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
+            .boots(buffedItem(Items.GOLDEN_BOOTS, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
             .tag("ascent_melee"));
 
         addSet("ascent/ranged/enchanted_gold", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(new ItemStack(Items.BOW), 12)
-            .mainhand(new ItemStack(Items.CROSSBOW), 8)
-            .helmet(buffedGoldItem(Items.GOLDEN_HELMET, enchants), 10)
-            .chestplate(buffedGoldItem(Items.GOLDEN_CHESTPLATE, enchants), 10)
-            .leggings(buffedGoldItem(Items.GOLDEN_LEGGINGS, enchants), 10)
-            .boots(buffedGoldItem(Items.GOLDEN_BOOTS, enchants), 10)
+            .mainhand(new ItemStackTemplate(Items.BOW), 12)
+            .mainhand(new ItemStackTemplate(Items.CROSSBOW), 8)
+            .helmet(buffedItem(Items.GOLDEN_HELMET, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
+            .chestplate(buffedItem(Items.GOLDEN_CHESTPLATE, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
+            .leggings(buffedItem(Items.GOLDEN_LEGGINGS, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
+            .boots(buffedItem(Items.GOLDEN_BOOTS, enchants, Enchantments.PROTECTION, 3, 0.5F), 10)
             .tag("ascent_ranged"));
 
         addSet("ascent/iron", 80, 0, c -> c
-            .mainhand(new ItemStack(Items.IRON_SWORD), 10)
-            .mainhand(new ItemStack(Items.IRON_AXE), 10)
-            .mainhand(new ItemStack(Items.IRON_PICKAXE), 10)
-            .mainhand(new ItemStack(Items.IRON_SHOVEL), 10)
-            .offhand(new ItemStack(Items.SHIELD), 10)
-            .helmet(new ItemStack(Items.IRON_HELMET), 10)
-            .chestplate(new ItemStack(Items.IRON_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.IRON_LEGGINGS), 10)
-            .boots(new ItemStack(Items.IRON_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_SWORD), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_AXE), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_PICKAXE), 10)
+            .mainhand(new ItemStackTemplate(Items.IRON_SHOVEL), 10)
+            .offhand(new ItemStackTemplate(Items.SHIELD), 10)
+            .helmet(new ItemStackTemplate(Items.IRON_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.IRON_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.IRON_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.IRON_BOOTS), 10)
             .tag("ascent_melee"));
 
         addSet("ascent/ranged/iron", 80, 0, c -> c
-            .mainhand(new ItemStack(Items.BOW), 12)
-            .mainhand(new ItemStack(Items.CROSSBOW), 8)
-            .helmet(new ItemStack(Items.IRON_HELMET), 10)
-            .chestplate(new ItemStack(Items.IRON_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.IRON_LEGGINGS), 10)
-            .boots(new ItemStack(Items.IRON_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.BOW), 12)
+            .mainhand(new ItemStackTemplate(Items.CROSSBOW), 8)
+            .helmet(new ItemStackTemplate(Items.IRON_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.IRON_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.IRON_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.IRON_BOOTS), 10)
             .tag("ascent_ranged"));
 
         addSet("ascent/diamond", DEFAULT_WEIGHT, 5, c -> c
-            .mainhand(new ItemStack(Items.DIAMOND_SWORD), 10)
-            .mainhand(new ItemStack(Items.DIAMOND_AXE), 10)
-            .mainhand(new ItemStack(Items.DIAMOND_PICKAXE), 10)
-            .mainhand(new ItemStack(Items.DIAMOND_SHOVEL), 10)
-            .offhand(new ItemStack(Items.SHIELD), 10)
-            .helmet(new ItemStack(Items.DIAMOND_HELMET), 10)
-            .chestplate(new ItemStack(Items.DIAMOND_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.DIAMOND_LEGGINGS), 10)
-            .boots(new ItemStack(Items.DIAMOND_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_SWORD), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_AXE), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_PICKAXE), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_SHOVEL), 10)
+            .offhand(new ItemStackTemplate(Items.SHIELD), 10)
+            .helmet(new ItemStackTemplate(Items.DIAMOND_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.DIAMOND_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.DIAMOND_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.DIAMOND_BOOTS), 10)
             .tag("ascent_melee"));
 
         addSet("ascent/ranged/diamond", DEFAULT_WEIGHT, 5, c -> c
-            .mainhand(new ItemStack(Items.BOW), 12)
-            .mainhand(new ItemStack(Items.CROSSBOW), 8)
-            .helmet(new ItemStack(Items.DIAMOND_HELMET), 10)
-            .chestplate(new ItemStack(Items.DIAMOND_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.DIAMOND_LEGGINGS), 10)
-            .boots(new ItemStack(Items.DIAMOND_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.BOW), 12)
+            .mainhand(new ItemStackTemplate(Items.CROSSBOW), 8)
+            .helmet(new ItemStackTemplate(Items.DIAMOND_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.DIAMOND_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.DIAMOND_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.DIAMOND_BOOTS), 10)
             .tag("ascent_ranged"));
 
         // Summit Sets
         addSet("summit/enchanted_iron", 30, 0, c -> c
-            .mainhand(buffedItem(Items.IRON_SWORD, enchants, 1F), 10)
-            .mainhand(buffedItem(Items.IRON_AXE, enchants, 1F), 10)
-            .mainhand(buffedItem(Items.IRON_PICKAXE, enchants, 1F), 10)
-            .mainhand(buffedItem(Items.IRON_SHOVEL, enchants, 1F), 10)
-            .helmet(buffedItem(Items.IRON_HELMET, enchants, 1F), 10)
-            .chestplate(buffedItem(Items.IRON_CHESTPLATE, enchants, 1F), 10)
-            .leggings(buffedItem(Items.IRON_LEGGINGS, enchants, 1F), 10)
-            .boots(buffedItem(Items.IRON_BOOTS, enchants, 1F), 10)
+            .mainhand(buffedItem(Items.IRON_SWORD, enchants, Enchantments.SHARPNESS, 5, 0.35F), 10)
+            .mainhand(buffedItem(Items.IRON_AXE, enchants, Enchantments.SHARPNESS, 5, 0.35F), 10)
+            .mainhand(buffedItem(Items.IRON_PICKAXE, enchants, Enchantments.FORTUNE, 5, 0.35F), 10)
+            .mainhand(buffedItem(Items.IRON_SHOVEL, enchants, Enchantments.FORTUNE, 5, 0.35F), 10)
+            .helmet(buffedItem(Items.IRON_HELMET, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
+            .chestplate(buffedItem(Items.IRON_CHESTPLATE, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
+            .leggings(buffedItem(Items.IRON_LEGGINGS, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
+            .boots(buffedItem(Items.IRON_BOOTS, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
             .tag("summit_melee"));
 
         addSet("summit/ranged/enchanted_iron", 30, 0, c -> c
-            .mainhand(buffedItem(Items.BOW, enchants, 1F), 10)
-            .mainhand(buffedItem(Items.CROSSBOW, enchants, 1F), 10)
-            .helmet(buffedItem(Items.IRON_HELMET, enchants, 1F), 10)
-            .chestplate(buffedItem(Items.IRON_CHESTPLATE, enchants, 1F), 10)
-            .leggings(buffedItem(Items.IRON_LEGGINGS, enchants, 1F), 10)
-            .boots(buffedItem(Items.IRON_BOOTS, enchants, 1F), 10)
+            .mainhand(buffedItem(Items.BOW, enchants, Enchantments.POWER, 5, 0.35F), 10)
+            .mainhand(buffedItem(Items.CROSSBOW, enchants, Enchantments.POWER, 5, 0.35F), 10)
+            .helmet(buffedItem(Items.IRON_HELMET, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
+            .chestplate(buffedItem(Items.IRON_CHESTPLATE, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
+            .leggings(buffedItem(Items.IRON_LEGGINGS, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
+            .boots(buffedItem(Items.IRON_BOOTS, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
             .tag("summit_ranged"));
 
         addSet("summit/diamond", 40, 0, c -> c
-            .mainhand(new ItemStack(Items.DIAMOND_SWORD), 10)
-            .mainhand(new ItemStack(Items.DIAMOND_AXE), 10)
-            .mainhand(new ItemStack(Items.DIAMOND_PICKAXE), 10)
-            .mainhand(new ItemStack(Items.DIAMOND_SHOVEL), 10)
-            .offhand(new ItemStack(Items.SHIELD), 10)
-            .helmet(new ItemStack(Items.DIAMOND_HELMET), 10)
-            .chestplate(new ItemStack(Items.DIAMOND_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.DIAMOND_LEGGINGS), 10)
-            .boots(new ItemStack(Items.DIAMOND_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_SWORD), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_AXE), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_PICKAXE), 10)
+            .mainhand(new ItemStackTemplate(Items.DIAMOND_SHOVEL), 10)
+            .offhand(new ItemStackTemplate(Items.SHIELD), 10)
+            .helmet(new ItemStackTemplate(Items.DIAMOND_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.DIAMOND_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.DIAMOND_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.DIAMOND_BOOTS), 10)
             .tag("summit_melee"));
 
         addSet("summit/ranged/diamond", 40, 0, c -> c
-            .mainhand(new ItemStack(Items.BOW), 10)
-            .mainhand(new ItemStack(Items.CROSSBOW), 10)
-            .helmet(new ItemStack(Items.DIAMOND_HELMET), 10)
-            .chestplate(new ItemStack(Items.DIAMOND_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.DIAMOND_LEGGINGS), 10)
-            .boots(new ItemStack(Items.DIAMOND_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.BOW), 10)
+            .mainhand(new ItemStackTemplate(Items.CROSSBOW), 10)
+            .helmet(new ItemStackTemplate(Items.DIAMOND_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.DIAMOND_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.DIAMOND_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.DIAMOND_BOOTS), 10)
             .tag("summit_ranged"));
 
         addSet("summit/enchanted_diamond", 60, 0, c -> c
-            .mainhand(buffedItem(Items.DIAMOND_SWORD, enchants, 1.5F), 10)
-            .mainhand(buffedItem(Items.DIAMOND_AXE, enchants, 1.5F), 10)
-            .mainhand(buffedItem(Items.DIAMOND_PICKAXE, enchants, 1.5F), 10)
-            .mainhand(buffedItem(Items.DIAMOND_SHOVEL, enchants, 1.5F), 10)
-            .helmet(buffedItem(Items.DIAMOND_HELMET, enchants, 1F), 10)
-            .chestplate(buffedItem(Items.DIAMOND_CHESTPLATE, enchants, 1F), 10)
-            .leggings(buffedItem(Items.DIAMOND_LEGGINGS, enchants, 1F), 10)
-            .boots(buffedItem(Items.DIAMOND_BOOTS, enchants, 1F), 10)
+            .mainhand(buffedItem(Items.DIAMOND_SWORD, enchants, Enchantments.SHARPNESS, 8, 0.525F), 10)
+            .mainhand(buffedItem(Items.DIAMOND_AXE, enchants, Enchantments.SHARPNESS, 8, 0.525F), 10)
+            .mainhand(buffedItem(Items.DIAMOND_PICKAXE, enchants, Enchantments.FORTUNE, 8, 0.525F), 10)
+            .mainhand(buffedItem(Items.DIAMOND_SHOVEL, enchants, Enchantments.FORTUNE, 8, 0.525F), 10)
+            .helmet(buffedItem(Items.DIAMOND_HELMET, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
+            .chestplate(buffedItem(Items.DIAMOND_CHESTPLATE, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
+            .leggings(buffedItem(Items.DIAMOND_LEGGINGS, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
+            .boots(buffedItem(Items.DIAMOND_BOOTS, enchants, Enchantments.PROTECTION, 3, 0.35F), 10)
             .tag("summit_melee"));
 
         addSet("summit/ranged/enchanted_diamond", DEFAULT_WEIGHT, 0, c -> c
-            .mainhand(buffedItem(Items.BOW, enchants, 1.2F), 10)
-            .mainhand(buffedItem(Items.CROSSBOW, enchants, 1.2F), 10)
-            .helmet(buffedItem(Items.DIAMOND_HELMET, enchants, 0.6F), 10)
-            .chestplate(buffedItem(Items.DIAMOND_CHESTPLATE, enchants, 0.6F), 10)
-            .leggings(buffedItem(Items.DIAMOND_LEGGINGS, enchants, 0.6F), 10)
-            .boots(buffedItem(Items.DIAMOND_BOOTS, enchants, 0.6F), 10)
+            .mainhand(buffedItem(Items.BOW, enchants, Enchantments.POWER, 6, 0.42F), 10)
+            .mainhand(buffedItem(Items.CROSSBOW, enchants, Enchantments.POWER, 6, 0.42F), 10)
+            .helmet(buffedItem(Items.DIAMOND_HELMET, enchants, Enchantments.PROTECTION, 2, 0.21F), 10)
+            .chestplate(buffedItem(Items.DIAMOND_CHESTPLATE, enchants, Enchantments.PROTECTION, 2, 0.21F), 10)
+            .leggings(buffedItem(Items.DIAMOND_LEGGINGS, enchants, Enchantments.PROTECTION, 2, 0.21F), 10)
+            .boots(buffedItem(Items.DIAMOND_BOOTS, enchants, Enchantments.PROTECTION, 2, 0.21F), 10)
             .tag("summit_ranged"));
 
         addSet("summit/netherite", 140, 5, c -> c
-            .mainhand(new ItemStack(Items.NETHERITE_SWORD), 10)
-            .mainhand(new ItemStack(Items.NETHERITE_AXE), 10)
-            .mainhand(new ItemStack(Items.NETHERITE_PICKAXE), 10)
-            .mainhand(new ItemStack(Items.NETHERITE_SHOVEL), 10)
-            .offhand(new ItemStack(Items.SHIELD), 10)
-            .helmet(new ItemStack(Items.NETHERITE_HELMET), 10)
-            .chestplate(new ItemStack(Items.NETHERITE_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.NETHERITE_LEGGINGS), 10)
-            .boots(new ItemStack(Items.NETHERITE_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.NETHERITE_SWORD), 10)
+            .mainhand(new ItemStackTemplate(Items.NETHERITE_AXE), 10)
+            .mainhand(new ItemStackTemplate(Items.NETHERITE_PICKAXE), 10)
+            .mainhand(new ItemStackTemplate(Items.NETHERITE_SHOVEL), 10)
+            .offhand(new ItemStackTemplate(Items.SHIELD), 10)
+            .helmet(new ItemStackTemplate(Items.NETHERITE_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.NETHERITE_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.NETHERITE_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.NETHERITE_BOOTS), 10)
             .tag("summit_melee"));
 
         addSet("summit/ranged/netherite", 140, 5, c -> c
-            .mainhand(new ItemStack(Items.BOW), 10)
-            .mainhand(new ItemStack(Items.CROSSBOW), 10)
-            .helmet(new ItemStack(Items.NETHERITE_HELMET), 10)
-            .chestplate(new ItemStack(Items.NETHERITE_CHESTPLATE), 10)
-            .leggings(new ItemStack(Items.NETHERITE_LEGGINGS), 10)
-            .boots(new ItemStack(Items.NETHERITE_BOOTS), 10)
+            .mainhand(new ItemStackTemplate(Items.BOW), 10)
+            .mainhand(new ItemStackTemplate(Items.CROSSBOW), 10)
+            .helmet(new ItemStackTemplate(Items.NETHERITE_HELMET), 10)
+            .chestplate(new ItemStackTemplate(Items.NETHERITE_CHESTPLATE), 10)
+            .leggings(new ItemStackTemplate(Items.NETHERITE_LEGGINGS), 10)
+            .boots(new ItemStackTemplate(Items.NETHERITE_BOOTS), 10)
             .tag("summit_ranged"));
 
         // Pinnacle
         addSet("pinnacle/enchanted_netherite", DEFAULT_WEIGHT, 5, c -> c
-            .mainhand(buffedItem(Items.NETHERITE_SWORD, enchants, 3F), 10)
-            .mainhand(buffedItem(Items.NETHERITE_AXE, enchants, 3F), 10)
-            .mainhand(buffedItem(Items.NETHERITE_PICKAXE, enchants, 3F), 10)
-            .mainhand(buffedItem(Items.NETHERITE_SHOVEL, enchants, 3F), 10)
-            .offhand(new ItemStack(Items.SHIELD), 10)
-            .helmet(buffedItem(Items.NETHERITE_HELMET, enchants, 2F), 10)
-            .chestplate(buffedItem(Items.NETHERITE_CHESTPLATE, enchants, 2F), 10)
-            .leggings(buffedItem(Items.NETHERITE_LEGGINGS, enchants, 2F), 10)
-            .boots(buffedItem(Items.NETHERITE_BOOTS, enchants, 2F), 10)
+            .mainhand(buffedItem(Items.NETHERITE_SWORD, enchants, Enchantments.SHARPNESS, 15, 0.8F), 10)
+            .mainhand(buffedItem(Items.NETHERITE_AXE, enchants, Enchantments.SHARPNESS, 15, 0.8F), 10)
+            .mainhand(buffedItem(Items.NETHERITE_PICKAXE, enchants, Enchantments.FORTUNE, 15, 0.8F), 10)
+            .mainhand(buffedItem(Items.NETHERITE_SHOVEL, enchants, Enchantments.FORTUNE, 15, 0.8F), 10)
+            .offhand(new ItemStackTemplate(Items.SHIELD), 10)
+            .helmet(buffedItem(Items.NETHERITE_HELMET, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
+            .chestplate(buffedItem(Items.NETHERITE_CHESTPLATE, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
+            .leggings(buffedItem(Items.NETHERITE_LEGGINGS, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
+            .boots(buffedItem(Items.NETHERITE_BOOTS, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
             .tag("pinnacle_melee"));
 
         addSet("pinnacle/ranged/enchanted_netherite", DEFAULT_WEIGHT, 5, c -> c
-            .mainhand(buffedItem(Items.BOW, enchants, 3F), 10)
-            .mainhand(buffedItem(Items.CROSSBOW, enchants, 3F), 10)
-            .helmet(buffedItem(Items.NETHERITE_HELMET, enchants, 2F), 10)
-            .chestplate(buffedItem(Items.NETHERITE_CHESTPLATE, enchants, 2F), 10)
-            .leggings(buffedItem(Items.NETHERITE_LEGGINGS, enchants, 2F), 10)
-            .boots(buffedItem(Items.NETHERITE_BOOTS, enchants, 2F), 10)
+            .mainhand(buffedItem(Items.BOW, enchants, Enchantments.POWER, 15, 0.8F), 10)
+            .mainhand(buffedItem(Items.CROSSBOW, enchants, Enchantments.POWER, 15, 0.8F), 10)
+            .helmet(buffedItem(Items.NETHERITE_HELMET, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
+            .chestplate(buffedItem(Items.NETHERITE_CHESTPLATE, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
+            .leggings(buffedItem(Items.NETHERITE_LEGGINGS, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
+            .boots(buffedItem(Items.NETHERITE_BOOTS, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
             .tag("pinnacle_ranged"));
 
         addSet("gateway_only/nether_herald", 0, 0, c -> c
             .helmet(getNetherHeraldBannerInstance(registries.lookupOrThrow(Registries.BANNER_PATTERN)), 1)
-            .mainhand(buffedItem(Items.DIAMOND_AXE, enchants, 0.5F), 1));
+            .mainhand(buffedItem(Items.DIAMOND_AXE, enchants, Enchantments.SHARPNESS, 3, 0.175F), 1));
 
         addSet("gateway_only/bastion_guard", 0, 0, c -> c
             .helmet(getBastionGuardBannerInstance(registries.lookupOrThrow(Registries.BANNER_PATTERN)), 1)
-            .mainhand(buffedItem(Items.NETHERITE_AXE, enchants, 0.5F), 1)
-            .offhand(new ItemStack(Items.SHIELD), 1)
-            .chestplate(new ItemStack(Items.NETHERITE_CHESTPLATE), 1)
-            .leggings(new ItemStack(Items.NETHERITE_LEGGINGS), 1)
-            .boots(new ItemStack(Items.NETHERITE_BOOTS), 1));
+            .mainhand(buffedItem(Items.NETHERITE_AXE, enchants, Enchantments.SHARPNESS, 3, 0.175F), 1)
+            .offhand(new ItemStackTemplate(Items.SHIELD), 1)
+            .chestplate(new ItemStackTemplate(Items.NETHERITE_CHESTPLATE), 1)
+            .leggings(new ItemStackTemplate(Items.NETHERITE_LEGGINGS), 1)
+            .boots(new ItemStackTemplate(Items.NETHERITE_BOOTS), 1));
     }
 
-    @SuppressWarnings("removal")
-    protected static ItemStack buffedItem(Item item, RegistryLookup<Enchantment> enchants, float magnitude) {
-        ItemStack stack = new ItemStack(item);
-        LootCategory cat = LootCategory.forItem(stack);
-        stack.set(Components.DURABILITY_BONUS, Mth.clamp(0.35F * magnitude, 0, 0.8F));
-        if (cat.isArmor()) {
-            stack.enchant(enchants.getOrThrow(Enchantments.PROTECTION), Mth.ceil(magnitude * 3));
-        }
-        else if (cat.isMelee()) {
-            stack.enchant(enchants.getOrThrow(Enchantments.SHARPNESS), Mth.ceil(magnitude * 5));
-        }
-        else if (cat.isBreaker()) {
-            stack.enchant(enchants.getOrThrow(Enchantments.FORTUNE), Mth.ceil(magnitude * 5));
-        }
-        else if (cat.isRanged()) {
-            stack.enchant(enchants.getOrThrow(Enchantments.POWER), Mth.ceil(magnitude * 5));
-        }
-        return stack;
+    protected static ItemStackTemplate buffedItem(Item item, RegistryLookup<Enchantment> enchants, ResourceKey<Enchantment> enchant, int level, float durabilityBonus) {
+        ItemEnchantments.Mutable mut = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+        mut.set(enchants.getOrThrow(enchant), level);
+        DataComponentPatch patch = DataComponentPatch.builder()
+            .set(Components.DURABILITY_BONUS, durabilityBonus)
+            .set(DataComponents.ENCHANTMENTS, mut.toImmutable())
+            .build();
+        return new ItemStackTemplate(item, 1, patch);
     }
 
-    @SuppressWarnings("removal")
-    protected static ItemStack buffedGoldItem(Item item, RegistryLookup<Enchantment> enchants) {
-        ItemStack stack = new ItemStack(item);
-        LootCategory cat = LootCategory.forItem(stack);
-        stack.set(Components.DURABILITY_BONUS, 0.50F);
-        if (cat.isArmor()) {
-            stack.enchant(enchants.getOrThrow(Enchantments.PROTECTION), 3);
-        }
-        else if (cat.isMelee()) {
-            stack.enchant(enchants.getOrThrow(Enchantments.SHARPNESS), 5);
-        }
-        else if (cat.isBreaker()) {
-            stack.enchant(enchants.getOrThrow(Enchantments.FORTUNE), 5);
-        }
-        return stack;
-    }
-
-    @SuppressWarnings("deprecation")
-    public static ItemStack getNetherHeraldBannerInstance(HolderGetter<BannerPattern> patternRegistry) {
-        ItemStack itemstack = new ItemStack(Items.BLACK_BANNER);
+    public static ItemStackTemplate getNetherHeraldBannerInstance(HolderGetter<BannerPattern> patternRegistry) {
         BannerPatternLayers bannerpatternlayers = new BannerPatternLayers.Builder()
             .addIfRegistered(patternRegistry, BannerPatterns.SKULL, DyeColor.YELLOW)
             .addIfRegistered(patternRegistry, BannerPatterns.BORDER, DyeColor.RED)
             .addIfRegistered(patternRegistry, BannerPatterns.GRADIENT_UP, DyeColor.BLACK)
             .build();
-        itemstack.set(DataComponents.BANNER_PATTERNS, bannerpatternlayers);
-        itemstack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
-        itemstack.set(DataComponents.ITEM_NAME, Apotheosis.lang("banner", "nether_herald").withStyle(ChatFormatting.RED));
-        return itemstack;
+        DataComponentPatch patch = DataComponentPatch.builder()
+            .set(DataComponents.BANNER_PATTERNS, bannerpatternlayers)
+            .set(DataComponents.TOOLTIP_DISPLAY, net.minecraft.world.item.component.TooltipDisplay.DEFAULT.withHidden(DataComponents.BANNER_PATTERNS, true))
+            .set(DataComponents.ITEM_NAME, Apotheosis.lang("banner", "nether_herald").withStyle(ChatFormatting.RED))
+            .build();
+        return new ItemStackTemplate(Items.BLACK_BANNER, 1, patch);
     }
 
-    @SuppressWarnings("deprecation")
-    public static ItemStack getBastionGuardBannerInstance(HolderGetter<BannerPattern> patternRegistry) {
-        ItemStack itemstack = new ItemStack(Items.BROWN_BANNER);
+    public static ItemStackTemplate getBastionGuardBannerInstance(HolderGetter<BannerPattern> patternRegistry) {
         BannerPatternLayers bannerpatternlayers = new BannerPatternLayers.Builder()
             .addIfRegistered(patternRegistry, BannerPatterns.CIRCLE_MIDDLE, DyeColor.BLACK)
             .addIfRegistered(patternRegistry, BannerPatterns.CURLY_BORDER, DyeColor.YELLOW)
             .build();
-        itemstack.set(DataComponents.BANNER_PATTERNS, bannerpatternlayers);
-        itemstack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
-        itemstack.set(DataComponents.ITEM_NAME, Apotheosis.lang("banner", "bastion_guard").withStyle(ChatFormatting.RED));
-        return itemstack;
+        DataComponentPatch patch = DataComponentPatch.builder()
+            .set(DataComponents.BANNER_PATTERNS, bannerpatternlayers)
+            .set(DataComponents.TOOLTIP_DISPLAY, net.minecraft.world.item.component.TooltipDisplay.DEFAULT.withHidden(DataComponents.BANNER_PATTERNS, true))
+            .set(DataComponents.ITEM_NAME, Apotheosis.lang("banner", "bastion_guard").withStyle(ChatFormatting.RED))
+            .build();
+        return new ItemStackTemplate(Items.BROWN_BANNER, 1, patch);
     }
 
     protected void addSet(String name, int weight, float quality, UnaryOperator<GSBuilder> config) {
@@ -413,58 +386,58 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             this.quality = quality;
         }
 
-        public GSBuilder helmet(ItemStack stack, int weight, float dropChance) {
-            this.helmets.add(new WeightedItemStack(stack, Weight.of(weight), dropChance));
+        public GSBuilder helmet(ItemStackTemplate template, int weight, float dropChance) {
+            this.helmets.add(new WeightedItemStack(Optional.of(template), weight, dropChance));
             return this;
         }
 
-        public GSBuilder helmet(ItemStack stack, int weight) {
-            return helmet(stack, weight, -1);
+        public GSBuilder helmet(ItemStackTemplate template, int weight) {
+            return helmet(template, weight, -1);
         }
 
-        public GSBuilder chestplate(ItemStack stack, int weight, float dropChance) {
-            this.chestplates.add(new WeightedItemStack(stack, Weight.of(weight), dropChance));
+        public GSBuilder chestplate(ItemStackTemplate template, int weight, float dropChance) {
+            this.chestplates.add(new WeightedItemStack(Optional.of(template), weight, dropChance));
             return this;
         }
 
-        public GSBuilder chestplate(ItemStack stack, int weight) {
-            return chestplate(stack, weight, -1);
+        public GSBuilder chestplate(ItemStackTemplate template, int weight) {
+            return chestplate(template, weight, -1);
         }
 
-        public GSBuilder leggings(ItemStack stack, int weight, float dropChance) {
-            this.leggings.add(new WeightedItemStack(stack, Weight.of(weight), dropChance));
+        public GSBuilder leggings(ItemStackTemplate template, int weight, float dropChance) {
+            this.leggings.add(new WeightedItemStack(Optional.of(template), weight, dropChance));
             return this;
         }
 
-        public GSBuilder leggings(ItemStack stack, int weight) {
-            return leggings(stack, weight, -1);
+        public GSBuilder leggings(ItemStackTemplate template, int weight) {
+            return leggings(template, weight, -1);
         }
 
-        public GSBuilder boots(ItemStack stack, int weight, float dropChance) {
-            this.boots.add(new WeightedItemStack(stack, Weight.of(weight), dropChance));
+        public GSBuilder boots(ItemStackTemplate template, int weight, float dropChance) {
+            this.boots.add(new WeightedItemStack(Optional.of(template), weight, dropChance));
             return this;
         }
 
-        public GSBuilder boots(ItemStack stack, int weight) {
-            return boots(stack, weight, -1);
+        public GSBuilder boots(ItemStackTemplate template, int weight) {
+            return boots(template, weight, -1);
         }
 
-        public GSBuilder mainhand(ItemStack stack, int weight, float dropChance) {
-            this.mainhands.add(new WeightedItemStack(stack, Weight.of(weight), dropChance));
+        public GSBuilder mainhand(ItemStackTemplate template, int weight, float dropChance) {
+            this.mainhands.add(new WeightedItemStack(Optional.of(template), weight, dropChance));
             return this;
         }
 
-        public GSBuilder mainhand(ItemStack stack, int weight) {
-            return mainhand(stack, weight, -1);
+        public GSBuilder mainhand(ItemStackTemplate template, int weight) {
+            return mainhand(template, weight, -1);
         }
 
-        public GSBuilder offhand(ItemStack stack, int weight, float dropChance) {
-            this.offhands.add(new WeightedItemStack(stack, Weight.of(weight), dropChance));
+        public GSBuilder offhand(ItemStackTemplate template, int weight, float dropChance) {
+            this.offhands.add(new WeightedItemStack(Optional.of(template), weight, dropChance));
             return this;
         }
 
-        public GSBuilder offhand(ItemStack stack, int weight) {
-            return offhand(stack, weight, -1);
+        public GSBuilder offhand(ItemStackTemplate template, int weight) {
+            return offhand(template, weight, -1);
         }
 
         public GSBuilder tag(String tag) {

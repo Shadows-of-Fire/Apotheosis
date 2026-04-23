@@ -59,7 +59,7 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
     @Override
     public void removed(Player player) {
         super.removed(player);
-        if (!this.level.isClientSide) this.tile.removeListener(this);
+        if (!this.level.isClientSide()) this.tile.removeListener(this);
         this.clearContainer(player, this.ioInv);
         this.clearContainer(player, this.upgradeMatInv);
     }
@@ -79,10 +79,10 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
             @Override
             public void setChanged() {
                 super.setChanged();
-                if (!GemCaseMenu.this.level.isClientSide && !this.getItem().isEmpty()) {
+                if (!GemCaseMenu.this.level.isClientSide() && !this.getItem().isEmpty()) {
                     GemCaseMenu.this.tile.depositGem(this.getItem());
                 }
-                if (!this.getItem().isEmpty() && GemCaseMenu.this.level.isClientSide) {
+                if (!this.getItem().isEmpty() && GemCaseMenu.this.level.isClientSide()) {
                     inv.player.level().playSound(inv.player, GemCaseMenu.this.pos, SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.NEUTRAL, 0.5F, 0.7F);
                 }
                 GemCaseMenu.this.ioInv.setItem(0, ItemStack.EMPTY);
@@ -223,7 +223,7 @@ public class GemCaseMenu extends BlockEntityMenu<GemCaseTile> implements IButton
             boolean result = this.tile.upgradeGem(holder, purity, this.upgradeMatInv);
             if (!result) break;
 
-            this.level.playSound(null, this.pos, SoundEvents.AMETHYST_BLOCK_HIT, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.random.nextFloat()));
+            this.level.playSound(null, this.pos, SoundEvents.AMETHYST_BLOCK_HIT, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.getRandom().nextFloat()));
         }
 
     }

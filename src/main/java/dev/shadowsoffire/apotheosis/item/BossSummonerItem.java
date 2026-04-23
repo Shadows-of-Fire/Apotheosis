@@ -21,7 +21,7 @@ public class BossSummonerItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext ctx) {
         Level world = ctx.getLevel();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
 

@@ -205,7 +205,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
                 .enchantChance(1)
                 .enchLevels(100, 80)
                 .effect(1, MobEffects.FIRE_RESISTANCE)
-                .effect(1, MobEffects.DAMAGE_RESISTANCE)
+                .effect(1, MobEffects.RESISTANCE)
                 .modifier(Attributes.MAX_HEALTH, Operation.ADD_VALUE, 90, 140)
                 .modifier(Attributes.MOVEMENT_SPEED, Operation.ADD_MULTIPLIED_BASE, 0.35F, 0.65F)
                 .modifier(ALObjects.Attributes.COLD_DAMAGE, Operation.ADD_VALUE, 30F, 40F)
@@ -304,7 +304,7 @@ public class InvaderProvider extends DynamicRegistryProvider<Invader> {
             .stats(mythic, c -> c
                 .enchantChance(1)
                 .enchLevels(100, 80)
-                .effect(1, MobEffects.DAMAGE_RESISTANCE)
+                .effect(1, MobEffects.RESISTANCE)
                 .modifier(Attributes.MAX_HEALTH, Operation.ADD_VALUE, 90, 140)
                 .modifier(Attributes.MOVEMENT_SPEED, Operation.ADD_MULTIPLIED_BASE, 0.35F, 0.65F)
                 .modifier(ALObjects.Attributes.FIRE_DAMAGE, Operation.ADD_VALUE, 30F, 40F)

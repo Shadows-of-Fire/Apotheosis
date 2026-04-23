@@ -23,7 +23,6 @@
             "components": {
                 "gateways:gateway": "apotheosis:tiered/frontier"
             },
-            "count": 1,
             "id": "gateways:gate_pearl"
         },
         "title": {

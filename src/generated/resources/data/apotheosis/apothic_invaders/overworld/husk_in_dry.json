@@ -39,7 +39,7 @@
         "apotheosis:uncommon": {
             "attribute_modifiers": [
                 {
-                    "attribute": "minecraft:generic.max_health",
+                    "attribute": "minecraft:max_health",
                     "operation": "add_value",
                     "value": {
                         "min": 20.0,
@@ -47,7 +47,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.movement_speed",
+                    "attribute": "minecraft:movement_speed",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.15,
@@ -55,7 +55,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.attack_damage",
+                    "attribute": "minecraft:attack_damage",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.2,
@@ -63,12 +63,12 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.knockback_resistance",
+                    "attribute": "minecraft:knockback_resistance",
                     "operation": "add_value",
                     "value": 0.3
                 },
                 {
-                    "attribute": "minecraft:generic.scale",
+                    "attribute": "minecraft:scale",
                     "operation": "add_multiplied_total",
                     "value": {
                         "min": -0.15,
@@ -91,7 +91,7 @@
         "apotheosis:rare": {
             "attribute_modifiers": [
                 {
-                    "attribute": "minecraft:generic.max_health",
+                    "attribute": "minecraft:max_health",
                     "operation": "add_value",
                     "value": {
                         "min": 40.0,
@@ -99,7 +99,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.movement_speed",
+                    "attribute": "minecraft:movement_speed",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.15,
@@ -107,7 +107,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.attack_damage",
+                    "attribute": "minecraft:attack_damage",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.25,
@@ -115,12 +115,12 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.knockback_resistance",
+                    "attribute": "minecraft:knockback_resistance",
                     "operation": "add_value",
                     "value": 0.4
                 },
                 {
-                    "attribute": "minecraft:generic.scale",
+                    "attribute": "minecraft:scale",
                     "operation": "add_multiplied_total",
                     "value": {
                         "min": -0.15,
@@ -143,7 +143,7 @@
         "apotheosis:epic": {
             "attribute_modifiers": [
                 {
-                    "attribute": "minecraft:generic.max_health",
+                    "attribute": "minecraft:max_health",
                     "operation": "add_value",
                     "value": {
                         "min": 80.0,
@@ -151,7 +151,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.movement_speed",
+                    "attribute": "minecraft:movement_speed",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.25,
@@ -159,7 +159,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.attack_damage",
+                    "attribute": "minecraft:attack_damage",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.3,
@@ -167,22 +167,22 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.knockback_resistance",
+                    "attribute": "minecraft:knockback_resistance",
                     "operation": "add_value",
                     "value": 0.5
                 },
                 {
-                    "attribute": "minecraft:generic.armor",
+                    "attribute": "minecraft:armor",
                     "operation": "add_value",
                     "value": 4.0
                 },
                 {
-                    "attribute": "minecraft:generic.armor_toughness",
+                    "attribute": "minecraft:armor_toughness",
                     "operation": "add_value",
                     "value": 10.0
                 },
                 {
-                    "attribute": "minecraft:generic.scale",
+                    "attribute": "minecraft:scale",
                     "operation": "add_multiplied_total",
                     "value": {
                         "min": -0.15,
@@ -205,7 +205,7 @@
         "apotheosis:mythic": {
             "attribute_modifiers": [
                 {
-                    "attribute": "minecraft:generic.max_health",
+                    "attribute": "minecraft:max_health",
                     "operation": "add_value",
                     "value": {
                         "min": 110.0,
@@ -213,7 +213,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.movement_speed",
+                    "attribute": "minecraft:movement_speed",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.3,
@@ -221,7 +221,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.attack_damage",
+                    "attribute": "minecraft:attack_damage",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.7,
@@ -229,22 +229,22 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.knockback_resistance",
+                    "attribute": "minecraft:knockback_resistance",
                     "operation": "add_value",
                     "value": 0.8
                 },
                 {
-                    "attribute": "minecraft:generic.armor",
+                    "attribute": "minecraft:armor",
                     "operation": "add_value",
                     "value": 10.0
                 },
                 {
-                    "attribute": "minecraft:generic.armor_toughness",
+                    "attribute": "minecraft:armor_toughness",
                     "operation": "add_value",
                     "value": 20.0
                 },
                 {
-                    "attribute": "minecraft:generic.scale",
+                    "attribute": "minecraft:scale",
                     "operation": "add_multiplied_total",
                     "value": {
                         "min": -0.15,

@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.80'
+    id 'net.neoforged.moddev' version '2.0.141'
     id 'com.diffplug.eclipse.apt' version '3.42.2'
     id 'net.darkhax.curseforgegradle' version '1.1.18'
 }
@@ -17,12 +17,6 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 
 neoForge {
     version = project.properties.forgeVersion
-
-    parchment {
-        def split = "${parchmentVersion}".split('-')
-        minecraftVersion = split[1]
-        mappingsVersion = split[0]
-    }
 
     mods {
         create(project.name) {
@@ -50,7 +44,7 @@ neoForge {
         }
 
         data {
-            data()
+            clientData()
             programArguments.addAll '--mod', "${modid}", '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
             ideName = "${project.name} - Data"
         }
@@ -115,7 +109,7 @@ dependencies {
     if (project.hasProperty('jeiVersion'))                localImplementation "mezz.jei:jei-${mcVersion}-neoforge:${jeiVersion}"
     if (project.hasProperty('jadeVersion'))               localImplementation "snownee.jade:Jade-NeoForge:${mcVersion}-${jadeVersion}"
     if (project.hasProperty('curiosVersion'))             implementation      "top.theillusivec4.curios:curios-neoforge:${curiosVersion}"
-    if (project.hasProperty('patchouliVersion'))          implementation      "vazkii.patchouli:Patchouli:${patchouliVersion}"
+    if (project.hasProperty('patchouliVersion'))          implementation      "vazkii.patchouli:patchouli-neoforge:${patchouliVersion}"
     if (project.hasProperty('bookshelfVersion'))          localImplementation "net.darkhax.bookshelf:Bookshelf-Forge-${mcVersion}:${bookshelfVersion}"
     if (project.hasProperty('gamestagesVersion'))         localImplementation "net.darkhax.gamestages:GameStages-Forge-${mcVersion}:${gamestagesVersion}"
     if (project.hasProperty('twilightFileId'))            localImplementation "curse.maven:the-twilight-forest-227639:${twilightFileId}"
@@ -234,32 +228,6 @@ tasks.named("generateModMetadata") {
         name "${modid}.mixins.json".toString()
     }
 
-    // Automatically populate coremods.json file from existing coremod js files in /coremods
-    filesMatching('coremods.json') {
-        def names = []
-        fileTree("${project.projectDir}/src/main/resources/coremods").visit { FileVisitDetails details ->
-            def name = details.file.path.replace('\\', '/')
-            name = name.substring(name.indexOf('coremods'), name.length())
-            if(name.endsWith('.js')) {
-                names.add(name)
-            }
-        }
-
-        def coremods = ''
-
-        for (int i = 0; i < names.size(); i++) {
-            def name = names[i]
-            coremods += "\t\"${modid}_" + name.substring('coremods/'.length(), name.length() - 3) + '": "' + name + '"'
-            if (i != names.size() - 1) {
-                coremods += ',\n'
-            }
-        }
-
-        replaceProperties.put('coremods', coremods)
-
-        expand replaceProperties
-        name 'META-INF/coremods.json'
-    }
 }
 
 tasks.named('processResources') {
@@ -356,17 +324,14 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 def getChangelogLink() {
-    def repo = ''
-    def proc = 'git config --get remote.origin.url'.execute();
-    proc.in.eachLine { line -> repo = line}
-    proc.err.eachLine { line -> println line }
-    proc.waitFor();
+    def repo = providers.exec {
+        commandLine 'git', 'config', '--get', 'remote.origin.url'
+    }.standardOutput.asText.get().trim()
 
-    def branch = ''
-    proc = 'git rev-parse --abbrev-ref HEAD'.execute()
-    proc.in.eachLine { line -> branch = line }
-    proc.err.eachLine { line -> println line }
-    proc.waitFor()
+    def branch = providers.exec {
+        commandLine 'git', 'rev-parse', '--abbrev-ref', 'HEAD'
+    }.standardOutput.asText.get().trim()
+
     // Remove ".git" and append /blob/branch/changelog.md
     if (!repo.isBlank() && !branch.isBlank()) {
         return repo.substring(0, repo.length() - 4) + '/blob/' + branch + '/changelog.md'

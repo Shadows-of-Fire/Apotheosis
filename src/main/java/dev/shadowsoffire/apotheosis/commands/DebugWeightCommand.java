@@ -38,14 +38,12 @@ import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.commands.arguments.IdentifierArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.util.random.WeightedEntry;
-import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 
@@ -53,7 +51,7 @@ public class DebugWeightCommand {
 
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_AFFIX_TYPE = (ctx, builder) -> SharedSuggestionProvider.suggest(Arrays.stream(AffixType.values()).map(StringRepresentable::getSerializedName), builder);
 
-    public static final SuggestionProvider<CommandSourceStack> SUGGEST_LOOT_CATEGORY = (ctx, builder) -> SharedSuggestionProvider.suggest(BuiltInRegs.LOOT_CATEGORY.keySet().stream().map(ResourceLocation::toString), builder);
+    public static final SuggestionProvider<CommandSourceStack> SUGGEST_LOOT_CATEGORY = (ctx, builder) -> SharedSuggestionProvider.suggest(BuiltInRegs.LOOT_CATEGORY.keySet().stream().map(Identifier::toString), builder);
 
     public static void register(LiteralArgumentBuilder<CommandSourceStack> root, CommandBuildContext ctx) {
         LiteralArgumentBuilder<CommandSourceStack> weights = Commands.literal("weights");
@@ -62,8 +60,8 @@ public class DebugWeightCommand {
         weights.then(Commands.literal("affixes")
             .then(Commands.argument("item", ItemArgument.item(ctx))
                 .then(Commands.argument("type", StringArgumentType.word()).suggests(SUGGEST_AFFIX_TYPE)
-                    .then(Commands.argument("rarity", ResourceLocationArgument.id()).suggests(RarityCommand.SUGGEST_RARITY)
-                        .executes(c -> dumpAffixWeights(c, ItemArgument.getItem(c, "item"), StringArgumentType.getString(c, "type"), ResourceLocationArgument.getId(c, "rarity")))))));
+                    .then(Commands.argument("rarity", IdentifierArgument.id()).suggests(RarityCommand.SUGGEST_RARITY)
+                        .executes(c -> dumpAffixWeights(c, ItemArgument.getItem(c, "item"), StringArgumentType.getString(c, "type"), IdentifierArgument.getId(c, "rarity")))))));
         weights.then(Commands.literal("elites").executes(c -> dumpWeights(c, EliteRegistry.INSTANCE)));
         weights.then(Commands.literal("gems").executes(c -> dumpWeights(c, GemRegistry.INSTANCE)));
         weights.then(Commands.literal("invaders").executes(c -> dumpWeights(c, InvaderRegistry.INSTANCE)));
@@ -83,21 +81,21 @@ public class DebugWeightCommand {
      */
     public static <T extends CodecProvider<? super T> & Weighted> void dumpWeightsFor(GenContext ctx, DynamicRegistry<T> registry, Predicate<T> filter) {
         Collection<T> values = registry.getValues();
-        List<Wrapper<T>> list = new ArrayList<>(values.size());
+        List<net.minecraft.util.random.Weighted<T>> list = new ArrayList<>(values.size());
 
         values.stream().filter(filter).map(t -> wrapWithConstraints(ctx, t)).forEach(list::add);
 
-        float total = WeightedRandom.getTotalWeight(list);
+        float total = WeightedRandom.getTotalWeight(list, net.minecraft.util.random.Weighted::weight);
 
         Apotheosis.LOGGER.info("Starting dump of all {} weights...", registry.getPath());
         Apotheosis.LOGGER.info("Current GenContext: {}", ctx);
-        Comparator<Wrapper<T>> comparator = Comparator.comparing(w -> -w.weight().asInt());
-        comparator = comparator.thenComparing(Comparator.comparing(w -> registry.getKey(w.data()).toString()));
+        Comparator<net.minecraft.util.random.Weighted<T>> comparator = Comparator.comparing(w -> -w.weight());
+        comparator = comparator.thenComparing(Comparator.comparing(w -> registry.getKey(w.value()).toString()));
         list.sort(comparator);
-        for (Wrapper<T> entry : list) {
-            ResourceLocation key = registry.getKey(entry.data());
-            float chance = entry.weight().asInt() / total;
-            Apotheosis.LOGGER.info("{} : {}% ({} / {}}", key, Affix.fmt(chance * 100), entry.weight().asInt(), (int) total);
+        for (net.minecraft.util.random.Weighted<T> entry : list) {
+            Identifier key = registry.getKey(entry.value());
+            float chance = entry.weight() / total;
+            Apotheosis.LOGGER.info("{} : {}% ({} / {}}", key, Affix.fmt(chance * 100), entry.weight(), (int) total);
         }
     }
 
@@ -108,9 +106,9 @@ public class DebugWeightCommand {
         return 0;
     }
 
-    private static <T extends Weighted> Wrapper<T> wrapWithConstraints(GenContext ctx, T t) {
+    private static <T extends Weighted> net.minecraft.util.random.Weighted<T> wrapWithConstraints(GenContext ctx, T t) {
         if (t instanceof Constrained c && !c.constraints().test(ctx)) {
-            return new WeightedEntry.Wrapper<>(t, Weighted.SAFE_ZERO);
+            return new net.minecraft.util.random.Weighted<>(t, 0);
         }
         return t.<T>wrap(ctx.tier(), ctx.luck());
     }
@@ -119,7 +117,7 @@ public class DebugWeightCommand {
 
     private static final DynamicCommandExceptionType UNKNOWN_AFFIX_TYPE = new DynamicCommandExceptionType(str -> () -> "Unknown Affix Type: " + str);
 
-    private static int dumpAffixWeights(CommandContext<CommandSourceStack> c, ItemInput item, String typeStr, ResourceLocation rarityId) throws CommandSyntaxException {
+    private static int dumpAffixWeights(CommandContext<CommandSourceStack> c, ItemInput item, String typeStr, Identifier rarityId) throws CommandSyntaxException {
         LootRarity rarity = RarityRegistry.INSTANCE.getValue(rarityId);
         if (rarity == null) {
             throw UNKNOWN_RARITY.create(rarityId);
@@ -127,7 +125,7 @@ public class DebugWeightCommand {
 
         AffixType type = AffixType.CODEC.decode(JsonOps.INSTANCE, new JsonPrimitive(typeStr)).getOrThrow(s -> UNKNOWN_AFFIX_TYPE.create(typeStr)).getFirst();
 
-        ItemStack stack = item.createItemStack(1, false);
+        ItemStack stack = item.createItemStack(1);
         LootCategory cat = LootCategory.forItem(stack);
         Apotheosis.LOGGER.info("Affix weight dump target item: " + stack.toString());
 

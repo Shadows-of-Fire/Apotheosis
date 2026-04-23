@@ -19,7 +19,7 @@ import dev.shadowsoffire.apotheosis.util.LootPatternMatcher;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.util.random.WeightedEntry.Wrapper;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -34,8 +34,8 @@ public class GemLootModifier extends ContextualLootModifier {
 
     protected final List<GemTableEntry> entries;
 
-    public GemLootModifier(LootItemCondition[] conditions, List<GemTableEntry> entries) {
-        super(conditions);
+    public GemLootModifier(LootItemCondition[] conditions, int priority, List<GemTableEntry> entries) {
+        super(conditions, priority);
         this.entries = entries;
     }
 
@@ -48,8 +48,8 @@ public class GemLootModifier extends ContextualLootModifier {
 
                     Gem gem;
                     if (!entry.gems.isEmpty()) {
-                        List<Wrapper<Gem>> resolved = entry.gems.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<Gem>wrap(gCtx.tier(), gCtx.luck())).toList();
-                        gem = WeightedRandom.getRandomItem(ctx.getRandom(), resolved).get().data();
+                        List<Weighted<Gem>> resolved = entry.gems.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<Gem>wrap(gCtx.tier(), gCtx.luck())).toList();
+                        gem = WeightedRandom.getRandomItem(ctx.getRandom(), resolved, Weighted::weight).get().value();
                     }
                     else {
                         gem = GemRegistry.INSTANCE.getRandomItem(gCtx);

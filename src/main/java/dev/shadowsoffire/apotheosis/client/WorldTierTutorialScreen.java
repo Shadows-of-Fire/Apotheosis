@@ -3,17 +3,16 @@ package dev.shadowsoffire.apotheosis.client;
 import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
-
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import org.joml.Matrix3x2fStack;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 
 /**
@@ -79,27 +78,26 @@ public class WorldTierTutorialScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics gfx, int mouseX, int mouseY, float partialTick) {
+    public void extractBackground(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
         int imgLeft = (this.width - WorldTierSelectScreen.IMAGE_WIDTH) / 2;
         int imgTop = (this.height - WorldTierSelectScreen.IMAGE_HEIGHT) / 2;
 
-        RenderSystem.enableBlend();
-        gfx.blit(stage.overlay, imgLeft, imgTop, 0, 0, WorldTierSelectScreen.IMAGE_WIDTH, WorldTierSelectScreen.IMAGE_HEIGHT, WorldTierSelectScreen.IMAGE_WIDTH, WorldTierSelectScreen.IMAGE_HEIGHT);
+        gfx.blit(RenderPipelines.GUI_TEXTURED, stage.overlay, imgLeft, imgTop, 0, 0, WorldTierSelectScreen.IMAGE_WIDTH, WorldTierSelectScreen.IMAGE_HEIGHT, WorldTierSelectScreen.IMAGE_WIDTH, WorldTierSelectScreen.IMAGE_HEIGHT);
     }
 
     @Override
-    public void render(GuiGraphics gfx, int mouseX, int mouseY, float partialTick) {
-        super.render(gfx, mouseX, mouseY, partialTick);
+    public void extractRenderState(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(gfx, mouseX, mouseY, partialTick);
         int imgLeft = (this.width - WorldTierSelectScreen.IMAGE_WIDTH) / 2;
         int imgTop = (this.height - WorldTierSelectScreen.IMAGE_HEIGHT) / 2;
-        PoseStack pose = gfx.pose();
+        Matrix3x2fStack pose = gfx.pose();
 
         float scale = 2;
-        pose.pushPose();
-        pose.scale(scale, scale, 1);
+        pose.pushMatrix();
+        pose.scale(scale, scale);
         Component title = this.stage.title;
-        gfx.drawString(font, title.getVisualOrderText(), (imgLeft + 380 - font.width(title) * scale / 2) / scale, (imgTop + 107) / scale, 0xFFFFFF, true);
-        pose.popPose();
+        gfx.text(font, title.getVisualOrderText(), (int) ((imgLeft + 380 - font.width(title) * scale / 2) / scale), (int) ((imgTop + 107) / scale), 0xFFFFFFFF, true);
+        pose.popMatrix();
 
         Component desc = stage.description;
         if (stage == TutorialStage.ACTIVATE && !AdventureConfig.enableManualWorldTierChanges) {
@@ -110,20 +108,20 @@ public class WorldTierTutorialScreen extends Screen {
 
         for (int i = 0; i < split.size(); i++) {
             FormattedCharSequence line = split.get(i);
-            gfx.drawString(font, line, imgLeft + 280, imgTop + 100 + font.lineHeight * 3 + (2 + font.lineHeight) * i, 0xFFFFFF, true);
+            gfx.text(font, line, imgLeft + 280, imgTop + 100 + font.lineHeight * 3 + (2 + font.lineHeight) * i, 0xFFFFFFFF, true);
         }
 
         // Re-render the relevant buttons from the parent so users can see the hovered tooltip when the button is focused.
         if (this.stage == TutorialStage.WORLD_TIERS) {
             for (SimpleTexButton btn : this.parent.tierButtons.values()) {
-                btn.render(gfx, mouseX, mouseY, partialTick);
+                btn.extractRenderState(gfx, mouseX, mouseY, partialTick);
             }
         }
         else if (this.stage == TutorialStage.DETAILED_INFO) {
-            this.parent.detailButton.render(gfx, mouseX, mouseY, partialTick);
+            this.parent.detailButton.extractRenderState(gfx, mouseX, mouseY, partialTick);
         }
         else if (this.stage == TutorialStage.ACTIVATE) {
-            this.parent.activateButton.render(gfx, mouseX, mouseY, partialTick);
+            this.parent.activateButton.extractRenderState(gfx, mouseX, mouseY, partialTick);
         }
 
     }
@@ -152,7 +150,7 @@ public class WorldTierTutorialScreen extends Screen {
         DETAILED_INFO("detailed_info"),
         ACTIVATE("activate");
 
-        private final ResourceLocation overlay;
+        private final Identifier overlay;
         private final Component title;
         private final Component description;
 

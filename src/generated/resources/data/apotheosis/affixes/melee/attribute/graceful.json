@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.attack_speed",
+    "attribute": "minecraft:attack_speed",
     "categories": [
         "apotheosis:melee_weapon",
         "apotheosis:trident"

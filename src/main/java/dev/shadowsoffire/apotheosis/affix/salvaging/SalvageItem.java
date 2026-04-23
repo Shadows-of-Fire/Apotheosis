@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.affix.salvaging;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 public class SalvageItem extends Item {
 
@@ -25,13 +26,13 @@ public class SalvageItem extends Item {
         if (!this.rarity.isBound()) {
             return super.getName(pStack);
         }
-        return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(this.rarity.get().color()));
+        return Component.translatable(this.getDescriptionId()).withStyle(Style.EMPTY.withColor(this.rarity.get().color()));
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag tooltipFlag) {
         if (this.rarity.isBound()) {
-            list.add(Component.translatable("info.apotheosis.rarity_material", this.rarity.get().toComponent()).withStyle(ChatFormatting.GRAY));
+            tooltip.accept(Component.translatable("info.apotheosis.rarity_material", this.rarity.get().toComponent()).withStyle(ChatFormatting.GRAY));
         }
     }
 

@@ -24,7 +24,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.WorldGenLevel;
@@ -40,15 +40,15 @@ public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted
             Codec.INT.fieldOf("weight").forGetter(RogueSpawner::getWeight),
             PresetSpawnerStats.CODEC.fieldOf("stats").forGetter(RogueSpawner::getStats),
             ResourceKey.codec(Registries.LOOT_TABLE).fieldOf("loot_table").forGetter(RogueSpawner::getLootTableId),
-            SimpleWeightedRandomList.wrappedCodec(SpawnData.CODEC).fieldOf("spawn_potentials").forGetter(s -> s.spawnPotentials))
+            WeightedList.codec(SpawnData.CODEC).fieldOf("spawn_potentials").forGetter(s -> s.spawnPotentials))
         .apply(inst, RogueSpawner::new));
 
     protected final int weight;
     protected final PresetSpawnerStats stats;
     protected final ResourceKey<LootTable> lootTable;
-    protected final SimpleWeightedRandomList<SpawnData> spawnPotentials;
+    protected final WeightedList<SpawnData> spawnPotentials;
 
-    public RogueSpawner(int weight, PresetSpawnerStats stats, ResourceKey<LootTable> lootTable, SimpleWeightedRandomList<SpawnData> potentials) {
+    public RogueSpawner(int weight, PresetSpawnerStats stats, ResourceKey<LootTable> lootTable, WeightedList<SpawnData> potentials) {
         this.weight = weight;
         this.stats = stats;
         this.lootTable = lootTable;
@@ -79,7 +79,7 @@ public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted
         if (level.getBlockEntity(pos) instanceof ApothSpawnerTile spawner) {
             this.stats.apply(spawner);
             spawner.getSpawner().spawnPotentials = this.spawnPotentials;
-            ((BaseSpawnerAccessor) spawner.getSpawner()).callSetNextSpawnData(null, pos, this.spawnPotentials.getRandomValue(rand).get());
+            ((BaseSpawnerAccessor) spawner.getSpawner()).callSetNextSpawnData(null, pos, this.spawnPotentials.getRandom(rand).get());
 
             level.setBlock(pos.below(), Blocks.CHEST.defaultBlockState(), 2);
             ResourceKey<LootTable> realLootTable = rand.nextFloat() <= AdventureConfig.spawnerValueChance ? Apoth.LootTables.CHEST_VALUABLE : this.lootTable;
@@ -109,7 +109,7 @@ public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted
         protected int weight;
         protected PresetSpawnerStats stats;
         protected ResourceKey<LootTable> lootTable;
-        protected SimpleWeightedRandomList.Builder<SpawnData> spawnPotentials = SimpleWeightedRandomList.builder();
+        protected WeightedList.Builder<SpawnData> spawnPotentials = WeightedList.builder();
 
         public Builder weight(int weight) {
             this.weight = weight;

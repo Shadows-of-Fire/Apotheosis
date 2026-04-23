@@ -4,7 +4,7 @@ import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.level.WorldGenLevel;
@@ -23,7 +23,7 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
  */
 public class BossDungeonFeature2 extends Feature<SuccessChanceFeatureConfig> {
 
-    public static final ResourceLocation TEMPLATE_ID = Apotheosis.loc("boss_1");
+    public static final Identifier TEMPLATE_ID = Apotheosis.loc("boss_1");
 
     protected static int xRadius = 4;
     protected static int floor = -1;

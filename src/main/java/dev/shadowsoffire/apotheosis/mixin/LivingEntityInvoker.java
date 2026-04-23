@@ -15,12 +15,6 @@ import net.minecraft.world.entity.LivingEntity;
 public interface LivingEntityInvoker {
 
     /**
-     * Invokes the protected method {@link LivingEntity#actuallyHurt(DamageSource, float)}
-     */
-    @Invoker
-    public void callActuallyHurt(DamageSource pDamageSrc, float pDamageAmount);
-
-    /**
      * Invokes the private method {@link LivingEntity#checkTotemDeathProtection(DamageSource)}
      */
     @Invoker

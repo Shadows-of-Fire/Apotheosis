@@ -39,11 +39,11 @@ import dev.shadowsoffire.gateways.gate.endless.ApplicationMode.AfterEveryNWaves;
 import dev.shadowsoffire.gateways.gate.endless.ApplicationMode.OnlyOnEveryNWaves;
 import dev.shadowsoffire.gateways.gate.endless.EndlessGateway;
 import dev.shadowsoffire.gateways.gate.normal.NormalGateway;
-import dev.shadowsoffire.gateways.item.GatePearlItem;
 import dev.shadowsoffire.placebo.color.GradientColor;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.data.DynamicRegistryProvider;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
@@ -53,7 +53,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 
 public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
@@ -74,7 +74,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .tier(WorldTier.FRONTIER)
                 .size(NormalGateway.Size.SMALL)
                 .color(0x33FF33)
-                .soundtrack(Apoth.Sounds.MUSIC_DISC_SHIMMER))
+                .soundtrack(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(Apoth.Sounds.MUSIC_DISC_SHIMMER)))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true))
@@ -156,16 +156,16 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .modifier(AttributeModifier.create(Attributes.MOVEMENT_SPEED, Operation.ADD_MULTIPLIED_TOTAL, 0.10F)))
             .keyReward(new CountedReward(AffixItemReward.create(Rarities.UNCOMMON, Rarities.RARE), 3))
             .keyReward(new CountedReward(GemReward.create(Purity.CHIPPED, Purity.FLAWED), 5))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 16)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.UNCOMMON_MATERIAL, 8)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SOCKETING, 2))));
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.GEM_DUST, 16)))
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.UNCOMMON_MATERIAL, 8)))
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.SIGIL_OF_SOCKETING, 2))));
 
         tieredGateway("tiered/ascent", b -> b
             .settings(c -> c
                 .tier(WorldTier.ASCENT)
                 .size(NormalGateway.Size.MEDIUM)
                 .color(0x5555FF)
-                .soundtrack(Apoth.Sounds.MUSIC_DISC_FLASH))
+                .soundtrack(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(Apoth.Sounds.MUSIC_DISC_FLASH)))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true))
@@ -265,17 +265,17 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .modifier(AttributeModifier.create(Attributes.KNOCKBACK_RESISTANCE, Operation.ADD_VALUE, 0.08F)))
             .keyReward(new CountedReward(AffixItemReward.create(Rarities.RARE, Rarities.EPIC), 3))
             .keyReward(new CountedReward(GemReward.create(Purity.FLAWED, Purity.NORMAL), 5))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 24)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.RARE_MATERIAL, 12)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SOCKETING, 2)))
-            .keyReward(new StackReward(new ItemStack(Items.WITHER_SKELETON_SKULL, 3))));
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.GEM_DUST, 24)))
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.RARE_MATERIAL, 12)))
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.SIGIL_OF_SOCKETING, 2)))
+            .keyReward(new StackReward(new ItemStackTemplate(Items.WITHER_SKELETON_SKULL, 3))));
 
         tieredGateway("tiered/summit", b -> b
             .settings(c -> c
                 .tier(WorldTier.SUMMIT)
                 .size(NormalGateway.Size.MEDIUM)
                 .color(0xBB00BB)
-                .soundtrack(Ench.Sounds.MUSIC_DISC_ARCANA))
+                .soundtrack(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(Ench.Sounds.MUSIC_DISC_ARCANA)))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true)
@@ -381,17 +381,17 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .modifier(AttributeModifier.create(Attributes.KNOCKBACK_RESISTANCE, Operation.ADD_VALUE, 0.08F)))
             .keyReward(new CountedReward(AffixItemReward.create(Rarities.EPIC, Rarities.MYTHIC), 3))
             .keyReward(new CountedReward(GemReward.create(Purity.NORMAL, Purity.FLAWLESS), 5))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 48)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.EPIC_MATERIAL, 24)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SOCKETING, 6)))
-            .keyReward(new StackReward(new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1), Apotheosis.langKey("reward", "netherite_smithing_template"))));
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.GEM_DUST, 48)))
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.EPIC_MATERIAL, 24)))
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.SIGIL_OF_SOCKETING, 6)))
+            .keyReward(new StackReward(new ItemStackTemplate(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1), Apotheosis.langKey("reward", "netherite_smithing_template"))));
 
         endlessGateway("endless_invader", b -> b
             .color(GradientColor.RAINBOW)
             .size(Gateway.Size.LARGE)
             .bossSettings(new BossEventSettings(BossEventSettings.Mode.NAME_PLATE, false))
             .spawnAlgo(SpawnAlgorithms.INWARD_SPIRAL)
-            .soundtrack(Apoth.Sounds.MUSIC_DISC_GLIMMER)
+            .soundtrack(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(Apoth.Sounds.MUSIC_DISC_GLIMMER))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true)
@@ -419,14 +419,14 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .modifier(AttributeModifier.create(ALObjects.Attributes.ARMOR_SHRED, Operation.ADD_MULTIPLIED_TOTAL, 0.08F))
                 .modifier(AttributeModifier.create(ALObjects.Attributes.PROT_SHRED, Operation.ADD_MULTIPLIED_TOTAL, 0.08F))
                 .modifier(AttributeModifier.create(Attributes.KNOCKBACK_RESISTANCE, Operation.ADD_MULTIPLIED_TOTAL, 0.05F))
-                .reward(new StackReward(new ItemStack(Apoth.Items.MYTHIC_MATERIAL, 16)))
-                .reward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 16)))
+                .reward(new StackReward(new ItemStackTemplate(Apoth.Items.MYTHIC_MATERIAL, 16)))
+                .reward(new StackReward(new ItemStackTemplate(Apoth.Items.GEM_DUST, 16)))
                 .reward(new ExperienceReward(25000, 1000))
                 .setupTime(-5)
                 .maxWaveTime(-25))
             .modifier(m -> m
                 .applicationMode(new OnlyOnEveryNWaves(100))
-                .reward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SUPREMACY)))
+                .reward(new StackReward(new ItemStackTemplate(Apoth.Items.SIGIL_OF_SUPREMACY)))
                 .modifier(AttributeModifier.create(Attributes.MAX_HEALTH, Operation.ADD_MULTIPLIED_TOTAL, 1F))));
 
         tieredGateway("tiered/pinnacle", b -> b
@@ -434,7 +434,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .tier(WorldTier.PINNACLE)
                 .size(NormalGateway.Size.LARGE)
                 .color(0xED7014)
-                .soundtrack(Ench.Sounds.MUSIC_DISC_QUANTA))
+                .soundtrack(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(Ench.Sounds.MUSIC_DISC_QUANTA)))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true)
@@ -542,8 +542,8 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                         .addModifier(AttributeModifier.create(Attributes.MOVEMENT_SPEED, Operation.ADD_MULTIPLIED_TOTAL, 0.20F)))))
             .keyReward(new CountedReward(AffixItemReward.create(Rarities.MYTHIC), 5))
             .keyReward(new CountedReward(GemReward.create(Purity.PERFECT), 10))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 64)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.MYTHIC_MATERIAL, 64)))
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.GEM_DUST, 64)))
+            .keyReward(new StackReward(new ItemStackTemplate(Apoth.Items.MYTHIC_MATERIAL, 64)))
             .keyReward(new StackReward(endlessInvaderGatePearl())));
     }
 
@@ -555,10 +555,12 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
         this.add(Apotheosis.loc(path), config.apply(EndlessGateway.builder()).build());
     }
 
-    private ItemStack endlessInvaderGatePearl() {
-        ItemStack stack = new ItemStack(GatewayObjects.GATE_PEARL);
-        GatePearlItem.setGate(stack, GatewayRegistry.INSTANCE.holder(Apotheosis.loc("endless_invader")));
-        return stack;
+    @SuppressWarnings("deprecation")
+    private ItemStackTemplate endlessInvaderGatePearl() {
+        DataComponentPatch patch = DataComponentPatch.builder()
+            .set(GatewayObjects.GATEWAY_COMPONENT, GatewayRegistry.INSTANCE.holder(Apotheosis.loc("endless_invader")))
+            .build();
+        return new ItemStackTemplate(GatewayObjects.GATE_PEARL.value().builtInRegistryHolder(), 1, patch);
     }
 
     public static EliteWaveEntity elite(EntityType<? extends Mob> entity, DynamicHolder<Elite> elite, String desc, UnaryOperator<StandardWaveEntity.Builder> baseEntity) {

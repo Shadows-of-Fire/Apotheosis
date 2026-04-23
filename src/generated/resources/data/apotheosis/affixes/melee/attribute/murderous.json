@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.attack_damage",
+    "attribute": "minecraft:attack_damage",
     "categories": [
         "apotheosis:melee_weapon",
         "apotheosis:trident"

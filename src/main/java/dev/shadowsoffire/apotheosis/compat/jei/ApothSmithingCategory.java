@@ -9,19 +9,19 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
-import net.minecraft.client.gui.GuiGraphics;
+import mezz.jei.api.recipe.types.IRecipeType;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.minecraft.world.level.block.Blocks;
 
 public class ApothSmithingCategory implements IRecipeCategory<SmithingRecipe> {
 
-    public static final ResourceLocation RECIPE_GUI_VANILLA = ResourceLocation.fromNamespaceAndPath("jei", "textures/gui/gui_vanilla.png");
+    public static final Identifier RECIPE_GUI_VANILLA = Identifier.fromNamespaceAndPath("jei", "textures/gui/gui_vanilla.png");
 
     private static final Map<Class<? extends SmithingRecipe>, Extension<SmithingRecipe>> EXTENSIONS = new IdentityHashMap<>();
 
@@ -35,7 +35,7 @@ public class ApothSmithingCategory implements IRecipeCategory<SmithingRecipe> {
     }
 
     @Override
-    public RecipeType<SmithingRecipe> getRecipeType() {
+    public IRecipeType<SmithingRecipe> getRecipeType() {
         return AdventureJEIPlugin.APO_SMITHING;
     }
 
@@ -45,8 +45,13 @@ public class ApothSmithingCategory implements IRecipeCategory<SmithingRecipe> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return 125;
+    }
+
+    @Override
+    public int getHeight() {
+        return 34;
     }
 
     @Override
@@ -55,7 +60,8 @@ public class ApothSmithingCategory implements IRecipeCategory<SmithingRecipe> {
     }
 
     @Override
-    public void draw(SmithingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gfx, double mouseX, double mouseY) {
+    public void draw(SmithingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
+        this.background.draw(gfx);
         EXTENSIONS.get(recipe.getClass()).draw(recipe, recipeSlotsView, gfx, mouseX, mouseY);
     }
 
@@ -73,7 +79,7 @@ public class ApothSmithingCategory implements IRecipeCategory<SmithingRecipe> {
 
         public void setRecipe(IRecipeLayoutBuilder builder, R recipe, IFocusGroup focuses);
 
-        public void draw(R recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gfx, double mouseX, double mouseY);
+        public void draw(R recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor gfx, double mouseX, double mouseY);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

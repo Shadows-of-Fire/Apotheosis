@@ -1,7 +1,7 @@
 {
     "type": "apotheosis:salvaging",
     "input": {
-        "type": "apotheosis:gem",
+        "neoforge:ingredient_type": "apotheosis:gem",
         "purity": "flawed"
     },
     "outputs": [
@@ -9,7 +9,6 @@
             "max_count": 4,
             "min_count": 2,
             "stack": {
-                "count": 1,
                 "id": "apotheosis:gem_dust"
             }
         }

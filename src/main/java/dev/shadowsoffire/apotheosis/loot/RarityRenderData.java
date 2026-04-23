@@ -6,7 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Render Data for {@link LootRarity}, which defines what kinds of effects will be shown when an affix item of that rarity is dropped in-world.
@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
  * @param glowTexture The texture of the glow effect. Ignored if {@code glowRadius} is zero or less.
  * @param shadow      The shadow data for the item. This is used to render a shadow under the item when it is dropped in-world.
  */
-public record RarityRenderData(float beamHeight, float beamRadius, ResourceLocation beamTexture, float glowRadius, ResourceLocation glowTexture, ShadowData shadow, ParticleData particle) {
+public record RarityRenderData(float beamHeight, float beamRadius, Identifier beamTexture, float glowRadius, Identifier glowTexture, ShadowData shadow, ParticleData particle) {
 
     public static final RarityRenderData DEFAULT = new RarityRenderData(3.5F, 0.035F, Apotheosis.loc("textures/rarity/beam.png"), 0.065F, Apotheosis.loc("textures/rarity/glow.png"), ShadowData.DEFAULT, ParticleData.DEFAULT);
 
@@ -26,9 +26,9 @@ public record RarityRenderData(float beamHeight, float beamRadius, ResourceLocat
         .group(
             Codec.floatRange(0, 256).fieldOf("beam_height").forGetter(RarityRenderData::beamHeight),
             Codec.floatRange(0, 5).fieldOf("beam_radius").forGetter(RarityRenderData::beamRadius),
-            ResourceLocation.CODEC.fieldOf("beam_texture").forGetter(RarityRenderData::beamTexture),
+            Identifier.CODEC.fieldOf("beam_texture").forGetter(RarityRenderData::beamTexture),
             Codec.floatRange(0, 7).fieldOf("glow_radius").forGetter(RarityRenderData::glowRadius),
-            ResourceLocation.CODEC.fieldOf("glow_texture").forGetter(RarityRenderData::glowTexture),
+            Identifier.CODEC.fieldOf("glow_texture").forGetter(RarityRenderData::glowTexture),
             ShadowData.CODEC.optionalFieldOf("shadow", ShadowData.DEFAULT).forGetter(RarityRenderData::shadow),
             ParticleData.CODEC.optionalFieldOf("particle", ParticleData.DEFAULT).forGetter(RarityRenderData::particle))
         .apply(instance, RarityRenderData::new));
@@ -42,7 +42,7 @@ public record RarityRenderData(float beamHeight, float beamRadius, ResourceLocat
      * @param frames    The number of frames in the shadow animation. If this is 1, the shadow will not animate.
      * @param frameTime The time in ticks between frames of the shadow animation.
      */
-    public static record ShadowData(float size, int alpha, ResourceLocation texture, int frames, float frameTime) {
+    public static record ShadowData(float size, int alpha, Identifier texture, int frames, float frameTime) {
 
         public static final ShadowData DEFAULT = new ShadowData(0.35F, 0xFF, Apotheosis.loc("textures/rarity/shadow.png"), 1, 1);
 
@@ -50,7 +50,7 @@ public record RarityRenderData(float beamHeight, float beamRadius, ResourceLocat
             .group(
                 Codec.floatRange(0, 2).fieldOf("size").forGetter(ShadowData::size),
                 Codec.intRange(0, 255).fieldOf("alpha").forGetter(ShadowData::alpha),
-                ResourceLocation.CODEC.fieldOf("texture").forGetter(ShadowData::texture),
+                Identifier.CODEC.fieldOf("texture").forGetter(ShadowData::texture),
                 Codec.intRange(1, 128).fieldOf("frames").orElse(1).forGetter(ShadowData::frames),
                 Codec.floatRange(0.5F, 40).fieldOf("frame_time").orElse(1F).forGetter(ShadowData::frameTime))
             .apply(instance, ShadowData::new));
@@ -58,7 +58,7 @@ public record RarityRenderData(float beamHeight, float beamRadius, ResourceLocat
         public static class Builder {
             private int alpha = DEFAULT.alpha;
             private float size = DEFAULT.size;
-            private ResourceLocation texture = DEFAULT.texture;
+            private Identifier texture = DEFAULT.texture;
             private int frames = DEFAULT.frames;
             private float frameTime = DEFAULT.frameTime;
 
@@ -72,7 +72,7 @@ public record RarityRenderData(float beamHeight, float beamRadius, ResourceLocat
                 return this;
             }
 
-            public Builder texture(ResourceLocation texture) {
+            public Builder texture(Identifier texture) {
                 this.texture = texture;
                 return this;
             }
@@ -109,9 +109,9 @@ public record RarityRenderData(float beamHeight, float beamRadius, ResourceLocat
     public static class Builder {
         private float beamRadius = DEFAULT.beamRadius;
         private float beamHeight = DEFAULT.beamHeight;
-        private ResourceLocation beamTexture = DEFAULT.beamTexture;
+        private Identifier beamTexture = DEFAULT.beamTexture;
         private float glowRadius = DEFAULT.glowRadius;
-        private ResourceLocation glowTexture = DEFAULT.glowTexture;
+        private Identifier glowTexture = DEFAULT.glowTexture;
         private ShadowData shadow = DEFAULT.shadow;
         private boolean hasParticles = DEFAULT.particle.enabled;
 
@@ -125,7 +125,7 @@ public record RarityRenderData(float beamHeight, float beamRadius, ResourceLocat
             return this;
         }
 
-        public Builder beamTexture(ResourceLocation texture) {
+        public Builder beamTexture(Identifier texture) {
             this.beamTexture = texture;
             return this;
         }
@@ -135,7 +135,7 @@ public record RarityRenderData(float beamHeight, float beamRadius, ResourceLocat
             return this;
         }
 
-        public Builder glowTexture(ResourceLocation texture) {
+        public Builder glowTexture(Identifier texture) {
             this.glowTexture = texture;
             return this;
         }

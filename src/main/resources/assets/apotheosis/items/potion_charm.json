@@ -1,0 +1,26 @@
+{
+    "model": {
+        "type": "minecraft:select",
+        "property": "minecraft:component",
+        "component": "apotheosis:charm_enabled",
+        "cases": [
+            {
+                "when": true,
+                "model": {
+                    "type": "minecraft:model",
+                    "model": "apotheosis:item/potion_charm_glow",
+                    "tints": [
+                        { "type": "minecraft:potion", "default": -13083194 }
+                    ]
+                }
+            }
+        ],
+        "fallback": {
+            "type": "minecraft:model",
+            "model": "apotheosis:item/potion_charm",
+            "tints": [
+                { "type": "minecraft:potion", "default": -13083194 }
+            ]
+        }
+    }
+}

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.network.PayloadProvider;
-import net.minecraft.ResourceLocationException;
+import net.minecraft.IdentifierException;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.ConnectionProtocol;
@@ -15,19 +15,18 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.WorldGenLevel;
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class AdventureConfig {
 
-    public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
+    public static final List<Identifier> DIM_WHITELIST = new ArrayList<>();
 
     // Boss Stats
     public static boolean curseBossItems = false;
@@ -74,7 +73,7 @@ public class AdventureConfig {
             "The item that will be used when attempting to place torches with the torch placer affix.  Must be a valid item that places a block on right click.\nSynced.");
 
         try {
-            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(torch));
+            Item item = BuiltInRegistries.ITEM.getValue(Identifier.parse(torch));
             if (item == Items.AIR) {
                 throw new UnsupportedOperationException("Unknown item: " + torch);
             }
@@ -97,9 +96,9 @@ public class AdventureConfig {
         DIM_WHITELIST.clear();
         for (String s : dims) {
             try {
-                DIM_WHITELIST.add(ResourceLocation.parse(s.trim()));
+                DIM_WHITELIST.add(Identifier.parse(s.trim()));
             }
-            catch (ResourceLocationException e) {
+            catch (IdentifierException e) {
                 Apotheosis.LOGGER.error("Invalid dim whitelist entry: " + s + " will be ignored");
             }
         }
@@ -126,14 +125,14 @@ public class AdventureConfig {
 
     public static boolean canGenerateIn(WorldGenLevel world) {
         ResourceKey<Level> key = world.getLevel().dimension();
-        return DIM_WHITELIST.contains(key.location());
+        return DIM_WHITELIST.contains(key.identifier());
     }
 
     public static record ConfigPayload(Item affixTorch, int upgradeSigilCost, int upgradeLevelCost, int rerollSigilCost, int rerollLevelCost, boolean charmsInCuriosOnly, boolean manualWorldTierChanges) implements CustomPacketPayload {
 
         public static final Type<ConfigPayload> TYPE = new Type<>(Apotheosis.loc("config"));
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, ConfigPayload> CODEC = NeoForgeStreamCodecs.composite(
+        public static final StreamCodec<RegistryFriendlyByteBuf, ConfigPayload> CODEC = StreamCodec.composite(
             ByteBufCodecs.registry(Registries.ITEM), ConfigPayload::affixTorch,
             ByteBufCodecs.VAR_INT, ConfigPayload::upgradeSigilCost,
             ByteBufCodecs.VAR_INT, ConfigPayload::upgradeLevelCost,
@@ -166,7 +165,7 @@ public class AdventureConfig {
             }
 
             @Override
-            public void handle(ConfigPayload msg, IPayloadContext ctx) {
+            public void handleClient(ConfigPayload msg, IPayloadContext ctx) {
                 AdventureConfig.torchItem = msg.affixTorch();
                 AdventureConfig.upgradeSigilCost = msg.upgradeSigilCost;
                 AdventureConfig.upgradeLevelCost = msg.upgradeLevelCost;

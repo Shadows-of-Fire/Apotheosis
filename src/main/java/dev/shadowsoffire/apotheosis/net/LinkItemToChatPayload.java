@@ -53,7 +53,7 @@ public record LinkItemToChatPayload(int containerId, int slot, Item intendedItem
         }
 
         @Override
-        public void handle(LinkItemToChatPayload msg, IPayloadContext ctx) {
+        public void handleServer(LinkItemToChatPayload msg, IPayloadContext ctx) {
             Player player = ctx.player();
             if (ItemLinking.isOnCooldown(player.getUUID(), player.level().getGameTime())) {
                 return;
@@ -82,7 +82,7 @@ public record LinkItemToChatPayload(int containerId, int slot, Item intendedItem
                         comp = Apotheosis.lang("chat", "link_item_with_count", String.valueOf(count), comp);
                     }
                     PlayerChatMessage chatMsg = PlayerChatMessage.system("").withUnsignedContent(comp);
-                    player.getServer().getPlayerList().broadcastChatMessage(chatMsg, (ServerPlayer) player, ChatType.bind(ChatType.CHAT, player));
+                    player.level().getServer().getPlayerList().broadcastChatMessage(chatMsg, (ServerPlayer) player, ChatType.bind(ChatType.CHAT, player));
                     ItemLinking.startCooldown(player.getUUID(), player.level().getGameTime());
                 }
             }

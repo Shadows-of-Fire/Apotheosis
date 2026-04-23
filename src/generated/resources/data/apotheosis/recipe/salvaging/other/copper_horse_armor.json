@@ -1,0 +1,13 @@
+{
+    "type": "apotheosis:salvaging",
+    "input": "minecraft:copper_horse_armor",
+    "outputs": [
+        {
+            "max_count": 8,
+            "min_count": 3,
+            "stack": {
+                "id": "minecraft:copper_ingot"
+            }
+        }
+    ]
+}

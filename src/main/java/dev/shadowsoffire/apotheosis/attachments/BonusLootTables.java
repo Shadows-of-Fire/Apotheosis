@@ -28,26 +28,28 @@ public record BonusLootTables(List<ResourceKey<LootTable>> tables) {
      * Rolls all additional loot tables contained in this attachment and spawns the items via {@link Mob#spawnatLocation}.
      */
     public void drop(Mob owner, DamageSource source, boolean hitByPlayer) {
+        ServerLevel serverLevel = (ServerLevel) owner.level();
         for (ResourceKey<LootTable> key : this.tables) {
             // This is a copy of LivingEntity#dropLootFromLootTable - we can't invoke it directly since Mob overrides it
-            LootTable table = owner.level().getServer().reloadableRegistries().getLootTable(key);
+            LootTable table = serverLevel.getServer().reloadableRegistries().getLootTable(key);
             if (table == LootTable.EMPTY) {
                 continue;
             }
 
-            LootParams.Builder lootparams$builder = new LootParams.Builder((ServerLevel) owner.level())
+            LootParams.Builder lootparams$builder = new LootParams.Builder(serverLevel)
                 .withParameter(LootContextParams.THIS_ENTITY, owner)
                 .withParameter(LootContextParams.ORIGIN, owner.position())
                 .withParameter(LootContextParams.DAMAGE_SOURCE, source)
                 .withOptionalParameter(LootContextParams.ATTACKING_ENTITY, source.getEntity())
                 .withOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, source.getDirectEntity());
-            if (hitByPlayer && owner.lastHurtByPlayer != null) {
-                lootparams$builder = lootparams$builder.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, owner.lastHurtByPlayer)
-                    .withLuck(owner.lastHurtByPlayer.getLuck());
+            net.minecraft.world.entity.player.Player lastHurtByPlayer = owner.getLastHurtByPlayer();
+            if (hitByPlayer && lastHurtByPlayer != null) {
+                lootparams$builder = lootparams$builder.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, lastHurtByPlayer)
+                    .withLuck(lastHurtByPlayer.getLuck());
             }
 
             LootParams lootparams = lootparams$builder.create(LootContextParamSets.ENTITY);
-            table.getRandomItems(lootparams, owner.getLootTableSeed(), owner::spawnAtLocation);
+            table.getRandomItems(lootparams, owner.getLootTableSeed(), stack -> owner.spawnAtLocation(serverLevel, stack));
         }
     }
 

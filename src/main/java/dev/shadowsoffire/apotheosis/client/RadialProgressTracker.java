@@ -1,33 +1,28 @@
 package dev.shadowsoffire.apotheosis.client;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.jetbrains.annotations.Nullable;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.SheetedDecalTextureGenerator;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.effect.RadialAffix;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.RadialBonus;
 import dev.shadowsoffire.apotheosis.util.RadialUtil;
 import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialData;
 import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialState;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.BlockStateModelSet;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.BlockBreakingRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.HoverEvent.ItemStackInfo;
-import net.minecraft.server.level.BlockDestructionProgress;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -36,11 +31,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.RenderHighlightEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.SubmitCustomGeometryEvent;
 
 /**
  * Hooks to assist in rendering the crumbling block effect on blocks that will be broken by the radial effect (affix or gem bonus).
@@ -48,10 +43,8 @@ import net.neoforged.neoforge.client.model.data.ModelData;
  * Largely inspired by the implementation from Tinker's Construct (MIT License).
  * https://github.com/SlimeKnights/TinkersConstruct/blob/1.20.1/src/main/java/slimeknights/tconstruct/tools/client/ToolRenderEvents.java
  */
+@EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT)
 public class RadialProgressTracker {
-
-    /** Maximum number of blocks to render, so perf doesn't tank for huge AOEs */
-    private static final int MAX_BLOCKS = 100;
 
     @Nullable
     private static CacheKey lastKey = null;
@@ -78,7 +71,7 @@ public class RadialProgressTracker {
         BlockPos pos = blockTrace.getBlockPos();
         Direction dir = blockTrace.getDirection();
 
-        CacheKey key = new CacheKey(pos, player.getMainHandItem(), dir, player.getDirection());
+        CacheKey key = new CacheKey(pos, tool, dir, player.getDirection());
 
         if (lastKey != null && lastKey.equals(key)) {
             return knownAOEBlocks;
@@ -117,130 +110,107 @@ public class RadialProgressTracker {
         }
     }
 
-    /**
-     * Renders the outline on the extra blocks
-     *
-     * @param e the highlight event
-     */
     @SubscribeEvent
-    public static void renderBlockHighlights(RenderHighlightEvent.Block e) {
-        Set<BlockPos> extraBlocks = getAOEBlocks();
-        if (extraBlocks.isEmpty()) {
-            return;
+    public static void submitOutlines(SubmitCustomGeometryEvent e) {
+        Set<BlockPos> blocks = getAOEBlocks();
+        if (blocks.isEmpty()) return;
+
+        Minecraft mc = Minecraft.getInstance();
+        Level level = mc.level;
+        if (level == null) return;
+
+        Vec3 camPos = e.getLevelRenderState().cameraRenderState.pos;
+        PoseStack pose = e.getPoseStack();
+        SubmitNodeCollector collector = e.getSubmitNodeCollector();
+
+        for (BlockPos pos : blocks) {
+            BlockState state = level.getBlockState(pos);
+            if (state.isAir()) continue;
+
+            VoxelShape shape = state.getShape(level, pos);
+            if (shape.isEmpty()) continue;
+
+            double x = pos.getX() - camPos.x;
+            double y = pos.getY() - camPos.y;
+            double z = pos.getZ() - camPos.z;
+
+            collector.submitCustomGeometry(pose, RenderTypes.lines(), (p, buffer) -> {
+                shape.forAllEdges((x1, y1, z1, x2, y2, z2) -> {
+                    org.joml.Vector3f normal = new org.joml.Vector3f((float) (x2 - x1), (float) (y2 - y1), (float) (z2 - z1)).normalize();
+                    buffer.addVertex(p, (float) (x1 + x), (float) (y1 + y), (float) (z1 + z))
+                        .setColor(0, 0, 0, 102).setNormal(p, normal).setLineWidth(2F);
+                    buffer.addVertex(p, (float) (x2 + x), (float) (y2 + y), (float) (z2 + z))
+                        .setColor(0, 0, 0, 102).setNormal(p, normal).setLineWidth(2F);
+                });
+            });
         }
 
-        // set up renderer
-        LevelRenderer levelRender = e.getLevelRenderer();
-        PoseStack matrices = e.getPoseStack();
-        MultiBufferSource.BufferSource buffers = Minecraft.getInstance().renderBuffers().bufferSource();
-        VertexConsumer vertexBuilder = buffers.getBuffer(RenderType.lines());
-        matrices.pushPose();
-
-        // start drawing
-        Camera renderInfo = Minecraft.getInstance().gameRenderer.getMainCamera();
-        Entity viewEntity = renderInfo.getEntity();
-        Level level = viewEntity.level();
-        Vec3 vector3d = renderInfo.getPosition();
-        double x = vector3d.x();
-        double y = vector3d.y();
-        double z = vector3d.z();
-
-        int rendered = 0;
-        for (BlockPos pos : extraBlocks) {
-            levelRender.renderHitOutline(matrices, vertexBuilder, viewEntity, x, y, z, pos, level.getBlockState(pos));
-            if (rendered++ > MAX_BLOCKS) {
-                break;
-            }
-        }
-
-        matrices.popPose();
-        buffers.endBatch();
+        submitCrumbling(e, blocks, mc, level, camPos, pose, collector);
     }
 
     /**
-     * Updates the values stored in {@link LevelRenderer#destructionProgress} for the blocks that are being destroyed by the radial effect.
-     * <p>
-     * We can run this here, because this event handler fires <i>just</i> before vanilla will render the crumbling effect.
+     * Mirrors the progress of the player's current destruction target onto each AOE block,
+     * producing the vanilla crumbling overlay on the blocks that will also be destroyed.
      */
-    @SubscribeEvent
-    public static void renderStage(RenderLevelStageEvent e) {
-        if (e.getStage() != Stage.AFTER_BLOCK_ENTITIES) {
-            return;
-        }
+    private static void submitCrumbling(SubmitCustomGeometryEvent e, Set<BlockPos> blocks, Minecraft mc, Level level, Vec3 camPos, PoseStack pose, SubmitNodeCollector collector) {
+        MultiPlayerGameMode controller = mc.gameMode;
+        if (controller == null || !controller.isDestroying()) return;
 
-        Set<BlockPos> extraBlocks = getAOEBlocks();
-        if (extraBlocks.isEmpty()) {
-            return;
-        }
+        Player player = mc.player;
+        if (player == null || lastKey == null) return;
 
-        // validate required variables are set
-        MultiPlayerGameMode controller = Minecraft.getInstance().gameMode;
-        if (controller == null || !controller.isDestroying()) {
-            return;
-        }
-
-        // find breaking progress
         BlockPos target = lastKey.pos;
-        BlockDestructionProgress progress = null;
-        for (Int2ObjectMap.Entry<BlockDestructionProgress> entry : e.getLevelRenderer().destroyingBlocks.int2ObjectEntrySet()) {
-            if (entry.getValue().getPos().equals(target)) {
-                progress = entry.getValue();
+        int progress = -1;
+        for (BlockBreakingRenderState entry : e.getLevelRenderState().blockBreakingRenderStates) {
+            if (entry.blockPos().equals(target)) {
+                progress = entry.progress();
                 break;
             }
         }
+        if (progress < 0) return;
 
-        if (progress == null) {
-            return;
+        BlockState targetState = level.getBlockState(target);
+        if (!RadialUtil.isEffective(targetState, player, target)) return;
+
+        BlockStateModelSet models = mc.getModelManager().getBlockStateModelSet();
+
+        for (BlockPos pos : blocks) {
+            BlockState state = level.getBlockState(pos);
+            if (state.isAir()) continue;
+
+            BlockStateModel model = models.get(state);
+            pose.pushPose();
+            pose.translate(pos.getX() - camPos.x, pos.getY() - camPos.y, pos.getZ() - camPos.z);
+            collector.submitBreakingBlockModel(pose, model, state.getSeed(pos), progress);
+            pose.popPose();
         }
-
-        Level level = Minecraft.getInstance().level;
-        Player player = Minecraft.getInstance().player;
-        BlockState state = level.getBlockState(target);
-
-        // must not be broken, and the tool definition must be effective
-        if (!RadialUtil.isEffective(state, player, target)) {
-            return;
-        }
-
-        // set up buffers
-        PoseStack matrices = e.getPoseStack();
-        matrices.pushPose();
-        MultiBufferSource.BufferSource vertices = Minecraft.getInstance().renderBuffers().crumblingBufferSource();
-        VertexConsumer vertexBuilder = vertices.getBuffer(ModelBakery.DESTROY_TYPES.get(progress.getProgress()));
-
-        // finally, render the blocks
-        Camera renderInfo = Minecraft.getInstance().gameRenderer.getMainCamera();
-        double x = renderInfo.getPosition().x;
-        double y = renderInfo.getPosition().y;
-        double z = renderInfo.getPosition().z;
-        BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
-
-        int rendered = 0;
-        for (BlockPos pos : extraBlocks) {
-
-            matrices.pushPose();
-            matrices.translate(pos.getX() - x, pos.getY() - y, pos.getZ() - z);
-            PoseStack.Pose entry = matrices.last();
-            VertexConsumer blockBuilder = new SheetedDecalTextureGenerator(vertexBuilder, entry, 1);
-            ModelData modelData = level.getModelData(pos);
-            dispatcher.renderBreakingTexture(level.getBlockState(pos), pos, level, matrices, blockBuilder, modelData);
-            matrices.popPose();
-            rendered++;
-
-            if (rendered++ > MAX_BLOCKS) {
-                break;
-            }
-        }
-
-        // finish rendering
-        matrices.popPose();
-        vertices.endBatch();
     }
 
-    private static record CacheKey(BlockPos pos, ItemStackInfo tool, Direction hitDir, Direction playerDir) {
+    private static final class CacheKey {
+        private final BlockPos pos;
+        private final ItemStack tool;
+        private final Direction hitDir;
+        private final Direction playerDir;
 
         private CacheKey(BlockPos pos, ItemStack tool, Direction hitDir, Direction playerDir) {
-            this(pos, new ItemStackInfo(tool), hitDir, playerDir);
+            this.pos = pos;
+            this.tool = tool;
+            this.hitDir = hitDir;
+            this.playerDir = playerDir;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof CacheKey other)) return false;
+            return this.pos.equals(other.pos)
+                && this.hitDir == other.hitDir
+                && this.playerDir == other.playerDir
+                && ItemStack.isSameItemSameComponents(this.tool, other.tool);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(pos, hitDir, playerDir, tool.getItem(), tool.getComponentsPatch());
         }
     }
 

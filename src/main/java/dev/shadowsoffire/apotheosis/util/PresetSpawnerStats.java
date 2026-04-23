@@ -11,7 +11,7 @@ import dev.shadowsoffire.apothic_spawners.stats.SpawnerStats;
 
 public record PresetSpawnerStats(Map<SpawnerStat<?>, Object> stats) {
 
-    public static final Codec<PresetSpawnerStats> CODEC = Codec.<SpawnerStat<?>, Object>dispatchedMap(SpawnerStats.REGISTRY.byNameCodec(), SpawnerStat::getValueCodec)
+    public static final Codec<PresetSpawnerStats> CODEC = Codec.<SpawnerStat<?>, Object>dispatchedMap(SpawnerStats.REGISTRY.byNameCodec(), SpawnerStat::valueCodec)
         .xmap(PresetSpawnerStats::new, PresetSpawnerStats::stats);
 
     private static Map<SpawnerStat<?>, Object> DEFAULT_STATS = ImmutableMap.<SpawnerStat<?>, Object>builder()

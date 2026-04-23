@@ -34,21 +34,25 @@ import dev.shadowsoffire.apothic_enchanting.table.EnchantingStatRegistry.Stats;
 import dev.shadowsoffire.gateways.GatewayObjects;
 import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.gateways.gate.GatewayRegistry;
-import dev.shadowsoffire.gateways.item.GatePearlItem;
 import dev.shadowsoffire.placebo.datagen.LegacyRecipeProvider;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -63,12 +67,21 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
     }
 
     @Override
+    public String getName() {
+        return "Apotheosis Recipes";
+    }
+
+    private static ResourceKey<Recipe<?>> key(Identifier id) {
+        return ResourceKey.create(Registries.RECIPE, id);
+    }
+
+    @Override
     protected void genRecipes(RecipeOutput out, HolderLookup.Provider registries) {
-        out.accept(Apotheosis.loc("socketing"), new SocketingRecipe(), null);
-        out.accept(Apotheosis.loc("unnaming"), new UnnamingRecipe(), null);
-        out.accept(Apotheosis.loc("widthdrawal"), new WithdrawalRecipe(), null);
-        out.accept(Apotheosis.loc("malice"), new MaliceRecipe(), null);
-        out.accept(Apotheosis.loc("supremacy"), new SupremacyRecipe(), null);
+        out.accept(key(Apotheosis.loc("socketing")), new SocketingRecipe(), null);
+        out.accept(key(Apotheosis.loc("unnaming")), new UnnamingRecipe(), null);
+        out.accept(key(Apotheosis.loc("widthdrawal")), new WithdrawalRecipe(), null);
+        out.accept(key(Apotheosis.loc("malice")), new MaliceRecipe(), null);
+        out.accept(key(Apotheosis.loc("supremacy")), new SupremacyRecipe(), null);
         addSockets("sigil_add_sockets", ingredient(Items.SIGIL_OF_SOCKETING), 2);
         addAffixSalvaging("common", Items.COMMON_MATERIAL);
         addAffixSalvaging("uncommon", Items.UNCOMMON_MATERIAL);
@@ -84,24 +97,34 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         addGemSalvaging(Purity.PERFECT, 5, 10);
 
         addOtherSalvaging("leather_horse_armor", new OutputData(Items.LEATHER, 3, 8), Items.LEATHER_HORSE_ARMOR);
+        addOtherSalvaging("copper_horse_armor", new OutputData(Items.COPPER_INGOT, 3, 8), Items.COPPER_HORSE_ARMOR);
         addOtherSalvaging("iron_horse_armor", new OutputData(Items.IRON_INGOT, 3, 8), Items.IRON_HORSE_ARMOR);
         addOtherSalvaging("golden_horse_armor", new OutputData(Items.GOLD_INGOT, 3, 8), Items.GOLDEN_HORSE_ARMOR);
         addOtherSalvaging("diamond_horse_armor", new OutputData(Items.DIAMOND, 3, 8), Items.DIAMOND_HORSE_ARMOR);
+        addOtherSalvaging("netherite_horse_armor", new OutputData(Items.NETHERITE_SCRAP, 1, 3), Items.NETHERITE_HORSE_ARMOR);
         addOtherSalvaging("wolf_armor", new OutputData(Items.ARMADILLO_SCUTE, 1, 3), Items.WOLF_ARMOR);
 
-        addOtherSalvaging("wooden_tools", new OutputData(Items.OAK_PLANKS, 0, 1), Items.WOODEN_SWORD, Items.WOODEN_PICKAXE, Items.WOODEN_AXE, Items.WOODEN_SHOVEL, Items.WOODEN_HOE);
-        addOtherSalvaging("stone_tools", new OutputData(Items.COBBLESTONE, 0, 1), Items.STONE_SWORD, Items.STONE_PICKAXE, Items.STONE_AXE, Items.STONE_SHOVEL, Items.STONE_HOE);
-        addOtherSalvaging("gold_tools", new OutputData(Items.GOLD_INGOT, 0, 1), Items.GOLDEN_SWORD, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_SHOVEL, Items.GOLDEN_HOE);
-        addOtherSalvaging("iron_tools", new OutputData(Items.IRON_INGOT, 0, 1), Items.IRON_SWORD, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_SHOVEL, Items.IRON_HOE);
-        addOtherSalvaging("diamond_tools", new OutputData(Items.DIAMOND, 0, 1), Items.DIAMOND_SWORD, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE);
-        addOtherSalvaging("netherite_tools", new OutputData(Items.NETHERITE_SCRAP, 0, 2), Items.NETHERITE_SWORD, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
+        addOtherSalvaging("wooden_tools", new OutputData(Items.OAK_PLANKS, 0, 1), Items.WOODEN_SWORD, Items.WOODEN_PICKAXE, Items.WOODEN_AXE, Items.WOODEN_SHOVEL, Items.WOODEN_HOE, Items.WOODEN_SPEAR);
+        addOtherSalvaging("stone_tools", new OutputData(Items.COBBLESTONE, 0, 1), Items.STONE_SWORD, Items.STONE_PICKAXE, Items.STONE_AXE, Items.STONE_SHOVEL, Items.STONE_HOE, Items.STONE_SPEAR);
+        addOtherSalvaging("copper_tools", new OutputData(Items.COPPER_INGOT, 0, 1), Items.COPPER_SWORD, Items.COPPER_PICKAXE, Items.COPPER_AXE, Items.COPPER_SHOVEL, Items.COPPER_HOE, Items.COPPER_SPEAR);
+        addOtherSalvaging("gold_tools", new OutputData(Items.GOLD_INGOT, 0, 1), Items.GOLDEN_SWORD, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_SHOVEL, Items.GOLDEN_HOE, Items.GOLDEN_SPEAR);
+        addOtherSalvaging("iron_tools", new OutputData(Items.IRON_INGOT, 0, 1), Items.IRON_SWORD, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_SHOVEL, Items.IRON_HOE, Items.IRON_SPEAR);
+        addOtherSalvaging("diamond_tools", new OutputData(Items.DIAMOND, 0, 1), Items.DIAMOND_SWORD, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE, Items.DIAMOND_SPEAR);
+        addOtherSalvaging("netherite_tools", new OutputData(Items.NETHERITE_SCRAP, 0, 2), Items.NETHERITE_SWORD, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE, Items.NETHERITE_SPEAR);
 
         addOtherSalvaging("leather_armor", new OutputData(Items.LEATHER, 1, 3), Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS);
-        addOtherSalvaging("chain_armor", new OutputData(Items.CHAIN, 1, 3), Items.CHAINMAIL_HELMET, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_LEGGINGS, Items.CHAINMAIL_BOOTS);
+        addOtherSalvaging("chain_armor", new OutputData(Items.IRON_CHAIN, 1, 3), Items.CHAINMAIL_HELMET, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_LEGGINGS, Items.CHAINMAIL_BOOTS);
+        addOtherSalvaging("copper_armor", new OutputData(Items.COPPER_INGOT, 1, 3), Items.COPPER_HELMET, Items.COPPER_CHESTPLATE, Items.COPPER_LEGGINGS, Items.COPPER_BOOTS);
         addOtherSalvaging("gold_armor", new OutputData(Items.GOLD_INGOT, 1, 3), Items.GOLDEN_HELMET, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_LEGGINGS, Items.GOLDEN_BOOTS);
         addOtherSalvaging("iron_armor", new OutputData(Items.IRON_INGOT, 1, 3), Items.IRON_HELMET, Items.IRON_CHESTPLATE, Items.IRON_LEGGINGS, Items.IRON_BOOTS);
         addOtherSalvaging("diamond_armor", new OutputData(Items.DIAMOND, 1, 3), Items.DIAMOND_HELMET, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_LEGGINGS, Items.DIAMOND_BOOTS);
         addOtherSalvaging("netherite_armor", new OutputData(Items.NETHERITE_SCRAP, 0, 2), Items.NETHERITE_HELMET, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS);
+
+        addOtherSalvaging("copper_nautilus_armor", new OutputData(Items.COPPER_INGOT, 1, 3), Items.COPPER_NAUTILUS_ARMOR);
+        addOtherSalvaging("iron_nautilus_armor", new OutputData(Items.IRON_INGOT, 1, 3), Items.IRON_NAUTILUS_ARMOR);
+        addOtherSalvaging("golden_nautilus_armor", new OutputData(Items.GOLD_INGOT, 1, 3), Items.GOLDEN_NAUTILUS_ARMOR);
+        addOtherSalvaging("diamond_nautilus_armor", new OutputData(Items.DIAMOND, 1, 3), Items.DIAMOND_NAUTILUS_ARMOR);
+        addOtherSalvaging("netherite_nautilus_armor", new OutputData(Items.NETHERITE_SCRAP, 0, 2), Items.NETHERITE_NAUTILUS_ARMOR);
 
         addReforging("common", 1, 0, 2, Blocks.SIMPLE_REFORGING_TABLE, Blocks.REFORGING_TABLE);
         addReforging("uncommon", 2, 1, 5, Blocks.SIMPLE_REFORGING_TABLE, Blocks.REFORGING_TABLE);
@@ -111,22 +134,22 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
 
         addShaped(Blocks.AUGMENTING_TABLE, 3, 3, null, Items.NETHER_STAR, null, Items.MYTHIC_MATERIAL, Items.ENCHANTING_TABLE, Items.MYTHIC_MATERIAL, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE);
         addShaped(Blocks.GEM_CUTTING_TABLE, 3, 3, Items.SMOOTH_STONE, Items.SHEARS, Items.SMOOTH_STONE, ItemTags.PLANKS, Items.GEM_DUST, ItemTags.PLANKS, ItemTags.PLANKS, null, ItemTags.PLANKS);
-        addShaped(new ItemStack(Items.GEM_FUSED_SLATE, 8), 3, 3, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.GEM_DUST, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE);
+        addShaped(new ItemStackTemplate(Items.GEM_FUSED_SLATE, 8), 3, 3, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.GEM_DUST, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE);
         addShaped(Blocks.REFORGING_TABLE, 3, 3, null, Tags.Items.INGOTS_NETHERITE, null, Items.EPIC_MATERIAL, Items.SIMPLE_REFORGING_TABLE, Items.EPIC_MATERIAL, Items.NETHER_BRICKS, Items.NETHER_BRICKS, Items.NETHER_BRICKS);
         addShaped(Blocks.SALVAGING_TABLE, 3, 3, Tags.Items.INGOTS_COPPER, Tags.Items.INGOTS_COPPER, Tags.Items.INGOTS_COPPER, Items.IRON_PICKAXE, Items.SMITHING_TABLE, Items.IRON_AXE, Items.GEM_DUST, Items.LAVA_BUCKET, Items.GEM_DUST);
         addShaped(Blocks.SIMPLE_REFORGING_TABLE, 3, 3, null, Tags.Items.INGOTS_IRON, null, Items.GEM_DUST, Items.ENCHANTING_TABLE, Items.GEM_DUST, Items.SMOOTH_STONE, Items.SMOOTH_STONE, Items.SMOOTH_STONE);
 
         addShaped(Blocks.GEM_CASE, 3, 3, Tags.Items.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS, Items.BASALT, Items.GEM_CUTTING_TABLE, Items.BASALT, Items.BASALT, Items.ENDER_CHEST, Items.BASALT);
 
-        addShaped(new ItemStack(Items.SIGIL_OF_ENHANCEMENT, 4), 3, 3, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.MYTHIC_MATERIAL, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
+        addShaped(new ItemStackTemplate(Items.SIGIL_OF_ENHANCEMENT, 4), 3, 3, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.MYTHIC_MATERIAL, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
             Items.GEM_DUST);
-        addShaped(new ItemStack(Items.SIGIL_OF_REBIRTH, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE,
+        addShaped(new ItemStackTemplate(Items.SIGIL_OF_REBIRTH, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE,
             Items.GEM_FUSED_SLATE);
-        addShaped(new ItemStack(Items.SIGIL_OF_SOCKETING, 3), 3, 3, Items.GEM_DUST, Items.GUNPOWDER, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.AMETHYST_SHARD,
+        addShaped(new ItemStackTemplate(Items.SIGIL_OF_SOCKETING, 3), 3, 3, Items.GEM_DUST, Items.GUNPOWDER, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.AMETHYST_SHARD,
             Items.GEM_DUST);
-        addShaped(new ItemStack(Items.SIGIL_OF_UNNAMING, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.FLINT, Items.FLINT, Items.FLINT, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE,
+        addShaped(new ItemStackTemplate(Items.SIGIL_OF_UNNAMING, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.FLINT, Items.FLINT, Items.FLINT, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE,
             Items.GEM_FUSED_SLATE);
-        addShaped(new ItemStack(Items.SIGIL_OF_WITHDRAWAL, 4), 3, 3, Items.GEM_FUSED_SLATE, Items.BLAZE_ROD, Items.GEM_FUSED_SLATE, Tags.Items.ENDER_PEARLS, Items.LAVA_BUCKET, Tags.Items.ENDER_PEARLS, Items.GEM_FUSED_SLATE,
+        addShaped(new ItemStackTemplate(Items.SIGIL_OF_WITHDRAWAL, 4), 3, 3, Items.GEM_FUSED_SLATE, Items.BLAZE_ROD, Items.GEM_FUSED_SLATE, Tags.Items.ENDER_PEARLS, Items.LAVA_BUCKET, Tags.Items.ENDER_PEARLS, Items.GEM_FUSED_SLATE,
             Items.GEM_DUST, Items.GEM_FUSED_SLATE);
 
         List<Holder<Item>> rarityMaterials = List.of(Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL);
@@ -141,16 +164,16 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             addPurityUpgrade(purity, 1 + i * 2, materials, zeroCost);
         }
 
-        out.accept(Apotheosis.loc("potion_charm"), new PotionCharmRecipe("", CraftingBookCategory.MISC, charmPattern()), null);
+        out.accept(key(Apotheosis.loc("potion_charm")), new PotionCharmRecipe(new net.minecraft.world.item.crafting.Recipe.CommonInfo(true), new net.minecraft.world.item.crafting.CraftingRecipe.CraftingBookInfo(CraftingBookCategory.MISC, ""), charmPattern()), null);
 
-        out.accept(Apotheosis.loc("infusion/potion_charm"), new CharmInfusionRecipe(
+        out.accept(key(Apotheosis.loc("infusion/potion_charm")), new CharmInfusionRecipe(
             new Stats(15F, 100F, 8.5F, 32.5F, 0),
             new Stats(15F, 100F, 13.5F, 37.5F, 0)),
             null);
 
-        addShaped(new ItemStack(Items.IRON_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.COMMON_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
-        addShaped(new ItemStack(Items.GOLD_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.UNCOMMON_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
-        addShaped(new ItemStack(Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.RARE_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        addShaped(new ItemStackTemplate(Items.IRON_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.COMMON_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        addShaped(new ItemStackTemplate(Items.GOLD_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.UNCOMMON_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        addShaped(new ItemStackTemplate(Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.RARE_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
 
         addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_SWORD, Tags.Items.INGOTS_IRON, 4, Items.IRON_SWORD);
         addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_PICKAXE, Tags.Items.INGOTS_IRON, 4, Items.IRON_PICKAXE);
@@ -226,24 +249,24 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             matAmount /= 3;
         }
         var recipe = new PurityUpgradeRecipe(purity, List.of(dustIng), materialIngs);
-        this.recipeOutput.accept(Apotheosis.loc("gem_cutting/" + purity.name().toLowerCase(Locale.ROOT)), recipe, null);
+        this.recipeOutput.accept(key(Apotheosis.loc("gem_cutting/" + purity.name().toLowerCase(Locale.ROOT))), recipe, null);
     }
 
     @SafeVarargs
     private void addReforging(String rarity, int mats, int sigils, int levels, Holder<Block>... tables) {
         DynamicHolder<LootRarity> lRarity = RarityRegistry.INSTANCE.holder(Apotheosis.loc(rarity));
-        this.recipeOutput.accept(Apotheosis.loc("reforging/" + rarity), new ReforgingRecipe(lRarity, mats, sigils, levels, HolderSet.direct(tables)), null);
+        this.recipeOutput.accept(key(Apotheosis.loc("reforging/" + rarity)), new ReforgingRecipe(lRarity, mats, sigils, levels, HolderSet.direct(tables)), null);
     }
 
     private void addGemSalvaging(Purity purity, int min, int max) {
         Ingredient input = new Ingredient(new GemIngredient(purity));
-        OutputData output = new OutputData(new ItemStack(Items.GEM_DUST), min, max);
+        OutputData output = new OutputData(Items.GEM_DUST.value(), min, max);
         addSalvaging("gem/" + purity.getSerializedName(), input, output);
     }
 
     private void addAffixSalvaging(String rarity, Holder<Item> material) {
         Ingredient input = new Ingredient(new AffixItemIngredient(RarityRegistry.INSTANCE.holder(Apotheosis.loc(rarity))));
-        OutputData output = new OutputData(new ItemStack(material), 1, 4);
+        OutputData output = new OutputData(material.value(), 1, 4);
         addSalvaging("affix_item/" + rarity, input, output);
     }
 
@@ -256,11 +279,11 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
     }
 
     private void addSalvaging(String path, Ingredient input, List<OutputData> outputs) {
-        this.recipeOutput.accept(Apotheosis.loc(path), new SalvagingRecipe(input, outputs), null);
+        this.recipeOutput.accept(key(Apotheosis.loc(path)), new SalvagingRecipe(input, outputs), null);
     }
 
     private void addSockets(String path, Ingredient input, int maxSockets) {
-        this.recipeOutput.accept(Apotheosis.loc(path), new AddSocketsRecipe(input, maxSockets), null);
+        this.recipeOutput.accept(key(Apotheosis.loc(path)), new AddSocketsRecipe(input, maxSockets), null);
     }
 
     private static <T extends ItemLike> Ingredient ingredient(Holder<T> holder) {
@@ -270,13 +293,18 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
     private void addSizedUpgrade(Holder<Item> template, Item base, TagKey<Item> addition, int size, Item output) {
         String path1 = BuiltInRegistries.ITEM.getKey(base).getPath();
         String path2 = BuiltInRegistries.ITEM.getKey(output).getPath();
-        this.recipeOutput.accept(Apotheosis.loc("smithing/upgrade_%s_to_%s".formatted(path1, path2)),
-            new SizedUpgradeRecipe(Ingredient.of(template.value()), Ingredient.of(base), SizedIngredient.of(addition, size), output.getDefaultInstance()), null);
+        HolderSet<Item> additionTag = this.currentRegistries.lookupOrThrow(net.minecraft.core.registries.Registries.ITEM).getOrThrow(addition);
+        this.recipeOutput.accept(key(Apotheosis.loc("smithing/upgrade_%s_to_%s".formatted(path1, path2))),
+            new SizedUpgradeRecipe(Ingredient.of(template.value()), Ingredient.of(base), new SizedIngredient(Ingredient.of(additionTag), size), new ItemStackTemplate(output)), null);
     }
 
+    @SuppressWarnings("deprecation")
     private void gateRecipe(String gatePath, Object... pattern) {
-        ItemStack output = new ItemStack(GatewayObjects.GATE_PEARL);
-        GatePearlItem.setGate(output, GatewayRegistry.INSTANCE.holder(Apotheosis.loc(gatePath)));
+        Identifier key = Apotheosis.loc(gatePath);
+        DataComponentPatch patch = DataComponentPatch.builder()
+            .set(GatewayObjects.GATEWAY_COMPONENT, GatewayRegistry.INSTANCE.holder(key))
+            .build();
+        ItemStackTemplate output = new ItemStackTemplate(GatewayObjects.GATE_PEARL.value().builtInRegistryHolder(), 1, patch);
         addShaped(Apotheosis.loc("gateways/" + gatePath), output, 3, 3, pattern);
     }
 

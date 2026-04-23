@@ -18,6 +18,7 @@ import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.mobs.types.Augmentation;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import dev.shadowsoffire.placebo.codec.CodecMap;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
@@ -164,6 +165,7 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
                 return;
             }
 
+            NameHelper.setItemName(mob.getRandom(), stack);
             stack.set(Components.FROM_MOB, true);
             LootCategory cat = LootCategory.forItem(stack);
             EquipmentSlot slot = Arrays.stream(EquipmentSlot.values())

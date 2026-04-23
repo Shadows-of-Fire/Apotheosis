@@ -25,14 +25,14 @@ ${mixinConfig}
 [[dependencies.${modid}]]
     modId="minecraft"
     type="required"
-    versionRange="[${mcVersion},)"
+    versionRange="[26.1,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.${modid}]]
     modId="neoforge"
     type="required"
-    versionRange="[${forgeVersion},)"
+    versionRange="[26.1.0.1-beta,)"
     ordering="NONE"
     side="BOTH"
 
@@ -65,15 +65,15 @@ ${mixinConfig}
     side="BOTH"
 
 [[dependencies.${modid}]]
-    modId="curios"
+    modId="gateways"
     type="optional"
-    versionRange="[${curiosVersion},)"
+    versionRange="[${gatewaysVersion},)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${modid}]]
-    modId="gateways"
+    modId="patchouli"
     type="optional"
-    versionRange="[${gatewaysVersion},)"
+    versionRange="[${patchouliVersion},)"
     ordering="AFTER"
     side="BOTH"

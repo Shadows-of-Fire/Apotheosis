@@ -1,28 +1,18 @@
 {
     "type": "apotheosis:salvaging",
     "input": [
-        {
-            "item": "minecraft:iron_sword"
-        },
-        {
-            "item": "minecraft:iron_pickaxe"
-        },
-        {
-            "item": "minecraft:iron_axe"
-        },
-        {
-            "item": "minecraft:iron_shovel"
-        },
-        {
-            "item": "minecraft:iron_hoe"
-        }
+        "minecraft:iron_sword",
+        "minecraft:iron_pickaxe",
+        "minecraft:iron_axe",
+        "minecraft:iron_shovel",
+        "minecraft:iron_hoe",
+        "minecraft:iron_spear"
     ],
     "outputs": [
         {
             "max_count": 1,
             "min_count": 0,
             "stack": {
-                "count": 1,
                 "id": "minecraft:iron_ingot"
             }
         }

@@ -1,12 +1,11 @@
 {
     "type": "apotheosis:affix_loot_entry",
     "stack": {
-        "count": 1,
         "id": "minecraft:netherite_pickaxe"
     },
     "weights": {
         "summit": {
-            "quality": 1.0,
+            "quality": 0.75,
             "weight": 5
         },
         "pinnacle": {

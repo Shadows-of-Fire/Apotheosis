@@ -1,9 +1,5 @@
 {
-  "forge:conditions": [{
-    "type": "apotheosis:module",
-    "module": "adventure"
-  }],
   "type": "apotheosis:blacklist",
-  "blacklisted_biomes": ["minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean",  "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean", "minecraft:deep_dark"],
+  "blacklisted_biomes": ["minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean", "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean", "minecraft:deep_dark"],
   "feature": "apotheosis:boss_dungeon_2_deep"
 }

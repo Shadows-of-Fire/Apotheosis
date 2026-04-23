@@ -21,5 +21,6 @@
                 "path_regex": ".*"
             }
         }
-    ]
+    ],
+    "priority": 1050
 }

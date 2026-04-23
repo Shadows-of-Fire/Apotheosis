@@ -3,18 +3,10 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "A": {
-            "item": "minecraft:amethyst_shard"
-        },
-        "E": {
-            "item": "apotheosis:gem_fused_slate"
-        },
-        "G": {
-            "item": "apotheosis:gem_dust"
-        },
-        "U": {
-            "item": "minecraft:gunpowder"
-        }
+        "A": "minecraft:amethyst_shard",
+        "E": "apotheosis:gem_fused_slate",
+        "G": "apotheosis:gem_dust",
+        "U": "minecraft:gunpowder"
     },
     "pattern": [
         "GUG",

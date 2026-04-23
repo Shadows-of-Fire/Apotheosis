@@ -19,10 +19,11 @@ import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.util.LootPatternMatcher;
+import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.util.random.WeightedEntry.Wrapper;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -37,8 +38,8 @@ public class AffixLootModifier extends ContextualLootModifier {
 
     protected final List<AffixTableEntry> entries;
 
-    public AffixLootModifier(LootItemCondition[] conditions, List<AffixTableEntry> entries) {
-        super(conditions);
+    public AffixLootModifier(LootItemCondition[] conditions, int priority, List<AffixTableEntry> entries) {
+        super(conditions, priority);
         this.entries = entries;
     }
 
@@ -50,8 +51,8 @@ public class AffixLootModifier extends ContextualLootModifier {
 
                     AffixLootEntry lootEntry;
                     if (!entry.entries.isEmpty()) {
-                        List<Wrapper<AffixLootEntry>> resolved = entry.entries.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<AffixLootEntry>wrap(gCtx.tier(), gCtx.luck())).toList();
-                        lootEntry = WeightedRandom.getRandomItem(ctx.getRandom(), resolved).get().data();
+                        List<Weighted<AffixLootEntry>> resolved = entry.entries.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<AffixLootEntry>wrap(gCtx.tier(), gCtx.luck())).toList();
+                        lootEntry = WeightedRandom.getRandomItem(ctx.getRandom(), resolved, Weighted::weight).get().value();
                     }
                     else {
                         lootEntry = AffixLootRegistry.INSTANCE.getRandomItem(gCtx);
@@ -68,6 +69,7 @@ public class AffixLootModifier extends ContextualLootModifier {
 
                     ItemStack affixItem = LootController.createLootItem(lootEntry.stack(), rarity, gCtx);
                     if (!affixItem.isEmpty()) {
+                        NameHelper.setItemName(ctx.getRandom(), affixItem);
                         affixItem.set(Components.FROM_CHEST, true);
                         generatedLoot.add(affixItem);
                     }

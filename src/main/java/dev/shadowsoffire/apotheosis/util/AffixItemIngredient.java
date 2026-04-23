@@ -1,24 +1,21 @@
 package dev.shadowsoffire.apotheosis.util;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 import com.mojang.serialization.MapCodec;
 
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
-import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
-import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
 
@@ -41,9 +38,13 @@ public class AffixItemIngredient implements ICustomIngredient {
         return affixes.size() > 0 && rarity.isBound() && rarity == this.rarity;
     }
 
+    /**
+     * Affixes could be on anything, so we have to return the universe here.
+     */
     @Override
-    public Stream<ItemStack> getItems() {
-        return createFakeDisplayItems(this.getRarity());
+    @SuppressWarnings("unchecked")
+    public Stream<Holder<Item>> items() {
+        return (Stream<Holder<Item>>) (Object) BuiltInRegistries.ITEM.listElements().filter(i -> i.value() != Items.AIR);
     }
 
     @Override
@@ -60,15 +61,9 @@ public class AffixItemIngredient implements ICustomIngredient {
         return TYPE;
     }
 
-    private static Stream<ItemStack> createFakeDisplayItems(LootRarity rarity) {
-        RandomSource src = new LegacyRandomSource(0);
-        return Arrays.asList(Items.DIAMOND_SWORD, Items.DIAMOND_PICKAXE, Items.DIAMOND_HELMET, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_LEGGINGS, Items.DIAMOND_BOOTS).stream()
-            .map(ItemStack::new)
-            .map(stack -> {
-                LootController.createLootItem(stack, rarity, GenContext.dummy(src));
-                AffixHelper.setName(stack, Component.translatable("text.apotheosis.any_x_item", rarity.toComponent(), "").withStyle(Style.EMPTY.withColor(rarity.color()).withItalic(false)));
-                return stack;
-            });
+    @Override
+    public SlotDisplay display() {
+        return new AffixItemSlotDisplay(this.rarity);
     }
 
 }

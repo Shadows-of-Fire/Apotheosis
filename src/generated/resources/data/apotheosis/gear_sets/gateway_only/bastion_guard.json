@@ -32,8 +32,15 @@
                             "pattern": "minecraft:curly_border"
                         }
                     ],
-                    "minecraft:hide_additional_tooltip": {},
-                    "minecraft:item_name": "{\"color\":\"red\",\"translate\":\"banner.apotheosis.bastion_guard\"}"
+                    "minecraft:item_name": {
+                        "color": "red",
+                        "translate": "banner.apotheosis.bastion_guard"
+                    },
+                    "minecraft:tooltip_display": {
+                        "hidden_components": [
+                            "minecraft:banner_patterns"
+                        ]
+                    }
                 },
                 "count": 1,
                 "id": "minecraft:brown_banner"
@@ -56,9 +63,7 @@
                 "components": {
                     "apotheosis:durability_bonus": 0.175,
                     "minecraft:enchantments": {
-                        "levels": {
-                            "minecraft:sharpness": 3
-                        }
+                        "minecraft:sharpness": 3
                     }
                 },
                 "count": 1,

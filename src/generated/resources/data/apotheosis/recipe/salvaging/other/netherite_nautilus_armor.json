@@ -1,0 +1,13 @@
+{
+    "type": "apotheosis:salvaging",
+    "input": "minecraft:netherite_nautilus_armor",
+    "outputs": [
+        {
+            "max_count": 2,
+            "min_count": 0,
+            "stack": {
+                "id": "minecraft:netherite_scrap"
+            }
+        }
+    ]
+}

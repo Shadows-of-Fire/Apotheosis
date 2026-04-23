@@ -23,7 +23,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -55,14 +55,14 @@ public class AllStatsBonus extends GemBonus {
     public void addModifiers(GemInstance inst, StackAttributeModifiersEvent event) {
         int idx = 0;
         for (Holder<Attribute> attr : this.attributes) {
-            ResourceLocation id = makeUniqueId(inst, "" + idx++);
+            Identifier id = makeUniqueId(inst, "" + idx++);
             var modif = new AttributeModifier(id, this.values.get(inst.purity()), this.operation);
             event.addModifier(attr, modif, inst.category().getSlots());
         }
     }
 
     @Override
-    public void skipModifierIds(GemInstance inst, Consumer<ResourceLocation> skip) {
+    public void skipModifierIds(GemInstance inst, Consumer<Identifier> skip) {
         for (int i = 0; i < this.attributes.size(); i++) {
             skip.accept(makeUniqueId(inst, "" + i));
         }

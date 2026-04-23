@@ -13,9 +13,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RangedBowAttackGoal;
 import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.CrossbowAttackMob;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
@@ -63,7 +63,7 @@ public abstract class AbstractSkeletonMixin extends Monster implements CrossbowA
 
     @Inject(method = "reassessWeaponGoal()V", at = @At("HEAD"), cancellable = true)
     public void apoth_pickCrossbowIfAvailable(CallbackInfo ci) {
-        if (this.level() != null && !this.level().isClientSide) {
+        if (this.level() != null && !this.level().isClientSide()) {
             // Always remove the crossbow goal in case we pass to vanilla logic.
             this.goalSelector.removeGoal(this.apoth_crossbowGoal);
 

@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.oxygen_bonus",
+    "attribute": "minecraft:oxygen_bonus",
     "categories": [
         "apotheosis:helmet"
     ],

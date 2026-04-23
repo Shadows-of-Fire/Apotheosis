@@ -1,0 +1,28 @@
+{
+	"replace": false,
+	"values": [
+		"apotheosis:blaze_powder",
+		"apotheosis:diamond",
+		"apotheosis:eye_of_ender",
+		"apotheosis:gold_ingot",
+		"apotheosis:iron_ingot",
+		"apotheosis:prismarine_shard",
+		"apotheosis:saddle",
+		"apotheosis:iron_horse_armor",
+		"apotheosis:golden_horse_armor",
+		"apotheosis:diamond_horse_armor",
+		"apotheosis:skeleton_skull",
+		"apotheosis:wither_skeleton_skull",
+		"apotheosis:zombie_head",
+		"apotheosis:affix/automatic_1",
+		"apotheosis:affix/automatic_2",
+		"apotheosis:affix/automatic_3",
+		"apotheosis:affix/automatic_4",
+		"apotheosis:affix/automatic_5",
+		"apotheosis:affix/automatic_6",
+		"apotheosis:affix/automatic_7",
+		"apotheosis:affix/automatic_8",
+		"apotheosis:affix/automatic_9",
+		"apotheosis:affix/automatic_10"
+	]
+}

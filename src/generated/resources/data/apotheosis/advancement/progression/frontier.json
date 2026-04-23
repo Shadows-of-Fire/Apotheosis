@@ -103,7 +103,6 @@
             "translate": "advancements.apotheosis.progression.frontier.desc"
         },
         "icon": {
-            "count": 1,
             "id": "minecraft:iron_sword"
         },
         "title": {

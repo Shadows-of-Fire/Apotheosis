@@ -16,9 +16,10 @@ import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.criterion.ContextAwarePredicate;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -30,8 +31,8 @@ public class DropTransformBonus extends GemBonus {
         .group(
             gemClass(),
             ContextAwarePredicate.CODEC.fieldOf("conditions").forGetter(a -> a.conditions),
-            Ingredient.CODEC_NONEMPTY.fieldOf("inputs").forGetter(a -> a.inputs),
-            ItemStack.CODEC.fieldOf("output").forGetter(a -> a.output),
+            Ingredient.CODEC.fieldOf("inputs").forGetter(a -> a.inputs),
+            ItemStackTemplate.CODEC.fieldOf("output").forGetter(a -> a.output),
             Purity.mapCodec(Codec.floatRange(0, 1)).fieldOf("values").forGetter(a -> a.values),
             Codec.STRING.fieldOf("desc").forGetter(a -> a.descKey))
         .apply(inst, DropTransformBonus::new));
@@ -44,9 +45,9 @@ public class DropTransformBonus extends GemBonus {
     protected final Ingredient inputs;
 
     /**
-     * Output item. Each replaced stack will be cloned with this stack, with the same size as the original.
+     * Output item. Each replaced stack will be cloned with this template, with the same size as the original.
      */
-    protected final ItemStack output;
+    protected final ItemStackTemplate output;
 
     /**
      * Rarity -> Chance map.
@@ -54,7 +55,7 @@ public class DropTransformBonus extends GemBonus {
     protected final Map<Purity, Float> values;
     protected final String descKey;
 
-    public DropTransformBonus(GemClass gemClass, ContextAwarePredicate conditions, Ingredient inputs, ItemStack output, Map<Purity, Float> values, String descKey) {
+    public DropTransformBonus(GemClass gemClass, ContextAwarePredicate conditions, Ingredient inputs, ItemStackTemplate output, Map<Purity, Float> values, String descKey) {
         super(gemClass);
         this.conditions = conditions;
         this.inputs = inputs;
@@ -81,7 +82,7 @@ public class DropTransformBonus extends GemBonus {
                 for (int i = 0; i < loot.size(); i++) {
                     ItemStack stack = loot.get(i);
                     if (this.inputs.test(stack)) {
-                        ItemStack outCopy = this.output.copy();
+                        ItemStack outCopy = this.output.create();
                         outCopy.setCount(stack.getCount());
                         loot.set(i, outCopy);
                     }
@@ -103,7 +104,7 @@ public class DropTransformBonus extends GemBonus {
         private final List<LootItemCondition> conditions = new ArrayList<>();
         private final Map<Purity, Float> values = new HashMap<>();
         private Ingredient inputs;
-        private ItemStack output;
+        private ItemStackTemplate output;
         private String descKey;
 
         public Builder condition(LootItemCondition condition) {
@@ -116,8 +117,13 @@ public class DropTransformBonus extends GemBonus {
             return this;
         }
 
-        public Builder output(ItemStack output) {
-            this.output = output.copy();
+        public Builder output(ItemStackTemplate output) {
+            this.output = output;
+            return this;
+        }
+
+        public Builder output(net.minecraft.world.level.ItemLike item) {
+            this.output = new ItemStackTemplate(item.asItem());
             return this;
         }
 

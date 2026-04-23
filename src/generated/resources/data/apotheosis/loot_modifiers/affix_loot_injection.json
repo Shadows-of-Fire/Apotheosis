@@ -22,5 +22,6 @@
                 "path_regex": "structures.*"
             }
         }
-    ]
+    ],
+    "priority": 1050
 }

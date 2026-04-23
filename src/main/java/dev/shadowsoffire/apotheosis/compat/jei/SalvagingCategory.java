@@ -1,9 +1,8 @@
 package dev.shadowsoffire.apotheosis.compat.jei;
 
-import java.util.Arrays;
 import java.util.List;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import org.joml.Matrix3x2fStack;
 
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -13,22 +12,30 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
+import mezz.jei.api.gui.widgets.IRecipeWidget;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.ingredients.ITypedIngredient;
+import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
+import net.minecraft.world.level.Level;
 
 @SuppressWarnings("removal")
 public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
 
-    public static final ResourceLocation TEXTURES = Apotheosis.loc("textures/gui/salvage_jei.png");
+    public static final Identifier TEXTURES = Apotheosis.loc("textures/gui/salvage_jei.png");
 
     private final Component title = Component.translatable("title.apotheosis.salvaging");
     private final IDrawable background;
@@ -40,7 +47,7 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
     }
 
     @Override
-    public RecipeType<SalvagingRecipe> getRecipeType() {
+    public IRecipeType<SalvagingRecipe> getRecipeType() {
         return AdventureJEIPlugin.SALVAGING;
     }
 
@@ -50,8 +57,13 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return 98;
+    }
+
+    @Override
+    public int getHeight() {
+        return 74;
     }
 
     @Override
@@ -60,38 +72,71 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
     }
 
     @Override
-    public void draw(SalvagingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gfx, double mouseX, double mouseY) {
-        List<OutputData> outputs = recipe.getOutputs();
-        Font font = Minecraft.getInstance().font;
-        PoseStack pose = gfx.pose();
+    public void draw(SalvagingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
+        this.background.draw(gfx);
+    }
 
-        int idx = 0;
-        for (var d : outputs) {
-            pose.pushPose();
-            pose.translate(0, 0, 200);
-            String text = String.format("%d-%d", d.min(), d.max());
+    @Override
+    public void createRecipeExtras(IRecipeExtrasBuilder builder, SalvagingRecipe recipe, IFocusGroup focuses) {
+        builder.addWidget(new OutputCountWidget(recipe.getOutputs()));
+    }
 
-            float x = 59 + 18 * (idx % 2) + (16 - font.width(text) * 0.5F);
-            float y = 23F + 18 * (idx / 2);
+    private static class OutputCountWidget implements IRecipeWidget {
 
-            float scale = 0.5F;
+        private final List<OutputData> outputs;
 
-            pose.scale(scale, scale, 1);
-            gfx.drawString(font, text, (int) (x / scale), (int) (y / scale), 0xFFFFFF);
+        OutputCountWidget(List<OutputData> outputs) {
+            this.outputs = outputs;
+        }
 
-            idx++;
-            pose.popPose();
+        @Override
+        public ScreenPosition getPosition() {
+            return new ScreenPosition(0, 0);
+        }
+
+        @Override
+        public void drawWidget(GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
+            Font font = Minecraft.getInstance().font;
+            Matrix3x2fStack pose = gfx.pose();
+            int idx = 0;
+            for (var d : this.outputs) {
+                pose.pushMatrix();
+                String text = String.format("%d-%d", d.min(), d.max());
+
+                float x = 59 + 18 * (idx % 2) + (16 - font.width(text) * 0.5F);
+                float y = 23F + 18 * (idx / 2);
+
+                float scale = 0.5F;
+
+                pose.scale(scale, scale);
+                gfx.text(font, text, (int) (x / scale), (int) (y / scale), 0xFFFFFFFF);
+
+                idx++;
+                pose.popMatrix();
+            }
         }
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, SalvagingRecipe recipe, IFocusGroup focuses) {
-        List<ItemStack> input = Arrays.asList(recipe.getInput().getItems());
+        ItemStack focusStack = focuses.getFocuses(VanillaTypes.ITEM_STACK).findFirst()
+            .map(IFocus::getTypedValue).map(ITypedIngredient::getIngredient).orElse(ItemStack.EMPTY);
+
+        List<ItemStack> input;
+        if (!focusStack.isEmpty() && recipe.getInput().test(focusStack)) {
+            input = List.of(focusStack);
+        }
+        else {
+            Level level = Minecraft.getInstance().level;
+            ContextMap ctx = level != null ? SlotDisplayContext.fromLevel(level) : ContextMap.EMPTY;
+            input = recipe.getInput().display().resolveForStacks(ctx);
+        }
+
         builder.addSlot(RecipeIngredientRole.INPUT, 5, 29).addIngredients(VanillaTypes.ITEM_STACK, input);
         List<OutputData> outputs = recipe.getOutputs();
         int idx = 0;
         for (var d : outputs) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 59 + 18 * (idx % 2), 11 + 18 * (idx / 2)).addIngredient(VanillaTypes.ITEM_STACK, d.stack());
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 59 + 18 * (idx % 2), 11 + 18 * (idx / 2)).addIngredient(VanillaTypes.ITEM_STACK, d.stack().create());
             idx++;
         }
     }

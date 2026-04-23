@@ -27,7 +27,7 @@ import dev.shadowsoffire.placebo.codec.CodecProvider;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -42,9 +42,9 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.neoforge.client.event.GatherSkippedAttributeTooltipsEvent;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
+import net.neoforged.neoforge.event.GatherSkippedAttributeTooltipsEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent;
 
@@ -222,14 +222,14 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
      * @param inst The current gem instance.
      * @param skip A consumer that accepts resource locations to skip.
      */
-    public void skipModifierIds(GemInstance inst, Consumer<ResourceLocation> skip) {}
+    public void skipModifierIds(GemInstance inst, Consumer<Identifier> skip) {}
 
     /**
      * Returns the serialization key for this GemBonus.
      * <p>
      * This is unique on a per-type basis, rather than per-instance basis.
      */
-    public final ResourceLocation getTypeKey() {
+    public final Identifier getTypeKey() {
         return GemBonus.CODEC.getKey(this.getCodec());
     }
 
@@ -238,25 +238,25 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     }
 
     /**
-     * Generates a deterministic {@link ResourceLocation} that is unique for a given socketed gem instance.
+     * Generates a deterministic {@link Identifier} that is unique for a given socketed gem instance.
      * <p>
      * Can be used to generate attribute modifiers, track cooldowns, and other things that need to be unique per-gem-in-slot.
      *
      * @param view The owning gem instance for the bonus
      * @param salt A salt value, which can be used if the bonus needs multiple modifiers.
      */
-    protected static ResourceLocation makeUniqueId(GemView view, String salt) {
+    protected static Identifier makeUniqueId(GemView view, String salt) {
         String path = view.gem().getId().getPath() + "_modifier_";
         if (view instanceof GemInstance inst) {
             path += inst.category().getSlots().id().toShortLanguageKey() + "_" + inst.slot();
         }
-        return ResourceLocation.fromNamespaceAndPath(view.gem().getId().getNamespace(), path + salt);
+        return Identifier.fromNamespaceAndPath(view.gem().getId().getNamespace(), path + salt);
     }
 
     /**
      * Calls {@link #makeUniqueId(GemInstance, String)} with an empty salt value.
      */
-    protected static ResourceLocation makeUniqueId(GemView inst) {
+    protected static Identifier makeUniqueId(GemView inst) {
         return makeUniqueId(inst, "");
     }
 

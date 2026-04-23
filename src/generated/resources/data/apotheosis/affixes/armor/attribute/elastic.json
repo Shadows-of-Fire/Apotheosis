@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.step_height",
+    "attribute": "minecraft:step_height",
     "categories": [
         "apotheosis:boots"
     ],

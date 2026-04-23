@@ -1,0 +1,30 @@
+{
+    "additional_wants": {
+        "count": 64.0,
+        "id": "minecraft:emerald"
+    },
+    "gives": {
+        "components": {
+            "minecraft:custom_name": {
+                "color": "#9AB091",
+                "italic": false,
+                "translate": "name.apotheosis.bonesplitter"
+            },
+            "minecraft:enchantments": {
+                "apothic_enchanting:scavenger": 2,
+                "apothic_spawners:capturing": 2,
+                "minecraft:looting": 5,
+                "minecraft:mending": 1,
+                "minecraft:sharpness": 10,
+                "minecraft:unbreaking": 3
+            }
+        },
+        "id": "minecraft:diamond_axe"
+    },
+    "max_uses": 1.0,
+    "reputation_discount": 0.05,
+    "wants": {
+        "id": "minecraft:diamond_axe"
+    },
+    "xp": 500.0
+}

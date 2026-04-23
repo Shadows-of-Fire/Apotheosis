@@ -17,7 +17,7 @@ import dev.shadowsoffire.apotheosis.advancements.EquippedItemTrigger;
 import dev.shadowsoffire.apotheosis.advancements.predicates.AffixItemPredicate;
 import dev.shadowsoffire.apotheosis.advancements.predicates.InvaderPredicate;
 import dev.shadowsoffire.apotheosis.advancements.predicates.RarityItemPredicate;
-import dev.shadowsoffire.apotheosis.advancements.predicates.TypeAwareISP;
+import dev.shadowsoffire.apotheosis.advancements.predicates.TypeAwareDCP;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
@@ -26,54 +26,57 @@ import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.gateways.advancements.FinishGatewayTrigger;
 import dev.shadowsoffire.gateways.gate.Gateway;
 import dev.shadowsoffire.gateways.gate.GatewayRegistry;
-import dev.shadowsoffire.gateways.item.GatePearlItem;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.KilledTrigger;
-import net.minecraft.advancements.critereon.MinMaxBounds;
-import net.minecraft.advancements.critereon.PlayerTrigger;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.KilledTrigger;
+import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.criterion.PlayerTrigger;
 import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.component.DataComponentPredicate;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.conditions.ConditionalOps;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.conditions.WithConditions;
-import net.neoforged.neoforge.common.data.AdvancementProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class ApothAdvancementProvider extends AdvancementProvider {
 
-    private final Map<ResourceLocation, List<ICondition>> conditions = new HashMap<>();
+    private final Map<Identifier, List<ICondition>> conditions = new HashMap<>();
+    private final PackOutput.PathProvider pathProvider;
+    private final List<AdvancementSubProvider> apoth_subProviders;
+    private final CompletableFuture<Provider> apoth_registries;
 
-    private ApothAdvancementProvider(PackOutput output, CompletableFuture<Provider> registries, ExistingFileHelper existingFileHelper, List<AdvancementGenerator> subProviders) {
-        super(output, registries, existingFileHelper, subProviders);
-
+    private ApothAdvancementProvider(PackOutput output, CompletableFuture<Provider> registries, List<AdvancementSubProvider> subProviders) {
+        super(output, registries, subProviders);
+        this.pathProvider = output.createRegistryElementsPathProvider(Registries.ADVANCEMENT);
+        this.apoth_subProviders = subProviders;
+        this.apoth_registries = registries;
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public final CompletableFuture<?> run(CachedOutput output) {
-        return this.registries.thenCompose(regs -> {
+        return this.apoth_registries.thenCompose(regs -> {
             var conditionalCodec = ConditionalOps.createConditionalCodecWithConditions(Advancement.CODEC);
 
-            Set<ResourceLocation> set = new HashSet<>();
+            Set<Identifier> set = new HashSet<>();
             List<CompletableFuture<?>> list = new ArrayList<>();
             ConditionalConsumer<AdvancementHolder> consumer = wrap(holder -> {
                 if (!set.add(holder.id())) {
@@ -92,7 +95,7 @@ public class ApothAdvancementProvider extends AdvancementProvider {
                 }
             });
 
-            for (AdvancementSubProvider advancementsubprovider : this.subProviders) {
+            for (AdvancementSubProvider advancementsubprovider : this.apoth_subProviders) {
                 advancementsubprovider.generate(regs, consumer);
             }
 
@@ -100,22 +103,21 @@ public class ApothAdvancementProvider extends AdvancementProvider {
         });
     }
 
-    public static ApothAdvancementProvider create(PackOutput output, CompletableFuture<Provider> registries, ExistingFileHelper existingFileHelper) {
+    public static ApothAdvancementProvider create(PackOutput output, CompletableFuture<Provider> registries) {
         return new ApothAdvancementProvider(
             output,
             registries,
-            existingFileHelper,
             List.of(
                 new ProgressionGenerator()
 
             ));
     }
 
-    private static class ProgressionGenerator implements AdvancementGenerator {
+    private static class ProgressionGenerator implements AdvancementSubProvider {
 
         @Override
         @SuppressWarnings("unused")
-        public void generate(Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
+        public void generate(Provider registries, Consumer<AdvancementHolder> saver) {
 
             ConditionalConsumer<AdvancementHolder> consumer = (ConditionalConsumer<AdvancementHolder>) saver;
 
@@ -209,7 +211,7 @@ public class ApothAdvancementProvider extends AdvancementProvider {
                 .addCriterion("rare_legs", rarityInSlot(EquipmentSlotGroup.LEGS, rare, epic, mythic))
                 .addCriterion("rare_feet", rarityInSlot(EquipmentSlotGroup.FEET, rare, epic, mythic))
                 .addCriterion("rare_hand", rarityInSlot(EquipmentSlotGroup.HAND, rare, epic, mythic))
-                .addCriterion("kill_wither", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(EntityType.WITHER)))
+                .addCriterion("kill_wither", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(registries.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WITHER)))
                 .parent(ascent)
                 .save(saver, loc("progression/summit"));
 
@@ -229,7 +231,7 @@ public class ApothAdvancementProvider extends AdvancementProvider {
                 .addCriterion("epic_legs", rarityInSlot(EquipmentSlotGroup.LEGS, epic, mythic))
                 .addCriterion("epic_feet", rarityInSlot(EquipmentSlotGroup.FEET, epic, mythic))
                 .addCriterion("epic_hand", rarityInSlot(EquipmentSlotGroup.HAND, epic, mythic))
-                .addCriterion("kill_ender_dragon", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(EntityType.ENDER_DRAGON)))
+                .addCriterion("kill_ender_dragon", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(registries.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.ENDER_DRAGON)))
                 .parent(summit)
                 .save(saver, loc("progression/pinnacle"));
 
@@ -346,8 +348,8 @@ public class ApothAdvancementProvider extends AdvancementProvider {
         return Apotheosis.loc(path).toString();
     }
 
-    private static ItemPredicate ip(TypeAwareISP<?> sub) {
-        return new ItemPredicate(Optional.empty(), MinMaxBounds.Ints.ANY, DataComponentPredicate.EMPTY, Map.of(sub.type(), sub));
+    private static ItemPredicate ip(TypeAwareDCP<?> sub) {
+        return new ItemPredicate(Optional.empty(), MinMaxBounds.Ints.ANY, new net.minecraft.advancements.criterion.DataComponentMatchers(net.minecraft.core.component.DataComponentExactPredicate.EMPTY, Map.of(sub.type(), sub)));
     }
 
     private static DynamicHolder<LootRarity> rarity(String path) {
@@ -358,10 +360,12 @@ public class ApothAdvancementProvider extends AdvancementProvider {
         return GatewayRegistry.INSTANCE.holder(Apotheosis.loc(path));
     }
 
-    private static ItemStack gatePearl(DynamicHolder<Gateway> gate) {
-        ItemStack stack = new ItemStack(GatewayObjects.GATE_PEARL);
-        GatePearlItem.setGate(stack, gate);
-        return stack;
+    @SuppressWarnings("deprecation")
+    private static net.minecraft.world.item.ItemStackTemplate gatePearl(DynamicHolder<Gateway> gate) {
+        DataComponentPatch patch = DataComponentPatch.builder()
+            .set(GatewayObjects.GATEWAY_COMPONENT, gate)
+            .build();
+        return new net.minecraft.world.item.ItemStackTemplate(GatewayObjects.GATE_PEARL.value().builtInRegistryHolder(), 1, patch);
     }
 
     private static interface ConditionalConsumer<T> extends Consumer<T> {

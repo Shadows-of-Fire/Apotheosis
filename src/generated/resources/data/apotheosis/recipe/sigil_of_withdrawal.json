@@ -3,21 +3,11 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "B": {
-            "item": "minecraft:blaze_rod"
-        },
-        "E": {
-            "tag": "c:ender_pearls"
-        },
-        "G": {
-            "item": "apotheosis:gem_fused_slate"
-        },
-        "L": {
-            "item": "minecraft:lava_bucket"
-        },
-        "M": {
-            "item": "apotheosis:gem_dust"
-        }
+        "B": "minecraft:blaze_rod",
+        "E": "#c:ender_pearls",
+        "G": "apotheosis:gem_fused_slate",
+        "L": "minecraft:lava_bucket",
+        "M": "apotheosis:gem_dust"
     },
     "pattern": [
         "GBG",

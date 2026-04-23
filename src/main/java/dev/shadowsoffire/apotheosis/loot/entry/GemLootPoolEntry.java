@@ -16,7 +16,6 @@ import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -35,8 +34,6 @@ public class GemLootPoolEntry extends ContextualLootPoolEntry {
         PlaceboCodecs.setOf(GemRegistry.INSTANCE.holderCodec()).optionalFieldOf("gems", Set.of()).forGetter(a -> a.gems))
         .and(LootPoolSingletonContainer.singletonFields(inst))
         .apply(inst, GemLootPoolEntry::new));
-
-    public static final LootPoolEntryType TYPE = new LootPoolEntryType(CODEC);
 
     private final Set<Purity> purities;
     private final Set<DynamicHolder<Gem>> gems;
@@ -71,8 +68,8 @@ public class GemLootPoolEntry extends ContextualLootPoolEntry {
     }
 
     @Override
-    public LootPoolEntryType getType() {
-        return TYPE;
+    public MapCodec<GemLootPoolEntry> codec() {
+        return CODEC;
     }
 
     public static LootPoolSingletonContainer.Builder<?> builder(Set<Purity> purities, Set<DynamicHolder<Gem>> gems) {

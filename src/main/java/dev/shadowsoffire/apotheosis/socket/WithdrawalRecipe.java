@@ -4,13 +4,11 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.util.ApothSmithingRecipe;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmithingRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -18,7 +16,7 @@ import net.minecraft.world.level.block.Block;
 public class WithdrawalRecipe extends ApothSmithingRecipe implements ReactiveSmithingRecipe {
 
     public WithdrawalRecipe() {
-        super(Ingredient.EMPTY, Ingredient.of(Items.SIGIL_OF_WITHDRAWAL.value()), ItemStack.EMPTY);
+        super(BASE_PLACEHOLDER, Ingredient.of(Items.SIGIL_OF_WITHDRAWAL.value()), ItemStack.EMPTY);
     }
 
     /**
@@ -35,7 +33,7 @@ public class WithdrawalRecipe extends ApothSmithingRecipe implements ReactiveSmi
      * Returns an Item that is the result of this recipe
      */
     @Override
-    public ItemStack assemble(SmithingRecipeInput inv, HolderLookup.Provider regs) {
+    public ItemStack assemble(SmithingRecipeInput inv) {
         ItemStack out = inv.getItem(BASE).copy();
         if (out.isEmpty()) {
             return ItemStack.EMPTY;
@@ -45,7 +43,7 @@ public class WithdrawalRecipe extends ApothSmithingRecipe implements ReactiveSmi
     }
 
     @Override
-    public void onCraft(Container inv, Player player, ItemStack output) {
+    public void onCraft(Container inv, ServerPlayer player, ItemStack output) {
         ItemStack base = inv.getItem(BASE);
         SocketedGems gems = SocketHelper.getGems(base);
         for (GemInstance gem : gems) {
@@ -60,13 +58,9 @@ public class WithdrawalRecipe extends ApothSmithingRecipe implements ReactiveSmi
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return Apoth.RecipeSerializers.WITHDRAWAL.value();
-    }
-
-    @Override
-    public RecipeType<?> getType() {
-        return RecipeType.SMITHING;
+    @SuppressWarnings("unchecked")
+    public RecipeSerializer<? extends net.minecraft.world.item.crafting.SmithingRecipe> getSerializer() {
+        return (RecipeSerializer<? extends net.minecraft.world.item.crafting.SmithingRecipe>) Apoth.RecipeSerializers.WITHDRAWAL.value();
     }
 
     @Override

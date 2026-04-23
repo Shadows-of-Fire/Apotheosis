@@ -1,17 +1,19 @@
 {
     "type": "apotheosis:affix_loot_entry",
     "stack": {
-        "count": 1,
         "id": "minecraft:diamond_chestplate"
     },
     "weights": {
         "ascent": {
+            "quality": 1.25,
             "weight": 25
         },
         "summit": {
+            "quality": 0.25,
             "weight": 25
         },
         "pinnacle": {
+            "quality": 1.0,
             "weight": 5
         }
     }

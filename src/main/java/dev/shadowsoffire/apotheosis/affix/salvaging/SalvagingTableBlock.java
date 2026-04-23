@@ -1,18 +1,11 @@
 package dev.shadowsoffire.apotheosis.affix.salvaging;
 
-import java.util.List;
-
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item.TooltipContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -38,27 +31,7 @@ public class SalvagingTableBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag tooltipFlag) {
-        list.add(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
-    }
-
-    @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new SalvagingTableTile(pPos, pState);
-    }
-
-    @Override
-    @Deprecated
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() == this && newState.getBlock() == this) {
-            return;
-        }
-        BlockEntity te = world.getBlockEntity(pos);
-        if (te instanceof SalvagingTableTile salvTile) {
-            for (int i = 0; i < salvTile.output.getSlots(); i++) {
-                popResource(world, pos, salvTile.output.getStackInSlot(i));
-            }
-        }
-        super.onRemove(state, world, pos, newState, isMoving);
     }
 }

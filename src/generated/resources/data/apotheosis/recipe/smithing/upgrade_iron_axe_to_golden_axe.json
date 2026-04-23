@@ -2,16 +2,11 @@
     "type": "apotheosis:sized_upgrade_recipe",
     "addition": {
         "count": 4,
-        "tag": "c:ingots/gold"
+        "ingredient": "#c:ingots/gold"
     },
-    "base": {
-        "item": "minecraft:iron_axe"
-    },
+    "base": "minecraft:iron_axe",
     "result": {
-        "count": 1,
         "id": "minecraft:golden_axe"
     },
-    "template": {
-        "item": "apotheosis:gold_upgrade_smithing_template"
-    }
+    "template": "apotheosis:gold_upgrade_smithing_template"
 }

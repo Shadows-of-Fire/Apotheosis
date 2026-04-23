@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.gravity",
+    "attribute": "minecraft:gravity",
     "categories": [
         "apotheosis:chestplate"
     ],

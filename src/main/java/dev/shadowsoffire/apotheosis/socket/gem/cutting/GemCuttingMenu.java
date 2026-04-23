@@ -22,6 +22,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class GemCuttingMenu extends PlaceboContainerMenu {
 
@@ -34,9 +35,9 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
     protected final ContainerLevelAccess access;
     protected final InternalItemHandler inv = new InternalItemHandler(4){
         @Override
-        public int getSlotLimit(int slot) {
-            return slot == BASE_SLOT ? 1 : super.getSlotLimit(slot);
-        };
+        protected int getCapacity(int index, ItemResource resource) {
+            return index == BASE_SLOT ? 1 : super.getCapacity(index, resource);
+        }
     };
     protected final CuttingRecipeInput rInput = new CuttingRecipeInput(this.inv);
     @Nullable
@@ -70,10 +71,10 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
             for (RecipeHolder<GemCuttingRecipe> holder : getRecipes(this.level)) {
                 GemCuttingRecipe r = holder.value();
                 if (r.matches(this.rInput, player.level())) {
-                    ItemStack out = r.assemble(this.rInput, player.level().registryAccess());
+                    ItemStack out = r.assemble(this.rInput);
                     r.decrementInputs(this.rInput, player.level());
-                    this.inv.setStackInSlot(0, out);
-                    this.level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.random.nextFloat()));
+                    this.inv.set(0, ItemResource.of(out), out.getCount());
+                    this.level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.getRandom().nextFloat()));
                     Apoth.Triggers.GEM_CUTTING.trigger((ServerPlayer) player, out);
                     return true;
                 }
@@ -148,6 +149,9 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
     }
 
     public static List<RecipeHolder<GemCuttingRecipe>> getRecipes(Level level) {
-        return level.getRecipeManager().getAllRecipesFor(RecipeTypes.GEM_CUTTING);
+        if (level.isClientSide()) {
+            return GemCuttingRecipeCache.all();
+        }
+        return List.copyOf(level.getServer().getRecipeManager().recipeMap().byType(RecipeTypes.GEM_CUTTING));
     }
 }

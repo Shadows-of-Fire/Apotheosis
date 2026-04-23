@@ -1,0 +1,29 @@
+{
+    "additional_wants": {
+        "count": 45.0,
+        "id": "minecraft:emerald"
+    },
+    "gives": {
+        "components": {
+            "minecraft:custom_name": {
+                "color": "#608F07",
+                "italic": false,
+                "translate": "name.apotheosis.treecapitator"
+            },
+            "minecraft:enchantments": {
+                "apothic_enchanting:chainsaw": 1,
+                "minecraft:efficiency": 10,
+                "minecraft:mending": 1,
+                "minecraft:silk_touch": 1,
+                "minecraft:unbreaking": 5
+            }
+        },
+        "id": "minecraft:diamond_axe"
+    },
+    "max_uses": 1.0,
+    "reputation_discount": 0.05,
+    "wants": {
+        "id": "minecraft:diamond_axe"
+    },
+    "xp": 500.0
+}

@@ -1,28 +1,18 @@
 {
     "type": "apotheosis:salvaging",
     "input": [
-        {
-            "item": "minecraft:golden_sword"
-        },
-        {
-            "item": "minecraft:golden_pickaxe"
-        },
-        {
-            "item": "minecraft:golden_axe"
-        },
-        {
-            "item": "minecraft:golden_shovel"
-        },
-        {
-            "item": "minecraft:golden_hoe"
-        }
+        "minecraft:golden_sword",
+        "minecraft:golden_pickaxe",
+        "minecraft:golden_axe",
+        "minecraft:golden_shovel",
+        "minecraft:golden_hoe",
+        "minecraft:golden_spear"
     ],
     "outputs": [
         {
             "max_count": 1,
             "min_count": 0,
             "stack": {
-                "count": 1,
                 "id": "minecraft:gold_ingot"
             }
         }

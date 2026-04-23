@@ -1,0 +1,12 @@
+{
+    "gives": {
+        "id": "minecraft:beacon"
+    },
+    "max_uses": 1.0,
+    "reputation_discount": 0.05,
+    "wants": {
+        "count": 25.0,
+        "id": "minecraft:emerald"
+    },
+    "xp": 50.0
+}

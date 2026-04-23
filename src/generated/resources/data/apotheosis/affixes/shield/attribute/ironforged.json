@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.armor",
+    "attribute": "minecraft:armor",
     "categories": [
         "apotheosis:shield"
     ],

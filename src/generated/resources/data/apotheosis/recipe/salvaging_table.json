@@ -3,24 +3,12 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "G": {
-            "item": "apotheosis:gem_dust"
-        },
-        "I": {
-            "tag": "c:ingots/copper"
-        },
-        "L": {
-            "item": "minecraft:lava_bucket"
-        },
-        "O": {
-            "item": "minecraft:iron_axe"
-        },
-        "R": {
-            "item": "minecraft:iron_pickaxe"
-        },
-        "S": {
-            "item": "minecraft:smithing_table"
-        }
+        "G": "apotheosis:gem_dust",
+        "I": "#c:ingots/copper",
+        "L": "minecraft:lava_bucket",
+        "O": "minecraft:iron_axe",
+        "R": "minecraft:iron_pickaxe",
+        "S": "minecraft:smithing_table"
     },
     "pattern": [
         "III",
@@ -28,7 +16,6 @@
         "GLG"
     ],
     "result": {
-        "count": 1,
         "id": "apotheosis:salvaging_table"
     }
 }

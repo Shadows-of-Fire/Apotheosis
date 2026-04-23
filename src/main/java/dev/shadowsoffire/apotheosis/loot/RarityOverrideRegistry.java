@@ -10,7 +10,7 @@ import com.google.common.base.Preconditions;
 import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.reload.DynamicRegistry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class RarityOverrideRegistry extends DynamicRegistry<RarityOverride> {
 
@@ -33,12 +33,12 @@ public class RarityOverrideRegistry extends DynamicRegistry<RarityOverride> {
     }
 
     @Override
-    protected void validateItem(ResourceLocation key, RarityOverride value) {
+    protected void validateItem(Identifier key, RarityOverride value) {
         String path = key.getPath().replace('/', ':');
-        ResourceLocation cat = ResourceLocation.tryParse(path);
+        Identifier cat = Identifier.tryParse(path);
         Preconditions.checkNotNull(cat, "Invalid category path: " + path);
-        LootCategory category = BuiltInRegs.LOOT_CATEGORY.get(cat);
-        Preconditions.checkArgument(!category.isNone(), "Category not found: " + cat);
+        LootCategory category = BuiltInRegs.LOOT_CATEGORY.getValue(cat);
+        Preconditions.checkArgument(category != null && !category.isNone(), "Category not found: " + cat);
         Preconditions.checkArgument(value.category() == category, "Category mismatch: " + value.category() + " != " + category);
     }
 
@@ -53,8 +53,8 @@ public class RarityOverrideRegistry extends DynamicRegistry<RarityOverride> {
         super.onReload(type);
         this.registry.forEach((key, value) -> {
             String path = key.getPath().replace('/', ':');
-            ResourceLocation cat = ResourceLocation.tryParse(path);
-            LootCategory category = BuiltInRegs.LOOT_CATEGORY.get(cat);
+            Identifier cat = Identifier.tryParse(path);
+            LootCategory category = BuiltInRegs.LOOT_CATEGORY.getValue(cat);
             RarityOverride old = this.byCategory.put(category, value);
             if (old != null) {
                 this.logger.warn("Duplicate rarity override for category {}: Old: {}, New: {}", path, this.getKey(old), key);

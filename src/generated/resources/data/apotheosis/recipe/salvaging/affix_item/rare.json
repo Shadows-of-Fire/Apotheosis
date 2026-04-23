@@ -1,7 +1,7 @@
 {
     "type": "apotheosis:salvaging",
     "input": {
-        "type": "apotheosis:affix",
+        "neoforge:ingredient_type": "apotheosis:affix",
         "rarity": "apotheosis:rare"
     },
     "outputs": [
@@ -9,7 +9,6 @@
             "max_count": 4,
             "min_count": 1,
             "stack": {
-                "count": 1,
                 "id": "apotheosis:rare_material"
             }
         }

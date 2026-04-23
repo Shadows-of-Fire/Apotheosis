@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.movement_speed",
+    "attribute": "minecraft:movement_speed",
     "categories": [
         "apotheosis:leggings",
         "apotheosis:boots"

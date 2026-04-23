@@ -27,7 +27,7 @@
         },
         {
             "type": "apotheosis:attribute",
-            "attribute": "minecraft:generic.gravity",
+            "attribute": "minecraft:gravity",
             "gem_class": {
                 "key": "core_armor",
                 "types": [
@@ -47,7 +47,7 @@
         },
         {
             "type": "apotheosis:attribute",
-            "attribute": "minecraft:generic.step_height",
+            "attribute": "minecraft:step_height",
             "gem_class": "apotheosis:boots",
             "operation": "add_value",
             "values": {

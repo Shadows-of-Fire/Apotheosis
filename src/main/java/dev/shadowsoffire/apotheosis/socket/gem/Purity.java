@@ -23,8 +23,9 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.util.random.WeightedEntry.Wrapper;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedRandom;
+
 
 /**
  * Purity represents a fixed set of gem tiers. Gems are expected to have increasingly powerful stats with each purity level.
@@ -103,8 +104,8 @@ public enum Purity implements StringRepresentable, TieredWeights.Weighted {
             pool = ALL_PURITIES;
         }
 
-        List<Wrapper<Purity>> list = pool.stream().map(l -> l.<Purity>wrap(ctx.tier(), ctx.luck())).toList();
-        return WeightedRandom.getRandomItem(ctx.rand(), list).map(Wrapper::data).orElse(ApothMiscUtil.getRandomElement(pool, ctx.rand()));
+        List<Weighted<Purity>> list = pool.stream().map(l -> l.<Purity>wrap(ctx.tier(), ctx.luck())).toList();
+        return WeightedRandom.getRandomItem(ctx.rand(), list, Weighted::weight).map(Weighted::value).orElse(ApothMiscUtil.getRandomElement(pool, ctx.rand()));
     }
 
     public static <T> MapCodec<Map<Purity, T>> mapCodec(Codec<T> elementCodec) {

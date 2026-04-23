@@ -7,23 +7,26 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
-import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
 
 public class SalvagingRecipe implements Recipe<SingleRecipeInput> {
 
     public static final MapCodec<SalvagingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-        Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(SalvagingRecipe::getInput),
+        Ingredient.CODEC.fieldOf("input").forGetter(SalvagingRecipe::getInput),
         OutputData.CODEC.listOf().fieldOf("outputs").forGetter(SalvagingRecipe::getOutputs))
         .apply(inst, SalvagingRecipe::new));
 
@@ -53,37 +56,23 @@ public class SalvagingRecipe implements Recipe<SingleRecipeInput> {
         return this.outputs;
     }
 
+    public static final RecipeSerializer<SalvagingRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
+
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return Serializer.INSTANCE;
+    public RecipeSerializer<? extends Recipe<SingleRecipeInput>> getSerializer() {
+        return SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<SingleRecipeInput>> getType() {
         return RecipeTypes.SALVAGING;
     }
 
-    public static class Serializer implements RecipeSerializer<SalvagingRecipe> {
-
-        public static final Serializer INSTANCE = new Serializer();
-
-        @Override
-        public MapCodec<SalvagingRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, SalvagingRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
-
-    }
-
-    public static record OutputData(ItemStack stack, int min, int max) {
+    public static record OutputData(ItemStackTemplate stack, int min, int max) {
 
         public static Codec<OutputData> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                ItemStack.CODEC.fieldOf("stack").forGetter(d -> d.stack),
+                ItemStackTemplate.CODEC.fieldOf("stack").forGetter(d -> d.stack),
                 Codec.intRange(0, 99).fieldOf("min_count").forGetter(d -> d.min),
                 Codec.intRange(1, 99).fieldOf("max_count").forGetter(d -> d.max))
             .apply(inst, OutputData::new));
@@ -91,31 +80,49 @@ public class SalvagingRecipe implements Recipe<SingleRecipeInput> {
         public static final Codec<List<OutputData>> LIST_CODEC = Codec.list(CODEC);
 
         public static final StreamCodec<RegistryFriendlyByteBuf, OutputData> STREAM_CODEC = StreamCodec.composite(
-            ItemStack.STREAM_CODEC, OutputData::stack,
+            ItemStackTemplate.STREAM_CODEC, OutputData::stack,
             ByteBufCodecs.VAR_INT, OutputData::min,
             ByteBufCodecs.VAR_INT, OutputData::max,
             OutputData::new);
 
         public OutputData(Item item, int min, int max) {
-            this(item.getDefaultInstance(), min, max);
+            this(new ItemStackTemplate(item), min, max);
         }
     }
 
     @Override
     @Deprecated
-    public ItemStack assemble(SingleRecipeInput input, Provider registries) {
+    public ItemStack assemble(SingleRecipeInput input) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    @Deprecated
-    public boolean canCraftInDimensions(int width, int height) {
+    public String group() {
+        return "";
+    }
+
+    @Override
+    public boolean showNotification() {
+        return false;
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
+    }
+
+    @Override
+    public boolean isSpecial() {
         return true;
     }
 
     @Override
-    @Deprecated
-    public ItemStack getResultItem(Provider registries) {
-        return ItemStack.EMPTY;
+    public RecipeBookCategory recipeBookCategory() {
+        return net.minecraft.world.item.crafting.RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    public List<RecipeDisplay> display() {
+        return List.of();
     }
 }

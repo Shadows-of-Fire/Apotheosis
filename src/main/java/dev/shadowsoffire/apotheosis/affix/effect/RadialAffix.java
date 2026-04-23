@@ -30,12 +30,12 @@ import dev.shadowsoffire.placebo.util.CachedObject;
 import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 public class RadialAffix extends Affix {
 
@@ -46,7 +46,7 @@ public class RadialAffix extends Affix {
             LootRarity.mapCodec(Codec.list(RadialData.CODEC)).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, RadialAffix::new));
 
-    public static final ResourceLocation AFFIX_RADIAL_DATA_CACHED_OBJECT = Apotheosis.loc("afx_radial_data");
+    public static final Identifier AFFIX_RADIAL_DATA_CACHED_OBJECT = Apotheosis.loc("afx_radial_data");
 
     protected final Set<LootCategory> categories;
     protected final Map<LootRarity, List<RadialData>> values;
@@ -84,7 +84,7 @@ public class RadialAffix extends Affix {
     }
 
     // EventPriority.LOW
-    public static void onBreak(BlockEvent.BreakEvent e) {
+    public static void onBreak(BreakBlockEvent e) {
         Player player = e.getPlayer();
         RadialData data = getRadialData(player.getMainHandItem());
         if (data != null) {

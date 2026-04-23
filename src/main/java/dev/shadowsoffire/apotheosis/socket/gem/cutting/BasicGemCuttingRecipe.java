@@ -5,7 +5,6 @@ import java.util.List;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -19,9 +18,9 @@ public record BasicGemCuttingRecipe(Ingredient base, List<SizedIngredient> top, 
 
     public static MapCodec<BasicGemCuttingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
         Ingredient.CODEC.fieldOf("base").forGetter(BasicGemCuttingRecipe::base),
-        SizedIngredient.FLAT_CODEC.listOf().fieldOf("top").forGetter(BasicGemCuttingRecipe::top),
-        SizedIngredient.FLAT_CODEC.listOf().fieldOf("left").forGetter(BasicGemCuttingRecipe::left),
-        SizedIngredient.FLAT_CODEC.listOf().fieldOf("right").forGetter(BasicGemCuttingRecipe::right),
+        SizedIngredient.NESTED_CODEC.listOf().fieldOf("top").forGetter(BasicGemCuttingRecipe::top),
+        SizedIngredient.NESTED_CODEC.listOf().fieldOf("left").forGetter(BasicGemCuttingRecipe::left),
+        SizedIngredient.NESTED_CODEC.listOf().fieldOf("right").forGetter(BasicGemCuttingRecipe::right),
         ItemStack.CODEC.fieldOf("output").forGetter(BasicGemCuttingRecipe::output))
         .apply(inst, BasicGemCuttingRecipe::new));
 
@@ -45,18 +44,13 @@ public record BasicGemCuttingRecipe(Ingredient base, List<SizedIngredient> top, 
     }
 
     @Override
-    public ItemStack assemble(CuttingRecipeInput input, Provider registries) {
+    public ItemStack assemble(CuttingRecipeInput input) {
         return this.output.copy();
     }
 
     @Override
-    public ItemStack getResultItem(Provider registries) {
-        return this.output.copy();
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return Serializer.INSTANCE;
+    public RecipeSerializer<? extends GemCuttingRecipe> getSerializer() {
+        return SERIALIZER;
     }
 
     @Override
@@ -65,9 +59,9 @@ public record BasicGemCuttingRecipe(Ingredient base, List<SizedIngredient> top, 
         SizedIngredient left = GemCuttingRecipe.getMatchOrThrow(input.getLeft(), this.left);
         SizedIngredient right = GemCuttingRecipe.getMatchOrThrow(input.getRight(), this.right);
 
-        input.getTop().shrink(top.count());
-        input.getLeft().shrink(left.count());
-        input.getRight().shrink(right.count());
+        input.shrink(GemCuttingMenu.TOP_SLOT, top.count());
+        input.shrink(GemCuttingMenu.LEFT_SLOT, left.count());
+        input.shrink(GemCuttingMenu.RIGHT_SLOT, right.count());
     }
 
     @Override
@@ -90,20 +84,6 @@ public record BasicGemCuttingRecipe(Ingredient base, List<SizedIngredient> top, 
         return GemCuttingRecipe.anyMatch(stack, this.right);
     }
 
-    public static class Serializer implements RecipeSerializer<BasicGemCuttingRecipe> {
-
-        public static final Serializer INSTANCE = new Serializer();
-
-        @Override
-        public MapCodec<BasicGemCuttingRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, BasicGemCuttingRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
-
-    }
+    public static final RecipeSerializer<BasicGemCuttingRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
 }

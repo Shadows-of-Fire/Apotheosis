@@ -24,7 +24,6 @@
             "components": {
                 "gateways:gateway": "apotheosis:tiered/summit"
             },
-            "count": 1,
             "id": "gateways:gate_pearl"
         },
         "title": {

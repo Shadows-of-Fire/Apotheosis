@@ -1,0 +1,29 @@
+{
+    "additional_wants": {
+        "count": 45.0,
+        "id": "minecraft:emerald"
+    },
+    "gives": {
+        "components": {
+            "minecraft:custom_name": {
+                "color": "#ADD8E6",
+                "italic": false,
+                "translate": "name.apotheosis.captive_dreams"
+            },
+            "minecraft:enchantments": {
+                "apothic_spawners:capturing": 5,
+                "minecraft:looting": 4,
+                "minecraft:mending": 1,
+                "minecraft:sharpness": 5,
+                "minecraft:unbreaking": 5
+            }
+        },
+        "id": "minecraft:diamond_sword"
+    },
+    "max_uses": 1.0,
+    "reputation_discount": 0.05,
+    "wants": {
+        "id": "minecraft:diamond_sword"
+    },
+    "xp": 500.0
+}

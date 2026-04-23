@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:player.entity_interaction_range",
+    "attribute": "minecraft:entity_interaction_range",
     "categories": [
         "apotheosis:melee_weapon",
         "apotheosis:trident"

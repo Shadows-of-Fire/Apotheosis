@@ -1,15 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "apotheosis:items/potion_charm",
-        "layer1": "apotheosis:items/potion_charm_static"
-    },
-    "overrides": [
-        {
-            "predicate": {
-                "apotheosis:enabled": 1
-            },
-            "model": "apotheosis:item/potion_charm_glow"
-        }
-    ]
+        "layer0": "apotheosis:items/potion_charm_static",
+        "layer1": "apotheosis:items/potion_charm"
+    }
 }

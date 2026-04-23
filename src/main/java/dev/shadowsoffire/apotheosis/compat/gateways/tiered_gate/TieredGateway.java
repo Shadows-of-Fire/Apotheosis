@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.compat.gateways.tiered_gate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
 import org.jetbrains.annotations.Nullable;
@@ -89,7 +90,7 @@ public record TieredGateway(TieredGateSettings settings, List<Wave> waves, List<
     }
 
     @Override
-    public void appendPearlTooltip(TooltipContext ctx, List<Component> tooltips, TooltipFlag flag) {
+    public void appendPearlTooltip(TooltipContext ctx, Consumer<Component> tooltips, TooltipFlag flag) {
         TieredGateClient.appendPearlTooltip(this, ctx, tooltips, flag);
     }
 

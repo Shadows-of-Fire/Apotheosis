@@ -82,8 +82,8 @@ public class StoneformingAffix extends Affix {
 
     @Override
     public void modifyLoot(AffixInstance inst, ObjectArrayList<ItemStack> loot, LootContext ctx) {
-        if (ctx.hasParam(LootContextParams.BLOCK_STATE)) {
-            Block block = ctx.getParam(LootContextParams.BLOCK_STATE).getBlock();
+        if (ctx.hasParameter(LootContextParams.BLOCK_STATE)) {
+            Block block = ctx.getParameter(LootContextParams.BLOCK_STATE).getBlock();
             if (isCandidate(block)) {
                 // If this action broke a candidate block, try to find that item in the loot list and do the replacement.
                 for (int i = 0; i < loot.size(); i++) {
@@ -104,7 +104,7 @@ public class StoneformingAffix extends Affix {
         BlockState state = ctx.getLevel().getBlockState(ctx.getClickedPos());
         Block block = state.getBlock();
         if (isCandidate(block) && getTarget(inst) != block && ctx.getPlayer().isShiftKeyDown()) {
-            if (!ctx.getLevel().isClientSide) {
+            if (!ctx.getLevel().isClientSide()) {
                 inst.stack().set(Components.STONEFORMING_TARGET, block);
                 ctx.getPlayer().sendSystemMessage(Apotheosis.lang("affix", "stoneforming.target_updated", block.getName()));
             }

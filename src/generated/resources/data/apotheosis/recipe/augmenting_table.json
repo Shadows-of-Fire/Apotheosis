@@ -3,18 +3,10 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "E": {
-            "item": "minecraft:enchanting_table"
-        },
-        "M": {
-            "item": "apotheosis:mythic_material"
-        },
-        "N": {
-            "item": "minecraft:nether_star"
-        },
-        "P": {
-            "item": "minecraft:polished_blackstone"
-        }
+        "E": "minecraft:enchanting_table",
+        "M": "apotheosis:mythic_material",
+        "N": "minecraft:nether_star",
+        "P": "minecraft:polished_blackstone"
     },
     "pattern": [
         " N ",
@@ -22,7 +14,6 @@
         "PPP"
     ],
     "result": {
-        "count": 1,
         "id": "apotheosis:augmenting_table"
     }
 }

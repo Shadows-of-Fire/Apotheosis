@@ -25,7 +25,7 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.component.Unbreakable;
+import net.minecraft.util.Unit;
 
 public class RarityOverrideProvider extends DynamicRegistryProvider<RarityOverride> {
 
@@ -74,7 +74,7 @@ public class RarityOverrideProvider extends DynamicRegistryProvider<RarityOverri
                 .rule(new SelectLootRule(0.99F, // 99% chance to roll a durability bonus, 1% to be unbreakable.
                     new DurabilityLootRule(0.45F, 0.75F),
                     new ComponentLootRule(DataComponentPatch.builder()
-                        .set(DataComponents.UNBREAKABLE, new Unbreakable(true))
+                        .set(DataComponents.UNBREAKABLE, Unit.INSTANCE)
                         .remove(Components.DURABILITY_BONUS)
                         .build()))))
 

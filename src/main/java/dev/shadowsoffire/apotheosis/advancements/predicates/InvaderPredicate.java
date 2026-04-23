@@ -3,7 +3,7 @@ package dev.shadowsoffire.apotheosis.advancements.predicates;
 import com.mojang.serialization.MapCodec;
 
 import dev.shadowsoffire.apotheosis.mobs.types.Invader;
-import net.minecraft.advancements.critereon.EntitySubPredicate;
+import net.minecraft.advancements.criterion.EntitySubPredicate;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;

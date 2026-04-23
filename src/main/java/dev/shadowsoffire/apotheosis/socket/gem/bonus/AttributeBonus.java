@@ -16,7 +16,7 @@ import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -49,7 +49,7 @@ public class AttributeBonus extends GemBonus {
     }
 
     @Override
-    public void skipModifierIds(GemInstance gem, Consumer<ResourceLocation> skip) {
+    public void skipModifierIds(GemInstance gem, Consumer<Identifier> skip) {
         skip.accept(makeUniqueId(gem));
     }
 

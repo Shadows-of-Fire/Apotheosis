@@ -13,12 +13,12 @@ import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weight;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.reload.DynamicRegistry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public final class PurityWeightsRegistry extends DynamicRegistry<PurityWeights> {
 
     public static final PurityWeightsRegistry INSTANCE = new PurityWeightsRegistry();
-    public static final ResourceLocation TARGET_FILE = Apotheosis.loc("weights");
+    public static final Identifier TARGET_FILE = Apotheosis.loc("weights");
 
     private static final Map<Purity, TieredWeights> ERRORED = Map.of(
         Purity.CRACKED, TieredWeights.forAllTiers(1, 0),

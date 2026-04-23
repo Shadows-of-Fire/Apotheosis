@@ -23,8 +23,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderOwner;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.ServerAdvancementManager;
 import net.minecraft.server.level.ServerPlayer;
@@ -77,7 +77,7 @@ public class ApothMiscUtil {
 
     @Nullable
     public static Player getClientPlayer() {
-        return FMLEnvironment.dist.isClient() ? ClientInternal.getClientPlayer() : null;
+        return FMLEnvironment.getDist().isClient() ? ClientInternal.getClientPlayer() : null;
     }
 
     /**
@@ -106,13 +106,13 @@ public class ApothMiscUtil {
      * <p>
      * Returns false if the advancement is not loaded.
      */
-    public static boolean hasAdvancement(Player player, ResourceLocation key) {
-        if (player.level().isClientSide) {
+    public static boolean hasAdvancement(Player player, Identifier key) {
+        if (player.level().isClientSide()) {
             return ClientInternal.hasAdvancment(key);
         }
 
         PlayerAdvancements advancements = ((ServerPlayer) player).getAdvancements();
-        ServerAdvancementManager manager = player.getServer().getAdvancements();
+        ServerAdvancementManager manager = player.level().getServer().getAdvancements();
 
         AdvancementHolder holder = manager.get(key);
         if (holder != null) {
@@ -157,7 +157,7 @@ public class ApothMiscUtil {
             return Minecraft.getInstance().player;
         }
 
-        public static boolean hasAdvancment(ResourceLocation key) {
+        public static boolean hasAdvancment(Identifier key) {
             ClientAdvancements advancements = Minecraft.getInstance().getConnection().getAdvancements();
             AdvancementHolder holder = advancements.get(key);
             if (holder != null) {
@@ -187,7 +187,7 @@ public class ApothMiscUtil {
                 return false;
             }
 
-            if (!InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), key.getValue())) {
+            if (!InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), key.getValue())) {
                 return false;
             }
 

@@ -5,9 +5,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apoth.Components;
@@ -17,32 +17,33 @@ import dev.shadowsoffire.apotheosis.loot.AffixLootRegistry;
 import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import dev.shadowsoffire.placebo.systems.wanderer.WandererTrade;
-import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.WeightedEntry.Wrapper;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.item.TieredItem;
-import net.minecraft.world.item.trading.ItemCost;
-import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 /**
- * An affix trade that automatically determines the input items based on the world tier and repair material of the generated item.
+ * A {@link LootItemConditionalFunction} used as a {@code given_item_modifier} on a {@code minecraft:villager_trade}
+ * to dynamically generate an affix-bearing ItemStack scaled to the trading player's world tier.
+ * <p>
+ * The function replaces the trade's base {@code gives} stack with a freshly-rolled affix item, and sets
+ * {@link DataComponents#ADDITIONAL_TRADE_COST} so the trade's emerald cost scales with the player's {@code WorldTier}.
  */
-public class AutomaticAffixTrade implements WandererTrade {
+public class AutomaticAffixTrade extends LootItemConditionalFunction {
 
-    public static Codec<AutomaticAffixTrade> CODEC = RecordCodecBuilder.create(inst -> inst
-        .group(
+    public static final MapCodec<AutomaticAffixTrade> CODEC = RecordCodecBuilder.mapCodec(inst -> commonFields(inst)
+        .and(inst.group(
             PlaceboCodecs.setOf(LootRarity.CODEC).optionalFieldOf("rarities", Set.of()).forGetter(a -> a.rarities),
-            AffixLootRegistry.INSTANCE.holderCodec().listOf().fieldOf("entries").forGetter(a -> a.entries),
-            Codec.BOOL.optionalFieldOf("rare", false).forGetter(trade -> trade.rare))
+            AffixLootRegistry.INSTANCE.holderCodec().listOf().optionalFieldOf("entries", List.of()).forGetter(a -> a.entries)))
         .apply(inst, AutomaticAffixTrade::new));
 
     /**
@@ -59,95 +60,72 @@ public class AutomaticAffixTrade implements WandererTrade {
      */
     protected final List<DynamicHolder<AffixLootEntry>> entries;
 
-    /**
-     * If this trade is part of the "rare" trade list or not.
-     */
-    protected final boolean rare;
-
-    public AutomaticAffixTrade(Set<LootRarity> rarities, List<DynamicHolder<AffixLootEntry>> entries, boolean rare) {
+    public AutomaticAffixTrade(List<LootItemCondition> predicates, Set<LootRarity> rarities, List<DynamicHolder<AffixLootEntry>> entries) {
+        super(predicates);
         this.rarities = rarities;
         this.entries = entries;
-        this.rare = rare;
     }
 
     @Override
-    @Nullable
-    public MerchantOffer getOffer(Entity trader, RandomSource rand) {
-        if (trader.level().isClientSide) {
-            return null;
-        }
-        Player player = trader.level().getNearestPlayer(trader, -1);
-        if (player == null) {
-            return null;
-        }
-        GenContext ctx = GenContext.forPlayer(rand, player);
-
-        ItemStack affixItem;
-        if (this.entries.isEmpty()) {
-            LootRarity selectedRarity = LootRarity.random(ctx, this.rarities);
-            affixItem = LootController.createRandomLootItem(ctx, selectedRarity);
-        }
-        else {
-            List<Wrapper<AffixLootEntry>> resolved = this.entries.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<AffixLootEntry>wrap(ctx.tier(), ctx.luck())).toList();
-            AffixLootEntry entry = WeightedRandom.getRandomItem(rand, resolved).get().data();
-            LootRarity selectedRarity = LootRarity.random(ctx, this.rarities.isEmpty() ? entry.rarities() : this.rarities);
-            affixItem = LootController.createLootItem(entry.stack(), selectedRarity, ctx);
-        }
-
-        if (affixItem.isEmpty()) {
-            return null;
-        }
-        affixItem.set(Components.FROM_TRADER, true);
-
-        ItemStack repairMat = getRepairMaterial(affixItem);
-        if (repairMat.isEmpty()) {
-            Apotheosis.LOGGER.trace("An AutomaticAffixTrade was unable to determine a repair material for the item {}!", affixItem);
-            return null;
-        }
-
-        ItemCost price2 = new ItemCost(Items.EMERALD, ctx.tier().ordinal() * 7 + 1);
-        return new MerchantOffer(new ItemCost(repairMat.getItem(), 5), Optional.of(price2), affixItem, 1, 100, 1);
-    }
-
-    @Override
-    public boolean isRare() {
-        return this.rare;
-    }
-
-    @Override
-    public Codec<? extends WandererTrade> getCodec() {
+    public MapCodec<AutomaticAffixTrade> codec() {
         return CODEC;
     }
 
-    /**
-     * Unwraps the holder to its object, if present, otherwise returns null and logs an error.
-     */
+    @Override
+    protected ItemStack run(ItemStack stack, LootContext ctx) {
+        Entity trader = ctx.getOptionalParameter(LootContextParams.THIS_ENTITY);
+        if (trader == null || trader.level().isClientSide()) {
+            return stack;
+        }
+        Player player = trader.level().getNearestPlayer(trader, -1);
+        if (player == null) {
+            return stack;
+        }
+        GenContext gCtx = GenContext.forPlayer(ctx.getRandom(), player);
+
+        ItemStack affixItem;
+        if (this.entries.isEmpty()) {
+            LootRarity rarity = LootRarity.random(gCtx, this.rarities);
+            affixItem = LootController.createRandomLootItem(gCtx, rarity);
+        }
+        else {
+            List<Weighted<AffixLootEntry>> resolved = this.entries.stream()
+                .map(this::unwrap)
+                .filter(Objects::nonNull)
+                .map(e -> e.<AffixLootEntry>wrap(gCtx.tier(), gCtx.luck()))
+                .toList();
+            if (resolved.isEmpty()) {
+                return ItemStack.EMPTY;
+            }
+            Optional<Weighted<AffixLootEntry>> picked = WeightedRandom.getRandomItem(ctx.getRandom(), resolved, Weighted::weight);
+            if (picked.isEmpty()) {
+                return ItemStack.EMPTY;
+            }
+            AffixLootEntry entry = picked.get().value();
+            LootRarity rarity = LootRarity.random(gCtx, this.rarities.isEmpty() ? entry.rarities() : this.rarities);
+            affixItem = LootController.createLootItem(entry.stackTemplate().create(), rarity, gCtx);
+        }
+
+        if (affixItem.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+
+        NameHelper.setItemName(ctx.getRandom(), affixItem);
+        affixItem.set(Components.FROM_TRADER, true);
+        int scaledCost = gCtx.tier().ordinal() * 7;
+        if (scaledCost > 0) {
+            affixItem.set(DataComponents.ADDITIONAL_TRADE_COST, scaledCost);
+        }
+        return affixItem;
+    }
+
+    @Nullable
     private AffixLootEntry unwrap(DynamicHolder<AffixLootEntry> holder) {
         if (!holder.isBound()) {
-            Apotheosis.LOGGER.error("An AffixTrade failed to resolve the Affix Loot Entry {}!", holder.getId());
+            Apotheosis.LOGGER.error("An AutomaticAffixTrade failed to resolve the Affix Loot Entry {}!", holder.getId());
             return null;
         }
         return holder.get();
-    }
-
-    /**
-     * Gets the repair material for the given item stack.
-     * <p>
-     * Since items do not have a centralized interface to report back repair materials (only to query them), we try to retrieve it based on the item class.
-     */
-    private ItemStack getRepairMaterial(ItemStack stack) {
-        switch (stack.getItem()) {
-            case TieredItem tiered:
-                ItemStack[] repairItems = tiered.getTier().getRepairIngredient().getItems();
-                return repairItems.length > 0 ? repairItems[0] : ItemStack.EMPTY;
-            case ArmorItem armor:
-                ItemStack[] armorRepairItems = armor.getMaterial().value().repairIngredient().get().getItems();
-                return armorRepairItems.length > 0 ? armorRepairItems[0] : ItemStack.EMPTY;
-            case ShieldItem shield:
-                return shield == Items.SHIELD ? Items.OAK_PLANKS.getDefaultInstance() : ItemStack.EMPTY;
-            default:
-                return ItemStack.EMPTY;
-        }
     }
 
 }

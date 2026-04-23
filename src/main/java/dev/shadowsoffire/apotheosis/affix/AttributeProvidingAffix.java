@@ -4,10 +4,10 @@ import java.util.function.Consumer;
 
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.client.event.GatherSkippedAttributeTooltipsEvent;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
+import net.neoforged.neoforge.event.GatherSkippedAttributeTooltipsEvent;
 
 /**
  * This is a bit of a hack to allow affixes to report back their attribute modifier tooltips so we can mark them with the star prefix.
@@ -26,6 +26,6 @@ public interface AttributeProvidingAffix {
      * @param ctx  The tooltip context.
      * @param skip A consumer that accepts resource locations to skip.
      */
-    void skipModifierIds(AffixInstance inst, AttributeTooltipContext ctx, Consumer<ResourceLocation> skip);
+    void skipModifierIds(AffixInstance inst, AttributeTooltipContext ctx, Consumer<Identifier> skip);
 
 }

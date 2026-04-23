@@ -9,18 +9,10 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "E": {
-            "tag": "c:ender_pearls"
-        },
-        "G": {
-            "item": "apotheosis:gem_dust"
-        },
-        "I": {
-            "tag": "c:ingots/gold"
-        },
-        "R": {
-            "item": "apotheosis:rare_material"
-        }
+        "E": "#c:ender_pearls",
+        "G": "apotheosis:gem_dust",
+        "I": "#c:ingots/gold",
+        "R": "apotheosis:rare_material"
     },
     "pattern": [
         "IRI",
@@ -31,7 +23,6 @@
         "components": {
             "gateways:gateway": "apotheosis:tiered/ascent"
         },
-        "count": 1,
         "id": "gateways:gate_pearl"
     }
 }

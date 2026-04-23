@@ -1,0 +1,28 @@
+{
+    "additional_wants": {
+        "count": 55.0,
+        "id": "minecraft:emerald"
+    },
+    "gives": {
+        "components": {
+            "minecraft:custom_name": {
+                "color": "#1ABBE0",
+                "italic": false,
+                "translate": "name.apotheosis.thunder_forged_legguards"
+            },
+            "minecraft:enchantments": {
+                "apothic_enchanting:rebounding": 10,
+                "minecraft:mending": 1,
+                "minecraft:protection": 5,
+                "minecraft:unbreaking": 5
+            }
+        },
+        "id": "minecraft:diamond_leggings"
+    },
+    "max_uses": 1.0,
+    "reputation_discount": 0.05,
+    "wants": {
+        "id": "minecraft:diamond_leggings"
+    },
+    "xp": 500.0
+}

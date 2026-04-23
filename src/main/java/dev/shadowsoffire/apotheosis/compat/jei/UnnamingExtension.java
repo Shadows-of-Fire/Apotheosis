@@ -37,7 +37,7 @@ public class UnnamingExtension implements ISmithingCategoryExtension<UnnamingRec
 
     @Override
     public <T extends IIngredientAcceptor<T>> void setAddition(UnnamingRecipe recipe, T acc) {
-        acc.addItemStack(new ItemStack(Apoth.Items.SIGIL_OF_UNNAMING));
+        acc.add(new ItemStack(Apoth.Items.SIGIL_OF_UNNAMING));
     }
 
     @Override

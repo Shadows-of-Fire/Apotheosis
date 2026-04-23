@@ -13,9 +13,7 @@ import javax.annotation.Nullable;
 import org.jetbrains.annotations.ApiStatus;
 
 import com.google.common.base.Preconditions;
-import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 
 import dev.shadowsoffire.apotheosis.Apoth;
@@ -24,21 +22,20 @@ import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apothic_attributes.modifiers.EntitySlotGroup;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import net.minecraft.ResourceLocationException;
-import net.minecraft.Util;
+import net.minecraft.IdentifierException;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.registries.callback.BakeCallback;
 
 public final class LootCategory {
 
-    public static final Codec<LootCategory> CODEC = Codec.lazyInitialized(() -> legacyResolverCodec());
-    public static final Codec<LootCategory> OPTIONAL_CODEC = Codec.lazyInitialized(() -> Apoth.BuiltInRegs.LOOT_CATEGORY.byNameCodec());
-    public static final Codec<Set<LootCategory>> SET_CODEC = PlaceboCodecs.setOf(CODEC); // TODO: Make this into a HolderSet.
+    public static final Codec<LootCategory> CODEC = Codec.lazyInitialized(() -> Apoth.BuiltInRegs.LOOT_CATEGORY.byNameCodec());
+    public static final Codec<Set<LootCategory>> SET_CODEC = PlaceboCodecs.setOf(CODEC);
     public static final StreamCodec<RegistryFriendlyByteBuf, LootCategory> STREAM_CODEC = ByteBufCodecs.registry(Apoth.BuiltInRegs.LOOT_CATEGORY.key());
 
     private static List<LootCategory> sortedCategories = new ArrayList<>();
@@ -68,7 +65,7 @@ public final class LootCategory {
         return this.getDescId() + ".plural";
     }
 
-    public ResourceLocation getKey() {
+    public Identifier getKey() {
         return Apoth.BuiltInRegs.LOOT_CATEGORY.getKey(this);
     }
 
@@ -156,7 +153,7 @@ public final class LootCategory {
             return LootCategories.NONE;
         }
 
-        LootCategory override = BuiltInRegistries.ITEM.getData(DataMaps.LOOT_CATEGORY_OVERRIDES, stack.getItemHolder().getKey());
+        LootCategory override = BuiltInRegistries.ITEM.getData(DataMaps.LOOT_CATEGORY_OVERRIDES, stack.getItem().builtInRegistryHolder().getKey());
         if (override != null) {
             return override;
         }
@@ -169,30 +166,12 @@ public final class LootCategory {
         return LootCategories.NONE;
     }
 
-    /**
-     * Legacy resolver codec to assist with backwards compat.
-     * <p>
-     * Accepts a string as "apotheosis:path" instead of discarding it.
-     */
-    @Deprecated(forRemoval = true)
-    private static Codec<LootCategory> legacyResolverCodec() {
-        return Codec.either(
-            Codec.stringResolver(ResourceLocation::getPath, LootCategory::readLocWithApothNamespace),
-            ResourceLocation.CODEC)
-            .xmap(Either::unwrap, Either::right)
-            .xmap(Apoth.BuiltInRegs.LOOT_CATEGORY::get, Apoth.BuiltInRegs.LOOT_CATEGORY::getKey)
-            .validate(
-                cat -> cat == LootCategories.NONE
-                    ? DataResult.error(() -> "Loot Category must not be apotheosis:none")
-                    : DataResult.success(cat));
-    }
-
     @Nullable
-    private static ResourceLocation readLocWithApothNamespace(String path) {
+    private static Identifier readLocWithApothNamespace(String path) {
         try {
-            return path.contains(":") ? ResourceLocation.parse(path) : Apotheosis.loc(path);
+            return path.contains(":") ? Identifier.parse(path) : Apotheosis.loc(path);
         }
-        catch (ResourceLocationException resourcelocationexception) {
+        catch (IdentifierException resourcelocationexception) {
             return null;
         }
     }

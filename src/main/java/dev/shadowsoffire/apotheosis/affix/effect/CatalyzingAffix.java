@@ -47,7 +47,7 @@ public class CatalyzingAffix extends Affix {
         if (source.is(DamageTypeTags.IS_EXPLOSION)) {
             int time = this.values.get(inst.getRarity()).getInt(inst.level());
             int modifier = 1 + (int) (Math.log(amount) / Math.log(3));
-            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, time, modifier));
+            entity.addEffect(new MobEffectInstance(MobEffects.STRENGTH, time, modifier));
         }
 
         return super.onShieldBlock(inst, entity, source, amount);

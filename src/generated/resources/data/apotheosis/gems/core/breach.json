@@ -28,7 +28,7 @@
         },
         {
             "type": "apotheosis:attribute",
-            "attribute": "minecraft:player.block_interaction_range",
+            "attribute": "minecraft:block_interaction_range",
             "gem_class": {
                 "key": "tools",
                 "types": [

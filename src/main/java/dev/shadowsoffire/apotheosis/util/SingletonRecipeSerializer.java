@@ -9,26 +9,14 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-public class SingletonRecipeSerializer<T extends Recipe<?>> implements RecipeSerializer<T> {
+public final class SingletonRecipeSerializer {
 
-    private T recipe;
-    private MapCodec<T> codec;
-    private StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
+    private SingletonRecipeSerializer() {}
 
-    public SingletonRecipeSerializer(Supplier<T> factory) {
-        this.recipe = factory.get();
-        this.codec = MapCodec.unit(this.recipe);
-        this.streamCodec = StreamCodec.unit(this.recipe);
+    public static <T extends Recipe<?>> RecipeSerializer<T> create(Supplier<T> factory) {
+        T instance = factory.get();
+        MapCodec<T> codec = MapCodec.unit(instance);
+        StreamCodec<RegistryFriendlyByteBuf, T> streamCodec = StreamCodec.unit(instance);
+        return new RecipeSerializer<>(codec, streamCodec);
     }
-
-    @Override
-    public MapCodec<T> codec() {
-        return this.codec;
-    }
-
-    @Override
-    public StreamCodec<RegistryFriendlyByteBuf, T> streamCodec() {
-        return this.streamCodec;
-    }
-
 }

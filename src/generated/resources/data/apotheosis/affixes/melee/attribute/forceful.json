@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.attack_knockback",
+    "attribute": "minecraft:attack_knockback",
     "categories": [
         "apotheosis:melee_weapon"
     ],

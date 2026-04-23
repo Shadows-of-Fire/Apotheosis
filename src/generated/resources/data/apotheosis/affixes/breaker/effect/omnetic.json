@@ -15,23 +15,18 @@
         "apotheosis:rare": {
             "items": [
                 {
-                    "count": 1,
                     "id": "minecraft:iron_axe"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:iron_shovel"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:iron_pickaxe"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:iron_sword"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:iron_hoe"
                 }
             ],
@@ -40,23 +35,18 @@
         "apotheosis:epic": {
             "items": [
                 {
-                    "count": 1,
                     "id": "minecraft:diamond_axe"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:diamond_shovel"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:diamond_pickaxe"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:diamond_sword"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:diamond_hoe"
                 }
             ],
@@ -65,23 +55,18 @@
         "apotheosis:mythic": {
             "items": [
                 {
-                    "count": 1,
                     "id": "minecraft:netherite_axe"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:netherite_shovel"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:netherite_pickaxe"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:netherite_sword"
                 },
                 {
-                    "count": 1,
                     "id": "minecraft:netherite_hoe"
                 }
             ],

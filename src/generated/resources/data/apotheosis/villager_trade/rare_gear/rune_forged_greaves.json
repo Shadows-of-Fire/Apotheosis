@@ -1,0 +1,29 @@
+{
+    "additional_wants": {
+        "count": 45.0,
+        "id": "minecraft:emerald"
+    },
+    "gives": {
+        "components": {
+            "minecraft:custom_name": {
+                "color": "#1ABBE0",
+                "italic": false,
+                "translate": "name.apotheosis.rune_forged_greaves"
+            },
+            "minecraft:enchantments": {
+                "apothic_enchanting:stable_footing": 1,
+                "minecraft:feather_falling": 5,
+                "minecraft:mending": 1,
+                "minecraft:protection": 5,
+                "minecraft:unbreaking": 5
+            }
+        },
+        "id": "minecraft:diamond_boots"
+    },
+    "max_uses": 1.0,
+    "reputation_discount": 0.05,
+    "wants": {
+        "id": "minecraft:diamond_boots"
+    },
+    "xp": 500.0
+}

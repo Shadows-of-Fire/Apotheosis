@@ -11,7 +11,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.inventory.Slot;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ItemLinking {
 
@@ -21,7 +21,7 @@ public class ItemLinking {
     private static final Object2LongMap<UUID> LAST_LINK_TIMES = new Object2LongOpenHashMap<>();
 
     public static void sendHoveredItem() {
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             Client.sendHoveredItem();
         }
     }
@@ -39,7 +39,7 @@ public class ItemLinking {
             if (Minecraft.getInstance().screen instanceof AbstractContainerScreen scn) {
                 Slot slot = scn.getSlotUnderMouse();
                 if (slot != null && slot.hasItem()) {
-                    PacketDistributor.sendToServer(new LinkItemToChatPayload(scn.getMenu().containerId, slot.index, slot.getItem().getItem()));
+                    ClientPacketDistributor.sendToServer(new LinkItemToChatPayload(scn.getMenu().containerId, slot.index, slot.getItem().getItem()));
                 }
             }
         }

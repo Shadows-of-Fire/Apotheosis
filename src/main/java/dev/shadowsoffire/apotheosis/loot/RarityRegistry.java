@@ -12,7 +12,7 @@ import com.google.common.collect.HashBiMap;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.tiers.TieredDynamicRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -80,7 +80,7 @@ public class RarityRegistry extends TieredDynamicRegistry<LootRarity> {
     }
 
     @Override
-    protected void validateItem(ResourceLocation key, LootRarity item) {
+    protected void validateItem(Identifier key, LootRarity item) {
         super.validateItem(key, item);
         Preconditions.checkNotNull(item.color());
         Preconditions.checkArgument(item.getMaterial() != null && item.getMaterial() != Items.AIR);

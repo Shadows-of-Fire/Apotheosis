@@ -26,13 +26,12 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
 public record LootRarity(TextColor color, Holder<Item> material, TieredWeights weights, List<LootRule> rules, int sortIndex, RarityRenderData renderData, SoundEvent invaderSound) implements CodecProvider<LootRarity>, Weighted {
 
     public static final Codec<LootRarity> LOAD_CODEC = RecordCodecBuilder.create(inst -> inst.group(
         TextColor.CODEC.fieldOf("color").forGetter(LootRarity::color),
-        ItemStack.ITEM_NON_AIR_CODEC.fieldOf("material").forGetter(LootRarity::material),
+        BuiltInRegistries.ITEM.holderByNameCodec().fieldOf("material").forGetter(LootRarity::material),
         TieredWeights.CODEC.fieldOf("weights").forGetter(Weighted::weights),
         LootRule.CODEC.listOf().fieldOf("rules").forGetter(LootRarity::rules),
         Codec.intRange(0, 2000).optionalFieldOf("sort_index", 1000).forGetter(LootRarity::sortIndex),

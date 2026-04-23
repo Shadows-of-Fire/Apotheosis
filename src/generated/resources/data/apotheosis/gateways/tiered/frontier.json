@@ -101,19 +101,19 @@
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.max_health",
+                    "attribute": "minecraft:max_health",
                     "operation": "add_multiplied_total",
                     "value": 0.1
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.armor",
+                    "attribute": "minecraft:armor",
                     "operation": "add_value",
                     "value": 2.5
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.attack_damage",
+                    "attribute": "minecraft:attack_damage",
                     "operation": "add_multiplied_total",
                     "value": 0.15
                 },
@@ -125,13 +125,13 @@
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.knockback_resistance",
+                    "attribute": "minecraft:knockback_resistance",
                     "operation": "add_value",
                     "value": 0.1
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.movement_speed",
+                    "attribute": "minecraft:movement_speed",
                     "operation": "add_multiplied_total",
                     "value": 0.05
                 }
@@ -194,19 +194,19 @@
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.max_health",
+                    "attribute": "minecraft:max_health",
                     "operation": "add_multiplied_total",
                     "value": 0.15
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.armor",
+                    "attribute": "minecraft:armor",
                     "operation": "add_value",
                     "value": 3.5
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.attack_damage",
+                    "attribute": "minecraft:attack_damage",
                     "operation": "add_multiplied_total",
                     "value": 0.25
                 },
@@ -218,13 +218,13 @@
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.knockback_resistance",
+                    "attribute": "minecraft:knockback_resistance",
                     "operation": "add_value",
                     "value": 0.2
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.movement_speed",
+                    "attribute": "minecraft:movement_speed",
                     "operation": "add_multiplied_total",
                     "value": 0.1
                 }

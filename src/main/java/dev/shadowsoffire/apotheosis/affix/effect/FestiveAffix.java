@@ -24,6 +24,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -32,8 +33,8 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 /**
  * Loot Pinata
@@ -81,39 +82,41 @@ public class FestiveAffix extends Affix {
 
     // EventPriority.LOW
     public static void markEquipment(LivingDeathEvent e) {
-        if (e.getEntity() instanceof Player || e.getEntity().getPersistentData().getBoolean("apoth.no_pinata")) {
+        if (e.getEntity() instanceof Player || e.getEntity().getPersistentData().getBooleanOr("apoth.no_pinata", false)) {
             return;
         }
 
-        IItemHandler inv = e.getEntity().getCapability(Capabilities.ItemHandler.ENTITY);
+        ResourceHandler<ItemResource> inv = e.getEntity().getCapability(Capabilities.Item.ENTITY);
 
-        if (inv instanceof IItemHandlerModifiable iihm) {
-            for (int i = 0; i < inv.getSlots(); i++) {
-                ItemStack stack = inv.getStackInSlot(i);
-                if (!stack.isEmpty()) {
+        if (inv != null) {
+            for (int i = 0; i < inv.size(); i++) {
+                ItemResource res = inv.getResource(i);
+                int amount = inv.getAmountAsInt(i);
+                if (!res.isEmpty() && amount > 0) {
+                    ItemStack stack = res.toStack(amount);
                     ((IFestiveMarker) (Object) stack).setMarked(true);
-                    iihm.setStackInSlot(i, stack);
                 }
             }
         }
 
-        e.getEntity().getAllSlots().forEach(i -> {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            ItemStack i = e.getEntity().getItemBySlot(slot);
             if (!i.isEmpty()) {
                 ((IFestiveMarker) (Object) i).setMarked(true);
             }
-        });
+        }
     }
 
     @Override
     public void modifyEntityLoot(AffixInstance inst, LivingDropsEvent e) {
         LivingEntity dead = e.getEntity();
-        if (dead instanceof Player || dead.getPersistentData().getBoolean("apoth.no_pinata")) {
+        if (dead instanceof Player || dead.getPersistentData().getBooleanOr("apoth.no_pinata", false)) {
             return;
         }
         if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty()) {
-            if (inst != null && inst.isValid() && player.level().random.nextFloat() < this.getTrueLevel(inst.rarity().get(), inst.level())) {
+            if (inst != null && inst.isValid() && player.level().getRandom().nextFloat() < this.getTrueLevel(inst.rarity().get(), inst.level())) {
                 player.level().playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F,
-                    (1.0F + (player.level().random.nextFloat() - player.level().random.nextFloat()) * 0.2F) * 0.7F);
+                    (1.0F + (player.level().getRandom().nextFloat() - player.level().getRandom().nextFloat()) * 0.2F) * 0.7F);
                 ((ServerLevel) player.level()).sendParticles(ParticleTypes.EXPLOSION_EMITTER, dead.getX(), dead.getY(), dead.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
 
                 List<ItemEntity> drops = new ArrayList<>(e.getDrops());
@@ -130,7 +133,7 @@ public class FestiveAffix extends Affix {
 
                 for (ItemEntity item : e.getDrops()) {
                     item.setPos(dead.getX(), dead.getY(), dead.getZ());
-                    item.setDeltaMovement(-0.3 + dead.level().random.nextDouble() * 0.6, 0.3 + dead.level().random.nextDouble() * 0.3, -0.3 + dead.level().random.nextDouble() * 0.6);
+                    item.setDeltaMovement(-0.3 + dead.level().getRandom().nextDouble() * 0.6, 0.3 + dead.level().getRandom().nextDouble() * 0.3, -0.3 + dead.level().getRandom().nextDouble() * 0.6);
                 }
             }
         }

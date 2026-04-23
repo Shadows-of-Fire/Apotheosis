@@ -69,7 +69,7 @@ public class ExecutingAffix extends Affix {
     @Override
     public void doPostAttack(AffixInstance inst, LivingEntity user, Entity target) {
         float threshold = this.getTrueLevel(inst.getRarity(), inst.level());
-        if (ApothicAttributes.getLocalAtkStrength(user) >= 0.98 && target instanceof LivingEntity living && !living.level().isClientSide) {
+        if (ApothicAttributes.getLocalAtkStrength(user) >= 0.98 && target instanceof LivingEntity living && !living.level().isClientSide()) {
             if (!living.isDeadOrDying() && living.getHealth() / living.getMaxHealth() < threshold) {
                 DamageSource src = living.damageSources().source(Apoth.DamageTypes.EXECUTE, user);
                 if (!((LivingEntityInvoker) living).callCheckTotemDeathProtection(src)) {
@@ -80,7 +80,7 @@ public class ExecutingAffix extends Affix {
 
                     living.setLastHurtByMob(user);
                     if (user instanceof Player p) {
-                        living.setLastHurtByPlayer(p);
+                        living.setLastHurtByPlayer(p, 100);
                     }
                     living.getCombatTracker().recordDamage(src, 99999);
                     living.setHealth(0);

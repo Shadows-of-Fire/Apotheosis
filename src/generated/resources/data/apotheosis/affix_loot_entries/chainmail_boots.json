@@ -1,15 +1,14 @@
 {
     "type": "apotheosis:affix_loot_entry",
     "stack": {
-        "count": 1,
         "id": "minecraft:chainmail_boots"
     },
     "weights": {
         "haven": {
+            "quality": 2.0,
             "weight": 10
         },
         "frontier": {
-            "quality": 1.0,
             "weight": 10
         }
     }

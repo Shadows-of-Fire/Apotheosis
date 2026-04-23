@@ -16,6 +16,7 @@ import dev.shadowsoffire.apotheosis.advancements.predicates.PurityItemPredicate;
 import dev.shadowsoffire.apotheosis.advancements.predicates.RarityItemPredicate;
 import dev.shadowsoffire.apotheosis.advancements.predicates.SocketItemPredicate;
 import dev.shadowsoffire.apotheosis.affix.ItemAffixes;
+import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
 import dev.shadowsoffire.apotheosis.affix.UnnamingRecipe;
 import dev.shadowsoffire.apotheosis.affix.augmenting.AugmentingMenu;
 import dev.shadowsoffire.apotheosis.affix.augmenting.AugmentingTableBlock;
@@ -23,6 +24,7 @@ import dev.shadowsoffire.apotheosis.affix.augmenting.AugmentingTableTile;
 import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingMenu;
 import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingRecipe;
 import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingTableBlock;
+import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingTableBlockItem;
 import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingTableTile;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvageItem;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingMenu;
@@ -37,6 +39,7 @@ import dev.shadowsoffire.apotheosis.gen.ItemFrameGemsProcessor;
 import dev.shadowsoffire.apotheosis.gen.RogueSpawnerFeature;
 import dev.shadowsoffire.apotheosis.item.BossSummonerItem;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
+import dev.shadowsoffire.apotheosis.item.TooltipBlockItem;
 import dev.shadowsoffire.apotheosis.item.TooltipItem;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
@@ -73,6 +76,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseBlock;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseBlockItem;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseMenu;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile.BasicGemCaseTile;
@@ -80,7 +84,9 @@ import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseTile.EnderGemCaseT
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
+import dev.shadowsoffire.apotheosis.util.AffixItemSlotDisplay;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
+import dev.shadowsoffire.apotheosis.util.GemSlotDisplay;
 import dev.shadowsoffire.apotheosis.util.LootPatternMatcher;
 import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialState;
 import dev.shadowsoffire.apotheosis.util.SingletonRecipeSerializer;
@@ -91,19 +97,19 @@ import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType.TickSide;
 import dev.shadowsoffire.placebo.registry.DeferredHelper;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.critereon.ItemSubPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.component.predicates.DataComponentPredicate;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.tags.BlockTags;
@@ -112,16 +118,17 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.JukeboxSong;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.alchemy.Potion;
@@ -129,6 +136,8 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -137,9 +146,6 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.common.ItemAbilities;
@@ -195,6 +201,8 @@ public class Apoth {
 
         public static final DataComponentType<Boolean> TOUCHED_BY_MALICE = R.component("touched_by_malice", b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
+        public static final DataComponentType<Float> RENDER_ALPHA = R.component("render_alpha", b -> b.persistent(Codec.FLOAT).networkSynchronized(ByteBufCodecs.FLOAT));
+
         private static void bootstrap() {}
 
     }
@@ -204,24 +212,25 @@ public class Apoth {
         /**
          * Holds additional loot tables that will be dropped by the entity when it is killed.
          */
-        public static final AttachmentType<BonusLootTables> BONUS_LOOT_TABLES = R.attachment("bonus_loot_tables", () -> BonusLootTables.EMPTY, b -> b.serialize(BonusLootTables.CODEC, blt -> !blt.tables().isEmpty()));
+        public static final AttachmentType<BonusLootTables> BONUS_LOOT_TABLES = R.attachment("bonus_loot_tables", () -> BonusLootTables.EMPTY,
+            b -> b.serialize(BonusLootTables.CODEC.fieldOf("tables"), blt -> !blt.tables().isEmpty()));
 
         /**
          * The player's current {@link WorldTier}.
          */
-        public static final AttachmentType<WorldTier> WORLD_TIER = R.attachment("world_tier", () -> WorldTier.HAVEN, b -> b.serialize(WorldTier.CODEC).copyOnDeath().copyHandler((t, holder, prov) -> t));
+        public static final AttachmentType<WorldTier> WORLD_TIER = R.attachment("world_tier", () -> WorldTier.HAVEN, b -> b.serialize(WorldTier.CODEC.fieldOf("tier")).copyOnDeath().copyHandler((t, holder, prov) -> t));
 
         /**
          * Records if the {@link TierAugment}s for the current world tier have been applied to the attached entity or not.
          * <p>
          * If this is not set, they will be applied the next time the entity joins the level.
          */
-        public static final AttachmentType<Boolean> TIER_AUGMENTS_APPLIED = R.attachment("tier_augments_applied", () -> false, b -> b.serialize(Codec.BOOL));
+        public static final AttachmentType<Boolean> TIER_AUGMENTS_APPLIED = R.attachment("tier_augments_applied", () -> false, b -> b.serialize(Codec.BOOL.fieldOf("applied")));
 
         /**
          * Supports the {@link FrozenDropsBonus} by recording the amount of post-mitigation cold damage an entity has taken.
          */
-        public static final AttachmentType<Float> COLD_DAMAGE_TAKEN = R.attachment("cold_damage_taken", () -> 0F, b -> b.serialize(Codec.FLOAT));
+        public static final AttachmentType<Float> COLD_DAMAGE_TAKEN = R.attachment("cold_damage_taken", () -> 0F, b -> b.serialize(Codec.FLOAT.fieldOf("damage")));
 
         /**
          * Client-only attachment to record if the affix effect render has started.
@@ -245,7 +254,7 @@ public class Apoth {
         /**
          * Client-only attachment to record the time (in ticks, relative to the entity tick count) at which the next affix effect particle spawns.
          */
-        public static final AttachmentType<RadialState> RADIAL_MINING_MODE = R.attachment("radial_mining_mode", () -> RadialState.REQUIRE_NOT_SNEAKING, b -> b.serialize(RadialState.CODEC).copyOnDeath());
+        public static final AttachmentType<RadialState> RADIAL_MINING_MODE = R.attachment("radial_mining_mode", () -> RadialState.REQUIRE_NOT_SNEAKING, b -> b.serialize(RadialState.CODEC.fieldOf("mode")).copyOnDeath());
 
         private static void bootstrap() {}
     }
@@ -311,29 +320,29 @@ public class Apoth {
 
         public static final Holder<Item> BOSS_SUMMONER = R.item("boss_summoner", BossSummonerItem::new);
 
-        public static final Holder<Item> SIMPLE_REFORGING_TABLE = R.blockItem("simple_reforging_table", Blocks.SIMPLE_REFORGING_TABLE);
+        public static final Holder<Item> SIMPLE_REFORGING_TABLE = R.blockItem("simple_reforging_table", Blocks.SIMPLE_REFORGING_TABLE, ReforgingTableBlockItem::new, UnaryOperator.identity());
 
-        public static final Holder<Item> REFORGING_TABLE = R.blockItem("reforging_table", Blocks.REFORGING_TABLE, p -> p.rarity(Rarity.EPIC));
+        public static final Holder<Item> REFORGING_TABLE = R.blockItem("reforging_table", Blocks.REFORGING_TABLE, ReforgingTableBlockItem::new, p -> p.rarity(Rarity.EPIC));
 
-        public static final Holder<Item> SALVAGING_TABLE = R.blockItem("salvaging_table", Blocks.SALVAGING_TABLE);
+        public static final Holder<Item> SALVAGING_TABLE = R.blockItem("salvaging_table", Blocks.SALVAGING_TABLE, TooltipBlockItem::new, UnaryOperator.identity());
 
-        public static final Holder<Item> GEM_CUTTING_TABLE = R.blockItem("gem_cutting_table", Blocks.GEM_CUTTING_TABLE);
+        public static final Holder<Item> GEM_CUTTING_TABLE = R.blockItem("gem_cutting_table", Blocks.GEM_CUTTING_TABLE, TooltipBlockItem::new, UnaryOperator.identity());
 
-        public static final Holder<Item> AUGMENTING_TABLE = R.blockItem("augmenting_table", Blocks.AUGMENTING_TABLE, p -> p.rarity(Rarity.UNCOMMON));
+        public static final Holder<Item> AUGMENTING_TABLE = R.blockItem("augmenting_table", Blocks.AUGMENTING_TABLE, TooltipBlockItem::new, p -> p.rarity(Rarity.UNCOMMON));
 
-        public static final Holder<Item> GEM_CASE = R.blockItem("gem_case", Blocks.GEM_CASE);
+        public static final Holder<Item> GEM_CASE = R.blockItem("gem_case", Blocks.GEM_CASE, GemCaseBlockItem::new, UnaryOperator.identity());
 
-        public static final Holder<Item> ENDER_GEM_CASE = R.blockItem("ender_gem_case", Blocks.ENDER_GEM_CASE);
+        public static final Holder<Item> ENDER_GEM_CASE = R.blockItem("ender_gem_case", Blocks.ENDER_GEM_CASE, GemCaseBlockItem::new, UnaryOperator.identity());
 
         public static final Holder<Item> GEM = R.item("gem", GemItem::new);
 
         public static final Holder<Item> POTION_CHARM = R.item("potion_charm", PotionCharmItem::new);
 
-        public static final Holder<Item> IRON_UPGRADE_SMITHING_TEMPLATE = R.item("iron_upgrade_smithing_template", () -> createVanillaUpgradeTemplate("iron"));
+        public static final Holder<Item> IRON_UPGRADE_SMITHING_TEMPLATE = R.item("iron_upgrade_smithing_template", p -> createVanillaUpgradeTemplate("iron", p));
 
-        public static final Holder<Item> GOLD_UPGRADE_SMITHING_TEMPLATE = R.item("gold_upgrade_smithing_template", () -> createVanillaUpgradeTemplate("gold"));
+        public static final Holder<Item> GOLD_UPGRADE_SMITHING_TEMPLATE = R.item("gold_upgrade_smithing_template", p -> createVanillaUpgradeTemplate("gold", p));
 
-        public static final Holder<Item> DIAMOND_UPGRADE_SMITHING_TEMPLATE = R.item("diamond_upgrade_smithing_template", () -> createVanillaUpgradeTemplate("diamond"));
+        public static final Holder<Item> DIAMOND_UPGRADE_SMITHING_TEMPLATE = R.item("diamond_upgrade_smithing_template", p -> createVanillaUpgradeTemplate("diamond", p));
 
         public static final Holder<Item> MUSIC_DISC_FLASH = R.item("music_disc_flash", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.FLASH));
 
@@ -342,19 +351,19 @@ public class Apoth {
         public static final Holder<Item> MUSIC_DISC_SHIMMER = R.item("music_disc_shimmer", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.SHIMMER));
 
         private static Holder<Item> rarityMat(String id) {
-            return R.item(id + "_material", () -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(id)), new Item.Properties()));
+            return R.item(id + "_material", p -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(id)), p));
         }
 
-        private static SmithingTemplateItem createVanillaUpgradeTemplate(String type) {
+        private static SmithingTemplateItem createVanillaUpgradeTemplate(String type, Item.Properties props) {
             String path = type + "_upgrade_smithing_template";
             return new SmithingTemplateItem(
                 Apotheosis.lang("item", path + ".applies_to").withStyle(ChatFormatting.BLUE),
                 Apotheosis.lang("item", path + ".ingredients").withStyle(ChatFormatting.BLUE),
-                Apotheosis.lang("upgrade", type).withStyle(ChatFormatting.GRAY),
                 Apotheosis.lang("item", path + ".base_slot_description"),
                 Apotheosis.lang("item", path + ".additions_slot_description"),
                 SmithingTemplateItem.createNetheriteUpgradeIconList(),
-                SmithingTemplateItem.createNetheriteUpgradeMaterialList());
+                SmithingTemplateItem.createNetheriteUpgradeMaterialList(),
+                props);
         }
 
         private static void bootstrap() {}
@@ -400,18 +409,18 @@ public class Apoth {
     }
 
     public static class Sounds {
-        public static final Holder<SoundEvent> REFORGE = R.sound("reforge");
+        public static final SoundEvent REFORGE = R.sound("reforge");
 
-        public static final Holder<SoundEvent> MALICE = R.sound("malice");
+        public static final SoundEvent MALICE = R.sound("malice");
 
-        public static final Holder<SoundEvent> MUSIC_DISC_FLASH = R.sound("music_disc_flash");
-        public static final Holder<SoundEvent> MUSIC_DISC_GLIMMER = R.sound("music_disc_glimmer");
-        public static final Holder<SoundEvent> MUSIC_DISC_SHIMMER = R.sound("music_disc_shimmer");
+        public static final SoundEvent MUSIC_DISC_FLASH = R.sound("music_disc_flash");
+        public static final SoundEvent MUSIC_DISC_GLIMMER = R.sound("music_disc_glimmer");
+        public static final SoundEvent MUSIC_DISC_SHIMMER = R.sound("music_disc_shimmer");
 
-        public static final Holder<SoundEvent> INVADER_UNCOMMON = R.sound("invader_uncommon");
-        public static final Holder<SoundEvent> INVADER_RARE = R.sound("invader_rare");
-        public static final Holder<SoundEvent> INVADER_EPIC = R.sound("invader_epic");
-        public static final Holder<SoundEvent> INVADER_MYTHIC = R.sound("invader_mythic");
+        public static final SoundEvent INVADER_UNCOMMON = R.sound("invader_uncommon");
+        public static final SoundEvent INVADER_RARE = R.sound("invader_rare");
+        public static final SoundEvent INVADER_EPIC = R.sound("invader_epic");
+        public static final SoundEvent INVADER_MYTHIC = R.sound("invader_mythic");
 
         private static void bootstrap() {}
     }
@@ -435,19 +444,19 @@ public class Apoth {
     }
 
     public static final class RecipeSerializers {
-        public static final Holder<RecipeSerializer<?>> WITHDRAWAL = R.recipeSerializer("withdrawal", () -> new SingletonRecipeSerializer<>(WithdrawalRecipe::new));
-        public static final Holder<RecipeSerializer<?>> SOCKETING = R.recipeSerializer("socketing", () -> new SingletonRecipeSerializer<>(SocketingRecipe::new));
-        public static final Holder<RecipeSerializer<?>> SUPREMACY = R.recipeSerializer("supremacy", () -> new SingletonRecipeSerializer<>(SupremacyRecipe::new));
-        public static final Holder<RecipeSerializer<?>> UNNAMING = R.recipeSerializer("unnaming", () -> new SingletonRecipeSerializer<>(UnnamingRecipe::new));
-        public static final Holder<RecipeSerializer<?>> MALICE = R.recipeSerializer("malice", () -> new SingletonRecipeSerializer<>(MaliceRecipe::new));
-        public static final Holder<RecipeSerializer<?>> ADD_SOCKETS = R.recipeSerializer("add_sockets", () -> AddSocketsRecipe.Serializer.INSTANCE);
-        public static final Holder<RecipeSerializer<?>> SALVAGING = R.recipeSerializer("salvaging", () -> SalvagingRecipe.Serializer.INSTANCE);
-        public static final Holder<RecipeSerializer<?>> REFORGING = R.recipeSerializer("reforging", () -> ReforgingRecipe.Serializer.INSTANCE);
-        public static final Holder<RecipeSerializer<?>> PURITY_UPGRADE = R.recipeSerializer("purity_upgrade", () -> PurityUpgradeRecipe.Serializer.INSTANCE);
-        public static final Holder<RecipeSerializer<?>> BASIC_GEM_CUTTING = R.recipeSerializer("basic_gem_cutting", () -> BasicGemCuttingRecipe.Serializer.INSTANCE);
-        public static final Holder<RecipeSerializer<?>> POTION_CHARM_CRAFTING = R.recipeSerializer("potion_charm_crafting", () -> PotionCharmRecipe.Serializer.INSTANCE);
-        public static final Holder<RecipeSerializer<?>> POTION_CHARM_INFUSION = R.recipeSerializer("potion_charm_infusion", () -> CharmInfusionRecipe.Serializer.INSTANCE);
-        public static final Holder<RecipeSerializer<?>> SIZED_UPGRADE_RECIPE = R.recipeSerializer("sized_upgrade_recipe", () -> SizedUpgradeRecipe.Serializer.INSTANCE);
+        public static final Holder<RecipeSerializer<?>> WITHDRAWAL = R.recipeSerializer("withdrawal", () -> SingletonRecipeSerializer.create(WithdrawalRecipe::new));
+        public static final Holder<RecipeSerializer<?>> SOCKETING = R.recipeSerializer("socketing", () -> SingletonRecipeSerializer.create(SocketingRecipe::new));
+        public static final Holder<RecipeSerializer<?>> SUPREMACY = R.recipeSerializer("supremacy", () -> SingletonRecipeSerializer.create(SupremacyRecipe::new));
+        public static final Holder<RecipeSerializer<?>> UNNAMING = R.recipeSerializer("unnaming", () -> SingletonRecipeSerializer.create(UnnamingRecipe::new));
+        public static final Holder<RecipeSerializer<?>> MALICE = R.recipeSerializer("malice", () -> SingletonRecipeSerializer.create(MaliceRecipe::new));
+        public static final Holder<RecipeSerializer<?>> ADD_SOCKETS = R.recipeSerializer("add_sockets", () -> AddSocketsRecipe.SERIALIZER);
+        public static final Holder<RecipeSerializer<?>> SALVAGING = R.recipeSerializer("salvaging", () -> SalvagingRecipe.SERIALIZER);
+        public static final Holder<RecipeSerializer<?>> REFORGING = R.recipeSerializer("reforging", () -> ReforgingRecipe.SERIALIZER);
+        public static final Holder<RecipeSerializer<?>> PURITY_UPGRADE = R.recipeSerializer("purity_upgrade", () -> PurityUpgradeRecipe.SERIALIZER);
+        public static final Holder<RecipeSerializer<?>> BASIC_GEM_CUTTING = R.recipeSerializer("basic_gem_cutting", () -> BasicGemCuttingRecipe.SERIALIZER);
+        public static final Holder<RecipeSerializer<?>> POTION_CHARM_CRAFTING = R.recipeSerializer("potion_charm_crafting", () -> PotionCharmRecipe.SERIALIZER);
+        public static final Holder<RecipeSerializer<?>> POTION_CHARM_INFUSION = R.recipeSerializer("potion_charm_infusion", () -> CharmInfusionRecipe.SERIALIZER);
+        public static final Holder<RecipeSerializer<?>> SIZED_UPGRADE_RECIPE = R.recipeSerializer("sized_upgrade_recipe", () -> SizedUpgradeRecipe.SERIALIZER);
 
         private static void bootstrap() {}
     }
@@ -459,9 +468,16 @@ public class Apoth {
         private static void bootstrap() {}
     }
 
+    public static final class SlotDisplays {
+        public static final SlotDisplay.Type<AffixItemSlotDisplay> AFFIX_ITEM = R.custom("affix_item", Registries.SLOT_DISPLAY, AffixItemSlotDisplay.TYPE);
+        public static final SlotDisplay.Type<GemSlotDisplay> GEM = R.custom("gem", Registries.SLOT_DISPLAY, GemSlotDisplay.TYPE);
+
+        private static void bootstrap() {}
+    }
+
     public static final class LootPoolEntries {
-        public static final LootPoolEntryType RANDOM_AFFIX_ITEM = R.lootPoolEntry("random_affix_item", AffixLootPoolEntry.TYPE);
-        public static final LootPoolEntryType RANDOM_GEM = R.lootPoolEntry("random_gem", GemLootPoolEntry.TYPE);
+        public static final MapCodec<AffixLootPoolEntry> RANDOM_AFFIX_ITEM = R.lootPoolEntry("random_affix_item", AffixLootPoolEntry.CODEC);
+        public static final MapCodec<GemLootPoolEntry> RANDOM_GEM = R.lootPoolEntry("random_gem", GemLootPoolEntry.CODEC);
 
         private static void bootstrap() {}
     }
@@ -476,19 +492,20 @@ public class Apoth {
     }
 
     public static final class LootConditions {
-        public static final LootItemConditionType MATCHES_BLOCK = R.lootCondition("matches_block", MatchesBlockCondition.CODEC);
+        public static final MapCodec<MatchesBlockCondition> MATCHES_BLOCK = R.lootCondition("matches_block", MatchesBlockCondition.CODEC);
 
-        public static final LootItemConditionType KILLED_BY_REAL_PLAYER = R.lootCondition("killed_by_real_player", KilledByRealPlayerCondition.CODEC);
+        public static final MapCodec<KilledByRealPlayerCondition> KILLED_BY_REAL_PLAYER = R.lootCondition("killed_by_real_player", KilledByRealPlayerCondition.CODEC);
 
-        public static final LootItemConditionType HAS_WORLD_TIER = R.lootCondition("has_world_tier", WorldTierCondition.CODEC);
+        public static final MapCodec<WorldTierCondition> HAS_WORLD_TIER = R.lootCondition("has_world_tier", WorldTierCondition.CODEC);
 
-        public static final LootItemConditionType LOOT_TABLE_PATTERN_MATCHER = R.lootCondition("loot_table_pattern_matcher", LootPatternMatcher.CODEC);
+        public static final MapCodec<LootPatternMatcher> LOOT_TABLE_PATTERN_MATCHER = R.lootCondition("loot_table_pattern_matcher", LootPatternMatcher.CODEC);
 
         private static void bootstrap() {}
     }
 
     public static final class LootFunctions {
-        public static final LootItemFunctionType<ReforgeItemFunction> REFORGE_ITEM = R.custom("reforge_item", Registries.LOOT_FUNCTION_TYPE, ReforgeItemFunction.TYPE);
+        public static final MapCodec<ReforgeItemFunction> REFORGE_ITEM = R.custom("reforge_item", Registries.LOOT_FUNCTION_TYPE, ReforgeItemFunction.CODEC);
+        public static final MapCodec<AutomaticAffixTrade> AUTOMATIC_AFFIX_TRADE = R.custom("automatic_affix_trade", Registries.LOOT_FUNCTION_TYPE, AutomaticAffixTrade.CODEC);
 
         private static void bootstrap() {}
     }
@@ -507,12 +524,12 @@ public class Apoth {
         private static void bootstrap() {}
     }
 
-    public static final class ItemSubPredicates {
+    public static final class DataComponentPredicates {
 
-        public static final ItemSubPredicate.Type<AffixItemPredicate> AFFIXED_ITEM = R.itemSubPredicate("affixed_item", AffixItemPredicate.CODEC);
-        public static final ItemSubPredicate.Type<PurityItemPredicate> ITEM_WITH_PURITY = R.itemSubPredicate("item_with_purity", PurityItemPredicate.CODEC);
-        public static final ItemSubPredicate.Type<RarityItemPredicate> ITEM_WITH_RARITY = R.itemSubPredicate("item_with_rarity", RarityItemPredicate.CODEC);
-        public static final ItemSubPredicate.Type<SocketItemPredicate> SOCKETED_ITEM = R.itemSubPredicate("socketed_item", SocketItemPredicate.CODEC);
+        public static final DataComponentPredicate.Type<AffixItemPredicate> AFFIXED_ITEM = R.componentPredicate("affixed_item", AffixItemPredicate.CODEC);
+        public static final DataComponentPredicate.Type<PurityItemPredicate> ITEM_WITH_PURITY = R.componentPredicate("item_with_purity", PurityItemPredicate.CODEC);
+        public static final DataComponentPredicate.Type<RarityItemPredicate> ITEM_WITH_RARITY = R.componentPredicate("item_with_rarity", RarityItemPredicate.CODEC);
+        public static final DataComponentPredicate.Type<SocketItemPredicate> SOCKETED_ITEM = R.componentPredicate("socketed_item", SocketItemPredicate.CODEC);
 
         private static void bootstrap() {}
     }
@@ -559,11 +576,11 @@ public class Apoth {
     }
 
     public static final class Advancements {
-        public static final ResourceLocation WORLD_TIER_HAVEN = Apotheosis.loc("progression/haven");
-        public static final ResourceLocation WORLD_TIER_FRONTIER = Apotheosis.loc("progression/frontier");
-        public static final ResourceLocation WORLD_TIER_ASCENT = Apotheosis.loc("progression/ascent");
-        public static final ResourceLocation WORLD_TIER_SUMMIT = Apotheosis.loc("progression/summit");
-        public static final ResourceLocation WORLD_TIER_PINNACLE = Apotheosis.loc("progression/pinnacle");
+        public static final Identifier WORLD_TIER_HAVEN = Apotheosis.loc("progression/haven");
+        public static final Identifier WORLD_TIER_FRONTIER = Apotheosis.loc("progression/frontier");
+        public static final Identifier WORLD_TIER_ASCENT = Apotheosis.loc("progression/ascent");
+        public static final Identifier WORLD_TIER_SUMMIT = Apotheosis.loc("progression/summit");
+        public static final Identifier WORLD_TIER_PINNACLE = Apotheosis.loc("progression/pinnacle");
     }
 
     public static final class Particles {
@@ -573,22 +590,23 @@ public class Apoth {
     }
 
     public static final class Stats {
-        public static final ResourceLocation WORLD_TIERS_ACTIVATED = R.customStat("world_tiers_activated", StatFormatter.DEFAULT);
+        public static final Identifier WORLD_TIERS_ACTIVATED = R.customStat("world_tiers_activated", StatFormatter.DEFAULT);
 
         private static void bootstrap() {}
     }
 
+    // TODO https://github.com/neoforged/NeoForge/issues/3112: Re-wire BREAKER against _DIG abilities instead of item tags.
     public static final class LootCategories {
 
         public static final LootCategory BOW = register("bow", s -> s.getItem() instanceof BowItem || s.getItem() instanceof CrossbowItem, ALObjects.EquipmentSlotGroups.HAND);
-        public static final LootCategory BREAKER = register("breaker", s -> s.canPerformAction(ItemAbilities.PICKAXE_DIG) || s.canPerformAction(ItemAbilities.SHOVEL_DIG), ALObjects.EquipmentSlotGroups.MAINHAND);
+        public static final LootCategory BREAKER = register("breaker", s -> s.is(ItemTags.PICKAXES) || s.is(ItemTags.SHOVELS), ALObjects.EquipmentSlotGroups.MAINHAND);
         public static final LootCategory HELMET = register("helmet", armorSlot(EquipmentSlot.HEAD), ALObjects.EquipmentSlotGroups.HEAD);
         public static final LootCategory CHESTPLATE = register("chestplate", armorSlot(EquipmentSlot.CHEST), ALObjects.EquipmentSlotGroups.CHEST);
         public static final LootCategory LEGGINGS = register("leggings", armorSlot(EquipmentSlot.LEGS), ALObjects.EquipmentSlotGroups.LEGS);
         public static final LootCategory BOOTS = register("boots", armorSlot(EquipmentSlot.FEET), ALObjects.EquipmentSlotGroups.FEET);
-        public static final LootCategory SHIELD = register("shield", s -> s.canPerformAction(ItemAbilities.SHIELD_BLOCK), ALObjects.EquipmentSlotGroups.HAND);
+        public static final LootCategory SHIELD = register("shield", s -> s.getItem() instanceof ShieldItem, ALObjects.EquipmentSlotGroups.HAND);
         public static final LootCategory TRIDENT = register("trident", s -> s.getItem() instanceof TridentItem, ALObjects.EquipmentSlotGroups.MAINHAND);
-        public static final LootCategory MELEE_WEAPON = register("melee_weapon", s -> s.canPerformAction(ItemAbilities.SWORD_DIG) || getDefaultModifiers(s).compute(1, EquipmentSlot.MAINHAND) > 1,
+        public static final LootCategory MELEE_WEAPON = register("melee_weapon", s -> s.is(ItemTags.SWORDS) || getDefaultModifiers(s).compute(Attributes.ATTACK_DAMAGE, 1, EquipmentSlot.MAINHAND) > 1,
             ALObjects.EquipmentSlotGroups.MAINHAND, 2000);
         public static final LootCategory SHEARS = register("shears", s -> s.canPerformAction(ItemAbilities.SHEARS_DIG), ALObjects.EquipmentSlotGroups.MAINHAND, 2500);
         public static final LootCategory NONE = register("none", Predicates.alwaysFalse(), ALObjects.EquipmentSlotGroups.ANY, Integer.MAX_VALUE);
@@ -607,12 +625,10 @@ public class Apoth {
                     return false;
                 }
 
-                EquipmentSlot itemSlot = stack.getEquipmentSlot();
-                if (itemSlot == null) {
-                    Equipable equipable = Equipable.get(stack);
-                    if (equipable != null) {
-                        itemSlot = equipable.getEquipmentSlot();
-                    }
+                EquipmentSlot itemSlot = null;
+                Equippable equippable = stack.get(DataComponents.EQUIPPABLE);
+                if (equippable != null) {
+                    itemSlot = equippable.slot();
                 }
 
                 return itemSlot == slot;
@@ -637,7 +653,7 @@ public class Apoth {
         /**
          * Holds per-item loot category overrides.
          */
-        public static final DataMapType<Item, LootCategory> LOOT_CATEGORY_OVERRIDES = R.dataMap("loot_category_overrides", Registries.ITEM, LootCategory.OPTIONAL_CODEC, c -> c.synced(LootCategory.OPTIONAL_CODEC, true));
+        public static final DataMapType<Item, LootCategory> LOOT_CATEGORY_OVERRIDES = R.dataMap("loot_category_overrides", Registries.ITEM, LootCategory.CODEC, c -> c.synced(LootCategory.CODEC, true));
 
         private static void bootstrap() {}
     }
@@ -657,13 +673,14 @@ public class Apoth {
         Triggers.bootstrap();
         Features.bootstrap();
         Ingredients.bootstrap();
+        SlotDisplays.bootstrap();
         RecipeTypes.bootstrap();
         LootModifiers.bootstrap();
         LootFunctions.bootstrap();
         LootConditions.bootstrap();
         LootPoolEntries.bootstrap();
         RecipeSerializers.bootstrap();
-        ItemSubPredicates.bootstrap();
+        DataComponentPredicates.bootstrap();
         EntitySubPredicates.bootstrap();
         Stats.bootstrap();
         Particles.bootstrap();

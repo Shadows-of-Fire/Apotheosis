@@ -13,7 +13,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
@@ -51,14 +50,13 @@ public record RadialStatePayload(RadialState state) implements CustomPacketPaylo
         }
 
         @Override
-        public void handle(RadialStatePayload msg, IPayloadContext ctx) {
-            Player player = ctx.player();
-            if (ctx.flow().isClientbound()) {
-                RadialState.setState(player, msg.state);
-            }
-            else {
-                RadialUtil.toggleRadialState(player);
-            }
+        public void handleClient(RadialStatePayload msg, IPayloadContext ctx) {
+            RadialState.setState(ctx.player(), msg.state);
+        }
+
+        @Override
+        public void handleServer(RadialStatePayload msg, IPayloadContext ctx) {
+            RadialUtil.toggleRadialState(ctx.player());
         }
 
         @Override

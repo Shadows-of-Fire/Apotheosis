@@ -1,7 +1,7 @@
 {
     "type": "apotheosis:attribute",
     "modifier": {
-        "attribute": "minecraft:generic.armor_toughness",
+        "attribute": "minecraft:armor_toughness",
         "operation": "add_value",
         "value": 10.0
     },

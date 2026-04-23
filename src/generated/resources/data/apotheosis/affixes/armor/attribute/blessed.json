@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.max_health",
+    "attribute": "minecraft:max_health",
     "categories": [
         "apotheosis:helmet",
         "apotheosis:chestplate",

@@ -9,9 +9,9 @@ import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.effect.DamageReductionAffix.DamageType;
 import dev.shadowsoffire.apotheosis.affix.effect.MobEffectAffix.Target;
-import dev.shadowsoffire.apotheosis.compat.twilight.FortificationBonus;
-import dev.shadowsoffire.apotheosis.compat.twilight.OreMagnetBonus;
-import dev.shadowsoffire.apotheosis.compat.twilight.TreasureGoblinBonus;
+// import dev.shadowsoffire.apotheosis.compat.twilight.FortificationBonus; // Disabled: Twilight Forest has no 26.1 build yet
+// import dev.shadowsoffire.apotheosis.compat.twilight.OreMagnetBonus; // Disabled: Twilight Forest has no 26.1 build yet
+// import dev.shadowsoffire.apotheosis.compat.twilight.TreasureGoblinBonus; // Disabled: Twilight Forest has no 26.1 build yet
 import dev.shadowsoffire.apotheosis.loot.conditions.MatchesBlockCondition;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
@@ -27,7 +27,6 @@ import dev.shadowsoffire.apotheosis.socket.gem.bonus.MultiAttrBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.AllStatsBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.BloodyArrowBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.DropTransformBonus;
-import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.FrozenDropsBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.LeechBlockBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.MageSlayerBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.OmneticBonus;
@@ -43,16 +42,14 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderLookup.RegistryLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -78,9 +75,9 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
     public static final GemClass WEAPON_OR_TOOL = new GemClass("weapon_or_tool", LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW, LootCategories.BREAKER);
     public static final GemClass NON_TRIDENT_WEAPONS = new GemClass("weapons", LootCategories.MELEE_WEAPON, LootCategories.BOW);
     public static final GemClass TOOLS = new GemClass("tools", LootCategories.BREAKER, LootCategories.SHEARS);
-    public static final GemClass ANYTHING = new GemClass("anything", new AnyHolderSet<>(BuiltInRegs.LOOT_CATEGORY.asLookup()));
+    public static final GemClass ANYTHING = new GemClass("anything", new AnyHolderSet<>(BuiltInRegs.LOOT_CATEGORY));
 
-    public static final Holder<MobEffect> TW_FROSTED = DeferredHolder.create(Registries.MOB_EFFECT, ResourceLocation.parse("twilightforest:frosted"));
+    public static final Holder<MobEffect> TW_FROSTED = DeferredHolder.create(Registries.MOB_EFFECT, Identifier.parse("twilightforest:frosted"));
 
     public GemProvider(PackOutput output, CompletableFuture<Provider> registries) {
         super(output, registries, GemRegistry.INSTANCE);
@@ -249,7 +246,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.425)
                 .value(Purity.PERFECT, 0.55))
             .bonus(TOOLS, AttributeBonus.builder()
-                .attr(ALObjects.Attributes.MINING_SPEED)
+                .attr(Attributes.BLOCK_BREAK_SPEED)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 0.05)
                 .value(Purity.CHIPPED, 0.15)
@@ -358,7 +355,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.5)
                 .value(Purity.PERFECT, 0.60))
             .bonus(TOOLS, AttributeBonus.builder()
-                .attr(ALObjects.Attributes.MINING_SPEED)
+                .attr(Attributes.BLOCK_BREAK_SPEED)
                 .op(Operation.ADD_MULTIPLIED_BASE)
                 .value(Purity.CRACKED, 0.10)
                 .value(Purity.CHIPPED, 0.15)
@@ -511,7 +508,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.175)
                 .value(Purity.PERFECT, 0.225))
             .bonus(LootCategories.TRIDENT, MobEffectBonus.builder()
-                .effect(MobEffects.DAMAGE_BOOST)
+                .effect(MobEffects.STRENGTH)
                 .target(Target.ARROW_SELF)
                 .stacking()
                 .limit(5)
@@ -581,16 +578,16 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     ALObjects.Attributes.GHOST_HEALTH,
                     ALObjects.Attributes.HEALING_RECEIVED,
                     ALObjects.Attributes.LIFE_STEAL,
-                    ALObjects.Attributes.MINING_SPEED,
+                    Attributes.BLOCK_BREAK_SPEED,
                     ALObjects.Attributes.OVERHEAL,
                     ALObjects.Attributes.PROT_PIERCE,
                     ALObjects.Attributes.PROT_SHRED,
                     NeoForgeMod.SWIM_SPEED))
             .bonus(LootCategories.BREAKER, DropTransformBonus.builder()
-                .condition(new MatchesBlockCondition(BuiltInRegistries.BLOCK.getOrCreateTag(Tags.Blocks.ORES_COPPER)))
-                .inputs(Ingredient.of(Tags.Items.RAW_MATERIALS_COPPER))
+                .condition(new MatchesBlockCondition(registries.lookupOrThrow(Registries.BLOCK).getOrThrow(Tags.Blocks.ORES_COPPER)))
+                .inputs(Ingredient.of(registries.lookupOrThrow(Registries.ITEM).getOrThrow(Tags.Items.RAW_MATERIALS_COPPER)))
                 .desc("gem.apotheosis:overworld/royalty.bonus.pickaxe")
-                .output(new ItemStack(Items.RAW_GOLD))
+                .output(Items.RAW_GOLD)
                 .value(Purity.FLAWED, 0.15F)
                 .value(Purity.NORMAL, 0.20F)
                 .value(Purity.FLAWLESS, 0.25F)
@@ -856,16 +853,18 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     Purity.FLAWLESS, 0.225F,
                     Purity.PERFECT, 0.35F)))
             .bonus(LootCategories.SHIELD, MobEffectBonus.builder()
-                .effect(MobEffects.DAMAGE_RESISTANCE)
+                .effect(MobEffects.RESISTANCE)
                 .target(Target.BLOCK_SELF)
                 .value(Purity.NORMAL, 200, 0, 400)
                 .value(Purity.FLAWLESS, 300, 0, 400)
                 .value(Purity.PERFECT, 300, 1, 400)));
 
+        // TODO(26.1): Restore Twilight Forest gem entries once twilightforest ships a 26.1 build.
+        /*
         addConditionally("twilightforest", "twilight/queen", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
-            .contstraints(Constraints.forDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse("twilightforest:twilight_forest"))))
+            .contstraints(Constraints.forDimension(ResourceKey.create(Registries.DIMENSION, Identifier.parse("twilightforest:twilight_forest"))))
             .bonus(LootCategories.CHESTPLATE, FortificationBonus.builder()
                 .value(Purity.FLAWED, 0.05F, 6000)
                 .value(Purity.NORMAL, 0.10F, 5400)
@@ -892,7 +891,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
         addConditionally("twilightforest", "twilight/forest", TieredWeights.forTiersAbove(WorldTier.SUMMIT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
-            .contstraints(Constraints.forDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse("twilightforest:twilight_forest"))))
+            .contstraints(Constraints.forDimension(ResourceKey.create(Registries.DIMENSION, Identifier.parse("twilightforest:twilight_forest"))))
             .bonus(WEAPONS, TreasureGoblinBonus.builder()
                 .value(Purity.FLAWED, 0.005F, 4800)
                 .value(Purity.NORMAL, 0.0075F, 4800)
@@ -943,6 +942,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.NORMAL, -0.125F)
                     .value(Purity.FLAWLESS, -0.225F)
                     .value(Purity.PERFECT, -0.20F))));
+        */
     }
 
     private void addGem(String name, UnaryOperator<Gem.Builder> config) {

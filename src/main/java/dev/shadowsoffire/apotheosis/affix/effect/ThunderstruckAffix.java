@@ -68,7 +68,7 @@ public class ThunderstruckAffix extends Affix {
 
     @Override
     public void doPostAttack(AffixInstance inst, LivingEntity user, Entity target) {
-        if (user.level().isClientSide) {
+        if (user.level().isClientSide()) {
             return;
         }
         if (ApothicAttributes.getLocalAtkStrength(user) >= 0.98) {

@@ -11,20 +11,19 @@ import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
 import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -43,7 +42,7 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
     }
 
     @Override
-    public VoxelShape getOcclusionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
+    protected VoxelShape getOcclusionShape(BlockState pState) {
         return OCC_SHAPE;
     }
 
@@ -63,10 +62,10 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
                 opt.ifPresent(player -> {
                     this.level.setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
 
-                    GenContext ctx = GenContext.forPlayerAtPos(this.level.random, player, pos);
+                    GenContext ctx = GenContext.forPlayerAtPos(this.level.getRandom(), player, pos);
                     Invader bossItem = !this.item.isBound() ? InvaderRegistry.INSTANCE.getRandomItem(ctx) : this.item.get();
                     if (bossItem == null) {
-                        Apotheosis.LOGGER.error("A boss spawner attempted to spawn a boss at {} in {}, but no bosses were available!", this.getBlockPos(), this.level.dimension().location());
+                        Apotheosis.LOGGER.error("A boss spawner attempted to spawn a boss at {} in {}, but no bosses were available!", this.getBlockPos(), this.level.dimension().identifier());
                         return;
                     }
 
@@ -83,19 +82,17 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
         }
 
         @Override
-        protected void saveAdditional(CompoundTag tag, Provider registries) {
+        protected void saveAdditional(ValueOutput output) {
             if (this.item != null) {
-                tag.putString("boss_item", this.item.getId().toString());
+                output.putString("boss_item", this.item.getId().toString());
             }
-            super.saveAdditional(tag, registries);
+            super.saveAdditional(output);
         }
 
         @Override
-        protected void loadAdditional(CompoundTag tag, Provider registries) {
-            if (tag.contains("boss_item")) {
-                this.item = InvaderRegistry.INSTANCE.holder(ResourceLocation.tryParse(tag.getString("boss_item")));
-            }
-            super.loadAdditional(tag, registries);
+        protected void loadAdditional(ValueInput input) {
+            input.getString("boss_item").ifPresent(id -> this.item = InvaderRegistry.INSTANCE.holder(Identifier.tryParse(id)));
+            super.loadAdditional(input);
         }
 
     }

@@ -50,7 +50,7 @@ public class BlockUtil {
             player = FakePlayerFactory.getMinecraft(level);
         }
 
-        player.getInventory().items.set(player.getInventory().selected, mainhand);
+        player.getInventory().setItem(player.getInventory().getSelectedSlot(), mainhand);
         player.setPos(pos.getX(), pos.getY(), pos.getZ());
 
         if (state.getDestroySpeed(level, pos) < 0 || !state.canHarvestBlock(level, pos, player)) {
@@ -103,7 +103,7 @@ public class BlockUtil {
      * Vanilla Copy: {@link ServerPlayerGameMode#removeBlock}
      */
     public static boolean removeBlock(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState state, boolean canHarvest) {
-        boolean removed = state.onDestroyedByPlayer(level, pos, player, canHarvest, level.getFluidState(pos));
+        boolean removed = state.onDestroyedByPlayer(level, pos, player, player.getMainHandItem(), canHarvest, level.getFluidState(pos));
         if (removed) {
             state.getBlock().destroy(level, pos, state);
         }

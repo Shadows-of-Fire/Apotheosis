@@ -12,6 +12,7 @@ import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 /**
  * A loot entry represents a possible item that can come out of a loot roll.
@@ -22,22 +23,22 @@ import net.minecraft.world.item.ItemStack;
  * @param stack       The item stack that will be generated.
  * @param rarities    The possible rarities this entry may generate with.
  */
-public record AffixLootEntry(TieredWeights weights, Constraints constraints, ItemStack stack, Set<LootRarity> rarities) implements CodecProvider<AffixLootEntry>, Weighted, Constrained {
+public record AffixLootEntry(TieredWeights weights, Constraints constraints, ItemStackTemplate stackTemplate, Set<LootRarity> rarities) implements CodecProvider<AffixLootEntry>, Weighted, Constrained {
 
     public static final Codec<AffixLootEntry> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             TieredWeights.CODEC.fieldOf("weights").forGetter(Weighted::weights),
             Constraints.CODEC.optionalFieldOf("constraints", Constraints.EMPTY).forGetter(Constrained::constraints),
-            ItemStack.CODEC.fieldOf("stack").forGetter(AffixLootEntry::stack),
+            ItemStackTemplate.CODEC.fieldOf("stack").forGetter(AffixLootEntry::stackTemplate),
             PlaceboCodecs.setOf(LootRarity.CODEC).optionalFieldOf("rarities", Set.of()).forGetter(AffixLootEntry::rarities))
         .apply(inst, AffixLootEntry::new));
 
-    public AffixLootEntry(TieredWeights weights, ItemStack stack) {
+    public AffixLootEntry(TieredWeights weights, ItemStackTemplate stack) {
         this(weights, Constraints.EMPTY, stack, Set.of());
     }
 
     public LootCategory getType() {
-        return LootCategory.forItem(this.stack);
+        return LootCategory.forItem(this.stack());
     }
 
     @Override
@@ -50,9 +51,8 @@ public record AffixLootEntry(TieredWeights weights, Constraints constraints, Ite
      * <p>
      * In effectively all usecases, the stack must be copied anyway.
      */
-    @Override
     public ItemStack stack() {
-        return this.stack.copy();
+        return this.stackTemplate.create();
     }
 
 }

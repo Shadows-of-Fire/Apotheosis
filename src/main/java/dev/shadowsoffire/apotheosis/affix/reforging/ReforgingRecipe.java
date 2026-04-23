@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.affix.reforging;
 
+import java.util.List;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -8,7 +10,6 @@ import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
@@ -16,10 +17,13 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
@@ -41,30 +45,16 @@ public record ReforgingRecipe(DynamicHolder<LootRarity> rarity, int matCost, int
         ByteBufCodecs.holderSet(Registries.BLOCK), ReforgingRecipe::tables,
         ReforgingRecipe::new);
 
+    public static final RecipeSerializer<ReforgingRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
+
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return Serializer.INSTANCE;
+    public RecipeSerializer<? extends Recipe<RecipeInput>> getSerializer() {
+        return SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<RecipeInput>> getType() {
         return RecipeTypes.REFORGING;
-    }
-
-    public static class Serializer implements RecipeSerializer<ReforgingRecipe> {
-
-        public static final Serializer INSTANCE = new Serializer();
-
-        @Override
-        public MapCodec<ReforgingRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, ReforgingRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
-
     }
 
     @Override
@@ -75,20 +65,38 @@ public record ReforgingRecipe(DynamicHolder<LootRarity> rarity, int matCost, int
 
     @Override
     @Deprecated
-    public ItemStack assemble(RecipeInput input, Provider registries) {
+    public ItemStack assemble(RecipeInput input) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    @Deprecated
-    public boolean canCraftInDimensions(int width, int height) {
+    public String group() {
+        return "";
+    }
+
+    @Override
+    public boolean showNotification() {
         return false;
     }
 
     @Override
-    @Deprecated
-    public ItemStack getResultItem(Provider registries) {
-        return ItemStack.EMPTY;
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return net.minecraft.world.item.crafting.RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    public List<RecipeDisplay> display() {
+        return List.of();
     }
 
 }

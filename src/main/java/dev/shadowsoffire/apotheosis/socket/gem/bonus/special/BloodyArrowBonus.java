@@ -15,10 +15,11 @@ import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apothic_enchanting.Ench;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 
 public class BloodyArrowBonus extends GemBonus {
@@ -37,13 +38,13 @@ public class BloodyArrowBonus extends GemBonus {
 
     @Override
     public void onProjectileFired(GemInstance inst, LivingEntity user, Projectile proj) {
-        if (proj instanceof AbstractArrow arrow) {
+        if (proj instanceof AbstractArrow arrow && !user.level().isClientSide()) {
             Data d = this.values.get(inst.purity());
             if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) {
                 return;
             }
-            user.hurt(user.damageSources().source(Ench.DamageTypes.CORRUPTED), user.getMaxHealth() * d.healthCost);
-            arrow.setBaseDamage(arrow.getBaseDamage() * d.dmgMultiplier);
+            user.hurtServer((ServerLevel) user.level(), user.damageSources().source(Ench.DamageTypes.CORRUPTED), user.getMaxHealth() * d.healthCost);
+            arrow.setBaseDamage(arrow.baseDamage * d.dmgMultiplier);
             Affix.startCooldown(makeUniqueId(inst), user);
         }
     }

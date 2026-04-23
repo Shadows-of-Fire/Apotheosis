@@ -7,9 +7,7 @@ import java.util.Map;
 import java.util.function.UnaryOperator;
 
 import org.jetbrains.annotations.Nullable;
-
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import org.joml.Matrix3x2fStack;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -20,24 +18,25 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.CriterionProgress;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button.OnPress;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class WorldTierSelectScreen extends Screen {
 
-    public static final ResourceLocation TEXTURE = Apotheosis.loc("textures/gui/mountain.png");
-    public static final ResourceLocation SEPARATOR_LINE = Apotheosis.loc("textures/gui/separator_line.png");
-    public static final ResourceLocation SWORD_EMPTY = Apotheosis.loc("textures/gui/sword_empty.png");
-    public static final ResourceLocation SWORD_FULL = Apotheosis.loc("textures/gui/sword_full.png");
+    public static final Identifier TEXTURE = Apotheosis.loc("textures/gui/mountain.png");
+    public static final Identifier SEPARATOR_LINE = Apotheosis.loc("textures/gui/separator_line.png");
+    public static final Identifier SWORD_EMPTY = Apotheosis.loc("textures/gui/sword_empty.png");
+    public static final Identifier SWORD_FULL = Apotheosis.loc("textures/gui/sword_full.png");
 
     public static final AnimationData HAVEN_ANIMATION = new AnimationData(138, 156, 21, 320, 10, Apotheosis.loc("textures/gui/animations/haven.png"));
     public static final AnimationData FRONTIER_ANIMATION = new AnimationData(210, 236, 45, 588, 21, Apotheosis.loc("textures/gui/animations/frontier.png"));
@@ -110,40 +109,26 @@ public class WorldTierSelectScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics gfx, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(gfx, mouseX, mouseY, partialTick);
+    public void extractBackground(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(gfx, mouseX, mouseY, partialTick);
 
         int imgLeft = (this.width - IMAGE_WIDTH) / 2;
         int imgTop = (this.height - IMAGE_HEIGHT) / 2;
 
-        gfx.blit(TEXTURE, imgLeft, imgTop, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT);
+        gfx.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, imgLeft, imgTop, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT);
+        gfx.blit(RenderPipelines.GUI_TEXTURED, SEPARATOR_LINE, leftPos, topPos + 50, 0, 0, 275, 30, 275, 30);
 
-        PoseStack pose = gfx.pose();
-        pose.pushPose();
-
-        float scale = 3;
-        pose.scale(scale, scale, 1);
-        Component title = Apotheosis.lang("text", "world_tier." + this.displayedTier.getSerializedName());
-        gfx.drawString(font, title.getVisualOrderText(), (leftPos + 15) / scale, (topPos + 15) / scale, 0xFFFFFF, true);
-        pose.popPose();
-
-        Component desc = Apotheosis.lang("text", "world_tier." + this.displayedTier.getSerializedName() + ".desc");
-        gfx.drawString(font, desc, leftPos + 15, topPos + 45, 0xC8C86E);
-
-        gfx.blit(SEPARATOR_LINE, leftPos, topPos + 50, 0, 0, 0, 275, 30, 275, 30);
-
+        Matrix3x2fStack pose = gfx.pose();
+        pose.pushMatrix();
+        float scale = 0.5F;
+        pose.scale(scale, scale);
         Component diffText = Component.literal("Difficulty:").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
-        gfx.drawString(font, diffText.getVisualOrderText(), leftPos + 15, topPos + 80, 0xFFFFFF, true);
-
-        pose.pushPose();
-        scale = 0.5F;
-        pose.scale(scale, scale, 1);
         for (int i = 0; i < 5; i++) {
-            ResourceLocation tex = this.displayedTier.ordinal() >= i ? SWORD_FULL : SWORD_EMPTY;
+            Identifier tex = this.displayedTier.ordinal() >= i ? SWORD_FULL : SWORD_EMPTY;
             int swordLeft = leftPos + font.width(diffText) + 20 + i * (int) (30 * scale);
-            gfx.blit(tex, (int) (swordLeft / scale), (int) ((topPos + 77) / scale), 0, 0, 0, 30, 30, 30, 30);
+            gfx.blit(RenderPipelines.GUI_TEXTURED, tex, (int) (swordLeft / scale), (int) ((topPos + 77) / scale), 0, 0, 30, 30, 30, 30);
         }
-        pose.popPose();
+        pose.popMatrix();
 
         AnimationData anim = switch (this.displayedTier) {
             case HAVEN -> HAVEN_ANIMATION;
@@ -154,6 +139,26 @@ public class WorldTierSelectScreen extends Screen {
         };
 
         anim.render(gfx, leftPos, topPos, this.animTicks, partialTick);
+    }
+
+    @Override
+    public void extractRenderState(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(gfx, mouseX, mouseY, partialTick);
+
+        Matrix3x2fStack pose = gfx.pose();
+        pose.pushMatrix();
+
+        float scale = 3;
+        pose.scale(scale, scale);
+        Component title = Apotheosis.lang("text", "world_tier." + this.displayedTier.getSerializedName());
+        gfx.text(font, title.getVisualOrderText(), (int) ((leftPos + 15) / scale), (int) ((topPos + 15) / scale), 0xFFFFFFFF, true);
+        pose.popMatrix();
+
+        Component desc = Apotheosis.lang("text", "world_tier." + this.displayedTier.getSerializedName() + ".desc");
+        gfx.text(font, desc, leftPos + 15, topPos + 45, 0xFFC8C86E);
+
+        Component diffText = Component.literal("Difficulty:").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
+        gfx.text(font, diffText.getVisualOrderText(), leftPos + 15, topPos + 80, 0xFFFFFFFF, true);
     }
 
     @Override
@@ -175,7 +180,7 @@ public class WorldTierSelectScreen extends Screen {
         return btn -> {
             WorldTier tier = this.displayedTier;
             if (WorldTier.getTier(Minecraft.getInstance().player) != tier || WorldTier.isTutorialActive(Minecraft.getInstance().player)) {
-                PacketDistributor.sendToServer(new WorldTierPayload(tier));
+                ClientPacketDistributor.sendToServer(new WorldTierPayload(tier));
                 this.minecraft.getConnection().send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
             }
             btn.active = false;
@@ -192,7 +197,10 @@ public class WorldTierSelectScreen extends Screen {
 
     void closeTutorial() {
         if (this.activateButton.isActive()) {
-            this.activateButton.onPress();
+            this.activateButton.onPress(new net.minecraft.client.input.MouseButtonEvent(
+                this.activateButton.getX() + this.activateButton.getWidth() / 2.0,
+                this.activateButton.getY() + this.activateButton.getHeight() / 2.0,
+                new net.minecraft.client.input.MouseButtonInfo(org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT, 0)));
         }
     }
 
@@ -291,16 +299,15 @@ public class WorldTierSelectScreen extends Screen {
         return Minecraft.getInstance().getConnection().getAdvancements().get(Apotheosis.loc("progression/" + tier.getSerializedName()));
     }
 
-    private static record AnimationData(int x, int y, int width, int height, int frames, ResourceLocation texture) {
+    private static record AnimationData(int x, int y, int width, int height, int frames, Identifier texture) {
 
-        private void render(GuiGraphics gfx, int left, int top, int time, float partialTick) {
+        private void render(GuiGraphicsExtractor gfx, int left, int top, int time, float partialTick) {
             int frameHeight = height / frames;
             int frame = (int) ((time + partialTick) / 2F);
             if (frame >= frames) {
                 return;
             }
-            RenderSystem.enableBlend();
-            gfx.blit(texture, left + x, top + y, 0, (frame + 1F) * frameHeight, this.width, frameHeight, this.width, this.height);
+            gfx.blit(RenderPipelines.GUI_TEXTURED, texture, left + x, top + y, 0, (frame + 1F) * frameHeight, this.width, frameHeight, this.width, this.height);
         }
 
     }

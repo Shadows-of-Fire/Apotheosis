@@ -3,18 +3,10 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "E": {
-            "item": "apotheosis:epic_material"
-        },
-        "I": {
-            "tag": "c:ingots/netherite"
-        },
-        "N": {
-            "item": "minecraft:nether_bricks"
-        },
-        "S": {
-            "item": "apotheosis:simple_reforging_table"
-        }
+        "E": "apotheosis:epic_material",
+        "I": "#c:ingots/netherite",
+        "N": "minecraft:nether_bricks",
+        "S": "apotheosis:simple_reforging_table"
     },
     "pattern": [
         " I ",
@@ -22,7 +14,6 @@
         "NNN"
     ],
     "result": {
-        "count": 1,
         "id": "apotheosis:reforging_table"
     }
 }

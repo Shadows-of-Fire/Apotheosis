@@ -1,26 +1,17 @@
 {
     "type": "apotheosis:salvaging",
     "input": [
-        {
-            "item": "minecraft:chainmail_helmet"
-        },
-        {
-            "item": "minecraft:chainmail_chestplate"
-        },
-        {
-            "item": "minecraft:chainmail_leggings"
-        },
-        {
-            "item": "minecraft:chainmail_boots"
-        }
+        "minecraft:chainmail_helmet",
+        "minecraft:chainmail_chestplate",
+        "minecraft:chainmail_leggings",
+        "minecraft:chainmail_boots"
     ],
     "outputs": [
         {
             "max_count": 3,
             "min_count": 1,
             "stack": {
-                "count": 1,
-                "id": "minecraft:chain"
+                "id": "minecraft:iron_chain"
             }
         }
     ]

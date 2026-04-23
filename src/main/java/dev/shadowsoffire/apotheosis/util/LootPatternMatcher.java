@@ -9,11 +9,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import dev.shadowsoffire.apotheosis.Apoth;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 public record LootPatternMatcher(Optional<String> domain, Pattern pathRegex) implements LootItemCondition {
 
@@ -31,7 +29,7 @@ public record LootPatternMatcher(Optional<String> domain, Pattern pathRegex) imp
         return new LootPatternMatcher(Optional.empty(), Pattern.compile(regex));
     }
 
-    public boolean matches(ResourceLocation id) {
+    public boolean matches(Identifier id) {
         return (this.domain.isEmpty() || this.domain.get().equals(id.getNamespace())) && this.pathRegex.matcher(id.getPath()).matches();
     }
 
@@ -41,8 +39,8 @@ public record LootPatternMatcher(Optional<String> domain, Pattern pathRegex) imp
     }
 
     @Override
-    public LootItemConditionType getType() {
-        return Apoth.LootConditions.LOOT_TABLE_PATTERN_MATCHER;
+    public MapCodec<LootPatternMatcher> codec() {
+        return CODEC;
     }
 
     public static LootItemCondition.Builder matchesTables(String domain, String regex) {

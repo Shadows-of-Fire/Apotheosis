@@ -21,7 +21,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -65,7 +65,7 @@ public enum WorldTier implements StringRepresentable {
         return Apotheosis.lang("text", "world_tier." + this.getSerializedName());
     }
 
-    public ResourceLocation getUnlockAdvancement() {
+    public Identifier getUnlockAdvancement() {
         return switch (this) {
             case HAVEN -> Apoth.Advancements.WORLD_TIER_HAVEN;
             case FRONTIER -> Apoth.Advancements.WORLD_TIER_FRONTIER;
@@ -86,7 +86,7 @@ public enum WorldTier implements StringRepresentable {
      */
     public static WorldTier getTier(Player player) {
         if (player instanceof FakePlayer fp) {
-            MinecraftServer server = fp.getServer();
+            MinecraftServer server = ((ServerLevel) fp.level()).getServer();
             ServerPlayer realPlayer = server.getPlayerList().getPlayer(fp.getUUID());
             if (realPlayer != null) {
                 WorldTier realTier = getTier(realPlayer);
@@ -136,7 +136,7 @@ public enum WorldTier implements StringRepresentable {
      * </ul>
      */
     public static boolean isTutorialActive(Player player) {
-        if (FMLEnvironment.dist.isClient() && player.level().isClientSide) {
+        if (FMLEnvironment.getDist().isClient() && player.level().isClientSide()) {
             return ClientAccess.isTutorialActive(player);
         }
         return getTier(player) == WorldTier.HAVEN && ((ServerPlayer) player).getStats().getValue(Stats.CUSTOM.get(Apoth.Stats.WORLD_TIERS_ACTIVATED)) == 0;

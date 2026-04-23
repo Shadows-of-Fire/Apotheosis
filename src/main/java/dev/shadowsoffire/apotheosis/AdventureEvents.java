@@ -8,6 +8,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.shadowsoffire.apotheosis.AdventureConfig.ConfigPayload;
 import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
+import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.affix.effect.FestiveAffix;
@@ -50,10 +51,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SlotAccess;
-import net.minecraft.world.entity.animal.AbstractGolem;
+import net.minecraft.world.entity.animal.golem.AbstractGolem;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -82,8 +84,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.neoforged.neoforge.event.level.BlockDropsEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
-import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -100,7 +101,7 @@ public class AdventureEvents {
         AffixCommand.register(e.getRoot());
         WorldTierCommand.register(e.getRoot());
 
-        LiteralArgumentBuilder<CommandSourceStack> debug = Commands.literal("debug").requires(c -> c.hasPermission(4));
+        LiteralArgumentBuilder<CommandSourceStack> debug = Commands.literal("debug").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS));
         DebugWeightCommand.register(debug, e.getContext());
         e.getRoot().then(debug);
     }
@@ -125,7 +126,7 @@ public class AdventureEvents {
      */
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void fireProjectile(EntityJoinLevelEvent e) {
-        if (e.getEntity() instanceof Projectile proj && !proj.getPersistentData().getBoolean("apoth.generated")) {
+        if (e.getEntity() instanceof Projectile proj && !proj.getPersistentData().getBooleanOr("apoth.generated", false)) {
             if (proj.getOwner() instanceof LivingEntity user) {
                 ItemStack weapon = user.getUseItem();
                 if (weapon.isEmpty()) {
@@ -170,7 +171,8 @@ public class AdventureEvents {
         DamageSource src = e.getSource();
         LivingEntity ent = e.getEntity();
         float amount = e.getAmount();
-        for (ItemStack s : ent.getAllSlots()) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            ItemStack s = ent.getItemBySlot(slot);
             amount = SocketHelper.getGems(s).onHurt(src, ent, amount);
 
             var affixes = AffixHelper.getAffixes(s);
@@ -197,7 +199,7 @@ public class AdventureEvents {
     }
 
     @SubscribeEvent
-    public void blockBreak(BreakEvent e) {
+    public void blockBreak(BreakBlockEvent e) {
         ItemStack stack = e.getPlayer().getMainHandItem();
         SocketHelper.getGems(stack).onBlockBreak(e.getPlayer(), e.getLevel(), e.getPos(), e.getState());
         AffixHelper.streamAffixes(stack).forEach(inst -> {
@@ -245,7 +247,7 @@ public class AdventureEvents {
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onBreak(BlockEvent.BreakEvent e) {
+    public void onBreak(BreakBlockEvent e) {
         RadialAffix.onBreak(e);
         RadialBonus.onBreak(e);
     }
@@ -275,9 +277,10 @@ public class AdventureEvents {
         if (isReentrant) {
             return;
         }
-        SocketHelper.getGems(e.getStack()).getEnchantmentLevels(e);
-
-        AffixHelper.streamAffixes(e.getStack()).forEach(inst -> inst.getEnchantmentLevels(e));
+        if (e.getStack() instanceof ItemStack stack) {
+            SocketHelper.getGems(stack).getEnchantmentLevels(e);
+            AffixHelper.streamAffixes(stack).forEach(inst -> inst.getEnchantmentLevels(e));
+        }
         reentrantLock.get().set(false);
     }
 
@@ -287,10 +290,10 @@ public class AdventureEvents {
         Entity entity = e.getEntity();
         if (entity.getPersistentData().contains("apoth.burns_in_sun")) {
             // Copy of Mob#isSunBurnTick()
-            if (entity.level().isDay() && !entity.level().isClientSide) {
+            if (entity.level().isBrightOutside() && !entity.level().isClientSide()) {
                 float f = entity.getLightLevelDependentMagicValue();
                 BlockPos blockpos = BlockPos.containing(entity.getX(), entity.getEyeY(), entity.getZ());
-                boolean flag = entity.isInWaterRainOrBubble() || entity.isInPowderSnow || entity.wasInPowderSnow;
+                boolean flag = entity.isInWaterOrRain() || entity.isInPowderSnow || entity.wasInPowderSnow;
                 if (f > 0.5F && entity.getRandom().nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !flag && entity.level().canSeeSky(blockpos)) {
                     entity.setRemainingFireTicks(160);
                 }
@@ -304,7 +307,7 @@ public class AdventureEvents {
      */
     @SubscribeEvent
     public void despawn(MobDespawnEvent e) {
-        if (e.getEntity() instanceof AbstractGolem g && g.tickCount > 12000 && g.getPersistentData().getBoolean("apoth.boss")) {
+        if (e.getEntity() instanceof AbstractGolem g && g.tickCount > 12000 && g.getPersistentData().getBooleanOr("apoth.boss", false)) {
             Entity player = g.level().getNearestPlayer(g, -1.0D);
             if (player != null) {
                 double dist = player.distanceToSqr(g);
@@ -322,7 +325,7 @@ public class AdventureEvents {
      */
     @SubscribeEvent
     public void clone(PlayerEvent.Clone e) {
-        int oldSeed = e.getOriginal().getPersistentData().getInt(ReforgingMenu.REFORGE_SEED);
+        int oldSeed = e.getOriginal().getPersistentData().getIntOr(ReforgingMenu.REFORGE_SEED, 0);
         e.getEntity().getPersistentData().putInt(ReforgingMenu.REFORGE_SEED, oldSeed);
     }
 
@@ -375,6 +378,7 @@ public class AdventureEvents {
     @SubscribeEvent
     public void sync(OnDatapackSyncEvent e) {
         ConfigPayload payload = new ConfigPayload();
+        e.sendRecipes(RecipeTypes.SALVAGING, RecipeTypes.GEM_CUTTING);
         e.getRelevantPlayers().forEach(p -> PacketDistributor.sendToPlayer(p, payload));
     }
 
@@ -405,7 +409,7 @@ public class AdventureEvents {
 
     @SubscribeEvent(receiveCanceled = true)
     public void removeCloudsOnDeath(LivingDeathEvent e) {
-        if (e.getEntity().getPersistentData().getBoolean(Elite.MINIBOSS_KEY)) {
+        if (e.getEntity().getPersistentData().getBooleanOr(Elite.MINIBOSS_KEY, false)) {
             for (Entity passenger : e.getEntity().getPassengers()) {
                 if (passenger instanceof AreaEffectCloud cloud) {
                     cloud.discard();

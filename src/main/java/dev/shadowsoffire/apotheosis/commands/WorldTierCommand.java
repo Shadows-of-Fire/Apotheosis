@@ -20,7 +20,7 @@ public class WorldTierCommand {
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_WORLD_TIER = (ctx, builder) -> SharedSuggestionProvider.suggest(Arrays.stream(WorldTier.values()).map(WorldTier::getSerializedName), builder);
 
     public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
-        root.then(Commands.literal("set_world_tier").requires(c -> c.hasPermission(2))
+        root.then(Commands.literal("set_world_tier").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
             .then(Commands.argument("target_player", EntityArgument.player())
                 .then(Commands.argument("tier", StringArgumentType.word()).suggests(SUGGEST_WORLD_TIER)
                     .executes(c -> {

@@ -21,7 +21,7 @@
         },
         {
             "type": "apotheosis:attribute",
-            "attribute": "apothic_attributes:mining_speed",
+            "attribute": "minecraft:block_break_speed",
             "gem_class": {
                 "key": "tools",
                 "types": [
@@ -41,7 +41,7 @@
         },
         {
             "type": "apotheosis:attribute",
-            "attribute": "minecraft:generic.movement_speed",
+            "attribute": "minecraft:movement_speed",
             "gem_class": {
                 "key": "lower_armor",
                 "types": [

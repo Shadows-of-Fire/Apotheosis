@@ -27,7 +27,7 @@ public class GatewaysCompat {
         .setTrackingRange(5)
         .setUpdateInterval(20)
         .sized(2F, 3F)
-        .build("gateway"));
+        .build(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, Apotheosis.loc("tiered_gateway"))));
 
     public static void register(IEventBus bus) {
         WaveEntity.CODEC.register(Apotheosis.loc("invader"), InvaderWaveEntity.CODEC);
@@ -40,7 +40,7 @@ public class GatewaysCompat {
         WaveModifier.CODEC.register(Apotheosis.loc("passenger"), PassengerWaveModifier.CODEC);
         GatewayRegistry.INSTANCE.registerCodec(Apotheosis.loc("tiered"), TieredGateway.CODEC);
         bus.register(R);
-        if (FMLEnvironment.dist.isClient()) {
+        if (FMLEnvironment.getDist().isClient()) {
             bus.register(ClientInternal.class);
         }
     }

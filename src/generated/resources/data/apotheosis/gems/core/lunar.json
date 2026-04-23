@@ -27,7 +27,7 @@
         },
         {
             "type": "apotheosis:attribute",
-            "attribute": "minecraft:generic.gravity",
+            "attribute": "minecraft:gravity",
             "gem_class": {
                 "key": "core_armor",
                 "types": [

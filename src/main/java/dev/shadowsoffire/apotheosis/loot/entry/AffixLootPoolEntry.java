@@ -15,11 +15,11 @@ import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.loot.functions.ReforgeItemFunction;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -40,8 +40,6 @@ public class AffixLootPoolEntry extends ContextualLootPoolEntry {
         PlaceboCodecs.setOf(AffixLootRegistry.INSTANCE.holderCodec()).optionalFieldOf("entries", Set.of()).forGetter(a -> a.entries))
         .and(LootPoolSingletonContainer.singletonFields(inst))
         .apply(inst, AffixLootPoolEntry::new));
-
-    public static final LootPoolEntryType TYPE = new LootPoolEntryType(CODEC);
 
     private final Set<DynamicHolder<LootRarity>> rarities;
     private final Set<DynamicHolder<AffixLootEntry>> entries;
@@ -74,13 +72,14 @@ public class AffixLootPoolEntry extends ContextualLootPoolEntry {
 
         ItemStack stack = LootController.createAffixItemFromPools(this.rarities, this.entries, gCtx);
         if (!stack.isEmpty()) {
+            NameHelper.setItemName(ctx.getRandom(), stack);
             list.accept(stack);
         }
     }
 
     @Override
-    public LootPoolEntryType getType() {
-        return TYPE;
+    public MapCodec<AffixLootPoolEntry> codec() {
+        return CODEC;
     }
 
     public static LootPoolSingletonContainer.Builder<?> builder(Set<DynamicHolder<LootRarity>> rarities, Set<DynamicHolder<AffixLootEntry>> entries) {

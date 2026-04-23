@@ -1,8 +1,6 @@
 {
 	"type": "apothic_enchanting:keep_nbt_infusion",
-	"input": {
-		"item": "apotheosis:gem_case"
-	},
+	"input": "apotheosis:gem_case",
 	"requirements": {
 		"eterna": 100,
 		"quanta": 100,

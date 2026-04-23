@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 public class CategoryCheckCommand {
 
     public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
-        root.then(Commands.literal("loot_category").requires(c -> c.hasPermission(2)).executes(c -> {
+        root.then(Commands.literal("loot_category").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS)).executes(c -> {
             Player p = c.getSource().getPlayerOrException();
             ItemStack stack = p.getMainHandItem();
             LootCategory cat = LootCategory.forItem(stack);

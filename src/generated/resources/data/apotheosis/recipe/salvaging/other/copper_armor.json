@@ -1,0 +1,18 @@
+{
+    "type": "apotheosis:salvaging",
+    "input": [
+        "minecraft:copper_helmet",
+        "minecraft:copper_chestplate",
+        "minecraft:copper_leggings",
+        "minecraft:copper_boots"
+    ],
+    "outputs": [
+        {
+            "max_count": 3,
+            "min_count": 1,
+            "stack": {
+                "id": "minecraft:copper_ingot"
+            }
+        }
+    ]
+}

@@ -14,6 +14,7 @@ import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.util.LootPatternMatcher;
+import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -31,8 +32,8 @@ public class AffixConvertLootModifier extends ContextualLootModifier {
 
     protected final List<AffixConversionEntry> entries;
 
-    public AffixConvertLootModifier(LootItemCondition[] conditions, List<AffixConversionEntry> entries) {
-        super(conditions);
+    public AffixConvertLootModifier(LootItemCondition[] conditions, int priority, List<AffixConversionEntry> entries) {
+        super(conditions, priority);
         this.entries = entries;
     }
 
@@ -50,6 +51,7 @@ public class AffixConvertLootModifier extends ContextualLootModifier {
                         // This modifies the stack in-place, so we don't need to re-set it into the list.
                         LootRarity rarity = LootRarity.randomFromHolders(gCtx, entry.rarities);
                         LootController.createLootItem(s, rarity, gCtx);
+                        NameHelper.setItemName(rand, s);
                     }
                 }
                 break;

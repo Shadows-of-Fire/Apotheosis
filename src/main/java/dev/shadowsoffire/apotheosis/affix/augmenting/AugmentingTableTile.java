@@ -5,14 +5,16 @@ import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class AugmentingTableTile extends BlockEntity implements TickingBlockEntity {
 
@@ -24,14 +26,14 @@ public class AugmentingTableTile extends BlockEntity implements TickingBlockEnti
 
     protected InternalItemHandler inv = new InternalItemHandler(1){
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return stack.is(Items.SIGIL_OF_ENHANCEMENT);
-        };
+        public boolean isValid(int index, ItemResource resource) {
+            return resource.is(Items.SIGIL_OF_ENHANCEMENT);
+        }
 
         @Override
-        protected void onContentsChanged(int slot) {
+        protected void onContentsChanged(int index, ItemStack previousContents) {
             AugmentingTableTile.this.setChanged();
-        };
+        }
     };
 
     public AugmentingTableTile(BlockPos pPos, BlockState pBlockState) {
@@ -86,19 +88,31 @@ public class AugmentingTableTile extends BlockEntity implements TickingBlockEnti
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, Provider regs) {
-        super.saveAdditional(tag, regs);
-        tag.put("inventory", this.inv.serializeNBT(regs));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putChild("inventory", this.inv);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, Provider regs) {
-        super.loadAdditional(tag, regs);
-        this.inv.deserializeNBT(regs, tag.getCompound("inventory"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        input.readChild("inventory", this.inv);
     }
 
-    public IItemHandler getInventory() {
+    public ResourceHandler<ItemResource> getInventory() {
         return this.inv;
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        if (this.level == null) return;
+        for (int i = 0; i < this.inv.size(); i++) {
+            ItemResource res = this.inv.getResource(i);
+            int amount = this.inv.getAmountAsInt(i);
+            if (!res.isEmpty() && amount > 0) {
+                Block.popResource(this.level, pos, res.toStack(amount));
+            }
+        }
     }
 
     public static enum AnimationStage {

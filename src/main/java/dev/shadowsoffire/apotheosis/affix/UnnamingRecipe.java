@@ -6,20 +6,18 @@ import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.util.ApothSmithingRecipe;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmithingRecipeInput;
 import net.minecraft.world.level.Level;
 
 public class UnnamingRecipe extends ApothSmithingRecipe {
 
     public UnnamingRecipe() {
-        super(Ingredient.EMPTY, Ingredient.of(Items.SIGIL_OF_UNNAMING.value()), ItemStack.EMPTY);
+        super(BASE_PLACEHOLDER, Ingredient.of(Items.SIGIL_OF_UNNAMING.value()), ItemStack.EMPTY);
     }
 
     @Override
@@ -29,7 +27,7 @@ public class UnnamingRecipe extends ApothSmithingRecipe {
     }
 
     @Override
-    public ItemStack assemble(SmithingRecipeInput pInv, HolderLookup.Provider regs) {
+    public ItemStack assemble(SmithingRecipeInput pInv) {
         ItemStack out = pInv.getItem(BASE).copy();
         DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(out);
         if (!rarity.isBound()) {
@@ -42,13 +40,9 @@ public class UnnamingRecipe extends ApothSmithingRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return Apoth.RecipeSerializers.UNNAMING.value();
-    }
-
-    @Override
-    public RecipeType<?> getType() {
-        return RecipeType.SMITHING;
+    @SuppressWarnings("unchecked")
+    public RecipeSerializer<? extends net.minecraft.world.item.crafting.SmithingRecipe> getSerializer() {
+        return (RecipeSerializer<? extends net.minecraft.world.item.crafting.SmithingRecipe>) Apoth.RecipeSerializers.UNNAMING.value();
     }
 
     @Override

@@ -4,11 +4,9 @@
         {
             "stack": {
                 "components": {
-                    "apotheosis:durability_bonus": 0.21000001,
+                    "apotheosis:durability_bonus": 0.21,
                     "minecraft:enchantments": {
-                        "levels": {
-                            "minecraft:protection": 2
-                        }
+                        "minecraft:protection": 2
                     }
                 },
                 "count": 1,
@@ -21,11 +19,9 @@
         {
             "stack": {
                 "components": {
-                    "apotheosis:durability_bonus": 0.21000001,
+                    "apotheosis:durability_bonus": 0.21,
                     "minecraft:enchantments": {
-                        "levels": {
-                            "minecraft:protection": 2
-                        }
+                        "minecraft:protection": 2
                     }
                 },
                 "count": 1,
@@ -38,11 +34,9 @@
         {
             "stack": {
                 "components": {
-                    "apotheosis:durability_bonus": 0.21000001,
+                    "apotheosis:durability_bonus": 0.21,
                     "minecraft:enchantments": {
-                        "levels": {
-                            "minecraft:protection": 2
-                        }
+                        "minecraft:protection": 2
                     }
                 },
                 "count": 1,
@@ -55,11 +49,9 @@
         {
             "stack": {
                 "components": {
-                    "apotheosis:durability_bonus": 0.21000001,
+                    "apotheosis:durability_bonus": 0.21,
                     "minecraft:enchantments": {
-                        "levels": {
-                            "minecraft:protection": 2
-                        }
+                        "minecraft:protection": 2
                     }
                 },
                 "count": 1,
@@ -72,11 +64,9 @@
         {
             "stack": {
                 "components": {
-                    "apotheosis:durability_bonus": 0.42000002,
+                    "apotheosis:durability_bonus": 0.42,
                     "minecraft:enchantments": {
-                        "levels": {
-                            "minecraft:power": 6
-                        }
+                        "minecraft:power": 6
                     }
                 },
                 "count": 1,
@@ -87,11 +77,9 @@
         {
             "stack": {
                 "components": {
-                    "apotheosis:durability_bonus": 0.42000002,
+                    "apotheosis:durability_bonus": 0.42,
                     "minecraft:enchantments": {
-                        "levels": {
-                            "minecraft:power": 6
-                        }
+                        "minecraft:power": 6
                     }
                 },
                 "count": 1,

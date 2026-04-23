@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
 import com.google.common.base.Predicates;
 
@@ -17,7 +17,6 @@ import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.DynamicRegistry;
-import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 
 public abstract class TieredDynamicRegistry<V extends CodecProvider<? super V> & Weighted> extends DynamicRegistry<V> {
@@ -44,13 +43,13 @@ public abstract class TieredDynamicRegistry<V extends CodecProvider<? super V> &
     @Nullable
     @SafeVarargs
     public final V getRandomItem(GenContext ctx, Predicate<? super V>... filters) {
-        List<Wrapper<V>> list = new ArrayList<>(this.registry.size());
+        List<net.minecraft.util.random.Weighted<V>> list = new ArrayList<>(this.registry.size());
         var stream = this.registry.values().stream();
         for (Predicate<? super V> filter : filters) {
             stream = stream.filter(filter);
         }
         stream.map(l -> l.<V>wrap(ctx.tier(), ctx.luck())).forEach(list::add);
-        return WeightedRandom.getRandomItem(ctx.rand(), list).map(Wrapper::data).orElse(null);
+        return WeightedRandom.getRandomItem(ctx.rand(), list, net.minecraft.util.random.Weighted::weight).map(net.minecraft.util.random.Weighted::value).orElse(null);
     }
 
     /**

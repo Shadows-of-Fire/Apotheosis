@@ -19,6 +19,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.HarvestCheck;
@@ -85,7 +86,7 @@ public class OmneticBonus extends GemBonus {
         private final Map<Purity, OmneticData> values = new LinkedHashMap<>();
 
         public Builder value(Purity rarity, String name, Item... items) {
-            OmneticData data = new OmneticData(name, Arrays.stream(items).map(Item::getDefaultInstance).toArray(ItemStack[]::new));
+            OmneticData data = new OmneticData(name, Arrays.stream(items).map(ItemStackTemplate::new).toArray(ItemStackTemplate[]::new));
             this.values.put(rarity, data);
             return this;
         }

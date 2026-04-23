@@ -23,8 +23,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.random.WeightedEntry;
-import net.minecraft.util.random.WeightedEntry.Wrapper;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -107,9 +106,9 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
 
                 AffixHelper.applyAffix(mainItem, inst.withNewLevel(Math.min(inst.level() + 0.25F, Affix.STANDARD_MAX_LEVEL)));
                 this.slots.get(0).set(mainItem);
-                player.level().playSound(null, this.pos, SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 1F, player.level().random.nextFloat() * 0.25F + 1F);
-                player.level().playSound(null, this.pos, SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.PLAYERS, 0.34F, player.level().random.nextFloat() * 0.2F + 0.8F);
-                player.level().playSound(null, this.pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.PLAYERS, 0.45F, player.level().random.nextFloat() * 0.75F + 0.5F);
+                player.level().playSound(null, this.pos, SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 1F, player.getRandom().nextFloat() * 0.25F + 1F);
+                player.level().playSound(null, this.pos, SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.PLAYERS, 0.34F, player.getRandom().nextFloat() * 0.2F + 0.8F);
+                player.level().playSound(null, this.pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.PLAYERS, 0.45F, player.getRandom().nextFloat() * 0.75F + 0.5F);
                 return true;
             }
             case REROLL -> {
@@ -134,8 +133,8 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
                 builder.remove(inst.affix());
 
                 GenContext ctx = GenContext.forPlayer(player);
-                List<WeightedEntry.Wrapper<Affix>> weighted = getWeightedAffixes(alternatives, ctx);
-                DynamicHolder<Affix> newAffix = WeightedRandom.getRandomItem(player.getRandom(), weighted).map(Wrapper::data).map(AffixRegistry.INSTANCE::holder).orElse(null);
+                List<Weighted<Affix>> weighted = getWeightedAffixes(alternatives, ctx);
+                DynamicHolder<Affix> newAffix = WeightedRandom.getRandomItem(player.getRandom(), weighted, Weighted::weight).map(Weighted::value).map(AffixRegistry.INSTANCE::holder).orElse(null);
 
                 // We need to fallback to a random affix if all the weights were zero.
                 if (newAffix == null) {
@@ -146,9 +145,9 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
 
                 AffixHelper.setAffixes(mainItem, builder.build());
                 this.slots.get(0).set(mainItem);
-                player.level().playSound(null, this.pos, SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 1F, player.level().random.nextFloat() * 0.25F + 1F);
-                player.level().playSound(null, this.pos, SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.PLAYERS, 0.34F, player.level().random.nextFloat() * 0.2F + 0.8F);
-                player.level().playSound(null, this.pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.PLAYERS, 0.45F, player.level().random.nextFloat() * 0.75F + 0.5F);
+                player.level().playSound(null, this.pos, SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 1F, player.getRandom().nextFloat() * 0.25F + 1F);
+                player.level().playSound(null, this.pos, SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.PLAYERS, 0.34F, player.getRandom().nextFloat() * 0.2F + 0.8F);
+                player.level().playSound(null, this.pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.PLAYERS, 0.45F, player.getRandom().nextFloat() * 0.75F + 0.5F);
                 this.broadcastChanges();
                 PacketDistributor.sendToPlayer((ServerPlayer) this.player, new RerollResultPayload(newAffix));
                 this.tile.setChanged();
@@ -197,7 +196,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
         return LootController.getAlternativeAffixes(player, stack, selected.getRarity(), selected.affix()).toList();
     }
 
-    protected static List<WeightedEntry.Wrapper<Affix>> getWeightedAffixes(List<DynamicHolder<Affix>> affixes, GenContext ctx) {
+    protected static List<Weighted<Affix>> getWeightedAffixes(List<DynamicHolder<Affix>> affixes, GenContext ctx) {
         return affixes.stream().map(a -> a.get().<Affix>wrap(ctx.tier(), ctx.luck())).toList();
     }
 

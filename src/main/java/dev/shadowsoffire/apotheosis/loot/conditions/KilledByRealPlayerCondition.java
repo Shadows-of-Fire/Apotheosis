@@ -5,14 +5,12 @@ import java.util.Set;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.MapCodec;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.neoforged.neoforge.common.util.FakePlayer;
 
 /**
@@ -28,18 +26,18 @@ public class KilledByRealPlayerCondition implements LootItemCondition {
     private KilledByRealPlayerCondition() {}
 
     @Override
-    public LootItemConditionType getType() {
-        return Apoth.LootConditions.KILLED_BY_REAL_PLAYER;
+    public MapCodec<KilledByRealPlayerCondition> codec() {
+        return CODEC;
     }
 
     @Override
-    public Set<LootContextParam<?>> getReferencedContextParams() {
+    public Set<ContextKey<?>> getReferencedContextParams() {
         return ImmutableSet.of(LootContextParams.ATTACKING_ENTITY);
     }
 
     @Override
     public boolean test(LootContext context) {
-        Entity attacker = context.getParamOrNull(LootContextParams.ATTACKING_ENTITY);
+        Entity attacker = context.getOptionalParameter(LootContextParams.ATTACKING_ENTITY);
         return attacker instanceof Player && !(attacker instanceof FakePlayer);
     }
 

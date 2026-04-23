@@ -9,19 +9,19 @@ import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.commands.arguments.ResourceLocationArgument;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.commands.arguments.IdentifierArgument;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class RarityCommand {
 
-    public static final SuggestionProvider<CommandSourceStack> SUGGEST_RARITY = (ctx, builder) -> SharedSuggestionProvider.suggest(RarityRegistry.INSTANCE.getKeys().stream().map(ResourceLocation::toString), builder);
+    public static final SuggestionProvider<CommandSourceStack> SUGGEST_RARITY = (ctx, builder) -> SharedSuggestionProvider.suggest(RarityRegistry.INSTANCE.getKeys().stream().map(Identifier::toString), builder);
 
     public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
-        root.then(Commands.literal("set_rarity").requires(c -> c.hasPermission(2)).then(Commands.argument("rarity", ResourceLocationArgument.id()).suggests(SUGGEST_RARITY).executes(c -> {
+        root.then(Commands.literal("set_rarity").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS)).then(Commands.argument("rarity", IdentifierArgument.id()).suggests(SUGGEST_RARITY).executes(c -> {
             Player p = c.getSource().getPlayerOrException();
-            LootRarity rarity = RarityRegistry.INSTANCE.getValue(ResourceLocationArgument.getId(c, "rarity"));
+            LootRarity rarity = RarityRegistry.INSTANCE.getValue(IdentifierArgument.getId(c, "rarity"));
             ItemStack stack = p.getMainHandItem();
             AffixHelper.setRarity(stack, rarity);
             return 0;

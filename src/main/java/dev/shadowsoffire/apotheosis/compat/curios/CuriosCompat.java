@@ -11,7 +11,7 @@ public class CuriosCompat {
 
     private static DeferredHelper R = DeferredHelper.create(Apotheosis.MODID);
 
-//    public static final TagKey<Item> CHARM_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", "charm"));
+//    public static final TagKey<Item> CHARM_TAG = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("curios", "charm"));
 //
 //    public static final Holder<EntityEquipmentSlot> CHARM = R.custom("charm", BuiltInRegs.ENTITY_EQUIPMENT_SLOT.key(), () -> new CurioEquipmentSlot("charm"));
 //    public static final EntitySlotGroup CHARM_G = R.custom("charm", BuiltInRegs.ENTITY_SLOT_GROUP.key(), new EntitySlotGroup(Apotheosis.loc("charm"),

@@ -1,58 +1,60 @@
 package dev.shadowsoffire.apotheosis.mobs.util;
 
+import java.util.Map;
+import java.util.TreeMap;
+
+import com.mojang.serialization.Codec;
+
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.saveddata.SavedDataType;
 
 public class SpawnCooldownSavedData extends SavedData {
 
-    public Object2IntMap<ResourceLocation> bossCooldowns = new Object2IntOpenHashMap<>();
+    private static final Codec<SpawnCooldownSavedData> CODEC = Codec.unboundedMap(Identifier.CODEC, Codec.INT)
+        .xmap(SpawnCooldownSavedData::unpack, SpawnCooldownSavedData::pack);
 
-    @Override
-    public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
-        for (Object2IntMap.Entry<ResourceLocation> e : this.bossCooldowns.object2IntEntrySet()) {
-            tag.putInt(e.getKey().toString(), e.getIntValue());
-        }
-        return tag;
+    public static final SavedDataType<SpawnCooldownSavedData> TYPE = new SavedDataType<>(
+        Apotheosis.loc("boss_cooldowns"), SpawnCooldownSavedData::new, CODEC);
+
+    public Object2IntMap<Identifier> bossCooldowns = new Object2IntOpenHashMap<>();
+
+    private static SpawnCooldownSavedData unpack(Map<Identifier, Integer> source) {
+        SpawnCooldownSavedData data = new SpawnCooldownSavedData();
+        source.forEach((id, value) -> data.bossCooldowns.put(id, value.intValue()));
+        return data;
     }
 
-    public void tick(ResourceLocation level) {
+    private Map<Identifier, Integer> pack() {
+        Map<Identifier, Integer> out = new TreeMap<>();
+        for (Object2IntMap.Entry<Identifier> e : this.bossCooldowns.object2IntEntrySet()) {
+            out.put(e.getKey(), e.getIntValue());
+        }
+        return out;
+    }
+
+    public void tick(Identifier level) {
         this.bossCooldowns.computeIntIfPresent(level, (key, value) -> Math.max(0, value - 1));
     }
 
     public boolean isOnCooldown(Level level) {
-        return this.isOnCooldown(level.dimension().location());
+        return this.isOnCooldown(level.dimension().identifier());
     }
 
-    public boolean isOnCooldown(ResourceLocation level) {
+    public boolean isOnCooldown(Identifier level) {
         return this.bossCooldowns.getInt(level) > 0;
     }
 
     public void startCooldown(Level level, int timer) {
-        this.startCooldown(level.dimension().location(), timer);
+        this.startCooldown(level.dimension().identifier(), timer);
     }
 
-    public void startCooldown(ResourceLocation level, int timer) {
+    public void startCooldown(Identifier level, int timer) {
         this.bossCooldowns.put(level, timer);
-    }
-
-    public static SpawnCooldownSavedData loadTimes(CompoundTag tag, HolderLookup.Provider registries) {
-        var data = new SpawnCooldownSavedData();
-
-        data.bossCooldowns.clear();
-        for (String s : tag.getAllKeys()) {
-            ResourceLocation id = ResourceLocation.tryParse(s);
-            if (id != null) {
-                int val = tag.getInt(s);
-                data.bossCooldowns.put(id, val);
-            }
-        }
-
-        return data;
     }
 
 }

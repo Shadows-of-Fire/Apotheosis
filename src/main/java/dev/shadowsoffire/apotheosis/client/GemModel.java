@@ -1,92 +1,84 @@
 package dev.shadowsoffire.apotheosis.client;
 
-import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4fc;
+import org.jspecify.annotations.Nullable;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
+import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.Direction;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.item.ItemModels;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.resources.model.ResolvableModel;
+import net.minecraft.world.entity.ItemOwner;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 
-public class GemModel implements BakedModel {
-    private final BakedModel original;
-    private final ItemOverrides overrides;
+/**
+ * Dispatches rendering of gem items to a per-gem baked item model based on the ID of the {@link Gem}
+ * stored on the stack via {@link Components#GEM}.
+ * <p>
+ * The per-gem models are registered as standalone models during {@code ModelEvent.RegisterStandalone}
+ * (see {@code AdventureModuleClient.addGemModels}). That handler scans {@code assets/<ns>/models/item/gems/**}
+ * and publishes one {@link StandaloneModelKey} per gem into {@link #GEM_MODEL_KEYS}. When a gem is
+ * bound, the looked-up standalone model renders; otherwise the configured fallback is used.
+ */
+public class GemModel implements ItemModel {
 
-    @SuppressWarnings("deprecation")
-    public GemModel(BakedModel original, ModelBakery loader) {
-        this.original = original;
-        this.overrides = new ItemOverrides(){
-            @Override
-            public BakedModel resolve(BakedModel original, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int seed) {
-                BakedModel specific = GemModel.this.resolve(original, stack, world, entity, seed);
-                return specific == original ? specific : specific.getOverrides().resolve(specific, stack, world, entity, seed);
+    public static final Map<DynamicHolder<Gem>, StandaloneModelKey<ItemModel>> GEM_MODEL_KEYS = new ConcurrentHashMap<>();
+
+    private final ItemModel fallback;
+
+    public GemModel(ItemModel fallback) {
+        this.fallback = fallback;
+    }
+
+    @Override
+    public void update(ItemStackRenderState output, ItemStack stack, ItemModelResolver resolver,
+        ItemDisplayContext displayContext, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {
+        DynamicHolder<Gem> holder = stack.get(Components.GEM);
+        if (holder != null && holder.isBound()) {
+            StandaloneModelKey<ItemModel> key = GEM_MODEL_KEYS.get(holder);
+            if (key != null) {
+                ItemModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(key);
+                if (model != null) {
+                    model.update(output, stack, resolver, displayContext, level, owner, seed);
+                    return;
+                }
             }
-        };
-    }
-
-    public BakedModel resolve(BakedModel original, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int seed) {
-        DynamicHolder<Gem> gem = GemItem.getGem(stack);
-        if (gem.isBound()) {
-            return Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(Apotheosis.loc("item/gems/" + gem.getId().getPath())));
         }
-        return original;
+        this.fallback.update(output, stack, resolver, displayContext, level, owner, seed);
     }
 
-    @Override
-    public ItemOverrides getOverrides() {
-        return this.overrides;
-    }
+    public record Unbaked(ItemModel.Unbaked fallback) implements ItemModel.Unbaked {
 
-    @Override
-    @Deprecated
-    public List<BakedQuad> getQuads(BlockState pState, Direction pDirection, RandomSource pRandom) {
-        return this.original.getQuads(pState, pDirection, pRandom);
-    }
+        public static final MapCodec<Unbaked> MAP_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+            ItemModels.CODEC.fieldOf("fallback").forGetter(Unbaked::fallback))
+            .apply(i, Unbaked::new));
 
-    @Override
-    public boolean useAmbientOcclusion() {
-        return this.original.useAmbientOcclusion();
-    }
+        @Override
+        public MapCodec<Unbaked> type() {
+            return MAP_CODEC;
+        }
 
-    @Override
-    public boolean isGui3d() {
-        return this.original.isGui3d();
-    }
+        @Override
+        public ItemModel bake(ItemModel.BakingContext context, Matrix4fc transformation) {
+            return new GemModel(this.fallback.bake(context, transformation));
+        }
 
-    @Override
-    public boolean usesBlockLight() {
-        return this.original.usesBlockLight();
-    }
-
-    @Override
-    public boolean isCustomRenderer() {
-        return this.original.isCustomRenderer();
-    }
-
-    @Override
-    @Deprecated
-    public TextureAtlasSprite getParticleIcon() {
-        return this.original.getParticleIcon();
-    }
-
-    @Override
-    @Deprecated
-    public ItemTransforms getTransforms() {
-        return this.original.getTransforms();
+        @Override
+        public void resolveDependencies(ResolvableModel.Resolver resolver) {
+            this.fallback.resolveDependencies(resolver);
+        }
     }
 }

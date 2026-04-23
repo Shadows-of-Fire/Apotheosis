@@ -3,12 +3,8 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "F": {
-            "item": "minecraft:flint"
-        },
-        "G": {
-            "item": "apotheosis:gem_fused_slate"
-        }
+        "F": "minecraft:flint",
+        "G": "apotheosis:gem_fused_slate"
     },
     "pattern": [
         "GGG",

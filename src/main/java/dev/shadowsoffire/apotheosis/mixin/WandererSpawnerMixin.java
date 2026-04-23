@@ -14,7 +14,7 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacementTypes;
-import net.minecraft.world.entity.npc.WanderingTraderSpawner;
+import net.minecraft.world.entity.npc.wanderingtrader.WanderingTraderSpawner;
 import net.minecraft.world.level.LevelReader;
 
 @Mixin(value = WanderingTraderSpawner.class, remap = false)

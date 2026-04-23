@@ -3,18 +3,18 @@
     "left": [
         {
             "count": 1,
-            "item": "apotheosis:gem_dust"
+            "ingredient": "apotheosis:gem_dust"
         }
     ],
     "purity": "cracked",
     "right": [
         {
             "count": 3,
-            "item": "apotheosis:common_material"
+            "ingredient": "apotheosis:common_material"
         },
         {
             "count": 1,
-            "item": "apotheosis:uncommon_material"
+            "ingredient": "apotheosis:uncommon_material"
         }
     ]
 }

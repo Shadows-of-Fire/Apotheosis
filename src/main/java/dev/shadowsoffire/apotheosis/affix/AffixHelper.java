@@ -23,16 +23,17 @@ import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.CachedObject;
 import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
-import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -40,13 +41,14 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 
 public class AffixHelper {
 
-    public static final ResourceLocation AFFIX_CACHED_OBJECT = Apotheosis.loc("affixes");
+    public static final Identifier AFFIX_CACHED_OBJECT = Apotheosis.loc("affixes");
 
     // Used to encode the shooting weapon on arrows.
     public static final String SOURCE_WEAPON = "apoth.source_weapon";
@@ -87,7 +89,7 @@ public class AffixHelper {
     @Nullable
     public static Component getModifiedStackName(ItemStack stack, Component currentName) {
         if (stack.has(Components.AFFIX_NAME)) {
-            if (FMLEnvironment.dist.isClient()) {
+            if (FMLEnvironment.getDist().isClient()) {
                 Component hidden = ClientAccess.getHiddenAffixName(currentName);
                 if (hidden != null) {
                     return hidden;
@@ -176,8 +178,9 @@ public class AffixHelper {
     public static void copyToProjectile(ItemStack stack, Entity entity) {
         ItemAffixes affixes = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY);
         ItemContainerContents gems = stack.getOrDefault(Components.SOCKETED_GEMS, ItemContainerContents.EMPTY);
-        if (!affixes.isEmpty() || gems.nonEmptyStream().findAny().isPresent()) {
-            entity.getPersistentData().put(SOURCE_WEAPON, stack.save(entity.level().registryAccess()));
+        if (!affixes.isEmpty() || gems.nonEmptyItemCopyStream().findAny().isPresent()) {
+            Tag tag = ItemStack.CODEC.encodeStart(entity.level().registryAccess().createSerializationContext(NbtOps.INSTANCE), stack).getOrThrow();
+            entity.getPersistentData().put(SOURCE_WEAPON, tag);
         }
     }
 
@@ -186,7 +189,9 @@ public class AffixHelper {
      */
     public static ItemStack getSourceWeapon(Entity entity) {
         if (entity.getPersistentData().contains(SOURCE_WEAPON)) {
-            return ItemStack.parseOptional(entity.level().registryAccess(), entity.getPersistentData().getCompound(SOURCE_WEAPON));
+            return entity.getPersistentData().getCompound(SOURCE_WEAPON)
+                .flatMap(t -> ItemStack.CODEC.parse(entity.level().registryAccess().createSerializationContext(NbtOps.INSTANCE), t).result())
+                .orElse(ItemStack.EMPTY);
         }
         return ItemStack.EMPTY;
     }
@@ -221,7 +226,7 @@ public class AffixHelper {
             return;
         }
 
-        int seed = player.getPersistentData().getInt(ReforgingMenu.REFORGE_SEED);
+        int seed = player.getPersistentData().getIntOr(ReforgingMenu.REFORGE_SEED, 0);
         RandomSource rand = new XoroshiroRandomSource(seed);
 
         ItemAffixes.Builder builder = affixes.toBuilder();
@@ -249,16 +254,16 @@ public class AffixHelper {
         stack.set(Components.TOUCHED_BY_MALICE, true);
         player.getPersistentData().putInt(ReforgingMenu.REFORGE_SEED, player.getRandom().nextInt());
 
-        AttributeTooltipContext ctx = AttributeTooltipContext.of(player, TooltipContext.of(player.level()), ApothicAttributes.getTooltipFlag());
+        AttributeTooltipContext ctx = AttributeTooltipContext.of(player, TooltipContext.of(player.level()), TooltipDisplay.DEFAULT, ApothicAttributes.getTooltipFlag());
 
         AffixInstance buff = new AffixInstance(buffed, 1.5F, getRarity(stack), stack);
         AffixInstance rem = new AffixInstance(removed, oldLevel, getRarity(stack), stack);
 
         MutableComponent buffedName = Component.translatable("[%s]", buff.getName(true));
-        buffedName.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, buff.getAugmentingText(ctx))));
+        buffedName.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW).withHoverEvent(new HoverEvent.ShowText(buff.getAugmentingText(ctx))));
 
         MutableComponent removedName = Component.translatable("[%s]", rem.getName(true));
-        removedName.setStyle(Style.EMPTY.withColor(ChatFormatting.RED).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, rem.getAugmentingText(ctx))));
+        removedName.setStyle(Style.EMPTY.withColor(ChatFormatting.RED).withHoverEvent(new HoverEvent.ShowText(rem.getAugmentingText(ctx))));
 
         Component msg = Apotheosis.lang("text", "malice_notice", buffedName, removedName);
         player.sendSystemMessage(msg);
@@ -285,11 +290,6 @@ public class AffixHelper {
         }
 
         setAffixes(stack, builder.build());
-    }
-
-    @Deprecated
-    public static StepFunction step(float min, int steps, float step) {
-        return new StepFunction(min, steps, step);
     }
 
     private static TranslatableContents copyContents(Component comp) {

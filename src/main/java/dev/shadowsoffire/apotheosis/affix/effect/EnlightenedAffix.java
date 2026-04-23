@@ -15,7 +15,6 @@ import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -64,7 +63,7 @@ public class EnlightenedAffix extends Affix {
             }
 
             int cost = this.getTrueLevel(inst.getRarity(), inst.level());
-            player.getItemInHand(ctx.getHand()).hurtAndBreak(cost, player, LivingEntity.getSlotForHand(ctx.getHand()));
+            player.getItemInHand(ctx.getHand()).hurtAndBreak(cost, player, ctx.getHand().asEquipmentSlot());
             return InteractionResult.SUCCESS;
         }
         return super.onItemUse(inst, ctx);

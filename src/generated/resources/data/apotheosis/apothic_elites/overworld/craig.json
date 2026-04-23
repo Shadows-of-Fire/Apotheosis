@@ -21,7 +21,7 @@
                 "spawn_condition": {
                     "type": "apotheosis:spawn_type",
                     "spawn_types": [
-                        "spawn_egg"
+                        "spawn_item_use"
                     ]
                 }
             }
@@ -50,12 +50,12 @@
     "stats": {
         "attribute_modifiers": [
             {
-                "attribute": "minecraft:generic.max_health",
+                "attribute": "minecraft:max_health",
                 "operation": "add_value",
                 "value": 4096.0
             },
             {
-                "attribute": "minecraft:generic.attack_damage",
+                "attribute": "minecraft:attack_damage",
                 "operation": "add_multiplied_total",
                 "value": {
                     "min": 4.0,
@@ -63,12 +63,12 @@
                 }
             },
             {
-                "attribute": "minecraft:generic.knockback_resistance",
+                "attribute": "minecraft:knockback_resistance",
                 "operation": "add_value",
                 "value": 1.0
             },
             {
-                "attribute": "minecraft:generic.scale",
+                "attribute": "minecraft:scale",
                 "operation": "add_value",
                 "value": 3.0
             }

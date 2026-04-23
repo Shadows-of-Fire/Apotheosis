@@ -14,7 +14,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
@@ -24,7 +24,7 @@ import net.neoforged.neoforge.common.data.DataMapProvider;
 
 public class ApothDataMapProvider extends DataMapProvider {
 
-    private static final ResourceLocation TWILIGHT_FOREST = ResourceLocation.fromNamespaceAndPath("twilightforest", "twilight_forest_type");
+    private static final Identifier TWILIGHT_FOREST = Identifier.fromNamespaceAndPath("twilightforest", "twilight_forest_type");
 
     public ApothDataMapProvider(PackOutput packOutput, CompletableFuture<Provider> lookupProvider) {
         super(packOutput, lookupProvider);

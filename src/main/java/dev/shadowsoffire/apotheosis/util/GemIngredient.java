@@ -4,12 +4,15 @@ import java.util.stream.Stream;
 
 import com.mojang.serialization.MapCodec;
 
-import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.core.Holder;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
 
@@ -26,13 +29,9 @@ public record GemIngredient(Purity purity) implements ICustomIngredient {
     }
 
     @Override
-    public Stream<ItemStack> getItems() {
-        if (GemRegistry.INSTANCE.getValues().size() == 0) {
-            return Stream.of(ItemStack.EMPTY);
-        }
-        return GemRegistry.INSTANCE.getValues().stream()
-            .filter(g -> this.purity.isAtLeast(g.getMinPurity()))
-            .map(g -> g.toStack(this.purity));
+    @SuppressWarnings("deprecation")
+    public Stream<Holder<Item>> items() {
+        return Stream.of(Apoth.Items.GEM.value().builtInRegistryHolder());
     }
 
     @Override
@@ -43,6 +42,11 @@ public record GemIngredient(Purity purity) implements ICustomIngredient {
     @Override
     public IngredientType<?> getType() {
         return TYPE;
+    }
+
+    @Override
+    public SlotDisplay display() {
+        return new GemSlotDisplay(this.purity);
     }
 
 }

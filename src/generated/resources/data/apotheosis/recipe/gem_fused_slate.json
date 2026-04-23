@@ -3,12 +3,8 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "D": {
-            "item": "minecraft:deepslate"
-        },
-        "G": {
-            "item": "apotheosis:gem_dust"
-        }
+        "D": "minecraft:deepslate",
+        "G": "apotheosis:gem_dust"
     },
     "pattern": [
         "DDD",

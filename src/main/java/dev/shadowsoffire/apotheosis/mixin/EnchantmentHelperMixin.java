@@ -19,6 +19,8 @@ import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -33,7 +35,8 @@ public class EnchantmentHelperMixin {
     @Inject(at = @At("RETURN"), method = "getDamageProtection(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;)F", cancellable = true)
     private static void apoth_getDamageProtection(ServerLevel level, LivingEntity entity, DamageSource source, CallbackInfoReturnable<Float> cir) {
         float prot = cir.getReturnValueF();
-        for (ItemStack s : entity.getArmorAndBodyArmorSlots()) {
+        for (EquipmentSlot slot : EquipmentSlotGroup.ARMOR) {
+            ItemStack s = entity.getItemBySlot(slot);
             prot += SocketHelper.getGems(s).getDamageProtection(source);
 
             var affixes = AffixHelper.getAffixes(s);
@@ -70,7 +73,8 @@ public class EnchantmentHelperMixin {
     @Inject(at = @At("TAIL"), method = "doPostAttackEffectsWithItemSource(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/item/ItemStack;)V")
     private static void apoth_doPostAttackEffectsWithItemSource(ServerLevel level, Entity target, DamageSource damageSource, @Nullable ItemStack itemSource, CallbackInfo ci) {
         if (damageSource.getEntity() instanceof LivingEntity user) {
-            for (ItemStack s : user.getAllSlots()) {
+            for (EquipmentSlot slot : EquipmentSlot.VALUES) {
+                ItemStack s = user.getItemBySlot(slot);
                 SocketHelper.getGems(s).doPostAttack(user, target);
 
                 var affixes = AffixHelper.getAffixes(s);
@@ -84,7 +88,8 @@ public class EnchantmentHelperMixin {
         }
 
         if (target instanceof LivingEntity livingTarget) {
-            for (ItemStack s : livingTarget.getAllSlots()) {
+            for (EquipmentSlot slot : EquipmentSlot.VALUES) {
+                ItemStack s = livingTarget.getItemBySlot(slot);
                 SocketHelper.getGems(s).doPostHurt(livingTarget, damageSource);
 
                 var affixes = AffixHelper.getAffixes(s);

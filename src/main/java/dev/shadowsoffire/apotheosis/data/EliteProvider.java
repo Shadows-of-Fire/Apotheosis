@@ -28,8 +28,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
@@ -57,7 +57,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
                 .name(Apotheosis.lang("elite", "craig").withStyle(s -> s.withColor(GradientColor.RAINBOW)))
                 .weights(TieredWeights.onlyFor(WorldTier.PINNACLE, DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
-                .exclusion(excludedSpawnTypes(MobSpawnType.SPAWN_EGG))
+                .exclusion(excludedSpawnTypes(EntitySpawnReason.SPAWN_ITEM_USE))
                 .gearSets(WorldTier.PINNACLE, "#pinnacle_melee")
                 .nbt(t -> t.putBoolean("IsScreamingGoat", true))
                 .nbt(t -> t.putBoolean("HasLeftHorn", true))
@@ -81,7 +81,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
                 .name(Component.literal("Honeyed Archer"))
                 .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
-                .exclusion(excludedSpawnTypes(MobSpawnType.SPAWN_EGG, MobSpawnType.SPAWNER, MobSpawnType.MOB_SUMMONED))
+                .exclusion(excludedSpawnTypes(EntitySpawnReason.SPAWN_ITEM_USE, EntitySpawnReason.SPAWNER, EntitySpawnReason.MOB_SUMMONED))
                 .exclusion(new SurfaceTypeCondition(SurfaceType.NEEDS_SURFACE))
                 .mount(m -> m
                     .entity(EntityType.BEE)
@@ -102,7 +102,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
                 .name(Component.literal("Undead Knight"))
                 .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .constraints(Constraints.forDimension(Level.OVERWORLD))
-                .exclusion(excludedSpawnTypes(MobSpawnType.SPAWN_EGG, MobSpawnType.SPAWNER, MobSpawnType.MOB_SUMMONED))
+                .exclusion(excludedSpawnTypes(EntitySpawnReason.SPAWN_ITEM_USE, EntitySpawnReason.SPAWNER, EntitySpawnReason.MOB_SUMMONED))
                 .exclusion(new SurfaceTypeCondition(SurfaceType.NEEDS_SURFACE))
                 .mount(m -> m
                     .entity(EntityType.SKELETON_HORSE)
@@ -122,7 +122,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
                 .name(Component.literal("Withering Archer"))
                 .weights(TieredWeights.forTiersAbove(WorldTier.FRONTIER, DEFAULT_WEIGHT, DEFAULT_QUALITY))
                 .constraints(Constraints.forDimension(Level.NETHER))
-                .exclusion(excludedSpawnTypes(MobSpawnType.SPAWN_EGG, MobSpawnType.SPAWNER, MobSpawnType.MOB_SUMMONED))
+                .exclusion(excludedSpawnTypes(EntitySpawnReason.SPAWN_ITEM_USE, EntitySpawnReason.SPAWNER, EntitySpawnReason.MOB_SUMMONED))
                 .nbt(witherCloud()))
             .stats(c -> c
                 .enchantChance(0.25F)
@@ -154,7 +154,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
             """;
 
         try {
-            return TagParser.parseTag(rawNbt);
+            return TagParser.parseCompoundFully(rawNbt);
         }
         catch (CommandSyntaxException e) {
             throw new RuntimeException(e);
@@ -182,7 +182,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
             """;
 
         try {
-            return TagParser.parseTag(rawNbt);
+            return TagParser.parseCompoundFully(rawNbt);
         }
         catch (CommandSyntaxException e) {
             throw new RuntimeException(e);
@@ -193,7 +193,7 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
         this.add(Apotheosis.loc(name), builder.apply(Elite.builder()).build());
     }
 
-    private static SpawnCondition excludedSpawnTypes(MobSpawnType... types) {
+    private static SpawnCondition excludedSpawnTypes(EntitySpawnReason... types) {
         return new NotCondition(new SpawnTypeCondition(ApothMiscUtil.linkedSet(types)));
     }
 

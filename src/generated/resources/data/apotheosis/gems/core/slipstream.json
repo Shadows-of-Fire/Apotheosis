@@ -22,7 +22,7 @@
         },
         {
             "type": "apotheosis:attribute",
-            "attribute": "apothic_attributes:mining_speed",
+            "attribute": "minecraft:block_break_speed",
             "gem_class": {
                 "key": "tools",
                 "types": [

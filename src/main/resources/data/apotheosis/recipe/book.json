@@ -1,16 +1,13 @@
 {
 	"type": "minecraft:crafting_shapeless",
-	"conditions": [{
+	"neoforge:conditions": [{
 		"type": "neoforge:mod_loaded",
 		"modid": "patchouli"
 	}],
 	"group": "something",
-	"ingredients": [{
-			"item": "minecraft:book"
-		},
-		{
-			"tag": "c:ingots/gold"
-		}
+	"ingredients": [
+		"minecraft:book",
+		"#c:ingots/gold"
 	],
 	"result": {
         "id": "patchouli:guide_book",

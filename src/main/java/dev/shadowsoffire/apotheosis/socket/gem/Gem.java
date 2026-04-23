@@ -32,7 +32,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 
@@ -185,7 +185,7 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
         return CODEC;
     }
 
-    public final ResourceLocation getId() {
+    public final Identifier getId() {
         return GemRegistry.INSTANCE.getKey(this);
     }
 

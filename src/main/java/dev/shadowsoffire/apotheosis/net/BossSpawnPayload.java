@@ -47,7 +47,7 @@ public record BossSpawnPayload(BlockPos pos, DynamicHolder<LootRarity> rarity) i
         }
 
         @Override
-        public void handle(BossSpawnPayload msg, IPayloadContext ctx) {
+        public void handleClient(BossSpawnPayload msg, IPayloadContext ctx) {
             AdventureModuleClient.onBossSpawn(msg.pos, msg.rarity);
         }
 

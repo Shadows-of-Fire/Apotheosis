@@ -48,7 +48,7 @@
         "apotheosis:mythic": {
             "attribute_modifiers": [
                 {
-                    "attribute": "minecraft:generic.max_health",
+                    "attribute": "minecraft:max_health",
                     "operation": "add_value",
                     "value": {
                         "min": 90.0,
@@ -56,7 +56,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.movement_speed",
+                    "attribute": "minecraft:movement_speed",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.35,
@@ -80,22 +80,22 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.knockback_resistance",
+                    "attribute": "minecraft:knockback_resistance",
                     "operation": "add_value",
                     "value": 0.8
                 },
                 {
-                    "attribute": "minecraft:generic.armor",
+                    "attribute": "minecraft:armor",
                     "operation": "add_value",
                     "value": 12.0
                 },
                 {
-                    "attribute": "minecraft:generic.armor_toughness",
+                    "attribute": "minecraft:armor_toughness",
                     "operation": "add_value",
                     "value": 20.0
                 },
                 {
-                    "attribute": "minecraft:generic.scale",
+                    "attribute": "minecraft:scale",
                     "operation": "add_multiplied_total",
                     "value": 1.0
                 }

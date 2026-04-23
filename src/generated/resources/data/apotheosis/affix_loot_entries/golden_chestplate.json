@@ -1,7 +1,6 @@
 {
     "type": "apotheosis:affix_loot_entry",
     "stack": {
-        "count": 1,
         "id": "minecraft:golden_chestplate"
     },
     "weights": {
@@ -9,9 +8,11 @@
             "weight": 5
         },
         "frontier": {
+            "quality": 2.0,
             "weight": 10
         },
         "ascent": {
+            "quality": 0.25,
             "weight": 5
         }
     }

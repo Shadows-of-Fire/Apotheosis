@@ -2,15 +2,18 @@ package dev.shadowsoffire.apotheosis.client;
 
 import dev.shadowsoffire.apotheosis.particle.RarityParticleData;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.TextureSheetParticle;
-import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
-public class RarityParticle extends TextureSheetParticle {
+public class RarityParticle extends SingleQuadParticle {
 
-    public RarityParticle(RarityParticleData data, ClientLevel level, double x, double y, double z, double velX, double velY, double velZ) {
-        super(level, x, y, z, velX, velY, velZ);
+    public RarityParticle(RarityParticleData data, ClientLevel level, double x, double y, double z, double velX, double velY, double velZ, TextureAtlasSprite sprite) {
+        super(level, x, y, z, velX, velY, velZ, sprite);
         this.rCol = data.red();
         this.gCol = data.green();
         this.bCol = data.blue();
@@ -20,17 +23,17 @@ public class RarityParticle extends TextureSheetParticle {
         this.zd = velZ;
         this.speedUpWhenYMotionIsBlocked = true;
         this.friction = 1;
-        this.quadSize = 0.05F + 0.03F * (float) level.random.nextGaussian();
+        this.quadSize = 0.05F + 0.03F * (float) level.getRandom().nextGaussian();
     }
 
     @Override
-    protected int getLightColor(float partialTicks) {
-        return LightTexture.pack(15, 15);
+    public int getLightCoords(float partialTicks) {
+        return 15728880;
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public SingleQuadParticle.Layer getLayer() {
+        return SingleQuadParticle.Layer.TRANSLUCENT;
     }
 
     @Override
@@ -42,6 +45,19 @@ public class RarityParticle extends TextureSheetParticle {
     public void tick() {
         super.tick();
         this.alpha = 0.75F * (1 - (float) this.age / this.lifetime);
+    }
+
+    public static class Provider implements ParticleProvider<RarityParticleData> {
+        private final SpriteSet sprites;
+
+        public Provider(SpriteSet sprites) {
+            this.sprites = sprites;
+        }
+
+        @Override
+        public Particle createParticle(RarityParticleData data, ClientLevel level, double x, double y, double z, double vx, double vy, double vz, RandomSource random) {
+            return new RarityParticle(data, level, x, y, z, vx, vy, vz, this.sprites.get(random));
+        }
     }
 
 }

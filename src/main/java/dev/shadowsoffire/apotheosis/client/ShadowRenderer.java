@@ -7,7 +7,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import dev.shadowsoffire.apotheosis.loot.RarityRenderData.ShadowData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
@@ -28,38 +28,38 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class ShadowRenderer {
 
     static void renderShadow(
-        PoseStack poseStack, MultiBufferSource buffer, Entity entity, float partialTicks, LevelReader level, ShadowData data, int color) {
+        PoseStack poseStack, SubmitNodeCollector collector, Entity entity, float partialTicks, LevelReader level, ShadowData data, int color) {
         // Discard the render if the size is zero, since we call this even when the shadow doesn't need to render.
         float size = data.size();
         if (size <= 0) {
             return;
         }
 
-        double x = Mth.lerp((double) partialTicks, entity.xOld, entity.getX());
-        double y = Mth.lerp((double) partialTicks, entity.yOld, entity.getY());
-        double z = Mth.lerp((double) partialTicks, entity.zOld, entity.getZ());
-        int xMin = Mth.floor(x - (double) size);
-        int xMax = Mth.floor(x + (double) size);
-        int yMin = Mth.floor(y - 2); // Discard the concept of weight and always check 2 blocks down.
-        int yMax = Mth.floor(y);
-        int zMin = Mth.floor(z - (double) size);
-        int zMax = Mth.floor(z + (double) size);
-        PoseStack.Pose pose = poseStack.last();
+        final double x = Mth.lerp((double) partialTicks, entity.xOld, entity.getX());
+        final double y = Mth.lerp((double) partialTicks, entity.yOld, entity.getY());
+        final double z = Mth.lerp((double) partialTicks, entity.zOld, entity.getZ());
+        final int xMin = Mth.floor(x - (double) size);
+        final int xMax = Mth.floor(x + (double) size);
+        final int yMin = Mth.floor(y - 2); // Discard the concept of weight and always check 2 blocks down.
+        final int yMax = Mth.floor(y);
+        final int zMin = Mth.floor(z - (double) size);
+        final int zMax = Mth.floor(z + (double) size);
+
         // Use a custom render type instead of SHADOW_RENDER_TYPE to replace the texture
-        VertexConsumer vtx = buffer.getBuffer(ApothRenderTypes.affixShadow(data.texture()));
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        collector.submitCustomGeometry(poseStack, ApothRenderTypes.affixShadow(data.texture()), (pose, vtx) -> {
+            BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+            for (int zi = zMin; zi <= zMax; zi++) {
+                for (int xi = xMin; xi <= xMax; xi++) {
+                    pos.set(xi, 0, zi);
+                    ChunkAccess chunkaccess = level.getChunk(pos);
 
-        for (int zi = zMin; zi <= zMax; zi++) {
-            for (int xi = xMin; xi <= xMax; xi++) {
-                pos.set(xi, 0, zi);
-                ChunkAccess chunkaccess = level.getChunk(pos);
-
-                for (int yi = yMin; yi <= yMax; yi++) {
-                    pos.setY(yi);
-                    renderBlockShadow(pose, vtx, entity, chunkaccess, partialTicks, level, pos, x, y, z, data, color);
+                    for (int yi = yMin; yi <= yMax; yi++) {
+                        pos.setY(yi);
+                        renderBlockShadow(pose, vtx, entity, chunkaccess, partialTicks, level, pos, x, y, z, data, color);
+                    }
                 }
             }
-        }
+        });
     }
 
     private static void renderBlockShadow(

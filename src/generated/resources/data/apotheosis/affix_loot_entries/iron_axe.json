@@ -1,7 +1,6 @@
 {
     "type": "apotheosis:affix_loot_entry",
     "stack": {
-        "count": 1,
         "id": "minecraft:iron_axe"
     },
     "weights": {
@@ -10,9 +9,11 @@
             "weight": 25
         },
         "ascent": {
+            "quality": 1.0,
             "weight": 10
         },
         "summit": {
+            "quality": 0.25,
             "weight": 10
         }
     }

@@ -306,7 +306,7 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
 
     private static CompoundTag parse(String str) {
         try {
-            return TagParser.parseTag(str);
+            return TagParser.parseCompoundFully(str);
         }
         catch (CommandSyntaxException e) {
             throw new RuntimeException(e);

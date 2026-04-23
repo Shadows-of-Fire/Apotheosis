@@ -18,7 +18,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
 import dev.shadowsoffire.placebo.util.CachedObject;
 import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
@@ -32,7 +32,7 @@ import net.neoforged.neoforge.common.NeoForge;
  */
 public class SocketHelper {
 
-    public static final ResourceLocation GEMS_CACHED_OBJECT = Apotheosis.loc("gems");
+    public static final Identifier GEMS_CACHED_OBJECT = Apotheosis.loc("gems");
 
     private static final ToIntFunction<ItemStack> SOCKET_DEPENDENT_COMPONENTS_HASHER = CachedObject.hashComponents(Components.GEM, Components.PURITY, Components.SOCKETED_GEMS);
 

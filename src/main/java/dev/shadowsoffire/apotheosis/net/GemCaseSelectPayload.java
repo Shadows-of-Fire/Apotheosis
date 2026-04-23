@@ -47,14 +47,14 @@ public record GemCaseSelectPayload(DynamicHolder<Gem> gem) implements CustomPack
         }
 
         @Override
-        public void handle(GemCaseSelectPayload msg, IPayloadContext ctx) {
-            if (ctx.flow().isClientbound()) {
-                GemCaseScreen.handleSelectedGem(msg.gem());
-            }
-            else {
-                if (ctx.player().containerMenu instanceof GemCaseMenu menu) {
-                    menu.setSelectedGem(msg.gem());
-                }
+        public void handleClient(GemCaseSelectPayload msg, IPayloadContext ctx) {
+            GemCaseScreen.handleSelectedGem(msg.gem());
+        }
+
+        @Override
+        public void handleServer(GemCaseSelectPayload msg, IPayloadContext ctx) {
+            if (ctx.player().containerMenu instanceof GemCaseMenu menu) {
+                menu.setSelectedGem(msg.gem());
             }
         }
 

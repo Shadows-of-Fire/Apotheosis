@@ -14,7 +14,7 @@ import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.util.DamageSourceExtension;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.EntityInvulnerabilityCheckEvent;

@@ -27,7 +27,7 @@
             },
             {
                 "type": "gateways:attribute",
-                "attribute": "minecraft:generic.movement_speed",
+                "attribute": "minecraft:movement_speed",
                 "operation": "add_multiplied_total",
                 "value": 0.02
             }
@@ -81,25 +81,25 @@
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.max_health",
+                    "attribute": "minecraft:max_health",
                     "operation": "add_multiplied_total",
                     "value": 0.25
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.armor",
+                    "attribute": "minecraft:armor",
                     "operation": "add_multiplied_total",
                     "value": 0.1
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.armor_toughness",
+                    "attribute": "minecraft:armor_toughness",
                     "operation": "add_multiplied_total",
                     "value": 0.03
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.attack_damage",
+                    "attribute": "minecraft:attack_damage",
                     "operation": "add_multiplied_total",
                     "value": 0.25
                 },
@@ -123,7 +123,7 @@
                 },
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.knockback_resistance",
+                    "attribute": "minecraft:knockback_resistance",
                     "operation": "add_multiplied_total",
                     "value": 0.05
                 }
@@ -158,7 +158,7 @@
             "modifiers": [
                 {
                     "type": "gateways:attribute",
-                    "attribute": "minecraft:generic.max_health",
+                    "attribute": "minecraft:max_health",
                     "operation": "add_multiplied_total",
                     "value": 1.0
                 }
@@ -167,7 +167,6 @@
                 {
                     "type": "gateways:stack",
                     "stack": {
-                        "count": 1,
                         "id": "apotheosis:sigil_of_supremacy"
                     }
                 }

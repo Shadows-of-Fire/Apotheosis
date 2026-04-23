@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apoth.Attachments;
@@ -32,22 +32,21 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -107,20 +106,20 @@ public class ApothMobEvents {
 
     private boolean trySpawnInvader(FinalizeSpawnEvent e, Mob mob, GenContext ctx, Player player) {
         // Invaders can only trigger off of natural spawns (chunk generation is considered "natural")
-        if ((e.getSpawnType() != MobSpawnType.NATURAL && e.getSpawnType() != MobSpawnType.CHUNK_GENERATION) || !(mob instanceof Monster)) {
+        if ((e.getSpawnType() != EntitySpawnReason.NATURAL && e.getSpawnType() != EntitySpawnReason.CHUNK_GENERATION) || !(mob instanceof Monster)) {
             debugLog("[Invaders]: Failed invader preconditions.");
             return false;
         }
 
         if (this.cooldownData.isOnCooldown(mob.level())) {
-            debugLog("[Invaders]: Cooldown is active for " + mob.level().dimension().location());
+            debugLog("[Invaders]: Cooldown is active for " + mob.level().dimension().identifier());
             return false;
         }
 
         ServerLevelAccessor sLevel = e.getLevel();
         ResourceKey<DimensionType> dimId = sLevel.getLevel().dimensionTypeRegistration().getKey();
 
-        InvaderSpawnRules rules = sLevel.registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).getData(DataMaps.INVADER_SPAWN_RULES, dimId);
+        InvaderSpawnRules rules = sLevel.registryAccess().lookupOrThrow(Registries.DIMENSION_TYPE).getData(DataMaps.INVADER_SPAWN_RULES, dimId);
         if (rules == null) {
             debugLog("[Invaders]: No invader spawn rules present for dimension {}", dimId);
             return false;
@@ -195,7 +194,7 @@ public class ApothMobEvents {
     /**
      * Applies all active {@link TierAugment}s to the mob, then rolls the {@link AdventureConfig#augmentedMobChance} to apply {@link Augmentation}s.
      */
-    private void tryAugmentations(ServerLevelAccessor level, Mob mob, MobSpawnType type, GenContext ctx) {
+    private void tryAugmentations(ServerLevelAccessor level, Mob mob, EntitySpawnReason type, GenContext ctx) {
         float healthPct = mob.getHealth() / mob.getMaxHealth();
 
         for (TierAugment aug : TierAugmentRegistry.getAugments(ctx.tier(), Target.MONSTERS)) {
@@ -257,20 +256,20 @@ public class ApothMobEvents {
      */
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void delayedEliteMobs(EntityJoinLevelEvent e) {
-        if (!e.getLevel().isClientSide && e.getEntity() instanceof Mob mob) {
+        if (!e.getLevel().isClientSide() && e.getEntity() instanceof Mob mob) {
             CompoundTag data = mob.getPersistentData();
             if (data.contains(Elite.MINIBOSS_KEY) && data.contains(Elite.PLAYER_KEY)) {
-                String key = data.getString(Elite.MINIBOSS_KEY);
+                String key = data.getString(Elite.MINIBOSS_KEY).orElse("");
                 try {
-                    UUID playerId = UUID.fromString(data.getString(Elite.PLAYER_KEY));
+                    UUID playerId = UUID.fromString(data.getString(Elite.PLAYER_KEY).orElseThrow());
                     Player player = e.getLevel().getPlayerByUUID(playerId);
                     if (player == null) {
                         player = e.getLevel().getNearestPlayer(mob, -1);
                     }
 
                     if (player != null) {
-                        GenContext ctx = GenContext.forPlayerAtPos(e.getLevel().random, player, mob.blockPosition());
-                        Elite item = EliteRegistry.INSTANCE.getValue(ResourceLocation.tryParse(key));
+                        GenContext ctx = GenContext.forPlayerAtPos(e.getLevel().getRandom(), player, mob.blockPosition());
+                        Elite item = EliteRegistry.INSTANCE.getValue(Identifier.tryParse(key));
                         if (item != null) {
                             item.transformMiniboss((ServerLevel) e.getLevel(), mob, ctx);
                         }
@@ -285,13 +284,13 @@ public class ApothMobEvents {
 
     @SubscribeEvent
     public void tick(LevelTickEvent.Post e) {
-        this.cooldownData.tick(e.getLevel().dimension().location());
+        this.cooldownData.tick(e.getLevel().dimension().identifier());
     }
 
     @SubscribeEvent
     public void load(ServerStartedEvent e) {
         this.cooldownData = e.getServer().getLevel(Level.OVERWORLD).getDataStorage()
-            .computeIfAbsent(new SavedData.Factory<>(SpawnCooldownSavedData::new, SpawnCooldownSavedData::loadTimes, null), "apotheosis_boss_times");
+            .computeIfAbsent(SpawnCooldownSavedData.TYPE);
     }
 
     private static boolean canSpawn(LevelAccessor world, Mob entity, double playerDist) {
@@ -299,7 +298,7 @@ public class ApothMobEvents {
             return false;
         }
         else {
-            return entity.checkSpawnRules(world, MobSpawnType.NATURAL) && entity.checkSpawnObstruction(world);
+            return entity.checkSpawnRules(world, EntitySpawnReason.NATURAL) && entity.checkSpawnObstruction(world);
         }
     }
 
@@ -310,12 +309,12 @@ public class ApothMobEvents {
 
     @Nullable
     private static DynamicHolder<LootRarity> getRarity(Mob boss) {
-        return boss.getSelfAndPassengers().filter(e -> e.getPersistentData().contains(Invader.BOSS_KEY)).findFirst().map(ent -> {
-            return RarityRegistry.INSTANCE.holder(ResourceLocation.tryParse(ent.getPersistentData().getString(Invader.RARITY_KEY)));
+        return boss.getSelfAndPassengers().filter(e -> e.getPersistentData().contains(Invader.BOSS_KEY)).findFirst().<DynamicHolder<LootRarity>>map(ent -> {
+            return RarityRegistry.INSTANCE.holder(Identifier.tryParse(ent.getPersistentData().getString(Invader.RARITY_KEY).orElse("")));
         }).orElse(RarityRegistry.INSTANCE.emptyHolder());
     }
 
-    private static final Marker MARKER = MarkerManager.getMarker(ApothMobEvents.class.getSimpleName());
+    private static final Marker MARKER = MarkerFactory.getMarker(ApothMobEvents.class.getSimpleName());
 
     private static void debugLog(String msg, Object... args) {
         if (Apotheosis.DEBUG_MOBS) {

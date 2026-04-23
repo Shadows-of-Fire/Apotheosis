@@ -8,7 +8,7 @@ license="MIT License (code) / All Rights Reserved (assets)"
 
 modId="apotheosis"
 
-version="8.5.2"
+version="9.0.0-beta0"
 
 displayName="Apotheosis"
 
@@ -26,55 +26,55 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21.1,)"
+    versionRange="[26.1,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="neoforge"
     type="required"
-    versionRange="[21.1.187,)"
+    versionRange="[26.1.0.1-beta,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="placebo"
     type="required"
-    versionRange="[9.9.1,)"
+    versionRange="[10.0.0-beta7,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="apothic_attributes"
     type="required"
-    versionRange="[2.7.0,)"
+    versionRange="[3.0.0-beta1,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="apothic_spawners"
     type="required"
-    versionRange="[1.3.0,)"
+    versionRange="[2.0.0beta0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="apothic_enchanting"
     type="required"
-    versionRange="[1.5.2,)"
-    ordering="AFTER"
-    side="BOTH"
-
-[[dependencies.apotheosis]]
-    modId="curios"
-    type="optional"
-    versionRange="[9.5.1+1.21.1,)"
+    versionRange="[4.0.0-beta5,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="gateways"
     type="optional"
-    versionRange="[5.1.0,)"
+    versionRange="[6.0.0-beta1,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.apotheosis]]
+    modId="patchouli"
+    type="optional"
+    versionRange="[26.1-94-SNAPSHOT,)"
     ordering="AFTER"
     side="BOTH"

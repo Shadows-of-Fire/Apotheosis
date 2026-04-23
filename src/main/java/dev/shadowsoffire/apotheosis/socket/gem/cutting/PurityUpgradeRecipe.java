@@ -8,7 +8,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
-import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -21,8 +20,8 @@ public record PurityUpgradeRecipe(Purity purity, List<SizedIngredient> left, Lis
 
     public static MapCodec<PurityUpgradeRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
         Purity.CODEC.fieldOf("purity").forGetter(PurityUpgradeRecipe::purity),
-        SizedIngredient.FLAT_CODEC.listOf().fieldOf("left").forGetter(PurityUpgradeRecipe::left),
-        SizedIngredient.FLAT_CODEC.listOf().fieldOf("right").forGetter(PurityUpgradeRecipe::right))
+        SizedIngredient.NESTED_CODEC.listOf().fieldOf("left").forGetter(PurityUpgradeRecipe::left),
+        SizedIngredient.NESTED_CODEC.listOf().fieldOf("right").forGetter(PurityUpgradeRecipe::right))
         .apply(inst, PurityUpgradeRecipe::new));
 
     public static StreamCodec<RegistryFriendlyByteBuf, PurityUpgradeRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -32,20 +31,15 @@ public record PurityUpgradeRecipe(Purity purity, List<SizedIngredient> left, Lis
         PurityUpgradeRecipe::new);
 
     @Override
-    public ItemStack assemble(CuttingRecipeInput input, Provider registries) {
+    public ItemStack assemble(CuttingRecipeInput input) {
         ItemStack out = input.getBase().copy();
         GemItem.setPurity(out, GemItem.getPurity(out).next());
         return out;
     }
 
     @Override
-    public ItemStack getResultItem(Provider registries) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return Serializer.INSTANCE;
+    public RecipeSerializer<? extends GemCuttingRecipe> getSerializer() {
+        return SERIALIZER;
     }
 
     @Override
@@ -53,9 +47,9 @@ public record PurityUpgradeRecipe(Purity purity, List<SizedIngredient> left, Lis
         SizedIngredient left = GemCuttingRecipe.getMatchOrThrow(input.getLeft(), this.left);
         SizedIngredient right = GemCuttingRecipe.getMatchOrThrow(input.getRight(), this.right);
 
-        input.getTop().shrink(1);
-        input.getLeft().shrink(left.count());
-        input.getRight().shrink(right.count());
+        input.shrink(GemCuttingMenu.TOP_SLOT, 1);
+        input.shrink(GemCuttingMenu.LEFT_SLOT, left.count());
+        input.shrink(GemCuttingMenu.RIGHT_SLOT, right.count());
     }
 
     @Override
@@ -95,20 +89,6 @@ public record PurityUpgradeRecipe(Purity purity, List<SizedIngredient> left, Lis
         return this.right.stream().map(SizedIngredient::ingredient).anyMatch(i -> i.test(stack));
     }
 
-    public static class Serializer implements RecipeSerializer<PurityUpgradeRecipe> {
-
-        public static final Serializer INSTANCE = new Serializer();
-
-        @Override
-        public MapCodec<PurityUpgradeRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, PurityUpgradeRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
-
-    }
+    public static final RecipeSerializer<PurityUpgradeRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
 }

@@ -6,20 +6,19 @@ import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.socket.ReactiveSmithingRecipe;
 import dev.shadowsoffire.apotheosis.util.ApothSmithingRecipe;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmithingRecipeInput;
 import net.minecraft.world.level.Level;
 
 public class MaliceRecipe extends ApothSmithingRecipe implements ReactiveSmithingRecipe {
 
     public MaliceRecipe() {
-        super(Ingredient.EMPTY, Ingredient.of(Items.SIGIL_OF_MALICE.value()), ItemStack.EMPTY);
+        super(BASE_PLACEHOLDER, Ingredient.of(Items.SIGIL_OF_MALICE.value()), ItemStack.EMPTY);
     }
 
     /**
@@ -36,29 +35,25 @@ public class MaliceRecipe extends ApothSmithingRecipe implements ReactiveSmithin
      * Returns an Item that is the result of this recipe
      */
     @Override
-    public ItemStack assemble(SmithingRecipeInput inv, HolderLookup.Provider regs) {
+    public ItemStack assemble(SmithingRecipeInput inv) {
         ItemStack base = inv.getItem(BASE).copy();
         base.set(Apoth.Components.MALICE_MARKER, true);
         return base;
     }
 
     @Override
-    public void onCraft(Container inv, Player player, ItemStack output) {
-        if (!player.level().isClientSide && !output.isEmpty()) {
+    public void onCraft(Container inv, ServerPlayer player, ItemStack output) {
+        if (!output.isEmpty()) {
             AffixHelper.applyMalice(player, output);
             output.remove(Components.MALICE_MARKER);
         }
-        player.playSound(Apoth.Sounds.MALICE.value(), 1.0F, player.getRandom().nextFloat() * 0.4F + 0.8F);
+        player.level().playSound(null, player.blockPosition(), Apoth.Sounds.MALICE, SoundSource.PLAYERS, 1.0F, player.getRandom().nextFloat() * 0.4F + 0.8F);
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return Apoth.RecipeSerializers.MALICE.value();
-    }
-
-    @Override
-    public RecipeType<?> getType() {
-        return RecipeType.SMITHING;
+    @SuppressWarnings("unchecked")
+    public RecipeSerializer<? extends net.minecraft.world.item.crafting.SmithingRecipe> getSerializer() {
+        return (RecipeSerializer<? extends net.minecraft.world.item.crafting.SmithingRecipe>) Apoth.RecipeSerializers.MALICE.value();
     }
 
     @Override

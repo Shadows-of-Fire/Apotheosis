@@ -13,7 +13,7 @@ import dev.shadowsoffire.apotheosis.mobs.util.SpawnCondition.SpawnTypeCondition;
 import dev.shadowsoffire.placebo.util.data.DynamicRegistryProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 
 public class AugmentationProvider extends DynamicRegistryProvider<Augmentation> {
 
@@ -31,7 +31,7 @@ public class AugmentationProvider extends DynamicRegistryProvider<Augmentation> 
         add("random_affix_items", b -> b
             .chance(0.12F)
             .conditions(
-                new NotCondition(SpawnTypeCondition.of(MobSpawnType.SPAWNER, MobSpawnType.TRIAL_SPAWNER)),
+                new NotCondition(SpawnTypeCondition.of(EntitySpawnReason.SPAWNER, EntitySpawnReason.TRIAL_SPAWNER)),
                 new IsMonsterCondition())
             .modifiers(new RandomAffixItemModifier()));
     }

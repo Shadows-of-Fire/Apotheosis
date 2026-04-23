@@ -10,18 +10,18 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item.TooltipContext;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -29,14 +29,15 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -83,20 +84,20 @@ public class GemCaseBlock extends HorizontalDirectionalBlock implements TickingE
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
         ItemStack s = new ItemStack(this);
         BlockEntity te = level.getBlockEntity(pos);
-        if (te != null) {
-            te.saveToItem(s, level.registryAccess());
+        if (te != null && includeData) {
+            saveBlockEntityToItem(te, s, level.registryAccess());
         }
         return s;
     }
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        CustomData data = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        TypedEntityData<BlockEntityType<?>> data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
         BlockEntity be = level.getBlockEntity(pos);
-        if (!data.isEmpty() && be instanceof GemCaseTile lib) {
+        if (data != null && be instanceof GemCaseTile lib) {
             data.loadInto(lib, level.registryAccess());
         }
     }
@@ -106,28 +107,17 @@ public class GemCaseBlock extends HorizontalDirectionalBlock implements TickingE
         ItemStack s = new ItemStack(this);
         BlockEntity te = ctx.getParameter(LootContextParams.BLOCK_ENTITY);
         if (te != null) {
-            te.saveToItem(s, ctx.getLevel().registryAccess());
+            saveBlockEntityToItem(te, s, ctx.getLevel().registryAccess());
         }
         return Arrays.asList(s);
     }
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag tooltipFlag) {
-        list.add(Apotheosis.lang("tooltip", "gem_case.capacity", format(this.maxCount)).withStyle(ChatFormatting.GOLD));
-        CustomData data = stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
-        if (!data.isEmpty() && data.contains("gems")) {
-            int gems = data.getUnsafe().getCompound("gems").size();
-            if (gems > 0) {
-                list.add(Apotheosis.lang("tooltip", "gem_case.unique_gems", gems).withStyle(ChatFormatting.GRAY));
-            }
-        }
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (newState.getBlock() != this) {
-            world.removeBlockEntity(pos);
+    private static void saveBlockEntityToItem(BlockEntity be, ItemStack stack, HolderLookup.Provider registries) {
+        try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(be.problemPath(), Apotheosis.LOGGER)) {
+            TagValueOutput output = TagValueOutput.createWithContext(reporter, registries);
+            be.saveCustomOnly(output);
+            BlockItem.setBlockEntityData(stack, be.getType(), output);
+            stack.applyComponents(be.collectComponents());
         }
     }
 

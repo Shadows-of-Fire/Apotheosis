@@ -13,7 +13,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
@@ -211,11 +211,11 @@ public record AffixInstance(DynamicHolder<Affix> affix, float level, DynamicHold
         return new AffixInstance(this.affix, Mth.clamp(level, 0, Affix.MAX_LEVEL), this.rarity, this.stack);
     }
 
-    public ResourceLocation makeUniqueId(String salt) {
+    public Identifier makeUniqueId(String salt) {
         return Affix.makeUniqueId(this, salt);
     }
 
-    public ResourceLocation makeUniqueId() {
+    public Identifier makeUniqueId() {
         return Affix.makeUniqueId(this);
     }
 }

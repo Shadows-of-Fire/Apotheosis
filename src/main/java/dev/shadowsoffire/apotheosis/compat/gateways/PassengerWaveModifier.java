@@ -32,7 +32,7 @@ public record PassengerWaveModifier(WaveEntity entity) implements WaveModifier {
     public void apply(LivingEntity entity, GatewayEntity gate) {
         LivingEntity passenger = this.entity.createEntity((ServerLevel) gate.level(), gate);
         if (passenger != null) {
-            passenger.startRiding(entity, true);
+            passenger.startRiding(entity, true, true);
         }
     }
 

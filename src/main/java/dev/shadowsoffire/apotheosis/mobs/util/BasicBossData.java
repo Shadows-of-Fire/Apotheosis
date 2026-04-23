@@ -36,8 +36,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
@@ -153,11 +153,13 @@ public record BasicBossData(
         }
 
         Mob mountedEntity = this.mount.get().create(level.getLevel(), pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-        rider.startRiding(mountedEntity, true);
-        return mountedEntity;
+        if (mountedEntity != null) {
+            rider.startRiding(mountedEntity, true, true);
+        }
+        return mountedEntity != null ? mountedEntity : rider;
     }
 
-    public boolean canSpawn(Mob mob, ServerLevelAccessor level, MobSpawnType type) {
+    public boolean canSpawn(Mob mob, ServerLevelAccessor level, EntitySpawnReason type) {
         return SpawnCondition.checkAll(this.spawnConditions, mob, level, type);
     }
 

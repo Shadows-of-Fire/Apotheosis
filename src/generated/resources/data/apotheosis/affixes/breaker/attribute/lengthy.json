@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:player.block_interaction_range",
+    "attribute": "minecraft:block_interaction_range",
     "categories": [
         "apotheosis:breaker"
     ],

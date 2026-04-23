@@ -8,13 +8,17 @@ import org.spongepowered.include.com.google.common.base.Preconditions;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe.CuttingRecipeInput;
+import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public interface GemCuttingRecipe extends Recipe<CuttingRecipeInput> {
 
@@ -50,13 +54,38 @@ public interface GemCuttingRecipe extends Recipe<CuttingRecipeInput> {
     boolean isValidRightItem(CuttingRecipeInput input, ItemStack stack);
 
     @Override
-    default boolean canCraftInDimensions(int width, int height) {
+    default RecipeType<? extends GemCuttingRecipe> getType() {
+        return Apoth.RecipeTypes.GEM_CUTTING;
+    }
+
+    @Override
+    default String group() {
+        return "";
+    }
+
+    @Override
+    default boolean showNotification() {
+        return false;
+    }
+
+    @Override
+    default PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
+    }
+
+    @Override
+    default boolean isSpecial() {
         return true;
     }
 
     @Override
-    default RecipeType<?> getType() {
-        return Apoth.RecipeTypes.GEM_CUTTING;
+    default RecipeBookCategory recipeBookCategory() {
+        return net.minecraft.world.item.crafting.RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    default List<RecipeDisplay> display() {
+        return List.of();
     }
 
     @Nullable
@@ -77,10 +106,22 @@ public interface GemCuttingRecipe extends Recipe<CuttingRecipeInput> {
         return getMatch(stack, ingredients) != null;
     }
 
-    public static class CuttingRecipeInput extends RecipeWrapper {
+    public static class CuttingRecipeInput implements RecipeInput {
 
-        public CuttingRecipeInput(IItemHandler inv) {
-            super(inv);
+        private final InternalItemHandler inv;
+
+        public CuttingRecipeInput(InternalItemHandler inv) {
+            this.inv = inv;
+        }
+
+        @Override
+        public int size() {
+            return this.inv.size();
+        }
+
+        @Override
+        public ItemStack getItem(int slot) {
+            return this.inv.getResource(slot).toStack(this.inv.getAmountAsInt(slot));
         }
 
         public ItemStack getBase() {
@@ -97,6 +138,18 @@ public interface GemCuttingRecipe extends Recipe<CuttingRecipeInput> {
 
         public ItemStack getRight() {
             return this.getItem(GemCuttingMenu.RIGHT_SLOT);
+        }
+
+        public void shrink(int slot, int amount) {
+            ItemResource res = this.inv.getResource(slot);
+            int currentAmount = this.inv.getAmountAsInt(slot);
+            int newAmount = Math.max(0, currentAmount - amount);
+            if (newAmount == 0) {
+                this.inv.set(slot, net.neoforged.neoforge.transfer.item.ItemResource.EMPTY, 0);
+            }
+            else {
+                this.inv.set(slot, res, newAmount);
+            }
         }
 
     }

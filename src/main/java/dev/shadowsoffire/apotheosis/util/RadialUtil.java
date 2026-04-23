@@ -37,7 +37,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class RadialUtil {
@@ -60,9 +60,9 @@ public class RadialUtil {
      * <p>
      * If radial mining is disabled for the player, this method does nothing.
      */
-    public static void attemptRadialMining(BlockEvent.BreakEvent e, RadialData data) {
+    public static void attemptRadialMining(BreakBlockEvent e, RadialData data) {
         Player player = e.getPlayer();
-        if (RadialState.isRadialMiningEnabled(player)) {
+        if (RadialState.isRadialMiningEnabled(player) && !player.level().isClientSide()) {
             RadialUtil.breakExtraBlocks(player, e.getPos(), data);
         }
     }
@@ -174,7 +174,7 @@ public class RadialUtil {
     }
 
     static BlockPos rotateDown(BlockPos pos, int y, Direction horizontal) {
-        Vec3i vec = horizontal.getNormal();
+        Vec3i vec = horizontal.getUnitVec3i();
         return new BlockPos(pos.getX() + vec.getX() * y, pos.getY() - y, pos.getZ() + vec.getZ() * y);
     }
 

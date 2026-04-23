@@ -1,0 +1,29 @@
+{
+    "additional_wants": {
+        "count": 45.0,
+        "id": "minecraft:emerald"
+    },
+    "gives": {
+        "components": {
+            "minecraft:custom_name": {
+                "color": "#C11101",
+                "italic": false,
+                "translate": "name.apotheosis.arachnids_fear"
+            },
+            "minecraft:enchantments": {
+                "minecraft:bane_of_arthropods": 10,
+                "minecraft:fire_aspect": 5,
+                "minecraft:looting": 5,
+                "minecraft:mending": 1,
+                "minecraft:unbreaking": 5
+            }
+        },
+        "id": "minecraft:diamond_sword"
+    },
+    "max_uses": 1.0,
+    "reputation_discount": 0.05,
+    "wants": {
+        "id": "minecraft:diamond_sword"
+    },
+    "xp": 500.0
+}

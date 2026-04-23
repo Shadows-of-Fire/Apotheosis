@@ -23,11 +23,11 @@ import dev.shadowsoffire.placebo.util.CachedObject;
 import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 public class RadialBonus extends GemBonus {
 
@@ -37,7 +37,7 @@ public class RadialBonus extends GemBonus {
             Purity.mapCodec(RadialData.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, RadialBonus::new));
 
-    public static final ResourceLocation GEM_RADIAL_DATA_CACHED_OBJECT = Apotheosis.loc("gem_radial_data");
+    public static final Identifier GEM_RADIAL_DATA_CACHED_OBJECT = Apotheosis.loc("gem_radial_data");
 
     protected final Map<Purity, RadialData> values;
 
@@ -63,7 +63,7 @@ public class RadialBonus extends GemBonus {
     }
 
     // EventPriority.LOW
-    public static void onBreak(BlockEvent.BreakEvent e) {
+    public static void onBreak(BreakBlockEvent e) {
         Player player = e.getPlayer();
         RadialData data = getRadialData(player.getMainHandItem());
         if (data != null) {

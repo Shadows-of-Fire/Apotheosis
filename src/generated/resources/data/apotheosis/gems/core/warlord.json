@@ -27,7 +27,7 @@
         },
         {
             "type": "apotheosis:attribute",
-            "attribute": "minecraft:generic.max_health",
+            "attribute": "minecraft:max_health",
             "gem_class": "apotheosis:chestplate",
             "operation": "add_multiplied_base",
             "values": {
@@ -41,7 +41,7 @@
         },
         {
             "type": "apotheosis:attribute",
-            "attribute": "minecraft:generic.attack_damage",
+            "attribute": "minecraft:attack_damage",
             "gem_class": "apotheosis:helmet",
             "operation": "add_multiplied_total",
             "values": {

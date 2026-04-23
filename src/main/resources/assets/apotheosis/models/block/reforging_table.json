@@ -28,8 +28,7 @@
                 "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#lit"}
             },
             "neoforge_data": {
-                "block_light": 15,
-                "sky_light": 15
+                "light_emission": 15
             }
         }
     ]

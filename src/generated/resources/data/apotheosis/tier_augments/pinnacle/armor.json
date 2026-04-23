@@ -1,7 +1,7 @@
 {
     "type": "apotheosis:attribute",
     "modifier": {
-        "attribute": "minecraft:generic.armor",
+        "attribute": "minecraft:armor",
         "operation": "add_value",
         "value": 16.0
     },

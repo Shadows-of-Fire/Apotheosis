@@ -21,6 +21,7 @@ import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -93,9 +94,9 @@ public abstract class ItemStackMixin implements IFestiveMarker {
     }
 
     @Inject(method = "inventoryTick", at = @At("HEAD"))
-    public void apoth_tryTickMalice(Level level, Entity entity, int inventorySlot, boolean isCurrentItem, CallbackInfo ci) {
+    public void apoth_tryTickMalice(Level level, Entity entity, EquipmentSlot slot, CallbackInfo ci) {
         ItemStack ths = (ItemStack) (Object) this;
-        if (!level.isClientSide && ths.has(Apoth.Components.MALICE_MARKER) && entity instanceof Player player) {
+        if (!level.isClientSide() && ths.has(Apoth.Components.MALICE_MARKER) && entity instanceof Player player) {
             AffixHelper.applyMalice(player, ths);
             ths.remove(Components.MALICE_MARKER);
         }

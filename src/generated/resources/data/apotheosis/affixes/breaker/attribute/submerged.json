@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:player.submerged_mining_speed",
+    "attribute": "minecraft:submerged_mining_speed",
     "categories": [
         "apotheosis:breaker"
     ],

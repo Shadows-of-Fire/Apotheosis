@@ -3,15 +3,9 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "G": {
-            "item": "apotheosis:gem_fused_slate"
-        },
-        "R": {
-            "item": "apotheosis:rare_material"
-        },
-        "S": {
-            "item": "minecraft:stone"
-        }
+        "G": "apotheosis:gem_fused_slate",
+        "R": "apotheosis:rare_material",
+        "S": "minecraft:stone"
     },
     "pattern": [
         " R ",

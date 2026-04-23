@@ -1,7 +1,7 @@
 {
     "type": "apotheosis:attribute",
     "modifier": {
-        "attribute": "minecraft:generic.luck",
+        "attribute": "minecraft:luck",
         "operation": "add_multiplied_total",
         "value": 1.0
     },

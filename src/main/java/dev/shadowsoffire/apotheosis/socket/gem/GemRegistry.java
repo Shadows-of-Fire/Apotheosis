@@ -11,7 +11,7 @@ import dev.shadowsoffire.apotheosis.tiers.Constraints;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.TieredDynamicRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 public class GemRegistry extends TieredDynamicRegistry<Gem> {
@@ -28,7 +28,7 @@ public class GemRegistry extends TieredDynamicRegistry<Gem> {
     }
 
     @Override
-    protected void validateItem(ResourceLocation key, Gem item) {
+    protected void validateItem(Identifier key, Gem item) {
         super.validateItem(key, item);
         for (Purity p : Purity.values()) {
             if (p.isAtLeast(item.getMinPurity())) {
@@ -55,7 +55,7 @@ public class GemRegistry extends TieredDynamicRegistry<Gem> {
                             gem.appendExtraBonus(bonus);
                         }
                         catch (Exception ex) {
-                            ResourceLocation extraBonusKey = ExtraGemBonusRegistry.INSTANCE.getKey(extraBonus);
+                            Identifier extraBonusKey = ExtraGemBonusRegistry.INSTANCE.getKey(extraBonus);
                             this.logger.warn("Failed to apply extra gem bonus for class {} to gem {}.", bonus.getGemClass().key(), holder.getId());
                             this.logger.warn("Exception while applying ExtraGemBonus %s: ".formatted(extraBonusKey), ex);
                         }

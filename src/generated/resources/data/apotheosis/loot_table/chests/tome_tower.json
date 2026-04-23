@@ -9,121 +9,154 @@
             },
             "entries": [
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 1,
-                    "max": 3,
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "add": false,
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1.0,
+                                "max": 3.0
+                            },
+                            "function": "minecraft:set_count"
+                        }
+                    ],
+                    "name": "minecraft:diamond",
                     "quality": 2,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:diamond"
-                    },
                     "weight": 30
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 1,
-                    "max": 3,
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "add": false,
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1.0,
+                                "max": 3.0
+                            },
+                            "function": "minecraft:set_count"
+                        }
+                    ],
+                    "name": "minecraft:emerald",
                     "quality": 2,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:emerald"
-                    },
                     "weight": 30
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 2,
-                    "max": 5,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:iron_ingot"
-                    },
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "add": false,
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 2.0,
+                                "max": 5.0
+                            },
+                            "function": "minecraft:set_count"
+                        }
+                    ],
+                    "name": "minecraft:iron_ingot",
                     "weight": 50
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 2,
-                    "max": 5,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:gold_ingot"
-                    },
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "add": false,
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 2.0,
+                                "max": 5.0
+                            },
+                            "function": "minecraft:set_count"
+                        }
+                    ],
+                    "name": "minecraft:gold_ingot",
                     "weight": 50
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 1,
-                    "max": 2,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:name_tag"
-                    },
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "add": false,
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1.0,
+                                "max": 2.0
+                            },
+                            "function": "minecraft:set_count"
+                        }
+                    ],
+                    "name": "minecraft:name_tag",
                     "weight": 20
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 1,
-                    "max": 2,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:lead"
-                    },
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "add": false,
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1.0,
+                                "max": 2.0
+                            },
+                            "function": "minecraft:set_count"
+                        }
+                    ],
+                    "name": "minecraft:lead",
                     "weight": 20
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 1,
-                    "max": 2,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:saddle"
-                    },
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "add": false,
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1.0,
+                                "max": 2.0
+                            },
+                            "function": "minecraft:set_count"
+                        }
+                    ],
+                    "name": "minecraft:saddle",
                     "weight": 20
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 1,
-                    "max": 1,
-                    "quality": 5,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:diamond_horse_armor"
-                    }
+                    "type": "minecraft:item",
+                    "name": "minecraft:diamond_horse_armor",
+                    "quality": 5
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 3,
-                    "max": 6,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:slime_ball"
-                    },
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "add": false,
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 3.0,
+                                "max": 6.0
+                            },
+                            "function": "minecraft:set_count"
+                        }
+                    ],
+                    "name": "minecraft:slime_ball",
                     "weight": 20
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 1,
-                    "max": 1,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:bucket"
-                    },
+                    "type": "minecraft:item",
+                    "name": "minecraft:bucket",
                     "weight": 3
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 1,
+                    "type": "minecraft:item",
                     "functions": [
                         {
                             "function": "minecraft:enchant_randomly",
                             "options": "#minecraft:on_random_loot"
                         }
                     ],
-                    "max": 1,
-                    "stack": {
-                        "count": 1,
-                        "id": "minecraft:book"
-                    },
+                    "name": "minecraft:book",
                     "weight": 400
                 },
                 {

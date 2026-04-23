@@ -61,7 +61,7 @@
             "gem_class": "apotheosis:helmet",
             "modifiers": [
                 {
-                    "attribute": "minecraft:generic.attack_damage",
+                    "attribute": "minecraft:attack_damage",
                     "operation": "add_multiplied_total",
                     "values": {
                         "flawed": 0.25,
@@ -71,7 +71,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.max_health",
+                    "attribute": "minecraft:max_health",
                     "operation": "add_multiplied_total",
                     "values": {
                         "flawed": -0.3,

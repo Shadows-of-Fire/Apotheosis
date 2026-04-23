@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -23,17 +22,17 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
-import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item.TooltipContext;
@@ -45,7 +44,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
     /**
      * Texture file is 256x307
      */
-    public static final ResourceLocation TEXTURE = Apotheosis.loc("textures/gui/augmenting.png");
+    public static final Identifier TEXTURE = Apotheosis.loc("textures/gui/augmenting.png");
 
     public static final int ALTERNATIVE_TEXT_WIDTH = 150;
     public static final int ALTERNATIVE_MAX_LINES = 15;
@@ -66,21 +65,18 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
     protected final AttributeTooltipContext tooltipCtx;
 
     public AugmentingScreen(AugmentingMenu menu, Inventory inv, Component pTitle) {
-        super(menu, inv, pTitle);
-        this.imageHeight = 222;
-        this.tooltipCtx = AttributeTooltipContext.of(inv.player, TooltipContext.of(inv.player.level()), ApothicAttributes.getTooltipFlag());
+        super(menu, inv, pTitle, 176, 222);
+        this.tooltipCtx = AttributeTooltipContext.of(inv.player, TooltipContext.of(inv.player.level()), net.minecraft.world.item.component.TooltipDisplay.DEFAULT, ApothicAttributes.getTooltipFlag());
     }
 
     @Override
     protected void init() {
         super.init();
 
-        int left = this.getGuiLeft();
-        int top = this.getGuiTop();
+        int left = this.getLeftPos();
+        int top = this.getTopPos();
 
         int selected = this.getSelectedAffix();
-        this.list = this.addRenderableWidget(new AffixDropList(left + 39, top + 17, 123, 14, Component.empty(), this.currentItemAffixes, 6));
-        this.list.setSelected(selected);
 
         this.upgradeBtn = this.addRenderableWidget(
             new FatTexButton(left + 60, top + 111, 29, 13, 186, 135,
@@ -99,17 +95,29 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                     }
                 },
                 Component.translatable("button.apotheosis.augmenting.reroll")));
+
+        this.list = this.addRenderableWidget(new AffixDropList(left + 39, top + 17, 123, 14, Component.empty(), this.currentItemAffixes, 6));
+        this.list.setSelected(selected);
     }
 
     @Override
-    protected void renderBg(GuiGraphics gfx, float partialTick, int mouseX, int mouseY) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        if (super.mouseScrolled(mouseX, mouseY, scrollX, scrollY)) {
+            return true;
+        }
+        return this.getChildAt(mouseX, mouseY).filter(child -> child.mouseScrolled(mouseX, mouseY, scrollX, scrollY)).isPresent();
+    }
+
+    @Override
+    public void extractBackground(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(gfx, mouseX, mouseY, partialTick);
         this.updateCachedState();
 
-        int left = this.getGuiLeft();
-        int top = this.getGuiTop();
+        int left = this.getLeftPos();
+        int top = this.getTopPos();
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
-        gfx.blit(TEXTURE, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight, 256, 307);
+        gfx.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight, 256, 307);
 
         int selected = this.getSelectedAffix();
 
@@ -117,19 +125,21 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
             AffixInstance inst = this.currentItemAffixes.get(selected);
             Component comp = inst.getAugmentingText(this.tooltipCtx);
             List<FormattedCharSequence> split = this.font.split(comp, 117);
+            drawPanel(gfx, left + 42, top + 39, 117, 6 * 11 - 1, 0xF0100010, 0xFF36454F);
             for (int i = 0; i < split.size(); i++) {
-                gfx.drawString(this.font, split.get(i), left + 43, top + 40 + i * 11, ChatFormatting.YELLOW.getColor(), true);
+                gfx.text(this.font, split.get(i), left + 43, top + 40 + i * 11, 0xFF000000 | ChatFormatting.YELLOW.getColor(), true);
             }
-
-            int bgColor = 0xF0100010;
-            int borderColor = 0xFF36454F;
-            TooltipRenderUtil.renderTooltipBackground(gfx, left + 42, top + 39, 117, 6 * 11 - 1, 0, bgColor, bgColor, borderColor, borderColor);
         }
         else {
-            int bgColor = 0xAA101010;
-            int borderColor = 0xAA36454F;
-            TooltipRenderUtil.renderTooltipBackground(gfx, left + 42, top + 39, 117, 6 * 11 - 1, 0, bgColor, bgColor, borderColor, borderColor);
+            drawPanel(gfx, left + 42, top + 39, 117, 6 * 11 - 1, 0xAA101010, 0xAA36454F);
         }
+    }
+
+    @Override
+    public void extractRenderState(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(gfx, mouseX, mouseY, partialTick);
+
+        int selected = this.getSelectedAffix();
 
         if (selected != DropDownList.NO_SELECTION && this.rerollBtn.isHovered() && this.rerollBtn.isActive()) {
             if (this.alternativePage != DropDownList.NO_SELECTION) {
@@ -146,7 +156,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                     list.set(list.size() - 2, new FakeWidthComponent(this.alternativeWidth));
                 }
 
-                gfx.renderTooltipInternal(this.font, list, this.alternativeXPos, this.getGuiTop() + 33, DefaultTooltipPositioner.INSTANCE);
+                gfx.tooltip(this.font, list, this.alternativeXPos, this.getTopPos() + 33, DefaultTooltipPositioner.INSTANCE, null);
             }
         }
 
@@ -158,8 +168,16 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
             altText.add(Component.translatable("text.apotheosis.upgraded_form").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
             altText.add(Component.translatable("%s", upgraded.getAugmentingText(this.tooltipCtx)).withStyle(ChatFormatting.YELLOW));
 
-            this.drawOnLeft(gfx, altText, top + 33, 150);
+            this.drawOnLeft(gfx, altText, this.getTopPos() + 33, 150);
         }
+    }
+
+    private static void drawPanel(GuiGraphicsExtractor gfx, int x, int y, int w, int h, int bgColor, int borderColor) {
+        gfx.fill(x, y, x + w, y + h, bgColor);
+        gfx.fill(x - 1, y, x, y + h, borderColor);
+        gfx.fill(x + w, y, x + w + 1, y + h, borderColor);
+        gfx.fill(x, y - 1, x + w, y, borderColor);
+        gfx.fill(x, y + h, x + w, y + h + 1, borderColor);
     }
 
     protected void updateCachedState() {
@@ -272,7 +290,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
 
                 this.alternativePage = 0;
                 this.alternativePages = pages;
-                this.alternativeXPos = this.getGuiLeft() - 16 - maxWidth;
+                this.alternativeXPos = this.getLeftPos() - 16 - maxWidth;
                 this.alternativeWidth = maxWidth;
             }
 
@@ -312,15 +330,12 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
         }
 
         @Override
-        protected void renderWidget(GuiGraphics gfx, int mouseX, int mouseY, float partialTick) {
-            gfx.pose().pushPose();
-            gfx.pose().translate(0, 0, 100);
-
+        protected void extractWidgetRenderState(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
             if (this.entries.isEmpty()) {
-                gfx.blit(TEXTURE, this.getX(), this.getY(), 0, 267, this.width, this.baseHeight, 256, 307);
+                gfx.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 0, 267, this.width, this.baseHeight, 256, 307);
             }
 
-            super.renderWidget(gfx, mouseX, mouseY, partialTick);
+            super.extractWidgetRenderState(gfx, mouseX, mouseY, partialTick);
 
             int hovered = this.getHoveredSlot(mouseX, mouseY);
             if (this.isOpen && hovered != -1) {
@@ -329,24 +344,22 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                 list.add(inst.getName(true).copy().withStyle(Style.EMPTY.withColor(0xFFFF80).withUnderlined(true)));
                 list.add(Component.translatable("%s", inst.getAugmentingText(AugmentingScreen.this.tooltipCtx)).withStyle(ChatFormatting.YELLOW));
 
-                AugmentingScreen.this.drawOnLeft(gfx, list, AugmentingScreen.this.getGuiTop() + 33, 150);
+                AugmentingScreen.this.drawOnLeft(gfx, list, AugmentingScreen.this.getTopPos() + 33, 150);
             }
 
-            gfx.blit(TEXTURE, this.getX() + this.width - 15, this.getY(), 123 + (this.isOpen ? 15 : 0), 239, 15, 14, 256, 307);
-            gfx.pose().popPose();
+            gfx.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX() + this.width - 15, this.getY(), 123 + (this.isOpen ? 15 : 0), 239, 15, 14, 256, 307);
         }
 
         @Override
-        protected void renderEntry(GuiGraphics gfx, int x, int y, int mouseX, int mouseY, AffixInstance entry) {
+        protected void renderEntry(GuiGraphicsExtractor gfx, int x, int y, int mouseX, int mouseY, AffixInstance entry) {
             int hovered = this.getHoveredSlot(mouseX, mouseY);
             int idx = this.entries.indexOf(entry);
-            // blit(ResourceLocation pAtlasLocation, int pX, int pY, float pUOffset, float pVOffset, int pWidth, int pHeight, int pTextureWidth, int pTextureHeight)
-            gfx.blit(TEXTURE, x, y, 0, 239 + (hovered == idx ? this.baseHeight : 0), this.width, this.baseHeight, 256, 307);
+            gfx.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 239 + (hovered == idx ? this.baseHeight : 0), this.width, this.baseHeight, 256, 307);
             Component name = entry.getName(true);
             if (!AugmentingMenu.canAugment(entry)) {
                 name = ApothMiscUtil.starPrefix(name);
             }
-            gfx.drawString(AugmentingScreen.this.font, name, x + 2, y + 3, 0xFFFF80);
+            gfx.text(AugmentingScreen.this.font, name, x + 2, y + 3, 0xFFFFFF80, false);
         }
 
     }
@@ -363,7 +376,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
         }
 
         @Override
-        public void renderWidget(GuiGraphics gfx, int pMouseX, int pMouseY, float pPartialTick) {
+        public void extractContents(GuiGraphicsExtractor gfx, int pMouseX, int pMouseY, float pPartialTick) {
             int yTex = this.yTexStart - 2;
             if (!this.isActive()) {
                 yTex += this.height + 4;
@@ -372,16 +385,14 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                 yTex += (this.height + 4) * 2;
             }
 
-            RenderSystem.enableDepthTest();
-            RenderSystem.enableBlend();
-            gfx.blit(this.texture.orThrow(), this.getX() - 2, this.getY() - 2, this.xTexStart - 2, yTex, this.width + 4, this.height + 4, this.textureWidth, this.textureHeight);
+            gfx.blit(RenderPipelines.GUI_TEXTURED, this.texture.left().orElseThrow(), this.getX() - 2, this.getY() - 2, this.xTexStart - 2, yTex, this.width + 4, this.height + 4, this.textureWidth, this.textureHeight);
             if (this.isHovered()) {
                 this.renderToolTip(gfx, pMouseX, pMouseY);
             }
         }
 
         @Override
-        public void renderToolTip(GuiGraphics gfx, int pMouseX, int pMouseY) {
+        public void renderToolTip(GuiGraphicsExtractor gfx, int pMouseX, int pMouseY) {
             if (this.getMessage() != CommonComponents.EMPTY && this.isHovered()) {
                 Component primary = this.getMessage();
                 if (!this.active) {
@@ -423,7 +434,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                     tooltips.add(levelCostMsg);
                 }
 
-                gfx.renderComponentTooltip(Minecraft.getInstance().font, tooltips, pMouseX, pMouseY);
+                gfx.setComponentTooltipForNextFrame(Minecraft.getInstance().font, tooltips, pMouseX, pMouseY);
             }
         }
 
@@ -446,12 +457,12 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
     public static record FakeWidthComponent(int width) implements ClientTooltipComponent {
 
         @Override
-        public int getHeight() {
-            return 9; // Font#lineHeight
+        public int getHeight(Font font) {
+            return font.lineHeight;
         }
 
         @Override
-        public int getWidth(Font pFont) {
+        public int getWidth(Font font) {
             return this.width;
         }
 

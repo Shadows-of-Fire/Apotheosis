@@ -18,9 +18,9 @@ import dev.shadowsoffire.placebo.codec.CodecMap;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 
@@ -90,14 +90,14 @@ public interface LootRule extends CodecProvider<LootRule> {
 
         @Override
         public void execute(ItemStack stack, LootRarity rarity, GenContext ctx) {
-            List<WeightedEntry.Wrapper<Affix>> available = LootController.getWeightedAffixes(stack, rarity, this.type, ctx);
-            int weight = WeightedRandom.getTotalWeight(available);
+            List<Weighted<Affix>> available = LootController.getWeightedAffixes(stack, rarity, this.type, ctx);
+            int weight = WeightedRandom.getTotalWeight(available, Weighted::weight);
             if (available.size() == 0 || weight == 0) {
-                ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
+                Identifier id = BuiltInRegistries.ITEM.getKey(stack.getItem());
                 Apotheosis.LOGGER.error("Failed to execute AffixLootRule (no affixes available) {}/{}/{}/{}!", id, RarityRegistry.INSTANCE.getKey(rarity), this.type, LootCategory.forItem(stack));
                 return;
             }
-            Affix selected = WeightedRandom.getRandomItem(ctx.rand(), available, weight).get().data();
+            Affix selected = WeightedRandom.getRandomItem(ctx.rand(), available, weight, Weighted::weight).get().value();
             ItemAffixes.Builder builder = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY).toBuilder();
             builder.upgrade(AffixRegistry.INSTANCE.holder(selected), ctx.rand().nextFloat());
             AffixHelper.setAffixes(stack, builder.build());

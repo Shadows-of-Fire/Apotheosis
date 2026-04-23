@@ -3,22 +3,20 @@ package dev.shadowsoffire.apotheosis.affix.reforging;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingMenu.ReforgingResultSlot;
-import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.client.AdventureContainerScreen;
-import dev.shadowsoffire.apotheosis.client.GhostVertexBuilder;
+import dev.shadowsoffire.apotheosis.client.PipelinedRenderer;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
@@ -29,8 +27,8 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
     /**
      * This texture is 256x384, which must be reflected in blit() calls.
      */
-    public static final ResourceLocation TEXTURE = Apotheosis.loc("textures/gui/reforge.png");
-    public static final ResourceLocation ANIMATED_TEXTURE = Apotheosis.loc("textures/gui/reforge_animation.png");
+    public static final Identifier TEXTURE = Apotheosis.loc("textures/gui/reforge.png");
+    public static final Identifier ANIMATED_TEXTURE = Apotheosis.loc("textures/gui/reforge_animation.png");
     public static final int MAX_ANIMATION_TIME = 8;
 
     protected boolean hasMainItem = false;
@@ -41,15 +39,12 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
     protected int availableOpacity = 0xAA;
 
     public ReforgingScreen(ReforgingMenu menu, Inventory inv, Component title) {
-        super(menu, inv, title);
-        this.imageHeight = 266;
+        super(menu, inv, title, 176, 266);
     }
 
     @Override
-    public void render(GuiGraphics gfx, int mouseX, int mouseY, float pPartialTick) {
-        super.render(gfx, mouseX, mouseY, pPartialTick);
-        RenderSystem.disableBlend();
-        this.renderTooltip(gfx, mouseX, mouseY);
+    public void extractRenderState(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(gfx, mouseX, mouseY, partialTick);
 
         int sigils = this.menu.getSigilCount();
         int mats = this.menu.getMatCount();
@@ -72,7 +67,7 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
                 tooltips.add(Component.translatable("text.apotheosis.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
                 tooltips.add(CommonComponents.EMPTY);
                 if (sigilCost > 0) {
-                    tooltips.add(Component.translatable("%s %s", sigilCost, Items.SIGIL_OF_REBIRTH.value().getName(ItemStack.EMPTY)).withStyle(creative || sigils >= sigilCost ? ChatFormatting.GRAY : ChatFormatting.RED));
+                    tooltips.add(Component.translatable("%s %s", sigilCost, new ItemStack(Items.SIGIL_OF_REBIRTH).getHoverName()).withStyle(creative || sigils >= sigilCost ? ChatFormatting.GRAY : ChatFormatting.RED));
                 }
                 if (matCost > 0) {
                     tooltips.add(Component.translatable("%s %s", matCost, this.menu.getSlot(1).getItem().getHoverName().getString()).withStyle(creative || mats >= matCost ? ChatFormatting.GRAY : ChatFormatting.RED));
@@ -83,23 +78,24 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
                 tooltips.add(Component.literal(" "));
                 tooltips.add(Component.translatable("container.enchant.level.requirement", levelCost).withStyle(creative || levels >= levelCost ? ChatFormatting.GRAY : ChatFormatting.RED));
 
-                this.drawOnLeft(gfx, tooltips, this.getGuiTop() + 45);
+                this.drawOnLeft(gfx, tooltips, this.getTopPos() + 45);
                 break;
             }
         }
     }
 
     @Override
-    protected void renderBg(GuiGraphics gfx, float partials, int x, int y) {
-        int left = this.getGuiLeft();
-        int top = this.getGuiTop();
+    public void extractBackground(GuiGraphicsExtractor gfx, int x, int y, float partials) {
+        super.extractBackground(gfx, x, y, partials);
+        int left = this.getLeftPos();
+        int top = this.getTopPos();
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
-        gfx.blit(TEXTURE, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight, 256, 384);
+        gfx.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight, 256, 384);
 
         for (int idx = 0; idx < 3; idx++) {
             if (this.maxSlot >= idx && this.animationTick == 0) {
-                gfx.blit(TEXTURE, left + 20 + 46 * idx, top + 129, 20 + 46 * idx, 273, 46, 35, 256, 384);
+                gfx.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, left + 20 + 46 * idx, top + 129, 20 + 46 * idx, 273, 46, 35, 256, 384);
             }
         }
 
@@ -108,13 +104,13 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
 
         if (!hadItem && this.hasMainItem) {
             this.animationTick = MAX_ANIMATION_TIME;
-            this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(Apoth.Sounds.REFORGE.value(), 1F, 2F));
+            this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(Apoth.Sounds.REFORGE, 1F, 2F));
         }
 
         if (this.hasMainItem) {
             float delta = Mth.clamp((MAX_ANIMATION_TIME - (float) this.animationTick) / MAX_ANIMATION_TIME, 0, 1);
             int frame = Mth.lerpInt(delta, 0, 19);
-            gfx.blit(ANIMATED_TEXTURE, left + 26, top + 15, 127, 112, 0, frame * 112, 127, 112, 127, 2240);
+            gfx.blit(RenderPipelines.GUI_TEXTURED, ANIMATED_TEXTURE, left + 26, top + 15, 0, frame * 112, 127, 112, 127, 2240);
         }
 
         int sigils = this.menu.getSigilCount();
@@ -147,30 +143,30 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
         return r << 16 | g << 8 | b;
     }
 
-    protected void drawBorderedString(GuiGraphics gfx, String str, int x, int y, int color, int shadowColor) {
+    protected void drawBorderedString(GuiGraphicsExtractor gfx, String str, int x, int y, int color, int shadowColor) {
         Component comp = Component.literal(str);
-        gfx.drawString(this.font, comp, x, y - 1, shadowColor, false);
-        gfx.drawString(this.font, comp, x - 1, y, shadowColor, false);
-        gfx.drawString(this.font, comp, x, y + 1, shadowColor, false);
-        gfx.drawString(this.font, comp, x + 1, y, shadowColor, false);
-        gfx.drawString(this.font, comp, x, y, color, false);
+        gfx.text(this.font, comp, x, y - 1, shadowColor, false);
+        gfx.text(this.font, comp, x - 1, y, shadowColor, false);
+        gfx.text(this.font, comp, x, y + 1, shadowColor, false);
+        gfx.text(this.font, comp, x + 1, y, shadowColor, false);
+        gfx.text(this.font, comp, x, y, color, false);
     }
 
     @Override
-    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
 
         for (int k = 0; k < 3; ++k) {
-            double d0 = pMouseX - (i + 60);
-            double d1 = pMouseY - (j + 14 + 19 * k);
+            double d0 = event.x() - (i + 60);
+            double d1 = event.y() - (j + 14 + 19 * k);
             if (d0 >= 0.0D && d1 >= 0.0D && d0 < 108.0D && d1 < 19.0D && this.menu.clickMenuButton(this.minecraft.player, k)) {
                 this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, k);
                 return true;
             }
         }
 
-        return super.mouseClicked(pMouseX, pMouseY, pButton);
+        return super.mouseClicked(event, doubleClick);
     }
 
     @Override
@@ -190,19 +186,15 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
     }
 
     @Override
-    public void renderSlot(GuiGraphics gfx, Slot slot) {
+    protected void extractSlot(GuiGraphicsExtractor gfx, Slot slot, int mouseX, int mouseY) {
         if (slot instanceof ReforgingResultSlot) {
             if (this.animationTick == 0) {
-                int opacity = this.maxSlot >= slot.getContainerSlot() ? this.availableOpacity : 0x40;
-                PoseStack pose = gfx.pose();
-                pose.pushPose();
-                pose.translate(0.0F, 0.0F, 100.0F);
-                SalvagingScreen.renderGuiItem(gfx, slot.getItem(), slot.x, slot.y, GhostVertexBuilder.wrapper(opacity));
-                pose.popPose();
+                int alpha = this.maxSlot >= slot.getContainerSlot() ? this.availableOpacity : 0x40;
+                PipelinedRenderer.ghostFakeItem(gfx, slot.getItem(), slot.x, slot.y, alpha / 255f);
             }
         }
         else {
-            super.renderSlot(gfx, slot);
+            super.extractSlot(gfx, slot, mouseX, mouseY);
         }
     }
 

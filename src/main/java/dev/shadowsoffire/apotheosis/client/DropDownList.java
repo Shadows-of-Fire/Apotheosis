@@ -2,9 +2,10 @@ package dev.shadowsoffire.apotheosis.client;
 
 import java.util.List;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
@@ -30,7 +31,7 @@ public abstract class DropDownList<T> extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics gfx, int mouseX, int mouseY, float partialTick) {
+    protected void extractWidgetRenderState(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
         int selected = this.getSelected();
         if (selected != NO_SELECTION) {
             this.renderEntry(gfx, this.getX(), this.getY(), mouseX, mouseY, this.entries.get(selected));
@@ -44,7 +45,7 @@ public abstract class DropDownList<T> extends AbstractWidget {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
+    public void onClick(MouseButtonEvent event, boolean doubleClick) {
         if (!this.isOpen) {
             if (this.entries.isEmpty()) {
                 return;
@@ -53,7 +54,7 @@ public abstract class DropDownList<T> extends AbstractWidget {
             this.height = this.baseHeight * (1 + Math.min(this.entries.size(), this.maxDisplayedEntries));
         }
         else {
-            this.selected = this.getHoveredSlot(mouseX, mouseY);
+            this.selected = this.getHoveredSlot(event.x(), event.y());
             this.height = this.baseHeight;
             this.isOpen = false;
         }
@@ -82,8 +83,9 @@ public abstract class DropDownList<T> extends AbstractWidget {
     }
 
     @Override
-    public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
+    public boolean mouseDragged(MouseButtonEvent event, double pDragX, double pDragY) {
         if (this.scrolling && this.isScrollBarActive()) {
+            double pMouseY = event.y();
             int barTop = this.getX() + 14;
             int barBot = barTop + 103;
             this.scrollOffs = ((float) pMouseY - barTop - 6F) / (barBot - barTop - 12F) - 0.12F;
@@ -92,7 +94,7 @@ public abstract class DropDownList<T> extends AbstractWidget {
             return true;
         }
         else {
-            return super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
+            return super.mouseDragged(event, pDragX, pDragY);
         }
     }
 
@@ -127,7 +129,7 @@ public abstract class DropDownList<T> extends AbstractWidget {
         return this.isOpen;
     }
 
-    protected abstract void renderEntry(GuiGraphics gfx, int x, int y, int mouseX, int mouseY, T entry);
+    protected abstract void renderEntry(GuiGraphicsExtractor gfx, int x, int y, int mouseX, int mouseY, T entry);
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput output) {}

@@ -14,6 +14,7 @@ import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
+import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
 import dev.shadowsoffire.gateways.gate.Reward;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
@@ -57,6 +58,7 @@ public class AffixItemReward implements Reward {
         GenContext gCtx = GenContext.forPlayer(summoner);
         ItemStack stack = LootController.createAffixItemFromPools(this.rarities, this.entries, gCtx);
         if (!stack.isEmpty()) {
+            NameHelper.setItemName(gate.getRandom(), stack);
             list.accept(stack);
         }
     }

@@ -39,7 +39,7 @@
             },
             "modifiers": [
                 {
-                    "attribute": "minecraft:generic.armor_toughness",
+                    "attribute": "minecraft:armor_toughness",
                     "operation": "add_multiplied_total",
                     "values": {
                         "cracked": 0.1,
@@ -51,7 +51,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.movement_speed",
+                    "attribute": "minecraft:movement_speed",
                     "operation": "add_multiplied_total",
                     "values": {
                         "cracked": -0.025,

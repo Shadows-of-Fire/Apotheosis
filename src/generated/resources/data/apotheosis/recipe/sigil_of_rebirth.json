@@ -3,12 +3,8 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "E": {
-            "item": "apotheosis:gem_dust"
-        },
-        "G": {
-            "item": "apotheosis:gem_fused_slate"
-        }
+        "E": "apotheosis:gem_dust",
+        "G": "apotheosis:gem_fused_slate"
     },
     "pattern": [
         "GGG",

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
@@ -57,7 +56,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -69,7 +68,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -147,7 +146,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         Optional<CompoundTag> nbt = this.basicData.nbt();
         CompoundTag fakeNbt = nbt.map(CompoundTag::copy).orElse(new CompoundTag());
         fakeNbt.putString("id", EntityType.getKey(this.entity).toString());
-        Mob entity = (Mob) EntityType.loadEntityRecursive(fakeNbt, level.getLevel(), Function.identity());
+        Mob entity = (Mob) EntityType.loadEntityRecursive(fakeNbt, level.getLevel(), net.minecraft.world.entity.EntitySpawnReason.EVENT, net.minecraft.world.entity.EntityProcessor.NOP);
 
         this.initBoss(entity, ctx, rarity);
 
@@ -158,16 +157,18 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         // Re-read here so we can apply certain things after the boss has been modified
         // But only mob-specific things, not a full load()
         if (nbt.isPresent()) {
-            entity.readAdditionalSaveData(nbt.get());
+            try (net.minecraft.util.ProblemReporter.ScopedCollector reporter = new net.minecraft.util.ProblemReporter.ScopedCollector(entity.problemPath(), Apotheosis.LOGGER)) {
+                ((dev.shadowsoffire.apotheosis.mixin.EntityInvoker) (Object) entity).callReadAdditionalSaveData(net.minecraft.world.level.storage.TagValueInput.create(reporter, level.registryAccess(), nbt.get()));
+            }
         }
 
-        entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, ctx.rand().nextFloat() * 360.0F, 0.0F);
+        entity.snapTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, ctx.rand().nextFloat() * 360.0F, 0.0F);
 
         if (this.basicData.hasMount()) {
             entity = this.basicData.createMount(level, pos, entity);
         }
 
-        entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, ctx.rand().nextFloat() * 360.0F, 0.0F);
+        entity.snapTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, ctx.rand().nextFloat() * 360.0F, 0.0F);
 
         // TODO: Implement supporting entities here. Need to return the boss *and* the supports for spawning.
         return entity;
@@ -280,16 +281,16 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         return CODEC;
     }
 
-    protected ResourceLocation createAttributeModifierId(int index) {
-        ResourceLocation key = InvaderRegistry.INSTANCE.getKey(this);
-        return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), INVADER_ATTR_PREFIX + key.getPath() + "_modif_" + index);
+    protected Identifier createAttributeModifierId(int index) {
+        Identifier key = InvaderRegistry.INSTANCE.getKey(this);
+        return Identifier.fromNamespaceAndPath(key.getNamespace(), INVADER_ATTR_PREFIX + key.getPath() + "_modif_" + index);
     }
 
     public static void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure, RegistryAccess reg) {
-        Stream<Holder<Enchantment>> available = reg.registryOrThrow(Registries.ENCHANTMENT).getTag(EnchantmentTags.ON_MOB_SPAWN_EQUIPMENT).map(HolderSet::stream).orElse(Stream.empty());
+        Stream<Holder<Enchantment>> available = reg.lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.ON_MOB_SPAWN_EQUIPMENT).map(HolderSet::stream).orElse(Stream.empty());
         List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, level, available);
         ItemEnchantments.Mutable builder = new ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(stack));
-        ench.stream().filter(d -> !d.enchantment.is(EnchantmentTags.CURSE)).forEach(i -> builder.upgrade(i.enchantment, i.level));
+        ench.stream().filter(d -> !d.enchantment().is(EnchantmentTags.CURSE)).forEach(i -> builder.upgrade(i.enchantment(), i.level()));
         EnchantmentHelper.setEnchantments(stack, builder.toImmutable());
     }
 
@@ -337,7 +338,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         }
 
         if (AdventureConfig.curseBossItems) {
-            List<Holder.Reference<Enchantment>> curses = reg.registryOrThrow(Registries.ENCHANTMENT).holders().filter(e -> e.is(EnchantmentTags.CURSE) && e.is(EnchantmentTags.ON_MOB_SPAWN_EQUIPMENT)).toList();
+            List<Holder.Reference<Enchantment>> curses = reg.lookupOrThrow(Registries.ENCHANTMENT).listElements().filter(e -> e.is(EnchantmentTags.CURSE) && e.is(EnchantmentTags.ON_MOB_SPAWN_EQUIPMENT)).toList();
             if (!curses.isEmpty()) {
                 Holder<Enchantment> curse = curses.get(rand.nextInt(curses.size()));
                 enchMap.upgrade(curse, Mth.nextInt(rand, 1, EnchHooks.getMaxLevel(curse.value())));

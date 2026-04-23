@@ -1,0 +1,12 @@
+{
+    "gives": {
+        "count": 3,
+        "id": "minecraft:blaze_powder"
+    },
+    "max_uses": 5.0,
+    "reputation_discount": 0.05,
+    "wants": {
+        "id": "minecraft:emerald"
+    },
+    "xp": 5.0
+}

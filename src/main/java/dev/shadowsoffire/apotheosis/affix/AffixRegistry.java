@@ -49,7 +49,7 @@ public class AffixRegistry extends TieredDynamicRegistry<Affix> {
         ImmutableMultimap.Builder<AffixType, DynamicHolder<Affix>> builder = ImmutableMultimap.builder();
         this.registry.values().forEach(a -> builder.put(a.definition().type(), this.holder(a)));
         this.byType = builder.build();
-        if (!FMLEnvironment.production && FMLEnvironment.dist.isClient()) {
+        if (!FMLEnvironment.isProduction() && FMLEnvironment.getDist().isClient()) {
             AdventureModuleClient.checkAffixLangKeys();
         }
         if (type == ReloadType.SERVER) {

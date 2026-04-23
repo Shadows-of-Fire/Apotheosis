@@ -22,9 +22,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.ServerLevelAccessor;
 
@@ -48,7 +48,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
      * @param entityNbt The entity NBT. This is always null unless a spawn condition requests it via {@link #requiresNbtAccess()}.
      * @return True if the condition has passed, false otherwise.
      */
-    boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, @Nullable CompoundTag entityNbt);
+    boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason spawnType, @Nullable CompoundTag entityNbt);
 
     default boolean requiresNbtAccess() {
         return false;
@@ -57,7 +57,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
     /**
      * Checks all spawn conditions in a list. The entire list is considered to be "true" if it is empty, or every condition in the list returns true.
      */
-    public static boolean checkAll(List<SpawnCondition> conditions, Mob mob, ServerLevelAccessor level, MobSpawnType type) {
+    public static boolean checkAll(List<SpawnCondition> conditions, Mob mob, ServerLevelAccessor level, EntitySpawnReason type) {
         if (conditions.isEmpty()) {
             return true;
         }
@@ -67,7 +67,14 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
             requiresNbt |= ex.requiresNbtAccess();
         }
 
-        CompoundTag nbt = requiresNbt ? mob.saveWithoutId(new CompoundTag()) : null;
+        CompoundTag nbt = null;
+        if (requiresNbt) {
+            try (net.minecraft.util.ProblemReporter.ScopedCollector reporter = new net.minecraft.util.ProblemReporter.ScopedCollector(mob.problemPath(), dev.shadowsoffire.apotheosis.Apotheosis.LOGGER)) {
+                net.minecraft.world.level.storage.TagValueOutput out = net.minecraft.world.level.storage.TagValueOutput.createWithContext(reporter, level.registryAccess());
+                mob.saveWithoutId(out);
+                nbt = out.buildResult();
+            }
+        }
 
         boolean success = true;
         for (SpawnCondition ex : conditions) {
@@ -96,11 +103,11 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
     /**
      * Requires that the target mob have a specific spawn type.
      */
-    public static record SpawnTypeCondition(Set<MobSpawnType> types) implements SpawnCondition {
+    public static record SpawnTypeCondition(Set<EntitySpawnReason> types) implements SpawnCondition {
 
         public static Codec<SpawnTypeCondition> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                PlaceboCodecs.setOf(PlaceboCodecs.enumCodec(MobSpawnType.class)).fieldOf("spawn_types").forGetter(SpawnTypeCondition::types))
+                PlaceboCodecs.setOf(PlaceboCodecs.enumCodec(EntitySpawnReason.class)).fieldOf("spawn_types").forGetter(SpawnTypeCondition::types))
             .apply(inst, SpawnTypeCondition::new));
 
         @Override
@@ -109,11 +116,11 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         }
 
         @Override
-        public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
+        public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason spawnType, CompoundTag entityNbt) {
             return this.types.contains(spawnType);
         }
 
-        public static SpawnTypeCondition of(MobSpawnType... types) {
+        public static SpawnTypeCondition of(EntitySpawnReason... types) {
             return new SpawnTypeCondition(new LinkedHashSet<>(Arrays.asList(types)));
         }
 
@@ -135,7 +142,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         }
 
         @Override
-        public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
+        public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason spawnType, CompoundTag entityNbt) {
             return this.type.test(level, mob.blockPosition());
         }
 
@@ -157,8 +164,8 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         }
 
         @Override
-        public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
-            return mob.getType().is(tag);
+        public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason spawnType, CompoundTag entityNbt) {
+            return mob.getType().builtInRegistryHolder().is(tag);
         }
 
     }
@@ -168,7 +175,8 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
      */
     public static record IsMonsterCondition() implements SpawnCondition {
 
-        public static Codec<IsMonsterCondition> CODEC = Codec.unit(IsMonsterCondition::new);
+        public static final IsMonsterCondition INSTANCE = new IsMonsterCondition();
+        public static Codec<IsMonsterCondition> CODEC = com.mojang.serialization.MapCodec.unit(INSTANCE).codec();
 
         @Override
         public Codec<? extends SpawnCondition> getCodec() {
@@ -176,7 +184,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         }
 
         @Override
-        public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
+        public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason spawnType, CompoundTag entityNbt) {
             return mob instanceof Monster;
         }
 
@@ -201,7 +209,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         }
 
         @Override
-        public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
+        public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason spawnType, CompoundTag entityNbt) {
             return NbtUtils.compareNbt(this.nbt, entityNbt, true);
         }
 
@@ -228,7 +236,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         }
 
         @Override
-        public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType type, CompoundTag nbt) {
+        public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason type, CompoundTag nbt) {
             boolean success = true;
             for (SpawnCondition cond : this.spawnConditions) {
                 success &= cond.test(mob, level, type, nbt);
@@ -264,7 +272,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         }
 
         @Override
-        public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType type, CompoundTag nbt) {
+        public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason type, CompoundTag nbt) {
             for (SpawnCondition ex : this.spawnConditions) {
                 if (ex.test(mob, level, type, nbt)) {
                     return true;
@@ -301,7 +309,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         }
 
         @Override
-        public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType type, CompoundTag nbt) {
+        public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason type, CompoundTag nbt) {
             return !this.spawnCondition.test(mob, level, type, nbt);
         }
 
@@ -329,7 +337,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         }
 
         @Override
-        public boolean test(Mob mob, ServerLevelAccessor level, MobSpawnType type, CompoundTag nbt) {
+        public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason type, CompoundTag nbt) {
             return this.left.test(mob, level, type, nbt) ^ this.right.test(mob, level, type, nbt);
         }
 

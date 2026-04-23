@@ -1,17 +1,10 @@
 package dev.shadowsoffire.apotheosis.affix.augmenting;
 
-import java.util.List;
-
 import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item.TooltipContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -47,23 +40,6 @@ public class AugmentingTableBlock extends Block implements TickingEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new AugmentingTableTile(pPos, pState);
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag tooltipFlag) {
-        list.add(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
-    }
-
-    @Override
-    @Deprecated
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        BlockEntity te = world.getBlockEntity(pos);
-        if (te instanceof AugmentingTableTile ref) {
-            for (int i = 0; i < ref.inv.getSlots(); i++) {
-                popResource(world, pos, ref.inv.getStackInSlot(i));
-            }
-        }
-        super.onRemove(state, world, pos, newState, isMoving);
     }
 
 }

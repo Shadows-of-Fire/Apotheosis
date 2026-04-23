@@ -22,7 +22,7 @@ import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -134,7 +134,7 @@ public class LootController {
         return getAvailableAffixes(copy, rarity, affix.get().definition().type()).filter(a -> !a.equals(affix)).filter(hasPositiveWeight(player));
     }
 
-    public static List<WeightedEntry.Wrapper<Affix>> getWeightedAffixes(ItemStack stack, LootRarity rarity, AffixType type, GenContext ctx) {
+    public static List<Weighted<Affix>> getWeightedAffixes(ItemStack stack, LootRarity rarity, AffixType type, GenContext ctx) {
         return getAvailableAffixes(stack, rarity, type).map(a -> a.get().<Affix>wrap(ctx.tier(), ctx.luck())).toList();
     }
 

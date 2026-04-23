@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.compat.jei;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import dev.shadowsoffire.apotheosis.compat.jei.GemCuttingCategory.GemCuttingExtension;
@@ -43,10 +42,17 @@ public class PurityUpgradeExtension implements GemCuttingExtension<PurityUpgrade
         builder.addSlot(RecipeIngredientRole.INPUT, 48, 37).addIngredients(VanillaTypes.ITEM_STACK, inputs);
 
         builder.addSlot(RecipeIngredientRole.INPUT, 48, 4).addIngredients(VanillaTypes.ITEM_STACK, inputs);
-        builder.addSlot(RecipeIngredientRole.INPUT, 19, 56).addIngredients(VanillaTypes.ITEM_STACK, recipe.left().stream().map(SizedIngredient::getItems).flatMap(Arrays::stream).toList());
-        builder.addSlot(RecipeIngredientRole.INPUT, 76, 56).addIngredients(VanillaTypes.ITEM_STACK, recipe.right().stream().map(SizedIngredient::getItems).flatMap(Arrays::stream).toList());
+        builder.addSlot(RecipeIngredientRole.INPUT, 19, 56).addIngredients(VanillaTypes.ITEM_STACK, toStacks(recipe.left()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 76, 56).addIngredients(VanillaTypes.ITEM_STACK, toStacks(recipe.right()));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 117, 35).addIngredients(VanillaTypes.ITEM_STACK, outputs);
     }
 
+    private List<ItemStack> toStacks(List<SizedIngredient> ingredients) {
+        List<ItemStack> stacks = new ArrayList<>();
+        for (SizedIngredient i : ingredients) {
+            i.ingredient().items().forEachOrdered(item -> stacks.add(new ItemStack(item, i.count())));
+        }
+        return stacks;
+    }
 }

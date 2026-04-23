@@ -40,20 +40,20 @@ public record WorldTierPayload(WorldTier tier) implements CustomPacketPayload {
         }
 
         @Override
-        public void handle(WorldTierPayload msg, IPayloadContext ctx) {
+        public void handleClient(WorldTierPayload msg, IPayloadContext ctx) {
+            WorldTier.setTier(ctx.player(), msg.tier);
+        }
+
+        @Override
+        public void handleServer(WorldTierPayload msg, IPayloadContext ctx) {
             Player player = ctx.player();
-            if (ctx.flow() == PacketFlow.CLIENTBOUND) {
-                WorldTier.setTier(player, msg.tier);
+            if (AdventureConfig.enableManualWorldTierChanges) {
+                if (WorldTier.isUnlocked(player, msg.tier)) {
+                    WorldTier.setTier(player, msg.tier);
+                }
             }
             else {
-                if (AdventureConfig.enableManualWorldTierChanges) {
-                    if (WorldTier.isUnlocked(player, msg.tier)) {
-                        WorldTier.setTier(player, msg.tier);
-                    }
-                }
-                else {
-                    ctx.connection().disconnect(Apotheosis.lang("disconnect", "tier_changes_disabled"));
-                }
+                ctx.connection().disconnect(Apotheosis.lang("disconnect", "tier_changes_disabled"));
             }
         }
 

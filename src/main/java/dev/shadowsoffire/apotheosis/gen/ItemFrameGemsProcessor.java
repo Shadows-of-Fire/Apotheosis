@@ -13,6 +13,7 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -45,7 +46,7 @@ public class ItemFrameGemsProcessor extends StructureProcessor {
     public StructureEntityInfo processEntity(LevelReader world, BlockPos seedPos, StructureEntityInfo rawEntityInfo, StructureEntityInfo entityInfo, StructurePlaceSettings placementSettings, StructureTemplate template) {
         CompoundTag entityNBT = entityInfo.nbt;
 
-        String id = entityNBT.getString("id"); // entity type ID
+        String id = entityNBT.getStringOr("id", ""); // entity type ID
         if (world instanceof ServerLevelAccessor sla && "minecraft:item_frame".equals(id)) {
             this.writeEntityNBT(sla.getLevel(), entityInfo.blockPos, placementSettings.getRandom(entityInfo.blockPos), entityNBT, placementSettings);
         }
@@ -60,7 +61,7 @@ public class ItemFrameGemsProcessor extends StructureProcessor {
         if (gem != null) {
             Purity purity = Purity.random(ctx, this.purities);
             ItemStack stack = gem.toStack(purity);
-            nbt.put("Item", stack.save(level.registryAccess()));
+            nbt.put("Item", ItemStack.CODEC.encodeStart(level.registryAccess().createSerializationContext(NbtOps.INSTANCE), stack).getOrThrow());
         }
         nbt.putInt("TileX", pos.getX());
         nbt.putInt("TileY", pos.getY());

@@ -2,56 +2,52 @@ package dev.shadowsoffire.apotheosis.affix.salvaging;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingRecipe.OutputData;
 import dev.shadowsoffire.apotheosis.client.AdventureContainerScreen;
-import dev.shadowsoffire.apotheosis.client.GrayBufferSource;
+import dev.shadowsoffire.apotheosis.client.PipelinedRenderer;
 import dev.shadowsoffire.apotheosis.client.SimpleTexButton;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
 
     public static final Component TITLE = Component.translatable("container.apotheosis.salvage");
-    public static final ResourceLocation TEXTURE = Apotheosis.loc("textures/gui/salvage.png");
+    public static final Identifier TEXTURE = Apotheosis.loc("textures/gui/salvage.png");
 
     protected List<OutputData> results = new ArrayList<>();
     protected SimpleTexButton salvageBtn;
 
-    @SuppressWarnings("removal")
     public SalvagingScreen(SalvagingMenu menu, Inventory inv, Component title) {
-        super(menu, inv, TITLE);
-        this.menu.addSlotListener((id, stack) -> this.computeResults());
-        this.imageHeight = 174;
+        super(menu, inv, TITLE, 176, 174);
+        this.menu.addSlotListener(new net.minecraft.world.inventory.ContainerListener(){
+            @Override
+            public void slotChanged(AbstractContainerMenu container, int slotIndex, ItemStack stack) {
+                SalvagingScreen.this.computeResults();
+            }
+
+            @Override
+            public void dataChanged(AbstractContainerMenu container, int id, int value) {}
+        });
     }
 
     @Override
     protected void init() {
         super.init();
-        int left = this.getGuiLeft();
-        int top = this.getGuiTop();
+        int left = this.getLeftPos();
+        int top = this.getTopPos();
 
         this.salvageBtn = this.addRenderableWidget(
             new SimpleTexButton(left + 98, top + 34, 18, 18, 238, 0, TEXTURE, 256, 256,
@@ -91,7 +87,7 @@ public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
             boolean success = false;
             for (int i = 0; i < compressed.size(); i++) {
                 OutputData existing = compressed.get(i);
-                if (ItemStack.isSameItemSameComponents(data.stack(), existing.stack())) {
+                if (data.stack().item().equals(existing.stack().item()) && data.stack().components().equals(existing.stack().components())) {
                     compressed.set(i, new OutputData(existing.stack(), existing.min() + data.min(), existing.max() + data.max()));
                     success = true;
                     break;
@@ -107,19 +103,14 @@ public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
     }
 
     @Override
-    public void render(GuiGraphics gfx, int pMouseX, int pMouseY, float pPartialTick) {
-        super.render(gfx, pMouseX, pMouseY, pPartialTick);
-
-        RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
-        RenderSystem.enableBlend();
+    public void extractRenderState(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(gfx, mouseX, mouseY, partialTick);
 
         int maxDisplay = Math.min(6, this.results.size());
 
         IntSet skipSlots = new IntOpenHashSet();
         for (int i = 0; i < maxDisplay; i++) {
-            ItemStack display = this.results.get(i).stack();
-            // Search for an empty slot to draw the ghost item on.
-            // Skip drawing the item if it already exists in the output inventory.
+            ItemStack display = this.results.get(i).stack().create();
             int displaySlot = -1;
             for (int slot = 12; slot < 18; slot++) {
                 if (skipSlots.contains(slot)) {
@@ -139,65 +130,25 @@ public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
                 continue;
             }
             Slot slot = this.menu.getSlot(displaySlot);
-            renderGuiItem(gfx, display, this.getGuiLeft() + slot.x, this.getGuiTop() + slot.y, GrayBufferSource::new);
+            int sx = this.getLeftPos() + slot.x;
+            int sy = this.getTopPos() + slot.y;
+            PipelinedRenderer.grayFakeItem(gfx, display, sx, sy);
         }
 
-        this.renderTooltip(gfx, pMouseX, pMouseY);
-    }
-
-    public static void renderGuiItem(GuiGraphics gfx, ItemStack pStack, int pX, int pY, Function<MultiBufferSource, MultiBufferSource> wrapper) {
-        Minecraft.getInstance().getTextureManager().getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
-        RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        PoseStack posestack = gfx.pose();
-        posestack.pushPose();
-        posestack.translate(pX, pY, 100.0F);
-        posestack.translate(8.0D, 8.0D, 0.0D);
-        posestack.scale(1.0F, -1.0F, 1.0F);
-        posestack.scale(16.0F, 16.0F, 16.0F);
-        Minecraft mc = Minecraft.getInstance();
-        BakedModel model = mc.getItemRenderer().getModel(pStack, mc.level, mc.player, pX ^ pY);
-        boolean flag = !model.usesBlockLight();
-        if (flag) {
-            Lighting.setupForFlatItems();
-        }
-
-        MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-        Minecraft.getInstance().getItemRenderer().render(pStack, ItemDisplayContext.GUI, false, posestack, wrapper.apply(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
-        buffer.endBatch();
-        RenderSystem.enableDepthTest();
-        if (flag) {
-            Lighting.setupFor3DItems();
-        }
-
-        posestack.popPose();
-    }
-
-    @Override
-    protected void renderBg(GuiGraphics gfx, float pPartialTick, int pX, int pY) {
-        gfx.blit(TEXTURE, this.getGuiLeft(), this.getGuiTop(), 0, 0, this.imageWidth, this.imageHeight);
-    }
-
-    @Override
-    protected void renderTooltip(GuiGraphics gfx, int x, int y) {
-        PoseStack stack = gfx.pose();
-        stack.pushPose();
-        stack.translate(0, 0, -100);
         List<Component> tooltip = new ArrayList<>();
         tooltip.add(Component.translatable("text.apotheosis.salvage_results").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
-
         for (OutputData data : this.results) {
-            tooltip.add(Component.translatable("%s-%s %s", data.min(), data.max(), data.stack().getHoverName()));
+            tooltip.add(Component.translatable("%s-%s %s", data.min(), data.max(), data.stack().create().getHoverName()));
         }
-
         if (tooltip.size() > 1) {
-            this.drawOnLeft(gfx, tooltip, this.getGuiTop() + 29);
+            this.drawOnLeft(gfx, tooltip, this.getTopPos() + 29);
         }
-        stack.popPose();
+    }
 
-        super.renderTooltip(gfx, x, y);
+    @Override
+    public void extractBackground(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(gfx, mouseX, mouseY, partialTick);
+        gfx.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getLeftPos(), this.getTopPos(), 0, 0, this.imageWidth, this.imageHeight, 256, 256);
     }
 
 }

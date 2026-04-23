@@ -9,8 +9,8 @@ import net.neoforged.neoforge.common.loot.LootModifier;
 
 public abstract class ContextualLootModifier extends LootModifier {
 
-    protected ContextualLootModifier(LootItemCondition[] conditionsIn) {
-        super(conditionsIn);
+    protected ContextualLootModifier(LootItemCondition[] conditions, int priority) {
+        super(conditions, priority);
     }
 
     @Override

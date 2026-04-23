@@ -1,35 +1,29 @@
 package dev.shadowsoffire.apotheosis.client;
 
-import org.joml.Matrix4f;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.affix.effect.StoneformingAffix;
 import dev.shadowsoffire.placebo.PlaceboClient;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 public record StoneformingTooltipRenderer(StoneformingComponent comp) implements ClientTooltipComponent {
 
-    public static final ResourceLocation SOCKET = Apotheosis.loc("textures/gui/socket.png");
+    public static final Identifier SOCKET = Apotheosis.loc("textures/gui/socket.png");
 
     public static final Component EMPTY_SPACE_PLACEHOLDER = Component.literal(" ".repeat(8));
 
     @Override
-    public int getHeight() {
-        return Minecraft.getInstance().font.lineHeight + 2;
+    public int getHeight(Font font) {
+        return font.lineHeight + 2;
     }
 
     @Override
@@ -38,7 +32,7 @@ public record StoneformingTooltipRenderer(StoneformingComponent comp) implements
     }
 
     @Override
-    public void renderImage(Font font, int x, int y, GuiGraphics gfx) {
+    public void extractImage(Font font, int x, int y, int w, int h, GuiGraphicsExtractor gfx) {
         if (affix().getCandidates().size() == 0) {
             return;
         }
@@ -53,22 +47,20 @@ public record StoneformingTooltipRenderer(StoneformingComponent comp) implements
             selected[i] = affix.getCandidates().get((start + i) % affix.getCandidates().size()).value();
         }
 
-        PoseStack pose = gfx.pose();
-        pose.pushPose();
-        pose.translate(0, -0.25F, 0);
-        pose.scale(0.5F, 0.5F, 1);
+        gfx.pose().pushMatrix();
+        gfx.pose().translate(0, -0.25F);
+        gfx.pose().scale(0.5F, 0.5F);
         for (Block block : selected) {
             ItemStack stack = new ItemStack(block);
-            gfx.renderFakeItem(stack, (x + xPos) * 2 + 8, y * 2);
+            gfx.fakeItem(stack, (x + xPos) * 2 + 8, y * 2);
             xPos += 10;
         }
-        pose.popPose();
+        gfx.pose().popMatrix();
     }
 
     @Override
-    public void renderText(Font font, int x, int y, Matrix4f matrix, MultiBufferSource.BufferSource bufferSource) {
-        font.drawInBatch(getText(this.comp.inst()), x, y, 0xAABBCC, true, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
-
+    public void extractText(GuiGraphicsExtractor gfx, Font font, int x, int y) {
+        gfx.text(font, getText(this.comp.inst()), x, y, 0xFFAABBCC, true);
     }
 
     private StoneformingAffix affix() {

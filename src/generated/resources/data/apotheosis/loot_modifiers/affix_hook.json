@@ -1,3 +1,5 @@
 {
-    "type": "apotheosis:code_hook"
+    "type": "apotheosis:code_hook",
+    "conditions": [],
+    "priority": 900
 }

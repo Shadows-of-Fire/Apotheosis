@@ -64,8 +64,8 @@ public class FrozenDropsBonus extends GemBonus {
 
     @Override
     public void modifyLoot(GemInstance inst, ObjectArrayList<ItemStack> loot, LootContext ctx) {
-        Entity entity = ctx.getParamOrNull(LootContextParams.THIS_ENTITY);
-        if (entity instanceof Mob mob && ctx.getParamOrNull(LootContextParams.DIRECT_ATTACKING_ENTITY) instanceof ServerPlayer) {
+        Entity entity = ctx.getOptionalParameter(LootContextParams.THIS_ENTITY);
+        if (entity instanceof Mob mob && ctx.getOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY) instanceof ServerPlayer) {
 
             float coldDmgTaken = mob.getData(Attachments.COLD_DAMAGE_TAKEN);
 

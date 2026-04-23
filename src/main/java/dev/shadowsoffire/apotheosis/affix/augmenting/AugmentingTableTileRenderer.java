@@ -1,79 +1,90 @@
 package dev.shadowsoffire.apotheosis.affix.augmenting;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joml.Quaternionf;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.augmenting.AugmentingTableTile.AnimationStage;
+import dev.shadowsoffire.apotheosis.client.AdventureModuleClient;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.phys.Vec3;
 
-public class AugmentingTableTileRenderer implements BlockEntityRenderer<AugmentingTableTile> {
+public class AugmentingTableTileRenderer implements BlockEntityRenderer<AugmentingTableTile, AugmentingTableTileRenderer.State> {
 
-    public static final ModelResourceLocation STAR_CUBE = ModelResourceLocation.standalone(Apotheosis.loc("item/star_cube"));
+    public AugmentingTableTileRenderer(BlockEntityRendererProvider.Context context) {}
 
     @Override
-    @SuppressWarnings("deprecation")
-    public void render(AugmentingTableTile tile, float partials, PoseStack matrix, MultiBufferSource pBufferSource, int light, int overlay) {
-        if (tile.stage == AnimationStage.HIDING) {
-            return; // no-op if the cube is hidden
-        }
+    public State createRenderState() {
+        return new State();
+    }
 
-        Minecraft.getInstance().getTextureManager().getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
-        RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    @Override
+    public void extractRenderState(AugmentingTableTile blockEntity, State state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
+        state.time = blockEntity.time;
+        state.partialTicks = partialTicks;
+        state.stage = blockEntity.stage;
+    }
 
-        ItemRenderer irenderer = Minecraft.getInstance().getItemRenderer();
-        BakedModel base = irenderer.getItemModelShaper().getModelManager().getModel(STAR_CUBE);
+    @Override
+    public void submit(State state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+        if (state.stage == AnimationStage.HIDING) return;
 
-        double px = 1 / 16D;
-        long time = tile.time;
+        BlockStateModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(AdventureModuleClient.STAR_CUBE_MODEL);
+        if (model == null) return;
 
-        matrix.pushPose();
+        float px = 1F / 16F;
 
-        matrix.translate(5 * px, 5 * px, 5 * px);
+        poseStack.pushPose();
+        poseStack.translate(5F * px, 5F * px, 5F * px);
 
-        switch (tile.stage) {
-            case HIDING -> {
-
-            }
+        switch (state.stage) {
+            case HIDING -> {}
             case RISING -> {
-                float progress = (time + partials) / AugmentingTableTile.RISE_TIME;
-                double rise = Mth.lerp(progress, 0.1 * px, 11 * px);
-                matrix.translate(0, rise, 0);
+                float progress = (state.time + state.partialTicks) / AugmentingTableTile.RISE_TIME;
+                float rise = Mth.lerp(progress, 0.1F * px, 11F * px);
+                poseStack.translate(0F, rise, 0F);
             }
             case FALLING -> {
-                float progress = (AugmentingTableTile.RISE_TIME - time + partials) / AugmentingTableTile.RISE_TIME;
-                double rise = Mth.lerp(progress, 11 * px, 0.1 * px);
-                matrix.translate(0, rise, 0);
+                float progress = (AugmentingTableTile.RISE_TIME - state.time + state.partialTicks) / (float) AugmentingTableTile.RISE_TIME;
+                float rise = Mth.lerp(progress, 11F * px, 0.1F * px);
+                poseStack.translate(0F, rise, 0F);
             }
             case SPINNING -> {
-                float rotation = (time % 360 + partials) * Mth.PI / 180F;
-
-                matrix.translate(0, 11 * px, 0);
-
-                matrix.translate(3 * px, 3 * px, 3 * px);
-                matrix.mulPose(new Quaternionf().rotationXYZ(rotation, 0, rotation));
-                matrix.translate(-3 * px, -3 * px, -3 * px);
+                float rotation = (state.time % 360 + state.partialTicks) * Mth.PI / 180F;
+                poseStack.translate(0F, 11F * px, 0F);
+                poseStack.translate(3F * px, 3F * px, 3F * px);
+                poseStack.mulPose(new Quaternionf().rotationXYZ(rotation, 0F, rotation));
+                poseStack.translate(-3F * px, -3F * px, -3F * px);
             }
         }
 
-        irenderer.renderModelLists(base, ItemStack.EMPTY, light, overlay, matrix, ItemRenderer.getFoilBufferDirect(pBufferSource, Sheets.translucentItemSheet(), true, false));
+        List<BlockStateModelPart> parts = new ArrayList<>();
+        model.collectParts(RandomSource.create(), parts);
 
-        matrix.popPose();
+        submitNodeCollector.submitBlockModel(poseStack, Sheets.translucentBlockSheet(), parts, new int[]{-1}, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
+        poseStack.popPose();
+    }
+
+    public static class State extends BlockEntityRenderState {
+        public int time;
+        public float partialTicks;
+        public AnimationStage stage;
     }
 
 }

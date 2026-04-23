@@ -1,24 +1,23 @@
 package dev.shadowsoffire.apotheosis.socket.gem.storage;
 
-import java.util.function.Function;
-
 import org.jetbrains.annotations.Nullable;
 
-import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingScreen;
-import dev.shadowsoffire.apotheosis.client.GhostVertexBuilder;
+import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.client.PipelinedRenderer;
 import dev.shadowsoffire.apotheosis.net.GemCaseSelectPayload;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
+import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseScreen.SafeSlot;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 /**
  * Gem Safe selection buttons make up the selection grid of fake slots in the Gem Safe GUI.
@@ -38,7 +37,7 @@ public class GemCaseSelectButton extends AbstractButton {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics gfx, int mouseX, int mouseY, float partialTick) {
+    protected void extractContents(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTick) {
         Minecraft mc = Minecraft.getInstance();
         SafeSlot slot = this.getSafeSlot();
         if (slot == null) {
@@ -46,48 +45,42 @@ public class GemCaseSelectButton extends AbstractButton {
         }
 
         int count = this.screen.getMenu().getGemCount(slot.gem());
-        Function<MultiBufferSource, MultiBufferSource> wrapper = Function.identity();
         if (count == 0) {
-            wrapper = GhostVertexBuilder.wrapper(0x44);
+            PipelinedRenderer.ghostFakeItem(gfx, slot.displayStack(), this.getX(), this.getY());
         }
-        SalvagingScreen.renderGuiItem(gfx, slot.displayStack(), this.getX(), this.getY(), wrapper);
+        else {
+            gfx.fakeItem(slot.displayStack(), this.getX(), this.getY());
+        }
 
-        // Render dynamically scaled count number showing the sum of this gem in the safe
         if (count > 1) {
             String countStr = GemCaseBlock.format(count);
             float scale = 1.0f;
             if (countStr.length() > 2) {
                 scale = 2.0f / countStr.length();
             }
-            gfx.pose().pushPose();
-            gfx.pose().scale(scale, scale, 1);
-            gfx.pose().translate(0.0f, 0.0f, 200.0f);
+            gfx.pose().pushMatrix();
+            gfx.pose().scale(scale, scale);
             float textX = (this.getX() + 16 - (mc.font.width(countStr) - 1) * scale) / scale;
             float textY = (this.getY() + 16 - (mc.font.lineHeight - 2) * scale) / scale;
-            gfx.drawString(mc.font, countStr, textX, textY, 0xAAFFFFFF, true);
-            gfx.pose().popPose();
+            gfx.text(mc.font, countStr, (int) textX, (int) textY, 0xAAFFFFFF, true);
+            gfx.pose().popMatrix();
         }
 
-        // Render the hover overlay and item tooltip if hovered
-
         if (this.isHovered()) {
-            gfx.pose().pushPose();
-            gfx.pose().translate(0.0f, 0.0f, 200.0f);
             gfx.fill(this.getX(), this.getY(), this.getX() + 16, this.getY() + 16, 0x40FFFFFF);
-            gfx.pose().popPose();
 
-            Component desc = Component.translatable(slot.displayStack().getDescriptionId());
-            gfx.renderTooltip(mc.font, desc, mouseX, mouseY);
+            Component desc = Component.translatable(((GemItem) Apoth.Items.GEM.value()).getGemDescriptionId(slot.displayStack()));
+            gfx.setTooltipForNextFrame(mc.font, desc, mouseX, mouseY);
         }
     }
 
     @Override
-    public void onPress() {
+    public void onPress(InputWithModifiers input) {
         SafeSlot slot = this.getSafeSlot();
         if (slot != null) {
             DynamicHolder<Gem> holder = GemRegistry.INSTANCE.holder(this.getSafeSlot().gem());
             this.screen.getMenu().setSelectedGem(holder);
-            PacketDistributor.sendToServer(new GemCaseSelectPayload(holder));
+            ClientPacketDistributor.sendToServer(new GemCaseSelectPayload(holder));
         }
     }
 

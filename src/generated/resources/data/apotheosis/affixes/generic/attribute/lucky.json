@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.luck",
+    "attribute": "minecraft:luck",
     "categories": [
         "apotheosis:bow",
         "apotheosis:breaker",

@@ -15,9 +15,9 @@ import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IFocusGroup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.Unit;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.component.Unbreakable;
 
 public class CharmInfusionExtension implements InfusionRecipeCategory.Extension<CharmInfusionRecipe> {
 
@@ -28,7 +28,7 @@ public class CharmInfusionExtension implements InfusionRecipeCategory.Extension<
             ItemStack in = stack.copy();
             in.remove(DataComponents.UNBREAKABLE);
             ItemStack out = stack.copy();
-            out.set(DataComponents.UNBREAKABLE, new Unbreakable(true));
+            out.set(DataComponents.UNBREAKABLE, Unit.INSTANCE);
             input.addIngredient(VanillaTypes.ITEM_STACK, in);
             output.addIngredient(VanillaTypes.ITEM_STACK, out);
         }
@@ -36,13 +36,13 @@ public class CharmInfusionExtension implements InfusionRecipeCategory.Extension<
             List<ItemStack> potionStacks = new ArrayList<>();
             List<ItemStack> unbreakable = new ArrayList<>();
 
-            BuiltInRegistries.POTION.holders()
+            BuiltInRegistries.POTION.listElements()
                 .filter(PotionCharmItem::isValidPotion)
                 .forEach(p -> {
                     ItemStack charm = PotionContents.createItemStack(Apoth.Items.POTION_CHARM.value(), p);
                     potionStacks.add(charm);
                     charm = charm.copy();
-                    charm.set(DataComponents.UNBREAKABLE, new Unbreakable(true));
+                    charm.set(DataComponents.UNBREAKABLE, Unit.INSTANCE);
                     unbreakable.add(charm);
                 });
 

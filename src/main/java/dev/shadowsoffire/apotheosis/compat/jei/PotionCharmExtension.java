@@ -30,8 +30,16 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCharmRecipe> {
+
+    @Override
+    public List<SlotDisplay> getIngredients(RecipeHolder<PotionCharmRecipe> recipeHolder) {
+        return recipeHolder.value().getIngredients().stream()
+            .map(opt -> opt.map(Ingredient::display).orElse((SlotDisplay) SlotDisplay.Empty.INSTANCE))
+            .toList();
+    }
 
     @Override
     public int getWidth(RecipeHolder<PotionCharmRecipe> recipeHolder) {
@@ -49,21 +57,14 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
         Holder<Potion> potion = focusStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).potion().orElse(Potions.WATER);
 
         List<List<ItemStack>> recipeInputs = recipeHolder.value().getIngredients().stream()
-            .map(Ingredient::getItems)
-            .map(a -> {
-                // Copy the stacks, as we modify them later, and we don't want to modify the ingredients' cached stacks.
-                List<ItemStack> list = new ArrayList<>(a.length);
-                for (ItemStack s : a) {
-                    list.add(s.copy());
-                }
-                return list;
-            })
+            .map(optIng -> optIng.map(ing -> ing.items().map(h -> new ItemStack(h).copy()).collect(Collectors.toCollection(ArrayList::new))).orElseGet(ArrayList::new))
+            .map(a -> (List<ItemStack>) a)
             .collect(Collectors.toCollection(ArrayList::new));
 
         // If we have a focus, we need to manipulate the potion-contents having input items to match that focus.
         if (PotionCharmItem.isValidPotion(potion)) {
             for (List<ItemStack> stacks : recipeInputs) {
-                if (stacks.get(0).has(DataComponents.POTION_CONTENTS)) {
+                if (!stacks.isEmpty() && stacks.get(0).has(DataComponents.POTION_CONTENTS)) {
                     for (ItemStack s : stacks) {
                         s.set(DataComponents.POTION_CONTENTS, new PotionContents(potion));
                     }
@@ -74,10 +75,10 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
             // If we don't... well, we need to explode the potion-holding item lists into the full set of potion items.
             for (int i = 0; i < recipeInputs.size(); i++) {
                 List<ItemStack> stacks = recipeInputs.get(i);
-                if (stacks.get(0).has(DataComponents.POTION_CONTENTS)) {
+                if (!stacks.isEmpty() && stacks.get(0).has(DataComponents.POTION_CONTENTS)) {
                     Item mainItem = stacks.get(0).getItem();
                     List<ItemStack> potionStacks = new ArrayList<>();
-                    BuiltInRegistries.POTION.holders()
+                    BuiltInRegistries.POTION.listElements()
                         .filter(PotionCharmItem::isValidPotion)
                         .forEach(p -> {
                             potionStacks.add(PotionContents.createItemStack(mainItem, p));
@@ -95,7 +96,7 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
         }
         else {
             List<ItemStack> potionStacks = new ArrayList<>();
-            BuiltInRegistries.POTION.holders()
+            BuiltInRegistries.POTION.listElements()
                 .filter(PotionCharmItem::isValidPotion)
                 .forEach(p -> {
                     potionStacks.add(PotionContents.createItemStack(Apoth.Items.POTION_CHARM.value(), p));
@@ -112,7 +113,7 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
                     return "";
                 }
                 MobEffectInstance contained = PotionCharmItem.getEffect(stack);
-                return contained.getEffect().getKey().location() + "@" + contained.getAmplifier() + "@" + contained.getDuration();
+                return contained.getEffect().getKey().identifier() + "@" + contained.getAmplifier() + "@" + contained.getDuration();
             }
             return "";
         }
@@ -121,11 +122,6 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
         public @Nullable Object getSubtypeData(ItemStack ingredient, UidContext context) {
             String data = apply(ingredient, context);
             return data.isEmpty() ? null : data;
-        }
-
-        @Override
-        public String getLegacyStringSubtypeInfo(ItemStack ingredient, UidContext context) {
-            return apply(ingredient, context);
         }
 
     }

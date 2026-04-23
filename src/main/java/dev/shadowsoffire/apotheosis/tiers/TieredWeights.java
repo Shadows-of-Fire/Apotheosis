@@ -17,8 +17,6 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.util.random.WeightedEntry;
-import net.minecraft.util.random.WeightedEntry.Wrapper;
 
 /**
  * TieredWeights are item weights unique for each {@link WorldTier}.
@@ -105,31 +103,26 @@ public record TieredWeights(Map<WorldTier, Weight> weights) {
         return Either.right(value);
     }
 
+    // TODO: Replace existing wrap() functions with ones that use GenContext as context.
+    // TODO: Replace existing wrap() paradigm with a filter/mapper that can be used by Stream#mapMulti
+    //       We are technically supposed to avoid creating zero-weight vanilla Weighted objects.
     public static interface Weighted {
-        /**
-         * Cached {@link net.minecraft.util.random.Weight} with a value of zero that will not trigger the warning.
-         */
-        public static net.minecraft.util.random.Weight SAFE_ZERO = net.minecraft.util.random.Weight.of(0);
-
         TieredWeights weights();
 
         /**
-         * Helper to wrap this object as a WeightedEntry.
+         * Helper to wrap this object as a vanilla {@link net.minecraft.util.random.Weighted} entry.
          */
         @SuppressWarnings("unchecked")
-        default <T extends Weighted> Wrapper<T> wrap(WorldTier tier, float luck) {
+        default <T extends Weighted> net.minecraft.util.random.Weighted<T> wrap(WorldTier tier, float luck) {
             return wrap((T) this, tier, luck);
         }
 
         /**
-         * Static (and more generic-safe) variant of {@link Weighted#wrap(float)}
+         * Static (and more generic-safe) variant of {@link Weighted#wrap(WorldTier, float)}
          */
-        static <T extends Weighted> Wrapper<T> wrap(T item, WorldTier tier, float luck) {
+        static <T extends Weighted> net.minecraft.util.random.Weighted<T> wrap(T item, WorldTier tier, float luck) {
             int weight = Math.max(0, item.weights().getWeight(tier, luck));
-            if (weight == 0) {
-                return new WeightedEntry.Wrapper<>(item, SAFE_ZERO);
-            }
-            return WeightedEntry.wrap(item, weight);
+            return new net.minecraft.util.random.Weighted<>(item, weight);
         }
     }
 

@@ -14,7 +14,6 @@ import dev.shadowsoffire.apotheosis.loot.entry.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
-import dev.shadowsoffire.placebo.loot.StackLootEntry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -27,20 +26,20 @@ import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
-import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.entries.TagEntry;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SetPotionFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -85,7 +84,7 @@ public class ApothLootProvider extends LootTableProvider {
 
         @Override
         protected Iterable<Block> getKnownBlocks() {
-            return BuiltInRegistries.BLOCK.holders().filter(h -> Apotheosis.MODID.equals(h.getKey().location().getNamespace())).map(Holder::value).toList();
+            return BuiltInRegistries.BLOCK.listElements().filter(h -> Apotheosis.MODID.equals(h.getKey().identifier().getNamespace())).map(Holder::value).toList();
         }
 
         protected void dropSelf(Holder<Block> block) {
@@ -288,48 +287,19 @@ public class ApothLootProvider extends LootTableProvider {
 
     }
 
-    private static StackEntryBuilder enchanted(Item item, HolderLookup.Provider registries) {
-        return new StackEntryBuilder(item.getDefaultInstance()).apply(EnchantRandomlyFunction.randomApplicableEnchantment(registries));
+    private static LootPoolSingletonContainer.Builder<?> enchanted(Item item, HolderLookup.Provider registries) {
+        return LootItem.lootTableItem(item).apply(EnchantRandomlyFunction.randomApplicableEnchantment(registries));
     }
 
-    private static StackEntryBuilder item(Item item, int min, int max) {
-        return new StackEntryBuilder(item.getDefaultInstance()).count(min, max);
+    private static LootPoolSingletonContainer.Builder<?> item(Item item, int min, int max) {
+        LootPoolSingletonContainer.Builder<?> builder = LootItem.lootTableItem(item);
+        if (min != max || min != 1) {
+            builder.apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)));
+        }
+        return builder;
     }
 
-    private static StackEntryBuilder potion(Holder<Potion> potion) {
-        return new StackEntryBuilder(PotionContents.createItemStack(Items.POTION, potion));
-    }
-
-    public static class StackEntryBuilder extends LootPoolSingletonContainer.Builder<StackEntryBuilder> {
-
-        protected final ItemStack stack;
-        protected int min = -1, max = -1;
-
-        public StackEntryBuilder(ItemStack stack) {
-            this.stack = stack;
-        }
-
-        public StackEntryBuilder count(int min, int max) {
-            this.min = min;
-            this.max = max;
-            return this;
-        }
-
-        @Override
-        protected StackEntryBuilder getThis() {
-            return this;
-        }
-
-        @Override
-        public LootPoolEntryContainer build() {
-            if (this.min == -1) {
-                this.min = stack.getCount();
-            }
-            if (this.max == -1) {
-                this.max = stack.getCount();
-            }
-            return new StackLootEntry(this.stack, this.min, this.max, this.weight, this.quality, this.getConditions(), this.getFunctions());
-        }
-
+    private static LootPoolSingletonContainer.Builder<?> potion(Holder<Potion> potion) {
+        return LootItem.lootTableItem(Items.POTION).apply(SetPotionFunction.setPotion(potion));
     }
 }

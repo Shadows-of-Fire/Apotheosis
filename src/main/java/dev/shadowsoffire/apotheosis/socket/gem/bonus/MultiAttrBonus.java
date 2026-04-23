@@ -20,7 +20,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -53,7 +53,7 @@ public class MultiAttrBonus extends GemBonus {
     }
 
     @Override
-    public void skipModifierIds(GemInstance inst, Consumer<ResourceLocation> skip) {
+    public void skipModifierIds(GemInstance inst, Consumer<Identifier> skip) {
         for (int i = 0; i < this.modifiers.size(); i++) {
             skip.accept(makeUniqueId(inst, String.valueOf(i)));
         }
@@ -94,7 +94,7 @@ public class MultiAttrBonus extends GemBonus {
                 Purity.mapCodec(Codec.FLOAT).fieldOf("values").forGetter(ModifierInst::values))
             .apply(inst, ModifierInst::new));
 
-        public AttributeModifier build(ResourceLocation id, Purity purity) {
+        public AttributeModifier build(Identifier id, Purity purity) {
             return new AttributeModifier(id, this.values.get(purity), this.op);
         }
 

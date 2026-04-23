@@ -108,8 +108,7 @@
 				"west": {"uv": [0, 15, 4, 16], "texture": "#1"}
 			},
             "neoforge_data": {
-                "block_light": 15,
-                "sky_light": 15
+                "light_emission": 15
             }
 		}
 	]

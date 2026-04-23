@@ -3,26 +3,26 @@
     "left": [
         {
             "count": 7,
-            "item": "apotheosis:gem_dust"
+            "ingredient": "apotheosis:gem_dust"
         }
     ],
     "purity": "normal",
     "right": [
         {
             "count": 27,
-            "item": "apotheosis:uncommon_material"
+            "ingredient": "apotheosis:uncommon_material"
         },
         {
             "count": 9,
-            "item": "apotheosis:rare_material"
+            "ingredient": "apotheosis:rare_material"
         },
         {
             "count": 3,
-            "item": "apotheosis:epic_material"
+            "ingredient": "apotheosis:epic_material"
         },
         {
             "count": 1,
-            "item": "apotheosis:mythic_material"
+            "ingredient": "apotheosis:mythic_material"
         }
     ]
 }

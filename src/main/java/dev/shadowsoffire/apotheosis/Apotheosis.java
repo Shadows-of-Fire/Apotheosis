@@ -1,17 +1,15 @@
 package dev.shadowsoffire.apotheosis;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig.ConfigPayload;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
-import dev.shadowsoffire.apotheosis.affix.trades.AffixTrade;
-import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
-import dev.shadowsoffire.apotheosis.compat.curios.CuriosCompat;
+// import dev.shadowsoffire.apotheosis.compat.curios.CuriosCompat; // Disabled: Curios has no 26.1 build yet
 import dev.shadowsoffire.apotheosis.compat.gateways.GatewaysCompat;
-import dev.shadowsoffire.apotheosis.compat.twilight.AdventureTwilightCompat;
+// import dev.shadowsoffire.apotheosis.compat.twilight.AdventureTwilightCompat; // Disabled: Twilight Forest has no 26.1 build yet
 import dev.shadowsoffire.apotheosis.data.AffixLootEntryProvider;
 import dev.shadowsoffire.apotheosis.data.AffixProvider;
 import dev.shadowsoffire.apotheosis.data.ApothAdvancementProvider;
@@ -34,9 +32,9 @@ import dev.shadowsoffire.apotheosis.data.SongProvider;
 import dev.shadowsoffire.apotheosis.data.TierAugmentProvider;
 import dev.shadowsoffire.apotheosis.data.WandererTradesProvider;
 import dev.shadowsoffire.apotheosis.data.gateways.ApothGateProvider;
-import dev.shadowsoffire.apotheosis.data.twilight.TwilightAffixLootProvider;
-import dev.shadowsoffire.apotheosis.data.twilight.TwilightGearSetProvider;
-import dev.shadowsoffire.apotheosis.data.twilight.TwilightInvaderProvider;
+// import dev.shadowsoffire.apotheosis.data.twilight.TwilightAffixLootProvider; // Disabled: Twilight Forest has no 26.1 build yet
+// import dev.shadowsoffire.apotheosis.data.twilight.TwilightGearSetProvider; // Disabled: Twilight Forest has no 26.1 build yet
+// import dev.shadowsoffire.apotheosis.data.twilight.TwilightInvaderProvider; // Disabled: Twilight Forest has no 26.1 build yet
 import dev.shadowsoffire.apotheosis.loot.AffixLootRegistry;
 import dev.shadowsoffire.apotheosis.loot.LootRule;
 import dev.shadowsoffire.apotheosis.loot.RarityOverrideRegistry;
@@ -68,7 +66,6 @@ import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.datagen.DataGenBuilder;
 import dev.shadowsoffire.placebo.network.PayloadHelper;
-import dev.shadowsoffire.placebo.systems.wanderer.WandererTradesRegistry;
 import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
 import dev.shadowsoffire.placebo.util.RunnableReloader;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -78,7 +75,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -92,13 +89,13 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 
 @Mod(Apotheosis.MODID)
 public class Apotheosis {
 
     public static final String MODID = "apotheosis";
-    public static final Logger LOGGER = LogManager.getLogger(MODID);
+    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
     public static final boolean DEBUG_WORLDGEN = "on".equalsIgnoreCase(System.getenv("APOTH_DEBUG_WORLDGEN"));
     public static final boolean DEBUG_MOBS = "on".equalsIgnoreCase(System.getenv("APOTH_DEBUG_MOBS"));
     public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
@@ -116,8 +113,9 @@ public class Apotheosis {
             GatewaysCompat.register(bus);
         }
 
+        // TODO(26.1): Restore Twilight/Patchouli/Curios compat once their 26.1 builds ship.
         if (ModList.get().isLoaded("twilightforest")) {
-            AdventureTwilightCompat.register();
+            // AdventureTwilightCompat.register();
         }
 
         if (ModList.get().isLoaded("patchouli")) {
@@ -125,11 +123,8 @@ public class Apotheosis {
         }
 
         if (ModList.get().isLoaded("curios")) {
-            CuriosCompat.register(bus);
+            // CuriosCompat.register(bus);
         }
-
-        WandererTradesRegistry.INSTANCE.registerCodec(loc("affix_trade"), AffixTrade.CODEC);
-        WandererTradesRegistry.INSTANCE.registerCodec(loc("automatic_affix_trade"), AutomaticAffixTrade.CODEC);
     }
 
     @SubscribeEvent
@@ -169,24 +164,25 @@ public class Apotheosis {
         AugmentRegistry.INSTANCE.registerToBus();
         TierAugmentRegistry.INSTANCE.registerToBus();
         loadConfig(true);
-        NeoForge.EVENT_BUS.addListener(AddReloadListenerEvent.class, event -> event.addListener(RunnableReloader.of(() -> loadConfig(false))));
+        NeoForge.EVENT_BUS.addListener(AddServerReloadListenersEvent.class, event -> event.addListener(Apotheosis.loc("config_reloader"), RunnableReloader.of(() -> loadConfig(false))));
     }
 
     @SubscribeEvent
     public void caps(RegisterCapabilitiesEvent e) {
-        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.SALVAGING_TABLE, (be, side) -> be.getItemHandler());
-        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.REFORGING_TABLE, (be, side) -> be.getInventory());
-        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.AUGMENTING_TABLE, (be, side) -> be.getInventory());
-        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.GEM_CASE, GemCaseTile::getItemHandler);
-        e.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Apoth.Tiles.ENDER_GEM_CASE, GemCaseTile::getItemHandler);
+        e.registerBlockEntity(Capabilities.Item.BLOCK, Apoth.Tiles.SALVAGING_TABLE, (be, side) -> be.getItemHandler());
+        e.registerBlockEntity(Capabilities.Item.BLOCK, Apoth.Tiles.REFORGING_TABLE, (be, side) -> be.getInventory());
+        e.registerBlockEntity(Capabilities.Item.BLOCK, Apoth.Tiles.AUGMENTING_TABLE, (be, side) -> be.getInventory());
+        e.registerBlockEntity(Capabilities.Item.BLOCK, Apoth.Tiles.GEM_CASE, GemCaseTile::getItemHandler);
+        e.registerBlockEntity(Capabilities.Item.BLOCK, Apoth.Tiles.ENDER_GEM_CASE, GemCaseTile::getItemHandler);
     }
 
     @SubscribeEvent
-    public void data(GatherDataEvent e) {
+    public void data(GatherDataEvent.Client e) {
         DataProvider.INDENT_WIDTH.set(4);
         DataGenBuilder.create(Apotheosis.MODID)
             .registry(Registries.JUKEBOX_SONG, SongProvider::bootstrap)
             .registry(Registries.PAINTING_VARIANT, ApothPaintingsProvider::bootstrap)
+            .registry(Registries.VILLAGER_TRADE, WandererTradesProvider::bootstrap)
             .provider(ApothLootProvider::create)
             .provider(ApothRecipeProvider::new)
             .provider(ApothPaintingTagsProvider::new)
@@ -203,10 +199,9 @@ public class Apotheosis {
             .provider(ApothAdvancementProvider::create)
             .provider(TierAugmentProvider::new)
             .provider(RogueSpawnerProvider::new)
-            .provider(WandererTradesProvider::new)
-            .provider(TwilightAffixLootProvider::new)
-            .provider(TwilightGearSetProvider::new)
-            .provider(TwilightInvaderProvider::new)
+            // .provider(TwilightAffixLootProvider::new) // Disabled: Twilight Forest has no 26.1 build yet
+            // .provider(TwilightGearSetProvider::new) // Disabled: Twilight Forest has no 26.1 build yet
+            // .provider(TwilightInvaderProvider::new) // Disabled: Twilight Forest has no 26.1 build yet
             .provider(ApothDataMapProvider::new)
             .provider(AugmentationProvider::new)
             .provider(ApothGateProvider::new)
@@ -258,8 +253,8 @@ public class Apotheosis {
     /**
      * Constructs a resource location using the {@link Apotheosis#MODID} as the namespace.
      */
-    public static ResourceLocation loc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MODID, path);
+    public static Identifier loc(String path) {
+        return Identifier.fromNamespaceAndPath(MODID, path);
     }
 
     /**

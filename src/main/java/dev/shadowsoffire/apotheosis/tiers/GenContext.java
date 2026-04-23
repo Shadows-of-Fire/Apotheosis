@@ -70,16 +70,16 @@ public record GenContext(RandomSource rand, WorldTier tier, float luck, Resource
 
     @Nullable
     public static Player findPlayer(LootContext ctx) {
-        if (ctx.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Player p) return p;
-        if (ctx.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof Player p) return p;
-        if (ctx.getParamOrNull(LootContextParams.DIRECT_ATTACKING_ENTITY) instanceof Player p) return p;
-        if (ctx.getParamOrNull(LootContextParams.LAST_DAMAGE_PLAYER) != null) return ctx.getParamOrNull(LootContextParams.LAST_DAMAGE_PLAYER);
+        if (ctx.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof Player p) return p;
+        if (ctx.getOptionalParameter(LootContextParams.ATTACKING_ENTITY) instanceof Player p) return p;
+        if (ctx.getOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY) instanceof Player p) return p;
+        if (ctx.getOptionalParameter(LootContextParams.LAST_DAMAGE_PLAYER) != null) return ctx.getOptionalParameter(LootContextParams.LAST_DAMAGE_PLAYER);
         return null;
     }
 
     @Override
     public final String toString() {
-        return "GenContext[tier=%s, luck=%s, dimension=%s, biome=%s, stages=%s]".formatted(tier.getSerializedName(), luck, dimension.location(), biome.getKey().location(), stages);
+        return "GenContext[tier=%s, luck=%s, dimension=%s, biome=%s, stages=%s]".formatted(tier.getSerializedName(), luck, dimension.identifier(), biome.getKey().identifier(), stages);
     }
 
 }

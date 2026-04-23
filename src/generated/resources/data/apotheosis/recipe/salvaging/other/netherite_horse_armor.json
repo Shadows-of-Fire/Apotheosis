@@ -1,0 +1,13 @@
+{
+    "type": "apotheosis:salvaging",
+    "input": "minecraft:netherite_horse_armor",
+    "outputs": [
+        {
+            "max_count": 3,
+            "min_count": 1,
+            "stack": {
+                "id": "minecraft:netherite_scrap"
+            }
+        }
+    ]
+}

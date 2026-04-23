@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.armor_toughness",
+    "attribute": "minecraft:armor_toughness",
     "categories": [
         "apotheosis:shield"
     ],

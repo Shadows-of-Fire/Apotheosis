@@ -2,13 +2,13 @@ package dev.shadowsoffire.apotheosis.mobs.types;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.mixin.EntityInvoker;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry.IEntityMatch;
 import dev.shadowsoffire.apotheosis.mobs.util.AffixData;
@@ -30,8 +30,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -40,6 +41,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet;
 
@@ -99,14 +101,14 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
         if (optNbt.isPresent()) {
             // Since the mob already exists, we need to load all the entities in the passengers tab.
             CompoundTag nbt = optNbt.get();
-            if (nbt.contains(Entity.PASSENGERS_TAG)) {
-                ListTag passengers = nbt.getList(Entity.PASSENGERS_TAG, 10);
+            if (nbt.contains(Entity.TAG_PASSENGERS)) {
+                ListTag passengers = nbt.getListOrEmpty(Entity.TAG_PASSENGERS);
                 for (int i = 0; i < passengers.size(); ++i) {
-                    Entity entity = EntityType.loadEntityRecursive(passengers.getCompound(i), level.getLevel(), Function.identity());
+                    Entity entity = EntityType.loadEntityRecursive(passengers.getCompoundOrEmpty(i), level.getLevel(), net.minecraft.world.entity.EntitySpawnReason.EVENT, net.minecraft.world.entity.EntityProcessor.NOP);
                     if (entity != null) {
                         entity.setPos(pos);
                         level.addFreshEntityWithPassengers(entity);
-                        entity.startRiding(mob, true);
+                        entity.startRiding(mob, true, true);
                     }
                 }
             }
@@ -117,7 +119,9 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
 
         // readAdditionalSaveData should leave unchanged any tags that are not in the NBT data.
         if (optNbt.isPresent()) {
-            mob.readAdditionalSaveData(optNbt.get());
+            try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(mob.problemPath(), dev.shadowsoffire.apotheosis.Apotheosis.LOGGER)) {
+                ((EntityInvoker) mob).callReadAdditionalSaveData(TagValueInput.create(reporter, level.registryAccess(), optNbt.get()));
+            }
         }
 
         if (this.basicData.hasMount()) {
@@ -129,7 +133,9 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
             // TODO: Improve spawning algorithm instead of spawning all mobs directly on top of the main entity.
             // Probably best to steal the inward spiral from Gateways.
             Mob supportingMob = support.create(mob.level(), mob.getX() + 0.5, mob.getY(), mob.getZ() + 0.5);
-            level.addFreshEntity(supportingMob);
+            if (supportingMob != null) {
+                level.addFreshEntity(supportingMob);
+            }
         }
     }
 
@@ -180,9 +186,9 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
         return CODEC;
     }
 
-    protected ResourceLocation createAttributeModifierId(int index) {
-        ResourceLocation key = EliteRegistry.INSTANCE.getKey(this);
-        return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), Invader.INVADER_ATTR_PREFIX + key.getPath() + "_modif_" + index);
+    protected Identifier createAttributeModifierId(int index) {
+        Identifier key = EliteRegistry.INSTANCE.getKey(this);
+        return Identifier.fromNamespaceAndPath(key.getNamespace(), Invader.INVADER_ATTR_PREFIX + key.getPath() + "_modif_" + index);
     }
 
     public static Builder builder() {
@@ -217,7 +223,7 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
         }
 
         public Builder entities(TagKey<EntityType<?>> entities) {
-            return this.entities(BuiltInRegistries.ENTITY_TYPE.getOrCreateTag(entities));
+            return this.entities(BuiltInRegistries.ENTITY_TYPE.get(entities).orElseThrow());
         }
 
         @SafeVarargs

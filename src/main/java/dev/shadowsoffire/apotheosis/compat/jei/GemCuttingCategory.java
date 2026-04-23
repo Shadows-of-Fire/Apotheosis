@@ -14,15 +14,15 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 public class GemCuttingCategory implements IRecipeCategory<GemCuttingRecipe> {
 
-    public static final ResourceLocation TEXTURES = Apotheosis.loc("textures/gui/gem_cutting_jei.png");
+    public static final Identifier TEXTURES = Apotheosis.loc("textures/gui/gem_cutting_jei.png");
 
     private static final Map<Class<?>, GemCuttingExtension<?>> EXTENSIONS = new IdentityHashMap<>();
 
@@ -35,7 +35,7 @@ public class GemCuttingCategory implements IRecipeCategory<GemCuttingRecipe> {
     }
 
     @Override
-    public RecipeType<GemCuttingRecipe> getRecipeType() {
+    public IRecipeType<GemCuttingRecipe> getRecipeType() {
         return AdventureJEIPlugin.GEM_CUTTING;
     }
 
@@ -45,13 +45,23 @@ public class GemCuttingCategory implements IRecipeCategory<GemCuttingRecipe> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return 148;
+    }
+
+    @Override
+    public int getHeight() {
+        return 78;
     }
 
     @Override
     public IDrawable getIcon() {
         return this.icon;
+    }
+
+    @Override
+    public void draw(GemCuttingRecipe recipe, mezz.jei.api.gui.ingredient.IRecipeSlotsView recipeSlotsView, net.minecraft.client.gui.GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
+        this.background.draw(gfx);
     }
 
     @Override

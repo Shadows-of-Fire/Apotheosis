@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.compat.twilight;
 
+// TODO(26.1): Restore Twilight Forest compat once a 26.1 build of twilightforest is published.
+/*
 import java.util.Map;
 
 import com.mojang.serialization.Codec;
@@ -69,3 +71,4 @@ public class OreMagnetBonus extends GemBonus {
     }
 
 }
+*/

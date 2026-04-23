@@ -7,7 +7,7 @@
     "bonuses": [
         {
             "type": "apotheosis:attribute",
-            "attribute": "minecraft:generic.armor",
+            "attribute": "minecraft:armor",
             "gem_class": {
                 "key": "core_armor",
                 "types": [
@@ -47,7 +47,7 @@
         },
         {
             "type": "apotheosis:attribute",
-            "attribute": "minecraft:generic.armor",
+            "attribute": "minecraft:armor",
             "gem_class": "apotheosis:shield",
             "operation": "add_multiplied_total",
             "values": {

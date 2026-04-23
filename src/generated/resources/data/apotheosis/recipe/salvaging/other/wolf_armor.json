@@ -1,14 +1,11 @@
 {
     "type": "apotheosis:salvaging",
-    "input": {
-        "item": "minecraft:wolf_armor"
-    },
+    "input": "minecraft:wolf_armor",
     "outputs": [
         {
             "max_count": 3,
             "min_count": 1,
             "stack": {
-                "count": 1,
                 "id": "minecraft:armadillo_scute"
             }
         }

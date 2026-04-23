@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.burning_time",
+    "attribute": "minecraft:burning_time",
     "categories": [
         "apotheosis:helmet"
     ],

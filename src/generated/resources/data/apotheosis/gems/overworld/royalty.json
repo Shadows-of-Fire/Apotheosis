@@ -29,18 +29,18 @@
         {
             "type": "apotheosis:all_stats",
             "attributes": [
-                "minecraft:generic.max_health",
-                "minecraft:generic.knockback_resistance",
-                "minecraft:generic.movement_speed",
-                "minecraft:generic.attack_damage",
-                "minecraft:generic.attack_knockback",
-                "minecraft:generic.attack_speed",
-                "minecraft:generic.armor",
-                "minecraft:generic.armor_toughness",
-                "minecraft:generic.luck",
-                "minecraft:generic.step_height",
-                "minecraft:player.block_interaction_range",
-                "minecraft:player.entity_interaction_range",
+                "minecraft:max_health",
+                "minecraft:knockback_resistance",
+                "minecraft:movement_speed",
+                "minecraft:attack_damage",
+                "minecraft:attack_knockback",
+                "minecraft:attack_speed",
+                "minecraft:armor",
+                "minecraft:armor_toughness",
+                "minecraft:luck",
+                "minecraft:step_height",
+                "minecraft:block_interaction_range",
+                "minecraft:entity_interaction_range",
                 "apothic_attributes:armor_pierce",
                 "apothic_attributes:armor_shred",
                 "apothic_attributes:arrow_damage",
@@ -55,7 +55,7 @@
                 "apothic_attributes:ghost_health",
                 "apothic_attributes:healing_received",
                 "apothic_attributes:life_steal",
-                "apothic_attributes:mining_speed",
+                "minecraft:block_break_speed",
                 "apothic_attributes:overheal",
                 "apothic_attributes:prot_pierce",
                 "apothic_attributes:prot_shred",
@@ -80,11 +80,8 @@
             ],
             "desc": "gem.apotheosis:overworld/royalty.bonus.pickaxe",
             "gem_class": "apotheosis:breaker",
-            "inputs": {
-                "tag": "c:raw_materials/copper"
-            },
+            "inputs": "#c:raw_materials/copper",
             "output": {
-                "count": 1,
                 "id": "minecraft:raw_gold"
             },
             "values": {
@@ -127,7 +124,7 @@
             "gem_class": "apotheosis:shield",
             "modifiers": [
                 {
-                    "attribute": "minecraft:generic.armor",
+                    "attribute": "minecraft:armor",
                     "operation": "add_multiplied_base",
                     "values": {
                         "flawed": 0.15,
@@ -137,7 +134,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.armor_toughness",
+                    "attribute": "minecraft:armor_toughness",
                     "operation": "add_multiplied_base",
                     "values": {
                         "flawed": 0.075,
@@ -147,7 +144,7 @@
                     }
                 },
                 {
-                    "attribute": "minecraft:generic.movement_speed",
+                    "attribute": "minecraft:movement_speed",
                     "operation": "add_multiplied_total",
                     "values": {
                         "flawed": -0.25,

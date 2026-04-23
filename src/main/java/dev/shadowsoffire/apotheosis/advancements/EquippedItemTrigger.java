@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.advancements;
 
-import java.util.Map;
 import java.util.Optional;
 
 import com.mojang.serialization.Codec;
@@ -8,13 +7,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.MinMaxBounds;
-import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.advancements.criterion.ContextAwarePredicate;
+import net.minecraft.advancements.criterion.DataComponentMatchers;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.component.DataComponentPredicate;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -55,7 +54,7 @@ public class EquippedItemTrigger extends SimpleCriterionTrigger<EquippedItemTrig
         @SuppressWarnings("deprecation")
         public static Criterion<EquippedItemTrigger.TriggerInstance> hasItems(EquipmentSlotGroup slots, ItemLike item) {
             ItemPredicate predicate = new ItemPredicate(
-                Optional.of(HolderSet.direct(item.asItem().builtInRegistryHolder())), MinMaxBounds.Ints.ANY, DataComponentPredicate.EMPTY, Map.of());
+                Optional.of(HolderSet.direct(item.asItem().builtInRegistryHolder())), MinMaxBounds.Ints.ANY, DataComponentMatchers.ANY);
 
             return hasItems(slots, predicate);
         }

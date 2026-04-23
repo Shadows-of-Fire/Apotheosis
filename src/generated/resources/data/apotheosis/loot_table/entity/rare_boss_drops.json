@@ -10,14 +10,9 @@
                     "weight": 45
                 },
                 {
-                    "type": "placebo:stack_entry",
-                    "min": 1,
-                    "max": 1,
+                    "type": "minecraft:item",
+                    "name": "apotheosis:sigil_of_malice",
                     "quality": 1,
-                    "stack": {
-                        "count": 1,
-                        "id": "apotheosis:sigil_of_malice"
-                    },
                     "weight": 30
                 },
                 {

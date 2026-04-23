@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.jetbrains.annotations.Nullable;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Tiles;
 import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
@@ -26,7 +25,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -34,13 +33,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
 public abstract class GemCaseTile extends BlockEntity implements TickingBlockEntity {
 
     protected final Object2ObjectMap<DynamicHolder<Gem>, EnumMap<Purity, Integer>> gems = new Object2ObjectLinkedOpenHashMap<>();
     protected final Set<GemCaseMenu> activeContainers = new HashSet<>();
-    protected final IItemHandler itemHandler = new GemCaseItemHandler();
+    protected final ResourceHandler<ItemResource> itemHandler = new GemCaseItemHandler();
     protected final int maxCount;
     private final Int2ObjectMap<UnsocketedGem> slotIndicies = new Int2ObjectOpenHashMap<>();
 
@@ -172,19 +176,19 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
     }
 
     public void loadGemData(CompoundTag tag) {
-        CompoundTag gems = tag.getCompound("gems");
-        for (String key : gems.getAllKeys()) {
-            ResourceLocation res = ResourceLocation.tryParse(key);
+        CompoundTag gems = tag.getCompoundOrEmpty("gems");
+        for (String key : gems.keySet()) {
+            Identifier res = Identifier.tryParse(key);
             DynamicHolder<Gem> gem = GemRegistry.INSTANCE.holder(res);
             if (!gem.isBound()) continue;
-            CompoundTag purityTag = gems.getCompound(key);
+            CompoundTag purityTag = gems.getCompoundOrEmpty(key);
             if (purityTag.isEmpty()) {
                 this.gems.remove(gem);
             }
             else {
                 EnumMap<Purity, Integer> map = new EnumMap<>(Purity.class);
                 for (Purity p : Purity.values()) {
-                    map.put(p, purityTag.getInt(p.getSerializedName()));
+                    map.put(p, purityTag.getIntOr(p.getSerializedName(), 0));
                 }
                 this.gems.put(gem, map);
             }
@@ -192,15 +196,21 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag, HolderLookup.Provider regs) {
-        super.saveAdditional(tag, regs);
-        saveGemData(tag);
+    public void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        CompoundTag gemTag = new CompoundTag();
+        saveGemData(gemTag);
+        output.store(gemTag);
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider regs) {
-        super.loadAdditional(tag, regs);
-        loadGemData(tag);
+    public void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        input.read("gems", CompoundTag.CODEC).ifPresent(gems -> {
+            CompoundTag wrapper = new CompoundTag();
+            wrapper.put("gems", gems);
+            loadGemData(wrapper);
+        });
     }
 
     @Override
@@ -211,9 +221,12 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
-        CompoundTag tag = pkt.getTag();
-        loadGemData(tag);
+    public void onDataPacket(Connection net, ValueInput valueInput) {
+        valueInput.read("gems", CompoundTag.CODEC).ifPresent(gems -> {
+            CompoundTag wrapper = new CompoundTag();
+            wrapper.put("gems", gems);
+            loadGemData(wrapper);
+        });
         this.activeContainers.forEach(GemCaseMenu::onChanged);
     }
 
@@ -251,7 +264,7 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
         this.activeContainers.remove(ctr);
     }
 
-    public IItemHandler getItemHandler(Direction dir) {
+    public ResourceHandler<ItemResource> getItemHandler(Direction dir) {
         return this.itemHandler;
     }
 
@@ -268,58 +281,105 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
         return this.slotIndicies.getOrDefault(slot, new UnsocketedGem(GemRegistry.INSTANCE.emptyHolder(), Purity.CRACKED, ItemStack.EMPTY));
     }
 
-    private class GemCaseItemHandler implements IItemHandler {
+    /**
+     * Snapshot of the case's gem state used for transactional rollback.
+     */
+    private record Snapshot(Object2ObjectMap<DynamicHolder<Gem>, EnumMap<Purity, Integer>> gems) {}
 
-        /**
-         * We have to account for every possible gem+purity combination as a slot.
-         */
+    private class GemCaseItemHandler extends SnapshotJournal<Snapshot> implements ResourceHandler<ItemResource> {
+
         @Override
-        public int getSlots() {
+        public int size() {
             return 1 + GemCaseTile.this.gems.size() * Purity.values().length;
         }
 
         @Override
-        public ItemStack getStackInSlot(int slot) {
-            if (slot < 0 || slot >= this.getSlots()) return ItemStack.EMPTY;
-            UnsocketedGem gem = GemCaseTile.this.getGemForSlot(slot);
+        public ItemResource getResource(int index) {
+            if (index <= 0 || index >= this.size()) return ItemResource.EMPTY;
+            UnsocketedGem gem = GemCaseTile.this.getGemForSlot(index - 1);
+            if (!gem.gem().isBound()) return ItemResource.EMPTY;
             int count = GemCaseTile.this.getCount(gem.gem(), gem.purity());
-            if (count <= 0) return ItemStack.EMPTY;
-            return GemItem.createStack(gem.gem().get(), gem.purity(), count);
+            if (count <= 0) return ItemResource.EMPTY;
+            return ItemResource.of(GemItem.createStack(gem.gem().get(), gem.purity(), 1));
         }
 
         @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            UnsocketedGem gem = UnsocketedGem.of(stack);
-            if (!gem.isValid()) return stack;
-
-            if (!simulate) {
-                GemCaseTile.this.depositGem(stack);
-            }
-            return ItemStack.EMPTY;
+        public long getAmountAsLong(int index) {
+            if (index <= 0 || index >= this.size()) return 0;
+            UnsocketedGem gem = GemCaseTile.this.getGemForSlot(index - 1);
+            if (!gem.gem().isBound()) return 0;
+            return GemCaseTile.this.getCount(gem.gem(), gem.purity());
         }
 
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (slot < 0 || slot >= this.getSlots() || amount <= 0) return ItemStack.EMPTY;
-            UnsocketedGem gem = GemCaseTile.this.getGemForSlot(slot);
-
-            if (simulate) {
-                int count = GemCaseTile.this.getCount(gem.gem(), gem.purity());
-                return getStackInSlot(slot).copyWithCount(Math.min(count, amount));
-            }
-            else {
-                return GemCaseTile.this.extractGem(gem.gem(), gem.purity(), amount);
-            }
-        }
-
-        @Override
-        public int getSlotLimit(int slot) {
+        public long getCapacityAsLong(int index, ItemResource resource) {
+            // Must report general capacity when queried with an empty resource so hopper insertion works.
+            if (resource.isEmpty()) return GemCaseTile.this.maxCount;
+            if (!UnsocketedGem.of(resource.toStack()).isValid()) return 0;
             return GemCaseTile.this.maxCount;
         }
 
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return UnsocketedGem.of(stack).isValid();
+        public boolean isValid(int index, ItemResource resource) {
+            return UnsocketedGem.of(resource.toStack()).isValid();
+        }
+
+        @Override
+        public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
+            if (amount <= 0 || index != 0) return 0;
+            ItemStack stack = resource.toStack(amount);
+            UnsocketedGem gem = UnsocketedGem.of(stack);
+            if (!gem.isValid()) return 0;
+
+            EnumMap<Purity, Integer> map = GemCaseTile.this.getGems(gem.gem());
+            int stored = map.get(gem.purity());
+            int inserted = Math.min(amount, GemCaseTile.this.maxCount - stored);
+            if (inserted <= 0) return 0;
+
+            updateSnapshots(transaction);
+            map.put(gem.purity(), stored + inserted);
+            return inserted;
+        }
+
+        @Override
+        public int extract(int index, ItemResource resource, int amount, TransactionContext transaction) {
+            if (index <= 0 || index >= this.size() || amount <= 0) return 0;
+            UnsocketedGem slotGem = GemCaseTile.this.getGemForSlot(index - 1);
+            if (!slotGem.gem().isBound()) return 0;
+            UnsocketedGem reqGem = UnsocketedGem.of(resource.toStack());
+            if (!reqGem.isValid() || reqGem.gem() != slotGem.gem() || reqGem.purity() != slotGem.purity()) return 0;
+
+            EnumMap<Purity, Integer> map = GemCaseTile.this.getGems(slotGem.gem());
+            int stored = map.get(slotGem.purity());
+            int extracted = Math.min(amount, stored);
+            if (extracted <= 0) return 0;
+
+            updateSnapshots(transaction);
+            map.put(slotGem.purity(), stored - extracted);
+            return extracted;
+        }
+
+        @Override
+        protected Snapshot createSnapshot() {
+            Object2ObjectLinkedOpenHashMap<DynamicHolder<Gem>, EnumMap<Purity, Integer>> copy = new Object2ObjectLinkedOpenHashMap<>();
+            for (Object2ObjectMap.Entry<DynamicHolder<Gem>, EnumMap<Purity, Integer>> e : GemCaseTile.this.gems.object2ObjectEntrySet()) {
+                copy.put(e.getKey(), new EnumMap<>(e.getValue()));
+            }
+            return new Snapshot(copy);
+        }
+
+        @Override
+        protected void revertToSnapshot(Snapshot snapshot) {
+            GemCaseTile.this.gems.clear();
+            GemCaseTile.this.gems.putAll(snapshot.gems());
+        }
+
+        @Override
+        protected void onRootCommit(Snapshot originalState) {
+            if (!GemCaseTile.this.level.isClientSide()) {
+                VanillaPacketDispatcher.dispatchTEToNearbyPlayers(GemCaseTile.this);
+            }
+            GemCaseTile.this.setChanged();
         }
 
     }

@@ -15,8 +15,6 @@ import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 /**
@@ -31,8 +29,6 @@ public class ReforgeItemFunction extends ContextualLootFunction {
             PlaceboCodecs.setOf(RarityRegistry.INSTANCE.holderCodec()).optionalFieldOf("rarities", Set.of()).forGetter(a -> a.rarities))
         .apply(inst, ReforgeItemFunction::new));
 
-    public static final LootItemFunctionType<ReforgeItemFunction> TYPE = new LootItemFunctionType<>(CODEC);
-
     private final Set<DynamicHolder<LootRarity>> rarities;
 
     public ReforgeItemFunction(List<LootItemCondition> predicates, Set<DynamicHolder<LootRarity>> rarities) {
@@ -41,8 +37,8 @@ public class ReforgeItemFunction extends ContextualLootFunction {
     }
 
     @Override
-    public LootItemFunctionType<? extends LootItemConditionalFunction> getType() {
-        return TYPE;
+    public MapCodec<ReforgeItemFunction> codec() {
+        return CODEC;
     }
 
     @Override

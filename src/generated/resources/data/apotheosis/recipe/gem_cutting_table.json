@@ -3,18 +3,10 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "G": {
-            "item": "apotheosis:gem_dust"
-        },
-        "H": {
-            "item": "minecraft:shears"
-        },
-        "P": {
-            "tag": "minecraft:planks"
-        },
-        "S": {
-            "item": "minecraft:smooth_stone"
-        }
+        "G": "apotheosis:gem_dust",
+        "H": "minecraft:shears",
+        "P": "#minecraft:planks",
+        "S": "minecraft:smooth_stone"
     },
     "pattern": [
         "SHS",
@@ -22,7 +14,6 @@
         "P P"
     ],
     "result": {
-        "count": 1,
         "id": "apotheosis:gem_cutting_table"
     }
 }

@@ -6,7 +6,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.util.ApothSmithingRecipe;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -19,7 +18,7 @@ import net.minecraft.world.level.Level;
 public class AddSocketsRecipe extends ApothSmithingRecipe {
 
     public static final MapCodec<AddSocketsRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-        Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(AddSocketsRecipe::getInput),
+        Ingredient.CODEC.fieldOf("input").forGetter(AddSocketsRecipe::getInput),
         Codec.intRange(0, 16).fieldOf("max_sockets").forGetter(AddSocketsRecipe::getMaxSockets))
         .apply(inst, AddSocketsRecipe::new));
 
@@ -32,7 +31,7 @@ public class AddSocketsRecipe extends ApothSmithingRecipe {
     private final int maxSockets;
 
     public AddSocketsRecipe(Ingredient input, int maxSockets) {
-        super(Ingredient.EMPTY, input, ItemStack.EMPTY);
+        super(BASE_PLACEHOLDER, input, ItemStack.EMPTY);
         this.input = input;
         this.maxSockets = maxSockets;
     }
@@ -50,7 +49,7 @@ public class AddSocketsRecipe extends ApothSmithingRecipe {
      * Returns an Item that is the result of this recipe
      */
     @Override
-    public ItemStack assemble(SmithingRecipeInput inv, HolderLookup.Provider regs) {
+    public ItemStack assemble(SmithingRecipeInput inv) {
         ItemStack out = inv.getItem(BASE).copy();
         if (out.isEmpty()) {
             return ItemStack.EMPTY;
@@ -61,8 +60,8 @@ public class AddSocketsRecipe extends ApothSmithingRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return Serializer.INSTANCE;
+    public RecipeSerializer<? extends net.minecraft.world.item.crafting.SmithingRecipe> getSerializer() {
+        return SERIALIZER;
     }
 
     @Override
@@ -78,18 +77,5 @@ public class AddSocketsRecipe extends ApothSmithingRecipe {
         return this.maxSockets;
     }
 
-    public static class Serializer implements RecipeSerializer<AddSocketsRecipe> {
-
-        public static Serializer INSTANCE = new Serializer();
-
-        @Override
-        public MapCodec<AddSocketsRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, AddSocketsRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
-    }
+    public static final RecipeSerializer<AddSocketsRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 }

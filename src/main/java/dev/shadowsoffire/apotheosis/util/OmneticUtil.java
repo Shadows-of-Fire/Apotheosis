@@ -6,13 +6,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.HarvestCheck;
 
@@ -25,8 +26,8 @@ public class OmneticUtil {
      */
     public static void applyOmneticData(PlayerEvent.BreakSpeed e, OmneticData data) {
         float speed = e.getOriginalSpeed();
-        for (ItemStack item : data.items()) {
-            speed = Math.max(OmneticUtil.getBaseSpeed(e.getEntity(), item, e.getState(), e.getPosition().orElse(BlockPos.ZERO)), speed);
+        for (ItemStackTemplate template : data.items()) {
+            speed = Math.max(OmneticUtil.getBaseSpeed(e.getEntity(), template.create(), e.getState(), e.getPosition().orElse(BlockPos.ZERO)), speed);
         }
         e.setNewSpeed(Math.max(speed, e.getNewSpeed()));
     }
@@ -35,8 +36,8 @@ public class OmneticUtil {
      * Applies the Omnetic data to the harvest check event. This is done by checking if any of the omnetic tools can harvest the block.
      */
     public static void applyOmneticData(HarvestCheck e, OmneticData data) {
-        for (ItemStack item : data.items()) {
-            if (item.isCorrectToolForDrops(e.getTargetBlock())) {
+        for (ItemStackTemplate template : data.items()) {
+            if (template.create().isCorrectToolForDrops(e.getTargetBlock())) {
                 e.setCanHarvest(true);
                 break;
             }
@@ -57,8 +58,8 @@ public class OmneticUtil {
             f *= 1.0F + (MobEffectUtil.getDigSpeedAmplification(player) + 1) * 0.2F;
         }
 
-        if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
-            f *= switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
+        if (player.hasEffect(MobEffects.MINING_FATIGUE)) {
+            f *= switch (player.getEffect(MobEffects.MINING_FATIGUE).getAmplifier()) {
                 case 0 -> 0.3F;
                 case 1 -> 0.09F;
                 case 2 -> 0.0027F;
@@ -67,7 +68,7 @@ public class OmneticUtil {
         }
 
         f *= (float) player.getAttributeValue(Attributes.BLOCK_BREAK_SPEED);
-        if (player.isEyeInFluidType(NeoForgeMod.WATER_TYPE.value())) {
+        if (player.isEyeInFluid(FluidTags.WATER)) {
             f *= (float) player.getAttribute(Attributes.SUBMERGED_MINING_SPEED).getValue();
         }
 
@@ -78,12 +79,12 @@ public class OmneticUtil {
         return f;
     }
 
-    public static record OmneticData(String name, ItemStack[] items) {
+    public static record OmneticData(String name, ItemStackTemplate[] items) {
 
         public static Codec<OmneticData> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 Codec.STRING.fieldOf("name").forGetter(OmneticData::name),
-                Codec.list(ItemStack.CODEC).xmap(l -> l.toArray(new ItemStack[0]), Arrays::asList).fieldOf("items").forGetter(OmneticData::items))
+                Codec.list(ItemStackTemplate.CODEC).xmap(l -> l.toArray(new ItemStackTemplate[0]), Arrays::asList).fieldOf("items").forGetter(OmneticData::items))
             .apply(inst, OmneticData::new));
 
     }

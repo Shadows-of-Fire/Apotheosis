@@ -3,6 +3,8 @@ package dev.shadowsoffire.apotheosis.mobs.util;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.Nullable;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -38,12 +40,17 @@ public class SupportingEntity {
         this.z = z;
     }
 
+    @Nullable
     public Mob create(Level level, double x, double y, double z) {
-        Mob ent = (Mob) this.entity.create(level);
-        if (this.nbt != null) {
-            ent.load(this.nbt);
+        Mob ent = (Mob) this.entity.create(level, net.minecraft.world.entity.EntitySpawnReason.EVENT);
+        if (ent != null && this.nbt != null) {
+            try (net.minecraft.util.ProblemReporter.ScopedCollector reporter = new net.minecraft.util.ProblemReporter.ScopedCollector(ent.problemPath(), dev.shadowsoffire.apotheosis.Apotheosis.LOGGER)) {
+                ent.load(net.minecraft.world.level.storage.TagValueInput.create(reporter, level.registryAccess(), this.nbt));
+            }
         }
-        ent.setPos(this.x + x, this.y + y, this.z + z);
+        if (ent != null) {
+            ent.setPos(this.x + x, this.y + y, this.z + z);
+        }
         return ent;
     }
 

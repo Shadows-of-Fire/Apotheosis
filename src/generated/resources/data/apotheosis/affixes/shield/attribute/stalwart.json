@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "minecraft:generic.knockback_resistance",
+    "attribute": "minecraft:knockback_resistance",
     "categories": [
         "apotheosis:shield"
     ],

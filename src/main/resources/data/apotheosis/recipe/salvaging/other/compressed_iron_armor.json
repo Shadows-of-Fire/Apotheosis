@@ -7,18 +7,10 @@
     ],
     "type": "apotheosis:salvaging",
     "input": [
-        {
-            "item": "pneumaticcraft:compressed_iron_helmet"
-        },
-        {
-            "item": "pneumaticcraft:compressed_iron_chestplate"
-        },
-        {
-            "item": "pneumaticcraft:compressed_iron_leggings"
-        },
-        {
-            "item": "pneumaticcraft:compressed_iron_boots"
-        }
+        "pneumaticcraft:compressed_iron_helmet",
+        "pneumaticcraft:compressed_iron_chestplate",
+        "pneumaticcraft:compressed_iron_leggings",
+        "pneumaticcraft:compressed_iron_boots"
     ],
     "outputs": [
         {

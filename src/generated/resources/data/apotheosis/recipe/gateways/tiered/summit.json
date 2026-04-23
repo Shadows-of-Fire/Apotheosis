@@ -9,21 +9,11 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "B": {
-            "item": "minecraft:blaze_powder"
-        },
-        "E": {
-            "item": "apotheosis:epic_material"
-        },
-        "G": {
-            "item": "minecraft:ghast_tear"
-        },
-        "M": {
-            "item": "apotheosis:gem_dust"
-        },
-        "N": {
-            "item": "minecraft:ender_eye"
-        }
+        "B": "minecraft:blaze_powder",
+        "E": "apotheosis:epic_material",
+        "G": "minecraft:ghast_tear",
+        "M": "apotheosis:gem_dust",
+        "N": "minecraft:ender_eye"
     },
     "pattern": [
         "BGB",
@@ -34,7 +24,6 @@
         "components": {
             "gateways:gateway": "apotheosis:tiered/summit"
         },
-        "count": 1,
         "id": "gateways:gate_pearl"
     }
 }

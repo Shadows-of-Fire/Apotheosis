@@ -31,7 +31,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -142,7 +142,7 @@ public class MultiAttrAffix extends Affix implements AttributeProvidingAffix {
     }
 
     @Override
-    public void skipModifierIds(AffixInstance inst, AttributeTooltipContext ctx, Consumer<ResourceLocation> skip) {
+    public void skipModifierIds(AffixInstance inst, AttributeTooltipContext ctx, Consumer<Identifier> skip) {
         if (ctx.player() != null && WorldTier.isTutorialActive(ctx.player())) {
             for (int i = 0; i < this.modifiers.size(); i++) {
                 skip.accept(inst.makeUniqueId("" + i));

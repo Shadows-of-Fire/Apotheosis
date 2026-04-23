@@ -41,7 +41,7 @@ public record RerollResultPayload(DynamicHolder<Affix> newAffix) implements Cust
         }
 
         @Override
-        public void handle(RerollResultPayload msg, IPayloadContext ctx) {
+        public void handleClient(RerollResultPayload msg, IPayloadContext ctx) {
             AugmentingScreen.handleRerollResult(msg.newAffix());
         }
 

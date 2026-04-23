@@ -11,7 +11,6 @@
             "translate": "advancements.apotheosis.progression.root.desc"
         },
         "icon": {
-            "count": 1,
             "id": "apotheosis:boss_summoner"
         },
         "show_toast": false,

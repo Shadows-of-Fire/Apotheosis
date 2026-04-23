@@ -21,7 +21,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -289,15 +289,17 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
         return this.definition.weights();
     }
 
-    public final ResourceLocation id() {
+    public final Identifier id() {
         return AffixRegistry.INSTANCE.getKey(this);
     }
 
     /**
      * Checks if the affix is still on cooldown, if a cooldown was set via {@link #startCooldown(Affix, int, LivingEntity)}
+     * 
+     * TODO: Migrate to using an attachment which stores a map of id -> cooldown, since we can sync it.
      */
-    public static boolean isOnCooldown(ResourceLocation id, int cooldown, LivingEntity entity) {
-        long lastApplied = entity.getPersistentData().getLong("apoth.affix_cooldown." + id.toString());
+    public static boolean isOnCooldown(Identifier id, int cooldown, LivingEntity entity) {
+        long lastApplied = entity.getPersistentData().getLongOr("apoth.affix_cooldown." + id.toString(), 0L);
         return lastApplied != 0 && lastApplied + cooldown >= entity.level().getGameTime();
     }
 
@@ -306,7 +308,7 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
      * <p>
      * Use of this method is problematic if the id is not unique for the effect, as is the case with {@link Gem#getId()} and {@link GemBonus#getTypeKey()}.
      */
-    public static void startCooldown(ResourceLocation id, LivingEntity entity) {
+    public static void startCooldown(Identifier id, LivingEntity entity) {
         entity.getPersistentData().putLong("apoth.affix_cooldown." + id.toString(), entity.level().getGameTime());
     }
 
@@ -324,23 +326,23 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
     }
 
     /**
-     * Generates a deterministic {@link ResourceLocation} that is unique for a given socketed gem instance.
+     * Generates a deterministic {@link Identifier} that is unique for a given socketed gem instance.
      * <p>
      * Can be used to generate attribute modifiers, track cooldowns, and other things that need to be unique per-gem-in-slot.
      *
      * @param inst The owning gem instance for the bonus
      * @param salt A salt value, which can be used if the bonus needs multiple modifiers.
      */
-    static ResourceLocation makeUniqueId(AffixInstance inst, String salt) {
-        ResourceLocation key = inst.affix().getId();
+    static Identifier makeUniqueId(AffixInstance inst, String salt) {
+        Identifier key = inst.affix().getId();
         LootCategory cat = LootCategory.forItem(inst.stack());
-        return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), key.getPath() + "_modifier_" + cat.getSlots().id().toShortLanguageKey() + "_" + salt);
+        return Identifier.fromNamespaceAndPath(key.getNamespace(), key.getPath() + "_modifier_" + cat.getSlots().id().toShortLanguageKey() + "_" + salt);
     }
 
     /**
      * Calls {@link #makeUniqueId(GemInstance, String)} with an empty salt value.
      */
-    static ResourceLocation makeUniqueId(AffixInstance inst) {
+    static Identifier makeUniqueId(AffixInstance inst) {
         return makeUniqueId(inst, "");
     }
 

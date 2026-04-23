@@ -3,15 +3,9 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "E": {
-            "item": "apotheosis:gem_fused_slate"
-        },
-        "G": {
-            "item": "apotheosis:gem_dust"
-        },
-        "M": {
-            "item": "apotheosis:mythic_material"
-        }
+        "E": "apotheosis:gem_fused_slate",
+        "G": "apotheosis:gem_dust",
+        "M": "apotheosis:mythic_material"
     },
     "pattern": [
         "GEG",

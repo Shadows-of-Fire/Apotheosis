@@ -1,0 +1,16 @@
+{
+    "given_item_modifiers": [
+        {
+            "function": "apotheosis:automatic_affix_trade"
+        }
+    ],
+    "gives": {
+        "id": "minecraft:emerald"
+    },
+    "max_uses": 1.0,
+    "reputation_discount": 1.0,
+    "wants": {
+        "id": "minecraft:emerald"
+    },
+    "xp": 100.0
+}

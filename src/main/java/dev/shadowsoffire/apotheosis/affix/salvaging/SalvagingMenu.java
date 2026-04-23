@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.affix.salvaging;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.google.common.base.Predicates;
@@ -14,6 +15,7 @@ import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.menu.FilteredSlot;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,8 +25,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
 
@@ -37,7 +40,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
         int leftOffset = 17;
         int topOffset = 17;
         for (int i = 0; i < 12; i++) {
-            this.addSlot(new UpdatingSlot(this.inputInv, i, leftOffset + i % 4 * 19, topOffset + i / 4 * 19, s -> !findMatch(this.level, s).isEmpty()){
+            this.addSlot(new UpdatingSlot(this.inputInv, i, leftOffset + i % 4 * 19, topOffset + i / 4 * 19, s -> this.level.isClientSide() || !findMatch(this.level, s).isEmpty()){
 
                 @Override
                 public int getMaxStackSize() {
@@ -65,7 +68,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
 
     @Override
     public boolean stillValid(Player player) {
-        if (this.level.isClientSide) {
+        if (this.level.isClientSide()) {
             return true;
         }
         return this.level.getBlockState(this.pos).is(Blocks.SALVAGING_TABLE);
@@ -74,7 +77,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
     @Override
     public void removed(Player player) {
         super.removed(player);
-        if (!this.level.isClientSide) {
+        if (!this.level.isClientSide()) {
             this.clearContainer(player, this.inputInv);
         }
     }
@@ -83,9 +86,9 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
     public boolean clickMenuButton(Player player, int id) {
         if (id == 0) {
             this.salvageAll();
-            this.level.playSound(null, player.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.BLOCKS, 0.99F, this.level.random.nextFloat() * 0.25F + 1F);
-            this.level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.BLOCKS, 0.34F, this.level.random.nextFloat() * 0.2F + 0.8F);
-            this.level.playSound(null, player.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.45F, this.level.random.nextFloat() * 0.5F + 0.75F);
+            this.level.playSound(null, player.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.BLOCKS, 0.99F, this.level.getRandom().nextFloat() * 0.25F + 1F);
+            this.level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.BLOCKS, 0.34F, this.level.getRandom().nextFloat() * 0.2F + 0.8F);
+            this.level.playSound(null, player.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.45F, this.level.getRandom().nextFloat() * 0.5F + 0.75F);
             return true;
         }
         return super.clickMenuButton(player, id);
@@ -109,16 +112,19 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
             ItemStack stack = s.getItem();
             List<ItemStack> outputs = getSalvageResults(this.level, stack);
             s.set(ItemStack.EMPTY);
-            for (ItemStack out : outputs) {
-                for (int outSlot = 0; outSlot < 6; outSlot++) {
-                    if (out.isEmpty()) {
-                        break;
+            try (Transaction tx = Transaction.openRoot()) {
+                for (ItemStack out : outputs) {
+                    ItemResource outRes = ItemResource.of(out);
+                    int remaining = out.getCount();
+                    for (int outSlot = 0; outSlot < 6 && remaining > 0; outSlot++) {
+                        remaining -= this.tile.output.insert(outSlot, outRes, remaining, tx);
                     }
-                    out = this.tile.output.insertItem(outSlot, out, false);
+
+                    if (remaining > 0) {
+                        this.giveItem(this.player, outRes.toStack(remaining));
+                    }
                 }
-                if (!out.isEmpty()) {
-                    this.giveItem(this.player, out);
-                }
+                tx.commit();
             }
         }
     }
@@ -133,7 +139,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
         if (stack.isDamageableItem()) {
             int maxDmg = stack.getMaxDamage();
             if (maxDmg <= 0) {
-                Apotheosis.LOGGER.warn("Item {} returned true to ItemStack#isDamageableItem, but returned {} from ItemStack#getMaxDamage, when the value should be positive!", stack.getItemHolder().getKey(), maxDmg);
+                Apotheosis.LOGGER.warn("Item {} returned true to ItemStack#isDamageableItem, but returned {} from ItemStack#getMaxDamage, when the value should be positive!", BuiltInRegistries.ITEM.getKey(stack.getItem()), maxDmg);
                 return out;
             }
             out[1] = Math.max(out[0], Math.round(out[1] * (maxDmg - stack.getDamageValue()) / maxDmg));
@@ -145,8 +151,8 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
         List<ItemStack> outputs = new ArrayList<>();
         for (RecipeHolder<SalvagingRecipe> recipe : findMatch(level, stack)) {
             for (OutputData d : recipe.value().getOutputs()) {
-                ItemStack out = d.stack().copy();
-                out.setCount(getSalvageCount(d, stack, level.random));
+                ItemStack out = d.stack().create();
+                out.setCount(getSalvageCount(d, stack, level.getRandom()));
                 outputs.add(out);
             }
         }
@@ -157,7 +163,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
         List<ItemStack> outputs = new ArrayList<>();
         for (RecipeHolder<SalvagingRecipe> recipe : findMatch(level, stack)) {
             for (OutputData d : recipe.value().getOutputs()) {
-                ItemStack out = d.stack().copy();
+                ItemStack out = d.stack().create();
                 out.setCount(getSalvageCounts(d, stack)[1]);
                 outputs.add(out);
             }
@@ -165,8 +171,13 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
         return outputs;
     }
 
-    public static List<RecipeHolder<SalvagingRecipe>> findMatch(Level level, ItemStack stack) {
-        return level.getRecipeManager().getRecipesFor(RecipeTypes.SALVAGING, new SingleRecipeInput(stack), level);
+    public static Collection<RecipeHolder<SalvagingRecipe>> findMatch(Level level, ItemStack stack) {
+        if (level.isClientSide()) {
+            return SalvagingRecipeCache.findMatch(stack);
+        }
+        return level.getServer().getRecipeManager().recipeMap().byType(RecipeTypes.SALVAGING).stream()
+            .filter(r -> r.value().getInput().test(stack))
+            .toList();
     }
 
 }

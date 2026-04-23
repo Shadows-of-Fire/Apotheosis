@@ -34,7 +34,7 @@
                 "spawn_condition": {
                     "type": "apotheosis:spawn_type",
                     "spawn_types": [
-                        "spawn_egg",
+                        "spawn_item_use",
                         "spawner",
                         "mob_summoned"
                     ]
@@ -84,12 +84,12 @@
     "stats": {
         "attribute_modifiers": [
             {
-                "attribute": "minecraft:generic.max_health",
+                "attribute": "minecraft:max_health",
                 "operation": "add_value",
                 "value": 20.0
             },
             {
-                "attribute": "minecraft:generic.movement_speed",
+                "attribute": "minecraft:movement_speed",
                 "operation": "add_multiplied_base",
                 "value": 0.1
             },
@@ -99,7 +99,7 @@
                 "value": 0.25
             },
             {
-                "attribute": "minecraft:generic.knockback_resistance",
+                "attribute": "minecraft:knockback_resistance",
                 "operation": "add_value",
                 "value": 0.5
             }
