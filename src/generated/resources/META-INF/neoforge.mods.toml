@@ -61,7 +61,7 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="apothic_enchanting"
     type="required"
-    versionRange="[4.0.0-beta5,)"
+    versionRange="[4.0.0-beta6,)"
     ordering="AFTER"
     side="BOTH"
 
