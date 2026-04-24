@@ -45,7 +45,10 @@ public class SizedUpgradeRecipe implements SmithingRecipe, ReactiveSmithingRecip
 
     @Override
     public ItemStack assemble(SmithingRecipeInput input) {
-        return this.result.create();
+        ItemStack template = this.result.create();
+        ItemStack out = input.base().transmuteCopy(template.getItem(), template.getCount());
+        out.applyComponents(template.getComponentsPatch());
+        return out;
     }
 
     @Override
