@@ -97,7 +97,7 @@
         }
     },
     "display": {
-        "background": "apotheosis:textures/advancements/bg/apoth.png",
+        "background": "apotheosis:gui/advancements/backgrounds/apoth",
         "description": {
             "translate": "advancements.apotheosis.progression.pinnacle.desc"
         },

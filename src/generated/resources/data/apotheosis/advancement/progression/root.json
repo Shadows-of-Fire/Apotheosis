@@ -6,7 +6,7 @@
     },
     "display": {
         "announce_to_chat": false,
-        "background": "apotheosis:textures/advancements/bg/apoth.png",
+        "background": "apotheosis:gui/advancements/backgrounds/apoth",
         "description": {
             "translate": "advancements.apotheosis.progression.root.desc"
         },
