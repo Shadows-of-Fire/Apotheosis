@@ -15,7 +15,10 @@ import mezz.jei.api.ingredients.ITypedIngredient;
 import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
 public class PurityUpgradeExtension implements GemCuttingExtension<PurityUpgradeRecipe> {
@@ -49,9 +52,10 @@ public class PurityUpgradeExtension implements GemCuttingExtension<PurityUpgrade
     }
 
     private List<ItemStack> toStacks(List<SizedIngredient> ingredients) {
+        ContextMap ctx = SlotDisplayContext.fromLevel(Minecraft.getInstance().level);
         List<ItemStack> stacks = new ArrayList<>();
         for (SizedIngredient i : ingredients) {
-            i.ingredient().items().forEachOrdered(item -> stacks.add(new ItemStack(item, i.count())));
+            i.ingredient().display().resolveForStacks(ctx).forEach(stack -> stacks.add(stack.copyWithCount(i.count())));
         }
         return stacks;
     }

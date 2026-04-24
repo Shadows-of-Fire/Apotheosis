@@ -80,37 +80,6 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory category, Purity 
     }
 
     /**
-     * Creates a {@link GemInstance} with {@link LootCategories#NONE} and an unknown slot index (-1).
-     * This instance will be unable to invoke bonus methods, but may be used to easily retrieve the gem properties.
-     *
-     * @deprecated See {@link UnsocketedGem}.
-     */
-    @Deprecated(forRemoval = true, since = "8.1.0")
-    public static GemInstance unsocketed(ItemStack gemStack) {
-        return socketed(LootCategories.NONE, gemStack, -1);
-    }
-
-    /**
-     * @deprecated See {@link UnsocketedGem}.
-     */
-    @Deprecated(forRemoval = true, since = "8.1.0")
-    public boolean equalsUnsocketed(GemInstance other) {
-        return this.isValid() && this.gem.equals(other.gem) && this.purity == other.purity;
-    }
-
-    /**
-     * Checks if the underlying {@link #gem} is bound, but does not validate that the {@link #category} is correct.
-     * <p>
-     * This should only be used in conjunction with {@link #unsocketed(ItemStack)}. Otherwise, use {@link #isValid()}.
-     *
-     * @deprecated See {@link UnsocketedGem}.
-     */
-    @Deprecated(forRemoval = true, since = "8.1.0")
-    public boolean isValidUnsocketed() {
-        return this.gem.isBound();
-    }
-
-    /**
      * If this gem instance {@linkplain #isValidUnsocketed() is valid}, returns the stored {@link Gem}.
      *
      * @throws NullPointerException if this gem instance is invalid.
@@ -144,7 +113,7 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory category, Purity 
      * @see Gem#canApplyTo(ItemStack, ItemStack, LootRarity)
      */
     public boolean canApplyTo(ItemStack stack) {
-        return this.gem.get().canApplyTo(stack, this.gemStack, this.purity);
+        return this.gem.get().canApplyTo(stack, this.purity);
     }
 
     /**

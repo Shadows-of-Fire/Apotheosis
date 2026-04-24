@@ -955,6 +955,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
         this.add(Apotheosis.loc(name), builder.build());
     }
 
+    @SuppressWarnings("unused")
     private void addConditionally(String modid, String name, TieredWeights weights, UnaryOperator<Gem.Builder> config) {
         var builder = new Gem.Builder(weights);
         config.apply(builder);

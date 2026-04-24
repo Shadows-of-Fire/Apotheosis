@@ -280,11 +280,11 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
             int index = 0;
             for (DynamicHolder<Gem> gem : this.gems.keySet()) {
                 for (Purity p : Purity.values()) {
-                    this.slotIndicies.put(index++, new UnsocketedGem(gem, p, ItemStack.EMPTY));
+                    this.slotIndicies.put(index++, new UnsocketedGem(gem, p));
                 }
             }
         }
-        return this.slotIndicies.getOrDefault(slot, new UnsocketedGem(GemRegistry.INSTANCE.emptyHolder(), Purity.CRACKED, ItemStack.EMPTY));
+        return this.slotIndicies.getOrDefault(slot, new UnsocketedGem(GemRegistry.INSTANCE.emptyHolder(), Purity.CRACKED));
     }
 
     /**

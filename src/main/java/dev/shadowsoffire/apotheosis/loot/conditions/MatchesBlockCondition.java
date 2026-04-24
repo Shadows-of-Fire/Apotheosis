@@ -25,6 +25,7 @@ public record MatchesBlockCondition(HolderSet<Block> blocks) implements LootItem
         .apply(inst, MatchesBlockCondition::new));
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean test(LootContext ctx) {
         if (ctx.hasParameter(LootContextParams.BLOCK_STATE)) {
             BlockState state = ctx.getParameter(LootContextParams.BLOCK_STATE);

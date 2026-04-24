@@ -29,8 +29,8 @@ public class CharmInfusionExtension implements InfusionRecipeCategory.Extension<
             in.remove(DataComponents.UNBREAKABLE);
             ItemStack out = stack.copy();
             out.set(DataComponents.UNBREAKABLE, Unit.INSTANCE);
-            input.addIngredient(VanillaTypes.ITEM_STACK, in);
-            output.addIngredient(VanillaTypes.ITEM_STACK, out);
+            input.add(VanillaTypes.ITEM_STACK, in);
+            output.add(VanillaTypes.ITEM_STACK, out);
         }
         else {
             List<ItemStack> potionStacks = new ArrayList<>();

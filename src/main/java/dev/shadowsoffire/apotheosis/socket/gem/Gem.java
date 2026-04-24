@@ -108,14 +108,14 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
      * @param gem      The gem
      * @return If this gem can be socketed into the item.
      */
-    public boolean canApplyTo(ItemStack socketed, ItemStack gem, Purity purity) {
+    public boolean canApplyTo(ItemStack socketed, Purity purity) {
         if (this.isUnique()) {
             List<Gem> gems = SocketHelper.getGems(socketed).streamValidGems().map(GemInstance::gem).map(DynamicHolder::get).toList();
             if (gems.contains(this)) {
                 return false;
             }
         }
-        return this.isValidIn(socketed, gem, purity);
+        return this.isValidIn(socketed, purity);
     }
 
     /**
@@ -126,7 +126,7 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
      * @param gem      The gem
      * @return If this gem can be socketed into the item.
      */
-    public boolean isValidIn(ItemStack socketed, ItemStack gem, Purity purity) {
+    public boolean isValidIn(ItemStack socketed, Purity purity) {
         LootCategory cat = LootCategory.forItem(socketed);
         return !cat.isNone() && this.bonusMap.containsKey(cat) && this.bonusMap.get(cat).supports(purity);
     }

@@ -24,7 +24,7 @@ public class GemCutTrigger extends SimpleCriterionTrigger<GemCutTrigger.Instance
     public void trigger(ServerPlayer player, ItemStack stack) {
         UnsocketedGem gem = UnsocketedGem.of(stack);
         if (gem.isValid()) {
-            this.trigger(player, inst -> inst.test(gem));
+            this.trigger(player, inst -> inst.test(stack, gem));
         }
     }
 
@@ -36,8 +36,8 @@ public class GemCutTrigger extends SimpleCriterionTrigger<GemCutTrigger.Instance
             Purity.CODEC.optionalFieldOf("purity").forGetter(Instance::purity))
             .apply(inst, Instance::new));
 
-        public boolean test(UnsocketedGem inst) {
-            return this.gem.test(inst.gemStack()) && (this.purity.isEmpty() || this.purity.get() == inst.purity());
+        public boolean test(ItemStack stack, UnsocketedGem inst) {
+            return this.gem.test(stack) && (this.purity.isEmpty() || this.purity.get() == inst.purity());
         }
     }
 

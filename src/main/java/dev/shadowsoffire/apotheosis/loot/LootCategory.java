@@ -144,6 +144,7 @@ public final class LootCategory {
      * @param stack The item to find the category for.
      * @return The first valid loot category, or {@link LootCategories#NONE} if no categories were valid.
      */
+    @SuppressWarnings("deprecation")
     public static LootCategory forItem(ItemStack stack) {
         if (sortedCategories.isEmpty()) {
             throw new UnsupportedOperationException("Attempted to resolve the loot category for an item before loot categories were registered!");

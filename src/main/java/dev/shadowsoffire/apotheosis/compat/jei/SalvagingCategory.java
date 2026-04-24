@@ -30,7 +30,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.display.SlotDisplayContext;
-import net.minecraft.world.level.Level;
 
 @SuppressWarnings("removal")
 public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
@@ -127,8 +126,7 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
             input = List.of(focusStack);
         }
         else {
-            Level level = Minecraft.getInstance().level;
-            ContextMap ctx = level != null ? SlotDisplayContext.fromLevel(level) : ContextMap.EMPTY;
+            ContextMap ctx = SlotDisplayContext.fromLevel(Minecraft.getInstance().level);
             input = recipe.getInput().display().resolveForStacks(ctx);
         }
 

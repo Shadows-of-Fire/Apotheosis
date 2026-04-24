@@ -87,9 +87,9 @@ public class AdventureJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
-        reg.addRecipeCatalyst(new ItemStack(Blocks.SMITHING_TABLE), APO_SMITHING);
-        reg.addRecipeCatalyst(new ItemStack(Apoth.Blocks.SALVAGING_TABLE.value()), SALVAGING);
-        reg.addRecipeCatalyst(new ItemStack(Apoth.Blocks.GEM_CUTTING_TABLE.value()), GEM_CUTTING);
+        reg.addCraftingStation(APO_SMITHING, new ItemStack(Blocks.SMITHING_TABLE));
+        reg.addCraftingStation(SALVAGING, new ItemStack(Apoth.Blocks.SALVAGING_TABLE.value()));
+        reg.addCraftingStation(GEM_CUTTING, new ItemStack(Apoth.Blocks.GEM_CUTTING_TABLE.value()));
     }
 
     @Override

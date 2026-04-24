@@ -37,7 +37,7 @@ public class ItemLinking {
     public static class Client {
         public static void sendHoveredItem() {
             if (Minecraft.getInstance().screen instanceof AbstractContainerScreen scn) {
-                Slot slot = scn.getSlotUnderMouse();
+                Slot slot = scn.getHoveredSlot();
                 if (slot != null && slot.hasItem()) {
                     ClientPacketDistributor.sendToServer(new LinkItemToChatPayload(scn.getMenu().containerId, slot.index, slot.getItem().getItem()));
                 }

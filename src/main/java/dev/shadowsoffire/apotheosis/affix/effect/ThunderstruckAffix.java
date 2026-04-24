@@ -17,6 +17,7 @@ import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -77,7 +78,7 @@ public class ThunderstruckAffix extends Affix {
                 DamageSource src = user.damageSources().mobAttack(user);
                 ((DamageSourceExtension) src).addTag(DamageTypeTags.IS_LIGHTNING);
                 ((DamageSourceExtension) src).addTag(DamageTypeTags.BYPASSES_ARMOR);
-                e.hurt(src, this.getTrueLevel(inst.getRarity(), inst.level()));
+                e.hurtServer((ServerLevel) user.level(), src, this.getTrueLevel(inst.getRarity(), inst.level()));
             }
         }
     }

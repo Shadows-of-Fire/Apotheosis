@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
-import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
+import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
 import net.minecraft.advancements.criterion.SingleComponentItemPredicate;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.predicates.DataComponentPredicate;
@@ -23,7 +23,7 @@ public class SocketItemPredicate implements SingleComponentItemPredicate<ItemCon
 
     @Override
     public boolean matches(ItemContainerContents value) {
-        return value.nonEmptyItemCopyStream().map(GemInstance::unsocketed).anyMatch(GemInstance::isValid);
+        return value.nonEmptyItemCopyStream().map(UnsocketedGem::of).anyMatch(UnsocketedGem::isValid);
     }
 
     @Override

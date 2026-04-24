@@ -34,7 +34,7 @@ public class WithdrawalExtension implements ISmithingCategoryExtension<Withdrawa
     public <T extends IIngredientAcceptor<T>> void setBase(WithdrawalRecipe recipe, T acc) {
         List<ItemStack> outputs = DUMMY_INPUTS.stream().map(ItemStack::copy).map(s -> {
             SocketHelper.setSockets(s, 1);
-            Gem gem = GemRegistry.INSTANCE.getRandomItem(GenContext.forPlayer(Minecraft.getInstance().player), g -> g.isValidIn(s, ItemStack.EMPTY, Purity.FLAWED));
+            Gem gem = GemRegistry.INSTANCE.getRandomItem(GenContext.forPlayer(Minecraft.getInstance().player), g -> g.isValidIn(s, Purity.FLAWED));
             if (gem != null) {
                 ItemStack gemStack = gem.toStack(Purity.FLAWED);
                 return SocketHelper.socketGemInItem(s, gemStack);
@@ -46,7 +46,7 @@ public class WithdrawalExtension implements ISmithingCategoryExtension<Withdrawa
 
     @Override
     public <T extends IIngredientAcceptor<T>> void setAddition(WithdrawalRecipe recipe, T acc) {
-        acc.addItemStack(new ItemStack(Apoth.Items.SIGIL_OF_WITHDRAWAL));
+        acc.add(new ItemStack(Apoth.Items.SIGIL_OF_WITHDRAWAL));
     }
 
     @Override

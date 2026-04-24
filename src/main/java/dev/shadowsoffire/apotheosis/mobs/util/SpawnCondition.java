@@ -164,6 +164,7 @@ public interface SpawnCondition extends CodecProvider<SpawnCondition> {
         }
 
         @Override
+        @SuppressWarnings("deprecation")
         public boolean test(Mob mob, ServerLevelAccessor level, EntitySpawnReason spawnType, CompoundTag entityNbt) {
             return mob.getType().builtInRegistryHolder().is(this.tag);
         }

@@ -116,6 +116,7 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void extractTooltip(GuiGraphicsExtractor gfx, int mouseX, int mouseY) {
         super.extractTooltip(gfx, mouseX, mouseY);
         if (this.getSelectedGem() != null) {

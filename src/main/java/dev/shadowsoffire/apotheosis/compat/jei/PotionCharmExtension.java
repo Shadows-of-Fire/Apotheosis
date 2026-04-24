@@ -19,9 +19,11 @@ import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,6 +33,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 
 public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCharmRecipe> {
 
@@ -55,9 +58,10 @@ public class PotionCharmExtension implements ICraftingCategoryExtension<PotionCh
     public void setRecipe(RecipeHolder<PotionCharmRecipe> recipeHolder, IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
         ItemStack focusStack = focuses.getFocuses(VanillaTypes.ITEM_STACK).findFirst().map(IFocus::getTypedValue).map(ITypedIngredient::getIngredient).orElse(ItemStack.EMPTY);
         Holder<Potion> potion = focusStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).potion().orElse(Potions.WATER);
+        ContextMap ctx = SlotDisplayContext.fromLevel(Minecraft.getInstance().level);
 
         List<List<ItemStack>> recipeInputs = recipeHolder.value().getIngredients().stream()
-            .map(optIng -> optIng.map(ing -> ing.items().map(h -> new ItemStack(h).copy()).collect(Collectors.toCollection(ArrayList::new))).orElseGet(ArrayList::new))
+            .map(optIng -> optIng.map(ing -> ing.display().resolveForStacks(ctx)).orElse(List.of()))
             .map(a -> (List<ItemStack>) a)
             .collect(Collectors.toCollection(ArrayList::new));
 

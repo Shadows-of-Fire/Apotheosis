@@ -40,6 +40,7 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void submit(State state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         BlockStateModel model = Minecraft.getInstance().getModelManager().getStandaloneModel(AdventureModuleClient.HAMMER_MODEL);
         if (model == null) {
@@ -73,7 +74,7 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
         List<BlockStateModelPart> parts = new ArrayList<>();
         model.collectParts(RandomSource.create(), parts);
 
-        submitNodeCollector.submitBlockModel(poseStack, Sheets.cutoutBlockSheet(), parts, new int[]{-1}, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
+        submitNodeCollector.submitBlockModel(poseStack, Sheets.cutoutBlockSheet(), parts, new int[] { -1 }, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
         poseStack.popPose();
     }
 

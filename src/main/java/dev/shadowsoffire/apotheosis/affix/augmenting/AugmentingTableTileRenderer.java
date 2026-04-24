@@ -42,6 +42,7 @@ public class AugmentingTableTileRenderer implements BlockEntityRenderer<Augmenti
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void submit(State state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         if (state.stage == AnimationStage.HIDING) {
             return;
@@ -81,7 +82,7 @@ public class AugmentingTableTileRenderer implements BlockEntityRenderer<Augmenti
         List<BlockStateModelPart> parts = new ArrayList<>();
         model.collectParts(RandomSource.create(), parts);
 
-        submitNodeCollector.submitBlockModel(poseStack, Sheets.translucentBlockSheet(), parts, new int[]{-1}, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
+        submitNodeCollector.submitBlockModel(poseStack, Sheets.translucentBlockSheet(), parts, new int[] { -1 }, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
         poseStack.popPose();
     }
 

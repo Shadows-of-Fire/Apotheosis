@@ -31,7 +31,7 @@ public class AddSocketsExtension implements ISmithingCategoryExtension<AddSocket
 
     @Override
     public <T extends IIngredientAcceptor<T>> void setAddition(AddSocketsRecipe recipe, T acc) {
-        acc.addIngredients(recipe.getInput());
+        acc.add(recipe.getInput());
     }
 
     @Override

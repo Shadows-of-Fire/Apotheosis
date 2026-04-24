@@ -341,9 +341,9 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
 
     public static ItemStackTemplate getNetherHeraldBannerInstance(HolderGetter<BannerPattern> patternRegistry) {
         BannerPatternLayers bannerpatternlayers = new BannerPatternLayers.Builder()
-            .addIfRegistered(patternRegistry, BannerPatterns.SKULL, DyeColor.YELLOW)
-            .addIfRegistered(patternRegistry, BannerPatterns.BORDER, DyeColor.RED)
-            .addIfRegistered(patternRegistry, BannerPatterns.GRADIENT_UP, DyeColor.BLACK)
+            .add(patternRegistry.getOrThrow(BannerPatterns.SKULL), DyeColor.YELLOW)
+            .add(patternRegistry.getOrThrow(BannerPatterns.BORDER), DyeColor.RED)
+            .add(patternRegistry.getOrThrow(BannerPatterns.GRADIENT_UP), DyeColor.BLACK)
             .build();
         DataComponentPatch patch = DataComponentPatch.builder()
             .set(DataComponents.BANNER_PATTERNS, bannerpatternlayers)
@@ -355,8 +355,8 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
 
     public static ItemStackTemplate getBastionGuardBannerInstance(HolderGetter<BannerPattern> patternRegistry) {
         BannerPatternLayers bannerpatternlayers = new BannerPatternLayers.Builder()
-            .addIfRegistered(patternRegistry, BannerPatterns.CIRCLE_MIDDLE, DyeColor.BLACK)
-            .addIfRegistered(patternRegistry, BannerPatterns.CURLY_BORDER, DyeColor.YELLOW)
+            .add(patternRegistry.getOrThrow(BannerPatterns.CIRCLE_MIDDLE), DyeColor.BLACK)
+            .add(patternRegistry.getOrThrow(BannerPatterns.CURLY_BORDER), DyeColor.YELLOW)
             .build();
         DataComponentPatch patch = DataComponentPatch.builder()
             .set(DataComponents.BANNER_PATTERNS, bannerpatternlayers)

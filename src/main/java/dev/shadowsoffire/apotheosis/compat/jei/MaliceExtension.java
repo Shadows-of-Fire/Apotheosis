@@ -37,7 +37,7 @@ public class MaliceExtension implements ISmithingCategoryExtension<MaliceRecipe>
 
     @Override
     public <T extends IIngredientAcceptor<T>> void setAddition(MaliceRecipe recipe, T acc) {
-        acc.addItemStack(new ItemStack(Apoth.Items.SIGIL_OF_MALICE));
+        acc.add(new ItemStack(Apoth.Items.SIGIL_OF_MALICE));
     }
 
     @Override

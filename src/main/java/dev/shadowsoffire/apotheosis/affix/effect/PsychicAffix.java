@@ -15,6 +15,7 @@ import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -63,8 +64,8 @@ public class PsychicAffix extends Affix {
     public float onShieldBlock(AffixInstance inst, LivingEntity entity, DamageSource source, float amount) {
         if (source.getDirectEntity() instanceof Projectile arrow) {
             Entity owner = arrow.getOwner();
-            if (owner instanceof LivingEntity living) {
-                living.hurt(entity.damageSources().source(Apoth.DamageTypes.PSYCHIC, entity), amount * this.getTrueLevel(inst));
+            if (owner instanceof LivingEntity living && living.level() instanceof ServerLevel sl) {
+                living.hurtServer(sl, entity.damageSources().source(Apoth.DamageTypes.PSYCHIC, entity), amount * this.getTrueLevel(inst));
             }
         }
 

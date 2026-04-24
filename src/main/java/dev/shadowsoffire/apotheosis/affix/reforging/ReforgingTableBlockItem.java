@@ -39,6 +39,7 @@ public class ReforgingTableBlockItem extends BlockItem {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private LootRarity computeMaxRarity() {
         LootRarity best = null;
         for (RecipeHolder<ReforgingRecipe> holder : ReforgingRecipeCache.all()) {
