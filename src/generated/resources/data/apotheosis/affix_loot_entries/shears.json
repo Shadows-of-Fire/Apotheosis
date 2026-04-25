@@ -1,11 +1,10 @@
 {
     "type": "apotheosis:affix_loot_entry",
     "stack": {
-        "id": "minecraft:stone_hoe"
+        "id": "minecraft:shears"
     },
     "weights": {
-        "haven": {
-            "weight": 25
-        }
+        "quality": 1.0,
+        "weight": 5
     }
 }

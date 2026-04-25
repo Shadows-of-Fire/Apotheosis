@@ -16,11 +16,11 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 
 /**
- *  Haven spawns Stone/Leather and Gold/Chain items.
- *  Frontier spawns Iron and Gold/Chain items with a low chance for Diamond items.
- *  Ascent spawns Iron and Diamond items.
- *  Summit spawns Diamond items, with a low chance for Iron or Netherite.
- *  Pinnacle spawns mostly Netherite items, with a chance for Diamond.
+ * Haven spawns Stone/Leather and Gold/Chain items.
+ * Frontier spawns Iron and Gold/Chain items with a low chance for Diamond items.
+ * Ascent spawns Iron and Diamond items.
+ * Summit spawns Diamond items, with a low chance for Iron or Netherite.
+ * Pinnacle spawns mostly Netherite items, with a chance for Diamond.
  */
 public class AffixLootEntryProvider extends DynamicRegistryProvider<AffixLootEntry> {
 
@@ -66,17 +66,18 @@ public class AffixLootEntryProvider extends DynamicRegistryProvider<AffixLootEnt
 
     @Override
     public void generate() {
-        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(5, 1), new ItemStackTemplate(Items.BOW)));
-        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(5, 1), new ItemStackTemplate(Items.CROSSBOW)));
-        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(5, 1), new ItemStackTemplate(Items.SHIELD)));
+        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(5, 1), new ItemStackTemplate(Items.SHEARS)));
+        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(15, 1), new ItemStackTemplate(Items.BOW)));
+        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(10, 1), new ItemStackTemplate(Items.CROSSBOW)));
+        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(10, 1), new ItemStackTemplate(Items.SHIELD)));
         this.addEntry(new AffixLootEntry(TRIDENT, new ItemStackTemplate(Items.TRIDENT)));
         this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(2, 0), new ItemStackTemplate(Items.TURTLE_HELMET)));
 
-        this.addTools(STONE, Items.STONE_SWORD, Items.STONE_AXE, Items.STONE_PICKAXE, Items.STONE_SHOVEL, Items.STONE_HOE);
-        this.addTools(GOLD, Items.GOLDEN_SWORD, Items.GOLDEN_AXE, Items.GOLDEN_PICKAXE, Items.GOLDEN_SHOVEL, Items.GOLDEN_HOE);
-        this.addTools(IRON, Items.IRON_SWORD, Items.IRON_AXE, Items.IRON_PICKAXE, Items.IRON_SHOVEL, Items.IRON_HOE);
-        this.addTools(DIAMOND, Items.DIAMOND_SWORD, Items.DIAMOND_AXE, Items.DIAMOND_PICKAXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE);
-        this.addTools(NETHERITE, Items.NETHERITE_SWORD, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
+        this.addTools(STONE, Items.STONE_SWORD, Items.STONE_AXE, Items.STONE_PICKAXE, Items.STONE_SHOVEL);
+        this.addTools(GOLD, Items.GOLDEN_SWORD, Items.GOLDEN_AXE, Items.GOLDEN_PICKAXE, Items.GOLDEN_SHOVEL);
+        this.addTools(IRON, Items.IRON_SWORD, Items.IRON_AXE, Items.IRON_PICKAXE, Items.IRON_SHOVEL);
+        this.addTools(DIAMOND, Items.DIAMOND_SWORD, Items.DIAMOND_AXE, Items.DIAMOND_PICKAXE, Items.DIAMOND_SHOVEL);
+        this.addTools(NETHERITE, Items.NETHERITE_SWORD, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SHOVEL);
 
         this.addArmor(LEATHER, Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS);
         this.addArmor(CHAIN, Items.CHAINMAIL_HELMET, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_LEGGINGS, Items.CHAINMAIL_BOOTS);
