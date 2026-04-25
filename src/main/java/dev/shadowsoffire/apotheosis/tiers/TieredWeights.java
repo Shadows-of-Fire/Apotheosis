@@ -4,8 +4,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Either;
@@ -13,6 +16,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.placebo.codec.CodecProvider;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -59,6 +64,10 @@ public record TieredWeights(Map<WorldTier, Weight> weights) {
 
     }
 
+    public int getWeight(GenContext ctx) {
+        return this.getWeight(ctx.tier(), ctx.luck());
+    }
+
     public int getWeight(WorldTier tier, float luck) {
         return this.weights.getOrDefault(tier, Weight.ZERO).getWeight(luck);
     }
@@ -89,6 +98,32 @@ public record TieredWeights(Map<WorldTier, Weight> weights) {
     }
 
     /**
+     * Alternative version of {@link Weighted#wrap(GenContext)} which is intended for use with {@link Stream#mapMulti(BiConsumer)} that
+     * does not create a wrapper if the item's weight is zero.
+     * <p>
+     * Use this when you do not need to perform fallback handling if the total weight of the system is zero.
+     */
+    public static <T extends Weighted> BiConsumer<T, Consumer<net.minecraft.util.random.Weighted<T>>> wrapFilter(GenContext ctx) {
+        return (obj, sink) -> {
+            int weight = obj.weights().getWeight(ctx);
+            if (weight > 0) {
+                sink.accept(new net.minecraft.util.random.Weighted<>(obj, weight));
+            }
+        };
+    }
+
+    public static <T extends CodecProvider<T> & Weighted> BiConsumer<DynamicHolder<T>, Consumer<net.minecraft.util.random.Weighted<T>>> wrapFilterHolders(GenContext ctx) {
+        return (holder, sink) -> {
+            if (holder.isBound()) {
+                int weight = holder.get().weights().getWeight(ctx);
+                if (weight > 0) {
+                    sink.accept(new net.minecraft.util.random.Weighted<>(holder.get(), weight));
+                }
+            }
+        };
+    }
+
+    /**
      * Converts a weight map back into an {@link Either}.
      * <p>
      * If the weight map was created with {@link #forAllTiers(int, float)}, this will reduce to a single {@link Weight}.
@@ -103,27 +138,8 @@ public record TieredWeights(Map<WorldTier, Weight> weights) {
         return Either.right(value);
     }
 
-    // TODO: Replace existing wrap() functions with ones that use GenContext as context.
-    // TODO: Replace existing wrap() paradigm with a filter/mapper that can be used by Stream#mapMulti
-    // We are technically supposed to avoid creating zero-weight vanilla Weighted objects.
     public static interface Weighted {
         TieredWeights weights();
-
-        /**
-         * Helper to wrap this object as a vanilla {@link net.minecraft.util.random.Weighted} entry.
-         */
-        @SuppressWarnings("unchecked")
-        default <T extends Weighted> net.minecraft.util.random.Weighted<T> wrap(GenContext ctx) {
-            return wrap((T) this, ctx);
-        }
-
-        /**
-         * Static (and more generic-safe) variant of {@link Weighted#wrap(WorldTier, float)}
-         */
-        static <T extends Weighted> net.minecraft.util.random.Weighted<T> wrap(T item, GenContext ctx) {
-            int weight = Math.max(0, item.weights().getWeight(ctx.tier(), ctx.luck()));
-            return new net.minecraft.util.random.Weighted<>(item, weight);
-        }
     }
 
     public static class Builder {

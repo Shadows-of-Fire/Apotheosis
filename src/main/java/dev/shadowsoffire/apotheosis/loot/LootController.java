@@ -17,6 +17,7 @@ import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.affix.AffixType;
 import dev.shadowsoffire.apotheosis.affix.ItemAffixes;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.network.chat.Component;
@@ -135,7 +136,7 @@ public class LootController {
     }
 
     public static List<Weighted<Affix>> getWeightedAffixes(ItemStack stack, LootRarity rarity, AffixType type, GenContext ctx) {
-        return getAvailableAffixes(stack, rarity, type).map(a -> a.get().<Affix>wrap(ctx)).toList();
+        return getAvailableAffixes(stack, rarity, type).mapMulti(TieredWeights.wrapFilterHolders(ctx)).toList();
     }
 
     public static ItemStack createAffixItemFromPools(Set<DynamicHolder<LootRarity>> rarities, Set<DynamicHolder<AffixLootEntry>> entries, GenContext gCtx) {

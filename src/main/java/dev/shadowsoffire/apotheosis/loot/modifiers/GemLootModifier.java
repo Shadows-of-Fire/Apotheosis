@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.loot.modifiers;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import org.jetbrains.annotations.Nullable;
@@ -15,6 +14,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.util.LootPatternMatcher;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -48,7 +48,7 @@ public class GemLootModifier extends ContextualLootModifier {
 
                     Gem gem;
                     if (!entry.gems.isEmpty()) {
-                        List<Weighted<Gem>> resolved = entry.gems.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<Gem>wrap(gCtx)).toList();
+                        List<Weighted<Gem>> resolved = entry.gems.stream().mapMulti(TieredWeights.wrapFilterHolders(gCtx)).toList();
                         gem = WeightedRandom.getRandomItem(ctx.getRandom(), resolved, Weighted::weight).get().value();
                     }
                     else {

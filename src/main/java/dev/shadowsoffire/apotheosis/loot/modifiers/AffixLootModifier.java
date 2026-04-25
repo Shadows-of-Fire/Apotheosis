@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.loot.modifiers;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +17,7 @@ import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.util.LootPatternMatcher;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
@@ -51,7 +51,7 @@ public class AffixLootModifier extends ContextualLootModifier {
 
                     AffixLootEntry lootEntry;
                     if (!entry.entries.isEmpty()) {
-                        List<Weighted<AffixLootEntry>> resolved = entry.entries.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<AffixLootEntry>wrap(gCtx)).toList();
+                        List<Weighted<AffixLootEntry>> resolved = entry.entries.stream().mapMulti(TieredWeights.wrapFilterHolders(gCtx)).toList();
                         lootEntry = WeightedRandom.getRandomItem(ctx.getRandom(), resolved, Weighted::weight).get().value();
                     }
                     else {

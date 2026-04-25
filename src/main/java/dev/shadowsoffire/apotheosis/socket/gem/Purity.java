@@ -26,7 +26,6 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedRandom;
 
-
 /**
  * Purity represents a fixed set of gem tiers. Gems are expected to have increasingly powerful stats with each purity level.
  */
@@ -104,7 +103,7 @@ public enum Purity implements StringRepresentable, TieredWeights.Weighted {
             pool = ALL_PURITIES;
         }
 
-        List<Weighted<Purity>> list = pool.stream().map(l -> l.<Purity>wrap(ctx)).toList();
+        List<Weighted<Purity>> list = pool.stream().mapMulti(TieredWeights.wrapFilter(ctx)).toList();
         return WeightedRandom.getRandomItem(ctx.rand(), list, Weighted::weight).map(Weighted::value).orElse(ApothMiscUtil.getRandomElement(pool, ctx.rand()));
     }
 

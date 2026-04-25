@@ -17,6 +17,7 @@ import dev.shadowsoffire.apotheosis.loot.AffixLootRegistry;
 import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -92,7 +93,7 @@ public class AutomaticAffixTrade extends LootItemConditionalFunction {
             List<Weighted<AffixLootEntry>> resolved = this.entries.stream()
                 .map(this::unwrap)
                 .filter(Objects::nonNull)
-                .map(e -> e.<AffixLootEntry>wrap(gCtx))
+                .mapMulti(TieredWeights.wrapFilter(gCtx))
                 .toList();
             if (resolved.isEmpty()) {
                 return ItemStack.EMPTY;

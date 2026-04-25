@@ -15,6 +15,7 @@ import dev.shadowsoffire.apotheosis.affix.ItemAffixes;
 import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.net.RerollResultPayload;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -200,7 +201,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
     }
 
     protected static List<Weighted<Affix>> getWeightedAffixes(List<DynamicHolder<Affix>> affixes, GenContext ctx) {
-        return affixes.stream().map(a -> a.get().<Affix>wrap(ctx)).toList();
+        return affixes.stream().mapMulti(TieredWeights.wrapFilterHolders(ctx)).toList();
     }
 
 }

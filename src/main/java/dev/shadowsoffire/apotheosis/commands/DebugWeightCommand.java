@@ -81,19 +81,19 @@ public class DebugWeightCommand {
      */
     public static <T extends CodecProvider<? super T> & Weighted> void dumpWeightsFor(GenContext ctx, DynamicRegistry<T> registry, Predicate<T> filter) {
         Collection<T> values = registry.getValues();
-        List<net.minecraft.util.random.Weighted<T>> list = new ArrayList<>(values.size());
+        List<ItemAndWeight<T>> list = new ArrayList<>(values.size());
 
         values.stream().filter(filter).map(t -> wrapWithConstraints(ctx, t)).forEach(list::add);
 
-        float total = WeightedRandom.getTotalWeight(list, net.minecraft.util.random.Weighted::weight);
+        float total = WeightedRandom.getTotalWeight(list, ItemAndWeight::weight);
 
         Apotheosis.LOGGER.info("Starting dump of all {} weights...", registry.getPath());
         Apotheosis.LOGGER.info("Current GenContext: {}", ctx);
-        Comparator<net.minecraft.util.random.Weighted<T>> comparator = Comparator.comparing(w -> -w.weight());
-        comparator = comparator.thenComparing(Comparator.comparing(w -> registry.getKey(w.value()).toString()));
+        Comparator<ItemAndWeight<T>> comparator = Comparator.comparing(w -> -w.weight());
+        comparator = comparator.thenComparing(Comparator.comparing(w -> registry.getKey(w.item()).toString()));
         list.sort(comparator);
-        for (net.minecraft.util.random.Weighted<T> entry : list) {
-            Identifier key = registry.getKey(entry.value());
+        for (ItemAndWeight<T> entry : list) {
+            Identifier key = registry.getKey(entry.item());
             float chance = entry.weight() / total;
             Apotheosis.LOGGER.info("{} : {}% ({} / {}}", key, Affix.fmt(chance * 100), entry.weight(), (int) total);
         }
@@ -106,11 +106,11 @@ public class DebugWeightCommand {
         return 0;
     }
 
-    private static <T extends Weighted> net.minecraft.util.random.Weighted<T> wrapWithConstraints(GenContext ctx, T t) {
+    private static <T extends Weighted> ItemAndWeight<T> wrapWithConstraints(GenContext ctx, T t) {
         if (t instanceof Constrained c && !c.constraints().test(ctx)) {
-            return new net.minecraft.util.random.Weighted<>(t, 0);
+            return new ItemAndWeight<>(t, 0);
         }
-        return t.<T>wrap(ctx);
+        return new ItemAndWeight<>(t, t.weights().getWeight(ctx));
     }
 
     private static final DynamicCommandExceptionType UNKNOWN_RARITY = new DynamicCommandExceptionType(str -> () -> "Unknown Rarity: " + str);
@@ -135,4 +135,5 @@ public class DebugWeightCommand {
         return 0;
     }
 
+    private static record ItemAndWeight<T>(T item, int weight) {}
 }
