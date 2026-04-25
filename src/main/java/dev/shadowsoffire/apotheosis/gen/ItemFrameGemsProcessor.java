@@ -63,8 +63,6 @@ public class ItemFrameGemsProcessor extends StructureProcessor {
             ItemStack stack = gem.toStack(purity);
             nbt.put("Item", ItemStack.CODEC.encodeStart(level.registryAccess().createSerializationContext(NbtOps.INSTANCE), stack).getOrThrow());
         }
-        nbt.putInt("TileX", pos.getX());
-        nbt.putInt("TileY", pos.getY());
-        nbt.putInt("TileZ", pos.getZ());
+        nbt.put("block_pos", BlockPos.CODEC.encodeStart(NbtOps.INSTANCE, pos).getOrThrow());
     }
 }
