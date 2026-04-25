@@ -110,7 +110,7 @@ public class DebugWeightCommand {
         if (t instanceof Constrained c && !c.constraints().test(ctx)) {
             return new net.minecraft.util.random.Weighted<>(t, 0);
         }
-        return t.<T>wrap(ctx.tier(), ctx.luck());
+        return t.<T>wrap(ctx);
     }
 
     private static final DynamicCommandExceptionType UNKNOWN_RARITY = new DynamicCommandExceptionType(str -> () -> "Unknown Rarity: " + str);

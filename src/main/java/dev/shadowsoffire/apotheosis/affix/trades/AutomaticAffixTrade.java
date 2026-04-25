@@ -92,7 +92,7 @@ public class AutomaticAffixTrade extends LootItemConditionalFunction {
             List<Weighted<AffixLootEntry>> resolved = this.entries.stream()
                 .map(this::unwrap)
                 .filter(Objects::nonNull)
-                .map(e -> e.<AffixLootEntry>wrap(gCtx.tier(), gCtx.luck()))
+                .map(e -> e.<AffixLootEntry>wrap(gCtx))
                 .toList();
             if (resolved.isEmpty()) {
                 return ItemStack.EMPTY;

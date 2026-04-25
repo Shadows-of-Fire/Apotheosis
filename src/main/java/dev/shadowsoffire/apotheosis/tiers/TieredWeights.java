@@ -105,7 +105,7 @@ public record TieredWeights(Map<WorldTier, Weight> weights) {
 
     // TODO: Replace existing wrap() functions with ones that use GenContext as context.
     // TODO: Replace existing wrap() paradigm with a filter/mapper that can be used by Stream#mapMulti
-    //       We are technically supposed to avoid creating zero-weight vanilla Weighted objects.
+    // We are technically supposed to avoid creating zero-weight vanilla Weighted objects.
     public static interface Weighted {
         TieredWeights weights();
 
@@ -113,15 +113,15 @@ public record TieredWeights(Map<WorldTier, Weight> weights) {
          * Helper to wrap this object as a vanilla {@link net.minecraft.util.random.Weighted} entry.
          */
         @SuppressWarnings("unchecked")
-        default <T extends Weighted> net.minecraft.util.random.Weighted<T> wrap(WorldTier tier, float luck) {
-            return wrap((T) this, tier, luck);
+        default <T extends Weighted> net.minecraft.util.random.Weighted<T> wrap(GenContext ctx) {
+            return wrap((T) this, ctx);
         }
 
         /**
          * Static (and more generic-safe) variant of {@link Weighted#wrap(WorldTier, float)}
          */
-        static <T extends Weighted> net.minecraft.util.random.Weighted<T> wrap(T item, WorldTier tier, float luck) {
-            int weight = Math.max(0, item.weights().getWeight(tier, luck));
+        static <T extends Weighted> net.minecraft.util.random.Weighted<T> wrap(T item, GenContext ctx) {
+            int weight = Math.max(0, item.weights().getWeight(ctx.tier(), ctx.luck()));
             return new net.minecraft.util.random.Weighted<>(item, weight);
         }
     }

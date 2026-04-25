@@ -135,7 +135,7 @@ public class LootController {
     }
 
     public static List<Weighted<Affix>> getWeightedAffixes(ItemStack stack, LootRarity rarity, AffixType type, GenContext ctx) {
-        return getAvailableAffixes(stack, rarity, type).map(a -> a.get().<Affix>wrap(ctx.tier(), ctx.luck())).toList();
+        return getAvailableAffixes(stack, rarity, type).map(a -> a.get().<Affix>wrap(ctx)).toList();
     }
 
     public static ItemStack createAffixItemFromPools(Set<DynamicHolder<LootRarity>> rarities, Set<DynamicHolder<AffixLootEntry>> entries, GenContext gCtx) {

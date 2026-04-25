@@ -104,7 +104,7 @@ public enum Purity implements StringRepresentable, TieredWeights.Weighted {
             pool = ALL_PURITIES;
         }
 
-        List<Weighted<Purity>> list = pool.stream().map(l -> l.<Purity>wrap(ctx.tier(), ctx.luck())).toList();
+        List<Weighted<Purity>> list = pool.stream().map(l -> l.<Purity>wrap(ctx)).toList();
         return WeightedRandom.getRandomItem(ctx.rand(), list, Weighted::weight).map(Weighted::value).orElse(ApothMiscUtil.getRandomElement(pool, ctx.rand()));
     }
 

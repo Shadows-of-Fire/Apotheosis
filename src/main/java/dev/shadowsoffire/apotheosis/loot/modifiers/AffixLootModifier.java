@@ -51,7 +51,7 @@ public class AffixLootModifier extends ContextualLootModifier {
 
                     AffixLootEntry lootEntry;
                     if (!entry.entries.isEmpty()) {
-                        List<Weighted<AffixLootEntry>> resolved = entry.entries.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<AffixLootEntry>wrap(gCtx.tier(), gCtx.luck())).toList();
+                        List<Weighted<AffixLootEntry>> resolved = entry.entries.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<AffixLootEntry>wrap(gCtx)).toList();
                         lootEntry = WeightedRandom.getRandomItem(ctx.getRandom(), resolved, Weighted::weight).get().value();
                     }
                     else {

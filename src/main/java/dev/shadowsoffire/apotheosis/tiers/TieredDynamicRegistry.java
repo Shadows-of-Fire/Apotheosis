@@ -48,7 +48,7 @@ public abstract class TieredDynamicRegistry<V extends CodecProvider<? super V> &
         for (Predicate<? super V> filter : filters) {
             stream = stream.filter(filter);
         }
-        stream.map(l -> l.<V>wrap(ctx.tier(), ctx.luck())).forEach(list::add);
+        stream.map(l -> l.<V>wrap(ctx)).forEach(list::add);
         return WeightedRandom.getRandomItem(ctx.rand(), list, net.minecraft.util.random.Weighted::weight).map(net.minecraft.util.random.Weighted::value).orElse(null);
     }
 

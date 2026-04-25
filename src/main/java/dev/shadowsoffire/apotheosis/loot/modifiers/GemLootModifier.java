@@ -48,7 +48,7 @@ public class GemLootModifier extends ContextualLootModifier {
 
                     Gem gem;
                     if (!entry.gems.isEmpty()) {
-                        List<Weighted<Gem>> resolved = entry.gems.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<Gem>wrap(gCtx.tier(), gCtx.luck())).toList();
+                        List<Weighted<Gem>> resolved = entry.gems.stream().map(this::unwrap).filter(Objects::nonNull).map(e -> e.<Gem>wrap(gCtx)).toList();
                         gem = WeightedRandom.getRandomItem(ctx.getRandom(), resolved, Weighted::weight).get().value();
                     }
                     else {

@@ -200,7 +200,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
     }
 
     protected static List<Weighted<Affix>> getWeightedAffixes(List<DynamicHolder<Affix>> affixes, GenContext ctx) {
-        return affixes.stream().map(a -> a.get().<Affix>wrap(ctx.tier(), ctx.luck())).toList();
+        return affixes.stream().map(a -> a.get().<Affix>wrap(ctx)).toList();
     }
 
 }
