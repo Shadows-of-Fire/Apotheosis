@@ -32,8 +32,10 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
 
-    public static final int UPGRADE = 0;
-    public static final int REROLL = 1;
+    public static final int UPGRADE_BTN = 0;
+    public static final int REROLL_BTN = 1;
+    public static final int MAIN_SLOT = 0;
+    public static final int SIGIL_SLOT = 1;
 
     protected final Player player;
     protected InternalItemHandler itemInv = new InternalItemHandler(1);
@@ -87,7 +89,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
         }
 
         switch (id & 0b1) {
-            case UPGRADE -> {
+            case UPGRADE_BTN -> {
                 AffixInstance inst = affixes.get(selected);
                 if (!canAugment(inst)) {
                     return false;
@@ -100,6 +102,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
                     }
                     else {
                         sigils.shrink(AdventureConfig.upgradeSigilCost);
+                        this.slots.get(SIGIL_SLOT).set(sigils);
                         EnchantmentUtils.chargeExperience(player, EnchantmentUtils.getTotalExperienceForLevel(AdventureConfig.upgradeLevelCost));
                     }
                 }
@@ -111,7 +114,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
                 player.level().playSound(null, this.pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.PLAYERS, 0.45F, player.getRandom().nextFloat() * 0.75F + 0.5F);
                 return true;
             }
-            case REROLL -> {
+            case REROLL_BTN -> {
                 AffixInstance inst = affixes.get(selected);
                 List<DynamicHolder<Affix>> alternatives = computeAlternatives(player, mainItem, inst);
                 if (alternatives.isEmpty()) {
@@ -159,11 +162,11 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
     }
 
     public ItemStack getMainItem() {
-        return this.slots.get(0).getItem();
+        return this.slots.get(MAIN_SLOT).getItem();
     }
 
     public ItemStack getSigils() {
-        return this.slots.get(1).getItem();
+        return this.slots.get(SIGIL_SLOT).getItem();
     }
 
     public boolean hasUpgradeCost() {

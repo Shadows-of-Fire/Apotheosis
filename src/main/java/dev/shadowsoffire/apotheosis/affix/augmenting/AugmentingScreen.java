@@ -82,7 +82,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
             new FatTexButton(left + 60, top + 111, 29, 13, 186, 135,
                 btn -> {
                     if (this.getSelectedAffix() != DropDownList.NO_SELECTION) {
-                        this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, AugmentingMenu.UPGRADE | this.getSelectedAffix() << 1);
+                        this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, AugmentingMenu.UPGRADE_BTN | this.getSelectedAffix() << 1);
                     }
                 },
                 Component.translatable("button.apotheosis.augmenting.upgrade")));
@@ -91,7 +91,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
             new FatTexButton(left + 112, top + 111, 29, 13, 186 + 37, 135,
                 btn -> {
                     if (this.getSelectedAffix() != DropDownList.NO_SELECTION) {
-                        this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, AugmentingMenu.REROLL | this.getSelectedAffix() << 1);
+                        this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, AugmentingMenu.REROLL_BTN | this.getSelectedAffix() << 1);
                     }
                 },
                 Component.translatable("button.apotheosis.augmenting.reroll")));
