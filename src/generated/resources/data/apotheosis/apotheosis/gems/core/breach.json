@@ -1,0 +1,63 @@
+{
+    "unique": true,
+    "weights": {
+        "quality": 0.1,
+        "weight": 100
+    },
+    "bonuses": [
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "apothic_attributes:armor_pierce",
+            "gem_class": {
+                "key": "light_weapon",
+                "types": [
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
+                ]
+            },
+            "operation": "add_value",
+            "values": {
+                "cracked": 2.0,
+                "chipped": 3.0,
+                "flawed": 5.0,
+                "normal": 7.0,
+                "flawless": 9.0,
+                "perfect": 12.0
+            }
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "minecraft:block_interaction_range",
+            "gem_class": {
+                "key": "tools",
+                "types": [
+                    "apotheosis:breaker",
+                    "apotheosis:shears"
+                ]
+            },
+            "operation": "add_value",
+            "values": {
+                "cracked": 0.5,
+                "chipped": 1.0,
+                "flawed": 1.5,
+                "normal": 2.0,
+                "flawless": 2.5,
+                "perfect": 3.0
+            }
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "apothic_attributes:prot_pierce",
+            "gem_class": "apotheosis:bow",
+            "operation": "add_value",
+            "values": {
+                "cracked": 4.0,
+                "chipped": 5.0,
+                "flawed": 7.0,
+                "normal": 8.0,
+                "flawless": 10.0,
+                "perfect": 15.0
+            }
+        }
+    ]
+}

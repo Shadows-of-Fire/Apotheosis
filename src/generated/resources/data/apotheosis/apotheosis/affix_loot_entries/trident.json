@@ -1,0 +1,19 @@
+{
+    "stack": {
+        "id": "minecraft:trident"
+    },
+    "weights": {
+        "ascent": {
+            "quality": 1.0,
+            "weight": 5
+        },
+        "summit": {
+            "quality": 1.0,
+            "weight": 7
+        },
+        "pinnacle": {
+            "quality": 1.0,
+            "weight": 7
+        }
+    }
+}

@@ -16,8 +16,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import dev.shadowsoffire.placebo.codec.CodecProvider;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -112,7 +111,7 @@ public record TieredWeights(Map<WorldTier, Weight> weights) {
         };
     }
 
-    public static <T extends CodecProvider<T> & Weighted> BiConsumer<DynamicHolder<T>, Consumer<net.minecraft.util.random.Weighted<T>>> wrapFilterHolders(GenContext ctx) {
+    public static <T extends Weighted> BiConsumer<DynamicHolder<T>, Consumer<net.minecraft.util.random.Weighted<T>>> wrapFilterHolders(GenContext ctx) {
         return (holder, sink) -> {
             if (holder.isBound()) {
                 int weight = holder.get().weights().getWeight(ctx);

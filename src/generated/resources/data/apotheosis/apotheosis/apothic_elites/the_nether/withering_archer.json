@@ -1,0 +1,103 @@
+{
+    "affix_data": {
+        "affix_chance": 0.45
+    },
+    "basic_data": {
+        "constraints": {
+            "dimensions": [
+                "minecraft:the_nether"
+            ]
+        },
+        "name": "Withering Archer",
+        "nbt": {
+            "Passengers": [
+                {
+                    "Duration": 200000,
+                    "Particle": {
+                        "type": "entity_effect",
+                        "color": 0
+                    },
+                    "Radius": 2.5,
+                    "ReapplicationDelay": 20,
+                    "WaitTime": 0,
+                    "id": "minecraft:area_effect_cloud",
+                    "potion_contents": {
+                        "potion": "apothic_attributes:wither"
+                    }
+                }
+            ]
+        },
+        "spawn_conditions": [
+            {
+                "type": "apotheosis:not",
+                "spawn_condition": {
+                    "type": "apotheosis:spawn_type",
+                    "spawn_types": [
+                        "spawn_item_use",
+                        "spawner",
+                        "mob_summoned"
+                    ]
+                }
+            }
+        ],
+        "valid_gear_sets": {
+            "haven": "#apotheosis:haven_ranged",
+            "frontier": "#apotheosis:frontier_ranged",
+            "ascent": "#apotheosis:ascent_ranged",
+            "summit": "#apotheosis:summit_ranged",
+            "pinnacle": "#apotheosis:pinnacle_ranged"
+        },
+        "weights": {
+            "frontier": {
+                "quality": 0.1,
+                "weight": 100
+            },
+            "ascent": {
+                "quality": 0.1,
+                "weight": 100
+            },
+            "summit": {
+                "quality": 0.1,
+                "weight": 100
+            },
+            "pinnacle": {
+                "quality": 0.1,
+                "weight": 100
+            }
+        }
+    },
+    "entities": [
+        "minecraft:wither_skeleton",
+        "minecraft:skeleton"
+    ],
+    "stats": {
+        "attribute_modifiers": [
+            {
+                "attribute": "minecraft:max_health",
+                "operation": "add_value",
+                "value": 20.0
+            },
+            {
+                "attribute": "minecraft:movement_speed",
+                "operation": "add_multiplied_base",
+                "value": 0.1
+            },
+            {
+                "attribute": "apothic_attributes:arrow_damage",
+                "operation": "add_multiplied_total",
+                "value": 0.25
+            },
+            {
+                "attribute": "minecraft:knockback_resistance",
+                "operation": "add_value",
+                "value": 0.5
+            }
+        ],
+        "enchant_chance": 0.25,
+        "enchantment_levels": {
+            "primary": 20,
+            "secondary": 12
+        }
+    },
+    "success_chance": 0.02
+}

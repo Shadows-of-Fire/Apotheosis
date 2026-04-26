@@ -11,8 +11,8 @@ import dev.shadowsoffire.apotheosis.socket.gem.PurityWeightsRegistry.PurityWeigh
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weight;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
-import dev.shadowsoffire.placebo.codec.CodecProvider;
-import dev.shadowsoffire.placebo.reload.DynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.DynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.RegistrySerializer;
 import net.minecraft.resources.Identifier;
 
 public final class PurityWeightsRegistry extends DynamicRegistry<PurityWeights> {
@@ -31,12 +31,7 @@ public final class PurityWeightsRegistry extends DynamicRegistry<PurityWeights> 
     private Map<Purity, TieredWeights> parsedWeights = Map.of();
 
     public PurityWeightsRegistry() {
-        super(Apotheosis.LOGGER, "purity_weights", true, false);
-    }
-
-    @Override
-    protected void registerBuiltinCodecs() {
-        this.registerDefaultCodec(Apotheosis.loc("purity_weights"), PurityWeights.CODEC);
+        super(Apotheosis.LOGGER, Apotheosis.loc("purity_weights"), RegistrySerializer.synced(PurityWeights.CODEC));
     }
 
     @Override
@@ -82,17 +77,13 @@ public final class PurityWeightsRegistry extends DynamicRegistry<PurityWeights> 
         return INSTANCE.parsedWeights.isEmpty() ? ERRORED : INSTANCE.parsedWeights;
     }
 
-    public static record PurityWeights(Map<WorldTier, Map<Purity, Weight>> weights) implements CodecProvider<PurityWeights> {
+    public static record PurityWeights(Map<WorldTier, Map<Purity, Weight>> weights) {
 
         public static final Codec<PurityWeights> CODEC = WorldTier.mapCodec(Purity.mapCodec(Weight.CODEC.codec()).codec())
             .fieldOf("weights")
             .xmap(PurityWeights::new, PurityWeights::weights)
             .codec();
 
-        @Override
-        public Codec<? extends PurityWeights> getCodec() {
-            return CODEC;
-        }
     }
 
 }

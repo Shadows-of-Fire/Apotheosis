@@ -1,0 +1,15 @@
+{
+    "stack": {
+        "id": "minecraft:netherite_shovel"
+    },
+    "weights": {
+        "summit": {
+            "quality": 0.75,
+            "weight": 5
+        },
+        "pinnacle": {
+            "quality": 2.0,
+            "weight": 25
+        }
+    }
+}

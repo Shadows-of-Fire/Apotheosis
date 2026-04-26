@@ -1,0 +1,10 @@
+{
+    "stack": {
+        "id": "minecraft:leather_boots"
+    },
+    "weights": {
+        "haven": {
+            "weight": 25
+        }
+    }
+}

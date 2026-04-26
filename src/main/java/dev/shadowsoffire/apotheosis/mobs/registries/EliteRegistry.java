@@ -9,6 +9,7 @@ import dev.shadowsoffire.apotheosis.mobs.types.Elite;
 import dev.shadowsoffire.apotheosis.tiers.Constraints;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.TieredDynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.RegistrySerializer;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
@@ -19,12 +20,7 @@ public class EliteRegistry extends TieredDynamicRegistry<Elite> {
     public static final EliteRegistry INSTANCE = new EliteRegistry();
 
     public EliteRegistry() {
-        super(Apotheosis.LOGGER, "apothic_elites", false, false);
-    }
-
-    @Override
-    protected void registerBuiltinCodecs() {
-        this.registerDefaultCodec(Apotheosis.loc("elite"), Elite.CODEC);
+        super(Apotheosis.LOGGER, Apotheosis.loc("apothic_elites"), RegistrySerializer.simple(Elite.CODEC));
     }
 
     @Nullable

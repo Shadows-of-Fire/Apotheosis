@@ -1,0 +1,57 @@
+{
+    "unique": true,
+    "weights": {
+        "quality": 0.1,
+        "weight": 100
+    },
+    "bonuses": [
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "apothic_attributes:draw_speed",
+            "gem_class": "apotheosis:bow",
+            "operation": "add_multiplied_base",
+            "values": {
+                "cracked": 0.1,
+                "chipped": 0.25,
+                "flawed": 0.35,
+                "normal": 0.45,
+                "flawless": 0.5,
+                "perfect": 0.6
+            }
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "minecraft:block_break_speed",
+            "gem_class": {
+                "key": "tools",
+                "types": [
+                    "apotheosis:breaker",
+                    "apotheosis:shears"
+                ]
+            },
+            "operation": "add_multiplied_base",
+            "values": {
+                "cracked": 0.1,
+                "chipped": 0.15,
+                "flawed": 0.225,
+                "normal": 0.3,
+                "flawless": 0.375,
+                "perfect": 0.45
+            }
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "apothic_attributes:dodge_chance",
+            "gem_class": "apotheosis:boots",
+            "operation": "add_value",
+            "values": {
+                "cracked": 0.025,
+                "chipped": 0.05,
+                "flawed": 0.075,
+                "normal": 0.1,
+                "flawless": 0.125,
+                "perfect": 0.15
+            }
+        }
+    ]
+}

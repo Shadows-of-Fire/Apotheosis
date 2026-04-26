@@ -1,0 +1,9 @@
+{
+    "stack": {
+        "id": "minecraft:shield"
+    },
+    "weights": {
+        "quality": 1.0,
+        "weight": 10
+    }
+}

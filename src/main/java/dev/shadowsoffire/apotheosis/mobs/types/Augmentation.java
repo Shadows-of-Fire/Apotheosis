@@ -12,7 +12,6 @@ import dev.shadowsoffire.apotheosis.mobs.util.EntityModifier;
 import dev.shadowsoffire.apotheosis.mobs.util.SpawnCondition;
 import dev.shadowsoffire.apotheosis.tiers.Constraints;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
-import dev.shadowsoffire.placebo.codec.CodecProvider;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -29,7 +28,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
  * @param conditions  Any entity-based restrictions on the application of this augmentation.
  * @param modifiers   The list of modifiers that will be applied to the target entity.
  */
-public record Augmentation(float chance, Constraints constraints, List<SpawnCondition> conditions, List<EntityModifier> modifiers) implements CodecProvider<Augmentation> {
+public record Augmentation(float chance, Constraints constraints, List<SpawnCondition> conditions, List<EntityModifier> modifiers) {
 
     public static final Codec<Augmentation> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
@@ -38,11 +37,6 @@ public record Augmentation(float chance, Constraints constraints, List<SpawnCond
             SpawnCondition.CODEC.listOf().optionalFieldOf("conditions", Collections.emptyList()).forGetter(Augmentation::conditions),
             EntityModifier.CODEC.listOf().fieldOf("modifiers").forGetter(Augmentation::modifiers))
         .apply(inst, Augmentation::new));
-
-    @Override
-    public Codec<? extends Augmentation> getCodec() {
-        return CODEC;
-    }
 
     public boolean canApply(ServerLevelAccessor level, Mob mob, EntitySpawnReason type, GenContext ctx) {
         if (!this.constraints.test(ctx)) {

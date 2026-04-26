@@ -9,7 +9,8 @@ import com.google.common.base.Preconditions;
 
 import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.placebo.reload.DynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.DynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.RegistrySerializer;
 import net.minecraft.resources.Identifier;
 
 public class RarityOverrideRegistry extends DynamicRegistry<RarityOverride> {
@@ -19,17 +20,12 @@ public class RarityOverrideRegistry extends DynamicRegistry<RarityOverride> {
     protected Map<LootCategory, RarityOverride> byCategory = new HashMap<>();
 
     public RarityOverrideRegistry() {
-        super(Apotheosis.LOGGER, "rarity_override", true, false);
+        super(Apotheosis.LOGGER, Apotheosis.loc("rarity_override"), RegistrySerializer.synced(RarityOverride.CODEC));
     }
 
     @Nullable
     public RarityOverride getOverride(LootCategory category) {
         return this.byCategory.get(category);
-    }
-
-    @Override
-    protected void registerBuiltinCodecs() {
-        this.registerDefaultCodec(Apotheosis.loc("rarity_override"), RarityOverride.CODEC);
     }
 
     @Override

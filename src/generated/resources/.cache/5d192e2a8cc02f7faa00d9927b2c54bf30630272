@@ -1,6 +1,6 @@
-// 26.1.2	2026-04-19T23:55:35.471339798	Rarities
-bec96fea77cfd049359f111f1690ba7d330540e4 data/apotheosis/rarities/common.json
-2df51aab9f7e81011e8334a0685b9e1fb321dbbe data/apotheosis/rarities/epic.json
-1b8eab46a6582b236dfaab98f4c2f8d6ae19e035 data/apotheosis/rarities/mythic.json
-913739dd39c54fe0aca6252c9b7ea0c191477c31 data/apotheosis/rarities/rare.json
-31beb2e87ef3a4c363ff237f3426e4c053334460 data/apotheosis/rarities/uncommon.json
+// 26.1.2	2026-04-26T00:42:36.4917977	Rarities
+1bec8532de6f8c7a6792681a8197926087da7062 data/apotheosis/apotheosis/rarities/common.json
+fc4c7273b32fcd87f6c194d9fbaa09d6f8f3759f data/apotheosis/apotheosis/rarities/epic.json
+c57c0bf61201c1a68b666f1fb9f4186a744956f3 data/apotheosis/apotheosis/rarities/mythic.json
+a4d7d1ba6d93d6e02f334bc1a2edaee5aeea6c26 data/apotheosis/apotheosis/rarities/rare.json
+d604114ec0919bef353a58c8f313dc69cb33c3fc data/apotheosis/apotheosis/rarities/uncommon.json

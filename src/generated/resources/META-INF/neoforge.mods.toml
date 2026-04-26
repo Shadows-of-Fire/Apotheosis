@@ -40,7 +40,7 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="placebo"
     type="required"
-    versionRange="[10.0.0-beta7,)"
+    versionRange="[10.0.0-beta,)"
     ordering="AFTER"
     side="BOTH"
 
@@ -68,7 +68,7 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="gateways"
     type="optional"
-    versionRange="[6.0.0-beta1,)"
+    versionRange="[6.0.0-beta,)"
     ordering="AFTER"
     side="BOTH"
 

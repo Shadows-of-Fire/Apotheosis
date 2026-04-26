@@ -7,18 +7,14 @@ import dev.shadowsoffire.apotheosis.mobs.types.Invader;
 import dev.shadowsoffire.apotheosis.tiers.Constraints;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.TieredDynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.RegistrySerializer;
 
 public class InvaderRegistry extends TieredDynamicRegistry<Invader> {
 
     public static final InvaderRegistry INSTANCE = new InvaderRegistry();
 
     public InvaderRegistry() {
-        super(Apotheosis.LOGGER, "apothic_invaders", false, false);
-    }
-
-    @Override
-    protected void registerBuiltinCodecs() {
-        this.registerDefaultCodec(Apotheosis.loc("invader"), Invader.CODEC);
+        super(Apotheosis.LOGGER, Apotheosis.loc("apothic_invaders"), RegistrySerializer.simple(Invader.CODEC));
     }
 
     @Override

@@ -14,15 +14,16 @@ import com.google.common.base.Predicates;
 
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
-import dev.shadowsoffire.placebo.codec.CodecProvider;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import dev.shadowsoffire.placebo.reload.DynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.RegistrySerializer;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.WeightedRandom;
 
-public abstract class TieredDynamicRegistry<V extends CodecProvider<? super V> & Weighted> extends DynamicRegistry<V> {
+public abstract class TieredDynamicRegistry<V extends Weighted> extends DynamicRegistry<V> {
 
-    public TieredDynamicRegistry(Logger logger, String path, boolean synced, boolean subtypes) {
-        super(logger, path, synced, subtypes);
+    public TieredDynamicRegistry(Logger logger, Identifier id, RegistrySerializer<V> serializer) {
+        super(logger, id, serializer);
     }
 
     /**

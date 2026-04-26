@@ -20,7 +20,6 @@ import dev.shadowsoffire.apotheosis.tiers.Constraints.Constrained;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
-import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.json.ChancedEffectInstance;
 import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
 import net.minecraft.core.BlockPos;
@@ -45,7 +44,7 @@ import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet;
 
-public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<?>> entities, BossStats stats, AffixData afxData) implements CodecProvider<Elite>, Constrained, Weighted, IEntityMatch {
+public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<?>> entities, BossStats stats, AffixData afxData) implements Constrained, Weighted, IEntityMatch {
 
     /**
      * NBT key for a boolean value applied to entity persistent data to indicate a mob is a miniboss.
@@ -179,11 +178,6 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
         mob.setHealth(mob.getMaxHealth());
 
         this.basicData.appendBonusLoot(mob);
-    }
-
-    @Override
-    public Codec<? extends Elite> getCodec() {
-        return CODEC;
     }
 
     protected Identifier createAttributeModifierId(int index) {

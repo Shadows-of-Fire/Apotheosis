@@ -13,8 +13,7 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.mixin.BaseSpawnerAccessor;
 import dev.shadowsoffire.apotheosis.util.PresetSpawnerStats;
 import dev.shadowsoffire.apothic_spawners.block.ApothSpawnerTile;
-import dev.shadowsoffire.placebo.codec.CodecProvider;
-import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
+import dev.shadowsoffire.placebo.dynreg.WeightedDynamicRegistry.ILuckyWeighted;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
@@ -33,7 +32,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted {
+public class RogueSpawner implements ILuckyWeighted {
 
     public static final Codec<RogueSpawner> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
@@ -94,11 +93,6 @@ public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted
                 }
             }
         }
-    }
-
-    @Override
-    public Codec<? extends RogueSpawner> getCodec() {
-        return CODEC;
     }
 
     public static Builder builder() {

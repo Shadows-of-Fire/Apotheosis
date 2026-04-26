@@ -10,7 +10,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 
 // TODO: Replace AffixType with a data-driven grouping system for more expressive LootRules.
 // Maybe tags, but that requires leaving DynamicRegistry and moving to a vanilla Data Registry.

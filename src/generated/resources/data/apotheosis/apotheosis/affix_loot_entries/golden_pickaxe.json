@@ -1,0 +1,18 @@
+{
+    "stack": {
+        "id": "minecraft:golden_pickaxe"
+    },
+    "weights": {
+        "haven": {
+            "weight": 5
+        },
+        "frontier": {
+            "quality": 2.0,
+            "weight": 10
+        },
+        "ascent": {
+            "quality": 0.25,
+            "weight": 5
+        }
+    }
+}

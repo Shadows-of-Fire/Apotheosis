@@ -10,7 +10,7 @@ import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRenderData;
 import dev.shadowsoffire.apotheosis.loot.RarityRenderData.ShadowData;
 import dev.shadowsoffire.apotheosis.particle.RarityParticleData;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.util.ARGB;

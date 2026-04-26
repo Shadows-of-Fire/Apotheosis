@@ -1,0 +1,114 @@
+{
+    "unique": true,
+    "weights": {
+        "quality": 0.1,
+        "weight": 100
+    },
+    "bonuses": [
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "minecraft:attack_knockback",
+            "gem_class": {
+                "key": "light_weapon",
+                "types": [
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
+                ]
+            },
+            "operation": "add_value",
+            "values": {
+                "cracked": 0.5,
+                "chipped": 1.0,
+                "flawed": 1.5,
+                "normal": 2.0,
+                "flawless": 3.0,
+                "perfect": 3.5
+            }
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "minecraft:armor_toughness",
+            "gem_class": {
+                "key": "core_armor",
+                "types": [
+                    "apotheosis:chestplate",
+                    "apotheosis:leggings"
+                ]
+            },
+            "operation": "add_value",
+            "values": {
+                "cracked": 0.5,
+                "chipped": 1.0,
+                "flawed": 2.0,
+                "normal": 3.0,
+                "flawless": 4.0,
+                "perfect": 6.0
+            }
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "minecraft:armor_toughness",
+            "gem_class": "apotheosis:shield",
+            "operation": "add_multiplied_base",
+            "values": {
+                "cracked": 0.05,
+                "chipped": 0.15,
+                "flawed": 0.225,
+                "normal": 0.3,
+                "flawless": 0.375,
+                "perfect": 0.5
+            }
+        },
+        {
+            "type": "apotheosis:multi_attribute",
+            "desc": "bonus.apotheosis:multi_attr.desc.and",
+            "gem_class": "apotheosis:boots",
+            "modifiers": [
+                {
+                    "attribute": "minecraft:max_health",
+                    "operation": "add_multiplied_total",
+                    "values": {
+                        "cracked": 0.05,
+                        "chipped": 0.075,
+                        "flawed": 0.125,
+                        "normal": 0.175,
+                        "flawless": 0.225,
+                        "perfect": 0.4
+                    }
+                },
+                {
+                    "attribute": "apothic_attributes:life_steal",
+                    "operation": "add_value",
+                    "values": {
+                        "cracked": -0.025,
+                        "chipped": -0.05,
+                        "flawed": -0.075,
+                        "normal": -0.1,
+                        "flawless": -0.125,
+                        "perfect": -0.2
+                    }
+                }
+            ]
+        },
+        {
+            "type": "apotheosis:mob_effect",
+            "gem_class": "apotheosis:bow",
+            "mob_effect": "apothic_attributes:bleeding",
+            "stack_on_reapply": true,
+            "stacking_limit": 4,
+            "target": "arrow_target",
+            "values": {
+                "flawless": {
+                    "duration": 160,
+                    "amplifier": 0,
+                    "cooldown": 40
+                },
+                "perfect": {
+                    "duration": 160,
+                    "amplifier": 1,
+                    "cooldown": 40
+                }
+            }
+        }
+    ]
+}

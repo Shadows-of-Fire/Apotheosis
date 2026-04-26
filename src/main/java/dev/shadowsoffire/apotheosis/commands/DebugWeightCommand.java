@@ -32,8 +32,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.tiers.Constraints.Constrained;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
-import dev.shadowsoffire.placebo.codec.CodecProvider;
-import dev.shadowsoffire.placebo.reload.DynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.DynamicRegistry;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -70,7 +69,7 @@ public class DebugWeightCommand {
         root.then(weights);
     }
 
-    public static <T extends CodecProvider<? super T> & Weighted> void dumpWeightsFor(GenContext ctx, DynamicRegistry<T> registry) {
+    public static <T extends Weighted> void dumpWeightsFor(GenContext ctx, DynamicRegistry<T> registry) {
         dumpWeightsFor(ctx, registry, Predicates.alwaysTrue());
     }
 
@@ -79,7 +78,7 @@ public class DebugWeightCommand {
      * <p>
      * If the registry objects are {@link Constrainted}, objects that fail their constraint check will be treated as having zero weight.
      */
-    public static <T extends CodecProvider<? super T> & Weighted> void dumpWeightsFor(GenContext ctx, DynamicRegistry<T> registry, Predicate<T> filter) {
+    public static <T extends Weighted> void dumpWeightsFor(GenContext ctx, DynamicRegistry<T> registry, Predicate<T> filter) {
         Collection<T> values = registry.getValues();
         List<ItemAndWeight<T>> list = new ArrayList<>(values.size());
 
@@ -87,7 +86,7 @@ public class DebugWeightCommand {
 
         float total = WeightedRandom.getTotalWeight(list, ItemAndWeight::weight);
 
-        Apotheosis.LOGGER.info("Starting dump of all {} weights...", registry.getPath());
+        Apotheosis.LOGGER.info("Starting dump of all {} weights...", registry.getId());
         Apotheosis.LOGGER.info("Current GenContext: {}", ctx);
         Comparator<ItemAndWeight<T>> comparator = Comparator.comparing(w -> -w.weight());
         comparator = comparator.thenComparing(Comparator.comparing(w -> registry.getKey(w.item()).toString()));
@@ -99,7 +98,7 @@ public class DebugWeightCommand {
         }
     }
 
-    public static <T extends CodecProvider<? super T> & Weighted> int dumpWeights(CommandContext<CommandSourceStack> c, DynamicRegistry<T> registry) throws CommandSyntaxException {
+    public static <T extends Weighted> int dumpWeights(CommandContext<CommandSourceStack> c, DynamicRegistry<T> registry) throws CommandSyntaxException {
         GenContext ctx = GenContext.forPlayer(c.getSource().getPlayerOrException());
         dumpWeightsFor(ctx, registry);
         c.getSource().sendSuccess(() -> Component.literal("Weight values have been dumped to the log file."), true);

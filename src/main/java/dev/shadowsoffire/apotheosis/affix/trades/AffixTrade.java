@@ -23,7 +23,7 @@ public final class AffixTrade {
 // import dev.shadowsoffire.apotheosis.loot.LootRarity;
 // import dev.shadowsoffire.apotheosis.tiers.GenContext;
 // import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-// import dev.shadowsoffire.placebo.reload.DynamicHolder;
+// import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 // import dev.shadowsoffire.placebo.systems.wanderer.WandererTrade;
 // import net.minecraft.util.RandomSource;
 // import net.minecraft.util.random.Weighted;

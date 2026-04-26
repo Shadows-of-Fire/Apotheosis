@@ -3,7 +3,7 @@ package dev.shadowsoffire.apotheosis.affix.salvaging;
 import java.util.function.Consumer;
 
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;

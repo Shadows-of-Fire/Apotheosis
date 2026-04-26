@@ -1,0 +1,110 @@
+{
+    "affix_data": {
+        "affix_chance": 0.35
+    },
+    "basic_data": {
+        "constraints": {
+            "dimensions": [
+                "minecraft:overworld"
+            ]
+        },
+        "mount": {
+            "entity": "minecraft:skeleton_horse",
+            "nbt": {
+                "NeoForgeData": {
+                    "apoth.burns_in_sun": 1
+                },
+                "Tame": 1,
+                "attributes": [
+                    {
+                        "base": 0.3,
+                        "id": "generic.movement_speed"
+                    },
+                    {
+                        "base": 0.5,
+                        "id": "generic.knockback_resistance"
+                    }
+                ]
+            }
+        },
+        "name": "Undead Knight",
+        "spawn_conditions": [
+            {
+                "type": "apotheosis:not",
+                "spawn_condition": {
+                    "type": "apotheosis:spawn_type",
+                    "spawn_types": [
+                        "spawn_item_use",
+                        "spawner",
+                        "mob_summoned"
+                    ]
+                }
+            },
+            {
+                "type": "apotheosis:surface_type",
+                "surface_type": "needs_surface"
+            }
+        ],
+        "valid_gear_sets": {
+            "haven": "#apotheosis:haven_ranged",
+            "frontier": "#apotheosis:frontier_ranged",
+            "ascent": "#apotheosis:ascent_ranged",
+            "summit": "#apotheosis:summit_ranged",
+            "pinnacle": "#apotheosis:pinnacle_ranged"
+        },
+        "weights": {
+            "frontier": {
+                "quality": 0.1,
+                "weight": 100
+            },
+            "ascent": {
+                "quality": 0.1,
+                "weight": 100
+            },
+            "summit": {
+                "quality": 0.1,
+                "weight": 100
+            },
+            "pinnacle": {
+                "quality": 0.1,
+                "weight": 100
+            }
+        }
+    },
+    "entities": [
+        "minecraft:skeleton",
+        "minecraft:stray",
+        "minecraft:bogged"
+    ],
+    "stats": {
+        "attribute_modifiers": [
+            {
+                "attribute": "minecraft:max_health",
+                "operation": "add_value",
+                "value": {
+                    "min": 10.0,
+                    "max": 30.0
+                }
+            },
+            {
+                "attribute": "apothic_attributes:arrow_damage",
+                "operation": "add_multiplied_total",
+                "value": {
+                    "min": 0.3,
+                    "max": 0.5
+                }
+            },
+            {
+                "attribute": "minecraft:knockback_resistance",
+                "operation": "add_value",
+                "value": 0.5
+            }
+        ],
+        "enchant_chance": 0.25,
+        "enchantment_levels": {
+            "primary": 20,
+            "secondary": 12
+        }
+    },
+    "success_chance": 0.01
+}

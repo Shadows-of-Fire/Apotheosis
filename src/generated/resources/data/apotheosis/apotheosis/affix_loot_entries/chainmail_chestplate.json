@@ -1,0 +1,14 @@
+{
+    "stack": {
+        "id": "minecraft:chainmail_chestplate"
+    },
+    "weights": {
+        "haven": {
+            "quality": 2.0,
+            "weight": 10
+        },
+        "frontier": {
+            "weight": 10
+        }
+    }
+}

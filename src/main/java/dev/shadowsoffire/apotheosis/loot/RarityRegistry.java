@@ -11,7 +11,8 @@ import com.google.common.collect.HashBiMap;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.tiers.TieredDynamicRegistry;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.RegistrySerializer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -27,7 +28,7 @@ public class RarityRegistry extends TieredDynamicRegistry<LootRarity> {
     protected List<LootRarity> sorted = new ArrayList<>();
 
     private RarityRegistry() {
-        super(Apotheosis.LOGGER, "rarities", true, false);
+        super(Apotheosis.LOGGER, Apotheosis.loc("rarities"), RegistrySerializer.synced(LootRarity.LOAD_CODEC));
     }
 
     /**
@@ -72,11 +73,6 @@ public class RarityRegistry extends TieredDynamicRegistry<LootRarity> {
         }
         this.sorted.sort(Comparator.comparing(LootRarity::sortIndex));
 
-    }
-
-    @Override
-    protected void registerBuiltinCodecs() {
-        this.registerDefaultCodec(Apotheosis.loc("rarity"), LootRarity.LOAD_CODEC);
     }
 
     @Override

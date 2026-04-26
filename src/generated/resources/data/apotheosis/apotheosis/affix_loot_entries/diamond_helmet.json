@@ -1,0 +1,19 @@
+{
+    "stack": {
+        "id": "minecraft:diamond_helmet"
+    },
+    "weights": {
+        "ascent": {
+            "quality": 1.25,
+            "weight": 25
+        },
+        "summit": {
+            "quality": 0.25,
+            "weight": 25
+        },
+        "pinnacle": {
+            "quality": 1.0,
+            "weight": 5
+        }
+    }
+}

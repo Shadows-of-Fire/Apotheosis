@@ -22,6 +22,7 @@ import dev.shadowsoffire.apotheosis.data.AugmentationProvider;
 import dev.shadowsoffire.apotheosis.data.EliteProvider;
 import dev.shadowsoffire.apotheosis.data.GLMProvider;
 import dev.shadowsoffire.apotheosis.data.GearSetProvider;
+import dev.shadowsoffire.apotheosis.data.GearSetTagsProvider;
 import dev.shadowsoffire.apotheosis.data.GemProvider;
 import dev.shadowsoffire.apotheosis.data.InvaderProvider;
 import dev.shadowsoffire.apotheosis.data.PurityWeightsProvider;
@@ -193,6 +194,7 @@ public class Apotheosis {
             .provider(GemProvider::new)
             .provider(GLMProvider::new)
             .provider(GearSetProvider::new)
+            .provider(GearSetTagsProvider::new)
             .provider(PurityWeightsProvider::new)
             .provider(InvaderProvider::new)
             .provider(EliteProvider::new)

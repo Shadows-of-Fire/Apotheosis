@@ -11,8 +11,6 @@ import javax.annotation.Nullable;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import dev.shadowsoffire.placebo.codec.CodecProvider;
-
 /**
  * A Rarity Rule Override is a map of {@link LootRarity} to a list of {@link LootRule} which will override the default rules for that rarity.
  * <p>
@@ -23,18 +21,13 @@ import dev.shadowsoffire.placebo.codec.CodecProvider;
  * <p>
  * The loot category is included in this object only for posterity.
  */
-public record RarityOverride(LootCategory category, Map<LootRarity, List<LootRule>> overrides) implements CodecProvider<RarityOverride> {
+public record RarityOverride(LootCategory category, Map<LootRarity, List<LootRule>> overrides) {
 
     public static final Codec<RarityOverride> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             LootCategory.CODEC.fieldOf("category").forGetter(RarityOverride::category),
             Codec.unboundedMap(LootRarity.CODEC, LootRule.CODEC.listOf()).fieldOf("overrides").forGetter(RarityOverride::overrides))
         .apply(inst, RarityOverride::new));
-
-    @Override
-    public Codec<? extends RarityOverride> getCodec() {
-        return CODEC;
-    }
 
     public boolean hasRules(LootRarity rarity) {
         return this.overrides.containsKey(rarity);

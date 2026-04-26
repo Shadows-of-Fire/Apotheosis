@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.socket.gem;
 
 import dev.shadowsoffire.apotheosis.Apoth.Components;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 
 /**
  * Superclass of both {@link GemInstance} and {@link UnsocketedGem}, used to pass either class to a single method.

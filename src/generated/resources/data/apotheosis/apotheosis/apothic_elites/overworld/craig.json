@@ -1,0 +1,90 @@
+{
+    "basic_data": {
+        "constraints": {
+            "dimensions": [
+                "minecraft:overworld"
+            ]
+        },
+        "name": {
+            "color": "rainbow",
+            "translate": "elite.apotheosis.craig"
+        },
+        "nbt": {
+            "HasLeftHorn": 1,
+            "HasRightHorn": 0,
+            "IsScreamingGoat": 1
+        },
+        "spawn_conditions": [
+            {
+                "type": "apotheosis:not",
+                "spawn_condition": {
+                    "type": "apotheosis:spawn_type",
+                    "spawn_types": [
+                        "spawn_item_use"
+                    ]
+                }
+            }
+        ],
+        "supporting_entities": [
+            {
+                "entity": "minecraft:sheep",
+                "nbt": {
+                    "CustomName": "jeb_"
+                }
+            }
+        ],
+        "valid_gear_sets": {
+            "pinnacle": "#apotheosis:pinnacle_melee"
+        },
+        "weights": {
+            "pinnacle": {
+                "quality": 0.1,
+                "weight": 100
+            }
+        }
+    },
+    "entities": "minecraft:goat",
+    "stats": {
+        "attribute_modifiers": [
+            {
+                "attribute": "minecraft:max_health",
+                "operation": "add_value",
+                "value": 4096.0
+            },
+            {
+                "attribute": "minecraft:attack_damage",
+                "operation": "add_multiplied_total",
+                "value": {
+                    "min": 4.0,
+                    "max": 10.0
+                }
+            },
+            {
+                "attribute": "minecraft:knockback_resistance",
+                "operation": "add_value",
+                "value": 1.0
+            },
+            {
+                "attribute": "minecraft:scale",
+                "operation": "add_value",
+                "value": 3.0
+            }
+        ],
+        "effects": [
+            {
+                "amplifier": 1.0,
+                "effect": "minecraft:fire_resistance"
+            },
+            {
+                "amplifier": 1.0,
+                "effect": "minecraft:glowing"
+            }
+        ],
+        "enchant_chance": 1.0,
+        "enchantment_levels": {
+            "primary": 100,
+            "secondary": 100
+        }
+    },
+    "success_chance": 0.005
+}

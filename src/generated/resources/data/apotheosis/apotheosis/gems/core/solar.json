@@ -1,0 +1,62 @@
+{
+    "weights": {
+        "quality": 0.1,
+        "weight": 100
+    },
+    "bonuses": [
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "apothic_attributes:fire_damage",
+            "gem_class": {
+                "key": "light_weapon",
+                "types": [
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
+                ]
+            },
+            "operation": "add_value",
+            "values": {
+                "cracked": 1.0,
+                "chipped": 1.5,
+                "flawed": 2.5,
+                "normal": 4.0,
+                "flawless": 6.0,
+                "perfect": 8.0
+            }
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "minecraft:gravity",
+            "gem_class": {
+                "key": "core_armor",
+                "types": [
+                    "apotheosis:chestplate",
+                    "apotheosis:leggings"
+                ]
+            },
+            "operation": "add_multiplied_total",
+            "values": {
+                "cracked": 0.1,
+                "chipped": 0.25,
+                "flawed": 0.45,
+                "normal": 0.65,
+                "flawless": 0.85,
+                "perfect": 1.04
+            }
+        },
+        {
+            "type": "apotheosis:attribute",
+            "attribute": "minecraft:step_height",
+            "gem_class": "apotheosis:boots",
+            "operation": "add_value",
+            "values": {
+                "cracked": 0.25,
+                "chipped": 0.5,
+                "flawed": 1.0,
+                "normal": 1.5,
+                "flawless": 2.0,
+                "perfect": 3.0
+            }
+        }
+    ]
+}

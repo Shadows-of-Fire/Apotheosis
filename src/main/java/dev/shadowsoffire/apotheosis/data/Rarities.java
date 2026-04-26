@@ -3,7 +3,7 @@ package dev.shadowsoffire.apotheosis.data;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 
 /**
  * Holds the identifiers for the default rarities for use in datagen.

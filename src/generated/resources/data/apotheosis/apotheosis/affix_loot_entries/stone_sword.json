@@ -1,0 +1,10 @@
+{
+    "stack": {
+        "id": "minecraft:stone_sword"
+    },
+    "weights": {
+        "haven": {
+            "weight": 25
+        }
+    }
+}

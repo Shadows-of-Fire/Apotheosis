@@ -22,8 +22,7 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
 import dev.shadowsoffire.gateways.gate.WaveEntity;
-import dev.shadowsoffire.placebo.codec.CodecProvider;
-import dev.shadowsoffire.placebo.reload.DynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.DynamicRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -83,7 +82,7 @@ public record TrueRandomInvaderWaveEntity(int count, Optional<String> desc) impl
      * This method assigns equal weight to any items that have a non-zero weight for the given tier, and are not locked out of that tier by {@link Constraints}.
      */
     @Nullable
-    public static <T extends CodecProvider<T> & Weighted & Constrained> T getTrulyRandomItem(DynamicRegistry<T> registry, GenContext ctx) {
+    public static <T extends Weighted & Constrained> T getTrulyRandomItem(DynamicRegistry<T> registry, GenContext ctx) {
         Collection<T> items = registry.getValues();
         List<T> list = new ArrayList<>(items.size());
         for (T item : items) {

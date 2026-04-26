@@ -24,17 +24,43 @@ import dev.shadowsoffire.apotheosis.affix.effect.TelepathicAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.ThunderstruckAffix;
 import dev.shadowsoffire.apotheosis.client.AdventureModuleClient;
 import dev.shadowsoffire.apotheosis.tiers.TieredDynamicRegistry;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.RegistrySerializer;
+import dev.shadowsoffire.placebo.dynreg.SubtypedSerializer;
 import net.neoforged.fml.loading.FMLEnvironment;
 
 public class AffixRegistry extends TieredDynamicRegistry<Affix> {
+
+    /**
+     * Public serializer so external mods can register additional Affix subtypes during their setup phase.
+     */
+    public static final SubtypedSerializer<Affix> SERIALIZER = RegistrySerializer.<Affix>subtypedSynced("affixes")
+        .register(Apotheosis.loc("attribute"), AttributeAffix.CODEC)
+        .register(Apotheosis.loc("multi_attr"), MultiAttrAffix.CODEC)
+        .register(Apotheosis.loc("mob_effect"), MobEffectAffix.CODEC)
+        .register(Apotheosis.loc("damage_reduction"), DamageReductionAffix.CODEC)
+        .register(Apotheosis.loc("catalyzing"), CatalyzingAffix.CODEC)
+        .register(Apotheosis.loc("cleaving"), CleavingAffix.CODEC)
+        .register(Apotheosis.loc("enlightened"), EnlightenedAffix.CODEC)
+        .register(Apotheosis.loc("executing"), ExecutingAffix.CODEC)
+        .register(Apotheosis.loc("festive"), FestiveAffix.CODEC)
+        .register(Apotheosis.loc("magical"), MagicalArrowAffix.CODEC)
+        .register(Apotheosis.loc("omnetic"), OmneticAffix.CODEC)
+        .register(Apotheosis.loc("psychic"), PsychicAffix.CODEC)
+        .register(Apotheosis.loc("radial"), RadialAffix.CODEC)
+        .register(Apotheosis.loc("retreating"), RetreatingAffix.CODEC)
+        .register(Apotheosis.loc("spectral"), SpectralShotAffix.CODEC)
+        .register(Apotheosis.loc("telepathic"), TelepathicAffix.CODEC)
+        .register(Apotheosis.loc("thunderstruck"), ThunderstruckAffix.CODEC)
+        .register(Apotheosis.loc("enchantment"), EnchantmentAffix.CODEC)
+        .register(Apotheosis.loc("stoneforming"), StoneformingAffix.CODEC);
 
     public static final AffixRegistry INSTANCE = new AffixRegistry();
 
     private Multimap<AffixType, DynamicHolder<Affix>> byType = ImmutableMultimap.of();
 
     public AffixRegistry() {
-        super(Apotheosis.LOGGER, "affixes", true, true);
+        super(Apotheosis.LOGGER, Apotheosis.loc("affixes"), SERIALIZER);
     }
 
     @Override
@@ -55,29 +81,6 @@ public class AffixRegistry extends TieredDynamicRegistry<Affix> {
         if (type == ReloadType.SERVER) {
             this.validateAffixExclusiveSets();
         }
-    }
-
-    @Override
-    protected void registerBuiltinCodecs() {
-        this.registerCodec(Apotheosis.loc("attribute"), AttributeAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("multi_attr"), MultiAttrAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("mob_effect"), MobEffectAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("damage_reduction"), DamageReductionAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("catalyzing"), CatalyzingAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("cleaving"), CleavingAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("enlightened"), EnlightenedAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("executing"), ExecutingAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("festive"), FestiveAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("magical"), MagicalArrowAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("omnetic"), OmneticAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("psychic"), PsychicAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("radial"), RadialAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("retreating"), RetreatingAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("spectral"), SpectralShotAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("telepathic"), TelepathicAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("thunderstruck"), ThunderstruckAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("enchantment"), EnchantmentAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("stoneforming"), StoneformingAffix.CODEC);
     }
 
     public Multimap<AffixType, DynamicHolder<Affix>> getTypeMap() {

@@ -1,0 +1,19 @@
+{
+    "stack": {
+        "id": "minecraft:iron_chestplate"
+    },
+    "weights": {
+        "frontier": {
+            "quality": 1.0,
+            "weight": 25
+        },
+        "ascent": {
+            "quality": 1.0,
+            "weight": 10
+        },
+        "summit": {
+            "quality": 0.25,
+            "weight": 10
+        }
+    }
+}

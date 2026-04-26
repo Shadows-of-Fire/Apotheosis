@@ -1,0 +1,158 @@
+{
+    "constraints": {
+        "dimensions": [
+            "minecraft:overworld"
+        ]
+    },
+    "min_purity": "flawed",
+    "unique": true,
+    "weights": {
+        "frontier": {
+            "quality": 2.0,
+            "weight": 50
+        },
+        "ascent": {
+            "quality": 2.0,
+            "weight": 50
+        },
+        "summit": {
+            "quality": 2.0,
+            "weight": 50
+        },
+        "pinnacle": {
+            "quality": 2.0,
+            "weight": 50
+        }
+    },
+    "bonuses": [
+        {
+            "type": "apotheosis:all_stats",
+            "attributes": [
+                "minecraft:max_health",
+                "minecraft:knockback_resistance",
+                "minecraft:movement_speed",
+                "minecraft:attack_damage",
+                "minecraft:attack_knockback",
+                "minecraft:attack_speed",
+                "minecraft:armor",
+                "minecraft:armor_toughness",
+                "minecraft:luck",
+                "minecraft:step_height",
+                "minecraft:block_interaction_range",
+                "minecraft:entity_interaction_range",
+                "apothic_attributes:armor_pierce",
+                "apothic_attributes:armor_shred",
+                "apothic_attributes:arrow_damage",
+                "apothic_attributes:arrow_velocity",
+                "apothic_attributes:cold_damage",
+                "apothic_attributes:crit_chance",
+                "apothic_attributes:crit_damage",
+                "apothic_attributes:current_hp_damage",
+                "apothic_attributes:dodge_chance",
+                "apothic_attributes:experience_gained",
+                "apothic_attributes:fire_damage",
+                "apothic_attributes:ghost_health",
+                "apothic_attributes:healing_received",
+                "apothic_attributes:life_steal",
+                "minecraft:block_break_speed",
+                "apothic_attributes:overheal",
+                "apothic_attributes:prot_pierce",
+                "apothic_attributes:prot_shred",
+                "neoforge:swim_speed"
+            ],
+            "gem_class": "apotheosis:helmet",
+            "operation": "add_multiplied_total",
+            "values": {
+                "flawed": 0.05,
+                "normal": 0.075,
+                "flawless": 0.1,
+                "perfect": 0.15
+            }
+        },
+        {
+            "type": "apotheosis:drop_transform",
+            "conditions": [
+                {
+                    "condition": "apotheosis:matches_block",
+                    "valid_blocks": "#c:ores/copper"
+                }
+            ],
+            "desc": "gem.apotheosis:overworld/royalty.bonus.pickaxe",
+            "gem_class": "apotheosis:breaker",
+            "inputs": "#c:raw_materials/copper",
+            "output": {
+                "id": "minecraft:raw_gold"
+            },
+            "values": {
+                "flawed": 0.15,
+                "normal": 0.2,
+                "flawless": 0.25,
+                "perfect": 0.4
+            }
+        },
+        {
+            "type": "apotheosis:multi_attribute",
+            "desc": "bonus.apotheosis:multi_attr.desc.and",
+            "gem_class": "apotheosis:bow",
+            "modifiers": [
+                {
+                    "attribute": "apothic_attributes:prot_shred",
+                    "operation": "add_value",
+                    "values": {
+                        "flawed": 0.25,
+                        "normal": 0.3,
+                        "flawless": 0.35,
+                        "perfect": 0.4
+                    }
+                },
+                {
+                    "attribute": "apothic_attributes:draw_speed",
+                    "operation": "add_multiplied_total",
+                    "values": {
+                        "flawed": -0.35,
+                        "normal": -0.45,
+                        "flawless": -0.55,
+                        "perfect": -0.65
+                    }
+                }
+            ]
+        },
+        {
+            "type": "apotheosis:multi_attribute",
+            "desc": "bonus.apotheosis:multi_attr.desc.and_but",
+            "gem_class": "apotheosis:shield",
+            "modifiers": [
+                {
+                    "attribute": "minecraft:armor",
+                    "operation": "add_multiplied_base",
+                    "values": {
+                        "flawed": 0.15,
+                        "normal": 0.25,
+                        "flawless": 0.35,
+                        "perfect": 0.5
+                    }
+                },
+                {
+                    "attribute": "minecraft:armor_toughness",
+                    "operation": "add_multiplied_base",
+                    "values": {
+                        "flawed": 0.075,
+                        "normal": 0.125,
+                        "flawless": 0.225,
+                        "perfect": 0.3
+                    }
+                },
+                {
+                    "attribute": "minecraft:movement_speed",
+                    "operation": "add_multiplied_total",
+                    "values": {
+                        "flawed": -0.25,
+                        "normal": -0.3,
+                        "flawless": -0.35,
+                        "perfect": -0.4
+                    }
+                }
+            ]
+        }
+    ]
+}

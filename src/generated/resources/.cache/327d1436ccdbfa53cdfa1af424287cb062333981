@@ -1,10 +1,10 @@
-// 26.1.2	2026-04-19T23:55:35.484445044	Rogue Spawners
-c4aabb8d82ae4b5c68273aee22913ae9663dcac4 data/apotheosis/rogue_spawners/brutal/husk.json
-bf57eb0915d3147d97e703bb00751208c128acd2 data/apotheosis/rogue_spawners/brutal/pillager.json
-6dc0a8d734a6a47fe496e63dd6d6649bfd0c76a5 data/apotheosis/rogue_spawners/brutal/rotating.json
-b87565bb5a2504749641fc64a08aed60698b6d55 data/apotheosis/rogue_spawners/brutal/zombie.json
-fdd60e6630f4750cee938004e66ac2a58bcbae49 data/apotheosis/rogue_spawners/swarm/baby_zombie.json
-85bc2f51f3175de12d41a6c6c68944ae35ce78ae data/apotheosis/rogue_spawners/swarm/cave_spider.json
-4cb9129cb3daed1adf2a3fd49c3f5bd4db31bcee data/apotheosis/rogue_spawners/swarm/fast_cave_spider.json
-9e43b3abd664635774fba455283f6557b2ee31ad data/apotheosis/rogue_spawners/swarm/silverfish.json
-01686a28b034d63d087c66678a84242e32713a4f data/apotheosis/rogue_spawners/swarm/spider.json
+// 26.1.2	2026-04-26T00:42:36.4938503	Rogue Spawners
+8f5779de81605e454d66e3fa4523d950b30511c2 data/apotheosis/apotheosis/rogue_spawners/brutal/husk.json
+185e6ad793d88b99cd3abbd3d82ad12a6c8f9d3f data/apotheosis/apotheosis/rogue_spawners/brutal/pillager.json
+5a7b0ef570c4cf85cca8df93eff46cf63e59538f data/apotheosis/apotheosis/rogue_spawners/brutal/rotating.json
+102fb024da438ec4f97498e32132cc436de7cfe3 data/apotheosis/apotheosis/rogue_spawners/brutal/zombie.json
+425fb72a9c2d79a4373a69591155685b330ef9b0 data/apotheosis/apotheosis/rogue_spawners/swarm/baby_zombie.json
+6fc794db6dd941a7d28e3c2a2c1b7df82ed6efe2 data/apotheosis/apotheosis/rogue_spawners/swarm/cave_spider.json
+336a4c7b9239585153c08b576bf19cb2689e49ef data/apotheosis/apotheosis/rogue_spawners/swarm/fast_cave_spider.json
+f91ef06ae9fbfdb23bafd336f52f41d6f417bd25 data/apotheosis/apotheosis/rogue_spawners/swarm/silverfish.json
+27802f4c844e8ddffb74d9299b039f697aeb77f4 data/apotheosis/apotheosis/rogue_spawners/swarm/spider.json

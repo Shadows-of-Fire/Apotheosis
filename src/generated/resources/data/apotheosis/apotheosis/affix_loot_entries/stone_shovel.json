@@ -1,0 +1,10 @@
+{
+    "stack": {
+        "id": "minecraft:stone_shovel"
+    },
+    "weights": {
+        "haven": {
+            "weight": 25
+        }
+    }
+}

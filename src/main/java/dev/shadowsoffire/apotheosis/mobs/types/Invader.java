@@ -36,10 +36,9 @@ import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import dev.shadowsoffire.apothic_enchanting.asm.EnchHooks;
-import dev.shadowsoffire.placebo.codec.CodecProvider;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 import dev.shadowsoffire.placebo.json.ChancedEffectInstance;
 import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.systems.gear.GearSet;
 import dev.shadowsoffire.placebo.systems.gear.GearSetRegistry;
 import io.netty.buffer.Unpooled;
@@ -88,7 +87,7 @@ import net.neoforged.neoforge.network.connection.ConnectionType;
  * @param size      The AABB of the spawned entity, accounting for any mounts or supports.
  * @param stats     The per-rarity stats for this invader.
  */
-public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, Map<LootRarity, BossStats> stats) implements CodecProvider<Invader>, Constrained, Weighted {
+public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, Map<LootRarity, BossStats> stats) implements Constrained, Weighted {
 
     /**
      * NBT key for a boolean value applied to entity persistent data to indicate a mob is an apoth boss.
@@ -274,11 +273,6 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         }
 
         this.basicData.appendBonusLoot(mob);
-    }
-
-    @Override
-    public Codec<? extends Invader> getCodec() {
-        return CODEC;
     }
 
     protected Identifier createAttributeModifierId(int index) {

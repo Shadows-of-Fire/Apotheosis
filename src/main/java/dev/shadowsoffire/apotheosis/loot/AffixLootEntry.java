@@ -9,7 +9,6 @@ import dev.shadowsoffire.apotheosis.tiers.Constraints;
 import dev.shadowsoffire.apotheosis.tiers.Constraints.Constrained;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
-import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -23,7 +22,7 @@ import net.minecraft.world.item.ItemStackTemplate;
  * @param stack       The item stack that will be generated.
  * @param rarities    The possible rarities this entry may generate with.
  */
-public record AffixLootEntry(TieredWeights weights, Constraints constraints, ItemStackTemplate stackTemplate, Set<LootRarity> rarities) implements CodecProvider<AffixLootEntry>, Weighted, Constrained {
+public record AffixLootEntry(TieredWeights weights, Constraints constraints, ItemStackTemplate stackTemplate, Set<LootRarity> rarities) implements Weighted, Constrained {
 
     public static final Codec<AffixLootEntry> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
@@ -39,11 +38,6 @@ public record AffixLootEntry(TieredWeights weights, Constraints constraints, Ite
 
     public LootCategory getType() {
         return LootCategory.forItem(this.stack());
-    }
-
-    @Override
-    public Codec<? extends AffixLootEntry> getCodec() {
-        return CODEC;
     }
 
     /**

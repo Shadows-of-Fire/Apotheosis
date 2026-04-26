@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.mobs.util;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -23,11 +22,11 @@ import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
 import dev.shadowsoffire.placebo.codec.CodecMap;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.tag.DynamicHolderSet;
 import dev.shadowsoffire.placebo.json.ChancedEffectInstance;
 import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.systems.gear.GearSet;
-import dev.shadowsoffire.placebo.systems.gear.GearSet.SetPredicate;
 import dev.shadowsoffire.placebo.systems.gear.GearSetRegistry;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -116,11 +115,11 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
     /**
      * Applies a gear set to the target entity.
      */
-    public static record GearSetModifier(List<SetPredicate> gearSets) implements EntityModifier {
+    public static record GearSetModifier(DynamicHolderSet<GearSet> gearSets) implements EntityModifier {
 
         public static Codec<GearSetModifier> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                SetPredicate.CODEC.listOf().fieldOf("valid_gear_sets").forGetter(GearSetModifier::gearSets))
+                DynamicHolderSet.codec(GearSetRegistry.INSTANCE).fieldOf("valid_gear_sets").forGetter(GearSetModifier::gearSets))
             .apply(inst, GearSetModifier::new));
 
         @Override

@@ -25,15 +25,17 @@ import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
+import dev.shadowsoffire.placebo.dynreg.tag.DynamicHolderSet;
+import dev.shadowsoffire.placebo.dynreg.tag.DynamicTagKey;
 import dev.shadowsoffire.placebo.json.NBTAdapter;
 import dev.shadowsoffire.placebo.systems.gear.GearSet;
-import dev.shadowsoffire.placebo.systems.gear.GearSet.SetPredicate;
 import dev.shadowsoffire.placebo.systems.gear.GearSetRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -50,8 +52,8 @@ import net.minecraft.world.phys.AABB;
  * @param name            The entity name. May be a lang key. Empty or null will cause no name to be set.
  *                        The special string "use_name_generation" will invoke {@link NameHelper}.
  * @param bonusLoot       Any bonus loot tables that will be dropped by the entity.
- * @param gearSets        Per-tier lists of {@link SetPredicates} controlling what gear sets may be applied.
- *                        Not providing an entry for a tier will not equip anything. Individual predicates are logically OR'd.
+ * @param gearSets        Per-tier holder sets controlling what gear sets may be applied.
+ *                        Not providing an entry for a tier will not equip anything.
  * @param nbt             Entity NBT to apply to the target mob.
  * @param mount           An optional {@link SupportingEntity} that the target entity will start riding.
  * @param support         A list of entities to spawn alongside the entity.
@@ -63,7 +65,7 @@ public record BasicBossData(
     Constraints constraints,
     Component name,
     BonusLootTables bonusLoot,
-    Map<WorldTier, List<SetPredicate>> gearSets,
+    Map<WorldTier, DynamicHolderSet<GearSet>> gearSets,
     Optional<CompoundTag> nbt,
     Optional<SupportingEntity> mount,
     List<SupportingEntity> support,
@@ -81,7 +83,7 @@ public record BasicBossData(
             Constraints.CODEC.optionalFieldOf("constraints", Constraints.EMPTY).forGetter(BasicBossData::constraints),
             ComponentSerialization.CODEC.optionalFieldOf("name", CommonComponents.EMPTY).forGetter(BasicBossData::name),
             BonusLootTables.CODEC.optionalFieldOf("bonus_loot", BonusLootTables.EMPTY).forGetter(BasicBossData::bonusLoot),
-            WorldTier.mapCodec(SetPredicate.CODEC.listOf()).codec().optionalFieldOf("valid_gear_sets", Map.of()).forGetter(BasicBossData::gearSets),
+            WorldTier.mapCodec(DynamicHolderSet.codec(GearSetRegistry.INSTANCE)).codec().optionalFieldOf("valid_gear_sets", Map.of()).forGetter(BasicBossData::gearSets),
             NBTAdapter.EITHER_CODEC.optionalFieldOf("nbt").forGetter(BasicBossData::nbt),
             SupportingEntity.CODEC.optionalFieldOf("mount").forGetter(BasicBossData::mount),
             SupportingEntity.CODEC.listOf().optionalFieldOf("supporting_entities", Collections.emptyList()).forGetter(BasicBossData::support),
@@ -96,7 +98,8 @@ public record BasicBossData(
         .apply(inst, (width, height) -> new AABB(0, 0, 0, width, height, width)));
 
     public boolean hasGearSets(WorldTier tier) {
-        return !this.gearSets.getOrDefault(tier, List.of()).isEmpty();
+        DynamicHolderSet<GearSet> set = this.gearSets.get(tier);
+        return set != null && set.size() > 0;
     }
 
     public boolean hasNbt() {
@@ -131,8 +134,8 @@ public record BasicBossData(
 
     @Nullable
     public GearSet applyGearSet(Mob mob, GenContext ctx) {
-        List<SetPredicate> sets = this.gearSets.get(ctx.tier());
-        if (sets == null || sets.isEmpty()) {
+        DynamicHolderSet<GearSet> sets = this.gearSets.get(ctx.tier());
+        if (sets == null || sets.size() == 0) {
             return null;
         }
 
@@ -172,7 +175,7 @@ public record BasicBossData(
         private Constraints constraints = Constraints.EMPTY;
         private Component name = CommonComponents.EMPTY;
         private BonusLootTables bonusLoot = BonusLootTables.EMPTY;
-        private Map<WorldTier, List<SetPredicate>> gearSets = new HashMap<>();
+        private Map<WorldTier, DynamicHolderSet<GearSet>> gearSets = new HashMap<>();
         private Optional<CompoundTag> nbt = Optional.empty();
         private Optional<SupportingEntity> mount = Optional.empty();
         private List<SupportingEntity> support = new ArrayList<>();
@@ -213,8 +216,20 @@ public record BasicBossData(
             return this;
         }
 
-        public Builder gearSets(WorldTier tier, String... sets) {
-            this.gearSets.put(tier, Arrays.stream(sets).map(SetPredicate::new).toList());
+        /**
+         * Binds the given tier to a tag of gear sets. The {@code tagId} is parsed as a {@link DynamicTagKey}; if the
+         * input lacks a namespace, {@code apotheosis} is used. A leading {@code #} is accepted and stripped.
+         */
+        public Builder gearSets(WorldTier tier, String tagId) {
+            String stripped = tagId.startsWith("#") ? tagId.substring(1) : tagId;
+            Identifier id = stripped.contains(":") ? Identifier.parse(stripped) : Apotheosis.loc(stripped);
+            DynamicTagKey<GearSet> tag = new DynamicTagKey<>(GearSetRegistry.INSTANCE.getId(), id);
+            this.gearSets.put(tier, GearSetRegistry.INSTANCE.getOrCreateTag(tag));
+            return this;
+        }
+
+        public Builder gearSets(WorldTier tier, DynamicHolderSet<GearSet> set) {
+            this.gearSets.put(tier, set);
             return this;
         }
 

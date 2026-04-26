@@ -1,8 +1,10 @@
 package dev.shadowsoffire.apotheosis.data;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -23,6 +25,7 @@ import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -38,6 +41,13 @@ import net.minecraft.world.level.block.entity.BannerPatterns;
 public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
 
     public static final int DEFAULT_WEIGHT = 100;
+
+    /**
+     * Tag id (without leading '#') → list of gear set entry ids that should be members of that tag. Populated by
+     * {@link GearSetProvider#addSet} via {@link GSBuilder#tag(String)} declarations and consumed by
+     * {@link GearSetTagsProvider} to emit the corresponding tag JSON files.
+     */
+    public static final Map<String, List<Identifier>> TAG_ASSOCIATIONS = new LinkedHashMap<>();
 
     public GearSetProvider(PackOutput output, CompletableFuture<Provider> registries) {
         super(output, registries, GearSetRegistry.INSTANCE);
@@ -367,7 +377,12 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
     }
 
     protected void addSet(String name, int weight, float quality, UnaryOperator<GSBuilder> config) {
-        this.add(Apotheosis.loc(name), config.apply(new GSBuilder(weight, quality)).build());
+        Identifier id = Apotheosis.loc(name);
+        GSBuilder builder = config.apply(new GSBuilder(weight, quality));
+        this.add(id, builder.build());
+        for (String tag : builder.tags()) {
+            TAG_ASSOCIATIONS.computeIfAbsent(tag, k -> new ArrayList<>()).add(id);
+        }
     }
 
     public static class GSBuilder {
@@ -440,13 +455,27 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             return this.offhand(template, weight, -1);
         }
 
+        /**
+         * Records that this gear set belongs to the given tag id. Tag membership is no longer baked into the
+         * {@link GearSet} record itself; tag JSON files must be generated separately via a
+         * {@link dev.shadowsoffire.placebo.util.data.DynamicTagProvider DynamicTagProvider}. This method is retained
+         * so that callers can declare intent inline; the resulting tags are exposed via {@link GSBuilder#tags()}.
+         */
         public GSBuilder tag(String tag) {
             this.tags.add(tag);
             return this;
         }
 
+        /**
+         * @return The unmodifiable set of tag ids declared via {@link #tag(String)}. Use this from a sibling tag
+         *         provider to emit the corresponding {@code data/<ns>/tags/apotheosis/gear_sets/<tag>.json} files.
+         */
+        public Set<String> tags() {
+            return java.util.Collections.unmodifiableSet(this.tags);
+        }
+
         public GearSet build() {
-            return new GearSet(this.weight, this.quality, this.mainhands, this.offhands, this.boots, this.leggings, this.chestplates, this.helmets, this.tags);
+            return new GearSet(this.weight, this.quality, this.mainhands, this.offhands, this.boots, this.leggings, this.chestplates, this.helmets);
         }
     }
 }

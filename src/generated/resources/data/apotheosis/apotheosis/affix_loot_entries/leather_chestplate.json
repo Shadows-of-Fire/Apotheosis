@@ -1,0 +1,10 @@
+{
+    "stack": {
+        "id": "minecraft:leather_chestplate"
+    },
+    "weights": {
+        "haven": {
+            "weight": 25
+        }
+    }
+}

@@ -13,9 +13,9 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.socket.gem.ExtraGemBonusRegistry.ExtraGemBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
-import dev.shadowsoffire.placebo.codec.CodecProvider;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import dev.shadowsoffire.placebo.reload.DynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicRegistry;
+import dev.shadowsoffire.placebo.dynreg.RegistrySerializer;
 
 /**
  * Registry of additional gem bonuses. This can be used to add conditional bonuses to gems, or modify
@@ -30,7 +30,7 @@ public class ExtraGemBonusRegistry extends DynamicRegistry<ExtraGemBonus> {
     protected Multimap<DynamicHolder<Gem>, ExtraGemBonus> extraBonuses = HashMultimap.create();
 
     public ExtraGemBonusRegistry() {
-        super(Apotheosis.LOGGER, "extra_gem_bonuses", true, false);
+        super(Apotheosis.LOGGER, Apotheosis.loc("extra_gem_bonuses"), RegistrySerializer.synced(ExtraGemBonus.CODEC));
     }
 
     @Override
@@ -51,23 +51,13 @@ public class ExtraGemBonusRegistry extends DynamicRegistry<ExtraGemBonus> {
         return INSTANCE.extraBonuses.get(gem);
     }
 
-    @Override
-    protected void registerBuiltinCodecs() {
-        this.registerDefaultCodec(Apotheosis.loc("extra_gem_bonus"), ExtraGemBonus.CODEC);
-    }
-
-    public static record ExtraGemBonus(DynamicHolder<Gem> gem, List<GemBonus> bonuses) implements CodecProvider<ExtraGemBonus> {
+    public static record ExtraGemBonus(DynamicHolder<Gem> gem, List<GemBonus> bonuses) {
 
         public static final Codec<ExtraGemBonus> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 GemRegistry.INSTANCE.holderCodec().fieldOf("gem").forGetter(ExtraGemBonus::gem),
                 GemBonus.CODEC.listOf().fieldOf("bonuses").forGetter(ExtraGemBonus::bonuses))
             .apply(inst, ExtraGemBonus::new));
-
-        @Override
-        public Codec<? extends ExtraGemBonus> getCodec() {
-            return CODEC;
-        }
 
         public static Builder builder(DynamicHolder<Gem> gem) {
             return new Builder(gem);

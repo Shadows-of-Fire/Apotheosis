@@ -10,7 +10,8 @@ import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.tiers.Constraints;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.TieredDynamicRegistry;
-import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
+import dev.shadowsoffire.placebo.dynreg.RegistrySerializer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
@@ -19,12 +20,7 @@ public class GemRegistry extends TieredDynamicRegistry<Gem> {
     public static final GemRegistry INSTANCE = new GemRegistry();
 
     public GemRegistry() {
-        super(Apotheosis.LOGGER, "gems", true, false);
-    }
-
-    @Override
-    protected void registerBuiltinCodecs() {
-        this.registerDefaultCodec(Apotheosis.loc("gem"), Gem.CODEC);
+        super(Apotheosis.LOGGER, Apotheosis.loc("gems"), RegistrySerializer.synced(Gem.CODEC));
     }
 
     @Override
