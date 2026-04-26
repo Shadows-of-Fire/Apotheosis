@@ -7,6 +7,7 @@ import dev.shadowsoffire.apotheosis.AdventureConfig.ConfigPayload;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
+import dev.shadowsoffire.apotheosis.compat.curios.CuriosCompat;
 // import dev.shadowsoffire.apotheosis.compat.curios.CuriosCompat; // Disabled: Curios has no 26.1 build yet
 import dev.shadowsoffire.apotheosis.compat.gateways.GatewaysCompat;
 // import dev.shadowsoffire.apotheosis.compat.twilight.AdventureTwilightCompat; // Disabled: Twilight Forest has no 26.1 build yet
@@ -124,7 +125,7 @@ public class Apotheosis {
         }
 
         if (ModList.get().isLoaded("curios")) {
-            // CuriosCompat.register(bus);
+            CuriosCompat.register(bus);
         }
     }
 
