@@ -64,9 +64,9 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
-import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.datagen.DataGenBuilder;
+import dev.shadowsoffire.placebo.datagen.RegisterFieldOrderingsEvent;
 import dev.shadowsoffire.placebo.network.PayloadHelper;
 import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
 import dev.shadowsoffire.placebo.util.RunnableReloader;
@@ -209,7 +209,11 @@ public class Apotheosis {
             .provider(AugmentationProvider::new)
             .provider(ApothGateProvider::new)
             .build(e);
+    }
 
+    @SubscribeEvent
+    public void fieldOrder(RegisterFieldOrderingsEvent e) {
+        // TODO: Convert this to use the new APIs properly. Requires figuring out how these should be scoped.
         Object2IntOpenHashMap<String> map = (Object2IntOpenHashMap<String>) DataProvider.FIXED_ORDER_FIELDS;
         // Keep enums in ordinal order
         for (Purity p : Purity.values()) {
@@ -236,8 +240,6 @@ public class Apotheosis {
 
         // Place gem bonus lists below everything else in the gem file.
         map.put("bonuses", 5);
-
-        Gateways.setupDatagenFieldOrder();
     }
 
     public static void loadConfig(boolean firstLoad) {

@@ -1,4 +1,4 @@
-// 26.1.2	2026-04-26T00:42:36.4917977	Affixes
+// 26.1.2	2026-04-27T04:02:26.3094378	Affixes
 51adbffbacf80ea9de7233993ab6f44b45aba3c6 data/apotheosis/apotheosis/affixes/armor/attribute/adamantine.json
 6df2683685c5934ff580ef1d3901e1c593c48fde data/apotheosis/apotheosis/affixes/armor/attribute/aquatic.json
 f8c148e30d5432eb036c04b3e67f9be60107fc94 data/apotheosis/apotheosis/affixes/armor/attribute/blessed.json
@@ -38,7 +38,7 @@ c98e940ba4ae213607a77a87eb96be7e5b2e6d74 data/apotheosis/apotheosis/affixes/brea
 3561dab6262cde825be5b30fa71a96c5161dcbbf data/apotheosis/apotheosis/affixes/breaker/enchantment/prosperous.json
 1d5bae23ff4d1777156b9120b9fdf6982a14fd8e data/apotheosis/apotheosis/affixes/breaker/mob_effect/spelunkers.json
 ee742fd95638327e7e9f040a7b2165c727883b48 data/apotheosis/apotheosis/affixes/breaker/mob_effect/swift.json
-57f788853fb8a651aa274029b05eda26b985b8d6 data/apotheosis/apotheosis/affixes/generic/attribute/lucky.json
+d14ed867de5929e935755918c4fe639efdbd558b data/apotheosis/apotheosis/affixes/generic/attribute/lucky.json
 e47bf9e6e7ba42b7c5df5a2d65acea68a1d60c3b data/apotheosis/apotheosis/affixes/generic/telepathic.json
 e492c69bd942be42e78999f95b872415f2b2b7fa data/apotheosis/apotheosis/affixes/melee/attribute/berserking.json
 d61afbc66fb95d364604b2bccc38b6030984986f data/apotheosis/apotheosis/affixes/melee/attribute/forceful.json

@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "curios"
+    }
+  ],
+  "entities": [
+    "#curios:player_like"
+  ],
+  "slots": [
+    "charm"
+  ]
+}

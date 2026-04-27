@@ -11,7 +11,8 @@
         "apotheosis:shield",
         "apotheosis:trident",
         "apotheosis:melee_weapon",
-        "apotheosis:shears"
+        "apotheosis:shears",
+        "apotheosis:charm"
     ],
     "definition": {
         "affix_type": "stat",
