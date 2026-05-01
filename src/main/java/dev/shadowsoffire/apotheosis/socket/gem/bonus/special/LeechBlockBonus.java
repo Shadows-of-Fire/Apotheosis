@@ -12,6 +12,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemView;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
+import dev.shadowsoffire.apothic_attributes.api.AbilityCooldowns;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringUtil;
@@ -36,11 +37,11 @@ public class LeechBlockBonus extends GemBonus {
     @Override
     public float onShieldBlock(GemInstance inst, LivingEntity entity, DamageSource source, float amount) {
         Data d = this.values.get(inst.purity());
-        if (amount <= 2 || Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, entity)) {
+        if (amount <= 2 || AbilityCooldowns.isOnCooldown(entity, makeUniqueId(inst), d.cooldown)) {
             return amount;
         }
         entity.heal(amount * d.healFactor);
-        Affix.startCooldown(makeUniqueId(inst), entity);
+        AbilityCooldowns.startCooldown(entity, makeUniqueId(inst));
         return amount;
     }
 

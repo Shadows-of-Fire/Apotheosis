@@ -17,6 +17,7 @@ import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.mixin.LivingEntityInvoker;
+import dev.shadowsoffire.apothic_attributes.api.AbilityCooldowns;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.core.BlockPos;
@@ -206,7 +207,7 @@ public class MobEffectAffix extends Affix {
         }
 
         int cooldown = this.getCooldown(rarity);
-        if (cooldown != 0 && isOnCooldown(this.id(), cooldown, target)) {
+        if (cooldown != 0 && AbilityCooldowns.isOnCooldown(target, this.id(), cooldown)) {
             return;
         }
         EffectData data = this.values.get(rarity);
@@ -224,7 +225,9 @@ public class MobEffectAffix extends Affix {
         else {
             target.addEffect(data.build(this.effect, level));
         }
-        startCooldown(this.id(), target);
+        if (cooldown != 0) {
+            AbilityCooldowns.startCooldown(target, this.id());
+        }
     }
 
     @Override

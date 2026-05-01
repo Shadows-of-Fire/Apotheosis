@@ -6,13 +6,13 @@ import java.util.Map;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.effect.MobEffectAffix.Target;
 import dev.shadowsoffire.apotheosis.mixin.LivingEntityInvoker;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemView;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
+import dev.shadowsoffire.apothic_attributes.api.AbilityCooldowns;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -164,7 +164,7 @@ public class MobEffectBonus extends GemBonus {
 
     private void applyEffect(GemInstance inst, LivingEntity target) {
         int cooldown = this.getCooldown(inst.purity());
-        if (cooldown != 0 && Affix.isOnCooldown(makeUniqueId(inst), cooldown, target)) {
+        if (cooldown != 0 && AbilityCooldowns.isOnCooldown(target, makeUniqueId(inst), cooldown)) {
             return;
         }
         EffectData data = this.values.get(inst.purity());
@@ -182,7 +182,9 @@ public class MobEffectBonus extends GemBonus {
         else {
             target.addEffect(data.build(this.effect));
         }
-        Affix.startCooldown(makeUniqueId(inst), target);
+        if (cooldown != 0) {
+            AbilityCooldowns.startCooldown(target, makeUniqueId(inst));
+        }
     }
 
     public static Component toComponent(MobEffectInstance inst, float tickRate) {

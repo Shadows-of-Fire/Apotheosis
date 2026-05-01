@@ -322,6 +322,9 @@
     "affix.apotheosis:armor/attribute/oxygenated": "Oxygenated",
     "affix.apotheosis:armor/attribute/oxygenated.suffix": "of the Diver",
 
+    "affix.apotheosis:armor/attribute/timekeeping": "Timekeeping",
+    "affix.apotheosis:armor/attribute/timekeeping.suffix": "of Chronos",
+
     "affix.apotheosis:melee/mob_effect/omniscient": "Omniscient",
     "affix.apotheosis:melee/mob_effect/omniscient.suffix": "of the Grand Sage",
 
