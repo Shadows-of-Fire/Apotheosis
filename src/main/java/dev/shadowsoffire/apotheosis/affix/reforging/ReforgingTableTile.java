@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.affix.reforging;
 
+import net.minecraft.world.Clearable;
 import org.jetbrains.annotations.Nullable;
 
 import dev.shadowsoffire.apotheosis.Apoth;
@@ -25,7 +26,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 
-public class ReforgingTableTile extends BlockEntity implements TickingBlockEntity {
+public class ReforgingTableTile extends BlockEntity implements TickingBlockEntity, Clearable {
 
     public int time = 0;
     public boolean step1 = true;
@@ -112,4 +113,10 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
         return this.inv;
     }
 
+    @Override
+    public void clearContent() {
+        for (int i = 0; i < this.inv.getSlots(); i++) {
+            this.inv.setStackInSlot(i, ItemStack.EMPTY);
+        }
+    }
 }

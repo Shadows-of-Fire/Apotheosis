@@ -9,12 +9,13 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 
-public class SalvagingTableTile extends BlockEntity {
+public class SalvagingTableTile extends BlockEntity implements Clearable {
 
     public SalvagingTableTile(BlockPos pPos, BlockState pBlockState) {
         super(Apoth.Tiles.SALVAGING_TABLE, pPos, pBlockState);
@@ -42,6 +43,13 @@ public class SalvagingTableTile extends BlockEntity {
             this.output.deserializeNBT(regs, tag.getCompound("output"));
         }
         super.loadAdditional(tag, regs);
+    }
+
+    @Override
+    public void clearContent() {
+        for (int i = 0; i < this.output.getSlots(); i++) {
+            this.output.setStackInSlot(i, ItemStack.EMPTY);
+        }
     }
 
     protected class SalvagingItemHandler implements IItemHandler {
