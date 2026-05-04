@@ -31,6 +31,7 @@ import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
 import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.apothic_enchanting.table.EnchantingStatRegistry.Stats;
+import dev.shadowsoffire.apothic_spawners.ApothicSpawners;
 import dev.shadowsoffire.gateways.GatewayObjects;
 import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.gateways.gate.GatewayRegistry;
@@ -58,9 +59,19 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import net.neoforged.neoforge.common.conditions.NeverCondition;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
 public class ApothRecipeProvider extends LegacyRecipeProvider {
+
+    /**
+     * Names of every modifier recipe shipped by Apothic Spawners, used to override and disable
+     * those recipes via {@link NeverCondition} so Apotheosis can supply world-tier-gated equivalents.
+     */
+    private static final List<String> AS_MODIFIER_NAMES = List.of(
+        "min_delay", "max_delay", "spawn_count", "max_nearby", "player_range", "spawn_range",
+        "initial_health", "ignore_players", "ignore_conditions", "redstone_control",
+        "ignore_light", "no_ai", "silent", "youthful", "burning", "echoing");
 
     public ApothRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, Apotheosis.MODID);
@@ -132,24 +143,30 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         this.addReforging("epic", 2, 4, 30, Blocks.REFORGING_TABLE);
         this.addReforging("mythic", 3, 5, 50, Blocks.REFORGING_TABLE);
 
-        this.addShaped(Blocks.AUGMENTING_TABLE, 3, 3, null, Items.NETHER_STAR, null, Items.MYTHIC_MATERIAL, Items.ENCHANTING_TABLE, Items.MYTHIC_MATERIAL, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE);
+        this.addShaped(Blocks.AUGMENTING_TABLE, 3, 3, null, Items.NETHER_STAR, null, Items.MYTHIC_MATERIAL, Items.ENCHANTING_TABLE, Items.MYTHIC_MATERIAL, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE,
+            Items.POLISHED_BLACKSTONE);
         this.addShaped(Blocks.GEM_CUTTING_TABLE, 3, 3, Items.SMOOTH_STONE, Items.SHEARS, Items.SMOOTH_STONE, ItemTags.PLANKS, Items.GEM_DUST, ItemTags.PLANKS, ItemTags.PLANKS, null, ItemTags.PLANKS);
         this.addShaped(new ItemStackTemplate(Items.GEM_FUSED_SLATE, 8), 3, 3, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.GEM_DUST, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE);
         this.addShaped(Blocks.REFORGING_TABLE, 3, 3, null, Tags.Items.INGOTS_NETHERITE, null, Items.EPIC_MATERIAL, Items.SIMPLE_REFORGING_TABLE, Items.EPIC_MATERIAL, Items.NETHER_BRICKS, Items.NETHER_BRICKS, Items.NETHER_BRICKS);
-        this.addShaped(Blocks.SALVAGING_TABLE, 3, 3, Tags.Items.INGOTS_COPPER, Tags.Items.INGOTS_COPPER, Tags.Items.INGOTS_COPPER, Items.IRON_PICKAXE, Items.SMITHING_TABLE, Items.IRON_AXE, Items.GEM_DUST, Items.LAVA_BUCKET, Items.GEM_DUST);
+        this.addShaped(Blocks.SALVAGING_TABLE, 3, 3, Tags.Items.INGOTS_COPPER, Tags.Items.INGOTS_COPPER, Tags.Items.INGOTS_COPPER, Items.IRON_PICKAXE, Items.SMITHING_TABLE, Items.IRON_AXE, Items.GEM_DUST, Items.LAVA_BUCKET,
+            Items.GEM_DUST);
         this.addShaped(Blocks.SIMPLE_REFORGING_TABLE, 3, 3, null, Tags.Items.INGOTS_IRON, null, Items.GEM_DUST, Items.ENCHANTING_TABLE, Items.GEM_DUST, Items.SMOOTH_STONE, Items.SMOOTH_STONE, Items.SMOOTH_STONE);
 
         this.addShaped(Blocks.GEM_CASE, 3, 3, Tags.Items.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS, Items.BASALT, Items.GEM_CUTTING_TABLE, Items.BASALT, Items.BASALT, Items.ENDER_CHEST, Items.BASALT);
 
-        this.addShaped(new ItemStackTemplate(Items.SIGIL_OF_ENHANCEMENT, 4), 3, 3, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.MYTHIC_MATERIAL, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
+        this.addShaped(new ItemStackTemplate(Items.SIGIL_OF_ENHANCEMENT, 4), 3, 3, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.MYTHIC_MATERIAL, Items.GEM_FUSED_SLATE, Items.GEM_DUST,
+            Items.GEM_FUSED_SLATE,
             Items.GEM_DUST);
-        this.addShaped(new ItemStackTemplate(Items.SIGIL_OF_REBIRTH, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE,
+        this.addShaped(new ItemStackTemplate(Items.SIGIL_OF_REBIRTH, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
+            Items.GEM_FUSED_SLATE,
             Items.GEM_FUSED_SLATE);
-        this.addShaped(new ItemStackTemplate(Items.SIGIL_OF_SOCKETING, 3), 3, 3, Items.GEM_DUST, Items.GUNPOWDER, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.AMETHYST_SHARD,
+        this.addShaped(new ItemStackTemplate(Items.SIGIL_OF_SOCKETING, 3), 3, 3, Items.GEM_DUST, Items.GUNPOWDER, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST,
+            Items.AMETHYST_SHARD,
             Items.GEM_DUST);
         this.addShaped(new ItemStackTemplate(Items.SIGIL_OF_UNNAMING, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.FLINT, Items.FLINT, Items.FLINT, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE,
             Items.GEM_FUSED_SLATE);
-        this.addShaped(new ItemStackTemplate(Items.SIGIL_OF_WITHDRAWAL, 4), 3, 3, Items.GEM_FUSED_SLATE, Items.BLAZE_ROD, Items.GEM_FUSED_SLATE, Tags.Items.ENDER_PEARLS, Items.LAVA_BUCKET, Tags.Items.ENDER_PEARLS, Items.GEM_FUSED_SLATE,
+        this.addShaped(new ItemStackTemplate(Items.SIGIL_OF_WITHDRAWAL, 4), 3, 3, Items.GEM_FUSED_SLATE, Items.BLAZE_ROD, Items.GEM_FUSED_SLATE, Tags.Items.ENDER_PEARLS, Items.LAVA_BUCKET, Tags.Items.ENDER_PEARLS,
+            Items.GEM_FUSED_SLATE,
             Items.GEM_DUST, Items.GEM_FUSED_SLATE);
 
         List<Holder<Item>> rarityMaterials = List.of(Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL);
@@ -164,7 +181,8 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             this.addPurityUpgrade(purity, 1 + i * 2, materials, zeroCost);
         }
 
-        out.accept(key(Apotheosis.loc("potion_charm")), new PotionCharmRecipe(new net.minecraft.world.item.crafting.Recipe.CommonInfo(true), new net.minecraft.world.item.crafting.CraftingRecipe.CraftingBookInfo(CraftingBookCategory.MISC, ""), this.charmPattern()), null);
+        out.accept(key(Apotheosis.loc("potion_charm")),
+            new PotionCharmRecipe(new net.minecraft.world.item.crafting.Recipe.CommonInfo(true), new net.minecraft.world.item.crafting.CraftingRecipe.CraftingBookInfo(CraftingBookCategory.MISC, ""), this.charmPattern()), null);
 
         out.accept(key(Apotheosis.loc("infusion/potion_charm")), new CharmInfusionRecipe(
             new Stats(15F, 100F, 8.5F, 32.5F, 0),
@@ -231,6 +249,23 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
 
         this.recipeOutput = _out;
+
+        this.disableSpawnerModifierRecipes();
+    }
+
+    /**
+     * Overrides every Apothic Spawners modifier recipe with a {@link NeverCondition}-wrapped placeholder so the
+     * modifier system can be replaced by Apotheosis' world-tier-gated equivalents without touching Apothic Spawners.
+     */
+    private void disableSpawnerModifierRecipes() {
+        RecipeOutput disabled = this.recipeOutput.withConditions(NeverCondition.INSTANCE);
+        for (String name : AS_MODIFIER_NAMES) {
+            Identifier forward = Identifier.fromNamespaceAndPath(ApothicSpawners.MODID, "spawner_modifiers/" + name);
+            Identifier inverse = Identifier.fromNamespaceAndPath(ApothicSpawners.MODID, "spawner_modifiers/_inverse/" + name);
+            // Lazily use the MaliceRecipe because it has no args and the underlying recipe type is irrelevant.
+            disabled.accept(key(forward), new MaliceRecipe(), null);
+            disabled.accept(key(inverse), new MaliceRecipe(), null);
+        }
     }
 
     private ShapedRecipePattern charmPattern() {
