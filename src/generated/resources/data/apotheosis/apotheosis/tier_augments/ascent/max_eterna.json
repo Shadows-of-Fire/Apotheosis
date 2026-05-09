@@ -3,7 +3,7 @@
     "modifier": {
         "attribute": "apothic_enchanting:max_eterna",
         "operation": "add_value",
-        "value": -30.0
+        "value": -40.0
     },
     "modifier_id": "apotheosis:ascent/max_eterna",
     "sort_index": 90,

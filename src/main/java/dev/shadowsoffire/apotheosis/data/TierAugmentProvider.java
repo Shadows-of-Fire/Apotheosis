@@ -45,7 +45,7 @@ public class TierAugmentProvider extends DynamicRegistryProvider<TierAugment> {
         this.addAttribute("frontier/luck", WorldTier.FRONTIER, Target.PLAYERS, 200, Attributes.LUCK, Operation.ADD_MULTIPLIED_TOTAL, 0.20F);
 
         // Ascent
-        this.addAttribute("ascent/max_eterna", WorldTier.ASCENT, Target.PLAYERS, 90, Ench.Attributes.MAX_ETERNA, Operation.ADD_VALUE, -30);
+        this.addAttribute("ascent/max_eterna", WorldTier.ASCENT, Target.PLAYERS, 90, Ench.Attributes.MAX_ETERNA, Operation.ADD_VALUE, -40);
         this.addAttribute("ascent/armor", WorldTier.ASCENT, Target.MONSTERS, 100, Attributes.ARMOR, Operation.ADD_VALUE, 8);
         this.addAttribute("ascent/armor_pierce", WorldTier.ASCENT, Target.MONSTERS, 200, ALObjects.Attributes.ARMOR_PIERCE, Operation.ADD_VALUE, 5);
 
@@ -53,7 +53,7 @@ public class TierAugmentProvider extends DynamicRegistryProvider<TierAugment> {
         this.addAttribute("ascent/luck", WorldTier.ASCENT, Target.PLAYERS, 200, Attributes.LUCK, Operation.ADD_MULTIPLIED_TOTAL, 0.30F);
 
         // Summit
-        this.addAttribute("summit/max_eterna", WorldTier.SUMMIT, Target.PLAYERS, 90, Ench.Attributes.MAX_ETERNA, Operation.ADD_VALUE, -15);
+        this.addAttribute("summit/max_eterna", WorldTier.SUMMIT, Target.PLAYERS, 90, Ench.Attributes.MAX_ETERNA, Operation.ADD_VALUE, -25);
         this.addAttribute("summit/armor", WorldTier.SUMMIT, Target.MONSTERS, 100, Attributes.ARMOR, Operation.ADD_VALUE, 12);
         this.addAttribute("summit/armor_toughness", WorldTier.SUMMIT, Target.MONSTERS, 150, Attributes.ARMOR_TOUGHNESS, Operation.ADD_VALUE, 10);
         this.addAttribute("summit/armor_pierce", WorldTier.SUMMIT, Target.MONSTERS, 200, ALObjects.Attributes.ARMOR_PIERCE, Operation.ADD_VALUE, 15F);
