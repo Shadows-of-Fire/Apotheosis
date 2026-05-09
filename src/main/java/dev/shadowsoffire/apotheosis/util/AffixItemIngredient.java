@@ -12,12 +12,15 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 public class AffixItemIngredient implements ICustomIngredient {
 
@@ -44,7 +47,10 @@ public class AffixItemIngredient implements ICustomIngredient {
     @Override
     @SuppressWarnings("unchecked")
     public Stream<Holder<Item>> items() {
-        return (Stream<Holder<Item>>) (Object) BuiltInRegistries.ITEM.listElements().filter(i -> i.value() != Items.AIR);
+        // We need to filter out enabled features, otherwise the client will ignore our entire ingredient and then things like smithing tables won't work.
+        var server = ServerLifecycleHooks.getCurrentServer();
+        FeatureFlagSet flags = server == null ? FeatureFlags.VANILLA_SET : server.getWorldData().enabledFeatures();
+        return (Stream<Holder<Item>>) (Object) BuiltInRegistries.ITEM.listElements().filter(i -> i.value().isEnabled(flags) && i.value() != Items.AIR);
     }
 
     @Override
