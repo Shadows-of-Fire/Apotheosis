@@ -1,0 +1,32 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "C": "minecraft:chorus_fruit",
+        "I": "apotheosis:infused_spawner_rune",
+        "P": {
+            "neoforge:ingredient_type": "neoforge:components",
+            "components": {
+                "minecraft:potion_contents": {
+                    "potion": "apothic_attributes:fatigue"
+                }
+            },
+            "items": "minecraft:potion"
+        }
+    },
+    "pattern": [
+        " C ",
+        "CIC",
+        " P "
+    ],
+    "result": {
+        "id": "apotheosis:no_ai_spawner_rune"
+    }
+}

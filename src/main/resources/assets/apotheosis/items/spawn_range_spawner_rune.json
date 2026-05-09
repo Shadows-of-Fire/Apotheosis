@@ -1,0 +1,6 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "apotheosis:item/spawn_range_spawner_rune"
+    }
+}

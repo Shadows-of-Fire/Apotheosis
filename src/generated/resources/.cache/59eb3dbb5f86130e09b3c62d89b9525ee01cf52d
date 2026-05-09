@@ -1,4 +1,4 @@
-// 26.1.2	2026-04-19T23:55:35.467169557	Loot Tables
+// 26.1.2	2026-05-09T04:38:39.8557756	Loot Tables
 6e72c67c502d8671fc08cf2e1d05ac59ca9bf011 data/apotheosis/loot_table/blocks/augmenting_table.json
 62b77b4fda5aab28513167a1f8b69e9e39018cc3 data/apotheosis/loot_table/blocks/ender_gem_case.json
 bd22f224fc46cb4ff109bc9026c184ae8a97950e data/apotheosis/loot_table/blocks/gem_case.json
@@ -13,3 +13,4 @@ fa1bfb30342a8308f8dd20fd337e7aadba77da23 data/apotheosis/loot_table/chests/tome_
 847d588cc81e65277cf812b7e6f998246a622b64 data/apotheosis/loot_table/entity/boss_drops.json
 a068b76af1bcd1d706dccca2174362f2219389f1 data/apotheosis/loot_table/entity/rare_boss_drops.json
 dbbc2c36f8b58d8375a86d5f1a092fe350f0af96 data/apotheosis/loot_table/entity/treasure_goblin.json
+54b8e789c5b3a507ba90bcf73b5b4434e9e4432b data/apothic_spawners/loot_table/gameplay/unstable_spawner.json

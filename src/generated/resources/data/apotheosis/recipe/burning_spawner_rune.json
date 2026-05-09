@@ -1,0 +1,23 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "C": "minecraft:campfire",
+        "S": "apotheosis:spawner_rune"
+    },
+    "pattern": [
+        " C ",
+        "CSC",
+        " C "
+    ],
+    "result": {
+        "id": "apotheosis:burning_spawner_rune"
+    }
+}

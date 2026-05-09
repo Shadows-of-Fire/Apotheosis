@@ -1,0 +1,6 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "apotheosis:item/redstone_control_spawner_rune"
+    }
+}

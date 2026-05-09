@@ -54,7 +54,7 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="apothic_spawners"
     type="required"
-    versionRange="[2.0.0beta,)"
+    versionRange="[2.0.0beta3,)"
     ordering="AFTER"
     side="BOTH"
 

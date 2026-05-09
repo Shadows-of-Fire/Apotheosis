@@ -1,0 +1,23 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "S": "apotheosis:spawner_rune",
+        "T": "minecraft:turtle_egg"
+    },
+    "pattern": [
+        " T ",
+        "TST",
+        " T "
+    ],
+    "result": {
+        "id": "apotheosis:youthful_spawner_rune"
+    }
+}

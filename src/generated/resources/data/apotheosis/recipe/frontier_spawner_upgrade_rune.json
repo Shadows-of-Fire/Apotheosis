@@ -1,0 +1,25 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "C": "minecraft:clock",
+        "F": "minecraft:flint",
+        "S": "apotheosis:spawner_rune",
+        "U": "apotheosis:uncommon_material"
+    },
+    "pattern": [
+        "UCU",
+        "FSF",
+        "UCU"
+    ],
+    "result": {
+        "id": "apotheosis:frontier_spawner_upgrade_rune"
+    }
+}

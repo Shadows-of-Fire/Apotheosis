@@ -11,13 +11,25 @@ import net.minecraft.world.item.component.TooltipDisplay;
 
 public class TooltipItem extends Item {
 
-    public TooltipItem(Properties pProperties) {
-        super(pProperties);
+    public TooltipItem(Properties properties) {
+        super(properties);
     }
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.accept(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
+    }
+
+    public static class GlowyTooltipItem extends TooltipItem {
+
+        public GlowyTooltipItem(Properties properties) {
+            super(properties);
+        }
+
+        @Override
+        public boolean isFoil(ItemStack itemStack) {
+            return true;
+        }
     }
 
 }

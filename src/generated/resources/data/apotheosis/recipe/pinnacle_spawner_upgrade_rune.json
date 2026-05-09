@@ -1,0 +1,32 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "E": "minecraft:nether_star",
+        "G": {
+            "neoforge:ingredient_type": "apotheosis:gem",
+            "gems": [
+                "apotheosis:the_end/endersurge"
+            ],
+            "purity": "perfect"
+        },
+        "I": "apothic_enchanting:infused_breath",
+        "M": "apotheosis:mythic_material",
+        "N": "apotheosis:infused_spawner_rune"
+    },
+    "pattern": [
+        "MGM",
+        "INI",
+        "MEM"
+    ],
+    "result": {
+        "id": "apotheosis:pinnacle_spawner_upgrade_rune"
+    }
+}

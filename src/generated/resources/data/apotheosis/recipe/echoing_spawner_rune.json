@@ -1,0 +1,23 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "E": "minecraft:echo_shard",
+        "I": "apotheosis:infused_spawner_rune"
+    },
+    "pattern": [
+        "EEE",
+        "EIE",
+        "EEE"
+    ],
+    "result": {
+        "id": "apotheosis:echoing_spawner_rune"
+    }
+}

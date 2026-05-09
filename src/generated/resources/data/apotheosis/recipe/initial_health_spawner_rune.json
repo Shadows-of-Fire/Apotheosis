@@ -1,0 +1,23 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "P": "minecraft:pointed_dripstone",
+        "S": "apotheosis:spawner_rune"
+    },
+    "pattern": [
+        " P ",
+        "PSP",
+        " P "
+    ],
+    "result": {
+        "id": "apotheosis:initial_health_spawner_rune"
+    }
+}
