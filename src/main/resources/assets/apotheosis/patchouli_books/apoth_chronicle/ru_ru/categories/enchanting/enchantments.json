@@ -1,7 +1,0 @@
-{
-    "name": "Новые Зачарования",
-    "description": "Каждая запись в этом разделе описывает новое заклинание, добавленное этим модулем.$(p)Зачарования, добавленные другими модулями, здесь рассматриваться не будут.",
-    "icon": "minecraft:enchanted_book",
-	"flag": "apotheosis:enchanting",
-	"parent": "apotheosis:enchanting/enchanting"
-}
