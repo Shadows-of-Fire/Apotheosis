@@ -305,7 +305,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
 
         Component bossOwnerName = Component.translatable(NameHelper.ownershipFormat, bossName);
         Component name = AffixHelper.getName(stack);
-        if (name.getContents() instanceof TranslatableContents tc) {
+        if (name != null && name.getContents() instanceof TranslatableContents tc) {
             String oldKey = tc.getKey();
             String newKey = "misc.apotheosis.affix_name.two".equals(oldKey) ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.four";
             Object[] newArgs = new Object[tc.getArgs().length + 1];
