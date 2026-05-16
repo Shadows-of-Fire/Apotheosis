@@ -1,0 +1,31 @@
+{
+    "name": "宝石柜",
+    "icon": "apotheosis:gem_case",
+    "category": "apotheosis:adventure/gems",
+	"flag": "apotheosis:adventure",
+	"sortnum": 6,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_case",
+			"text": "$(9)宝石柜$()是用于存放$(l:apotheosis:adventure/gems/gems)宝石$()的存储设备。$(p)每种类型与纯度的宝石最多可存放三万两千颗，还可升级为容量更大的版本。"
+		},
+        {
+            "title": "过滤器",
+            "type": "patchouli:text",
+            "text": "宝石柜拥有两个过滤器：名称过滤器与物品过滤器。$(p)名称过滤器可按宝石名称进行搜索，而物品过滤器则可搜索适用于指定物品的宝石。"
+        },
+		{
+			"title": "宝石切割",
+            "type": "patchouli:text",
+            "text": "宝石柜还拥有六个辅助槽位，用于容纳升级材料。$(p)若材料与宝石数量足够，可按照纯度升级配方，在宝石柜内直接升级宝石。$(p)这一功能实际上完全淘汰了$(l:apotheosis:adventure/gems/gem_cutting)宝石切割台$()。"
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:ender_gem_case",
+            "title": "至尊宝石柜",
+            "link_recipe": true,
+            "text": "$(9)法贝热公司宝石柜$()拥有二十亿的$(6)存储容量$()。$(p)它无法直接合成，必须通过$(l:apotheosis:enchanting/table/infusion)灌注附魔$()来制作。"
+        }
+	]
+}

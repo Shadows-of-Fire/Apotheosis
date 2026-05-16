@@ -609,6 +609,11 @@
     "block.apotheosis.reforging_table.desc2": "最高稀有度：%s",
     "block.apotheosis.augmenting_table": "强化台",
     "block.apotheosis.augmenting_table.desc": "使用强化符石来强化单个词缀",
+    "block.apotheosis.gem_case": "宝石柜",
+    "tooltip.apotheosis.gem_case.capacity": "容量：%s宝石",
+    "tooltip.apotheosis.gem_case.unique_gems": "装有：%s种不同宝石",
+    "tooltip.apotheosis.gem_case.none_owned": "尚未拥有",
+    "block.apotheosis.ender_gem_case": "法贝热公司宝石柜",
 
     "button.apotheosis.salvage": "回收物品",
     "button.apotheosis.no_salvage": "没有放入物品",
@@ -622,6 +627,11 @@
     "button.apotheosis.augmenting.no_alternatives": "没有替代词缀",
     "button.apotheosis.augmenting.upgrade.cost": "花费：%s个%s",
     "button.apotheosis.augmenting.upgrade.exp_cost": "经验花费：%s级",
+    "button.apotheosis.gem_case.upgrade": "将2个%s宝石升级为1个%s宝石",
+    "button.apotheosis.gem_case.upgrade_no_gems": "宝石不足",
+    "button.apotheosis.gem_case.upgrade_no_materials": "材料不足",
+    "button.apotheosis.gem_case.upgrade_cost": "花费：%s个%s和%s个%s",
+    "button.apotheosis.gem_case.upgrade_all": "将升级尽可能多的宝石！",
 
     "menu.apotheosis.gem_cutting": "宝石切割",
     "container.apotheosis.salvage": "回收",
@@ -926,6 +936,11 @@
     "stat.apotheosis.world_tiers_activated": "世界层级更改次数",
     "apotheosis.subtitle.reforge": "重铸台：重铸",
     "apotheosis.subtitle.malice": "恶意符石：施加恶意",
+
+    "apotheosis.subtitle.invader_uncommon": "罕见神化入侵者：生成",
+    "apotheosis.subtitle.invader_rare": "稀有神化入侵者：生成",
+    "apotheosis.subtitle.invader_epic": "史诗神化入侵者：生成",
+    "apotheosis.subtitle.invader_mythic": "神话神化入侵者：生成",
 
     "comment_id": "指南书",
     "book.apotheosis.name": "阴影编年史",
