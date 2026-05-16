@@ -1,0 +1,7 @@
+{
+    "name": "Підручні інструменти",
+    "description": "У цьому розділі детально описано всі різноманітні інструменти, що використовуються для спрощення зачарування..",
+    "icon": "apothic_enchanting:library",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

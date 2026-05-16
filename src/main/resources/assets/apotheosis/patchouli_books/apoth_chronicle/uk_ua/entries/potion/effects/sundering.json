@@ -1,0 +1,17 @@
+{
+    "name": "Розвал",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)Sundering$() – це шкідливий ефект.$(p)Під його впливом уся отримувана шкода збільшується на 20% за рівень."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Він служить прямою протилежністю Стійкости та накладається до нього адитивно.$(p)Маючи Розвал II та Стійкість II ви б отримували звичайну шкоду."
+        }
+	]
+}

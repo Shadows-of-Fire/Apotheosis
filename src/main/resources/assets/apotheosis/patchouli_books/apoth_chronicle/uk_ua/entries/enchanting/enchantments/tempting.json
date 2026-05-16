@@ -1,0 +1,13 @@
+{
+    "name": "Спокуса",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Спокуса$() – це чари для мотики.$(p)Коли ви тримаєте мотику з цим зачаруванням, усі тварини слідуватимуть за вами, ніби ви тримаєте в руках їхній предмет для розмноження."
+        }
+	]
+}

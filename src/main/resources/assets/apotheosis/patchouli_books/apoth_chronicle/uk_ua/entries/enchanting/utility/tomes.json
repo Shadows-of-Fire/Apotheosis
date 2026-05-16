@@ -1,0 +1,42 @@
+{
+    "name": "Томи",
+    "icon": "apothic_enchanting:other_tome",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Томи – це особливий тип книг.$(p)Том можна зачарувати так само як книгу, але на нього можна накладати лише певні чари.$(p)Винятком є ​$(l:apotheosis:enchanting/utility/scrapping)том утилізації$(), який має інше призначення."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:other_tome",
+			"text": "Після того, як ви зачаруєте том, він перетвориться на зачаровану книгу."
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:helmet_tome",
+			"recipe2": "apothic_enchanting:chestplate_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:leggings_tome",
+			"recipe2": "apothic_enchanting:boots_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:weapon_tome",
+			"recipe2": "apothic_enchanting:pickaxe_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:fishing_tome",
+			"recipe2": "apothic_enchanting:bow_tome",
+			"text": ""
+		}
+	]
+}

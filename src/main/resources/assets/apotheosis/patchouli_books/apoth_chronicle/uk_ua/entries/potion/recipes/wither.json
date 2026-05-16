@@ -1,0 +1,19 @@
+{
+    "name": "Висушення",
+    "icon": "minecraft:textures/mob_effect/wither.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "&apotheosis:potion,!apotheosis:wstloaded",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)Висушення$() — це ворожий ефект, який зазвичай неможливо створити.$(p)Під час його дії ви отримуватимете крихітну шкоду кожного такту.$(p)На відміну від Отрути, ця шкода смертельна."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Рецепт варіння",
+			"item": "minecraft:wither_skeleton_skull",
+            "text": "Це зілля можна виготовити за допомогою незграбного зілля та черепа візера-скелета.$(p)Його можна подовжити, посилити або перетворити на вибухове зілля за допомогою звичайних інгредієнтів."
+        }
+	]
+}

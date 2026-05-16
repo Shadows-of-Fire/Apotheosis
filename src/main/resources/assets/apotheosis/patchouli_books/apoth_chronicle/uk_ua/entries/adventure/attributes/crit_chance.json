@@ -1,0 +1,17 @@
+{
+    "name": "Шанс криту",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Шанс криту$() - це ймовірність того, що наступна ваша шкода стане критичною атакою. Значення вище за 100% дозволяють здійснювати мультикрит.$(p)Притаманне зброї."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Величина вашої критичної шкоди залежить від вашої $(l:apotheosis:adventure/attributes/crit_damage)Критичної шкоди$()."
+		}
+	]
+}

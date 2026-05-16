@@ -1,0 +1,19 @@
+{
+    "name": "Стійкість",
+    "icon": "minecraft:textures/mob_effect/resistance.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Стійкість$() — досить корисний ефект, рецепт якого відсутній у звичайній грі.$(p)Кожен рівень дає +20% зменшення шкоди від усіх джерел.$(p)Це зілля вам також знадобиться для створення зілля $(l:apotheosis:potion/effects/sundering)Розвалу$()."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Рецепт варіння",
+			"item": "minecraft:shulker_shell",
+            "text": "Це зілля можна виготовити за допомогою незграбного зілля та панциру шалкера.$(p)Його можна подовжити, посилити або перетворити на вибухове зілля за допомогою звичайних інгредієнтів."
+        }
+	]
+}

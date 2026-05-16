@@ -1,0 +1,13 @@
+{
+    "name": "Швидкість натягування",
+    "icon": "minecraft:bow",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Швидкість натягування$() - це показник того, як швидко ви заряджаєте далекобійну зброю, відносно до початкової швидкості. 1 = 100%, 2 = 200% тощо.$(p)Притаманне далекобійній зброї."
+        }
+	]
+}

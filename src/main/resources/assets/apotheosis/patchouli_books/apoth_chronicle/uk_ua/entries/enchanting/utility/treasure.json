@@ -1,0 +1,19 @@
+{
+    "name": "Чари-скарби",
+    "icon": "apothic_enchanting:treasure_shelf",
+    "category": "apotheosis:enchanting/utility",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Чари скарбів – це спеціальні чари, які зазвичай недоступні на столі зачарувань.$(p)Однак це можна виправити за допомогою $(9)глибополиці таємничих скарбів$()."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apothic_enchanting:treasure_shelf",
+            "title": "Таємничі скарби",
+            "text": "Розміщення цієї книжкової полиці у відповідному місці призведе до появи чарів-скарбів під час зачарування.$(p)Майте на увазі, що більшість $(4)проклять$() є чарами-скарбами."
+        }
+    ]
+}

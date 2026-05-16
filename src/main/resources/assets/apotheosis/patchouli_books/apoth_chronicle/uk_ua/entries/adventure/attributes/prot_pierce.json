@@ -1,0 +1,13 @@
+{
+    "name": "Пробиття захисту",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Пробиття захисту$() дозволяє вам під час атаки ігнорувати фіксовану кількість очок захисту цілі.$(p)Перевищення цієї характеристики над бронею цілі не зробить її захист від'ємним."
+        }
+	]
+}

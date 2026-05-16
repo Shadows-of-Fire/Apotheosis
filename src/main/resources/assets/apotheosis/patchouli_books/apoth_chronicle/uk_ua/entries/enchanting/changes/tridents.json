@@ -1,0 +1,20 @@
+{
+    "name": "Тризуби",
+    "icon": "minecraft:trident",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Крім нових чар, тризуби тепер також можуть мати $(9)Гостроту$(), $(9)Грабунок$() та $(9)Пронизування$().$(p)Гострота та Грабунок функціонують так само як і на мечі.$(p)Пронизування дозволяє кинутим тризубам пробивати ворогів наскрізь."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Making Tridents",
+			"item": "apothic_enchanting:inert_trident",
+			"link_recipe": true,
+            "text": "Apotheosis також додає метод створення тризубів.$(p)Просто змайструйте $(9)інертний тризуб$() та модифікуйте його за допомогою $(l:apotheosis:enchanting/table/infusion)просякнення чарами$()."
+        }
+	]
+}

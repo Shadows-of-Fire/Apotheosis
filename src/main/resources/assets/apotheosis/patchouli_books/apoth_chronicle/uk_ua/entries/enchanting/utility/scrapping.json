@@ -1,0 +1,29 @@
+{
+    "name": "Том утилізації",
+    "icon": "apothic_enchanting:scrap_tome",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 4,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Том утилізації — це спосіб отримання чарів з предмета.$(p) Поєднання одного предмета з іншим у ковадлі знищить цільовий предмет і створить книгу з деякими чарами випадкового рівня."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:scrap_tome",
+			"text": "Ви завжди отримуватимете половину чарів (округлено вгору).$(p)Вибрані чари залежать від вашого $(l:apotheosis:enchanting/table/seed)насіння чарів$()."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Відмінна утилізація",
+			"item": "apothic_enchanting:improved_scrap_tome",
+			"text": "$(9)Том відмінної утилізації$() — це покращена версія тома утилізації.$(p)Він витягує всі чари з предмета, а не половину."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"item": "apothic_enchanting:extraction_tome",
+			"text": "$(9)Том вилучення$() — це вдосконалена версія тома відмінної утилізації.$(p)Він витягує всі чари з предмета, не знищуючи його в процесі."
+		}
+	]
+}

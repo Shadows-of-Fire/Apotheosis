@@ -1,0 +1,13 @@
+{
+    "name": "Відскакування",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Відскакування$() – це чари для нагрудників та наголінників.$(p)Вони відкидають від власника усіх нападників у ближньому бою.$(p)Вищі рівні збільшують відстань."
+        }
+	]
+}

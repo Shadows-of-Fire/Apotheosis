@@ -1,0 +1,13 @@
+{
+    "name": "Швидкість добування",
+    "icon": "minecraft:netherite_pickaxe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Збільшуючи $(9)Швидкість добування$(), ви збільшуєте швидкість добування блоків. Базова швидкість дорівнює 1.0.$(p)Притаманне кайлам і лопатам."
+        }
+	]
+}

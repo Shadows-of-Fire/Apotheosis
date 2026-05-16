@@ -1,0 +1,7 @@
+{
+    "name": "Нові чари",
+    "description": "Кожен запис у цьому розділі містить детальну інформацію про нове зачарування, додане цим модулем.$(p)Чари, додані іншими модулями, тут не розглядаються.",
+    "icon": "minecraft:enchanted_book",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}
