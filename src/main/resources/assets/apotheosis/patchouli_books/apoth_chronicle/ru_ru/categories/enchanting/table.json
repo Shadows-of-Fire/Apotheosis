@@ -1,8 +1,0 @@
-{
-    "name": "Чародейский Стол",
-    "description": "В этом разделе рассматриваются изменения, внесенные в Чародейский Стол.",
-    "icon": "minecraft:enchanting_table",
-	"flag": "apotheosis:enchanting",
-	"parent": "apotheosis:enchanting/enchanting",
-	"sortnum": -2
-}

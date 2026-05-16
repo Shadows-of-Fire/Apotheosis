@@ -1,6 +1,0 @@
-{
-    "name": "Модуль Рассадника",
-    "description": "Модуль Спавнера позволяет вам перемещать и изменять $(9)Рассадник$().",
-    "icon": "minecraft:spawner",
-	"flag": "apotheosis:spawner"
-}
