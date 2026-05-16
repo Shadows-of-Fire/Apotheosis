@@ -17,6 +17,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -29,7 +30,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public class ReforgingTableTile extends BlockEntity implements TickingBlockEntity {
+public class ReforgingTableTile extends BlockEntity implements TickingBlockEntity, Clearable {
 
     public int time = 0;
     public boolean step1 = true;
@@ -139,4 +140,10 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
         }
     }
 
+    @Override
+    public void clearContent() {
+        for (int i = 0; i < this.inv.size(); i++) {
+            this.inv.set(i, ItemResource.EMPTY, 0);
+        }
+    }
 }

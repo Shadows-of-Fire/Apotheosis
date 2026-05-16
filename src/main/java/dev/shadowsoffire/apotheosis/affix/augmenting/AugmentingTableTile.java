@@ -5,6 +5,7 @@ import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -16,7 +17,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public class AugmentingTableTile extends BlockEntity implements TickingBlockEntity {
+public class AugmentingTableTile extends BlockEntity implements TickingBlockEntity, Clearable {
 
     public static int RISE_TIME = 30;
     public static int SPIN_CYCLE_TIME = 90;
@@ -114,6 +115,13 @@ public class AugmentingTableTile extends BlockEntity implements TickingBlockEnti
             if (!res.isEmpty() && amount > 0) {
                 Block.popResource(this.level, pos, res.toStack(amount));
             }
+        }
+    }
+
+    @Override
+    public void clearContent() {
+        for (int i = 0; i < this.inv.size(); i++) {
+            this.inv.set(i, ItemResource.EMPTY, 0);
         }
     }
 

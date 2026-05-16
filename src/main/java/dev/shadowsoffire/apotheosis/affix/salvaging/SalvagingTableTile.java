@@ -5,6 +5,7 @@ import java.util.List;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -15,7 +16,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-public class SalvagingTableTile extends BlockEntity {
+public class SalvagingTableTile extends BlockEntity implements Clearable {
 
     public SalvagingTableTile(BlockPos pPos, BlockState pBlockState) {
         super(Apoth.Tiles.SALVAGING_TABLE, pPos, pBlockState);
@@ -41,6 +42,13 @@ public class SalvagingTableTile extends BlockEntity {
     public void loadAdditional(ValueInput in) {
         super.loadAdditional(in);
         in.readChild("output", this.output);
+    }
+
+    @Override
+    public void clearContent() {
+        for (int i = 0; i < this.output.size(); i++) {
+            this.output.set(i, ItemResource.EMPTY, 0);
+        }
     }
 
     protected class SalvagingItemHandler implements ResourceHandler<ItemResource> {
