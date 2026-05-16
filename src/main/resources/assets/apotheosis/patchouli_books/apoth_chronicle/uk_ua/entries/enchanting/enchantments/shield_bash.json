@@ -1,0 +1,13 @@
+{
+    "name": "Биття щитом",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Биття щитом$() – це чари для щита.$(p)Вони змушують атаки ближнього бою з цим щитом завдавати додаткової шкоди.$(p)Однак атака $(9)Биттям щитом$() додатково пошкоджує щит."
+        }
+	]
+}

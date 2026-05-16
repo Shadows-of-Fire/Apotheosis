@@ -1,0 +1,13 @@
+{
+    "name": "Крижані шипи",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Крижані шипи$() – це чари для нагрудника.$(p)Вони сповільнюють нападників. Тривалість та сила залежать від рівня чарів.$(p)Є взаємозаапречними з $(9)Шипами$()."
+        }
+	]
+}

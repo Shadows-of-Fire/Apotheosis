@@ -1,0 +1,13 @@
+{
+    "name": "Сироватка росту",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Сироватка росту$() це майстерні чари для ножиць.$(p)Вони дають вівцям 50% шанс негайно відновити свою вовну."
+        }
+	]
+}

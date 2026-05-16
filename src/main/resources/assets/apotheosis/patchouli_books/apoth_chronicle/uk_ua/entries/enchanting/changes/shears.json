@@ -1,0 +1,13 @@
+{
+    "name": "Ножиці",
+    "icon": "minecraft:shears",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Крім нових чар, ножиці тепер також можуть мати $(9)Незламність$(), $(9)Ефективність$() та $(9)Удачу$()."
+        }
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Шкода від атак",
+    "icon": "minecraft:diamond_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Шкода від атак$() — це атрибут, який визначає, скільки шкоди завдають ваші атаки.$(p)Зазвичай цю характеристику надає зброя."
+        }
+	]
+}

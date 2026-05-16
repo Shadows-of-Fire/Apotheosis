@@ -1,0 +1,13 @@
+{
+    "name": "Гострота",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Гострота$() більше не є ексклюзивною для підтипів чар шкоди.$(p)Це означає, що тепер ви можете мати $(9)Гостроту$() та ще одні чари шкоди, які зазвичай є з нею взаємозаперечними."
+        }
+	]
+}

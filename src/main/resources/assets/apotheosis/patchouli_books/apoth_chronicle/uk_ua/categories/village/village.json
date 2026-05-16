@@ -1,0 +1,6 @@
+{
+    "name": "Модуль селищ",
+    "description": "Модуль селищ додає різні предмети, пов'язані із селищами та селянами.",
+    "icon": "minecraft:textures/mob_effect/hero_of_the_village.png",
+	"flag": "apotheosis:village"
+}

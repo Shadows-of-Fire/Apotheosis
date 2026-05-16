@@ -1,0 +1,17 @@
+{
+    "name": "Незламні амулети",
+    "icon": "minecraft:enchanting_table",
+    "category": "apotheosis:potion/charms",
+	"flag": "&apotheosis:potion,apotheosis:enchanting",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Через $(l:apotheosis:enchanting/table/infusion)просякнення чарами$() амулети можна зробити незламними.$(p)Завдяки цьому ви можете мати постійні ефекти зілль."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Метод просякнення амулетів доволі важкий.$(p)Вам знадобиться тверде розуміння $(l:apotheosis:enchanting/table/stats)характеристик зачарування$(), щоб успішно користатися ним."
+        }
+	]
+}

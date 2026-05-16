@@ -1,0 +1,17 @@
+{
+    "name": "Стародавні знання",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Стародавні знання$() – це корисний ефект.$(p)Під його впливом увесь досвід, що випадає з убитих вами мобів, помножується."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "На рівні I він помножує отримуваний досвід на 4.$(p)На рівні II він помножує його на 8."
+        }
+	]
+}

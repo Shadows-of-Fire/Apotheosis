@@ -1,0 +1,13 @@
+{
+    "name": "Ройові породжувачі",
+    "icon": "minecraft:spider_eye",
+    "category": "apotheosis:adventure/rogue_spawners",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Ройовий породжувач — це мерзенний підтип зловісного породжувача, який дуже швидко викликає велику кількість мобів.$(p)Зазвичай він обмежений слабшими мобами, часто павукоподібними, тому не є надто страшним."
+        }
+	]
+}

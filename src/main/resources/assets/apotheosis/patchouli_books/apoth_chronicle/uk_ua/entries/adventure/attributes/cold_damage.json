@@ -1,0 +1,13 @@
+{
+    "name": "Шкода від холоду",
+    "icon": "minecraft:blue_ice",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Шкода від холоду$() - це додаткова магічна шкода, що застосовується до атак у ближньому бою. Вона також спричиняє уповільнення, яке залежить від сили шкоди.$(p)Притаманне зброї ближнього бою."
+        }
+	]
+}

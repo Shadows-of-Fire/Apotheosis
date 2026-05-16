@@ -1,0 +1,17 @@
+{
+    "name": "Везіння",
+    "icon": "minecraft:rabbit_foot",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Везіння$() робить вас удачливим! Точніше, воно збільшує ймовірність того, що ви отримаєте кращу здобич.$(p)Що завгодно може забезпечити везіння."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Ви також можете отримати невезіння, яке робить рідкісну здобич недоступнішою."
+		}
+	]
+}

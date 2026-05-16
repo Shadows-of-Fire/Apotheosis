@@ -1,0 +1,13 @@
+{
+    "name": "Curios",
+    "icon": "curios:textures/slot/empty_charm_slot.png",
+    "category": "apotheosis:potion/charms",
+	"flag": "&apotheosis:potion,apotheosis:curiosloaded",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Коли у вас встановлено $(9)Curios$(), ви можете одягати зіллєві амулети у слоти $(9)амулетів (оберегів)$().$(p)Вони працюватимуть так само, як і в інвентарі."
+        }
+	]
+}

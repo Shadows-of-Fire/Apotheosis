@@ -1,0 +1,44 @@
+{
+    "name": "Рівні 31 - 60",
+    "icon": "apothic_enchanting:hellshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Досягання 45 рівня",
+			"recipe": "apothic_enchanting:hellshelf",
+			"text": "Щоб досягти 45 рівня, вам потрібно створити кілька $(9)пеклополиць$() та додати їх до ваших наявних книжкових полиць."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Досягання 45 рівня",
+			"recipe": "apothic_enchanting:seashelf",
+			"text": "Якщо вам не подобається Незер, ви також можете вирушити до океану та створити з його ресурсів $(9)мореполиці$()."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Досягання 60 рівня",
+			"item": "apothic_enchanting:infused_hellshelf",
+			"text": "Як тільки ви досягнете 45 рівня, вам потрібно буде дослідити $(l:apotheosis:enchanting/table/infusion)просякнення чарами$(), щоб покращити свої полиці."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Досягання 60 рівня",
+			"item": "apothic_enchanting:infused_seashelf",
+			"text": "Створіть ще кілька полиць такого ж типу, як ви використовували раніше, просякніть їх та покращте.$(p) Ці нові полиці, поверх ваших старих, дозволять вам досягти 60 рівня."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Підказки зачарування",
+			"item": "apothic_enchanting:sightshelf",
+			"text": "Тепер у вас є доступ до кращих опцій для підвищення інших характеристик.$(p)Окрім бонусів від пеклополиць та мореполиць, тепер ви також можете створювати $(9)полиці погляду$(), щоб збільшити $(підказки) під час зачарування."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Квантична стабільність",
+			"recipe": "apothic_enchanting:geode_shelf",
+			"text": "Виконуючи просякнення для створення родючого аметиста, ви можете створити $(9)Книжкову полицю стабільности$().$(p)Це запобіжить отриманню негативних результатів кванти."
+		}
+	]
+}
