@@ -8,6 +8,7 @@ import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.affix.trades.AffixTrade;
 import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
+import dev.shadowsoffire.apotheosis.affix.trades.TieredTrade;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
 import dev.shadowsoffire.apotheosis.compat.curios.CuriosCompat;
 import dev.shadowsoffire.apotheosis.compat.gateways.GatewaysCompat;
@@ -130,6 +131,7 @@ public class Apotheosis {
 
         WandererTradesRegistry.INSTANCE.registerCodec(loc("affix_trade"), AffixTrade.CODEC);
         WandererTradesRegistry.INSTANCE.registerCodec(loc("automatic_affix_trade"), AutomaticAffixTrade.CODEC);
+        WandererTradesRegistry.INSTANCE.registerCodec(loc("tiered_trade"), TieredTrade.CODEC);
     }
 
     @SubscribeEvent
