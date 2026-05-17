@@ -1,7 +1,0 @@
-{
-    "name": "Прикрепление добычи",
-    "description": "Во время приключений вы можете встретить предметы с различными бонусами.$(p)Это прикрепленные предметы, реликвии прошлого с различной степенью силы.",
-    "icon": "minecraft:chest",
-	"flag": "apotheosis:adventure",
-	"parent": "apotheosis:adventure/adventure"
-}

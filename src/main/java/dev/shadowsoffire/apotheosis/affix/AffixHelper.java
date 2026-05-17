@@ -216,7 +216,7 @@ public class AffixHelper {
      * @apiNote This cannot be run reliably on the client, as the reforge seed is not guaranteed to be present.
      */
     public static void applyMalice(Player player, ItemStack stack) {
-        ItemAffixes affixes = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY);
+        Map<DynamicHolder<Affix>, AffixInstance> affixes = AffixHelper.getAffixes(stack);
         if (affixes.isEmpty() || affixes.size() < 2) {
             return;
         }
@@ -224,7 +224,7 @@ public class AffixHelper {
         int seed = player.getPersistentData().getInt(ReforgingMenu.REFORGE_SEED);
         RandomSource rand = new XoroshiroRandomSource(seed);
 
-        ItemAffixes.Builder builder = affixes.toBuilder();
+        ItemAffixes.Builder builder = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY).toBuilder();
         List<DynamicHolder<Affix>> afxList = new ArrayList<>(affixes.keySet());
 
         // TODO: Should we filter out affixes that are level-independent?

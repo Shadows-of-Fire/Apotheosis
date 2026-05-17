@@ -7,6 +7,7 @@ import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 
-public class AugmentingTableTile extends BlockEntity implements TickingBlockEntity {
+public class AugmentingTableTile extends BlockEntity implements TickingBlockEntity, Clearable {
 
     public static int RISE_TIME = 30;
     public static int SPIN_CYCLE_TIME = 90;
@@ -99,6 +100,13 @@ public class AugmentingTableTile extends BlockEntity implements TickingBlockEnti
 
     public IItemHandler getInventory() {
         return this.inv;
+    }
+
+    @Override
+    public void clearContent() {
+        for (int i = 0; i < this.inv.getSlots(); i++) {
+            this.inv.setStackInSlot(i, ItemStack.EMPTY);
+        }
     }
 
     public static enum AnimationStage {

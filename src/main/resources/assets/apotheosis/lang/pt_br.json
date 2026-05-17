@@ -81,10 +81,13 @@
     "key.apotheosis.compare_equipment": "Comparar Equipamento Apontado",
     "key.apotheosis.link_item_to_chat": "Compartilhar Item Apontado no Chat",
 
+    "chat.apotheosis.link_item_with_count": "%s %s",
+
     "info.apotheosis.affix_item": "Item de afixo apótico",
 
-    "death.attack.apotheosis:execute": "%s foi executado por %s",
-    "death.attack.apotheosis:execute.item": "%s foi executado por %s usando %s",
+    "death.attack.apotheosis:execute": "%2$s executou %1$s",
+    "death.attack.apotheosis:execute.item": "%2$s executou %1$s usando %s",
+    "death.attack.apotheosis:execute.player": "%2$s executou %1$s",
 
     "misc.apotheosis.affix_name.two": "%2$s %1$s",
     "misc.apotheosis.affix_name.three": "%2$s %1$s %3$s",
@@ -130,9 +133,6 @@
 
     "affix.apotheosis:breaker/attribute/experienced": "Experiente",
     "affix.apotheosis:breaker/attribute/experienced.suffix": "do Erudito",
-
-    "affix.apotheosis:melee/attribute/elongated": "Devastado",
-    "affix.apotheosis:melee/attribute/elongated.suffix": "de Batalhas Distantes",
 
     "affix.apotheosis:ranged/attribute/agile": "Ágil",
     "affix.apotheosis:ranged/attribute/agile.suffix": "da Destreza",
@@ -274,7 +274,7 @@
 
     "affix.apotheosis:breaker/ability/enlightened": "Iluminado",
     "affix.apotheosis:breaker/ability/enlightened.suffix": "do Arauto da Luz",
-    "affix.apotheosis:breaker/ability/enlightened.desc": "Esta ferramenta pode colocar uma tocha ao custo de %s de durabilidade.",
+    "affix.apotheosis:breaker/ability/enlightened.desc": "Esta ferramenta pode colocar uma fonte de luz ao custo de %s de durabilidade.",
 
     "affix.apotheosis:shield/psychic": "Psíquico",
     "affix.apotheosis:shield/psychic.suffix": "do Vingativo",
@@ -480,6 +480,7 @@
     "gem_class.light_ranged": "Armas Leves ou de Longo Alcance",
     "gem_class.weapon_or_tool": "Armas ou Ferramentas",
     "gem_class.weapons": "Armas",
+    "gem_class.tools": "Ferramentas",
 
     "gem_class.helmet": "Capacetes",
     "gem_class.chestplate": "Peitorais",
@@ -509,9 +510,8 @@
 
     "misc.apotheosis.level": "nível",
     "misc.apotheosis.level.many": "níveis",
-
     "name.apotheosis.treasure_goblin": "Goblin do Tesouro",
-    "item.apotheosis.gem.apotheosis:legacy": "Gema do Legado",
+
     "item.apotheosis.gem.apotheosis:core/guardian": "Gema do Guardião",
     "item.apotheosis.gem.apotheosis:core/ballast": "Gema do Lastro",
     "item.apotheosis.gem.apotheosis:core/solar": "Gema Solar",
@@ -609,6 +609,11 @@
     "block.apotheosis.reforging_table.desc2": "Raridade máxima: %s",
     "block.apotheosis.augmenting_table": "Bancada de Aprimoramento",
     "block.apotheosis.augmenting_table.desc": "Usa Sigilos de Aprimoramento para aprimorar afixos individualmente",
+    "block.apotheosis.gem_case": "Estojo de Gemas",
+    "tooltip.apotheosis.gem_case.capacity": "Capacidade: %s Gemas",
+    "tooltip.apotheosis.gem_case.unique_gems": "Contém %s gemas diferentes",
+    "tooltip.apotheosis.gem_case.none_owned": "Nenhuma Possuída",
+    "block.apotheosis.ender_gem_case": "Estojo de Gemas da Casa Fabergé",
 
     "button.apotheosis.salvage": "Reciclar Itens",
     "button.apotheosis.no_salvage": "Nenhum item selecionado",
@@ -622,6 +627,11 @@
     "button.apotheosis.augmenting.no_alternatives": "Sem Afixos Alternativos",
     "button.apotheosis.augmenting.upgrade.cost": "Custo: %sx %s",
     "button.apotheosis.augmenting.upgrade.exp_cost": "Custo de Experiência: %s níveis",
+    "button.apotheosis.gem_case.upgrade": "Melhore 2 gemas %s para %s",
+    "button.apotheosis.gem_case.upgrade_no_gems": "Gemas Insuficientes",
+    "button.apotheosis.gem_case.upgrade_no_materials": "Materiais Insuficientes",
+    "button.apotheosis.gem_case.upgrade_cost": "Custo: %s %s e %s %s",
+    "button.apotheosis.gem_case.upgrade_all": "Irá melhorar tantas gemas quanto possível!",
 
     "menu.apotheosis.gem_cutting": "Lapidação de Gema",
     "container.apotheosis.salvage": "Reciclar",
@@ -653,8 +663,8 @@
     "title.apotheosis.salvaging": "Reciclagem",
 
     "text.apotheosis.anything": "Qualquer coisa",
-    "loot_category.apotheosis.shears": "Tesoura",
-    "loot_category.apotheosis.shears.plural": "Tesouras",
+    "loot_category.apotheosis.none": "Nada",
+    "loot_category.apotheosis.none.plural": "Nada",
     "loot_category.apotheosis.bow": "Arco",
     "loot_category.apotheosis.bow.plural": "Arcos",
     "loot_category.apotheosis.crossbow": "Besta",
@@ -681,6 +691,8 @@
     "loot_category.apotheosis.leggings.plural": "Calças",
     "loot_category.apotheosis.boots": "Bota",
     "loot_category.apotheosis.boots.plural": "Botas",
+    "loot_category.apotheosis.shears": "Tesoura",
+    "loot_category.apotheosis.shears.plural": "Tesouras",
 
     "info.apotheosis.boss_spawn": "%s despertou por perto!",
     "info.apotheosis.boss": "Chefe Apótico %s",
@@ -703,10 +715,8 @@
     "rarity.apotheosis:mythic": "Mítico",
     "rarity.apotheosis:ancient": "Ancestral",
 
-    "death.attack.apotheosis:psychic": "%s foi morto por um ataque refletido.",
+    "death.attack.apotheosis:psychic": "Um ataque refletido matou %s.",
     "death.attack.apotheosis:psychic.player": "%s teve seu ataque refletido por %s.",
-    "death.attack.apotheosis:execute": "%s foi executado.",
-    "death.attack.apotheosis:execute.player": "%s foi executado por %s.",
 
     "disconnect.apotheosis.tier_changes_disabled": "Mudanças manuais nos tiers de mundo estão desabilitadas nas configurações.",
 
@@ -723,7 +733,7 @@
     "reward.apotheosis.gem": "Gema Apótica (%s)",
     "reward.apotheosis.random_gem": "Gema Apótica (Aleatória)",
     "reward.apotheosis.true_random_gem": "Verdadeiramente Aleatória Gema Apótica",
-    "reward.apotheosis.netherite_smithing_template": "Molde de Forja de Netherita",
+    "reward.apotheosis.netherite_smithing_template": "Molde de Ferraria de Netherita",
     "error.apotheosis.gate_tier_incorrect": "Este Portal só pode ser aberto no Nível Mundial: %s",
     "modifier.apotheosis.affix": "Recebe um Item com Afixo",
     "tooltip.apotheosis.requires_world_tier": "Requer Nível Mundial: %s",
@@ -900,11 +910,11 @@
     "jukebox_song.apotheosis.flash": "Renren - Relâmpago",
     "subtitle.apotheosis.music_disc.flash": "Renren - Relâmpago",
 
-    "item.apotheosis.music_disc_glimmer": "Disco de Música",
+    "item.apotheosis.music_disc_glimmer": "Disco Musical",
     "jukebox_song.apotheosis.glimmer": "Caner Crebes - Brilho",
     "subtitle.apotheosis.music_disc.glimmer": "Caner Crebes - Brilho",
 
-    "item.apotheosis.music_disc_shimmer": "Disco de Música",
+    "item.apotheosis.music_disc_shimmer": "Disco Musical",
     "jukebox_song.apotheosis.shimmer": "Camareiro Kaifry - Cintilar",
     "subtitle.apotheosis.music_disc.shimmer": "Camareiro Kaifry - Cintilar",
 
@@ -923,6 +933,15 @@
     "painting.apotheosis.window.title": "Uma Visão Além",
     "painting.apotheosis.window.author": "Faellynna",
 
+    "stat.apotheosis.world_tiers_activated": "Nível de Mundo Alterado",
+    "apotheosis.subtitle.reforge": "Mesa de Reforja reforja",
+    "apotheosis.subtitle.malice": "Sigilo da Malícia aplica malícia",
+
+    "apotheosis.subtitle.invader_uncommon": "Invasor Apótico Incomum surge",
+    "apotheosis.subtitle.invader_rare": "Invasor Apótico Raro surge",
+    "apotheosis.subtitle.invader_epic": "Invasor Apótico Épico surge",
+    "apotheosis.subtitle.invader_mythic": "Invasor Apótico Mítico surge",
+    
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Crônica das Sombras",
     "book.apotheosis.subtitle": "Guia Apótico",

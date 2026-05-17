@@ -1,6 +1,0 @@
-{
-    "name": "Зачаровывающий Модуль",
-    "description": "Модуль Зачарований отвечает за все изменения в системе чар.$(p)Здесь много контента, так что осмотритесь.",
-    "icon": "minecraft:enchanting_table",
-	"flag": "apotheosis:enchanting"
-}

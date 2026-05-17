@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 
 import dev.shadowsoffire.apotheosis.affix.Affix;
@@ -156,7 +157,7 @@ public class AffixCommand {
         }
     }
 
-    public static int listAlternatives(CommandContext<CommandSourceStack> c, ResourceLocation affixId) {
+    public static int listAlternatives(CommandContext<CommandSourceStack> c, ResourceLocation affixId) throws CommandSyntaxException {
         DynamicHolder<Affix> afx = AffixRegistry.INSTANCE.holder(affixId);
         if (!afx.isBound()) {
             return fail(c, "Unknown affix: " + affixId, -1);
@@ -179,7 +180,7 @@ public class AffixCommand {
                 return fail(c, "The target item does not contain the selected affix.", -4);
             }
 
-            Stream<DynamicHolder<Affix>> alternatives = LootController.getAlternativeAffixes(held, rarity.get(), afx);
+            Stream<DynamicHolder<Affix>> alternatives = LootController.getAlternativeAffixes(c.getSource().getPlayerOrException(), held, rarity.get(), afx);
             c.getSource().sendSystemMessage(Component.translatable("Possible alternatives to %s:", afx.get().getName(true)));
             AttributeTooltipContext ctx = AttributeTooltipContext.of(living instanceof Player p ? p : null, TooltipContext.of(c.getSource().getLevel()), ApothicAttributes.getTooltipFlag());
 

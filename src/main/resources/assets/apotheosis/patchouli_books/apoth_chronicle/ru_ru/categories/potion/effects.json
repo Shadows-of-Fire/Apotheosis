@@ -1,7 +1,0 @@
-{
-    "name": "Новые Эффекты",
-	"parent": "apotheosis:potion/potion",
-    "description": "В этом разделе подробно описаны новые эффекты зелий, добавленные Апофеозисом.",
-    "icon": "minecraft:experience_bottle",
-	"flag": "apotheosis:potion"
-}

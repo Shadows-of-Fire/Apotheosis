@@ -1,12 +1,16 @@
 package dev.shadowsoffire.apotheosis.data;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.UnaryOperator;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
+import dev.shadowsoffire.apotheosis.affix.trades.TieredTrade;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.apothic_spawners.ApothicSpawners;
@@ -145,7 +149,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
             .maxTrades(5)
             .xp(15));
 
-        this.add("rare_gear/arachnids_fear", b -> b
+        this.addTiered("rare_gear/arachnids_fear", b -> b
             .rare()
             .price(Items.DIAMOND_SWORD, 1)
             .price2(Items.EMERALD, 45)
@@ -159,9 +163,10 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.UNBREAKING, 5)
                 .enchant(Enchantments.FIRE_ASPECT, 5)))
             .maxTrades(1)
-            .xp(500));
+            .xp(500),
+            WorldTier.SUMMIT, WorldTier.PINNACLE);
 
-        this.add("rare_gear/bonesplitter", b -> b
+        this.addTiered("rare_gear/bonesplitter", b -> b
             .rare()
             .price(Items.DIAMOND_AXE, 1)
             .price2(Items.EMERALD, 64)
@@ -176,9 +181,10 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.LOOTING, 5)
                 .enchant(Enchantments.UNBREAKING, 3)))
             .maxTrades(1)
-            .xp(500));
+            .xp(500),
+            WorldTier.SUMMIT, WorldTier.PINNACLE);
 
-        this.add("rare_gear/captive_dreams", b -> b
+        this.addTiered("rare_gear/captive_dreams", b -> b
             .rare()
             .price(Items.DIAMOND_SWORD, 1)
             .price2(Items.EMERALD, 45)
@@ -192,9 +198,10 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.UNBREAKING, 5)
                 .enchant(CAPTURING, 5)))
             .maxTrades(1)
-            .xp(500));
+            .xp(500),
+            WorldTier.SUMMIT, WorldTier.PINNACLE);
 
-        this.add("rare_gear/eternal_vigilance", b -> b
+        this.addTiered("rare_gear/eternal_vigilance", b -> b
             .rare()
             .price(Items.DIAMOND, 64)
             .price2(Items.PHANTOM_MEMBRANE, 32)
@@ -207,9 +214,10 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.UNBREAKING, 5)
                 .enchant(Ench.Enchantments.SCAVENGER, 5)))
             .maxTrades(1)
-            .xp(1000));
+            .xp(1000),
+            WorldTier.SUMMIT, WorldTier.PINNACLE);
 
-        this.add("rare_gear/greatplate_of_eternity", b -> b
+        this.addTiered("rare_gear/greatplate_of_eternity", b -> b
             .rare()
             .price(Items.DIAMOND_CHESTPLATE, 1)
             .price2(Items.EMERALD, 55)
@@ -222,9 +230,10 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.UNBREAKING, 5)
                 .enchant(Ench.Enchantments.BERSERKERS_FURY, 2)))
             .maxTrades(1)
-            .xp(500));
+            .xp(500),
+            WorldTier.SUMMIT, WorldTier.PINNACLE);
 
-        this.add("rare_gear/rune_forged_greaves", b -> b
+        this.addTiered("rare_gear/rune_forged_greaves", b -> b
             .rare()
             .price(Items.DIAMOND_BOOTS, 1)
             .price2(Items.EMERALD, 45)
@@ -237,9 +246,10 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.FEATHER_FALLING, 5)
                 .enchant(Ench.Enchantments.STABLE_FOOTING, 1)))
             .maxTrades(1)
-            .xp(500));
+            .xp(500),
+            WorldTier.SUMMIT, WorldTier.PINNACLE);
 
-        this.add("rare_gear/stonebreaker", b -> b
+        this.addTiered("rare_gear/stonebreaker", b -> b
             .rare()
             .price(Items.DIAMOND_PICKAXE, 1)
             .price2(Items.EMERALD, 45)
@@ -252,9 +262,10 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.UNBREAKING, 5)
                 .enchant(Ench.Enchantments.BOON_OF_THE_EARTH, 4)))
             .maxTrades(1)
-            .xp(500));
+            .xp(500),
+            WorldTier.SUMMIT, WorldTier.PINNACLE);
 
-        this.add("rare_gear/thunder_forged_legguards", b -> b
+        this.addTiered("rare_gear/thunder_forged_legguards", b -> b
             .rare()
             .price(Items.DIAMOND_LEGGINGS, 1)
             .price2(Items.EMERALD, 55)
@@ -266,9 +277,10 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.UNBREAKING, 5)
                 .enchant(Ench.Enchantments.REBOUNDING, 10)))
             .maxTrades(1)
-            .xp(500));
+            .xp(500),
+            WorldTier.SUMMIT, WorldTier.PINNACLE);
 
-        this.add("rare_gear/timeworn_visage", b -> b
+        this.addTiered("rare_gear/timeworn_visage", b -> b
             .rare()
             .price(Items.DIAMOND_HELMET, 1)
             .price2(Items.EMERALD, 45)
@@ -281,9 +293,10 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.RESPIRATION, 5)
                 .enchant(Enchantments.AQUA_AFFINITY, 1)))
             .maxTrades(1)
-            .xp(500));
+            .xp(500),
+            WorldTier.SUMMIT, WorldTier.PINNACLE);
 
-        this.add("rare_gear/treecapitator", b -> b
+        this.addTiered("rare_gear/treecapitator", b -> b
             .rare()
             .price(Items.DIAMOND_AXE, 1)
             .price2(Items.EMERALD, 45)
@@ -297,7 +310,8 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.UNBREAKING, 5)
                 .enchant(Ench.Enchantments.CHAINSAW, 1)))
             .maxTrades(1)
-            .xp(500));
+            .xp(500),
+            WorldTier.SUMMIT, WorldTier.PINNACLE);
 
         // Need to add a bunch of these so they sufficiently fill the trade pool.
         // Otherwise they become way too rare.
@@ -315,6 +329,15 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
 
     public void addAffixTrade(String path) {
         this.add(Apotheosis.loc(path), new AutomaticAffixTrade(Set.of(), List.of(), false));
+    }
+
+    public void addTiered(String path, UnaryOperator<Builder> builder, WorldTier... tiers) {
+        WandererTrade underlying = builder.apply(new Builder()).build();
+        Map<WorldTier, WandererTrade> byTier = new HashMap<>();
+        for (WorldTier t : tiers) {
+            byTier.put(t, underlying);
+        }
+        this.add(Apotheosis.loc(path), new TieredTrade(byTier));
     }
 
     public void add(String path, UnaryOperator<Builder> builder) {

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,11 +17,13 @@ import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.affix.AffixType;
 import dev.shadowsoffire.apotheosis.affix.ItemAffixes;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class LootController {
@@ -124,11 +127,11 @@ public class LootController {
      * @param type   The type of affix to target
      * @return A list of alternative affixes for the item. May be empty. The original affix will not be present in the list.
      */
-    public static Stream<DynamicHolder<Affix>> getAlternativeAffixes(ItemStack stack, LootRarity rarity, DynamicHolder<Affix> affix) {
+    public static Stream<DynamicHolder<Affix>> getAlternativeAffixes(Player player, ItemStack stack, LootRarity rarity, DynamicHolder<Affix> affix) {
         ItemStack copy = stack.copy();
         ItemAffixes fixed = copy.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY).toBuilder().remove(affix).build();
         copy.set(Components.AFFIXES, fixed);
-        return getAvailableAffixes(copy, rarity, affix.get().definition().type()).filter(a -> !a.equals(affix));
+        return getAvailableAffixes(copy, rarity, affix.get().definition().type()).filter(a -> !a.equals(affix)).filter(hasPositiveWeight(player));
     }
 
     public static List<WeightedEntry.Wrapper<Affix>> getWeightedAffixes(ItemStack stack, LootRarity rarity, AffixType type, GenContext ctx) {
@@ -160,6 +163,12 @@ public class LootController {
             stack = LootController.createLootItem(entry.stack(), rarity, gCtx);
         }
         return stack;
+    }
+
+    private static Predicate<DynamicHolder<Affix>> hasPositiveWeight(Player player) {
+        WorldTier tier = WorldTier.getTier(player);
+        float luck = player.getLuck();
+        return a -> a.get().weights().getWeight(tier, luck) > 0;
     }
 
 }
