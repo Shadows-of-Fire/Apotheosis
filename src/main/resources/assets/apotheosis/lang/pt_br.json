@@ -85,9 +85,9 @@
 
     "info.apotheosis.affix_item": "Item de afixo apótico",
 
-    "death.attack.apotheosis:execute": "%s foi executado por %s",
-    "death.attack.apotheosis:execute.item": "%s foi executado por %s usando %s",
-    "death.attack.apotheosis:execute.player": "%s foi executado por %s",
+    "death.attack.apotheosis:execute": "%2$s executou %1$s",
+    "death.attack.apotheosis:execute.item": "%2$s executou %1$s usando %s",
+    "death.attack.apotheosis:execute.player": "%2$s executou %1$s",
 
     "misc.apotheosis.affix_name.two": "%2$s %1$s",
     "misc.apotheosis.affix_name.three": "%2$s %1$s %3$s",
@@ -715,7 +715,7 @@
     "rarity.apotheosis:mythic": "Mítico",
     "rarity.apotheosis:ancient": "Ancestral",
 
-    "death.attack.apotheosis:psychic": "%s foi morto por um ataque refletido.",
+    "death.attack.apotheosis:psychic": "Um ataque refletido matou %s.",
     "death.attack.apotheosis:psychic.player": "%s teve seu ataque refletido por %s.",
 
     "disconnect.apotheosis.tier_changes_disabled": "Mudanças manuais nos tiers de mundo estão desabilitadas nas configurações.",
@@ -910,11 +910,11 @@
     "jukebox_song.apotheosis.flash": "Renren - Relâmpago",
     "subtitle.apotheosis.music_disc.flash": "Renren - Relâmpago",
 
-    "item.apotheosis.music_disc_glimmer": "Disco de Música",
+    "item.apotheosis.music_disc_glimmer": "Disco Musical",
     "jukebox_song.apotheosis.glimmer": "Caner Crebes - Brilho",
     "subtitle.apotheosis.music_disc.glimmer": "Caner Crebes - Brilho",
 
-    "item.apotheosis.music_disc_shimmer": "Disco de Música",
+    "item.apotheosis.music_disc_shimmer": "Disco Musical",
     "jukebox_song.apotheosis.shimmer": "Camareiro Kaifry - Cintilar",
     "subtitle.apotheosis.music_disc.shimmer": "Camareiro Kaifry - Cintilar",
 
