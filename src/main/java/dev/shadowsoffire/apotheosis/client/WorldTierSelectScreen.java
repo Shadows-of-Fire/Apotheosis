@@ -196,7 +196,7 @@ public class WorldTierSelectScreen extends Screen {
     }
 
     void closeTutorial() {
-        if (this.activateButton.isActive()) {
+        if (this.activateButton.isActive() || WorldTier.isTutorialActive(Minecraft.getInstance().player)) {
             this.activateButton.onPress(new net.minecraft.client.input.MouseButtonEvent(
                 this.activateButton.getX() + this.activateButton.getWidth() / 2.0,
                 this.activateButton.getY() + this.activateButton.getHeight() / 2.0,
