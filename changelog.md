@@ -1,3 +1,18 @@
+## 8.5.3
+* Fixed the augmenting table showing affixes that had 0 weight as reroll candidates.
+  * This mostly impacted the table showing the Unbound (creative flight) affix when it was unavailable.
+* ZHAY10086, mc-kaishixiaxue: Updated Chinese translation.
+* PODOB: Updated Korean translation.
+* PrincessStelllar: Updated Brazilian translation.
+* Tenwoc: Added Ukranian translation.
+* Removed Russian translation.
+  * The Russian translation has been broken for many updates and no PRs have been made to repair it, so it has been removed for the time being.
+* Daudeuf: Added `Clearable` implementations to some block entities.
+* Fixed a potential crash during invader spawning.
+* Fixed a potential crash when using the Sigil of Malice after removing affixes via datapack.
+* Fixed the World Tier Tutorial being stuck enabled when using manual world tier changes.
+* "Unique" wandering trader items (e.g., Captive Dreams) now only spawn in World Tier: Summit or higher.
+
 ## 8.5.2
 * Fixed a dupe bug.
 
