@@ -7,6 +7,8 @@ import java.util.Set;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
+import dev.shadowsoffire.apotheosis.loot.functions.TierGatedTrade;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.component.DataComponentPatch;
@@ -213,7 +215,7 @@ public final class WandererTradesProvider {
                 xp,
                 0.05F,
                 Optional.empty(),
-                List.<LootItemFunction>of()));
+                List.of(new TierGatedTrade(List.of(), WorldTier.SUMMIT))));
     }
 
     private static ResourceKey<VillagerTrade> trade(String path) {

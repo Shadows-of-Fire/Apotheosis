@@ -3,6 +3,11 @@
         "count": 55.0,
         "id": "minecraft:emerald"
     },
+    "given_item_modifiers": [
+        {
+            "function": "apotheosis:tier_gated_trade"
+        }
+    ],
     "gives": {
         "components": {
             "minecraft:custom_name": {

@@ -3,6 +3,11 @@
         "count": 32.0,
         "id": "minecraft:phantom_membrane"
     },
+    "given_item_modifiers": [
+        {
+            "function": "apotheosis:tier_gated_trade"
+        }
+    ],
     "gives": {
         "components": {
             "minecraft:custom_name": {

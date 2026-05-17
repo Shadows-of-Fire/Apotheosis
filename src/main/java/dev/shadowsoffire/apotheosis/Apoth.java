@@ -51,6 +51,7 @@ import dev.shadowsoffire.apotheosis.loot.conditions.WorldTierCondition;
 import dev.shadowsoffire.apotheosis.loot.entry.AffixLootPoolEntry;
 import dev.shadowsoffire.apotheosis.loot.entry.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.loot.functions.ReforgeItemFunction;
+import dev.shadowsoffire.apotheosis.loot.functions.TierGatedTrade;
 import dev.shadowsoffire.apotheosis.loot.modifiers.AffixConvertLootModifier;
 import dev.shadowsoffire.apotheosis.loot.modifiers.AffixHookLootModifier;
 import dev.shadowsoffire.apotheosis.loot.modifiers.AffixLootModifier;
@@ -538,6 +539,7 @@ public class Apoth {
     public static final class LootFunctions {
         public static final MapCodec<ReforgeItemFunction> REFORGE_ITEM = R.custom("reforge_item", Registries.LOOT_FUNCTION_TYPE, ReforgeItemFunction.CODEC);
         public static final MapCodec<AutomaticAffixTrade> AUTOMATIC_AFFIX_TRADE = R.custom("automatic_affix_trade", Registries.LOOT_FUNCTION_TYPE, AutomaticAffixTrade.CODEC);
+        public static final MapCodec<TierGatedTrade> TIER_GATED_COMPONENTS = R.custom("tier_gated_trade", Registries.LOOT_FUNCTION_TYPE, TierGatedTrade.CODEC);
 
         private static void bootstrap() {}
     }
