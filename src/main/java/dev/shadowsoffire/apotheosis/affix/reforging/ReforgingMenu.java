@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apoth.Menus;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
@@ -17,7 +18,6 @@ import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -200,9 +200,7 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
                 ReforgingMenu.this.updateSeed();
             }
 
-            player.playSound(SoundEvents.EVOKER_CAST_SPELL, 0.99F, player.getRandom().nextFloat() * 0.25F + 1F);
-            player.playSound(SoundEvents.AMETHYST_CLUSTER_STEP, 0.34F, player.getRandom().nextFloat() * 0.2F + 0.8F);
-            player.playSound(SoundEvents.SMITHING_TABLE_USE, 0.45F, player.getRandom().nextFloat() * 0.5F + 0.75F);
+            player.playSound(Apoth.Sounds.REFORGE_ITEM_REFORGED, 0.25F, player.getRandom().nextFloat() * 0.15F + 1F);
         }
     }
 

@@ -975,7 +975,8 @@
     "painting.apotheosis.window.author": "Faellynna",
 
     "stat.apotheosis.world_tiers_activated": "World Tier Changed",
-    "apotheosis.subtitle.reforge": "Reforging Table reforges",
+    "apotheosis.subtitle.reforge_item_placed": "Item placed in Reforging Table",
+    "apotheosis.subtitle.reforge_item_reforged": "Item reforged",
     "apotheosis.subtitle.malice": "Sigil of Malice applies malice",
 
     "apotheosis.subtitle.invader_uncommon": "Uncommon Apothic Invader spawns",
