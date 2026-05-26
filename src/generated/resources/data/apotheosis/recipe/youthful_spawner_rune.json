@@ -9,13 +9,13 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "S": "apotheosis:spawner_rune",
-        "T": "minecraft:turtle_egg"
+        "G": "minecraft:golden_dandelion",
+        "S": "apotheosis:spawner_rune"
     },
     "pattern": [
-        " T ",
-        "TST",
-        " T "
+        " G ",
+        "GSG",
+        " G "
     ],
     "result": {
         "id": "apotheosis:youthful_spawner_rune"

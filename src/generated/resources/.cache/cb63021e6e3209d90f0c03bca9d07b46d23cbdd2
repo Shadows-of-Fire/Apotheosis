@@ -1,4 +1,4 @@
-// 26.1.2	2026-05-09T05:21:07.3607319	Apotheosis Recipes
+// 26.1.2	2026-05-25T21:24:57.2785503	Apotheosis Recipes
 71791a44d0626f7be32b24727150b8722f87c36a data/apotheosis/recipe/ascent_spawner_upgrade_rune.json
 8b2b59ead85298c73645d4e1a8571234ffdc328e data/apotheosis/recipe/augmenting_table.json
 bc23a5d1a1f1a9d2651a956c6e388d2a1d6bae78 data/apotheosis/recipe/burning_spawner_rune.json
@@ -142,7 +142,7 @@ e3f5e011fbf1ff80ba966cc6dd9ffe1c64b66c60 data/apotheosis/recipe/spawner_rune.jso
 7e6e90af737a83ade8359176e16a185d3140322b data/apotheosis/recipe/supremacy.json
 a9fa55145091e693c059c64a8d7208257d51f272 data/apotheosis/recipe/unnaming.json
 3767211558babc3efaa157c84ba8c64f9f301c8c data/apotheosis/recipe/widthdrawal.json
-d124cbaf4f92b6fc271881b610a36853a106ed61 data/apotheosis/recipe/youthful_spawner_rune.json
+861840c38f9648ac4fb375626c2d56dddd6edaed data/apotheosis/recipe/youthful_spawner_rune.json
 6089a004302e40c538025faa40bcab8fcd5d4585 data/apothic_spawners/recipe/spawner_modifiers/burning.json
 6089a004302e40c538025faa40bcab8fcd5d4585 data/apothic_spawners/recipe/spawner_modifiers/echoing.json
 6089a004302e40c538025faa40bcab8fcd5d4585 data/apothic_spawners/recipe/spawner_modifiers/ignore_conditions.json

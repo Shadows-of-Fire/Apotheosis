@@ -349,7 +349,7 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         this.addStatRuneRecipe(Items.IGNORE_LIGHT_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.SOUL_LANTERN);
         this.addStatRuneRecipe(Items.INITIAL_HEALTH_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.POINTED_DRIPSTONE);
         this.addStatRuneRecipe(Items.SILENT_SPAWNER_RUNE, Items.SPAWNER_RUNE, ItemTags.WOOL);
-        this.addStatRuneRecipe(Items.YOUTHFUL_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.TURTLE_EGG);
+        this.addStatRuneRecipe(Items.YOUTHFUL_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.GOLDEN_DANDELION);
         this.addStatRuneRecipe(Items.BURNING_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.CAMPFIRE);
 
         this.addShaped(Items.NO_AI_SPAWNER_RUNE, 3, 3,
