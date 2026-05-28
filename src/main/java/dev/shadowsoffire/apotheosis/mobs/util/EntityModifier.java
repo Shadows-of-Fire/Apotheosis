@@ -107,7 +107,7 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
             if (inst == null) {
                 return;
             }
-            this.modifier.apply(Apotheosis.loc("rm_ " + mob.getRandom().nextInt()), ctx.rand(), mob);
+            this.modifier.apply(Apotheosis.loc("rm_" + mob.getRandom().nextInt()), ctx.rand(), mob);
         }
 
     }
