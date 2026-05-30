@@ -9,16 +9,16 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "E": "apotheosis:epic_material",
+        "A": "apotheosis:arcane_sands",
         "I": "apotheosis:infused_spawner_rune",
         "P": "minecraft:phantom_membrane",
         "S": "apotheosis:sigil_of_malice",
         "W": "apothic_enchanting:warden_tendril"
     },
     "pattern": [
-        "EWE",
+        "AWA",
         "PIP",
-        "ESE"
+        "ASA"
     ],
     "result": {
         "id": "apotheosis:summit_spawner_upgrade_rune"

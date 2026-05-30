@@ -4,11 +4,11 @@
     "group": "apotheosis",
     "key": {
         "G": "apotheosis:gem_fused_slate",
-        "R": "apotheosis:rare_material",
+        "L": "apotheosis:luminous_crystal_shard",
         "S": "minecraft:stone"
     },
     "pattern": [
-        " R ",
+        " L ",
         "SGS",
         "SGS"
     ],

@@ -419,7 +419,7 @@
             "type": "gateways:stack",
             "stack": {
                 "count": 64,
-                "id": "apotheosis:mythic_material"
+                "id": "apotheosis:godforged_pearl"
             }
         },
         {

@@ -5,10 +5,10 @@
     "key": {
         "G": "apotheosis:gem_fused_slate",
         "S": "minecraft:stone",
-        "U": "apotheosis:uncommon_material"
+        "T": "apotheosis:timeworn_fabric"
     },
     "pattern": [
-        " U ",
+        " T ",
         "SGS",
         "SGS"
     ],

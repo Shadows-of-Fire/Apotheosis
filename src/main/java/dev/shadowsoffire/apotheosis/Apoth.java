@@ -293,15 +293,15 @@ public class Apoth {
 
     public static final class Items extends net.minecraft.world.item.Items {
 
-        public static final Holder<Item> COMMON_MATERIAL = rarityMat("common");
+        public static final Holder<Item> MYSTERIOUS_SCRAP_METAL = rarityMat("mysterious_scrap_metal", "common");
 
-        public static final Holder<Item> UNCOMMON_MATERIAL = rarityMat("uncommon");
+        public static final Holder<Item> TIMEWORN_FABRIC = rarityMat("timeworn_fabric", "uncommon");
 
-        public static final Holder<Item> RARE_MATERIAL = rarityMat("rare");
+        public static final Holder<Item> LUMINOUS_CRYSTAL_SHARD = rarityMat("luminous_crystal_shard", "rare");
 
-        public static final Holder<Item> EPIC_MATERIAL = rarityMat("epic");
+        public static final Holder<Item> ARCANE_SANDS = rarityMat("arcane_sands", "epic");
 
-        public static final Holder<Item> MYTHIC_MATERIAL = rarityMat("mythic");
+        public static final Holder<Item> GODFORGED_PEARL = rarityMat("godforged_pearl", "mythic");
 
         public static final Holder<Item> GEM_DUST = R.item("gem_dust", Item::new);
 
@@ -377,8 +377,8 @@ public class Apoth {
         public static final Holder<Item> IGNORE_PLAYERS_SPAWNER_RUNE = R.item("ignore_players_spawner_rune", GlowyTooltipItem::new, p -> p.rarity(Rarity.EPIC));
         public static final Holder<Item> ECHOING_SPAWNER_RUNE = R.item("echoing_spawner_rune", GlowyTooltipItem::new, p -> p.rarity(Rarity.EPIC));
 
-        private static Holder<Item> rarityMat(String id) {
-            return R.item(id + "_material", p -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(id)), p));
+        private static Holder<Item> rarityMat(String registryName, String rarityId) {
+            return R.item(registryName, p -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(rarityId)), p));
         }
 
         private static SmithingTemplateItem createVanillaUpgradeTemplate(String type, Item.Properties props) {

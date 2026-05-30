@@ -4,13 +4,13 @@
     "group": "apotheosis",
     "key": {
         "E": "minecraft:enchanting_table",
-        "M": "apotheosis:mythic_material",
+        "G": "apotheosis:godforged_pearl",
         "N": "minecraft:nether_star",
         "P": "minecraft:polished_blackstone"
     },
     "pattern": [
         " N ",
-        "MEM",
+        "GEG",
         "PPP"
     ],
     "result": {

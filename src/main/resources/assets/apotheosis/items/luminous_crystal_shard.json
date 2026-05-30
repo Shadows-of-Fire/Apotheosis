@@ -1,6 +1,6 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "apotheosis:item/mythic_material"
+        "model": "apotheosis:item/luminous_crystal_shard"
     }
 }

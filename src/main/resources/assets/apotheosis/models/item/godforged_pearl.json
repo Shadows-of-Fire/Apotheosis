@@ -2,7 +2,7 @@
     "parent": "item/generated",
     "textures": {
         "layer0": {
-            "sprite": "apotheosis:items/mythic_material",
+            "sprite": "apotheosis:items/godforged_pearl",
             "neoforge_data": {
                 "light_emission": 15
             }

@@ -14,13 +14,13 @@
         },
         "G": "#c:gems/quartz",
         "I": "apotheosis:sigil_of_socketing",
-        "R": "apotheosis:rare_material",
+        "L": "apotheosis:luminous_crystal_shard",
         "S": "apotheosis:spawner_rune"
     },
     "pattern": [
-        "RCR",
+        "LCL",
         "GSG",
-        "RIR"
+        "LIL"
     ],
     "result": {
         "id": "apotheosis:ascent_spawner_upgrade_rune"

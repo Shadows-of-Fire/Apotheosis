@@ -10,15 +10,15 @@
     "right": [
         {
             "count": 9,
-            "ingredient": "apotheosis:common_material"
+            "ingredient": "apotheosis:mysterious_scrap_metal"
         },
         {
             "count": 3,
-            "ingredient": "apotheosis:uncommon_material"
+            "ingredient": "apotheosis:timeworn_fabric"
         },
         {
             "count": 1,
-            "ingredient": "apotheosis:rare_material"
+            "ingredient": "apotheosis:luminous_crystal_shard"
         }
     ]
 }

@@ -5,11 +5,11 @@
     "key": {
         "E": "apotheosis:gem_fused_slate",
         "G": "apotheosis:gem_dust",
-        "M": "apotheosis:mythic_material"
+        "O": "apotheosis:godforged_pearl"
     },
     "pattern": [
         "GEG",
-        "EME",
+        "EOE",
         "GEG"
     ],
     "result": {

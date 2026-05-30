@@ -272,7 +272,7 @@
             "type": "gateways:stack",
             "stack": {
                 "count": 8,
-                "id": "apotheosis:uncommon_material"
+                "id": "apotheosis:timeworn_fabric"
             }
         },
         {

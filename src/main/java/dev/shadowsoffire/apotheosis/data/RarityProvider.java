@@ -46,7 +46,7 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
     public void generate() {
         // Common, high rarity early, dropping to 0% later
         // One stat, with a low chance for a second.
-        this.addRarity("common", TextColor.fromRgb(0x808080), Items.COMMON_MATERIAL, b -> b
+        this.addRarity("common", TextColor.fromRgb(0x808080), Items.MYSTERIOUS_SCRAP_METAL, b -> b
             .sortIndex(300)
             .weights(TieredWeights.builder()
                 .with(WorldTier.HAVEN, 600, 0)
@@ -62,7 +62,7 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
 
         // Uncommon, reasonable rarity until the final tier.
         // Two stats, with a chance for a basic effect. Opportunity for a socket.
-        this.addRarity("uncommon", TextColor.fromRgb(0x33FF33), Items.UNCOMMON_MATERIAL, b -> b
+        this.addRarity("uncommon", TextColor.fromRgb(0x33FF33), Items.TIMEWORN_FABRIC, b -> b
             .sortIndex(400)
             .weights(TieredWeights.builder()
                 .with(WorldTier.HAVEN, 360, 2.5F)
@@ -86,7 +86,7 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
         // Rare - always available, but starts out with very low frequency.
         // Two stats, one basic effect, with a chance for another.
         // Chance for two sockets, and can receive durability bonuses.
-        this.addRarity("rare", TextColor.fromRgb(0x5555FF), Items.RARE_MATERIAL, b -> b
+        this.addRarity("rare", TextColor.fromRgb(0x5555FF), Items.LUMINOUS_CRYSTAL_SHARD, b -> b
             .sortIndex(500)
             .weights(TieredWeights.builder()
                 .with(WorldTier.HAVEN, 40, 5)
@@ -115,7 +115,7 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
         // Starts to really appear in Summit, and is the most common rarity in Apotheosis.
         // Three stats, a basic effect, an ability, and a chance for a second basic effect.
         // Guaranteed to receive a socket, and receives a good durability bonus.
-        this.addRarity("epic", TextColor.fromRgb(0xBB00BB), Items.EPIC_MATERIAL, b -> b
+        this.addRarity("epic", TextColor.fromRgb(0xBB00BB), Items.ARCANE_SANDS, b -> b
             .sortIndex(600)
             .weights(TieredWeights.builder()
                 .with(WorldTier.HAVEN, 0, 0)
@@ -146,7 +146,7 @@ public class RarityProvider extends DynamicRegistryProvider<LootRarity> {
         // Mythic, the pinnacle rarity. Does not appear until summit, and has very low rarity until Apotheosis.
         // Four stats, two basic effects, one ability, guaranteed sockets and high durability bonuses.
         // Has a very low chance to receive 4 sockets, and be Unbreakable.
-        this.addRarity("mythic", TextColor.fromRgb(0xED7014), Items.MYTHIC_MATERIAL, b -> b
+        this.addRarity("mythic", TextColor.fromRgb(0xED7014), Items.GODFORGED_PEARL, b -> b
             .sortIndex(700)
             .weights(TieredWeights.builder()
                 .with(WorldTier.HAVEN, 0, 0)

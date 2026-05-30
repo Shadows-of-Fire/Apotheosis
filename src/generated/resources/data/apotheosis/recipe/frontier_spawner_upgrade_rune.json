@@ -12,12 +12,12 @@
         "C": "minecraft:clock",
         "F": "minecraft:flint",
         "S": "apotheosis:spawner_rune",
-        "U": "apotheosis:uncommon_material"
+        "T": "apotheosis:timeworn_fabric"
     },
     "pattern": [
-        "UCU",
+        "TCT",
         "FSF",
-        "UCU"
+        "TCT"
     ],
     "result": {
         "id": "apotheosis:frontier_spawner_upgrade_rune"

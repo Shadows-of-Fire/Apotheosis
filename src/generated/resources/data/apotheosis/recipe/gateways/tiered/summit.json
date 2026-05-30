@@ -9,15 +9,15 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
+        "A": "apotheosis:arcane_sands",
         "B": "minecraft:blaze_powder",
-        "E": "apotheosis:epic_material",
+        "E": "minecraft:ender_eye",
         "G": "minecraft:ghast_tear",
-        "M": "apotheosis:gem_dust",
-        "N": "minecraft:ender_eye"
+        "M": "apotheosis:gem_dust"
     },
     "pattern": [
         "BGB",
-        "ENE",
+        "AEA",
         "MMM"
     ],
     "result": {

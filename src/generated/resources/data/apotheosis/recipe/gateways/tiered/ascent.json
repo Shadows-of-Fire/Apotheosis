@@ -12,11 +12,11 @@
         "E": "#c:ender_pearls",
         "G": "apotheosis:gem_dust",
         "I": "#c:ingots/gold",
-        "R": "apotheosis:rare_material"
+        "L": "apotheosis:luminous_crystal_shard"
     },
     "pattern": [
-        "IRI",
-        "RER",
+        "ILI",
+        "LEL",
         "GGG"
     ],
     "result": {

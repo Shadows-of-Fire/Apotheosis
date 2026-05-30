@@ -9,16 +9,16 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "G": "apotheosis:gem_dust",
+        "E": "apotheosis:gem_dust",
+        "G": "apotheosis:godforged_pearl",
         "I": "apothic_enchanting:infused_breath",
-        "M": "apotheosis:mythic_material",
         "S": "apotheosis:sigil_of_malice",
         "W": "apothic_enchanting:warden_tendril"
     },
     "pattern": [
         "SWS",
-        "IMI",
-        "GGG"
+        "IGI",
+        "EEE"
     ],
     "result": {
         "components": {

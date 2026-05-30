@@ -9,22 +9,22 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "E": "minecraft:nether_star",
-        "G": {
+        "E": {
             "neoforge:ingredient_type": "apotheosis:gem",
             "gems": [
                 "apotheosis:the_end/endersurge"
             ],
             "purity": "perfect"
         },
+        "G": "apotheosis:godforged_pearl",
         "I": "apothic_enchanting:infused_breath",
-        "M": "apotheosis:mythic_material",
-        "N": "apotheosis:infused_spawner_rune"
+        "N": "apotheosis:infused_spawner_rune",
+        "T": "minecraft:nether_star"
     },
     "pattern": [
-        "MGM",
+        "GEG",
         "INI",
-        "MEM"
+        "GTG"
     ],
     "result": {
         "id": "apotheosis:pinnacle_spawner_upgrade_rune"
