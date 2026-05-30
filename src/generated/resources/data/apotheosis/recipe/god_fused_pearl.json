@@ -1,0 +1,17 @@
+{
+    "type": "apothic_enchanting:infusion",
+    "input": "apotheosis:godforged_pearl",
+    "max_requirements": {
+        "arcana": 60.0,
+        "eterna": 100.0,
+        "quanta": 11.0
+    },
+    "requirements": {
+        "arcana": 58.75,
+        "eterna": 100.0,
+        "quanta": 9.65
+    },
+    "result": {
+        "id": "apotheosis:god_fused_pearl"
+    }
+}

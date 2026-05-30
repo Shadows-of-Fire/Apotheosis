@@ -303,6 +303,8 @@ public class Apoth {
 
         public static final Holder<Item> GODFORGED_PEARL = rarityMat("godforged_pearl", "mythic");
 
+        public static final Holder<Item> GOD_FUSED_PEARL = R.item("god_fused_pearl", GlowyItem::new, p -> p.rarity(Rarity.EPIC));
+
         public static final Holder<Item> GEM_DUST = R.item("gem_dust", Item::new);
 
         public static final Holder<Item> GEM_FUSED_SLATE = R.item("gem_fused_slate", Item::new);

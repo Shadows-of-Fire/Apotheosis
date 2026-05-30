@@ -1,4 +1,4 @@
-// 26.1.2	2026-05-30T13:15:19.1237221	Apotheosis Recipes
+// 26.1.2	2026-05-30T14:05:58.9782527	Apotheosis Recipes
 6866f1cddfe59cb0e74c6c57840b644abfefc71f data/apotheosis/recipe/ascent_spawner_upgrade_rune.json
 e18a8715281af82e5e54874156172684bba0304a data/apotheosis/recipe/augmenting_table.json
 bc23a5d1a1f1a9d2651a956c6e388d2a1d6bae78 data/apotheosis/recipe/burning_spawner_rune.json
@@ -17,6 +17,7 @@ b4edc808055a7cf878b65893950ceee940f4f58f data/apotheosis/recipe/gem_cutting/flaw
 ff5c0337cf70d1d9561f63ed4942a4e21fddefa6 data/apotheosis/recipe/gem_cutting/normal.json
 23767beda4a554e8d0899748da275b3adacb724d data/apotheosis/recipe/gem_cutting_table.json
 c7e4415163aa7bbc89b18f593d6a0490b08466a0 data/apotheosis/recipe/gem_fused_slate.json
+da2fa6cacfe92c1555ebf16a4fa88357700937d5 data/apotheosis/recipe/god_fused_pearl.json
 703108f1bc254075f1820cdcbdc0c1fe8baaed4a data/apotheosis/recipe/gold_upgrade_smithing_template.json
 82a9ed3105fefe0e5408bd2e2b3fe81c2967023c data/apotheosis/recipe/ignore_conditions_spawner_rune.json
 32047b2820e481da6b2d968a5bc35d47eda83cb3 data/apotheosis/recipe/ignore_light_spawner_rune.json
@@ -29,6 +30,7 @@ d64b699e3f80a7933211494cf6a4dc8546dfcccf data/apotheosis/recipe/iron_upgrade_smi
 618b47a8df3dca8ce533137e316fd23eb583be1a data/apotheosis/recipe/no_ai_spawner_rune.json
 6146e910970a831419cbde56cc13674664055aa7 data/apotheosis/recipe/pinnacle_spawner_upgrade_rune.json
 25f85bc9067945d868682dac67529fbe52dee5ce data/apotheosis/recipe/potion_charm.json
+407609aa05ee6b228a2c4175637862848d78a0ba data/apotheosis/recipe/raven_enchanting_table.json
 dc18aee8506217650573708af5d61644775fda97 data/apotheosis/recipe/redstone_control_spawner_rune.json
 0803ca18f18ad251e9cbd1cc8ad11c7a557c7586 data/apotheosis/recipe/reforging/common.json
 0c9e500b832b072a30fd1ed224da480ba89e1712 data/apotheosis/recipe/reforging/epic.json

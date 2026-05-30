@@ -154,6 +154,10 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         this.addReforging("epic", 2, 4, 30, Blocks.REFORGING_TABLE);
         this.addReforging("mythic", 3, 5, 50, Blocks.REFORGING_TABLE);
 
+        this.addInfusion("god_fused_pearl", new ItemStackTemplate(Items.GOD_FUSED_PEARL), Items.GODFORGED_PEARL, req(100, 9.65F, 58.75F), req(100, 11F, 60F));
+        this.addShaped(Ench.Items.RAVEN_ENCHANTING_TABLE, 3, 3, null, perfectRoyal(), null, Items.GOD_FUSED_PEARL, Ench.Items.APOTHIC_ENCHANTING_TABLE, Items.GOD_FUSED_PEARL, Tags.Blocks.OBSIDIANS, Tags.Blocks.OBSIDIANS,
+            Tags.Blocks.OBSIDIANS);
+
         this.addShaped(Blocks.AUGMENTING_TABLE, 3, 3, null, Items.NETHER_STAR, null, Items.GODFORGED_PEARL, Items.ENCHANTING_TABLE, Items.GODFORGED_PEARL, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE,
             Items.POLISHED_BLACKSTONE);
         this.addShaped(Blocks.GEM_CUTTING_TABLE, 3, 3, Items.SMOOTH_STONE, Items.SHEARS, Items.SMOOTH_STONE, ItemTags.PLANKS, Items.GEM_DUST, ItemTags.PLANKS, ItemTags.PLANKS, null, ItemTags.PLANKS);
@@ -196,13 +200,14 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             new PotionCharmRecipe(new net.minecraft.world.item.crafting.Recipe.CommonInfo(true), new net.minecraft.world.item.crafting.CraftingRecipe.CraftingBookInfo(CraftingBookCategory.MISC, ""), this.charmPattern()), null);
 
         out.accept(key(Apotheosis.loc("infusion/potion_charm")), new CharmInfusionRecipe(
-            new Stats(15F, 100F, 8.5F, 32.5F, 0),
-            new Stats(15F, 100F, 13.5F, 37.5F, 0)),
+            new Stats(30F, 100F, 8.5F, 32.5F, 0),
+            new Stats(30F, 100F, 13.5F, 37.5F, 0)),
             null);
 
         this.addShaped(new ItemStackTemplate(Items.IRON_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.MYSTERIOUS_SCRAP_METAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
         this.addShaped(new ItemStackTemplate(Items.GOLD_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.TIMEWORN_FABRIC, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
-        this.addShaped(new ItemStackTemplate(Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.LUMINOUS_CRYSTAL_SHARD, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        this.addShaped(new ItemStackTemplate(Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.LUMINOUS_CRYSTAL_SHARD, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE,
+            Items.STONE);
 
         this.addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_SWORD, Tags.Items.INGOTS_IRON, 4, Items.IRON_SWORD);
         this.addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_PICKAXE, Tags.Items.INGOTS_IRON, 4, Items.IRON_PICKAXE);
@@ -491,7 +496,7 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
     }
 
     private static Stats req(float eterna, float quanta, float arcana) {
-        return new Stats(15F, eterna, quanta, arcana, 0);
+        return new Stats(30F, eterna, quanta, arcana, 0);
     }
 
     private void addInfusion(String path, ItemStackTemplate output, Object input, Stats requirements) {
@@ -528,6 +533,11 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
 
     private Ingredient perfectEndersurge() {
         var list = List.of(GemRegistry.INSTANCE.holder(Apotheosis.loc("the_end/endersurge")));
+        return new Ingredient(new GemIngredient(DynamicHolderSet.direct(list), Purity.PERFECT));
+    }
+
+    private Ingredient perfectRoyal() {
+        var list = List.of(GemRegistry.INSTANCE.holder(Apotheosis.loc("overworld/royalty")));
         return new Ingredient(new GemIngredient(DynamicHolderSet.direct(list), Purity.PERFECT));
     }
 
