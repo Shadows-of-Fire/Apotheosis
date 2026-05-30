@@ -8,7 +8,7 @@ license="MIT License (code) / All Rights Reserved (assets)"
 
 modId="apotheosis"
 
-version="9.0.0-beta5"
+version="9.0.0"
 
 displayName="Apotheosis"
 
@@ -40,35 +40,35 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="placebo"
     type="required"
-    versionRange="[10.0.0-beta15,)"
+    versionRange="[10.0.0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="apothic_attributes"
     type="required"
-    versionRange="[3.0.0-beta9,)"
+    versionRange="[3.0.0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="apothic_spawners"
     type="required"
-    versionRange="[2.0.0beta3,)"
+    versionRange="[2.0.0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="apothic_enchanting"
     type="required"
-    versionRange="[4.0.0-beta16,)"
+    versionRange="[2.0.0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="gateways"
     type="optional"
-    versionRange="[6.0.0-beta3,)"
+    versionRange="[6.0.0,)"
     ordering="AFTER"
     side="BOTH"
 

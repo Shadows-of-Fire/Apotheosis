@@ -1,3 +1,39 @@
+## 9.0.0
+Apotheosis 9.0.0 - "A World In Tiers" is now here for Minecraft 26.1.2!
+
+![](https://i.imgur.com/QEzYof1.png)
+
+### Features
+* Apothic Enchanting is now integrated with World Tiers.
+  * Tier Augments now provide negative Max Eterna, limiting your enchanting power based on your overall progress.
+  * A recipe for the Enchanting Table of the Raven has been added.
+* Apothic Spawners is now integrated with World Tiers.
+  * The basic spawner upgrade recipes provided by Apothic Spawners are disabled.
+  * Blowing up an Apothic Spawner grants Spawner Chains, used to craft Spawner Runes.
+  * Various Spawner Runes are now used to upgrade spawners, with 4 rarity-based runes for "core" stats.
+* All textures have been updated.
+* The reforging table now has new audio instead of playing a series of vanilla sounds.
+
+### Technical Changes
+* The Item IDs for rarity materials have been updated to match their real names, instead of `*_material`.
+* All cooldowns (with the hourglass symbol) use Apothic Attributes' unified cooldown system and respect Cooldown Reduction.
+* Data paths for most registries are now namespaced. You'll notice an additional `apotheosis/` directory in the `data/` folder.
+
+## 8.5.3
+* Fixed the augmenting table showing affixes that had 0 weight as reroll candidates.
+  * This mostly impacted the table showing the Unbound (creative flight) affix when it was unavailable.
+* ZHAY10086, mc-kaishixiaxue: Updated Chinese translation.
+* PODOB: Updated Korean translation.
+* PrincessStelllar: Updated Brazilian translation.
+* Tenwoc: Added Ukranian translation.
+* Removed Russian translation.
+  * The Russian translation has been broken for many updates and no PRs have been made to repair it, so it has been removed for the time being.
+* Daudeuf: Added `Clearable` implementations to some block entities.
+* Fixed a potential crash during invader spawning.
+* Fixed a potential crash when using the Sigil of Malice after removing affixes via datapack.
+* Fixed the World Tier Tutorial being stuck enabled when using manual world tier changes.
+* "Unique" wandering trader items (e.g., Captive Dreams) now only spawn in World Tier: Summit or higher.
+
 ## 8.5.2
 * Fixed a dupe bug.
 
