@@ -1,3 +1,6 @@
+## 8.5.4
+* WerewolfieMod: Fixed invalid modifier prefix in `EntityModifier`.
+
 ## 8.5.3
 * Fixed the augmenting table showing affixes that had 0 weight as reroll candidates.
   * This mostly impacted the table showing the Unbound (creative flight) affix when it was unavailable.
