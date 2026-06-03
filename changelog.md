@@ -1,3 +1,6 @@
+## 9.0.1
+* Updated to account for a recent Neo BC.
+
 ## 9.0.0
 Apotheosis 9.0.0 - "A World In Tiers" is now here for Minecraft 26.1.2!
 
