@@ -386,7 +386,7 @@ public class AdventureEvents {
     public void recordColdDamage(LivingDamageEvent.Post e) {
         if (e.getSource().is(ALObjects.DamageTypes.COLD_DAMAGE)) {
             LivingEntity entity = e.getEntity();
-            entity.setData(Attachments.COLD_DAMAGE_TAKEN, entity.getData(Attachments.COLD_DAMAGE_TAKEN) + e.getNewDamage());
+            entity.setData(Attachments.COLD_DAMAGE_TAKEN, entity.getData(Attachments.COLD_DAMAGE_TAKEN) + e.getInflictedDamage());
         }
     }
 
