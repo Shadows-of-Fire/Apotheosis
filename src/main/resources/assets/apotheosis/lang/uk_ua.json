@@ -1,6 +1,6 @@
 {
     "traslators": "@tenwoc",
-    "comment_id": "Guidebook",
+    "comment_id": "/Adventure Module",
 
     "key.categories.apotheosis": "Apotheosis",
 
@@ -723,7 +723,7 @@
 
     "elite.apotheosis.craig": "Крейг Вічний",
 
-    "comment_id": "Guidebook",
+    "comment_id": "/Adventure + Gateways Compat",
 
     "misc.apotheosis.random": "Випадковий",
     "wave_entity.apotheosis.invader": "%s апофеотичний загарбник",
@@ -865,7 +865,7 @@
     "advancements.apotheosis.challenge_gates.sigil_of_supremacy.title": "Неперевершено!                    ",
     "advancements.apotheosis.challenge_gates.sigil_of_supremacy.desc": "Здобудьте Сигіл перевершення з 100 хвилі нескінченних просторових воріт Апофеотичних загарбників",
 
-    "comment_id": "Guidebook",
+    "comment_id": "/Potion Module",
 
     "item.apotheosis.lucky_foot": "Щаслива кроляча лапка",
 
@@ -879,13 +879,13 @@
     "item.apotheosis.potion_charm.curios_only": "Працює лише у слоті аксесуарів",
     "misc.apotheosis.blacklisted_potion": "Неможливо перетворити в амулет.",
 
-    "comment_id": "Guidebook",
+    "comment_id": "/Garden Module",
     "item.apotheosis.ender_lead": "Повідець Енду",
     "info.apotheosis.noentity": "Захоплена сутність: Ніяка",
     "info.apotheosis.containedentity": "Захоплена сутність: %s",
     "info.apotheosis.ender_lead": "Повідець Енду — це предмет, який можна використовувати для переміщення тварин.  Ударте тварину, щоб захопити її, і клацніть ПКМ, щоб відпустити.  Початковий повідець не працює на інших типах сутностей.",
 
-    "comment_id": "Guidebook",
+    "comment_id": "/Wanderer Trades",
     "name.apotheosis.captive_dreams": "Ловець снів",
     "name.apotheosis.stonebreaker": "Каменелом",
     "name.apotheosis.treecapitator": "Деревостягувач",
@@ -897,7 +897,7 @@
     "name.apotheosis.rune_forged_greaves": "Ковані рунами чоботи",
     "name.apotheosis.eternal_vigilance": "Вічна пильність",
 
-    "comment_id": "Guidebook",
+    "comment_id": "/Misc",
     "info.apoth.modifier_disabled": "Цей модифікатор вимкнений",
     "itemGroup.apotheosis.adventure": "Apotheosis: Модуль пригоди",
     "itemGroup.apotheosis.ench": "Apotheosis: Модуль зачарування",
