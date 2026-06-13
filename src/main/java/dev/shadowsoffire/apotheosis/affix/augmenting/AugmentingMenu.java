@@ -96,14 +96,12 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
                     return false;
                 }
 
-                ItemStack sigils = this.getSigils();
                 if (!this.player.isCreative()) {
                     if (!this.hasUpgradeCost()) {
                         return false;
                     }
                     else {
-                        sigils.shrink(AdventureConfig.upgradeSigilCost);
-                        this.slots.get(SIGIL_SLOT).set(sigils);
+                        this.slots.get(SIGIL_SLOT).remove(AdventureConfig.upgradeSigilCost);
                         EnchantmentUtils.chargeExperience(player, EnchantmentUtils.getTotalExperienceForLevel(AdventureConfig.upgradeLevelCost));
                     }
                 }
@@ -122,13 +120,12 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
                     return false;
                 }
 
-                ItemStack sigils = this.getSigils();
                 if (!this.player.isCreative()) {
                     if (!this.hasRerollCost()) {
                         return false;
                     }
                     else {
-                        sigils.shrink(AdventureConfig.rerollSigilCost);
+                        this.slots.get(SIGIL_SLOT).remove(AdventureConfig.rerollSigilCost);
                         EnchantmentUtils.chargeExperience(player, EnchantmentUtils.getTotalExperienceForLevel(AdventureConfig.rerollLevelCost));
                     }
                 }
