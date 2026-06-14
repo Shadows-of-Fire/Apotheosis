@@ -539,7 +539,7 @@
     "item.apotheosis.gem.apotheosis:twilight/forest": "Gem of the Twilight Forest",
     "item.apotheosis.gem.apotheosis:twilight/queen": "Gem of the Frozen Queen",
 
-    "item.apotheosis.boss_summoner": "Apothic Boss Summoner",
+    "item.apotheosis.boss_summoner": "Apothic Invader Summoner",
     "item.apotheosis.gem.cracked": "Cracked %s",
     "item.apotheosis.gem.chipped": "Chipped %s",
     "item.apotheosis.gem.flawed": "Flawed %s",
@@ -737,7 +737,7 @@
     "loot_category.apotheosis.shears.plural": "Shears",
 
     "info.apotheosis.boss_spawn": "%s has awoken nearby!",
-    "info.apotheosis.boss": "%s Apothic Boss",
+    "info.apotheosis.boss": "%s Apothic Invader",
     "info.apotheosis.boss_item": "Will Drop: %s",
     "info.apotheosis.boss_modifiers": "Boss Modifiers:",
     "info.apotheosis.rarity_material": "Rarity Material (%s)",
@@ -865,7 +865,7 @@
     "advancements.apotheosis.ancient.desc": "Find an Ancient item",
 
     "advancements.apotheosis.boss": "He Wasn't So Strong",
-    "advancements.apotheosis.boss.desc": "Slay an Apothic Boss, and retrieve their affix item",
+    "advancements.apotheosis.boss.desc": "Slay an Apothic Invader, and retrieve their affix item",
     "advancements.apotheosis.chests": "I Found It Underground",
     "advancements.apotheosis.chests.desc": "Find an affix item in a chest",
     "advancements.apotheosis.merchant": "I Got Deals",
