@@ -1,3 +1,12 @@
+## 9.0.2
+* Updated to Placebo 10.0.1.
+  * Things interacting with `RandomAttributeModifier` now have a `modifier_id` field.
+  * Tier Augments' `modifier_id` field has been hoisted into the `modifier` object.
+* Fixed some stale references to the word "Boss"
+* Fixed augmenting not charging sigils to reroll.
+* pvpeuve: Added Spanish translation.
+* mc-kaishixiaxue: Updated Chinese translation.
+
 ## 9.0.1
 * Updated to account for a recent Neo BC.
 
