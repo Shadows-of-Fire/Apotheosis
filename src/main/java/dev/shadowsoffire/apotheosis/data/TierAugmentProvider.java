@@ -74,7 +74,7 @@ public class TierAugmentProvider extends DynamicRegistryProvider<TierAugment> {
 
     private void addAttribute(String path, WorldTier tier, Target target, int sortIdx, Holder<Attribute> attr, Operation op, float value) {
         Identifier id = Apotheosis.loc(path);
-        RandomAttributeModifier modif = new RandomAttributeModifier(attr, op, StepFunction.constant(value));
-        this.add(id, new AttributeAugment(tier, target, sortIdx, modif, id));
+        RandomAttributeModifier modif = new RandomAttributeModifier(attr, op, StepFunction.constant(value), id);
+        this.add(id, new AttributeAugment(tier, target, sortIdx, modif));
     }
 }

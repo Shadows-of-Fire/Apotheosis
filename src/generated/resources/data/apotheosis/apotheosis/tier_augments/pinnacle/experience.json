@@ -2,10 +2,10 @@
     "type": "apotheosis:attribute",
     "modifier": {
         "attribute": "apothic_attributes:experience_gained",
+        "modifier_id": "apotheosis:pinnacle/experience",
         "operation": "add_multiplied_total",
         "value": 1.25
     },
-    "modifier_id": "apotheosis:pinnacle/experience",
     "sort_index": 100,
     "target": "players",
     "tier": "pinnacle"

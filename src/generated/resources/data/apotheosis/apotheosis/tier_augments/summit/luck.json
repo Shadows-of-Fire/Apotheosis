@@ -2,10 +2,10 @@
     "type": "apotheosis:attribute",
     "modifier": {
         "attribute": "minecraft:luck",
+        "modifier_id": "apotheosis:summit/luck",
         "operation": "add_multiplied_total",
         "value": 0.5
     },
-    "modifier_id": "apotheosis:summit/luck",
     "sort_index": 200,
     "target": "players",
     "tier": "summit"

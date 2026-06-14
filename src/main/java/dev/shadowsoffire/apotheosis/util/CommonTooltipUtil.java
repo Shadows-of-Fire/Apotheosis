@@ -7,6 +7,7 @@ import com.google.common.base.Predicates;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.mobs.types.Invader;
+import dev.shadowsoffire.apotheosis.mobs.util.BossStats;
 import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 import net.minecraft.ChatFormatting;
@@ -34,7 +35,7 @@ public class CommonTooltipUtil {
             AttributeMap map = entity.getAttributes();
             BuiltInRegistries.ATTRIBUTE.listElements().map(map::getInstance).filter(Predicates.notNull()).forEach(inst -> {
                 for (AttributeModifier modif : inst.getModifiers()) {
-                    if (modif.id().getPath().startsWith(Invader.INVADER_ATTR_PREFIX)) {
+                    if (modif.id().getPath().startsWith(BossStats.MODIFIER_PREFIX)) {
                         tooltip.accept(inst.getAttribute().value().toComponent(modif, ApothicAttributes.getTooltipFlag()));
                     }
                 }

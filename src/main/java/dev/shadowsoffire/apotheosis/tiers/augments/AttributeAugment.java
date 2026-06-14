@@ -6,7 +6,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -18,15 +17,14 @@ import net.neoforged.neoforge.common.util.AttributeTooltipContext;
  * <p>
  * The modifier will be ignored if the entity does not have the attribute.
  */
-public record AttributeAugment(WorldTier tier, Target target, int sortIndex, RandomAttributeModifier modifier, Identifier id) implements TierAugment {
+public record AttributeAugment(WorldTier tier, Target target, int sortIndex, RandomAttributeModifier modifier) implements TierAugment {
 
     public static final Codec<AttributeAugment> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             WorldTier.CODEC.fieldOf("tier").forGetter(TierAugment::tier),
             Target.CODEC.fieldOf("target").forGetter(TierAugment::target),
             Codec.intRange(0, 2000).optionalFieldOf("sort_index", 1000).forGetter(TierAugment::sortIndex),
-            RandomAttributeModifier.CONSTANT_CODEC.fieldOf("modifier").forGetter(AttributeAugment::modifier),
-            Identifier.CODEC.fieldOf("modifier_id").forGetter(AttributeAugment::id))
+            RandomAttributeModifier.CODEC.fieldOf("modifier").forGetter(AttributeAugment::modifier))
         .apply(inst, AttributeAugment::new));
 
     @Override
@@ -38,7 +36,7 @@ public record AttributeAugment(WorldTier tier, Target target, int sortIndex, Ran
     public void apply(ServerLevelAccessor level, LivingEntity entity) {
         AttributeInstance inst = entity.getAttribute(this.modifier.attribute());
         if (inst != null) {
-            AttributeModifier modif = this.modifier.createDeterministic(this.id);
+            AttributeModifier modif = this.modifier.createDeterministic();
             inst.addOrReplacePermanentModifier(modif);
         }
     }
@@ -47,13 +45,13 @@ public record AttributeAugment(WorldTier tier, Target target, int sortIndex, Ran
     public void remove(ServerLevelAccessor level, LivingEntity entity) {
         AttributeInstance inst = entity.getAttribute(this.modifier.attribute());
         if (inst != null) {
-            inst.removeModifier(this.id);
+            inst.removeModifier(this.modifier.modifierId());
         }
     }
 
     @Override
     public Component getDescription(AttributeTooltipContext ctx) {
-        AttributeModifier modif = this.modifier.createDeterministic(this.id);
+        AttributeModifier modif = this.modifier.createDeterministic();
         return this.modifier.attribute().value().toComponent(modif, ctx.flag());
     }
 

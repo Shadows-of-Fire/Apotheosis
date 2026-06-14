@@ -2,10 +2,10 @@
     "type": "apotheosis:attribute",
     "modifier": {
         "attribute": "apothic_attributes:experience_gained",
+        "modifier_id": "apotheosis:ascent/experience",
         "operation": "add_multiplied_total",
         "value": 0.55
     },
-    "modifier_id": "apotheosis:ascent/experience",
     "sort_index": 100,
     "target": "players",
     "tier": "ascent"

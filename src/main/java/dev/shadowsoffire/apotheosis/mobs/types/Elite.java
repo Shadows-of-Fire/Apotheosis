@@ -9,7 +9,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.mixin.EntityInvoker;
-import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry.IEntityMatch;
 import dev.shadowsoffire.apotheosis.mobs.util.AffixData;
 import dev.shadowsoffire.apotheosis.mobs.util.BasicBossData;
@@ -29,7 +28,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
@@ -156,9 +154,8 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
             }
         }
 
-        int i = 0;
         for (RandomAttributeModifier modif : this.stats.modifiers()) {
-            modif.apply(this.createAttributeModifierId(i++), rand, mob);
+            modif.apply(rand, mob);
         }
 
         this.basicData.applyEntityName(rand, mob);
@@ -178,11 +175,6 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
         mob.setHealth(mob.getMaxHealth());
 
         this.basicData.appendBonusLoot(mob);
-    }
-
-    protected Identifier createAttributeModifierId(int index) {
-        Identifier key = EliteRegistry.INSTANCE.getKey(this);
-        return Identifier.fromNamespaceAndPath(key.getNamespace(), Invader.INVADER_ATTR_PREFIX + key.getPath() + "_modif_" + index);
     }
 
     public static Builder builder() {

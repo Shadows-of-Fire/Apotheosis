@@ -48,11 +48,13 @@
         "attribute_modifiers": [
             {
                 "attribute": "minecraft:max_health",
+                "modifier_id": "apotheosis:boss_stats_0",
                 "operation": "add_value",
                 "value": 4096.0
             },
             {
                 "attribute": "minecraft:attack_damage",
+                "modifier_id": "apotheosis:boss_stats_1",
                 "operation": "add_multiplied_total",
                 "value": {
                     "min": 4.0,
@@ -61,11 +63,13 @@
             },
             {
                 "attribute": "minecraft:knockback_resistance",
+                "modifier_id": "apotheosis:boss_stats_2",
                 "operation": "add_value",
                 "value": 1.0
             },
             {
                 "attribute": "minecraft:scale",
+                "modifier_id": "apotheosis:boss_stats_3",
                 "operation": "add_value",
                 "value": 3.0
             }

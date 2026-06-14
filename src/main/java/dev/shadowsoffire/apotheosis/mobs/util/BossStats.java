@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.json.ChancedEffectInstance;
 import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
 import dev.shadowsoffire.placebo.util.StepFunction;
@@ -23,6 +24,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
  * @param modifiers     List of attribute modifiers to apply to this boss when spawned. May be empty, but may not be null.
  */
 public record BossStats(float enchantChance, EnchantmentLevels enchLevels, List<ChancedEffectInstance> effects, List<RandomAttributeModifier> modifiers) {
+
+    public static final String MODIFIER_PREFIX = "boss_stats_";
 
     public static final Codec<BossStats> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
@@ -85,7 +88,7 @@ public record BossStats(float enchantChance, EnchantmentLevels enchLevels, List<
         }
 
         public Builder modifier(Holder<Attribute> attribute, Operation operation, StepFunction value) {
-            this.modifiers.add(new RandomAttributeModifier(attribute, operation, value));
+            this.modifiers.add(new RandomAttributeModifier(attribute, operation, value, Apotheosis.loc(MODIFIER_PREFIX + this.modifiers.size())));
             return this;
         }
 

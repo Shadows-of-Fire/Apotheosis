@@ -25,7 +25,6 @@ import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
-import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
 import dev.shadowsoffire.apotheosis.mobs.util.BasicBossData;
 import dev.shadowsoffire.apotheosis.mobs.util.BossStats;
 import dev.shadowsoffire.apotheosis.tiers.Constraints;
@@ -55,7 +54,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
-import net.minecraft.resources.Identifier;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -98,8 +96,6 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
      * NBT key for a string value applied to entity persistent data indicating a boss's rarity.
      */
     public static final String RARITY_KEY = BOSS_KEY + ".rarity";
-
-    public static final String INVADER_ATTR_PREFIX = "apothic_invader_";
 
     public static final Codec<Invader> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
@@ -195,9 +191,8 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
             }
         }
 
-        int i = 0;
         for (RandomAttributeModifier modif : stats.modifiers()) {
-            modif.apply(this.createAttributeModifierId(i++), rand, mob);
+            modif.apply(rand, mob);
         }
 
         mob.goalSelector.getAvailableGoals().removeIf(IS_VILLAGER_ATTACK);
@@ -273,11 +268,6 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         }
 
         this.basicData.appendBonusLoot(mob);
-    }
-
-    protected Identifier createAttributeModifierId(int index) {
-        Identifier key = InvaderRegistry.INSTANCE.getKey(this);
-        return Identifier.fromNamespaceAndPath(key.getNamespace(), INVADER_ATTR_PREFIX + key.getPath() + "_modif_" + index);
     }
 
     public static void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure, RegistryAccess reg) {

@@ -2,10 +2,10 @@
     "type": "apotheosis:attribute",
     "modifier": {
         "attribute": "apothic_attributes:armor_pierce",
+        "modifier_id": "apotheosis:pinnacle/armor_pierce",
         "operation": "add_value",
         "value": 25.0
     },
-    "modifier_id": "apotheosis:pinnacle/armor_pierce",
     "sort_index": 200,
     "target": "monsters",
     "tier": "pinnacle"

@@ -2,10 +2,10 @@
     "type": "apotheosis:attribute",
     "modifier": {
         "attribute": "minecraft:armor_toughness",
+        "modifier_id": "apotheosis:pinnacle/armor_toughness",
         "operation": "add_value",
         "value": 20.0
     },
-    "modifier_id": "apotheosis:pinnacle/armor_toughness",
     "sort_index": 150,
     "target": "monsters",
     "tier": "pinnacle"

@@ -2,10 +2,10 @@
     "type": "apotheosis:attribute",
     "modifier": {
         "attribute": "minecraft:armor",
+        "modifier_id": "apotheosis:summit/armor",
         "operation": "add_value",
         "value": 12.0
     },
-    "modifier_id": "apotheosis:summit/armor",
     "sort_index": 100,
     "target": "monsters",
     "tier": "summit"

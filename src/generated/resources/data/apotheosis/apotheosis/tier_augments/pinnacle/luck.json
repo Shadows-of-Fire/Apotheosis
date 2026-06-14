@@ -2,10 +2,10 @@
     "type": "apotheosis:attribute",
     "modifier": {
         "attribute": "minecraft:luck",
+        "modifier_id": "apotheosis:pinnacle/luck",
         "operation": "add_multiplied_total",
         "value": 1.0
     },
-    "modifier_id": "apotheosis:pinnacle/luck",
     "sort_index": 200,
     "target": "players",
     "tier": "pinnacle"

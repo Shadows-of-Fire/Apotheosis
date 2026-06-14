@@ -2,10 +2,10 @@
     "type": "apotheosis:attribute",
     "modifier": {
         "attribute": "apothic_attributes:prot_pierce",
+        "modifier_id": "apotheosis:pinnacle/prot_pierce",
         "operation": "add_value",
         "value": 20.0
     },
-    "modifier_id": "apotheosis:pinnacle/prot_pierce",
     "sort_index": 300,
     "target": "monsters",
     "tier": "pinnacle"

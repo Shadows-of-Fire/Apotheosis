@@ -40,7 +40,7 @@ public class TierAugmentModifierSource extends ModifierSource<TierAugment> {
             WorldTier tier = WorldTier.getTier(player);
             for (TierAugment aug : TierAugmentRegistry.getAugments(tier, Target.PLAYERS)) {
                 if (aug instanceof AttributeAugment attr) {
-                    AttributeModifier modif = attr.modifier().createDeterministic(attr.id());
+                    AttributeModifier modif = attr.modifier().createDeterministic();
                     map.accept(modif, new TierAugmentModifierSource(aug));
                 }
             }

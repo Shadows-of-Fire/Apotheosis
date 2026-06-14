@@ -2,10 +2,10 @@
     "type": "apotheosis:attribute",
     "modifier": {
         "attribute": "minecraft:armor",
+        "modifier_id": "apotheosis:frontier/armor",
         "operation": "add_value",
         "value": 4.0
     },
-    "modifier_id": "apotheosis:frontier/armor",
     "sort_index": 100,
     "target": "monsters",
     "tier": "frontier"
