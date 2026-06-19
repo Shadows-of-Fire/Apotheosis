@@ -1,9 +1,9 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.80'
+    id 'net.neoforged.moddev' version '2.0.141'
     id 'com.diffplug.eclipse.apt' version '3.42.2'
-    id 'net.darkhax.curseforgegradle' version '1.1.18'
+    id 'me.modmuss50.mod-publish-plugin' version '2.0.0'
 }
 
 base {
@@ -376,42 +376,59 @@ def getChangelogLink() {
     }
 }
 
-// Splits a list of values separated by ', ' (comma + space).
-def splitList(list) {
-    def split = list.split(', ')
-    assert split.length == list.count(',') + 1
-    return split
+// Parses a comma-separated dependency list for one platform ('curseforge' or 'modrinth'). Each entry is
+// either "slug" (sent to both platforms) or "curseforgeSlug|modrinthSlug"; an empty side (e.g. "foo|" or
+// "|foo") limits that dependency to a single platform.
+def depsFor(String list, String platform) {
+    list.split(',').collect { it.trim() }.findAll { it }.collect { entry ->
+        def parts = entry.split('\\|', -1).collect { it.trim() }
+        parts.size() > 1 ? (platform == 'curseforge' ? parts[0] : parts[1]) : parts[0]
+    }.findAll { it }
 }
 
-tasks.register('publishCurseForge', net.darkhax.curseforgegradle.TaskPublishCurseForge).configure {
-    if (project.hasProperty('curseforgeUploadToken') && project.hasProperty('curseforgeProjectId')) {
-        apiToken = getProperty('curseforgeUploadToken')
-        disableVersionDetection()
+// Applies CurseForge/Modrinth dependency relations from gradle.properties to the given platform options.
+def applyDeps = { options, String platform ->
+    if (project.hasProperty('requiredDeps'))     depsFor(project.requiredDeps, platform).each     { options.requires(it) }
+    if (project.hasProperty('optionalDeps'))     depsFor(project.optionalDeps, platform).each     { options.optional(it) }
+    if (project.hasProperty('incompatibleDeps')) depsFor(project.incompatibleDeps, platform).each { options.incompatible(it) }
+}
 
-        def projectId = getProperty('curseforgeProjectId')
-        def mainFile = upload(projectId, jar)
-        mainFile.changelog = getChangelogLink()
-        mainFile.addModLoader(splitList("${modLoaders}"))
-        mainFile.addJavaVersion("Java ${javaVersion}")
-        mainFile.addGameVersion("${mcVersion}")
-        mainFile.releaseType = "${releaseType}"        
+publishMods {
+    file = jar.archiveFile
+    additionalFiles.from(sourcesJar.archiveFile, stockDataPack.archiveFile)
+    changelog = provider { getChangelogLink() }
+    version = "${mcVersion}-${project.version}".toString()
+    type = switch (project.releaseType) {
+        case 'release' -> STABLE
+        case 'beta'    -> BETA
+        case 'alpha'   -> ALPHA
+        default -> throw new GradleException("Unknown release type: ${project.releaseType}")
+    }
+    modLoaders.add("neoforge")
 
-        if (project.hasProperty('requiredDeps')) {
-            mainFile.addRequirement(splitList("${requiredDeps}"))
+    if (project.hasProperty('curseforgeUploadToken')) {
+        curseforge {
+            projectId = curseforgeProjectId
+            accessToken = providers.gradleProperty('curseforgeUploadToken')
+            minecraftVersions.add(mcVersion)
+            javaVersions.add(JavaVersion.toVersion(javaVersion))
+            client = true
+            server = true
+            applyDeps(delegate, 'curseforge')
         }
-        if (project.hasProperty('optionalDeps')) {
-            mainFile.addOptional(splitList("${optionalDeps}"))
-        }
-        if (project.hasProperty('incompatibleDeps')) {
-            mainFile.addIncompatibility(splitList("${incompatibleDeps}"))
-        }
+    }
 
-        mainFile.withAdditionalFile(sourcesJar)
-        mainFile.withAdditionalFile(stockDataPack)
+    if (project.hasProperty('modrinthUploadToken') && project.hasProperty('modrinthProjectId')) {
+        modrinth {
+            projectId = modrinthProjectId
+            accessToken = providers.gradleProperty('modrinthUploadToken')
+            minecraftVersions.add(mcVersion)
+            applyDeps(delegate, 'modrinth')
+        }
     }
 }
 
 task publishAll() {
-    dependsOn publish
-    dependsOn publishCurseForge
+    dependsOn 'publish'
+    dependsOn 'publishMods'
 }
