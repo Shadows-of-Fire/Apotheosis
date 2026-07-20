@@ -153,6 +153,7 @@ public class AdventureModuleClient {
         });
         NeoForge.EVENT_BUS.register(AdventureKeys.class);
         NeoForge.EVENT_BUS.register(RadialProgressTracker.class);
+        TierAugmentModifierSource.bootstrap();
     }
 
     @SubscribeEvent
