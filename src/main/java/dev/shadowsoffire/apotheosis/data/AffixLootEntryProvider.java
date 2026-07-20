@@ -109,9 +109,10 @@ public class AffixLootEntryProvider extends DynamicRegistryProvider<AffixLootEnt
             }
         }
 
-        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(5, 1), new ItemStack(Items.BOW)));
-        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(5, 1), new ItemStack(Items.CROSSBOW)));
-        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(5, 1), new ItemStack(Items.SHIELD)));
+        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(5, 1), new ItemStack(Items.SHEARS)));
+        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(15, 1), new ItemStack(Items.BOW)));
+        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(10, 1), new ItemStack(Items.CROSSBOW)));
+        this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(10, 1), new ItemStack(Items.SHIELD)));
         this.addEntry(new AffixLootEntry(TRIDENT, new ItemStack(Items.TRIDENT)));
         this.addEntry(new AffixLootEntry(TieredWeights.forAllTiers(2, 0), new ItemStack(Items.TURTLE_HELMET)));
 

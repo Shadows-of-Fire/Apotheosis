@@ -2,10 +2,10 @@
     "type": "apotheosis:affix_loot_entry",
     "stack": {
         "count": 1,
-        "id": "minecraft:bow"
+        "id": "minecraft:shears"
     },
     "weights": {
         "quality": 1.0,
-        "weight": 15
+        "weight": 5
     }
 }

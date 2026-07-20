@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-20T01:51:26.3567276	Recipes
+// 1.21.1	2026-07-04T02:02:36.934076602	Recipes
 bab664def1f01400bfe3a7cf432385247dcd847d data/apotheosis/recipe/augmenting_table.json
 09ba3d6cf5c8648fcf8b628cffa3ab3b4df2fd98 data/apotheosis/recipe/diamond_upgrade_smithing_template.json
 e92f1d1d31f66ca7c2df06d187ba97832ffd0ff2 data/apotheosis/recipe/gateways/tiered/ascent.json
@@ -14,7 +14,7 @@ cfc46608a868f8e622a46d07c0b0d2d642bec035 data/apotheosis/recipe/gem_cutting/chip
 a391e858f4a4fbee5fcdcf669d25282eb00104ac data/apotheosis/recipe/gem_cutting_table.json
 a347031477eb93618ffdb13c26c94480f507c32a data/apotheosis/recipe/gem_fused_slate.json
 56e52aee3c0163ff48c1144278a50a1c78ecf79e data/apotheosis/recipe/gold_upgrade_smithing_template.json
-335353336e6ceeb73a8afc9330cc26f1623226e0 data/apotheosis/recipe/infusion/potion_charm.json
+3cbe4549ce568ce4dc0fe646630bc48d6aec954c data/apotheosis/recipe/infusion/potion_charm.json
 a2b81edb041170334599ea0d2152c38c7ce798a6 data/apotheosis/recipe/iron_upgrade_smithing_template.json
 16e3115f0d8efcfba9704e4f51cdd276a5357bd5 data/apotheosis/recipe/malice.json
 4d07bd52af85fdeb3a5bbe497c0600d84e403be8 data/apotheosis/recipe/potion_charm.json
@@ -39,9 +39,9 @@ b1fb97aa8454c7d5e7673d87d6dc25784f088076 data/apotheosis/recipe/salvaging/gem/fl
 b3de38c3febbe6e853d56ea3e8b5e946bd0bf75e data/apotheosis/recipe/salvaging/other/diamond_armor.json
 09f096a2caebb47cb1ce679e85e0eddfb69e48c6 data/apotheosis/recipe/salvaging/other/diamond_horse_armor.json
 92f3d3ee55f332ace3ad905e72578833d13fc173 data/apotheosis/recipe/salvaging/other/diamond_tools.json
-f8397dbece5e24bca7ad2e40dc0ac24f95923ba6 data/apotheosis/recipe/salvaging/other/golden_horse_armor.json
 919e2bcd100adc8b29baa7ccbae3177e0378e88f data/apotheosis/recipe/salvaging/other/gold_armor.json
 b5258244dd88e95731f5fdc952a5684ce3050935 data/apotheosis/recipe/salvaging/other/gold_tools.json
+f8397dbece5e24bca7ad2e40dc0ac24f95923ba6 data/apotheosis/recipe/salvaging/other/golden_horse_armor.json
 5ea869468994324e91ef44603bfa55e6d0cedaea data/apotheosis/recipe/salvaging/other/iron_armor.json
 f3975c5ea820291d9044c9cc99360bef92bb694e data/apotheosis/recipe/salvaging/other/iron_horse_armor.json
 25bc98196066de25a61355ff16cc9f92dd7a27ef data/apotheosis/recipe/salvaging/other/iron_tools.json
