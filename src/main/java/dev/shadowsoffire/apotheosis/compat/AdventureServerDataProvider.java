@@ -30,7 +30,7 @@ public class AdventureServerDataProvider implements IServerDataProvider<EntityAc
                 ListTag bossAttribs = new ListTag();
                 BuiltInRegistries.ATTRIBUTE.listElements().map(map::getInstance).filter(Predicates.notNull()).forEach(inst -> {
                     for (AttributeModifier modif : inst.getModifiers()) {
-                        if (modif.id().getPath().startsWith(BossStats.MODIFIER_PREFIX)) {
+                        if (modif.id().getPath().startsWith(BossStats.MODIFIER_BASE.getPath())) {
                             AttributeInstance.Packed packed = inst.pack();
                             bossAttribs.add(AttributeInstance.Packed.CODEC.encodeStart(NbtOps.INSTANCE, packed).getOrThrow());
                             break;

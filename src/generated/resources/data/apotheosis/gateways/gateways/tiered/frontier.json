@@ -102,42 +102,36 @@
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:max_health",
-                    "modifier_id": "gateways:wave_modifier_1",
                     "operation": "add_multiplied_total",
                     "value": 0.1
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:armor",
-                    "modifier_id": "gateways:wave_modifier_2",
                     "operation": "add_value",
                     "value": 2.5
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:attack_damage",
-                    "modifier_id": "gateways:wave_modifier_3",
                     "operation": "add_multiplied_total",
                     "value": 0.15
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "apothic_attributes:projectile_damage",
-                    "modifier_id": "gateways:wave_modifier_4",
                     "operation": "add_multiplied_total",
                     "value": 0.15
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:knockback_resistance",
-                    "modifier_id": "gateways:wave_modifier_5",
                     "operation": "add_value",
                     "value": 0.1
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:movement_speed",
-                    "modifier_id": "gateways:wave_modifier_6",
                     "operation": "add_multiplied_total",
                     "value": 0.05
                 }
@@ -201,42 +195,36 @@
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:max_health",
-                    "modifier_id": "gateways:wave_modifier_1",
                     "operation": "add_multiplied_total",
                     "value": 0.15
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:armor",
-                    "modifier_id": "gateways:wave_modifier_2",
                     "operation": "add_value",
                     "value": 3.5
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:attack_damage",
-                    "modifier_id": "gateways:wave_modifier_3",
                     "operation": "add_multiplied_total",
                     "value": 0.25
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "apothic_attributes:projectile_damage",
-                    "modifier_id": "gateways:wave_modifier_4",
                     "operation": "add_multiplied_total",
                     "value": 0.25
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:knockback_resistance",
-                    "modifier_id": "gateways:wave_modifier_5",
                     "operation": "add_value",
                     "value": 0.2
                 },
                 {
                     "type": "gateways:attribute",
                     "attribute": "minecraft:movement_speed",
-                    "modifier_id": "gateways:wave_modifier_6",
                     "operation": "add_multiplied_total",
                     "value": 0.1
                 }

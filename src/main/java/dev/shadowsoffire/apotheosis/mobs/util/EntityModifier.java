@@ -31,7 +31,6 @@ import dev.shadowsoffire.placebo.systems.gear.GearSetRegistry;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.ItemStack;
@@ -94,7 +93,7 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
      */
     public static record AttributeModifier(RandomAttributeModifier modifier) implements EntityModifier {
 
-        public static Codec<AttributeModifier> CODEC = RandomAttributeModifier.CODEC.xmap(AttributeModifier::new, AttributeModifier::modifier);
+        public static Codec<AttributeModifier> CODEC = RandomAttributeModifier.generatedCodec(Apotheosis.loc("entity_modifier")).xmap(AttributeModifier::new, AttributeModifier::modifier);
 
         @Override
         public Codec<? extends EntityModifier> getCodec() {
@@ -103,11 +102,7 @@ public interface EntityModifier extends CodecProvider<EntityModifier> {
 
         @Override
         public void apply(Mob mob, GenContext ctx) {
-            AttributeInstance inst = mob.getAttribute(this.modifier.attribute());
-            if (inst == null) {
-                return;
-            }
-            this.modifier.apply(Apotheosis.loc("rm_ " + mob.getRandom().nextInt()), ctx.rand(), mob);
+            this.modifier.apply(ctx.rand(), mob);
         }
 
     }

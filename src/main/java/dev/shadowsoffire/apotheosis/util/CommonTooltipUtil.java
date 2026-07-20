@@ -35,7 +35,7 @@ public class CommonTooltipUtil {
             AttributeMap map = entity.getAttributes();
             BuiltInRegistries.ATTRIBUTE.listElements().map(map::getInstance).filter(Predicates.notNull()).forEach(inst -> {
                 for (AttributeModifier modif : inst.getModifiers()) {
-                    if (modif.id().getPath().startsWith(BossStats.MODIFIER_PREFIX)) {
+                    if (modif.id().getPath().startsWith(BossStats.MODIFIER_BASE.getPath())) {
                         tooltip.accept(inst.getAttribute().value().toComponent(modif, ApothicAttributes.getTooltipFlag()));
                     }
                 }

@@ -11,6 +11,7 @@ import dev.shadowsoffire.placebo.json.ChancedEffectInstance;
 import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -25,14 +26,14 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
  */
 public record BossStats(float enchantChance, EnchantmentLevels enchLevels, List<ChancedEffectInstance> effects, List<RandomAttributeModifier> modifiers) {
 
-    public static final String MODIFIER_PREFIX = "boss_stats_";
+    public static final Identifier MODIFIER_BASE = Apotheosis.loc("boss_stats");
 
     public static final Codec<BossStats> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.FLOAT.fieldOf("enchant_chance").forGetter(BossStats::enchantChance),
             EnchantmentLevels.CODEC.fieldOf("enchantment_levels").forGetter(BossStats::enchLevels),
             ChancedEffectInstance.CODEC.listOf().optionalFieldOf("effects", List.of()).forGetter(BossStats::effects),
-            RandomAttributeModifier.CODEC.listOf().optionalFieldOf("attribute_modifiers", List.of()).forGetter(BossStats::modifiers))
+            RandomAttributeModifier.generatedCodec(MODIFIER_BASE).listOf().optionalFieldOf("attribute_modifiers", List.of()).forGetter(BossStats::modifiers))
         .apply(inst, BossStats::new));
 
     /**
@@ -88,7 +89,7 @@ public record BossStats(float enchantChance, EnchantmentLevels enchLevels, List<
         }
 
         public Builder modifier(Holder<Attribute> attribute, Operation operation, StepFunction value) {
-            this.modifiers.add(new RandomAttributeModifier(attribute, operation, value, Apotheosis.loc(MODIFIER_PREFIX + this.modifiers.size())));
+            this.modifiers.add(RandomAttributeModifier.generated(attribute, operation, value, MODIFIER_BASE));
             return this;
         }
 

@@ -35,7 +35,6 @@
             "attribute_modifiers": [
                 {
                     "attribute": "minecraft:max_health",
-                    "modifier_id": "apotheosis:boss_stats_0",
                     "operation": "add_value",
                     "value": {
                         "min": 20.0,
@@ -44,7 +43,6 @@
                 },
                 {
                     "attribute": "minecraft:movement_speed",
-                    "modifier_id": "apotheosis:boss_stats_1",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.15,
@@ -53,7 +51,6 @@
                 },
                 {
                     "attribute": "minecraft:attack_damage",
-                    "modifier_id": "apotheosis:boss_stats_2",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.2,
@@ -62,13 +59,11 @@
                 },
                 {
                     "attribute": "minecraft:knockback_resistance",
-                    "modifier_id": "apotheosis:boss_stats_3",
                     "operation": "add_value",
                     "value": 0.3
                 },
                 {
                     "attribute": "minecraft:scale",
-                    "modifier_id": "apotheosis:boss_stats_4",
                     "operation": "add_multiplied_total",
                     "value": {
                         "min": -0.15,
@@ -92,7 +87,6 @@
             "attribute_modifiers": [
                 {
                     "attribute": "minecraft:max_health",
-                    "modifier_id": "apotheosis:boss_stats_0",
                     "operation": "add_value",
                     "value": {
                         "min": 40.0,
@@ -101,7 +95,6 @@
                 },
                 {
                     "attribute": "minecraft:movement_speed",
-                    "modifier_id": "apotheosis:boss_stats_1",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.15,
@@ -110,7 +103,6 @@
                 },
                 {
                     "attribute": "minecraft:attack_damage",
-                    "modifier_id": "apotheosis:boss_stats_2",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.25,
@@ -119,13 +111,11 @@
                 },
                 {
                     "attribute": "minecraft:knockback_resistance",
-                    "modifier_id": "apotheosis:boss_stats_3",
                     "operation": "add_value",
                     "value": 0.4
                 },
                 {
                     "attribute": "minecraft:scale",
-                    "modifier_id": "apotheosis:boss_stats_4",
                     "operation": "add_multiplied_total",
                     "value": {
                         "min": -0.15,
@@ -149,7 +139,6 @@
             "attribute_modifiers": [
                 {
                     "attribute": "minecraft:max_health",
-                    "modifier_id": "apotheosis:boss_stats_0",
                     "operation": "add_value",
                     "value": {
                         "min": 80.0,
@@ -158,7 +147,6 @@
                 },
                 {
                     "attribute": "minecraft:movement_speed",
-                    "modifier_id": "apotheosis:boss_stats_1",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.25,
@@ -167,7 +155,6 @@
                 },
                 {
                     "attribute": "minecraft:attack_damage",
-                    "modifier_id": "apotheosis:boss_stats_2",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.3,
@@ -176,25 +163,21 @@
                 },
                 {
                     "attribute": "minecraft:knockback_resistance",
-                    "modifier_id": "apotheosis:boss_stats_3",
                     "operation": "add_value",
                     "value": 0.5
                 },
                 {
                     "attribute": "minecraft:armor",
-                    "modifier_id": "apotheosis:boss_stats_4",
                     "operation": "add_value",
                     "value": 4.0
                 },
                 {
                     "attribute": "minecraft:armor_toughness",
-                    "modifier_id": "apotheosis:boss_stats_5",
                     "operation": "add_value",
                     "value": 10.0
                 },
                 {
                     "attribute": "minecraft:scale",
-                    "modifier_id": "apotheosis:boss_stats_6",
                     "operation": "add_multiplied_total",
                     "value": {
                         "min": -0.15,
@@ -218,7 +201,6 @@
             "attribute_modifiers": [
                 {
                     "attribute": "minecraft:max_health",
-                    "modifier_id": "apotheosis:boss_stats_0",
                     "operation": "add_value",
                     "value": {
                         "min": 110.0,
@@ -227,7 +209,6 @@
                 },
                 {
                     "attribute": "minecraft:movement_speed",
-                    "modifier_id": "apotheosis:boss_stats_1",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.3,
@@ -236,7 +217,6 @@
                 },
                 {
                     "attribute": "minecraft:attack_damage",
-                    "modifier_id": "apotheosis:boss_stats_2",
                     "operation": "add_multiplied_base",
                     "value": {
                         "min": 0.7,
@@ -245,25 +225,21 @@
                 },
                 {
                     "attribute": "minecraft:knockback_resistance",
-                    "modifier_id": "apotheosis:boss_stats_3",
                     "operation": "add_value",
                     "value": 0.8
                 },
                 {
                     "attribute": "minecraft:armor",
-                    "modifier_id": "apotheosis:boss_stats_4",
                     "operation": "add_value",
                     "value": 10.0
                 },
                 {
                     "attribute": "minecraft:armor_toughness",
-                    "modifier_id": "apotheosis:boss_stats_5",
                     "operation": "add_value",
                     "value": 20.0
                 },
                 {
                     "attribute": "minecraft:scale",
-                    "modifier_id": "apotheosis:boss_stats_6",
                     "operation": "add_multiplied_total",
                     "value": {
                         "min": -0.15,
