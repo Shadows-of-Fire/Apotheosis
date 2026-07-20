@@ -35,6 +35,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -51,6 +52,13 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
     public static final ResourceLocation TEXTURES = Apotheosis.loc("textures/gui/gem_case.png");
     public static final int MAX_ROWS = 3;
     public static final int SLOTS_PER_ROW = 6;
+
+    /**
+     * Position and size of the upgrade material panel, which hangs off the left edge of the screen.
+     */
+    public static final int LEFT_PANEL_WIDTH = 65;
+    public static final int LEFT_PANEL_HEIGHT = 193;
+    public static final int LEFT_PANEL_Y_OFFSET = 16;
 
     protected float scrollOffs;
     protected boolean scrolling;
@@ -155,7 +163,7 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
         gfx.blit(TEXTURES, left, top, 0, 0, this.imageWidth, this.imageHeight, 307, 256);
         int scrollbarPos = (int) (90F * this.scrollOffs);
         gfx.blit(TEXTURES, left + 13, top + 29 + scrollbarPos, 303, this.isScrollBarActive() ? 0 : 12, 4, 12, 307, 256);
-        gfx.blit(TEXTURES, left - 65, top + 16, 198, 0, 65, 193, 307, 256);
+        gfx.blit(TEXTURES, left - LEFT_PANEL_WIDTH, top + LEFT_PANEL_Y_OFFSET, 198, 0, LEFT_PANEL_WIDTH, LEFT_PANEL_HEIGHT, 307, 256);
 
         // Render the stack for each purity of the selected gem in the "selected" slots.
         if (this.getSelectedGem() != null) {
@@ -247,6 +255,14 @@ public class GemCaseScreen extends AbstractContainerScreen<GemCaseMenu> implemen
     @Nullable
     public Gem getSelectedGem() {
         return this.menu.selectedGem;
+    }
+
+    /**
+     * Returns the screen areas occupied by this GUI which fall outside the bounds of the parent screen.
+     * Used to register exclusion zones with recipe viewers (JEI/EMI/REI), so their overlays do not overlap this GUI.
+     */
+    public List<Rect2i> getExclusionAreas() {
+        return List.of(new Rect2i(this.leftPos - LEFT_PANEL_WIDTH, this.topPos + LEFT_PANEL_Y_OFFSET, LEFT_PANEL_WIDTH, LEFT_PANEL_HEIGHT));
     }
 
     private boolean isScrollBarActive() {
