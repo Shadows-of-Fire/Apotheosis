@@ -19,10 +19,10 @@ import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
 import dev.shadowsoffire.apotheosis.mobs.types.Augmentation;
 import dev.shadowsoffire.apotheosis.mobs.types.Elite;
 import dev.shadowsoffire.apotheosis.mobs.types.Invader;
-import dev.shadowsoffire.apotheosis.mobs.util.SpawnCooldownSavedData;
 import dev.shadowsoffire.apotheosis.mobs.util.SurfaceType;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
@@ -35,6 +35,7 @@ import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -42,7 +43,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -51,8 +51,6 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
-import net.neoforged.neoforge.event.server.ServerStartedEvent;
-import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
@@ -70,8 +68,6 @@ public class ApothMobEvents {
 
     public static final String APOTH_MINIBOSS = "apoth.miniboss";
     public static final String APOTH_MINIBOSS_PLAYER = APOTH_MINIBOSS + ".player";
-
-    protected SpawnCooldownSavedData cooldownData = new SpawnCooldownSavedData();
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void finalizeMobSpawns(FinalizeSpawnEvent e) {
@@ -110,12 +106,14 @@ public class ApothMobEvents {
             return false;
         }
 
-        if (this.cooldownData.isOnCooldown(mob.level())) {
-            debugLog("[Invaders]: Cooldown is active for " + mob.level().dimension().identifier());
+        ServerLevelAccessor sLevel = e.getLevel();
+        long gameTime = sLevel.getGameTime();
+
+        if (player.getData(Attachments.INVADER_COOLDOWN) > gameTime) {
+            debugLog("[Invaders]: Spawn cooldown is active for the context player {}.", player.getName().getString());
             return false;
         }
 
-        ServerLevelAccessor sLevel = e.getLevel();
         ResourceKey<DimensionType> dimId = sLevel.getLevel().dimensionTypeRegistration().getKey();
 
         InvaderSpawnRules rules = sLevel.registryAccess().lookupOrThrow(Registries.DIMENSION_TYPE).getData(DataMaps.INVADER_SPAWN_RULES, dimId);
@@ -155,9 +153,10 @@ public class ApothMobEvents {
                 e.setCanceled(true);
                 e.setSpawnCancelled(true);
 
-                sendInvaderSpawnNotification((ServerLevel) sLevel, boss);
+                sendInvaderSpawnNotification(sLevel.getLevel(), boss);
 
-                this.cooldownData.startCooldown(mob.level(), rules.cooldown().orElse(AdventureConfig.bossSpawnCooldown));
+                long end = gameTime + rules.cooldown().orElse(AdventureConfig.bossSpawnCooldown);
+                applyClusteredCooldown(sLevel.getLevel(), player, ctx.tier(), boss, end);
                 debugLog("[Invaders]: Successfully spawned an invader {} at {}", boss.getName().getString(), boss.blockPosition());
                 return true;
             }
@@ -181,13 +180,51 @@ public class ApothMobEvents {
         }
         else {
             sLevel.players().forEach(p -> {
-                Vec3 tPos = new Vec3(invader.getX(), p.getY(), invader.getZ());
-                if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
+                if (isWithinAnnounceRange(p, invader)) {
                     p.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) invader.getX(), (int) invader.getY())));
                     PacketDistributor.sendToPlayer(p, new BossSpawnPayload(invader.blockPosition(), rarity));
                 }
             });
         }
+    }
+
+    /**
+     * Applies the invader spawn cooldown to the triggering player and all clustered players.
+     * <p>
+     * The cluster is every player in the level whose world tier matches the tier the spawn was rolled against
+     * and who is within {@link AdventureConfig#bossAnnounceRange} of the spawned boss.
+     * 
+     * @param end The game time at which the affected players may next trigger an invader spawn.
+     */
+    private static void applyClusteredCooldown(ServerLevel level, Player trigger, WorldTier tier, Mob boss, long end) {
+        applyCooldown(trigger, end);
+        int clustered = 0;
+        for (ServerPlayer p : level.players()) {
+            if (p != trigger && WorldTier.getTier(p) == tier && isWithinAnnounceRange(p, boss)) {
+                applyCooldown(p, end);
+                clustered++;
+            }
+        }
+        debugLog("[Invaders]: Applied spawn cooldown ending at {} to {} and {} clustered player(s).", end, trigger.getName().getString(), clustered);
+    }
+
+    /**
+     * Sets a player's invader spawn cooldown to the given end time, unless their current cooldown ends later.
+     */
+    private static void applyCooldown(Player player, long end) {
+        if (end > player.getData(Attachments.INVADER_COOLDOWN)) {
+            player.setData(Attachments.INVADER_COOLDOWN, end);
+        }
+    }
+
+    /**
+     * Checks if the player is within {@link AdventureConfig#bossAnnounceRange} blocks of the target entity, ignoring Y-level.
+     * <p>
+     * Used both for the invader spawn announcement and for clustering the invader spawn cooldown, so the two stay in lockstep.
+     */
+    private static boolean isWithinAnnounceRange(Player player, Entity target) {
+        Vec3 tPos = new Vec3(target.getX(), player.getY(), target.getZ());
+        return player.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange;
     }
 
     /**
@@ -281,19 +318,6 @@ public class ApothMobEvents {
         }
     }
 
-    @SubscribeEvent
-    public void tick(LevelTickEvent.Post e) {
-        if (!e.getLevel().isClientSide()) {
-            this.cooldownData.tick(e.getLevel().dimension().identifier());
-        }
-    }
-
-    @SubscribeEvent
-    public void load(ServerStartedEvent e) {
-        this.cooldownData = e.getServer().getLevel(Level.OVERWORLD).getDataStorage()
-            .computeIfAbsent(SpawnCooldownSavedData.TYPE);
-    }
-
     private static boolean canSpawn(LevelAccessor world, Mob entity, double playerDist) {
         if (playerDist > entity.getType().getCategory().getDespawnDistance() * entity.getType().getCategory().getDespawnDistance() && entity.removeWhenFarAway(playerDist)) {
             return false;
@@ -310,7 +334,16 @@ public class ApothMobEvents {
 
     @Nullable
     private static DynamicHolder<LootRarity> getRarity(Mob boss) {
-        return boss.getSelfAndPassengers().filter(e -> e.getPersistentData().contains(Invader.BOSS_KEY)).findFirst().<DynamicHolder<LootRarity>>map(ent -> RarityRegistry.INSTANCE.holder(Identifier.tryParse(ent.getPersistentData().getString(Invader.RARITY_KEY).orElse("")))).orElse(RarityRegistry.INSTANCE.emptyHolder());
+        return boss.getSelfAndPassengers()
+            .filter(e -> e.getPersistentData().contains(Invader.BOSS_KEY))
+            .findFirst()
+            .map(ApothMobEvents::getRarityHolder)
+            .orElse(RarityRegistry.INSTANCE.emptyHolder());
+    }
+
+    private static DynamicHolder<LootRarity> getRarityHolder(Entity entity) {
+        Identifier id = Identifier.tryParse(entity.getPersistentData().getString(Invader.RARITY_KEY).orElse(""));
+        return RarityRegistry.INSTANCE.holder(id);
     }
 
     private static final Marker MARKER = MarkerFactory.getMarker(ApothMobEvents.class.getSimpleName());
