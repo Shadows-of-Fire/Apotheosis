@@ -400,7 +400,8 @@ public class Apoth {
     }
 
     public static class Sounds {
-        public static final Holder<SoundEvent> REFORGE = R.sound("reforge");
+        public static final Holder<SoundEvent> REFORGE_ITEM_PLACED = R.sound("reforge_item_placed");
+        public static final Holder<SoundEvent> REFORGE_ITEM_REFORGED = R.sound("reforge_item_reforged");
 
         public static final Holder<SoundEvent> MALICE = R.sound("malice");
 
