@@ -6,6 +6,7 @@ import java.util.Map;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apothic_attributes.api.AbilityCooldowns;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
@@ -39,13 +40,13 @@ public class FortificationBonus extends GemBonus {
     @Override
     public void doPostHurt(GemInstance inst, LivingEntity user, DamageSource source) {
         Data d = this.values.get(inst.purity());
-        if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) {
+        if (AbilityCooldowns.isOnCooldown(user, makeUniqueId(inst), d.cooldown)) {
             return;
         }
         if (user.hasData(TFDataAttachments.FORTIFICATION_SHIELDS) && user.getRandom().nextFloat() <= d.chance) {
             user.getData(TFDataAttachments.FORTIFICATION_SHIELDS).setShields(user, 5, true);
             user.playSound(TFSounds.SHIELD_ADD.get(), 1.0F, (user.getRandom().nextFloat() - user.getRandom().nextFloat()) * 0.2F + 1.0F);
-            Affix.startCooldown(makeUniqueId(inst), user);
+            AbilityCooldowns.startCooldown(user, makeUniqueId(inst));
         }
     }
 

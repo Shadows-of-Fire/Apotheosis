@@ -7,6 +7,7 @@ import java.util.Map;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apothic_attributes.api.AbilityCooldowns;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -50,7 +51,7 @@ public class TreasureGoblinBonus extends GemBonus {
     @Override
     public void doPostAttack(GemInstance inst, LivingEntity user, Entity target) {
         Data d = this.values.get(inst.purity());
-        if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) {
+        if (AbilityCooldowns.isOnCooldown(user, makeUniqueId(inst), d.cooldown)) {
             return;
         }
         if (user.getRandom().nextFloat() <= d.chance) {
@@ -76,7 +77,7 @@ public class TreasureGoblinBonus extends GemBonus {
             }
             goblin.addEffect(new MobEffectInstance(MobEffects.GLOWING, 96000, 0, true, false));
             user.level().addFreshEntity(goblin);
-            Affix.startCooldown(makeUniqueId(inst), user);
+            AbilityCooldowns.startCooldown(user, makeUniqueId(inst));
         }
     }
 

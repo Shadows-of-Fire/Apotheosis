@@ -322,6 +322,9 @@
     "affix.apotheosis:armor/attribute/oxygenated": "Oxygenated",
     "affix.apotheosis:armor/attribute/oxygenated.suffix": "of the Diver",
 
+    "affix.apotheosis:armor/attribute/timekeeping": "Timekeeping",
+    "affix.apotheosis:armor/attribute/timekeeping.suffix": "of Chronos",
+
     "affix.apotheosis:melee/mob_effect/omniscient": "Omniscient",
     "affix.apotheosis:melee/mob_effect/omniscient.suffix": "of the Grand Sage",
 
@@ -553,6 +556,7 @@
     "item.apotheosis.luminous_crystal_shard": "Luminous Crystal Shard",
     "item.apotheosis.arcane_sands": "Arcane Sands",
     "item.apotheosis.godforged_pearl": "Godforged Pearl",
+    "item.apotheosis.god_fused_pearl": "God-Fused Pearl",
     "item.apotheosis.ancient_material": "Manifestation of Infinity",
     "item.apotheosis.gem_fused_slate": "Gem-Fused Slate",
 

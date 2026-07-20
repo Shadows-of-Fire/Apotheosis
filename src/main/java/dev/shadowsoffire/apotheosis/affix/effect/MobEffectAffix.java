@@ -10,6 +10,7 @@ import org.spongepowered.include.com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apothic_attributes.api.AbilityCooldowns;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixBuilder;
 import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
@@ -206,7 +207,7 @@ public class MobEffectAffix extends Affix {
         }
 
         int cooldown = this.getCooldown(rarity);
-        if (cooldown != 0 && isOnCooldown(this.id(), cooldown, target)) {
+        if (cooldown != 0 && AbilityCooldowns.isOnCooldown(target, this.id(), cooldown)) {
             return;
         }
         EffectData data = this.values.get(rarity);
@@ -224,7 +225,9 @@ public class MobEffectAffix extends Affix {
         else {
             target.addEffect(data.build(this.effect, level));
         }
-        startCooldown(this.id(), target);
+        if (cooldown != 0) {
+            AbilityCooldowns.startCooldown(target, this.id());
+        }
     }
 
     @Override

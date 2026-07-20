@@ -5,6 +5,7 @@ import java.util.Map;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apothic_attributes.api.AbilityCooldowns;
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
@@ -39,12 +40,12 @@ public class BloodyArrowBonus extends GemBonus {
     public void onProjectileFired(GemInstance inst, LivingEntity user, Projectile proj) {
         if (proj instanceof AbstractArrow arrow) {
             Data d = this.values.get(inst.purity());
-            if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) {
+            if (AbilityCooldowns.isOnCooldown(user, makeUniqueId(inst), d.cooldown)) {
                 return;
             }
             user.hurt(user.damageSources().source(Ench.DamageTypes.CORRUPTED), user.getMaxHealth() * d.healthCost);
             arrow.setBaseDamage(arrow.getBaseDamage() * d.dmgMultiplier);
-            Affix.startCooldown(makeUniqueId(inst), user);
+            AbilityCooldowns.startCooldown(user, makeUniqueId(inst));
         }
     }
 

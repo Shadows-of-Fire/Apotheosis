@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 /**
  * Superclass of both {@link GemInstance} and {@link UnsocketedGem}, used to pass either class to a single method.
  */
-public interface GemView {
+public sealed interface GemView permits GemInstance, UnsocketedGem {
 
     /**
      * Returns the gem specified by {@link Components#GEM} on the {@link #gemStack()}.
