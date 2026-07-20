@@ -12,7 +12,6 @@
     "requirements": {
         "arcana": 50.0,
         "eterna": 70.0,
-        "maxEterna": 15.0,
         "quanta": 30.0
     },
     "result": {

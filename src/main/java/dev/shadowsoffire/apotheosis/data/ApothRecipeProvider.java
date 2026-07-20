@@ -166,9 +166,13 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         out.accept(Apotheosis.loc("potion_charm"), new PotionCharmRecipe("", CraftingBookCategory.MISC, charmPattern()), null);
 
         out.accept(Apotheosis.loc("infusion/potion_charm"), new CharmInfusionRecipe(
-            new Stats(15F, 100F, 8.5F, 32.5F, 0),
-            new Stats(15F, 100F, 13.5F, 37.5F, 0)),
+            new Stats(30F, 100F, 8.5F, 32.5F, 0),
+            new Stats(30F, 100F, 13.5F, 37.5F, 0)),
             null);
+
+        this.addInfusion("god_fused_pearl", new ItemStack(Items.GOD_FUSED_PEARL), Items.GODFORGED_PEARL, req(100, 9.65F, 58.75F), req(100, 11F, 60F));
+        this.addShaped(Ench.Items.RAVEN_ENCHANTING_TABLE, 3, 3, null, perfectRoyal(), null, Items.GOD_FUSED_PEARL, Ench.Items.APOTHIC_ENCHANTING_TABLE, Items.GOD_FUSED_PEARL, Tags.Items.OBSIDIANS, Tags.Items.OBSIDIANS,
+            Tags.Items.OBSIDIANS);
 
         addShaped(new ItemStack(Items.IRON_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.MYSTERIOUS_SCRAP_METAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
         addShaped(new ItemStack(Items.GOLD_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.TIMEWORN_FABRIC, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
@@ -408,7 +412,7 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
     }
 
     private static Stats req(float eterna, float quanta, float arcana) {
-        return new Stats(15F, eterna, quanta, arcana, 0);
+        return new Stats(30F, eterna, quanta, arcana, 0);
     }
 
     private void addInfusion(String path, ItemStack output, Object input, Stats requirements) {
@@ -423,6 +427,11 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
 
     private Ingredient perfectEndersurge() {
         var list = List.of(GemRegistry.INSTANCE.holder(Apotheosis.loc("the_end/endersurge")));
+        return new Ingredient(new GemIngredient(list, Purity.PERFECT));
+    }
+
+    private Ingredient perfectRoyal() {
+        var list = List.of(GemRegistry.INSTANCE.holder(Apotheosis.loc("overworld/royalty")));
         return new Ingredient(new GemIngredient(list, Purity.PERFECT));
     }
 

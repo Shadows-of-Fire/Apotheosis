@@ -1,0 +1,32 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "A": {
+            "type": "apotheosis:gem",
+            "gems": [
+                "apotheosis:overworld/royalty"
+            ],
+            "purity": "perfect"
+        },
+        "G": {
+            "item": "apotheosis:god_fused_pearl"
+        },
+        "O": {
+            "tag": "c:obsidians"
+        },
+        "P": {
+            "item": "apothic_enchanting:apothic_enchanting_table"
+        }
+    },
+    "pattern": [
+        " A ",
+        "GPG",
+        "OOO"
+    ],
+    "result": {
+        "count": 1,
+        "id": "apothic_enchanting:raven_enchanting_table"
+    }
+}
