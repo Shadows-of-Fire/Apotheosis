@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.compat.jei;
 
+import java.util.List;
+
 import org.jetbrains.annotations.Nullable;
 
 import dev.shadowsoffire.apotheosis.Apoth;
@@ -21,20 +23,24 @@ import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipeCache;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseScreen;
 import dev.shadowsoffire.apotheosis.util.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
 import dev.shadowsoffire.apothic_enchanting.compat.InfusionRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.recipe.types.IRecipeType;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
+import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -90,6 +96,20 @@ public class AdventureJEIPlugin implements IModPlugin {
         reg.addCraftingStation(APO_SMITHING, new ItemStack(Blocks.SMITHING_TABLE));
         reg.addCraftingStation(SALVAGING, new ItemStack(Apoth.Blocks.SALVAGING_TABLE.value()));
         reg.addCraftingStation(GEM_CUTTING, new ItemStack(Apoth.Blocks.GEM_CUTTING_TABLE.value()));
+    }
+
+    /**
+     * Registers the exclusion zones for screens with areas outside their normal bounds, which prevents the JEI overlay
+     * (and the overlays of recipe viewers that consume JEI plugins through a bridge, such as EMI) from rendering below them.
+     */
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration reg) {
+        reg.addGuiContainerHandler(GemCaseScreen.class, new IGuiContainerHandler<GemCaseScreen>(){
+            @Override
+            public List<Rect2i> getGuiExtraAreas(GemCaseScreen screen) {
+                return screen.getExclusionAreas();
+            }
+        });
     }
 
     @Override
