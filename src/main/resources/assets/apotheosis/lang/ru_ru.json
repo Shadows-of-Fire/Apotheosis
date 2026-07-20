@@ -1,4 +1,4 @@
-﻿{
+{
     "comment_id": "/Adventure Module",
 
     "key.categories.apotheosis": "Апофеозис",
@@ -7,7 +7,7 @@
     "text.apotheosis.world_tier.haven.desc": "Начало вашего приключения",
 
     "text.apotheosis.world_tier.frontier": "Рубеж",
-    "text.apotheosis.world_tier.frontier.desc": "Отправление в опасный мир",
+    "text.apotheosis.world_tier.frontier.desc": "Путешествие в опасный мир",
 
     "text.apotheosis.world_tier.ascent": "Возвышение",
     "text.apotheosis.world_tier.ascent.desc": "Начало вашего пути к силе",
@@ -16,7 +16,7 @@
     "text.apotheosis.world_tier.summit.desc": "Вы достигли вершины, но не края",
 
     "text.apotheosis.world_tier.pinnacle": "Пик",
-    "text.apotheosis.world_tier.pinnacle.desc": "Затеряйтесь в бурных вершинах гор",
+    "text.apotheosis.world_tier.pinnacle.desc": "Блуждание на пике бурных гор",
 
     "title.apotheosis.select_world_tier": "Выбрать уровень мира",
     "title.apotheosis.world_tier_details": "Подробнее об уровне",
@@ -67,8 +67,8 @@
     "tutorial.apotheosis.world_tier.activate_disabled.desc": "Обычно эта кнопка позволяет активировать выбранный уровень мира.\n\nОднако в этом модпаке уровни мира активируются автоматически и не могут быть изменены вручную. Вы по-прежнему можете просматривать подробную информацию о каждом уровне мира, но не можете активировать или отключить их.",
 
     "text.apotheosis.tier_info": "Информация об уровне",
-    "text.apotheosis.monster_augments": "Дополнения монстров",
-    "text.apotheosis.player_augments": "Дополнения игроков",
+    "text.apotheosis.monster_augments": "Усиления монстров",
+    "text.apotheosis.player_augments": "Усиления игроков",
     "text.apotheosis.drop_chances": "Шансы выпадений",
     "text.apotheosis.rarities": "Редкость",
     "text.apotheosis.purities": "Чистота",
