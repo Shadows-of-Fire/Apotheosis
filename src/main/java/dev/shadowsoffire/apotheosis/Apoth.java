@@ -38,6 +38,7 @@ import dev.shadowsoffire.apotheosis.gen.RogueSpawnerFeature;
 import dev.shadowsoffire.apotheosis.item.BossSummonerItem;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
 import dev.shadowsoffire.apotheosis.item.TooltipItem;
+import dev.shadowsoffire.apotheosis.item.TooltipItem.GlowyTooltipItem;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
@@ -81,6 +82,7 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
+import dev.shadowsoffire.apotheosis.util.SpawnEggIngredient;
 import dev.shadowsoffire.apotheosis.util.LootPatternMatcher;
 import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialState;
 import dev.shadowsoffire.apotheosis.util.SingletonRecipeSerializer;
@@ -89,6 +91,7 @@ import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import dev.shadowsoffire.apothic_attributes.modifiers.EntitySlotGroup;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType.TickSide;
 import dev.shadowsoffire.placebo.registry.DeferredHelper;
+import dev.shadowsoffire.apothic_enchanting.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.critereon.ItemSubPredicate;
@@ -341,6 +344,32 @@ public class Apoth {
 
         public static final Holder<Item> MUSIC_DISC_SHIMMER = R.item("music_disc_shimmer", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.SHIMMER));
 
+        public static final Holder<Item> SPAWNER_CHAIN = R.item("spawner_chain", TooltipItem::new);
+        public static final Holder<Item> SPAWNER_RUNE = R.item("spawner_rune", Item::new);
+        public static final Holder<Item> INFUSED_SPAWNER_RUNE = R.item("infused_spawner_rune", GlowyItem::new, p -> p.rarity(Rarity.UNCOMMON));
+
+        public static final Holder<Item> FRONTIER_SPAWNER_UPGRADE_RUNE = R.item("frontier_spawner_upgrade_rune", TooltipItem::new, p -> p.component(Components.RARITY, rarity("uncommon")));
+        public static final Holder<Item> ASCENT_SPAWNER_UPGRADE_RUNE = R.item("ascent_spawner_upgrade_rune", TooltipItem::new, p -> p.component(Components.RARITY, rarity("rare")));
+        public static final Holder<Item> SUMMIT_SPAWNER_UPGRADE_RUNE = R.item("summit_spawner_upgrade_rune", GlowyTooltipItem::new, p -> p.component(Components.RARITY, rarity("epic")));
+        public static final Holder<Item> PINNACLE_SPAWNER_UPGRADE_RUNE = R.item("pinnacle_spawner_upgrade_rune", GlowyTooltipItem::new, p -> p.component(Components.RARITY, rarity("mythic")));
+
+        public static final Holder<Item> SPAWN_RANGE_SPAWNER_RUNE = R.item("spawn_range_spawner_rune", TooltipItem::new, p -> p.rarity(Rarity.UNCOMMON));
+        public static final Holder<Item> REDSTONE_CONTROL_SPAWNER_RUNE = R.item("redstone_control_spawner_rune", TooltipItem::new, p -> p.rarity(Rarity.UNCOMMON));
+        public static final Holder<Item> IGNORE_LIGHT_SPAWNER_RUNE = R.item("ignore_light_spawner_rune", TooltipItem::new, p -> p.rarity(Rarity.UNCOMMON));
+        public static final Holder<Item> INITIAL_HEALTH_SPAWNER_RUNE = R.item("initial_health_spawner_rune", TooltipItem::new, p -> p.rarity(Rarity.UNCOMMON));
+        public static final Holder<Item> SILENT_SPAWNER_RUNE = R.item("silent_spawner_rune", TooltipItem::new, p -> p.rarity(Rarity.UNCOMMON));
+        public static final Holder<Item> YOUTHFUL_SPAWNER_RUNE = R.item("youthful_spawner_rune", TooltipItem::new, p -> p.rarity(Rarity.UNCOMMON));
+        public static final Holder<Item> BURNING_SPAWNER_RUNE = R.item("burning_spawner_rune", TooltipItem::new, p -> p.rarity(Rarity.UNCOMMON));
+
+        public static final Holder<Item> NO_AI_SPAWNER_RUNE = R.item("no_ai_spawner_rune", GlowyTooltipItem::new, p -> p.rarity(Rarity.EPIC));
+        public static final Holder<Item> IGNORE_CONDITIONS_SPAWNER_RUNE = R.item("ignore_conditions_spawner_rune", GlowyTooltipItem::new, p -> p.rarity(Rarity.EPIC));
+        public static final Holder<Item> IGNORE_PLAYERS_SPAWNER_RUNE = R.item("ignore_players_spawner_rune", GlowyTooltipItem::new, p -> p.rarity(Rarity.EPIC));
+        public static final Holder<Item> ECHOING_SPAWNER_RUNE = R.item("echoing_spawner_rune", GlowyTooltipItem::new, p -> p.rarity(Rarity.EPIC));
+
+        private static DynamicHolder<LootRarity> rarity(String path) {
+            return RarityRegistry.INSTANCE.holder(Apotheosis.loc(path));
+        }
+
         private static Holder<Item> rarityMat(String registryName, String rarityId) {
             return R.item(registryName, () -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(rarityId)), new Item.Properties()));
         }
@@ -456,6 +485,7 @@ public class Apoth {
     public static final class Ingredients {
         public static final IngredientType<AffixItemIngredient> AFFIX = R.ingredient("affix", AffixItemIngredient.TYPE);
         public static final IngredientType<GemIngredient> GEM = R.ingredient("gem", GemIngredient.TYPE);
+        public static final IngredientType<SpawnEggIngredient> SPAWN_EGG = R.ingredient("spawn_egg", SpawnEggIngredient.TYPE);
 
         private static void bootstrap() {}
     }

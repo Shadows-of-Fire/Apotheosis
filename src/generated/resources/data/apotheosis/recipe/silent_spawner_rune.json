@@ -1,0 +1,28 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "S": {
+            "item": "apotheosis:spawner_rune"
+        },
+        "W": {
+            "tag": "minecraft:wool"
+        }
+    },
+    "pattern": [
+        " W ",
+        "WSW",
+        " W "
+    ],
+    "result": {
+        "count": 1,
+        "id": "apotheosis:silent_spawner_rune"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "apothic_spawners:spawner_modifier",
+    "mainhand": {
+        "item": "apotheosis:redstone_control_spawner_rune"
+    },
+    "offhand": {
+        "item": "minecraft:quartz"
+    },
+    "stat_changes": [
+        {
+            "type": "apothic_spawners:redstone_control",
+            "mode": "set",
+            "value": false
+        }
+    ]
+}

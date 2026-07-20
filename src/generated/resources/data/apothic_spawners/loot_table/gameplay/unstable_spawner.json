@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:chest",
+    "pools": [
+        {
+            "bonus_rolls": 0.0,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "apotheosis:spawner_chain"
+                }
+            ],
+            "rolls": {
+                "type": "minecraft:uniform",
+                "min": 48.0,
+                "max": 64.0
+            }
+        }
+    ],
+    "random_sequence": "apothic_spawners:gameplay/unstable_spawner"
+}

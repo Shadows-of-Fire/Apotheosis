@@ -1,0 +1,19 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "apothic_spawners:spawner_modifier",
+    "mainhand": {
+        "item": "apotheosis:spawn_range_spawner_rune"
+    },
+    "stat_changes": [
+        {
+            "type": "apothic_spawners:spawn_range",
+            "max": 32,
+            "value": 2
+        }
+    ]
+}

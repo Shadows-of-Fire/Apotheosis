@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "apotheosis:items/spawner_runes/spawn_range_spawner_rune"
+    }
+}
