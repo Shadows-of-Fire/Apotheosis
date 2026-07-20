@@ -285,7 +285,9 @@ public class ApothMobEvents {
 
     @SubscribeEvent
     public void tick(LevelTickEvent.Post e) {
-        this.cooldownData.tick(e.getLevel().dimension().location());
+        if (!e.getLevel().isClientSide()) {
+            this.cooldownData.tick(e.getLevel().dimension().location());
+        }
     }
 
     @SubscribeEvent
