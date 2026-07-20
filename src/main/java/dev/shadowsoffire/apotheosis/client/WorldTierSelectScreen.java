@@ -122,7 +122,7 @@ public class WorldTierSelectScreen extends Screen {
         pose.pushMatrix();
         float scale = 0.5F;
         pose.scale(scale, scale);
-        Component diffText = Component.literal("Difficulty:").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
+        Component diffText = Apotheosis.lang("text", "world_tier.difficulty").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
         for (int i = 0; i < 5; i++) {
             Identifier tex = this.displayedTier.ordinal() >= i ? SWORD_FULL : SWORD_EMPTY;
             int swordLeft = this.leftPos + this.font.width(diffText) + 20 + i * (int) (30 * scale);
@@ -157,7 +157,7 @@ public class WorldTierSelectScreen extends Screen {
         Component desc = Apotheosis.lang("text", "world_tier." + this.displayedTier.getSerializedName() + ".desc");
         gfx.text(this.font, desc, this.leftPos + 15, this.topPos + 45, 0xFFC8C86E);
 
-        Component diffText = Component.literal("Difficulty:").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
+        Component diffText = Apotheosis.lang("text", "world_tier.difficulty").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
         gfx.text(this.font, diffText.getVisualOrderText(), this.leftPos + 15, this.topPos + 80, 0xFFFFFFFF, true);
     }
 
