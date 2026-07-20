@@ -2,7 +2,7 @@
 	"loader": "neoforge:item_layers",
     "parent": "item/generated",
     "textures": {
-        "layer0": "apotheosis:items/mythic_material"
+        "layer0": "apotheosis:items/godforged_pearl"
     },
 	"neoforge_data": {
 		"0": {

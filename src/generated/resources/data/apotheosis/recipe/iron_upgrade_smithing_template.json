@@ -3,18 +3,18 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "C": {
-            "item": "apotheosis:common_material"
-        },
         "G": {
             "item": "apotheosis:gem_fused_slate"
+        },
+        "M": {
+            "item": "apotheosis:mysterious_scrap_metal"
         },
         "S": {
             "item": "minecraft:stone"
         }
     },
     "pattern": [
-        " C ",
+        " M ",
         "SGS",
         "SGS"
     ],

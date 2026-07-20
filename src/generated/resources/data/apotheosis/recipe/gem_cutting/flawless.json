@@ -10,15 +10,15 @@
     "right": [
         {
             "count": 27,
-            "item": "apotheosis:rare_material"
+            "item": "apotheosis:luminous_crystal_shard"
         },
         {
             "count": 9,
-            "item": "apotheosis:epic_material"
+            "item": "apotheosis:arcane_sands"
         },
         {
             "count": 3,
-            "item": "apotheosis:mythic_material"
+            "item": "apotheosis:godforged_pearl"
         }
     ]
 }

@@ -279,15 +279,15 @@ public class Apoth {
 
     public static final class Items extends net.minecraft.world.item.Items {
 
-        public static final Holder<Item> COMMON_MATERIAL = rarityMat("common");
+        public static final Holder<Item> MYSTERIOUS_SCRAP_METAL = rarityMat("mysterious_scrap_metal", "common");
 
-        public static final Holder<Item> UNCOMMON_MATERIAL = rarityMat("uncommon");
+        public static final Holder<Item> TIMEWORN_FABRIC = rarityMat("timeworn_fabric", "uncommon");
 
-        public static final Holder<Item> RARE_MATERIAL = rarityMat("rare");
+        public static final Holder<Item> LUMINOUS_CRYSTAL_SHARD = rarityMat("luminous_crystal_shard", "rare");
 
-        public static final Holder<Item> EPIC_MATERIAL = rarityMat("epic");
+        public static final Holder<Item> ARCANE_SANDS = rarityMat("arcane_sands", "epic");
 
-        public static final Holder<Item> MYTHIC_MATERIAL = rarityMat("mythic");
+        public static final Holder<Item> GODFORGED_PEARL = rarityMat("godforged_pearl", "mythic");
 
         public static final Holder<Item> GEM_DUST = R.item("gem_dust", Item::new);
 
@@ -341,8 +341,8 @@ public class Apoth {
 
         public static final Holder<Item> MUSIC_DISC_SHIMMER = R.item("music_disc_shimmer", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.SHIMMER));
 
-        private static Holder<Item> rarityMat(String id) {
-            return R.item(id + "_material", () -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(id)), new Item.Properties()));
+        private static Holder<Item> rarityMat(String registryName, String rarityId) {
+            return R.item(registryName, () -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(rarityId)), new Item.Properties()));
         }
 
         private static SmithingTemplateItem createVanillaUpgradeTemplate(String type) {

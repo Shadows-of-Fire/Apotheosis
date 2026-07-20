@@ -2,7 +2,7 @@
     "type": "apotheosis:rarity",
     "color": "#BB00BB",
     "invader_sound": "apotheosis:invader_epic",
-    "material": "apotheosis:epic_material",
+    "material": "apotheosis:arcane_sands",
     "render_data": {
         "beam_height": 3.0,
         "beam_radius": 0.035,

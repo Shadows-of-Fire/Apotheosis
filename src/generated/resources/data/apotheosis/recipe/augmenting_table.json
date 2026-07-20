@@ -6,8 +6,8 @@
         "E": {
             "item": "minecraft:enchanting_table"
         },
-        "M": {
-            "item": "apotheosis:mythic_material"
+        "G": {
+            "item": "apotheosis:godforged_pearl"
         },
         "N": {
             "item": "minecraft:nether_star"
@@ -18,7 +18,7 @@
     },
     "pattern": [
         " N ",
-        "MEM",
+        "GEG",
         "PPP"
     ],
     "result": {

@@ -12,31 +12,31 @@
 		},
 		{
             "type": "patchouli:spotlight",
-			"item": "apotheosis:common_material",
+			"item": "apotheosis:mysterious_scrap_metal",
 			"link_recipe": true,
             "text": "Дивно сформований шматок невідомого металу.$(p)Цей матеріал отримується в результаті перероблення Звичайних предметів."
         },
 		{
             "type": "patchouli:spotlight",
-			"item": "apotheosis:uncommon_material",
+			"item": "apotheosis:timeworn_fabric",
 			"link_recipe": true,
             "text": "Неймовірно міцна тканина, зношена незліченними століттями. На ній немає жодної дірки.$(p)Отримується в результаті перероблення Незвичайних предметів."
         },
 		{
             "type": "patchouli:spotlight",
-			"item": "apotheosis:rare_material",
+			"item": "apotheosis:luminous_crystal_shard",
 			"link_recipe": true,
             "text": "Шматочок найяскравішого кришталю, який коли-небудь існував. Хоча це лише уламок, він містить потужну магічну силу. $(p)Отримується в результаті перероблення Рідкісних предметів."
         },
 		{
             "type": "patchouli:spotlight",
-			"item": "apotheosis:epic_material",
+			"item": "apotheosis:arcane_sands",
 			"link_recipe": true,
             "text": "Піщинки з чарівного світу, де таємнича магія спотворює все живе. $(p)Перероблення Епічних предметів поверне їх до цієї форми."
         },
 		{
             "type": "patchouli:spotlight",
-			"item": "apotheosis:mythic_material",
+			"item": "apotheosis:godforged_pearl",
 			"link_recipe": true,
             "text": "Перлина очищеної божественної енергії. Величезна сила, що міститься в ній, робить її досить нестабільною.$(p)Ці надзвичайні витвори можна отримати лише шляхом перероблення Міфічних предметів."
         }

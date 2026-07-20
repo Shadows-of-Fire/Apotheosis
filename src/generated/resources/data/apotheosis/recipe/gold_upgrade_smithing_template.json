@@ -9,12 +9,12 @@
         "S": {
             "item": "minecraft:stone"
         },
-        "U": {
-            "item": "apotheosis:uncommon_material"
+        "T": {
+            "item": "apotheosis:timeworn_fabric"
         }
     },
     "pattern": [
-        " U ",
+        " T ",
         "SGS",
         "SGS"
     ],

@@ -323,7 +323,7 @@
             "type": "gateways:stack",
             "stack": {
                 "count": 12,
-                "id": "apotheosis:rare_material"
+                "id": "apotheosis:luminous_crystal_shard"
             }
         },
         {

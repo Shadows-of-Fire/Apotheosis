@@ -157,7 +157,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new CountedReward(AffixItemReward.create(Rarities.UNCOMMON, Rarities.RARE), 3))
             .keyReward(new CountedReward(GemReward.create(Purity.CHIPPED, Purity.FLAWED), 5))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 16)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.UNCOMMON_MATERIAL, 8)))
+            .keyReward(new StackReward(new ItemStack(Apoth.Items.TIMEWORN_FABRIC, 8)))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SOCKETING, 2))));
 
         tieredGateway("tiered/ascent", b -> b
@@ -266,7 +266,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new CountedReward(AffixItemReward.create(Rarities.RARE, Rarities.EPIC), 3))
             .keyReward(new CountedReward(GemReward.create(Purity.FLAWED, Purity.NORMAL), 5))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 24)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.RARE_MATERIAL, 12)))
+            .keyReward(new StackReward(new ItemStack(Apoth.Items.LUMINOUS_CRYSTAL_SHARD, 12)))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SOCKETING, 2)))
             .keyReward(new StackReward(new ItemStack(Items.WITHER_SKELETON_SKULL, 3))));
 
@@ -382,7 +382,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new CountedReward(AffixItemReward.create(Rarities.EPIC, Rarities.MYTHIC), 3))
             .keyReward(new CountedReward(GemReward.create(Purity.NORMAL, Purity.FLAWLESS), 5))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 48)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.EPIC_MATERIAL, 24)))
+            .keyReward(new StackReward(new ItemStack(Apoth.Items.ARCANE_SANDS, 24)))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.SIGIL_OF_SOCKETING, 6)))
             .keyReward(new StackReward(new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 1), Apotheosis.langKey("reward", "netherite_smithing_template"))));
 
@@ -419,7 +419,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .modifier(AttributeModifier.create(ALObjects.Attributes.ARMOR_SHRED, Operation.ADD_MULTIPLIED_TOTAL, 0.08F))
                 .modifier(AttributeModifier.create(ALObjects.Attributes.PROT_SHRED, Operation.ADD_MULTIPLIED_TOTAL, 0.08F))
                 .modifier(AttributeModifier.create(Attributes.KNOCKBACK_RESISTANCE, Operation.ADD_MULTIPLIED_TOTAL, 0.05F))
-                .reward(new StackReward(new ItemStack(Apoth.Items.MYTHIC_MATERIAL, 16)))
+                .reward(new StackReward(new ItemStack(Apoth.Items.GODFORGED_PEARL, 16)))
                 .reward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 16)))
                 .reward(new ExperienceReward(25000, 1000))
                 .setupTime(-5)
@@ -543,7 +543,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
             .keyReward(new CountedReward(AffixItemReward.create(Rarities.MYTHIC), 5))
             .keyReward(new CountedReward(GemReward.create(Purity.PERFECT), 10))
             .keyReward(new StackReward(new ItemStack(Apoth.Items.GEM_DUST, 64)))
-            .keyReward(new StackReward(new ItemStack(Apoth.Items.MYTHIC_MATERIAL, 64)))
+            .keyReward(new StackReward(new ItemStack(Apoth.Items.GODFORGED_PEARL, 64)))
             .keyReward(new StackReward(endlessInvaderGatePearl())));
     }
 

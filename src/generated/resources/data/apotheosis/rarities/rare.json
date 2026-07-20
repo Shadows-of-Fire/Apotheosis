@@ -2,7 +2,7 @@
     "type": "apotheosis:rarity",
     "color": "#5555FF",
     "invader_sound": "apotheosis:invader_rare",
-    "material": "apotheosis:rare_material",
+    "material": "apotheosis:luminous_crystal_shard",
     "render_data": {
         "beam_height": 2.5,
         "beam_radius": 0.035,

@@ -94,6 +94,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
 @Mod(Apotheosis.MODID)
 public class Apotheosis {
@@ -138,7 +139,7 @@ public class Apotheosis {
     public void setup(FMLCommonSetupEvent e) {
         e.enqueueWork(() -> {
             TabFillingRegistry.register(Apoth.Tabs.ADVENTURE.getKey(),
-                Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
+                Items.MYSTERIOUS_SCRAP_METAL, Items.TIMEWORN_FABRIC, Items.LUMINOUS_CRYSTAL_SHARD, Items.ARCANE_SANDS, Items.GODFORGED_PEARL, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
                 Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_WITHDRAWAL, Items.SIGIL_OF_REBIRTH, Items.SIGIL_OF_ENHANCEMENT, Items.SIGIL_OF_UNNAMING, Items.SIGIL_OF_MALICE, Items.SIGIL_OF_SUPREMACY,
                 Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE, Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.AUGMENTING_TABLE, Items.GEM_CASE, Items.ENDER_GEM_CASE,
                 Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE,
@@ -172,6 +173,22 @@ public class Apotheosis {
         TierAugmentRegistry.INSTANCE.registerToBus();
         loadConfig(true);
         NeoForge.EVENT_BUS.addListener(AddReloadListenerEvent.class, event -> event.addListener(RunnableReloader.of(() -> loadConfig(false))));
+    }
+
+    /**
+     * Registers aliases from the pre-8.6.0 rarity material ids to their renamed forms, so items in existing
+     * worlds (and datapack references) resolve to the new registry entries.
+     */
+    @SubscribeEvent
+    public void registerAliases(RegisterEvent e) {
+        if (e.getRegistryKey().equals(Registries.ITEM)) {
+            var items = e.getRegistry(Registries.ITEM);
+            items.addAlias(loc("common_material"), loc("mysterious_scrap_metal"));
+            items.addAlias(loc("uncommon_material"), loc("timeworn_fabric"));
+            items.addAlias(loc("rare_material"), loc("luminous_crystal_shard"));
+            items.addAlias(loc("epic_material"), loc("arcane_sands"));
+            items.addAlias(loc("mythic_material"), loc("godforged_pearl"));
+        }
     }
 
     @SubscribeEvent

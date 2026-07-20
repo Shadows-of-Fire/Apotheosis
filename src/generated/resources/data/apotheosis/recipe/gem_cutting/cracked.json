@@ -10,11 +10,11 @@
     "right": [
         {
             "count": 3,
-            "item": "apotheosis:common_material"
+            "item": "apotheosis:mysterious_scrap_metal"
         },
         {
             "count": 1,
-            "item": "apotheosis:uncommon_material"
+            "item": "apotheosis:timeworn_fabric"
         }
     ]
 }

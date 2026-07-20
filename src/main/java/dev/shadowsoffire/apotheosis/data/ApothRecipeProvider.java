@@ -70,11 +70,11 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         out.accept(Apotheosis.loc("malice"), new MaliceRecipe(), null);
         out.accept(Apotheosis.loc("supremacy"), new SupremacyRecipe(), null);
         addSockets("sigil_add_sockets", ingredient(Items.SIGIL_OF_SOCKETING), 2);
-        addAffixSalvaging("common", Items.COMMON_MATERIAL);
-        addAffixSalvaging("uncommon", Items.UNCOMMON_MATERIAL);
-        addAffixSalvaging("rare", Items.RARE_MATERIAL);
-        addAffixSalvaging("epic", Items.EPIC_MATERIAL);
-        addAffixSalvaging("mythic", Items.MYTHIC_MATERIAL);
+        addAffixSalvaging("common", Items.MYSTERIOUS_SCRAP_METAL);
+        addAffixSalvaging("uncommon", Items.TIMEWORN_FABRIC);
+        addAffixSalvaging("rare", Items.LUMINOUS_CRYSTAL_SHARD);
+        addAffixSalvaging("epic", Items.ARCANE_SANDS);
+        addAffixSalvaging("mythic", Items.GODFORGED_PEARL);
 
         addGemSalvaging(Purity.CRACKED, 1, 2);
         addGemSalvaging(Purity.CHIPPED, 1, 3);
@@ -109,16 +109,16 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         addReforging("epic", 2, 4, 30, Blocks.REFORGING_TABLE);
         addReforging("mythic", 3, 5, 50, Blocks.REFORGING_TABLE);
 
-        addShaped(Blocks.AUGMENTING_TABLE, 3, 3, null, Items.NETHER_STAR, null, Items.MYTHIC_MATERIAL, Items.ENCHANTING_TABLE, Items.MYTHIC_MATERIAL, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE);
+        addShaped(Blocks.AUGMENTING_TABLE, 3, 3, null, Items.NETHER_STAR, null, Items.GODFORGED_PEARL, Items.ENCHANTING_TABLE, Items.GODFORGED_PEARL, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE);
         addShaped(Blocks.GEM_CUTTING_TABLE, 3, 3, Items.SMOOTH_STONE, Items.SHEARS, Items.SMOOTH_STONE, ItemTags.PLANKS, Items.GEM_DUST, ItemTags.PLANKS, ItemTags.PLANKS, null, ItemTags.PLANKS);
         addShaped(new ItemStack(Items.GEM_FUSED_SLATE, 8), 3, 3, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.GEM_DUST, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE);
-        addShaped(Blocks.REFORGING_TABLE, 3, 3, null, Tags.Items.INGOTS_NETHERITE, null, Items.EPIC_MATERIAL, Items.SIMPLE_REFORGING_TABLE, Items.EPIC_MATERIAL, Items.NETHER_BRICKS, Items.NETHER_BRICKS, Items.NETHER_BRICKS);
+        addShaped(Blocks.REFORGING_TABLE, 3, 3, null, Tags.Items.INGOTS_NETHERITE, null, Items.ARCANE_SANDS, Items.SIMPLE_REFORGING_TABLE, Items.ARCANE_SANDS, Items.NETHER_BRICKS, Items.NETHER_BRICKS, Items.NETHER_BRICKS);
         addShaped(Blocks.SALVAGING_TABLE, 3, 3, Tags.Items.INGOTS_COPPER, Tags.Items.INGOTS_COPPER, Tags.Items.INGOTS_COPPER, Items.IRON_PICKAXE, Items.SMITHING_TABLE, Items.IRON_AXE, Items.GEM_DUST, Items.LAVA_BUCKET, Items.GEM_DUST);
         addShaped(Blocks.SIMPLE_REFORGING_TABLE, 3, 3, null, Tags.Items.INGOTS_IRON, null, Items.GEM_DUST, Items.ENCHANTING_TABLE, Items.GEM_DUST, Items.SMOOTH_STONE, Items.SMOOTH_STONE, Items.SMOOTH_STONE);
 
         addShaped(Blocks.GEM_CASE, 3, 3, Tags.Items.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS, Items.BASALT, Items.GEM_CUTTING_TABLE, Items.BASALT, Items.BASALT, Items.ENDER_CHEST, Items.BASALT);
 
-        addShaped(new ItemStack(Items.SIGIL_OF_ENHANCEMENT, 4), 3, 3, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.MYTHIC_MATERIAL, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
+        addShaped(new ItemStack(Items.SIGIL_OF_ENHANCEMENT, 4), 3, 3, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GODFORGED_PEARL, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
             Items.GEM_DUST);
         addShaped(new ItemStack(Items.SIGIL_OF_REBIRTH, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE,
             Items.GEM_FUSED_SLATE);
@@ -129,7 +129,7 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         addShaped(new ItemStack(Items.SIGIL_OF_WITHDRAWAL, 4), 3, 3, Items.GEM_FUSED_SLATE, Items.BLAZE_ROD, Items.GEM_FUSED_SLATE, Tags.Items.ENDER_PEARLS, Items.LAVA_BUCKET, Tags.Items.ENDER_PEARLS, Items.GEM_FUSED_SLATE,
             Items.GEM_DUST, Items.GEM_FUSED_SLATE);
 
-        List<Holder<Item>> rarityMaterials = List.of(Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL);
+        List<Holder<Item>> rarityMaterials = List.of(Items.MYSTERIOUS_SCRAP_METAL, Items.TIMEWORN_FABRIC, Items.LUMINOUS_CRYSTAL_SHARD, Items.ARCANE_SANDS, Items.GODFORGED_PEARL);
         for (int i = 0; i < Purity.values().length - 1; i++) {
             Purity purity = Purity.BY_ID.apply(i);
             List<Holder<Item>> materials = rarityMaterials.subList(Math.max(i - 2, 0), Math.min(i + 2, rarityMaterials.size()));
@@ -148,9 +148,9 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             new Stats(15F, 100F, 13.5F, 37.5F, 0)),
             null);
 
-        addShaped(new ItemStack(Items.IRON_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.COMMON_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
-        addShaped(new ItemStack(Items.GOLD_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.UNCOMMON_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
-        addShaped(new ItemStack(Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.RARE_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        addShaped(new ItemStack(Items.IRON_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.MYSTERIOUS_SCRAP_METAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        addShaped(new ItemStack(Items.GOLD_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.TIMEWORN_FABRIC, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        addShaped(new ItemStack(Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.LUMINOUS_CRYSTAL_SHARD, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
 
         addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_SWORD, Tags.Items.INGOTS_IRON, 4, Items.IRON_SWORD);
         addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_PICKAXE, Tags.Items.INGOTS_IRON, 4, Items.IRON_PICKAXE);
@@ -193,18 +193,18 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH);
 
         gateRecipe("tiered/ascent",
-            Tags.Items.INGOTS_GOLD, Items.RARE_MATERIAL, Tags.Items.INGOTS_GOLD,
-            Items.RARE_MATERIAL, Tags.Items.ENDER_PEARLS, Items.RARE_MATERIAL,
+            Tags.Items.INGOTS_GOLD, Items.LUMINOUS_CRYSTAL_SHARD, Tags.Items.INGOTS_GOLD,
+            Items.LUMINOUS_CRYSTAL_SHARD, Tags.Items.ENDER_PEARLS, Items.LUMINOUS_CRYSTAL_SHARD,
             Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
 
         gateRecipe("tiered/summit",
             Items.BLAZE_POWDER, Items.GHAST_TEAR, Items.BLAZE_POWDER,
-            Items.EPIC_MATERIAL, Items.ENDER_EYE, Items.EPIC_MATERIAL,
+            Items.ARCANE_SANDS, Items.ENDER_EYE, Items.ARCANE_SANDS,
             Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
 
         gateRecipe("tiered/pinnacle",
             Items.SIGIL_OF_MALICE, Ench.Items.WARDEN_TENDRIL, Items.SIGIL_OF_MALICE,
-            Ench.Items.INFUSED_BREATH, Items.MYTHIC_MATERIAL, Ench.Items.INFUSED_BREATH,
+            Ench.Items.INFUSED_BREATH, Items.GODFORGED_PEARL, Ench.Items.INFUSED_BREATH,
             Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
 
         this.recipeOutput = _out;

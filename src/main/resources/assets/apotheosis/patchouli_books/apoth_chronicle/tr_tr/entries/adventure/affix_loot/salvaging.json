@@ -12,31 +12,31 @@
         },
 		{
             "type": "patchouli:spotlight",
-			"item": "apotheosis:common_material",
+			"item": "apotheosis:mysterious_scrap_metal",
 			"link_recipe": true,
             "text": "Tanımlanamayan bir metalden yapılmış garip şekilli bir parça.$(p)Bu malzeme, sıradan eşyalar geri dönüştürüldüğünde elde edilir."
         },
 		{
             "type": "patchouli:spotlight",
-			"item": "apotheosis:uncommon_material",
+			"item": "apotheosis:timeworn_fabric",
 			"link_recipe": true,
             "text": "Sayısız çağlar boyunca aşınmış, inanılmaz derecede dayanıklı bir kumaş. Tek bir yırtık bile içermez.$(p)Sıradan olmayan eşyalar geri dönüştürüldüğünde bulunur."
         },
 		{
             "type": "patchouli:spotlight",
-			"item": "apotheosis:rare_material",
+			"item": "apotheosis:luminous_crystal_shard",
 			"link_recipe": true,
             "text": "Var olmuş en parlak kristalden bir parça. Parçanın küçük bir kısmı olmasına rağmen, güçlü bir büyü gücü içerir.$(p)Nadir eşyalar geri dönüştürüldüğünde elde edilir."
         },
 		{
             "type": "patchouli:spotlight",
-			"item": "apotheosis:epic_material",
+			"item": "apotheosis:arcane_sands",
 			"link_recipe": true,
             "text": "Büyülü bir alemin kum taneleri, burada büyü tüm yaşamı şekillendirir.$(p)Destansı bir eşya geri dönüştürüldüğünde bu formda indirgenir."
         },
 		{
             "type": "patchouli:spotlight",
-			"item": "apotheosis:mythic_material",
+			"item": "apotheosis:godforged_pearl",
 			"link_recipe": true,
             "text": "Arındırılmış tanrısal enerjiden bir inci. İçinde mühürlenmiş muazzam güç, onu oldukça uçucu hale getirir.$(p)Bu olağanüstü oluşumlar yalnızca efsanevi eşyalar geri dönüştürüldüğünde elde edilebilir."
         }
