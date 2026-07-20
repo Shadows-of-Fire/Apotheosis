@@ -227,6 +227,14 @@ public class Apoth {
         public static final AttachmentType<Float> COLD_DAMAGE_TAKEN = R.attachment("cold_damage_taken", () -> 0F, b -> b.serialize(Codec.FLOAT));
 
         /**
+         * Stores the game time at which the player may next trigger a natural invader spawn.
+         * <p>
+         * When an invader spawns, this is set for the triggering player and all same-tier players within
+         * the boss announcement range. A value of zero (or any time in the past) means no cooldown is active.
+         */
+        public static final AttachmentType<Long> INVADER_COOLDOWN = R.attachment("invader_cooldown", () -> 0L, b -> b.serialize(Codec.LONG, t -> t != 0L).copyOnDeath());
+
+        /**
          * Client-only attachment to record if the affix effect render has started.
          * <p>
          * Rendering starts when an item touches the ground, and stops if it leaves the ground.

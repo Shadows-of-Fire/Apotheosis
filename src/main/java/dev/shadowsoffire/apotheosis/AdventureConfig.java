@@ -89,7 +89,8 @@ public class AdventureConfig {
             "If boss items are always cursed.  Enable this if you want bosses to be less overpowered by always giving them a negative effect.\nServer-authoritative.");
         bossAnnounceRange = c.getFloat("Boss Announcement Range", "bosses", bossAnnounceRange, 0, 1024,
             "The range at which boss spawns will be announced.  If you are closer than this number of blocks (ignoring y-level), you will receive the announcement.\nServer-authoritative.");
-        bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", bossSpawnCooldown, 0, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.\nServer-authoritative.");
+        bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", bossSpawnCooldown, 0, 720000,
+            "The time, in ticks, that must pass before a player may trigger another natural invader spawn.\nWhen an invader spawns, this cooldown is applied to the triggering player and to all same-tier players within the boss announcement range.\nMay be overridden per-dimension via the invader spawn rules data map.\nServer-authoritative.");
         bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", bossAutoAggro, "If true, invading bosses will automatically target the closest player.\nServer-authoritative.");
         bossGlowOnSpawn = c.getBoolean("Boss Glowing On Spawn", "bosses", bossGlowOnSpawn, "If true, bosses will glow when they spawn.\nServer-authoritative.");
 
