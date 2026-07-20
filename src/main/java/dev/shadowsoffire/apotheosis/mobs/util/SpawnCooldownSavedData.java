@@ -38,7 +38,11 @@ public class SpawnCooldownSavedData extends SavedData {
     }
 
     public void tick(Identifier level) {
-        this.bossCooldowns.computeIntIfPresent(level, (key, value) -> Math.max(0, value - 1));
+        int remaining = this.bossCooldowns.getInt(level);
+        if (remaining > 0) {
+            this.bossCooldowns.put(level, remaining - 1);
+            this.setDirty();
+        }
     }
 
     public boolean isOnCooldown(Level level) {
@@ -55,6 +59,7 @@ public class SpawnCooldownSavedData extends SavedData {
 
     public void startCooldown(Identifier level, int timer) {
         this.bossCooldowns.put(level, timer);
+        this.setDirty();
     }
 
 }
