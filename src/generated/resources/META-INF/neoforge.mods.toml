@@ -8,7 +8,7 @@ license="MIT License (code) / All Rights Reserved (assets)"
 
 modId="apotheosis"
 
-version="9.0.2"
+version="9.0.3"
 
 displayName="Apotheosis"
 
@@ -40,7 +40,7 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="placebo"
     type="required"
-    versionRange="[10.0.1,)"
+    versionRange="[10.0.2,)"
     ordering="AFTER"
     side="BOTH"
 
@@ -68,13 +68,13 @@ config="apotheosis.mixins.json"
 [[dependencies.apotheosis]]
     modId="gateways"
     type="optional"
-    versionRange="[6.0.1,)"
+    versionRange="[6.0.2,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="patchouli"
     type="optional"
-    versionRange="[26.1-94-SNAPSHOT,)"
+    versionRange="[26.1-94,)"
     ordering="AFTER"
     side="BOTH"

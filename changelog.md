@@ -1,3 +1,14 @@
+## 9.0.3
+* Updated to Gateways 6.0.2 and Placebo 10.0.2.
+  * Fixes the Endless Gateway of Apothic Invaders crashing on wave 6 with "Modifier is already applied on this attribute!" (#1768).
+  * Attribute wave modifiers now use session-generated modifier ids, so the `modifier_id` field is no longer present in gateway data.
+* Boss stats and attribute entity modifiers now use generated modifier ids as well; their `modifier_id` fields are no longer used, and are ignored if present.
+  * Also fixes attribute entity modifiers building an invalid identifier (contained a space), which would have crashed on use.
+* Invader Spawn Cooldowns are now clustered instead of global. This means invader spawns on servers should no longer be deadlocked by multiple players being far away from eachother.
+  * Spawn Cooldowns are applied on a per-player basis, only to players in the same world tier within the announcement radius of an Invader Spawn.
+* Added JEI Exclusion Zones for the Gem Case
+* Fixed some hardcoded english text in the World Tier menu.
+
 ## 9.0.2
 * Updated to Placebo 10.0.1.
   * Things interacting with `RandomAttributeModifier` now have a `modifier_id` field.
