@@ -373,7 +373,7 @@
     "affix.apotheosis:breaker/effect/omnetic.desc": "Инструмент имеет %s уровень эффективности против всех блоков.",
     
     "misc.apotheosis.physical": "физический",
-    "misc.apotheosis.magic": "магичеcкий",
+    "misc.apotheosis.magic": "магический",
     "misc.apotheosis.fire": "огненный",
     "misc.apotheosis.fall": "при падении",
     "misc.apotheosis.explosion": "взрывной",
@@ -405,7 +405,7 @@
     "affix.apotheosis:generic/attribute/lucky": "Везучести",
     "affix.apotheosis:generic/attribute/lucky.suffix": "счастливой случайности",
 
-    "affix.apotheosis:melee/attribute/nullifying": "Ануллирования",
+    "affix.apotheosis:melee/attribute/nullifying": "Аннулирования",
     "affix.apotheosis:melee/attribute/nullifying.suffix": "магоборца",
 
     "affix.apotheosis:melee/attribute/spellbreaking": "Разрушения чар",
@@ -501,7 +501,7 @@
     "bonus.apotheosis:bloody_arrow.desc": "При стрельбе, вы теряете %s%% от макс. здоровья и наносите %s%% урона. %s",
     "bonus.apotheosis:leech_block.desc": "Блокирование атаки излечивает вас от %s%% урона. %s",
     "bonus.apotheosis:all_stats.desc": "+%s%% ко всем характеристикам",
-    "gem.apotheosis:overworld/royalty.bonus.pickaxe": "Разрушение железной руды имеет %s%% шанс выпадения рудного золота.",
+    "gem.apotheosis:overworld/royalty.bonus.pickaxe": "Разрушение медной руды имеет %s%% шанс выпадения рудного золота.",
     "bonus.apotheosis:mageslayer.desc": "Игнорирует %s%% магического урона и исцеляет на то же количество.",
     "bonus.apotheosis:twilight_ore_magnet.desc": "Может использоваться в качестве магнита для руды, что тратит дополнительно %s прочность.",
     "bonus.apotheosis:twilight_treasure_goblin.desc": "Атакуя сущность имеет %s%% шанс вызвать гоблина с сокровищами. %s",
@@ -536,7 +536,7 @@
     "item.apotheosis.gem.apotheosis:twilight/forest": "самоцвет сумеречного леса",
     "item.apotheosis.gem.apotheosis:twilight/queen": "самоцвет ледяной королевы",
 
-    "item.apotheosis.boss_summoner": "Призвать апофеозного босса",
+    "item.apotheosis.boss_summoner": "Призыватель апофеозного вторженца",
     "item.apotheosis.gem.cracked": "Треснутый %s",
     "item.apotheosis.gem.chipped": "Расщеплённый %s",
     "item.apotheosis.gem.flawed": "Дефектный %s",
@@ -589,7 +589,7 @@
 
     "item.apotheosis.gold_upgrade_smithing_template": "Кузнечный шаблон",
     "upgrade.apotheosis.gold": "Золотое улучшение ",
-    "item.apotheosis.gold_upgrade_smithing_template.applies_to": "Железеному снаряжению",
+    "item.apotheosis.gold_upgrade_smithing_template.applies_to": "Железному снаряжению",
     "item.apotheosis.gold_upgrade_smithing_template.ingredients": "4 золотых слитка",
     "item.apotheosis.gold_upgrade_smithing_template.base_slot_description": "Добавьте железную броню, оружие, или инструменты",
     "item.apotheosis.gold_upgrade_smithing_template.additions_slot_description": "Добавьте четыре золотых слитка",
@@ -615,7 +615,7 @@
     "block.apotheosis.gem_case": "Витрина самоцветов",
     "tooltip.apotheosis.gem_case.capacity": "Вместимость: %s самоцветов",
     "tooltip.apotheosis.gem_case.unique_gems": "Содержит %s разных самоцветов",
-    "tooltip.apotheosis.gem_case.none_owned": "Нет владельца",
+    "tooltip.apotheosis.gem_case.none_owned": "Нет в наличии",
     "block.apotheosis.ender_gem_case": "Витрина самоцветов дома Фаберже",
 
     "button.apotheosis.salvage": "Предметы утилизации",
@@ -747,7 +747,7 @@
     "wave_entity.apotheosis.affixed_armored_stray": "Усиленный бронированный бродяга",
     "wave_entity.apotheosis.affixed_polar_bear": "Усиленный полярный медведь",
     "wave_entity.apotheosis.affixed_wolf": "Усиленный волк",
-    "wave_entity.apotheosis.affixed_armored_bogged": "Усиленный бронированного болотника",
+    "wave_entity.apotheosis.affixed_armored_bogged": "Усиленный бронированный болотник",
     "wave_entity.apotheosis.vampiric_phantom": "Вампирический фантом",
     "wave_entity.apotheosis.nether_herald": "Вестник Нижнего мира",
     "wave_entity.apotheosis.affixed_armored_zombified_piglin": "Усиленный бронированный зомбифицированный пиглин",
@@ -808,7 +808,7 @@
     "advancements.apotheosis.progression.pinnacle.criteria.epic_legs": "Экипируйте эпические поножи",
     "advancements.apotheosis.progression.pinnacle.criteria.epic_feet": "Экипируйте эпические ботинки",
     "advancements.apotheosis.progression.pinnacle.criteria.epic_hand": "Экипируйте эпическое оружие",
-    "advancements.apotheosis.progression.pinnacle.criteria.kill_ender_dragon": "Убете дракона Края",
+    "advancements.apotheosis.progression.pinnacle.criteria.kill_ender_dragon": "Убейте дракона Края",
 
     "advancements.apotheosis.affix": "Апофеозные усиления",
     "advancements.apotheosis.affix.desc": "Найдите предмет с апофеозным усилением",
