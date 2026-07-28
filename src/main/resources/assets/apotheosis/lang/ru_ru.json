@@ -1,0 +1,952 @@
+{
+    "comment_id": "/Adventure Module",
+
+    "key.categories.apotheosis": "Апофеозис",
+
+    "text.apotheosis.world_tier.haven": "Прибежище",
+    "text.apotheosis.world_tier.haven.desc": "Начало вашего приключения",
+
+    "text.apotheosis.world_tier.frontier": "Рубеж",
+    "text.apotheosis.world_tier.frontier.desc": "Путешествие в опасный мир",
+
+    "text.apotheosis.world_tier.ascent": "Возвышение",
+    "text.apotheosis.world_tier.ascent.desc": "Ступление на путь к силе",
+
+    "text.apotheosis.world_tier.summit": "Вершина",
+    "text.apotheosis.world_tier.summit.desc": "Достижение вершины, но не края",
+
+    "text.apotheosis.world_tier.pinnacle": "Пик",
+    "text.apotheosis.world_tier.pinnacle.desc": "Блуждание на пике бурных гор",
+
+    "title.apotheosis.select_world_tier": "Выбрать уровень мира",
+    "title.apotheosis.world_tier_details": "Подробнее об уровне",
+
+    "button.apotheosis.haven": "Прибежище",
+    "button.apotheosis.frontier": "Рубеж",
+    "button.apotheosis.ascent": "Возвышение",
+    "button.apotheosis.summit": "Вершина",
+    "button.apotheosis.pinnacle": "Пик",
+    "button.apotheosis.tier_locked": "%s (Заблокирован)",
+    "button.apotheosis.tier_advancement": "Выполните достижение %s для разблокировки.",
+    "button.apotheosis.tier_advancement_criteria": "",
+    "button.apotheosis.activate_tier": "Активировать уровень мира: %s",
+    "button.apotheosis.already_activated": "Уровень мира уже активен",
+    "button.apotheosis.activate": "Неактивен",
+    "button.apotheosis.activated": "Активен",
+    "button.apotheosis.disabled": "Отключен",
+    "button.apotheosis.tier_changes_disabled": "В настройках отключена возможность ручной смены уровня мира.",
+    "button.apotheosis.show_detailed_info": "Подробно",
+    "button.apotheosis.show_detailed_info.desc": "Просмотреть усиления существ, игроков, и редкостей",
+    "button.apotheosis.return": "X",
+    "button.apotheosis.return.desc": "Вернуться на экран выбора уровня",
+    "button.apotheosis.inactive": "Неактивен",
+    "button.apotheosis.locked": "Уровень мира заблокирован",
+    "button.apotheosis.skip_tutorial": "Пропустить",
+    "button.apotheosis.prev_tutorial": "Назад",
+    "button.apotheosis.next_tutorial": "Далее",
+    "button.apotheosis.done": "Готово",
+    "button.apotheosis.open_world_tier_tutorial": "Открыть обучение по уровням мира",
+
+    "tutorial.apotheosis.world_tier.introduction.title": "Введение",
+    "tutorial.apotheosis.world_tier.introduction.desc": "Добро пожаловать в обучающий курс по уровням мира Апофеозиса! В этом руководстве вы узнаете о новой системе уровней мира и о том, как продвигаться по ней. Нажмите «Далее», чтобы продолжить, или «Пропустить», чтобы пропустить это руководство.",
+
+    "tutorial.apotheosis.world_tier.world_tiers.title": "Уровни мира",
+    "tutorial.apotheosis.world_tier.world_tiers.desc": "Уровни мира — это система прогресса в Апофеозисе. Разблокировка и активация новых уровней мира повысит сложность игры, и также улучшит качество добычи, которую вы найдёте в мире.\n\nНаведите курсор на значок уровня мира, чтобы увидеть требования для разблокировки, и нажмите по нему, чтобы выделить разблокированный уровень.",
+    
+    "tutorial.apotheosis.world_tier.tier_name.title": "Название уровней",
+    "tutorial.apotheosis.world_tier.tier_name.desc": "Это название выбранного уровня мира, а также краткое описание этого уровня.",
+    
+    "tutorial.apotheosis.world_tier.tier_difficulty.title": "Сложность уровней",
+    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "Это уровень сложности выбранного уровня мира. Более высокие уровни сложности означают более сильных существ, но и лучшие награды.\n\nНа уровне мира «Рубеж» и выше в вашем мире начнут появляться Апофеозные вторженцы.",
+    
+    "tutorial.apotheosis.world_tier.detailed_info.title": "Подробная информация", 
+    "tutorial.apotheosis.world_tier.detailed_info.desc": "Эта кнопка отобразит подробную информацию об уровне мира, включая усиления и ослабления для игроков и существ, а также шансы выпадения предметов каждой редкости и чистоты самоцветов.\n\nЕсли вы не уверены, или не знаете что такое редкость или чистота, взгляните в «Хронику теней» (внутриигровое руководство).",
+    
+    "tutorial.apotheosis.world_tier.activate.title": "Активация уровней",
+    "tutorial.apotheosis.world_tier.activate.desc": "Эта кнопка позволяет активировать выбранный уровень мира, если он ещё не активен.\n\nНажатие кнопки «Готово» автоматически активирует уровень мира: «Прибежище». Для всех остальных уровней мира вам необходимо вернуться сюда и активировать их самостоятельно.",
+    "tutorial.apotheosis.world_tier.activate_disabled.desc": "Обычно эта кнопка позволяет активировать выбранный уровень мира.\n\nОднако в этом модпаке уровни мира активируются автоматически и не могут быть изменены вручную. Вы по-прежнему можете просматривать подробную информацию о каждом уровне мира, но не можете активировать или отключить их.",
+
+    "text.apotheosis.tier_info": "Информация об уровне",
+    "text.apotheosis.monster_augments": "Усиления монстров",
+    "text.apotheosis.player_augments": "Усиления игроков",
+    "text.apotheosis.drop_chances": "Шансы выпадений",
+    "text.apotheosis.rarities": "Редкость",
+    "text.apotheosis.purities": "Чистота",
+    "text.apotheosis.unidentified": "Неопознанный %s",
+    "text.apotheosis.world_tier_tutorial": "Мощность этого предмета неизвестна",
+    "text.apotheosis.world_tier_tutorial.2": "Нажмите %s и активируйте уровень мира «Прибежище», чтобы разблокировать его",
+
+    "key.apotheosis.toggle_radial_mining": "Изменить режим радиального копания",
+    "key.apotheosis.open_world_tier_select": "Открыть выбор уровня мира",
+    "key.apotheosis.compare_equipment": "Сравнить снаряжение",
+    "key.apotheosis.link_item_to_chat": "Привязать предмет в чат",
+
+    "chat.apotheosis.link_item_with_count": "%s %s",
+
+    "info.apotheosis.affix_item": "Апофеозный предмет с усилением",
+
+    "death.attack.apotheosis:execute": "%s был казнён %s",
+    "death.attack.apotheosis:execute.item": "%s был казнён %s при помощи %s",
+    "death.attack.apotheosis:execute.player": "%s был казнён %s",
+
+    "misc.apotheosis.affix_name.two": "%s %s",
+    "misc.apotheosis.affix_name.three": "%s %s %s",
+    "misc.apotheosis.affix_name.four": "%s %s %s %s",
+    "misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
+
+    "misc.apotheosis.radial_state_updated": "Режим радиального копания «%s»",
+    "misc.apotheosis.radial_state.require_not_sneaking": "Отключен во время подкрадывания",
+    "misc.apotheosis.radial_state.require_sneaking": "Включен во время подкрадывания",
+    "misc.apotheosis.radial_state.enabled": "Включен",
+    "misc.apotheosis.radial_state.disabled": "Отключен",
+    "misc.apotheosis.right_click_to_socket": "ПКМ по гнезду %s для вставки в %s",
+
+    "affix.apotheosis:armor/attribute/blessed": "Благословления",
+    "affix.apotheosis:armor/attribute/blessed.suffix": "здоровья",
+
+    "affix.apotheosis:armor/attribute/windswept": "Ветренности",
+    "affix.apotheosis:armor/attribute/windswept.suffix": "потока",
+
+    "affix.apotheosis:armor/attribute/ironforged": "Железокования",
+    "affix.apotheosis:armor/attribute/ironforged.suffix": "кузнеца",
+
+    "affix.apotheosis:melee/attribute/violent": "Насилия",
+    "affix.apotheosis:melee/attribute/violent.suffix": "убийства",
+
+    "affix.apotheosis:ranged/attribute/windswept": "Ветренности",
+    "affix.apotheosis:ranged/attribute/windswept.suffix": "потока",
+
+    "affix.apotheosis:melee/attribute/graceful": "Грациозности",
+    "affix.apotheosis:melee/attribute/graceful.suffix": "дуэлянта",
+
+    "affix.apotheosis:melee/attribute/forceful": "Мощности",
+    "affix.apotheosis:melee/attribute/forceful.suffix": "быка",
+
+    "affix.apotheosis:armor/attribute/aquatic": "Водянистости",
+    "affix.apotheosis:armor/attribute/aquatic.suffix": "океана",
+
+    "affix.apotheosis:armor/attribute/gravitational": "Гравитационности",
+    "affix.apotheosis:armor/attribute/gravitational.suffix": "гравитации",
+
+    "affix.apotheosis:breaker/attribute/lengthy": "Длины",
+    "affix.apotheosis:breaker/attribute/lengthy.suffix": "хватания",
+
+    "affix.apotheosis:breaker/attribute/experienced": "Опытности",
+    "affix.apotheosis:breaker/attribute/experienced.suffix": "учёного",
+
+    "affix.apotheosis:ranged/attribute/agile": "Проворности",
+    "affix.apotheosis:ranged/attribute/agile.suffix": "ловкости",
+
+    "affix.apotheosis:armor/attribute/steel_touched": "Стальгорности",
+    "affix.apotheosis:armor/attribute/steel_touched.suffix": "защитника",
+
+    "affix.apotheosis:armor/attribute/stalwart": "Стойкости",
+    "affix.apotheosis:armor/attribute/stalwart.suffix": "упрямства",
+
+    "affix.apotheosis:armor/attribute/elastic": "Упругости",
+    "affix.apotheosis:armor/attribute/elastic.suffix": "восхождения",
+
+    "affix.apotheosis:armor/attribute/fortunate": "Удачливости",
+    "affix.apotheosis:armor/attribute/fortunate.suffix": "четырёхлистного клевера",
+    
+    "affix.apotheosis:armor/attribute/winged": "Крылатости",
+    "affix.apotheosis:armor/attribute/winged.suffix": "небес",
+
+    "affix.apotheosis:melee/attribute/intricate": "Хитроумности",
+    "affix.apotheosis:melee/attribute/intricate.suffix": "критического мышления",
+
+    "affix.apotheosis:melee/attribute/lacerating": "Раздирания",
+    "affix.apotheosis:melee/attribute/lacerating.suffix": "хирургической точности",
+
+    "affix.apotheosis:melee/attribute/glacial": "Ледниковости",
+    "affix.apotheosis:melee/attribute/glacial.suffix": "ледяных земель",
+
+    "affix.apotheosis:melee/attribute/infernal": "Инферно",
+    "affix.apotheosis:melee/attribute/infernal.suffix": "Солнца",
+
+    "affix.apotheosis:melee/attribute/vampiric": "Вампиризма",
+    "affix.apotheosis:melee/attribute/vampiric.suffix": "кровопускания",
+
+    "affix.apotheosis:melee/attribute/piercing": "Пронзания",
+    "affix.apotheosis:melee/attribute/piercing.suffix": "разделения",
+
+    "affix.apotheosis:melee/attribute/shredding": "Измельчения",
+    "affix.apotheosis:melee/attribute/shredding.suffix": "проникновения",
+
+    "affix.apotheosis:melee/attribute/giant_slaying": "Убийцы гигантов",
+    "affix.apotheosis:melee/attribute/giant_slaying.suffix": "колоссальных ударов",
+
+    "affix.apotheosis:melee/attribute/berserking": "Неистовства",
+    "affix.apotheosis:melee/attribute/berserking.suffix": "берсерка",
+
+    "affix.apotheosis:breaker/attribute/destructive": "Разрушительности",
+    "affix.apotheosis:breaker/attribute/destructive.suffix": "карьерных работ",
+
+    "affix.apotheosis:ranged/attribute/elven": "Эльфа",
+    "affix.apotheosis:ranged/attribute/elven.suffix": "первого лучника",
+
+    "affix.apotheosis:ranged/attribute/streamlined": "Обтекаемости",
+    "affix.apotheosis:ranged/attribute/streamlined.suffix": "снайпера",
+    
+    "affix.apotheosis:melee/mob_effect/elusive": "Неуловимости",
+    "affix.apotheosis:melee/mob_effect/elusive.suffix": "уклонения",
+
+    "affix.apotheosis:breaker/mob_effect/swift": "Быстроты",
+    "affix.apotheosis:breaker/mob_effect/swift.suffix": "разгрома",
+
+    "affix.apotheosis:breaker/mob_effect/spelunkers": "Спелеолога",
+    "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "исследования пещер",
+
+    "affix.apotheosis:ranged/mob_effect/ensnaring": "Заманивания",
+    "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "хищника",
+
+    "affix.apotheosis:shield/mob_effect/venomous": "Ядовитости",
+    "affix.apotheosis:shield/mob_effect/venomous.suffix": "змеи",
+
+    "affix.apotheosis:ranged/mob_effect/fleeting": "Мимолётный", 
+    "affix.apotheosis:ranged/mob_effect/fleeting.suffix": "рейнджера",
+
+    "affix.apotheosis:melee/mob_effect/weakening": "Ослабления",
+    "affix.apotheosis:melee/mob_effect/weakening.suffix": "слабости",
+
+    "affix.apotheosis:armor/mob_effect/bolstering": "Поддерживания",
+    "affix.apotheosis:armor/mob_effect/bolstering.suffix": "силы духа",
+
+    "affix.apotheosis:armor/mob_effect/revitalizing": "Оживления",
+    "affix.apotheosis:armor/mob_effect/revitalizing.suffix": "источника",
+
+    "affix.apotheosis:armor/mob_effect/nimble": "Шустрости",
+    "affix.apotheosis:armor/mob_effect/nimble.suffix": "лиса",
+
+    "affix.apotheosis:armor/mob_effect/blinding": "Ослепления",
+    "affix.apotheosis:armor/mob_effect/blinding.suffix": "тьмы",
+
+    "affix.apotheosis:ranged/mob_effect/shulkers": "Левитации",
+    "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "шалкера",
+
+    "affix.apotheosis:shield/mob_effect/withering": "Иссушения",
+    "affix.apotheosis:shield/mob_effect/withering.suffix": "чёрного скелета",
+
+    "affix.apotheosis:shield/attribute/ironforged": "Железокования",
+    "affix.apotheosis:shield/attribute/ironforged.suffix": "кузнеца",
+
+    "affix.apotheosis:shield/attribute/steel_touched": "Стальгорности",
+    "affix.apotheosis:shield/attribute/steel_touched.suffix": "защитника",
+
+    "affix.apotheosis:ranged/mob_effect/ivy_laced": "Плюща",
+    "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "природного токсина",
+
+    "affix.apotheosis:ranged/mob_effect/satanic": "Сатанизма",
+    "affix.apotheosis:ranged/mob_effect/satanic.suffix": "преисподней",
+
+    "affix.apotheosis:ranged/spectral": "Призрачности",
+    "affix.apotheosis:ranged/spectral.suffix": "покинутого",
+    "affix.apotheosis:ranged/spectral.desc": "У вас есть шанс %s%% выпустить вторую стрелу.",
+    
+    "affix.apotheosis:ranged/magical": "Волшебства",
+    "affix.apotheosis:ranged/magical.suffix": "таинства",
+    "affix.apotheosis:ranged/magical.desc": "Ваши стрелы наносят магический урон.",
+    
+    "affix.apotheosis:melee/festive": "Праздненства",
+    "affix.apotheosis:melee/festive.suffix": "вечеринок",
+    "affix.apotheosis:melee/festive.desc": "Убитые враги имеют %s%% шанс стать добычей Пиньяты",
+    
+    "affix.apotheosis:melee/thunderstruck": "Громовержца",
+    "affix.apotheosis:melee/thunderstruck.suffix": "шторма",
+    "affix.apotheosis:melee/thunderstruck.desc": "Ваши атаки наносят %s урона ближайшим врагам.",
+    
+    "affix.apotheosis:shield/retreating": "Отступания",
+    "affix.apotheosis:shield/retreating.suffix": "шута",
+    "affix.apotheosis:shield/retreating.desc": "Вы отпрыгнете назад при блокировании в ближнем бою.",
+    
+    "affix.apotheosis:generic/telepathic": "Телепатии",
+    "affix.apotheosis:generic/telepathic.suffix": "пространства и времени",
+    "affix.apotheosis:generic/telepathic.desc.weapon": "Добыча с существ будет телепортироваться к вам.",
+    "affix.apotheosis:generic/telepathic.desc.tool": "Добытые блоки будут телепортироваться к вам.",
+
+    "affix.apotheosis:melee/executing": "Казни",
+    "affix.apotheosis:melee/executing.suffix": "палача",
+    "affix.apotheosis:melee/executing.desc": "Враги с максимальным здоровьем ниже %s%% будут казнены.",
+    
+    "affix.apotheosis:melee/cleaving": "Рассекания",
+    "affix.apotheosis:melee/cleaving.suffix": "мясника",
+    "affix.apotheosis:melee/cleaving.desc": "Атаки имеют шанс %s%% поразить до %s ближайших врагов.",
+
+    "affix.apotheosis:breaker/ability/enlightened": "Просвящения",
+    "affix.apotheosis:breaker/ability/enlightened.suffix": "светозара",
+    "affix.apotheosis:breaker/ability/enlightened.desc": "Инструмент может разместить факел ценой %s прочности.",
+
+    "affix.apotheosis:shield/psychic": "Психики",
+    "affix.apotheosis:shield/psychic.suffix": "мстителя",
+    "affix.apotheosis:shield/psychic.desc": "Блокирование снаряда наносит стрелку %s%% урона.",
+
+    "affix.apotheosis:shield/catalyzing": "Катализации",
+    "affix.apotheosis:shield/catalyzing.suffix": "преобразования",
+    "affix.apotheosis:shield/catalyzing.desc": "Блокирование взрыва придаст вам огромную силу.",
+
+    "affix.apotheosis:melee/attribute/annihilating": "Уничтожения",
+    "affix.apotheosis:melee/attribute/annihilating.suffix": "титана",
+
+    "affix.apotheosis:melee/attribute/decimating": "Истребления",
+    "affix.apotheosis:melee/attribute/decimating.suffix": "короля Богов",
+    
+    "affix.apotheosis:melee/attribute/murderous": "Убийственности",
+    "affix.apotheosis:melee/attribute/murderous.suffix": "минотавра",
+    
+    "affix.apotheosis:ranged/mob_effect/acidic": "Кислотности",
+    "affix.apotheosis:ranged/mob_effect/acidic.suffix": "коррозии",
+
+    "affix.apotheosis:melee/mob_effect/bloodletting": "Въедливости",
+    "affix.apotheosis:melee/mob_effect/bloodletting.suffix": "убийцы",
+
+    "affix.apotheosis:melee/mob_effect/caustic": "Едкости",
+    "affix.apotheosis:melee/mob_effect/caustic.suffix": "едкого царства",
+
+    "affix.apotheosis:melee/mob_effect/sophisticated": "Утончённости",
+    "affix.apotheosis:melee/mob_effect/sophisticated.suffix": "древней библиотеки",
+
+    "affix.apotheosis:shield/mob_effect/devilish": "Дьявольства",
+    "affix.apotheosis:shield/mob_effect/devilish.suffix": "ветерана",
+
+    "affix.apotheosis:breaker/effect/radial": "Радиальности",
+    "affix.apotheosis:breaker/effect/radial.suffix": "землекрушителя",
+    "affix.apotheosis:breaker/effect/radial.desc": "Инструмент ломает по области %sx%s блоков.",
+    
+    "affix.apotheosis:breaker/ability/supermassive": "Сверхмассивности",
+    "affix.apotheosis:breaker/ability/supermassive.suffix": "разрушения миров",
+    "affix.apotheosis:breaker/ability/supermassive.desc": "Инструмент ломает по области %sx%s блоков.",
+
+    "affix.apotheosis:melee_weapon/mob_effect/detonating": "Detonating",
+    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "of the Elemental Flame",
+
+    "affix.apotheosis:armor/attribute/oxygenated": "Окисления",
+    "affix.apotheosis:armor/attribute/oxygenated.suffix": "дайвинга",
+
+    "affix.apotheosis:melee/mob_effect/omniscient": "Всеведения",
+    "affix.apotheosis:melee/mob_effect/omniscient.suffix": "великого мудреца",
+
+    "affix.apotheosis:breaker/attribute/submerged": "Погружения",
+    "affix.apotheosis:breaker/attribute/submerged.suffix": "подводного шахтёра",
+
+    "affix.apotheosis:shield/mob_effect/galvanizing": "Гальванизации",
+    "affix.apotheosis:shield/mob_effect/galvanizing.suffix": "несокрушимости",
+
+    "affix.apotheosis:armor/dmg_reduction/grounded": "Заземления",
+    "affix.apotheosis:armor/dmg_reduction/grounded.suffix": "громоотвода",
+
+    "affix.apotheosis:ranged/mob_effect/deathbound": "Касания смерти",
+    "affix.apotheosis:ranged/mob_effect/deathbound.suffix": "владыки иссушения",
+
+    "affix.apotheosis:shield/mob_effect/reinforcing": "Укрепления",
+    "affix.apotheosis:shield/mob_effect/reinforcing.suffix": "стали",
+
+    "affix.apotheosis:melee/attribute/lengthy": "Длины",
+    "affix.apotheosis:melee/attribute/lengthy.suffix": "чрезвычайной длины",
+
+    "affix.apotheosis:ranged/mob_effect/blighted": "Вредности",
+    "affix.apotheosis:ranged/mob_effect/blighted.suffix": "вредных земель",
+
+    "affix.apotheosis:armor/attribute/unbound": "Непривязанности",
+    "affix.apotheosis:armor/attribute/unbound.suffix": "Икара",
+
+    "affix.apotheosis:armor/attribute/fireproof": "Огнеупорности",
+    "affix.apotheosis:armor/attribute/fireproof.suffix": "пламенной защиты",
+
+    "affix.apotheosis:armor/attribute/adamantine": "Адамантита",
+    "affix.apotheosis:armor/attribute/adamantine.suffix": "адамантина",
+
+    "affix.apotheosis:breaker/enchantment/prosperous": "Успеха",
+    "affix.apotheosis:breaker/enchantment/prosperous.suffix": "великой удачи",
+
+    "affix.apotheosis:ranged/enchantment/prosperous": "Успеха",
+    "affix.apotheosis:ranged/enchantment/prosperous.suffix": "искателя сокровищ",
+
+    "affix.apotheosis:armor/dmg_reduction/deflective": "Отражения",
+    "affix.apotheosis:armor/dmg_reduction/deflective.suffix": "отражения",
+
+    "misc.apotheosis.iron": "железный",
+    "misc.apotheosis.diamond": "алмазный",
+    "misc.apotheosis.netherite": "незеритовый",
+    
+    "affix.apotheosis:breaker/effect/omnetic": "Всепроникновения",
+    "affix.apotheosis:breaker/effect/omnetic.suffix": "сингулярности",
+    "affix.apotheosis:breaker/effect/omnetic.desc": "Инструмент имеет %s уровень эффективности против всех блоков.",
+    
+    "misc.apotheosis.physical": "физический",
+    "misc.apotheosis.magic": "магичеcкий",
+    "misc.apotheosis.fire": "огненный",
+    "misc.apotheosis.fall": "при падении",
+    "misc.apotheosis.explosion": "взрывной",
+    "misc.apotheosis.projectile": "снарядом",
+    "misc.apotheosis.lightning": "молнией",
+    "affix.apotheosis:damage_reduction.desc": "Полученный %s урон уменьшен на %s%%",
+
+    "affix.apotheosis:armor/dmg_reduction/blockading": "Блокирования",
+    "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "блокады",
+
+    "affix.apotheosis:armor/dmg_reduction/runed": "Рунохранения",
+    "affix.apotheosis:armor/dmg_reduction/runed.suffix": "хранителя заклинаний",
+
+    "affix.apotheosis:armor/dmg_reduction/blast_forged": "Выплавления",
+    "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "Бога-кузницы",
+
+    "affix.apotheosis:armor/dmg_reduction/dwarven": "Вулкана",
+    "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "дворфа",
+
+    "affix.apotheosis:armor/dmg_reduction/feathery": "Пернатости",
+    "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "орла",
+
+    "affix.apotheosis:shield/attribute/stalwart": "Стойкости",
+    "affix.apotheosis:shield/attribute/stalwart.suffix": "упрямства",
+
+    "affix.apotheosis:armor/attribute/spiritual": "Духовности",
+    "affix.apotheosis:armor/attribute/spiritual.suffix": "знахаря",
+    
+    "affix.apotheosis:generic/attribute/lucky": "Везучести",
+    "affix.apotheosis:generic/attribute/lucky.suffix": "счастливой случайности",
+
+    "affix.apotheosis:melee/attribute/nullifying": "Ануллирования",
+    "affix.apotheosis:melee/attribute/nullifying.suffix": "магоборца",
+
+    "affix.apotheosis:melee/attribute/spellbreaking": "Разрушения чар",
+    "affix.apotheosis:melee/attribute/spellbreaking.suffix": "петрицитового голема",
+
+    "affix.apotheosis:ranged/mob_effect/grievous": "Печали",
+    "affix.apotheosis:ranged/mob_effect/grievous.suffix": "ранения",
+
+    "affix.apotheosis:armor/mob_effect/bursting": "Разрывания",
+    "affix.apotheosis:armor/mob_effect/bursting.suffix": "живучести",
+
+    "affix.apotheosis:durable": "Прочности",
+    "affix.apotheosis:durable.suffix": "долговечности",
+
+    "affix.apotheosis:breaker/ability/stoneforming": "Камнеобразования",
+    "affix.apotheosis:breaker/ability/stoneforming.suffix": "каменщика",
+    "affix.apotheosis:breaker/ability/stoneforming.desc": "Природные камни можно менять между собой",
+
+    "affix.apotheosis:breaker/ability/sandforming": "Пескообразования",
+    "affix.apotheosis:breaker/ability/sandforming.suffix": "песчаника",
+    "affix.apotheosis:breaker/ability/sandforming.desc": "Песок и подобные блоки можно менять между собой",
+
+    "affix.apotheosis.stoneforming.desc": "Разрушение [%s] преобразует в %s, shift-ПКМ для выбора цели.",
+    "affix.apotheosis.stoneforming.target_updated": "Цель обновлена: %s",
+
+    "affix.apotheosis:shears/effect/leafforming": "Листвообразования",
+    "affix.apotheosis:shears/effect/leafforming.suffix": "арбориста",
+    "affix.apotheosis:shears/effect/leafforming.desc": "Листья можно менять между собой",
+
+    "affix.apotheosis:shears/effect/gardening": "Садоводства",
+    "affix.apotheosis:shears/effect/gardening.suffix": "садовода",
+    "affix.apotheosis:shears/effect/gardening.desc": "Цветы можно менять между собой",
+
+    "affix.apotheosis.target.attack_self": "При ударе, даёт %s",
+    "affix.apotheosis.target.attack_target": "При ударе, накладывает %s",
+    "affix.apotheosis.target.hurt_self": "Когда атакован, даёт %s",
+    "affix.apotheosis.target.hurt_attacker": "Когда атакован, накладывает %s",
+    "affix.apotheosis.target.break_self": "При разрушении блока, даёт %s",
+    "affix.apotheosis.target.arrow_self": "При попадании стрелы, даёт %s",
+    "affix.apotheosis.target.arrow_target": "При попадании стрелы, накладывает %s",
+    "affix.apotheosis.target.block_self": "При блокировании, даёт %s",
+    "affix.apotheosis.target.block_attacker": "При блокировании, накладывает %s",
+    "affix.apotheosis.target.projectile_self": "При попадании снаряда, даёт %s",
+    "affix.apotheosis.target.projectile_target": "При попадании снаряда, накладывает %s",
+    "affix.apotheosis.cooldown": "[⌛ %s]",
+    "affix.apotheosis.stacking": "[Складывание]",
+
+    "affix.apotheosis:durable.desc": "Этот предмет игнорирует %s%% от повреждения прочности.",
+    "affix.apotheosis:socket.desc": "Гнёзда (%s)",
+
+    "socket.apotheosis.empty": "Пустое гнездо",
+    "text.apotheosis.when_socketed": "Когда вставлен:",
+    "text.apotheosis.when_socketed_in": "Когда вставлен в:",
+    "text.apotheosis.when_socketed_typed": "Когда вставлен в %s:",
+    "info.apotheosis.socketing": "Самоцветы можно вставлять в гнёзда с помощью кузнечного стола. Предмет слева, самоцвет справа.\n\nВыбирайте с умом, так как удаление самоцвета в гнезде обходится дорого.",
+
+    "purity.apotheosis.cracked": "Треснутый",
+    "purity.apotheosis.chipped": "Расщеплённый",
+    "purity.apotheosis.flawed": "Дефектный",
+    "purity.apotheosis.normal": "Обыкновенный",
+    "purity.apotheosis.flawless": "Безупречный",
+    "purity.apotheosis.perfect": "Идеальный",
+
+    "gem_class.melee_weapon": "Ближние оружия",
+    "gem_class.ranged_weapon": "Дальние оружия",
+    "gem_class.light_weapon": "Лёгкие оружия",
+    "gem_class.core_armor": "Основная броня",
+    "gem_class.lower_armor": "Нижняя броня",
+    "gem_class.armor": "Броня",
+    "gem_class.breaker": "Инструменты",
+    "gem_class.pickaxe": "Кирки",
+    "gem_class.light_ranged": "Лёгкие или дальние оружия",
+    "gem_class.weapon_or_tool": "Оружия или инструменты",
+    "gem_class.weapons": "Оружия",
+    "gem_class.tools": "Инструменты",
+
+    "gem_class.helmet": "Шлема",
+    "gem_class.chestplate": "Нагрудники",
+    "gem_class.leggings": "Поножи",
+    "gem_class.boots": "Ботинки",
+    "gem_class.shield": "Щиты",
+    "gem_class.bow": "Луки",
+    "gem_class.trident": "Трезубцы",
+    "gem_class.anything": "Любое",
+
+    "bonus.apotheosis:durability.desc": "Игнорирует %s%% повреждения прочности",
+    "bonus.apotheosis:enchantment.desc": "+%s %s к %s",
+    "bonus.apotheosis:enchantment.desc.mustExist": "+%s %s к существующим %s",
+    "bonus.apotheosis:enchantment.desc.global": "+%s %s ко всем существующим зачарованиям",
+    "bonus.apotheosis:multi_attr.desc.and": "%s и %s",
+    "bonus.apotheosis:multi_attr.desc.and_but": "%s и %s, но %s",
+    "bonus.apotheosis:multi_attr.desc.but_and": "%s, но %s и %s",
+    "bonus.apotheosis:bloody_arrow.desc": "При стрельбе, вы теряете %s%% от макс. здоровья и наносите %s%% урона. %s",
+    "bonus.apotheosis:leech_block.desc": "Блокирование атаки излечивает вас от %s%% урона. %s",
+    "bonus.apotheosis:all_stats.desc": "+%s%% ко всем характеристикам",
+    "gem.apotheosis:overworld/royalty.bonus.pickaxe": "Разрушение железной руды имеет %s%% шанс выпадения рудного золота.",
+    "bonus.apotheosis:mageslayer.desc": "Игнорирует %s%% магического урона и исцеляет на то же количество.",
+    "bonus.apotheosis:twilight_ore_magnet.desc": "Может использоваться в качестве магнита для руды, что тратит дополнительно %s прочность.",
+    "bonus.apotheosis:twilight_treasure_goblin.desc": "Атакуя сущность имеет %s%% шанс вызвать гоблина с сокровищами. %s",
+    "bonus.apotheosis:twilight_fortification.desc": "При получении урона у вас есть %s%% шанс усилить себя сумеречными щитами. %s",
+    "bonus.apotheosis:frozen_drops.desc": "Убийство врага с помощью %s увеличивает выпадение добычи на %s%%.",
+
+    "misc.apotheosis.level": "уровень",
+    "misc.apotheosis.level.many": "уровня",
+    "name.apotheosis.treasure_goblin": "Гоблин-сокровищник",
+
+    "item.apotheosis.gem.apotheosis:core/guardian": "самоцвет стража",
+    "item.apotheosis.gem.apotheosis:core/ballast": "самоцвет балласта",
+    "item.apotheosis.gem.apotheosis:core/solar": "самоцвет Солнца",
+    "item.apotheosis.gem.apotheosis:core/lunar": "самоцвет Луны",
+    "item.apotheosis.gem.apotheosis:core/samurai": "самоцвет самурая",
+    "item.apotheosis.gem.apotheosis:core/warlord": "самоцвет военачальника",
+    "item.apotheosis.gem.apotheosis:core/splendor": "самоцвет величия",
+    "item.apotheosis.gem.apotheosis:core/tyrannical": "самоцвет тирании",
+    "item.apotheosis.gem.apotheosis:core/breach": "самоцвет прорыва",
+    "item.apotheosis.gem.apotheosis:core/lightning": "самоцвет молнии",
+    "item.apotheosis.gem.apotheosis:core/slipstream": "самоцвет скользетока",
+    "item.apotheosis.gem.apotheosis:core/brawlers": "самоцвет скандалиста",
+    "item.apotheosis.gem.apotheosis:core/combatant": "самоцвет бойца",
+    "item.apotheosis.gem.apotheosis:overworld/earth": "самоцвет Земли",
+    "item.apotheosis.gem.apotheosis:overworld/royalty": "самоцвет королевской семьи",
+    "item.apotheosis.gem.apotheosis:overworld/verdant_ruin": "самоцвет незрелых руин",
+    "item.apotheosis.gem.apotheosis:the_nether/inferno": "самоцвет раскалённой преисподней",
+    "item.apotheosis.gem.apotheosis:the_nether/blood_lord": "самоцвет ненасытного лорда крови",
+    "item.apotheosis.gem.apotheosis:the_nether/molten_breach": "самоцвет плавящего прорыва",
+    "item.apotheosis.gem.apotheosis:the_end/endersurge": "самоцвет эндер выброса",
+    "item.apotheosis.gem.apotheosis:the_end/mageslayer": "самоцвет убийцы магов",
+    "item.apotheosis.gem.apotheosis:twilight/forest": "самоцвет сумеречного леса",
+    "item.apotheosis.gem.apotheosis:twilight/queen": "самоцвет ледяной королевы",
+
+    "item.apotheosis.boss_summoner": "Призвать апофеозного босса",
+    "item.apotheosis.gem.cracked": "Треснутый %s",
+    "item.apotheosis.gem.chipped": "Расщеплённый %s",
+    "item.apotheosis.gem.flawed": "Дефектный %s",
+    "item.apotheosis.gem.normal": "Обыкновенный %s",
+    "item.apotheosis.gem.flawless": "Безупречный %s",
+    "item.apotheosis.gem.perfect": "Идеальный %s",
+    "item.apotheosis.vial_of_extraction": "Флакон тайного извлечения",
+    "item.apotheosis.vial_of_extraction.desc": "Сыворотка для удаления самоцветов",
+    "item.apotheosis.vial_of_expulsion": "Флакон обжигающего изгнания",
+    "item.apotheosis.vial_of_expulsion.desc": "Сыворотка для удаления самоцветов",
+    "item.apotheosis.vial_of_unnaming": "Флакон безымяния",
+    "item.apotheosis.vial_of_unnaming.desc": "Сыворотка для удаления надписей",
+    "item.apotheosis.gem_dust": "Пыль самоцвета",
+    "item.apotheosis.gem_dust.desc": "Измельчённый апофеозный самоцвет",
+    "item.apotheosis.common_material": "Таинственный металлолом",
+    "item.apotheosis.uncommon_material": "Изношенная временем ткань",
+    "item.apotheosis.rare_material": "Светящийся осколок кристалла",
+    "item.apotheosis.epic_material": "Чародейские пески",
+    "item.apotheosis.mythic_material": "Выкованная богом жемчужина",
+    "item.apotheosis.ancient_material": "Проявление бесконечности",
+    "item.apotheosis.gem_fused_slate": "Дощечка с самоцветным напылением",
+
+    "item.apotheosis.sigil_of_socketing": "Сигил гнездования",
+    "item.apotheosis.sigil_of_socketing.desc": "Добавляет одно гнездо предмету",
+
+    "item.apotheosis.sigil_of_withdrawal": "Сигил снятия",
+    "item.apotheosis.sigil_of_withdrawal.desc": "Вынимает все вставленные самоцветы с предмета в инвентарь",
+
+    "item.apotheosis.sigil_of_rebirth": "Сигил возрождения",
+    "item.apotheosis.sigil_of_rebirth.desc": "Используется для заправки стола перековки",
+
+    "item.apotheosis.sigil_of_enhancement": "Сигил улучшения",
+    "item.apotheosis.sigil_of_enhancement.desc": "Используется для заправки стола дополнения",
+
+    "item.apotheosis.sigil_of_unnaming": "Сигил безымяния",
+    "item.apotheosis.sigil_of_unnaming.desc": "Удаляет все надписи усиления из предмета",
+
+    "item.apotheosis.sigil_of_malice": "Сигил злобы",
+    "item.apotheosis.sigil_of_malice.desc": "Применяет касание злобы на усиленный предмет",
+
+    "item.apotheosis.sigil_of_supremacy": "Сигил превосходства",
+    "item.apotheosis.sigil_of_supremacy.desc": "Сверхзаряжает каждое усиление предмета",
+
+    "item.apotheosis.iron_upgrade_smithing_template": "Кузнечный шаблон",
+    "upgrade.apotheosis.iron": "Железное улучшение ",
+    "item.apotheosis.iron_upgrade_smithing_template.applies_to": "Каменному и кольчужному снаряжению",
+    "item.apotheosis.iron_upgrade_smithing_template.ingredients": "4 железных слитка",
+    "item.apotheosis.iron_upgrade_smithing_template.base_slot_description": "Добавьте кольчугу или каменное снаряжение",
+    "item.apotheosis.iron_upgrade_smithing_template.additions_slot_description": "Добавьте четыре железных слитка",
+
+    "item.apotheosis.gold_upgrade_smithing_template": "Кузнечный шаблон",
+    "upgrade.apotheosis.gold": "Золотое улучшение ",
+    "item.apotheosis.gold_upgrade_smithing_template.applies_to": "Железеному снаряжению",
+    "item.apotheosis.gold_upgrade_smithing_template.ingredients": "4 золотых слитка",
+    "item.apotheosis.gold_upgrade_smithing_template.base_slot_description": "Добавьте железную броню, оружие, или инструменты",
+    "item.apotheosis.gold_upgrade_smithing_template.additions_slot_description": "Добавьте четыре золотых слитка",
+
+    "item.apotheosis.diamond_upgrade_smithing_template": "Кузнечный шаблон",
+    "upgrade.apotheosis.diamond": "Алмазное улучшение ",
+    "item.apotheosis.diamond_upgrade_smithing_template.applies_to": "Золотому снаряжению",
+    "item.apotheosis.diamond_upgrade_smithing_template.ingredients": "4 алмаза",
+    "item.apotheosis.diamond_upgrade_smithing_template.base_slot_description": "Добавьте золотую броню, оружие, или инструменты",
+    "item.apotheosis.diamond_upgrade_smithing_template.additions_slot_description": "Добавьте четыре алмаза",
+
+    "block.apotheosis.boss_spawner": "Рассадник вторженцев",
+    "block.apotheosis.gem_cutting_table": "Стол огранки самоцветов",
+    "block.apotheosis.gem_cutting_table.desc": "Использует пыль самоцвета и редкие материалы для улучшения самоцветов",
+    "block.apotheosis.salvaging_table": "Стол утилизации",
+    "block.apotheosis.salvaging_table.desc": "Разбивает предметы с усилениями на редкие материалы",
+    "block.apotheosis.simple_reforging_table": "Простой стол перековки",
+    "block.apotheosis.reforging_table": "Стол перековки",
+    "block.apotheosis.reforging_table.desc": "Использует сигилы возрождения и редкие материалы для перековки предметов",
+    "block.apotheosis.reforging_table.desc2": "Макс. редкость: %s",
+    "block.apotheosis.augmenting_table": "Стол дополнения",
+    "block.apotheosis.augmenting_table.desc": "Использует сигилы улучшения для дополнения отдельных усилений",
+    "block.apotheosis.gem_case": "Витрина самоцветов",
+    "tooltip.apotheosis.gem_case.capacity": "Вместимость: %s самоцветов",
+    "tooltip.apotheosis.gem_case.unique_gems": "Содержит %s разных самоцветов",
+    "tooltip.apotheosis.gem_case.none_owned": "Нет владельца",
+    "block.apotheosis.ender_gem_case": "Витрина самоцветов дома Фаберже",
+
+    "button.apotheosis.salvage": "Предметы утилизации",
+    "button.apotheosis.no_salvage": "Не выбран предмет",
+    "button.apotheosis.no_salvage_all": "В инвентаре нет доступных предметов",
+    "button.apotheosis.upgrade": "Улучшить самоцвет",
+    "button.apotheosis.upgrade.no": "Отсутствуют материалы",
+    "button.apotheosis.augmenting.upgrade": "Улучшить выбранное усиление",
+    "button.apotheosis.augmenting.reroll": "Сменить выбранное усиление",
+    "button.apotheosis.augmenting.no_selection": "Усиление не выбрано",
+    "button.apotheosis.augmenting.max_level": "Уже макс. уровень",
+    "button.apotheosis.augmenting.no_alternatives": "Нет альтернативных усилений",
+    "button.apotheosis.augmenting.upgrade.cost": "Стоит: %sx %s",
+    "button.apotheosis.augmenting.upgrade.exp_cost": "Стоит опыта: %s ур.",
+    "button.apotheosis.gem_case.upgrade": "Улучшить 2 %s самоцвета в %s",
+    "button.apotheosis.gem_case.upgrade_no_gems": "Недостаточно самоцветов",
+    "button.apotheosis.gem_case.upgrade_no_materials": "Недостаточно материалов",
+    "button.apotheosis.gem_case.upgrade_cost": "Стоит: %s %s и %s %s",
+    "button.apotheosis.gem_case.upgrade_all": "Улучшить как можно больше самоцветов!",
+
+    "menu.apotheosis.gem_cutting": "Огранка самоцветов",
+    "container.apotheosis.salvage": "Утилизация",
+    "container.apotheosis.reforge": "Перековка",
+    "text.apotheosis.cost": "%sx %s",
+    "text.apotheosis.reforge_cost": "Стоимость перековки",
+    "text.apotheosis.salvage_results": "Результаты утилизации",
+    "text.apotheosis.unique": "Уникальный",
+    "text.apotheosis.results": "Результаты",
+    "text.apotheosis.facets": "Грани: %s",
+    "text.apotheosis.socketable_into": "Вставляется в:",
+    "text.apotheosis.dot_prefix": "• %s",
+    "text.apotheosis.star_prefix": "🌟 %s",
+    "text.apotheosis.socket_limit": "Макс. кол-во применяемых гнёзд: %s",
+    "text.apotheosis.gems_returned": "Самоцветы возвращены в инвентарь",
+    "text.apotheosis.no_upgrade": "Достигнуто макс. улучшение",
+    "text.apotheosis.cut_cost": "Стоимость огранки самоцвета",
+    "text.apotheosis.one_rarity_mat": "Редкость материала (1)",
+    "text.apotheosis.potential_rerolls": "Потенциальные перекрутки",
+    "text.apotheosis.upgraded_form": "Улучшенная форма",
+    "text.apotheosis.alternative_page": "Стр. %s/%s (прокрутите для смены)",
+    "text.apotheosis.any_x_item": "Любой %s усиленный предмет",
+    "text.apotheosis.any_affix_item": "Любой усиленный предмет",
+    "text.apotheosis.malice_marker": "Была применена злоба при создании",
+    "text.apotheosis.touched_by_malice": "Касание злобы",
+    "text.apotheosis.malice_notice": "Злоба: %s потребляемой силы %s",
+
+    "title.apotheosis.smithing": "Апофеозная ковка",
+    "title.apotheosis.salvaging": "Утилизирование",
+
+    "text.apotheosis.anything": "Любое",
+    "loot_category.apotheosis.none": "Ничего",
+    "loot_category.apotheosis.none.plural": "Ничего",
+    "loot_category.apotheosis.bow": "Лук",
+    "loot_category.apotheosis.bow.plural": "Луки",
+    "loot_category.apotheosis.crossbow": "Арбалет",
+    "loot_category.apotheosis.crossbow.plural": "Арбалеты",
+    "loot_category.apotheosis.breaker": "Инструмент",
+    "loot_category.apotheosis.breaker.plural": "Инструменты",
+    "loot_category.apotheosis.pickaxe": "Кирка",
+    "loot_category.apotheosis.pickaxe.plural": "Кирки",
+    "loot_category.apotheosis.shovel": "Лопата",
+    "loot_category.apotheosis.shovel.plural": "Лопаты",
+    "loot_category.apotheosis.armor": "Броня",
+    "loot_category.apotheosis.armor.plural": "Броня",
+    "loot_category.apotheosis.shield": "Щит",
+    "loot_category.apotheosis.shield.plural": "Щиты",
+    "loot_category.apotheosis.trident": "Трезубец",
+    "loot_category.apotheosis.trident.plural": "Трезубцы",
+    "loot_category.apotheosis.melee_weapon": "Ближнее оружие",
+    "loot_category.apotheosis.melee_weapon.plural": "Ближние оружия",
+    "loot_category.apotheosis.helmet": "Шлем",
+    "loot_category.apotheosis.helmet.plural": "Шлема",
+    "loot_category.apotheosis.chestplate": "Нагрудник",
+    "loot_category.apotheosis.chestplate.plural": "Нагрудники",
+    "loot_category.apotheosis.leggings": "Поножи",
+    "loot_category.apotheosis.leggings.plural": "Поножи",
+    "loot_category.apotheosis.boots": "Ботинки",
+    "loot_category.apotheosis.boots.plural": "Ботинки",
+    "loot_category.apotheosis.shears": "Ножницы",
+    "loot_category.apotheosis.shears.plural": "Ножницы",
+
+    "info.apotheosis.boss_spawn": "%s пробуждён неподалеку!",
+    "info.apotheosis.boss": "%s апофеозный босс",
+    "info.apotheosis.boss_item": "Выпадет: %s",
+    "info.apotheosis.boss_modifiers": "Модификаторы босса:",
+    "info.apotheosis.rarity_material": "Редкость материала (%s)",
+    "info.apotheosis.gem_crushing": "Пыль самоцвета получается, если выбросить любой апофеозный самоцвет в мире и заставить на него упасть наковальню.\n\nПотом используйте стол утилизации.",
+    "info.apotheosis.gem_extraction": "Используется в столе кузнеца для извлечения апофеозных самоцветов.\n\nПредмет будет уничтожен в процессе.",
+    "info.apotheosis.gem_expulsion": "Используется в столе кузнеца для извлечения апофеозных самоцветов.\n\nСамоцветы будут уничтожены в процессе.",
+    "info.apotheosis.unnaming": "Используется в столе кузнеца для удаления компонентов усилений из названия предмета.",
+    "info.apotheosis.salvaging": "Редкие материалы получаются путём утилизации предметов с усилением в столе утилизации.",
+    "info.apotheosis.criteria_done": "☑ %s",
+    "info.apotheosis.criteria_unfinished": "☐ %s",
+    "info.apotheosis.criteria_unknown": "❓ %s",
+
+    "rarity.apotheosis:common": "Обычный",
+    "rarity.apotheosis:uncommon": "Необычный",
+    "rarity.apotheosis:rare": "Редкий",
+    "rarity.apotheosis:epic": "Эпический",
+    "rarity.apotheosis:mythic": "Мифический",
+    "rarity.apotheosis:ancient": "Древний",
+    
+    "death.attack.apotheosis:psychic": "%s был убит отражением.",
+    "death.attack.apotheosis:psychic.player": "Атака %s была отражена %s.",
+
+    "disconnect.apotheosis.tier_changes_disabled": "В настройках отключена возможность изменения уровня мира вручную.",
+
+    "elite.apotheosis.craig": "Крейг Вечный",
+
+    "comment_id": "/Adventure + Gateways Compat",
+
+    "misc.apotheosis.random": "Случайный",
+    "wave_entity.apotheosis.invader": "Апофеозный вторженец %s",
+    "wave_entity.apotheosis.elite": "Апофеозная элита - %s",
+    "wave_entity.apotheosis.true_random_invader": "Поистине случайный вторженец",
+    "reward.apotheosis.affix_item": "Усиленный предмет (%s)",
+    "reward.apotheosis.random_affix_item": "Усиленный предмет (Случайный)",
+    "reward.apotheosis.gem": "Апофеозный самоцвет (%s)",
+    "reward.apotheosis.random_gem": "Апофеозный самоцвет (Случайный)",
+    "reward.apotheosis.true_random_gem": "Поистине случайный апофеозный самоцвет",
+    "reward.apotheosis.netherite_smithing_template": "Незеритовый кузнечный шаблон",
+    "error.apotheosis.gate_tier_incorrect": "Эти врата могут быть открыты только в мире уровня: %s",
+    "modifier.apotheosis.affix": "Снаряжены усиллеными предметами",
+    "tooltip.apotheosis.requires_world_tier": "Требует уровень мира: %s",
+
+    "wave_entity.apotheosis.affixed_armored_zombie": "Усиленный бронированный зомби",
+    "wave_entity.apotheosis.affixed_armored_husk": "Усиленный бронированный кадавр",
+    "wave_entity.apotheosis.affixed_armored_skeleton": "Усиленный бронированный скелет",
+    "wave_entity.apotheosis.affixed_armored_stray": "Усиленный бронированный бродяга",
+    "wave_entity.apotheosis.affixed_polar_bear": "Усиленный полярный медведь",
+    "wave_entity.apotheosis.affixed_wolf": "Усиленный волк",
+    "wave_entity.apotheosis.affixed_armored_bogged": "Усиленный бронированного болотника",
+    "wave_entity.apotheosis.vampiric_phantom": "Вампирический фантом",
+    "wave_entity.apotheosis.nether_herald": "Вестник Нижнего мира",
+    "wave_entity.apotheosis.affixed_armored_zombified_piglin": "Усиленный бронированный зомбифицированный пиглин",
+    "wave_entity.apotheosis.affixed_armored_wither_skeleton": "Усиленный бронированный визер-скелет",
+    "wave_entity.apotheosis.ghast_rider": "Наездник на гасте",
+    "wave_entity.apotheosis.affixed_armored_piglin_brute": "Усиленный бронированный брутальный пиглин",
+    "wave_entity.apotheosis.bastion_guard": "Элитный страж бастиона",
+    "wave_entity.apotheosis.killer_bunny": "Кролик-убийца",
+
+    "reward.apotheosis.desert_pyramid_loot": "Добыча пустынной пирамиды",
+    "reward.apotheosis.woodland_mansion_loot": "Добыча лесного особняка",
+
+    "apotheosis.tiered/frontier": "Врата первого рубежа",
+    "apotheosis.tiered/ascent": "Врата солнечного восхождения",
+    "apotheosis.tiered/summit": "Врата громовой вершины",
+    "apotheosis.tiered/pinnacle": "Врата апофеозного пика",
+    "apotheosis.endless_invader": "Бесконечные врата апофеозных вторженцев",
+
+    "comment_id": "/Advancements",
+
+    "advancements.apotheosis.progression.root.title": "Апофеозные уровни мира",
+    "advancements.apotheosis.progression.root.desc": "Этапы разблокировки уровней мира в Апофеозисе.\nНажмите CTRL+T для открытия экрана выбора",
+
+    "advancements.apotheosis.progression.haven.title": "Уровень мира: Прибежище",
+    "advancements.apotheosis.progression.haven.desc": "Прибежище открывается после нахождения первого предмета с усилением и активируется по умолчанию",
+    "advancements.apotheosis.progression.haven.criteria.affixed": "Подберите усиленный предмет",
+
+    "advancements.apotheosis.progression.frontier.title": "Уровень мира: Рубеж",
+    "advancements.apotheosis.progression.frontier.desc": "Чтобы продвинуться в рубеж, экипируйтесь полным комплектом усиленных предметов.\nПри разблокировке, нажмите CTRL+T для активации",
+    "advancements.apotheosis.progression.frontier.criteria.common_helm": "Экипируйте обычный шлем",
+    "advancements.apotheosis.progression.frontier.criteria.common_chest": "Экипируйте обычный нагрудник",
+    "advancements.apotheosis.progression.frontier.criteria.common_legs": "Экипируйте обычные поножи",
+    "advancements.apotheosis.progression.frontier.criteria.common_feet": "Экипируйте обычные ботинки", 
+    "advancements.apotheosis.progression.frontier.criteria.common_hand": "Экипируйте обычное оружие",
+
+    "advancements.apotheosis.progression.ascent.title": "Уровень мира: Возвышение",
+    "advancements.apotheosis.progression.ascent.desc": "Наденьте полный комплект необычного снаряжения и одолейте вторженца, чтобы начать своё Восхождение",
+    "advancements.apotheosis.progression.ascent.criteria.uncommon_helm": "Экипируйте необычный шлем",
+    "advancements.apotheosis.progression.ascent.criteria.uncommon_chest": "Экипируйте необычный нагрудник",
+    "advancements.apotheosis.progression.ascent.criteria.uncommon_legs": "Экипируйте необычные поножи",
+    "advancements.apotheosis.progression.ascent.criteria.uncommon_feet": "Экипируйте необычные ботинки",
+    "advancements.apotheosis.progression.ascent.criteria.uncommon_hand": "Экипируйте необычное оружие",
+    "advancements.apotheosis.progression.ascent.criteria.kill_apothic_invader": "Убейте апофеозного вторженца",
+
+    "advancements.apotheosis.progression.summit.title": "Уровень мира: Вершина",
+    "advancements.apotheosis.progression.summit.desc": "Чтобы добраться до вершины, сразите Визера и экипируйтесь полным комплектом редкого снаряжения",
+    "advancements.apotheosis.progression.summit.criteria.rare_helm": "Экипируйте редкий шлем",
+    "advancements.apotheosis.progression.summit.criteria.rare_chest": "Экипируйте редкий нагрудник",
+    "advancements.apotheosis.progression.summit.criteria.rare_legs": "Экипируйте редкие поножи",
+    "advancements.apotheosis.progression.summit.criteria.rare_feet": "Экипируйте редкие ботинки",
+    "advancements.apotheosis.progression.summit.criteria.rare_hand": "Экипируйте редкое оружие",
+    "advancements.apotheosis.progression.summit.criteria.kill_wither": "Убейте Визера",
+
+    "advancements.apotheosis.progression.pinnacle.title": "Уровень мира: Пик",
+    "advancements.apotheosis.progression.pinnacle.desc": "Для достижения пика, необходимо освободить Край и получить полный комплект эпического снаряжения",
+    "advancements.apotheosis.progression.pinnacle.criteria.epic_helm": "Экипируйте эпический шлем",
+    "advancements.apotheosis.progression.pinnacle.criteria.epic_chest": "Экипируйте эпический нагрудник",
+    "advancements.apotheosis.progression.pinnacle.criteria.epic_legs": "Экипируйте эпические поножи",
+    "advancements.apotheosis.progression.pinnacle.criteria.epic_feet": "Экипируйте эпические ботинки",
+    "advancements.apotheosis.progression.pinnacle.criteria.epic_hand": "Экипируйте эпическое оружие",
+    "advancements.apotheosis.progression.pinnacle.criteria.kill_ender_dragon": "Убете дракона Края",
+
+    "advancements.apotheosis.affix": "Апофеозные усиления",
+    "advancements.apotheosis.affix.desc": "Найдите предмет с апофеозным усилением",
+
+    "advancements.apotheosis.rare": "Стоящая экипировка",
+    "advancements.apotheosis.rare.desc": "Найдите редкий предмет с усилением",
+
+    "advancements.apotheosis.epic": "Эпично!",
+    "advancements.apotheosis.epic.desc": "Найдите эпический предмет с усилением",
+
+    "advancements.apotheosis.mythic": "Выкованный из титана",
+    "advancements.apotheosis.mythic.desc": "Найдите мифический предмет с усилением",
+
+    "advancements.apotheosis.ancient": "Потерянное сокровище Богов",
+    "advancements.apotheosis.ancient.desc": "Найдите древний предмет",
+
+    "advancements.apotheosis.boss": "Он был не так уж и силён",
+    "advancements.apotheosis.boss.desc": "Убейте апофеозного босса и заберите его предмет с усилением",
+    "advancements.apotheosis.chests": "Я нашел его под землёй",
+    "advancements.apotheosis.chests.desc": "Найдите предмет с усилением в сундуке",
+    "advancements.apotheosis.merchant": "Я заключил сделку",
+    "advancements.apotheosis.merchant.desc": "Купите предмет с усилением у странствующего торговца",
+    "advancements.apotheosis.random": "Как ты его достал?",
+    "advancements.apotheosis.random.desc": "Выбейте предмет с усилением со случайного монстра",
+    
+    "advancements.apotheosis.gem": "Не алмаз",
+    "advancements.apotheosis.gem.desc": "Найдите апофеозный самоцвет, который можно вставить в гнездо предмета с усилением",
+    
+    "advancements.apotheosis.rare_gem": "Далёк от идеала",
+    "advancements.apotheosis.rare_gem.desc": "Приобретите дефектный самоцвет",
+    
+    "advancements.apotheosis.mythic_gem": "Безупречные кристаллы",
+    "advancements.apotheosis.mythic_gem.desc": "Приобретите безупречный самоцвет",
+    
+    "advancements.apotheosis.ancient_gem": "Камни бесконечности",
+    "advancements.apotheosis.ancient_gem.desc": "Используйте стол огранки самоцветов, создав идеальный самоцвет",
+    
+       "advancements.apotheosis.socket": "Ювелир",
+    "advancements.apotheosis.socket.desc": "Используйте стол кузнеца, вставив самоцвет в предмет",
+
+       "advancements.apotheosis.gem_cut": "Гранильщик",
+    "advancements.apotheosis.gem_cut.desc": "Используйте стол огранки самоцветов, чтобы улучшить апофеозный самоцвет",
+
+    "advancements.apotheosis.challenge_gates.frontier.title": "Покинутый рубеж",
+    "advancements.apotheosis.challenge_gates.frontier.desc": "Закройте врата первого рубежа",
+
+    "advancements.apotheosis.challenge_gates.ascent.title": "Завершение возвышения",
+    "advancements.apotheosis.challenge_gates.ascent.desc": "Закройте врата солнечного возвышения",
+
+    "advancements.apotheosis.challenge_gates.summit.title": "Достижение вершины",
+    "advancements.apotheosis.challenge_gates.summit.desc": "Закройте врата громовой вершины",
+
+    "advancements.apotheosis.challenge_gates.pinnacle.title": "На пике",
+    "advancements.apotheosis.challenge_gates.pinnacle.desc": "Закройте врата апофеозного пика",
+
+    "advancements.apotheosis.challenge_gates.sigil_of_supremacy.title": "Превосхождение!               ",
+    "advancements.apotheosis.challenge_gates.sigil_of_supremacy.desc": "Получите сигил Превосходства на 100-й волне бесконечных врат апофеозных вторженцев",
+
+    "comment_id": "/Potion Module",
+
+    "item.apotheosis.lucky_foot": "Счастливая кроличья лапка",
+
+    "item.apotheosis.potion_charm_broke": "Амулет с неизвестным зельем",
+    "item.apotheosis.potion_charm": "Амулет с эффектом (%s)",
+    "item.apotheosis.potion_charm.desc": "Накладывает эффект %s когда активен и находится в инвентаре.",
+    "item.apotheosis.potion_charm.desc2": "%s - ПКМ чтобы включить.",
+    "item.apotheosis.potion_charm.desc3": "Источник: %s",
+    "item.apotheosis.potion_charm.enabled": "Включен",
+    "item.apotheosis.potion_charm.disabled": "Отключен",
+    "item.apotheosis.potion_charm.curios_only": "Работает только в слоте Curios",
+    "misc.apotheosis.blacklisted_potion": "Не может быть преобразовано в амулет с эффектом.",
+
+    "comment_id": "/Garden Module",
+    "item.apotheosis.ender_lead": "Эндер-поводок",
+    "info.apotheosis.noentity": "Удерживаемое существо: пусто",
+    "info.apotheosis.containedentity": "Удерживаемое существо: %s",
+    "info.apotheosis.ender_lead": "Эндер-поводок - это предмет, который можно использовать для перемещения животных. Ударьте животное, чтобы захватить, а чтобы выпустить нажмите ПКМ. Поводок не будет работать на других видах существ.",
+
+    "comment_id": "/Wanderer Trades",
+    "name.apotheosis.captive_dreams": "Пленник мечты",
+    "name.apotheosis.stonebreaker": "Камнедробитель",
+    "name.apotheosis.treecapitator": "Лесоруб",
+    "name.apotheosis.bonesplitter": "Костоправ",
+    "name.apotheosis.arachnids_fear": "Арахнофоб",
+    "name.apotheosis.timeworn_visage": "Потёртый временем лик",
+    "name.apotheosis.greatplate_of_eternity": "Доспех вечности",
+    "name.apotheosis.thunder_forged_legguards": "Кованые громом поножи",
+    "name.apotheosis.rune_forged_greaves": "Выкованные рунами ботинки",
+    "name.apotheosis.eternal_vigilance": "Вечный бдитель",
+
+    "comment_id": "/Misc",
+    "info.apoth.modifier_disabled": "Этот модификатор отключен",
+    "itemGroup.apotheosis.adventure": "Апофеозис: Модуль приключений",
+    "itemGroup.apotheosis.ench": "Апофеозис: Модуль зачарований",
+    "config.jade.plugin_apotheosis.spawner": "Апоф модуль призыва",
+    "config.jade.plugin_apotheosis.ench": "Апоф модуль чаров",
+    "config.jade.plugin_apotheosis.adventure": "Апоф модуль приключений",
+    "message.apotheosis.item_linking_disabled": "Привязка предметов отключена сервером.",
+    "text.apotheosis.equipped": "Экипирован",
+    
+    "item.apotheosis.music_disc_flash": "Пластинка",
+    "jukebox_song.apotheosis.flash": "Рэнрен - Вспышка",
+    "subtitle.apotheosis.music_disc.flash": "Рэнрен - Вспышка",
+
+    "item.apotheosis.music_disc_glimmer": "Пластинка",
+    "jukebox_song.apotheosis.glimmer": "Кэйнер Кребес - Отблеск",
+    "subtitle.apotheosis.music_disc.glimmer": "Кэйнер Кребес - Отблеск",
+
+    "item.apotheosis.music_disc_shimmer": "Пластинка",
+    "jukebox_song.apotheosis.shimmer": "Чемберлен Кейфри - Мерцание",
+    "subtitle.apotheosis.music_disc.shimmer": "Чемберлен Кейфри - Мерцание",
+
+    "painting.apotheosis.gems.title": "Самоцветы",
+    "painting.apotheosis.gems.author": "Фэллинна",
+
+    "painting.apotheosis.craig.title": "Крейг Вечный",
+    "painting.apotheosis.craig.author": "Астрел",
+
+    "painting.apotheosis.tower.title": "Башня",
+    "painting.apotheosis.tower.author": "Фэллинна",
+
+    "painting.apotheosis.enchanting_table.title": "Апофеозное зачарование",
+    "painting.apotheosis.enchanting_table.author": "Фэллинна",
+
+    "painting.apotheosis.window.title": "Взгляд за пределы",
+    "painting.apotheosis.window.author": "Фэллинна",
+
+    "stat.apotheosis.world_tiers_activated": "Уровень мира изменён",
+    "apotheosis.subtitle.reforge": "Таблица перековок перекована",
+    "apotheosis.subtitle.malice": "Сигил злобы применил злобу",
+
+    "apotheosis.subtitle.invader_uncommon": "Появился необычный апофеозный вторженец",
+    "apotheosis.subtitle.invader_rare": "Появился редкий апофеозный вторженец",
+    "apotheosis.subtitle.invader_epic": "Появился эпический апофеозный вторженец",
+    "apotheosis.subtitle.invader_mythic": "Появился мифический апофеозный вторженец",
+
+    "comment_id": "Guidebook",
+    "book.apotheosis.name": "Хроника теней",
+    "book.apotheosis.subtitle": "Гайд Апофеозиса",
+    "book.apotheosis.landing": "Добро пожаловать в мир Апофеозиса.$(br2)Апофеозис организован в $(#8080FF)Модули$(), таково же и содержание этой книги.$(br2)Отключенные модули скрыты."
+}
