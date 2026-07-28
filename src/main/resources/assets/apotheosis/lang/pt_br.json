@@ -86,7 +86,7 @@
     "info.apotheosis.affix_item": "Item de afixo apótico",
 
     "death.attack.apotheosis:execute": "%2$s executou %1$s",
-    "death.attack.apotheosis:execute.item": "%2$s executou %1$s usando %s",
+    "death.attack.apotheosis:execute.item": "%2$s executou %1$s usando %3$s",
     "death.attack.apotheosis:execute.player": "%2$s executou %1$s",
 
     "misc.apotheosis.affix_name.two": "%2$s %1$s",
