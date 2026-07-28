@@ -1,3 +1,12 @@
+## 8.6.1
+* Invader Spawn Cooldowns are now clustered instead of global. This means invader spawns on servers should no longer be deadlocked by multiple players being far away from eachother.
+  * Spawn Cooldowns are applied on a per-player basis, only to players in the same world tier within the announcement radius of an Invader Spawn.
+* Added JEI Exclusion Zones for the Gem Case
+* Fixed some hardcoded english text in the World Tier menu.
+* Tenwoc: Updated Ukranian translation.
+* Quarkrus & Loperka: Added Russian translation.
+* PrincessStellar: Updated Brazilian translation.
+
 ## 8.6.0
 * Backported the following changes from 9.0.0 (Minecraft 26.1.2)
   * Apothic Enchanting is now integrated with World Tiers.
