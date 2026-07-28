@@ -58,7 +58,7 @@
     "tutorial.apotheosis.world_tier.tier_name.desc": "Це назва вибраного світового рівня, а також його короткий опис.",
     
     "tutorial.apotheosis.world_tier.tier_difficulty.title": "Складність світового рівня",
-    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "Це складність обраного світового рівня. Вищі рівні складності означають сильніших мобів, але й кращі нагороди.\n\nНа рівні світу «Кордон» і вище, у вашому світі почнуть з'являтися апофеотичні загарбники.",
+    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "Це складність обраного світового рівня. Вищі рівні складності означають сильніших мобів, але й кращі нагороди.\n\nНа рівні світу «Кордон» і вище, у вашому світі почнуть з’являтися апофеотичні загарбники.",
     
     "tutorial.apotheosis.world_tier.detailed_info.title": "Детальна інформація", 
     "tutorial.apotheosis.world_tier.detailed_info.desc": "Ця кнопка покаже вам детальну інформацію про рівень світу, включаючи посилення та послаблення для гравців і мобів, а також шанси на випадання кожного рівня рідкості та чистоти самоцвітів. Якщо ви не впевнені, що таке рідкість або чистота, дивіться «Хроніку тіней» (внутрішньоігровий довідник).",
@@ -93,7 +93,7 @@
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",
     "misc.apotheosis.affix_name.four": "%s %s %s %s",
-    "misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
+    "misc.apotheosis.affix_bounds": "[%s - %s]",
 
     "misc.apotheosis.radial_state_updated": "Радіальний режим добування оновлено до \"%s\"",
     "misc.apotheosis.radial_state.require_not_sneaking": "Вимикати при підкраданні",
@@ -267,15 +267,15 @@
 
     "affix.apotheosis:melee/executing": "Катуючий",
     "affix.apotheosis:melee/executing.suffix": "ката",
-    "affix.apotheosis:melee/executing.desc": "Вороги з максимальним здоров'ям нижче %s%% будуть страчені.",
+    "affix.apotheosis:melee/executing.desc": "Вороги з максимальним здоров’ям нижче %s%% будуть страчені.",
     
     "affix.apotheosis:melee/cleaving": "Розколюючий",
-    "affix.apotheosis:melee/cleaving.suffix": "м'ясника",
+    "affix.apotheosis:melee/cleaving.suffix": "м’ясника",
     "affix.apotheosis:melee/cleaving.desc": "Атаки мають %s%% шанс додатково вразити до %s ворогів поблизу.",
 
     "affix.apotheosis:breaker/ability/enlightened": "Просвітлений",
     "affix.apotheosis:breaker/ability/enlightened.suffix": "освітлення",
-    "affix.apotheosis:breaker/ability/enlightened.desc": "Цей інструмент може поставити факел ціною %s од. міцності.",
+    "affix.apotheosis:breaker/ability/enlightened.desc": "Цей інструмент може поставити смолоскип ціною %s од. міцності.",
 
     "affix.apotheosis:shield/psychic": "Медіумічний",
     "affix.apotheosis:shield/psychic.suffix": "мстивого",
@@ -318,7 +318,7 @@
     "affix.apotheosis:breaker/ability/supermassive.desc": "Цей інструмент добуває в області %sx%s.",
 
     "affix.apotheosis:melee_weapon/mob_effect/detonating": "Вибуховий",
-    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "елементального полум'я",
+    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "елементального полум’я",
 
     "affix.apotheosis:armor/attribute/oxygenated": "Оксигенований",
     "affix.apotheosis:armor/attribute/oxygenated.suffix": "пірнання",
@@ -335,8 +335,8 @@
     "affix.apotheosis:armor/dmg_reduction/grounded": "Заземлений",
     "affix.apotheosis:armor/dmg_reduction/grounded.suffix": "громовідводу",
 
-    "affix.apotheosis:ranged/mob_effect/deathbound": "Зв'язаний зі смертю",
-    "affix.apotheosis:ranged/mob_effect/deathbound.suffix": "повелителя зів'янення",
+    "affix.apotheosis:ranged/mob_effect/deathbound": "Зв’язаний зі смертю",
+    "affix.apotheosis:ranged/mob_effect/deathbound.suffix": "повелителя зів’янення",
 
     "affix.apotheosis:shield/mob_effect/reinforcing": "Укріплений",
     "affix.apotheosis:shield/mob_effect/reinforcing.suffix": "сталі",
@@ -347,7 +347,7 @@
     "affix.apotheosis:ranged/mob_effect/blighted": "Знищений",
     "affix.apotheosis:ranged/mob_effect/blighted.suffix": "мертвих земель",
 
-    "affix.apotheosis:armor/attribute/unbound": "Незв'язаний",
+    "affix.apotheosis:armor/attribute/unbound": "Незв’язаний",
     "affix.apotheosis:armor/attribute/unbound.suffix": "Ікара",
 
     "affix.apotheosis:armor/attribute/fireproof": "Вогнетривкий",
@@ -394,7 +394,7 @@
     "affix.apotheosis:armor/dmg_reduction/dwarven": "Дварфійський",
     "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "вулкану",
 
-    "affix.apotheosis:armor/dmg_reduction/feathery": "Пір'ястий",
+    "affix.apotheosis:armor/dmg_reduction/feathery": "Пір’ястий",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "орла",
 
     "affix.apotheosis:shield/attribute/stalwart": "Рішучий",
@@ -499,7 +499,7 @@
     "bonus.apotheosis:multi_attr.desc.and": "%s та %s",
     "bonus.apotheosis:multi_attr.desc.and_but": "%s та %s, але %s",
     "bonus.apotheosis:multi_attr.desc.but_and": "%s, але %s та %s",
-    "bonus.apotheosis:bloody_arrow.desc": "Під час атаки ви втрачатимете %s%% від запасу здоров'я та завдаватимете на %s%% більше шкоди. %s",
+    "bonus.apotheosis:bloody_arrow.desc": "Під час атаки ви втрачатимете %s%% від запасу здоров’я та завдаватимете на %s%% більше шкоди. %s",
     "bonus.apotheosis:leech_block.desc": "Блокування та атакування зцілює вас на %s%% від заподіяної шкоди. %s",
     "bonus.apotheosis:all_stats.desc": "+%s%% до усіх характеристик",
     "gem.apotheosis:overworld/royalty.bonus.pickaxe": "Добування мідної руди матиме %s%% ймовірність скинути золоту копалину.",
@@ -570,7 +570,7 @@
     "item.apotheosis.sigil_of_enhancement.desc": "Живить стіл доповнення",
 
     "item.apotheosis.sigil_of_unnaming": "Сигіл позбавлення імені",
-    "item.apotheosis.sigil_of_unnaming.desc": "Видаляє афіксне ім'я предмета",
+    "item.apotheosis.sigil_of_unnaming.desc": "Видаляє афіксне ім’я предмета",
 
     "item.apotheosis.sigil_of_malice": "Сигіл злоби",
     "item.apotheosis.sigil_of_malice.desc": "Додає Дотик злоби до афіксного предмета",
@@ -580,9 +580,9 @@
 
     "item.apotheosis.iron_upgrade_smithing_template": "Ковальський шаблон",
     "upgrade.apotheosis.iron": "Залізне покращення ",
-    "item.apotheosis.iron_upgrade_smithing_template.applies_to": "Кам'яне та кольчужне спорядження",
+    "item.apotheosis.iron_upgrade_smithing_template.applies_to": "Кам’яне та кольчужне спорядження",
     "item.apotheosis.iron_upgrade_smithing_template.ingredients": "4 залізних злитки",
-    "item.apotheosis.iron_upgrade_smithing_template.base_slot_description": "Розмістіть частину кольчужних обладунків чи кам'яного спорядження",
+    "item.apotheosis.iron_upgrade_smithing_template.base_slot_description": "Розмістіть частину кольчужних обладунків чи кам’яного спорядження",
     "item.apotheosis.iron_upgrade_smithing_template.additions_slot_description": "Розмістіть чотири залізних злитки",
 
     "item.apotheosis.gold_upgrade_smithing_template": "Ковальський шаблон",
@@ -610,6 +610,11 @@
     "block.apotheosis.reforging_table.desc2": "Максимальна рідкість: %s",
     "block.apotheosis.augmenting_table": "Стіл доповнення",
     "block.apotheosis.augmenting_table.desc": "Використовує сигіли вдосконалення для доповнення окремих афіксів",
+    "block.apotheosis.gem_case": "Шкатулка",
+    "tooltip.apotheosis.gem_case.capacity": "Місткість: %s самоцвітів",
+    "tooltip.apotheosis.gem_case.unique_gems": "Містить %s різних самоцвітів",
+    "tooltip.apotheosis.gem_case.none_owned": "Немає власних",
+    "block.apotheosis.ender_gem_case": "Шкатулка дому Фаберже",
 
     "button.apotheosis.salvage": "Перероблення предметів",
     "button.apotheosis.no_salvage": "Нічого перероблювати",
@@ -623,6 +628,11 @@
     "button.apotheosis.augmenting.no_alternatives": "Немає доступних альтернатив",
     "button.apotheosis.augmenting.upgrade.cost": "Вартість: %sx %s",
     "button.apotheosis.augmenting.upgrade.exp_cost": "Вартість досвіду: %s рівні(в)",
+    "button.apotheosis.gem_case.upgrade": "Покращити 2 %s самоцвіти до %s",
+    "button.apotheosis.gem_case.upgrade_no_gems": "Недостатньо самоцвітів",
+    "button.apotheosis.gem_case.upgrade_no_materials": "Недостатньо матеріалів",
+    "button.apotheosis.gem_case.upgrade_cost": "Вартість: %s %s та %s %s",
+    "button.apotheosis.gem_case.upgrade_all": "Покращить стільки самоцвітів, скільки можливо!",
 
     "menu.apotheosis.gem_cutting": "Огранування самоцвітів",
     "container.apotheosis.salvage": "Перероблення",
@@ -682,6 +692,8 @@
     "loot_category.apotheosis.leggings.plural": "Наголінники",
     "loot_category.apotheosis.boots": "Чоботи",
     "loot_category.apotheosis.boots.plural": "Чоботи",
+    "loot_category.apotheosis.shears": "Ножиці",
+    "loot_category.apotheosis.shears.plural": "Ножиці",
 
     "info.apotheosis.boss_spawn": "%s пробудився поблизу!",
     "info.apotheosis.boss": "%s (Апофеотичний бос)",
@@ -718,7 +730,7 @@
     "wave_entity.apotheosis.elite": "Елітний загарбник - %s",
     "wave_entity.apotheosis.true_random_invader": "Дійсно випадковий апофеотичний загарбник",
     "reward.apotheosis.affix_item": "Афіксний предмет (%s)",
-    "reward.apotheosis.random_affix": "Випадковий афіксний предмет",
+    "reward.apotheosis.random_affix_item": "Випадковий афіксний предмет",
     "reward.apotheosis.gem": "Апофеотичний самоцвіт (%s)",
     "reward.apotheosis.random_gem": "Випадковий апофеотичний самоцвіт",
     "reward.apotheosis.true_random_gem": "Дійсно випадковий апофеотичний самоцвіт",
@@ -752,7 +764,7 @@
     "apotheosis.tiered/pinnacle": "Просторові ворота Апофеотичного піку",
     "apotheosis.endless_invader": "Нескінченні просторові ворота Апофеотичних загарбників",
 
-    "comment_id": "/Advancements",
+    "comment_id3": "/Advancements",
 
     "advancements.apotheosis.progression.root.title": "Апофеотичні світові рівні",
     "advancements.apotheosis.progression.root.desc": "Етапи розблокування світових рівнів в Apotheosis.\nНатисніть CTRL+T, щоб відкрити екран вибору",
@@ -762,7 +774,7 @@
     "advancements.apotheosis.progression.haven.criteria.affixed": "Підберіть афіксний предмет",
 
     "advancements.apotheosis.progression.frontier.title": "Світовий рівень: Кордон",
-    "advancements.apotheosis.progression.frontier.desc": "Спорядіть повний комплект афіксних предметів, щоб дійти до етапу «Кордон».\nКоли відкриєте, натисніть CTRL+T, щоб активувати його.",
+    "advancements.apotheosis.progression.frontier.desc": "Спорядіть повний комплект афіксних предметів, щоб дійти до «Кордону».\nКоли досягнете його, натисніть CTRL+T, щоб активувати етап.",
     "advancements.apotheosis.progression.frontier.criteria.common_helm": "Спорядіть звичайний шолом",
     "advancements.apotheosis.progression.frontier.criteria.common_chest": "Спорядіть звичайний нагрудник",
     "advancements.apotheosis.progression.frontier.criteria.common_legs": "Спорядіть звичайні наголінники",
@@ -926,8 +938,12 @@
     "apotheosis.subtitle.reforge": "Cтіл перекування кує",
     "apotheosis.subtitle.malice": "Сигіл злоби накладає злобу",  
 
-    "comment_id": "Guidebook",
+    "apotheosis.subtitle.invader_uncommon": "Прибуває незвичайний апофеотичний загарбник",
+    "apotheosis.subtitle.invader_rare": "Прибуває рідкісний апофеотичний загарбник",
+    "apotheosis.subtitle.invader_epic": "Прибуває епічний апофеотичний загарбник",
+    "apotheosis.subtitle.invader_mythic": "Прибуває міфічний апофеотичний загарбник",
 
+    "comment_id": "Guidebook",
     "book.apotheosis.name": "Хроніки тіней",
     "book.apotheosis.subtitle": "Керівництво по Апофеозу",
     "book.apotheosis.landing": "Ласкаво просимо до світу Apotheosis.$(br2)Apotheosis організовано у $(#8080FF)модулі$(), як і зміст цієї книги.$(br2)Інформація вимкнених модулів прихована."
