@@ -3,8 +3,8 @@
     "category": "misc",
     "group": "apotheosis",
     "key": {
-        "E": {
-            "item": "apotheosis:epic_material"
+        "A": {
+            "item": "apotheosis:arcane_sands"
         },
         "I": {
             "tag": "c:ingots/netherite"
@@ -18,7 +18,7 @@
     },
     "pattern": [
         " I ",
-        "ESE",
+        "ASA",
         "NNN"
     ],
     "result": {

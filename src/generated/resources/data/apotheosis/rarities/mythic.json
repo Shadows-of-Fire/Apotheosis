@@ -2,7 +2,7 @@
     "type": "apotheosis:rarity",
     "color": "#ED7014",
     "invader_sound": "apotheosis:invader_mythic",
-    "material": "apotheosis:mythic_material",
+    "material": "apotheosis:godforged_pearl",
     "render_data": {
         "beam_height": 3.5,
         "beam_radius": 0.035,

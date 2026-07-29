@@ -15,7 +15,7 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
  * Record holding the per-dimension invader spawn rules for use by {@link DataMaps#INVADER_SPAWN_RULES}.
  *
  * @param spawnChances The per-world-tier spawn chances for invaders in the target dimension.
- * @param cooldown     An optional cooldown override for this dimension. If not set, the global cooldown will be used.
+ * @param cooldown     An optional cooldown override for this dimension. If not set, the configured default cooldown will be used.
  * @param surfaceType  The surface type used for this dimension.
  */
 public record InvaderSpawnRules(Map<WorldTier, Float> spawnChances, Optional<Integer> cooldown, SurfaceType surfaceType) {

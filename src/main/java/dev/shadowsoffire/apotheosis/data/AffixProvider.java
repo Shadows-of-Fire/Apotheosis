@@ -237,6 +237,14 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
             .value(epic, 0.55F, 0.7F)
             .value(mythic, 0.85F, 1.25F));
 
+        this.addAttribute("armor", "timekeeping", ALObjects.Attributes.COOLDOWN_REDUCTION, Operation.ADD_VALUE, b -> b
+            .definition(AffixType.STAT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
+            .categories(LootCategories.HELMET, LootCategories.CHESTPLATE)
+            .step(0.005F)
+            .value(rare, 0.01F, 0.05F)
+            .value(epic, 0.05F, 0.075F)
+            .value(mythic, 0.05F, 0.10F));
+
         // TODO: Potentially add offensive stats as armor affixes?
 
         // Breaker Attributes

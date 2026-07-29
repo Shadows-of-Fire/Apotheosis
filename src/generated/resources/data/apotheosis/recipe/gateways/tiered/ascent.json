@@ -18,13 +18,13 @@
         "I": {
             "tag": "c:ingots/gold"
         },
-        "R": {
-            "item": "apotheosis:rare_material"
+        "L": {
+            "item": "apotheosis:luminous_crystal_shard"
         }
     },
     "pattern": [
-        "IRI",
-        "RER",
+        "ILI",
+        "LEL",
         "GGG"
     ],
     "result": {

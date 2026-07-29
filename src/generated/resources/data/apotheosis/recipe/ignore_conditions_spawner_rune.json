@@ -1,0 +1,31 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "C": {
+            "item": "minecraft:conduit"
+        },
+        "E": {
+            "tag": "c:ender_pearls"
+        },
+        "I": {
+            "item": "apotheosis:infused_spawner_rune"
+        }
+    },
+    "pattern": [
+        " C ",
+        "EIE",
+        " E "
+    ],
+    "result": {
+        "count": 1,
+        "id": "apotheosis:ignore_conditions_spawner_rune"
+    }
+}

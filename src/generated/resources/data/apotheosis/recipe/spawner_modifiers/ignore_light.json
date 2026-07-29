@@ -1,0 +1,19 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "apothic_spawners:spawner_modifier",
+    "mainhand": {
+        "item": "apotheosis:ignore_light_spawner_rune"
+    },
+    "stat_changes": [
+        {
+            "type": "apothic_spawners:ignore_light",
+            "mode": "set",
+            "value": true
+        }
+    ]
+}

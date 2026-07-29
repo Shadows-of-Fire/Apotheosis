@@ -1,0 +1,39 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
+    "type": "apothic_spawners:spawner_modifier",
+    "mainhand": {
+        "item": "apotheosis:pinnacle_spawner_upgrade_rune"
+    },
+    "stat_changes": [
+        {
+            "type": "apothic_spawners:min_delay",
+            "mode": "set",
+            "value": 20
+        },
+        {
+            "type": "apothic_spawners:max_delay",
+            "mode": "set",
+            "value": 20
+        },
+        {
+            "type": "apothic_spawners:spawn_count",
+            "mode": "set",
+            "value": 16
+        },
+        {
+            "type": "apothic_spawners:max_nearby_entities",
+            "mode": "set",
+            "value": 32
+        },
+        {
+            "type": "apothic_spawners:req_player_range",
+            "mode": "set",
+            "value": 48
+        }
+    ]
+}

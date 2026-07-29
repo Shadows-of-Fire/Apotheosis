@@ -108,7 +108,7 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
 
         if (!hadItem && this.hasMainItem) {
             this.animationTick = MAX_ANIMATION_TIME;
-            this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(Apoth.Sounds.REFORGE.value(), 1F, 2F));
+            this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(Apoth.Sounds.REFORGE_ITEM_PLACED.value(), 1F, 2F));
         }
 
         if (this.hasMainItem) {

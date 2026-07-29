@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "apotheosis:items/spawner_runes/redstone_control_spawner_rune"
+    }
+}

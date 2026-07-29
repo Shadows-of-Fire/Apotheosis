@@ -2,7 +2,7 @@
     "type": "apotheosis:rarity",
     "color": "#33FF33",
     "invader_sound": "apotheosis:invader_uncommon",
-    "material": "apotheosis:uncommon_material",
+    "material": "apotheosis:timeworn_fabric",
     "render_data": {
         "beam_height": 0.0,
         "beam_radius": 0.035,

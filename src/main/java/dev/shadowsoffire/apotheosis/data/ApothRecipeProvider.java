@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import dev.shadowsoffire.apotheosis.Apoth;
@@ -24,13 +25,23 @@ import dev.shadowsoffire.apotheosis.recipe.SupremacyRecipe;
 import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
 import dev.shadowsoffire.apotheosis.socket.SocketingRecipe;
 import dev.shadowsoffire.apotheosis.socket.WithdrawalRecipe;
+import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.util.SpawnEggIngredient;
+import dev.shadowsoffire.apothic_attributes.api.ALObjects.Potions;
 import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.apothic_enchanting.table.EnchantingStatRegistry.Stats;
+import dev.shadowsoffire.apothic_enchanting.table.infusion.InfusionRecipe;
+import dev.shadowsoffire.apothic_spawners.ApothicSpawners;
+import dev.shadowsoffire.apothic_spawners.modifiers.SpawnerModifier;
+import dev.shadowsoffire.apothic_spawners.modifiers.StatModifier;
+import dev.shadowsoffire.apothic_spawners.modifiers.StatModifier.Mode;
+import dev.shadowsoffire.apothic_spawners.stats.SpawnerStat;
+import dev.shadowsoffire.apothic_spawners.stats.SpawnerStats;
 import dev.shadowsoffire.gateways.GatewayObjects;
 import dev.shadowsoffire.gateways.Gateways;
 import dev.shadowsoffire.gateways.gate.GatewayRegistry;
@@ -43,6 +54,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -53,10 +65,20 @@ import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.FalseCondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
 public class ApothRecipeProvider extends LegacyRecipeProvider {
+
+    /**
+     * Names of every modifier recipe shipped by Apothic Spawners, used to override and disable
+     * those recipes via {@link FalseCondition} so Apotheosis can supply world-tier-gated equivalents.
+     */
+    private static final List<String> AS_MODIFIER_NAMES = List.of(
+        "min_delay", "max_delay", "spawn_count", "max_nearby", "player_range", "spawn_range",
+        "initial_health", "ignore_players", "ignore_conditions", "redstone_control",
+        "ignore_light", "no_ai", "silent", "youthful", "burning", "echoing");
 
     public ApothRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, Apotheosis.MODID);
@@ -70,11 +92,11 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         out.accept(Apotheosis.loc("malice"), new MaliceRecipe(), null);
         out.accept(Apotheosis.loc("supremacy"), new SupremacyRecipe(), null);
         addSockets("sigil_add_sockets", ingredient(Items.SIGIL_OF_SOCKETING), 2);
-        addAffixSalvaging("common", Items.COMMON_MATERIAL);
-        addAffixSalvaging("uncommon", Items.UNCOMMON_MATERIAL);
-        addAffixSalvaging("rare", Items.RARE_MATERIAL);
-        addAffixSalvaging("epic", Items.EPIC_MATERIAL);
-        addAffixSalvaging("mythic", Items.MYTHIC_MATERIAL);
+        addAffixSalvaging("common", Items.MYSTERIOUS_SCRAP_METAL);
+        addAffixSalvaging("uncommon", Items.TIMEWORN_FABRIC);
+        addAffixSalvaging("rare", Items.LUMINOUS_CRYSTAL_SHARD);
+        addAffixSalvaging("epic", Items.ARCANE_SANDS);
+        addAffixSalvaging("mythic", Items.GODFORGED_PEARL);
 
         addGemSalvaging(Purity.CRACKED, 1, 2);
         addGemSalvaging(Purity.CHIPPED, 1, 3);
@@ -109,16 +131,16 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         addReforging("epic", 2, 4, 30, Blocks.REFORGING_TABLE);
         addReforging("mythic", 3, 5, 50, Blocks.REFORGING_TABLE);
 
-        addShaped(Blocks.AUGMENTING_TABLE, 3, 3, null, Items.NETHER_STAR, null, Items.MYTHIC_MATERIAL, Items.ENCHANTING_TABLE, Items.MYTHIC_MATERIAL, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE);
+        addShaped(Blocks.AUGMENTING_TABLE, 3, 3, null, Items.NETHER_STAR, null, Items.GODFORGED_PEARL, Items.ENCHANTING_TABLE, Items.GODFORGED_PEARL, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE, Items.POLISHED_BLACKSTONE);
         addShaped(Blocks.GEM_CUTTING_TABLE, 3, 3, Items.SMOOTH_STONE, Items.SHEARS, Items.SMOOTH_STONE, ItemTags.PLANKS, Items.GEM_DUST, ItemTags.PLANKS, ItemTags.PLANKS, null, ItemTags.PLANKS);
         addShaped(new ItemStack(Items.GEM_FUSED_SLATE, 8), 3, 3, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.GEM_DUST, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE, Items.DEEPSLATE);
-        addShaped(Blocks.REFORGING_TABLE, 3, 3, null, Tags.Items.INGOTS_NETHERITE, null, Items.EPIC_MATERIAL, Items.SIMPLE_REFORGING_TABLE, Items.EPIC_MATERIAL, Items.NETHER_BRICKS, Items.NETHER_BRICKS, Items.NETHER_BRICKS);
+        addShaped(Blocks.REFORGING_TABLE, 3, 3, null, Tags.Items.INGOTS_NETHERITE, null, Items.ARCANE_SANDS, Items.SIMPLE_REFORGING_TABLE, Items.ARCANE_SANDS, Items.NETHER_BRICKS, Items.NETHER_BRICKS, Items.NETHER_BRICKS);
         addShaped(Blocks.SALVAGING_TABLE, 3, 3, Tags.Items.INGOTS_COPPER, Tags.Items.INGOTS_COPPER, Tags.Items.INGOTS_COPPER, Items.IRON_PICKAXE, Items.SMITHING_TABLE, Items.IRON_AXE, Items.GEM_DUST, Items.LAVA_BUCKET, Items.GEM_DUST);
         addShaped(Blocks.SIMPLE_REFORGING_TABLE, 3, 3, null, Tags.Items.INGOTS_IRON, null, Items.GEM_DUST, Items.ENCHANTING_TABLE, Items.GEM_DUST, Items.SMOOTH_STONE, Items.SMOOTH_STONE, Items.SMOOTH_STONE);
 
         addShaped(Blocks.GEM_CASE, 3, 3, Tags.Items.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS, Tags.Items.GLASS_BLOCKS, Items.BASALT, Items.GEM_CUTTING_TABLE, Items.BASALT, Items.BASALT, Items.ENDER_CHEST, Items.BASALT);
 
-        addShaped(new ItemStack(Items.SIGIL_OF_ENHANCEMENT, 4), 3, 3, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.MYTHIC_MATERIAL, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
+        addShaped(new ItemStack(Items.SIGIL_OF_ENHANCEMENT, 4), 3, 3, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GODFORGED_PEARL, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_FUSED_SLATE,
             Items.GEM_DUST);
         addShaped(new ItemStack(Items.SIGIL_OF_REBIRTH, 6), 3, 3, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_FUSED_SLATE,
             Items.GEM_FUSED_SLATE);
@@ -129,7 +151,7 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         addShaped(new ItemStack(Items.SIGIL_OF_WITHDRAWAL, 4), 3, 3, Items.GEM_FUSED_SLATE, Items.BLAZE_ROD, Items.GEM_FUSED_SLATE, Tags.Items.ENDER_PEARLS, Items.LAVA_BUCKET, Tags.Items.ENDER_PEARLS, Items.GEM_FUSED_SLATE,
             Items.GEM_DUST, Items.GEM_FUSED_SLATE);
 
-        List<Holder<Item>> rarityMaterials = List.of(Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL);
+        List<Holder<Item>> rarityMaterials = List.of(Items.MYSTERIOUS_SCRAP_METAL, Items.TIMEWORN_FABRIC, Items.LUMINOUS_CRYSTAL_SHARD, Items.ARCANE_SANDS, Items.GODFORGED_PEARL);
         for (int i = 0; i < Purity.values().length - 1; i++) {
             Purity purity = Purity.BY_ID.apply(i);
             List<Holder<Item>> materials = rarityMaterials.subList(Math.max(i - 2, 0), Math.min(i + 2, rarityMaterials.size()));
@@ -144,13 +166,17 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         out.accept(Apotheosis.loc("potion_charm"), new PotionCharmRecipe("", CraftingBookCategory.MISC, charmPattern()), null);
 
         out.accept(Apotheosis.loc("infusion/potion_charm"), new CharmInfusionRecipe(
-            new Stats(15F, 100F, 8.5F, 32.5F, 0),
-            new Stats(15F, 100F, 13.5F, 37.5F, 0)),
+            new Stats(30F, 100F, 8.5F, 32.5F, 0),
+            new Stats(30F, 100F, 13.5F, 37.5F, 0)),
             null);
 
-        addShaped(new ItemStack(Items.IRON_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.COMMON_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
-        addShaped(new ItemStack(Items.GOLD_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.UNCOMMON_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
-        addShaped(new ItemStack(Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.RARE_MATERIAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        this.addInfusion("god_fused_pearl", new ItemStack(Items.GOD_FUSED_PEARL), Items.GODFORGED_PEARL, req(100, 9.65F, 58.75F), req(100, 11F, 60F));
+        this.addShaped(Ench.Items.RAVEN_ENCHANTING_TABLE, 3, 3, null, perfectRoyal(), null, Items.GOD_FUSED_PEARL, Ench.Items.APOTHIC_ENCHANTING_TABLE, Items.GOD_FUSED_PEARL, Tags.Items.OBSIDIANS, Tags.Items.OBSIDIANS,
+            Tags.Items.OBSIDIANS);
+
+        addShaped(new ItemStack(Items.IRON_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.MYSTERIOUS_SCRAP_METAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        addShaped(new ItemStack(Items.GOLD_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.TIMEWORN_FABRIC, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
+        addShaped(new ItemStack(Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.LUMINOUS_CRYSTAL_SHARD, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
 
         addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_SWORD, Tags.Items.INGOTS_IRON, 4, Items.IRON_SWORD);
         addSizedUpgrade(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.STONE_PICKAXE, Tags.Items.INGOTS_IRON, 4, Items.IRON_PICKAXE);
@@ -193,21 +219,220 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             Items.ROTTEN_FLESH, Items.ROTTEN_FLESH, Items.ROTTEN_FLESH);
 
         gateRecipe("tiered/ascent",
-            Tags.Items.INGOTS_GOLD, Items.RARE_MATERIAL, Tags.Items.INGOTS_GOLD,
-            Items.RARE_MATERIAL, Tags.Items.ENDER_PEARLS, Items.RARE_MATERIAL,
+            Tags.Items.INGOTS_GOLD, Items.LUMINOUS_CRYSTAL_SHARD, Tags.Items.INGOTS_GOLD,
+            Items.LUMINOUS_CRYSTAL_SHARD, Tags.Items.ENDER_PEARLS, Items.LUMINOUS_CRYSTAL_SHARD,
             Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
 
         gateRecipe("tiered/summit",
             Items.BLAZE_POWDER, Items.GHAST_TEAR, Items.BLAZE_POWDER,
-            Items.EPIC_MATERIAL, Items.ENDER_EYE, Items.EPIC_MATERIAL,
+            Items.ARCANE_SANDS, Items.ENDER_EYE, Items.ARCANE_SANDS,
             Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
 
         gateRecipe("tiered/pinnacle",
             Items.SIGIL_OF_MALICE, Ench.Items.WARDEN_TENDRIL, Items.SIGIL_OF_MALICE,
-            Ench.Items.INFUSED_BREATH, Items.MYTHIC_MATERIAL, Ench.Items.INFUSED_BREATH,
+            Ench.Items.INFUSED_BREATH, Items.GODFORGED_PEARL, Ench.Items.INFUSED_BREATH,
             Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
 
         this.recipeOutput = _out;
+
+        this.recipeOutput = _out.withConditions(new ModLoadedCondition(ApothicSpawners.MODID));
+        this.addSpawnerRuneRecipes();
+        this.addRuneCraftingRecipes();
+        this.recipeOutput = _out;
+
+        this.disableSpawnerModifierRecipes();
+    }
+
+    /**
+     * Emits {@link SpawnerModifier} recipes that consume the rune items registered in {@link Items} and apply
+     * stat changes to a spawner. Tier upgrade runes set the five spawn-rate stats to a tier-scaled value;
+     * the per-stat runes apply a forward change with an inverse counterpart triggered by a quartz off-hand.
+     */
+    private void addSpawnerRuneRecipes() {
+        // Tier upgrade runes — SET the five core spawn-rate stats. Pinnacle uses the maxes implied by Apothic
+        // Spawners' progression advancements (min/max delay 20, spawn count 16, max nearby 32, player range 48).
+        this.addTierUpgradeRune("frontier", Items.FRONTIER_SPAWNER_UPGRADE_RUNE, 150, 600, 7, 12, 24);
+        this.addTierUpgradeRune("ascent", Items.ASCENT_SPAWNER_UPGRADE_RUNE, 100, 400, 10, 18, 32);
+        this.addTierUpgradeRune("summit", Items.SUMMIT_SPAWNER_UPGRADE_RUNE, 50, 200, 13, 24, 40);
+        this.addTierUpgradeRune("pinnacle", Items.PINNACLE_SPAWNER_UPGRADE_RUNE, 20, 20, 16, 32, 48);
+
+        this.addRune("spawn_range", Items.SPAWN_RANGE_SPAWNER_RUNE, intChange(SpawnerStats.SPAWN_RANGE, 2, null, 32));
+        this.addInverseRune("spawn_range", Items.SPAWN_RANGE_SPAWNER_RUNE, intChange(SpawnerStats.SPAWN_RANGE, -2, 1, null));
+
+        this.addRune("initial_health", Items.INITIAL_HEALTH_SPAWNER_RUNE, floatChange(SpawnerStats.INITIAL_HEALTH, -0.05F, 0.20F, null));
+        this.addInverseRune("initial_health", Items.INITIAL_HEALTH_SPAWNER_RUNE, floatChange(SpawnerStats.INITIAL_HEALTH, 0.05F, null, 1.0F));
+
+        this.addRune("ignore_players", Items.IGNORE_PLAYERS_SPAWNER_RUNE, boolSet(SpawnerStats.IGNORE_PLAYERS, true));
+        this.addInverseRune("ignore_players", Items.IGNORE_PLAYERS_SPAWNER_RUNE, boolSet(SpawnerStats.IGNORE_PLAYERS, false));
+
+        this.addRune("ignore_conditions", Items.IGNORE_CONDITIONS_SPAWNER_RUNE, boolSet(SpawnerStats.IGNORE_CONDITIONS, true));
+        this.addInverseRune("ignore_conditions", Items.IGNORE_CONDITIONS_SPAWNER_RUNE, boolSet(SpawnerStats.IGNORE_CONDITIONS, false));
+
+        this.addRune("redstone_control", Items.REDSTONE_CONTROL_SPAWNER_RUNE, boolSet(SpawnerStats.REDSTONE_CONTROL, true));
+        this.addInverseRune("redstone_control", Items.REDSTONE_CONTROL_SPAWNER_RUNE, boolSet(SpawnerStats.REDSTONE_CONTROL, false));
+
+        this.addRune("ignore_light", Items.IGNORE_LIGHT_SPAWNER_RUNE, boolSet(SpawnerStats.IGNORE_LIGHT, true));
+        this.addInverseRune("ignore_light", Items.IGNORE_LIGHT_SPAWNER_RUNE, boolSet(SpawnerStats.IGNORE_LIGHT, false));
+
+        this.addRune("no_ai", Items.NO_AI_SPAWNER_RUNE, boolSet(SpawnerStats.NO_AI, true));
+        this.addInverseRune("no_ai", Items.NO_AI_SPAWNER_RUNE, boolSet(SpawnerStats.NO_AI, false));
+
+        this.addRune("silent", Items.SILENT_SPAWNER_RUNE, boolSet(SpawnerStats.SILENT, true));
+        this.addInverseRune("silent", Items.SILENT_SPAWNER_RUNE, boolSet(SpawnerStats.SILENT, false));
+
+        this.addRune("youthful", Items.YOUTHFUL_SPAWNER_RUNE, boolSet(SpawnerStats.YOUTHFUL, true));
+        this.addInverseRune("youthful", Items.YOUTHFUL_SPAWNER_RUNE, boolSet(SpawnerStats.YOUTHFUL, false));
+
+        this.addRune("burning", Items.BURNING_SPAWNER_RUNE, boolSet(SpawnerStats.BURNING, true));
+        this.addInverseRune("burning", Items.BURNING_SPAWNER_RUNE, boolSet(SpawnerStats.BURNING, false));
+
+        this.addRune("echoing", Items.ECHOING_SPAWNER_RUNE, intChange(SpawnerStats.ECHOING, 1, null, 3));
+        this.addInverseRune("echoing", Items.ECHOING_SPAWNER_RUNE, intChange(SpawnerStats.ECHOING, -1, 0, null));
+    }
+
+    /**
+     * Crafting recipes for the rune item line. The base {@link Items#SPAWNER_RUNE} is built from a Spawner Chain core,
+     * Gem-Fused Slate, and Gem Dust; the Infused variant feeds advanced rune crafts (Summit/Pinnacle tier upgrade
+     * runes plus the gameplay-warping stat runes — ignore_players/conditions/light, no_ai, echoing). The remaining stat
+     * runes use ingredients reminiscent of Apothic Spawners' original modifier items (piston, dripstone, comparator, ...).
+     */
+    private void addRuneCraftingRecipes() {
+        this.addShaped(new ItemStack(Items.SPAWNER_RUNE, 2), 3, 3,
+            Items.GEM_DUST, Items.GEM_FUSED_SLATE, Items.GEM_DUST,
+            Items.SPAWNER_CHAIN, Items.GEM_FUSED_SLATE, Items.SPAWNER_CHAIN,
+            Items.SPAWNER_CHAIN, Items.SPAWNER_CHAIN, Items.SPAWNER_CHAIN);
+
+        this.addInfusion("infused_spawner_rune", new ItemStack(Items.INFUSED_SPAWNER_RUNE), Items.SPAWNER_RUNE, req(70, 30, 50));
+
+        // Tier upgrade runes — rarity material in the corners, themed mats on the cardinals, rune in the center.
+        this.addTierRuneRecipe(Items.FRONTIER_SPAWNER_UPGRADE_RUNE, Items.TIMEWORN_FABRIC, Items.SPAWNER_RUNE,
+            Items.CLOCK, Items.FLINT, Items.FLINT, Items.CLOCK);
+
+        this.addTierRuneRecipe(Items.ASCENT_SPAWNER_UPGRADE_RUNE, Items.LUMINOUS_CRYSTAL_SHARD, Items.SPAWNER_RUNE,
+            new Ingredient(new SpawnEggIngredient()), Tags.Items.GEMS_QUARTZ, Tags.Items.GEMS_QUARTZ, Items.SIGIL_OF_SOCKETING);
+
+        this.addTierRuneRecipe(Items.SUMMIT_SPAWNER_UPGRADE_RUNE, Items.ARCANE_SANDS, Items.INFUSED_SPAWNER_RUNE,
+            Ench.Items.WARDEN_TENDRIL, Items.PHANTOM_MEMBRANE, Items.PHANTOM_MEMBRANE, Items.SIGIL_OF_MALICE);
+
+        this.addTierRuneRecipe(Items.PINNACLE_SPAWNER_UPGRADE_RUNE, Items.GODFORGED_PEARL, Items.INFUSED_SPAWNER_RUNE,
+            perfectEndersurge(), Ench.Items.INFUSED_BREATH, Ench.Items.INFUSED_BREATH, Items.NETHER_STAR);
+
+        // Per-stat runes — basic Spawner Rune for low-impact stats, Infused Spawner Rune for the gameplay-bending ones.
+        this.addStatRuneRecipe(Items.SPAWN_RANGE_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.PISTON);
+        this.addStatRuneRecipe(Items.REDSTONE_CONTROL_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.COMPARATOR);
+        this.addStatRuneRecipe(Items.IGNORE_LIGHT_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.SOUL_LANTERN);
+        this.addStatRuneRecipe(Items.INITIAL_HEALTH_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.POINTED_DRIPSTONE);
+        this.addStatRuneRecipe(Items.SILENT_SPAWNER_RUNE, Items.SPAWNER_RUNE, ItemTags.WOOL);
+        this.addStatRuneRecipe(Items.YOUTHFUL_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.TURTLE_EGG);
+        this.addStatRuneRecipe(Items.BURNING_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.CAMPFIRE);
+
+        this.addShaped(Items.NO_AI_SPAWNER_RUNE, 3, 3,
+            null, Items.CHORUS_FRUIT, null,
+            Items.CHORUS_FRUIT, Items.INFUSED_SPAWNER_RUNE, Items.CHORUS_FRUIT,
+            null, potionIngredient(Potions.FATIGUE), null);
+
+        this.addShaped(Items.IGNORE_CONDITIONS_SPAWNER_RUNE, 3, 3,
+            null, Items.CONDUIT, null,
+            Tags.Items.ENDER_PEARLS, Items.INFUSED_SPAWNER_RUNE, Tags.Items.ENDER_PEARLS,
+            null, Tags.Items.ENDER_PEARLS, null);
+        this.addShaped(Items.IGNORE_PLAYERS_SPAWNER_RUNE, 3, 3,
+            null, Items.NETHER_STAR, null,
+            Items.PHANTOM_MEMBRANE, Items.INFUSED_SPAWNER_RUNE, Items.PHANTOM_MEMBRANE,
+            null, Items.ENDER_EYE, null);
+        this.addShaped(Items.ECHOING_SPAWNER_RUNE, 3, 3,
+            Items.ECHO_SHARD, Items.ECHO_SHARD, Items.ECHO_SHARD,
+            Items.ECHO_SHARD, Items.INFUSED_SPAWNER_RUNE, Items.ECHO_SHARD,
+            Items.ECHO_SHARD, Items.ECHO_SHARD, Items.ECHO_SHARD);
+    }
+
+    private void addTierRuneRecipe(Holder<Item> output, Holder<Item> rarityMat, Holder<Item> rune, Object top, Object left, Object right, Object bottom) {
+        this.addShaped(output, 3, 3,
+            rarityMat, top, rarityMat,
+            left, rune, right,
+            rarityMat, bottom, rarityMat);
+    }
+
+    private void addStatRuneRecipe(Holder<Item> output, Holder<Item> rune, Object material) {
+        this.addShaped(output, 3, 3,
+            null, material, null,
+            material, rune, material,
+            null, material, null);
+    }
+
+    private void addTierUpgradeRune(String tierName, Holder<Item> rune, int minDelay, int maxDelay, int spawnCount, int maxNearby, int playerRange) {
+        SpawnerModifier recipe = new SpawnerModifier(ingredient(rune), Ingredient.EMPTY, false, List.of(
+            intSet(SpawnerStats.MIN_DELAY, minDelay),
+            intSet(SpawnerStats.MAX_DELAY, maxDelay),
+            intSet(SpawnerStats.SPAWN_COUNT, spawnCount),
+            intSet(SpawnerStats.MAX_NEARBY_ENTITIES, maxNearby),
+            intSet(SpawnerStats.REQ_PLAYER_RANGE, playerRange)));
+        this.recipeOutput.accept(Apotheosis.loc("spawner_modifiers/tier/" + tierName), recipe, null);
+    }
+
+    private void addRune(String name, Holder<Item> rune, StatModifier<?> change) {
+        SpawnerModifier recipe = new SpawnerModifier(ingredient(rune), Ingredient.EMPTY, false, List.of(change));
+        this.recipeOutput.accept(Apotheosis.loc("spawner_modifiers/" + name), recipe, null);
+    }
+
+    private void addInverseRune(String name, Holder<Item> rune, StatModifier<?> change) {
+        Ingredient offhand = Ingredient.of(Items.QUARTZ);
+        SpawnerModifier recipe = new SpawnerModifier(ingredient(rune), offhand, false, List.of(change));
+        this.recipeOutput.accept(Apotheosis.loc("spawner_modifiers/_inverse/" + name), recipe, null);
+    }
+
+    private static StatModifier<Integer> intChange(SpawnerStat<Integer> stat, int value, Integer min, Integer max) {
+        return new StatModifier<>(stat, value, Optional.ofNullable(min), Optional.ofNullable(max), Mode.ADD);
+    }
+
+    private static StatModifier<Float> floatChange(SpawnerStat<Float> stat, float value, Float min, Float max) {
+        return new StatModifier<>(stat, value, Optional.ofNullable(min), Optional.ofNullable(max), Mode.ADD);
+    }
+
+    private static StatModifier<Boolean> boolSet(SpawnerStat<Boolean> stat, boolean value) {
+        return new StatModifier<>(stat, value, Optional.empty(), Optional.empty(), Mode.SET);
+    }
+
+    private static StatModifier<Integer> intSet(SpawnerStat<Integer> stat, int value) {
+        return new StatModifier<>(stat, value, Optional.empty(), Optional.empty(), Mode.SET);
+    }
+
+    /**
+     * Overrides every Apothic Spawners modifier recipe with a {@link FalseCondition}-wrapped placeholder so the
+     * modifier system can be replaced by Apotheosis' world-tier-gated equivalents without touching Apothic Spawners.
+     */
+    private void disableSpawnerModifierRecipes() {
+        RecipeOutput disabled = this.recipeOutput.withConditions(FalseCondition.INSTANCE);
+        for (String name : AS_MODIFIER_NAMES) {
+            ResourceLocation forward = ResourceLocation.fromNamespaceAndPath(ApothicSpawners.MODID, "spawner_modifiers/" + name);
+            ResourceLocation inverse = ResourceLocation.fromNamespaceAndPath(ApothicSpawners.MODID, "spawner_modifiers/_inverse/" + name);
+            // Lazily use the MaliceRecipe because it has no args and the underlying recipe type is irrelevant.
+            disabled.accept(forward, new MaliceRecipe(), null);
+            disabled.accept(inverse, new MaliceRecipe(), null);
+        }
+    }
+
+    private static Stats req(float eterna, float quanta, float arcana) {
+        return new Stats(30F, eterna, quanta, arcana, 0);
+    }
+
+    private void addInfusion(String path, ItemStack output, Object input, Stats requirements) {
+        addInfusion(path, output, input, requirements, InfusionRecipe.NO_MAX);
+    }
+
+    private void addInfusion(String path, ItemStack output, Object input, Stats requirements, Stats maxRequirements) {
+        Ingredient ingredient = createInput(false, input).get(0);
+        InfusionRecipe recipe = new InfusionRecipe(output, ingredient, requirements, maxRequirements);
+        this.recipeOutput.accept(Apotheosis.loc(path), recipe, null);
+    }
+
+    private Ingredient perfectEndersurge() {
+        var list = List.of(GemRegistry.INSTANCE.holder(Apotheosis.loc("the_end/endersurge")));
+        return new Ingredient(new GemIngredient(list, Purity.PERFECT));
+    }
+
+    private Ingredient perfectRoyal() {
+        var list = List.of(GemRegistry.INSTANCE.holder(Apotheosis.loc("overworld/royalty")));
+        return new Ingredient(new GemIngredient(list, Purity.PERFECT));
     }
 
     private ShapedRecipePattern charmPattern() {

@@ -1,7 +1,11 @@
 {
-	"reforge": {
-		"subtitle": "apotheosis.subtitle.reforge",
-		"sounds": ["apotheosis:reforge"]
+	"reforge_item_placed": {
+		"subtitle": "apotheosis.subtitle.reforge_item_placed",
+		"sounds": ["apotheosis:reforge_item_placed"]
+	},
+	"reforge_item_reforged": {
+		"subtitle": "apotheosis.subtitle.reforge_item_reforged",
+		"sounds": ["apotheosis:reforge_item_reforged"]
 	},
     "malice": {
         "subtitle": "apotheosis.subtitle.malice",

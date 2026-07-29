@@ -1,0 +1,11 @@
+{
+    "type": "apotheosis:affix_loot_entry",
+    "stack": {
+        "count": 1,
+        "id": "minecraft:shears"
+    },
+    "weights": {
+        "quality": 1.0,
+        "weight": 5
+    }
+}

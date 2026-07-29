@@ -18,6 +18,8 @@
     "text.apotheosis.world_tier.pinnacle": "Pinnacle",
     "text.apotheosis.world_tier.pinnacle.desc": "Lose thyself in the mountain's stormy peaks",
 
+    "text.apotheosis.world_tier.difficulty": "Difficulty:",
+
     "title.apotheosis.select_world_tier": "Select World Tier",
     "title.apotheosis.world_tier_details": "World Tier Details",
 
@@ -322,6 +324,9 @@
     "affix.apotheosis:armor/attribute/oxygenated": "Oxygenated",
     "affix.apotheosis:armor/attribute/oxygenated.suffix": "of the Diver",
 
+    "affix.apotheosis:armor/attribute/timekeeping": "Timekeeping",
+    "affix.apotheosis:armor/attribute/timekeeping.suffix": "of Chronos",
+
     "affix.apotheosis:melee/mob_effect/omniscient": "Omniscient",
     "affix.apotheosis:melee/mob_effect/omniscient.suffix": "of the Grand Sage",
 
@@ -536,7 +541,7 @@
     "item.apotheosis.gem.apotheosis:twilight/forest": "Gem of the Twilight Forest",
     "item.apotheosis.gem.apotheosis:twilight/queen": "Gem of the Frozen Queen",
 
-    "item.apotheosis.boss_summoner": "Apothic Boss Summoner",
+    "item.apotheosis.boss_summoner": "Apothic Invader Summoner",
     "item.apotheosis.gem.cracked": "Cracked %s",
     "item.apotheosis.gem.chipped": "Chipped %s",
     "item.apotheosis.gem.flawed": "Flawed %s",
@@ -548,11 +553,12 @@
     "item.apotheosis.vial_of_unnaming": "Vial of Unnaming",
     "item.apotheosis.gem_dust": "Gem Dust",
     "item.apotheosis.gem_dust.desc": "A Crushed Apothic Gemstone",
-    "item.apotheosis.common_material": "Mysterious Scrap Metal",
-    "item.apotheosis.uncommon_material": "Timeworn Fabric",
-    "item.apotheosis.rare_material": "Luminous Crystal Shard",
-    "item.apotheosis.epic_material": "Arcane Sands",
-    "item.apotheosis.mythic_material": "Godforged Pearl",
+    "item.apotheosis.mysterious_scrap_metal": "Mysterious Scrap Metal",
+    "item.apotheosis.timeworn_fabric": "Timeworn Fabric",
+    "item.apotheosis.luminous_crystal_shard": "Luminous Crystal Shard",
+    "item.apotheosis.arcane_sands": "Arcane Sands",
+    "item.apotheosis.godforged_pearl": "Godforged Pearl",
+    "item.apotheosis.god_fused_pearl": "God-Fused Pearl",
     "item.apotheosis.ancient_material": "Manifestation of Infinity",
     "item.apotheosis.gem_fused_slate": "Gem-Fused Slate",
 
@@ -576,6 +582,44 @@
 
     "item.apotheosis.sigil_of_supremacy": "Sigil of Supremacy",
     "item.apotheosis.sigil_of_supremacy.desc": "Overcharges every Affix on an Affix Item",
+
+    "item.apotheosis.spawner_chain": "Spawner Chain",
+    "item.apotheosis.spawner_chain.desc": "Obtained from the explosive detonation of a Mob Spawner",
+    "item.apotheosis.spawner_rune": "Spawner Rune",
+    "item.apotheosis.infused_spawner_rune": "Infused Spawner Rune",
+
+    "item.apotheosis.frontier_spawner_upgrade_rune": "Frontiersman's Spawner Upgrade Rune",
+    "item.apotheosis.frontier_spawner_upgrade_rune.desc": "Slightly improves a Mob Spawner",
+    "item.apotheosis.ascent_spawner_upgrade_rune": "Wayfarer's Spawner Upgrade Rune",
+    "item.apotheosis.ascent_spawner_upgrade_rune.desc": "Improves a Mob Spawner",
+    "item.apotheosis.summit_spawner_upgrade_rune": "Mountaineer's Spawner Upgrade Rune",
+    "item.apotheosis.summit_spawner_upgrade_rune.desc": "Greatly improves a Mob Spawner",
+    "item.apotheosis.pinnacle_spawner_upgrade_rune": "Thundering Spawner Upgrade Rune",
+    "item.apotheosis.pinnacle_spawner_upgrade_rune.desc": "Brings a Mob Spawner to its maximum potential",
+
+    "item.apotheosis.spawn_range_spawner_rune": "Rune of Spawning Range",
+    "item.apotheosis.spawn_range_spawner_rune.desc": "Increases the area in which a spawner spawns mobs",
+    "item.apotheosis.redstone_control_spawner_rune": "Rune of Control",
+    "item.apotheosis.redstone_control_spawner_rune.desc": "Causes a spawner to only operate while powered by redstone",
+    "item.apotheosis.ignore_light_spawner_rune": "Rune of Perpetual Twilight",
+    "item.apotheosis.ignore_light_spawner_rune.desc": "Forces a spawner to ignore light level requirements",
+    "item.apotheosis.initial_health_spawner_rune": "Rune of Debilitation",
+    "item.apotheosis.initial_health_spawner_rune.desc": "Reduces the starting health of mobs spawned by the spawner",
+    "item.apotheosis.silent_spawner_rune": "Rune of Silence",
+    "item.apotheosis.silent_spawner_rune.desc": "Spawned mobs will make no sound",
+    "item.apotheosis.youthful_spawner_rune": "Rune of Youth",
+    "item.apotheosis.youthful_spawner_rune.desc": "Spawned mobs will be babies",
+    "item.apotheosis.burning_spawner_rune": "Rune of Immolation",
+    "item.apotheosis.burning_spawner_rune.desc": "Spawned mobs are wreathed in flame",
+
+    "item.apotheosis.no_ai_spawner_rune": "Rune of Stupor",
+    "item.apotheosis.no_ai_spawner_rune.desc": "Spawned mobs are stripped of their AI",
+    "item.apotheosis.ignore_conditions_spawner_rune": "Rune of Defiance",
+    "item.apotheosis.ignore_conditions_spawner_rune.desc": "Forces a spawner to ignore all spawn rules",
+    "item.apotheosis.ignore_players_spawner_rune": "Rune of Solitude",
+    "item.apotheosis.ignore_players_spawner_rune.desc": "Allows a spawner to operate without a player nearby",
+    "item.apotheosis.echoing_spawner_rune": "Rune of Echoes",
+    "item.apotheosis.echoing_spawner_rune.desc": "Spawned mobs drop additional copies of their loot",
 
     "item.apotheosis.iron_upgrade_smithing_template": "Smithing Template",
     "upgrade.apotheosis.iron": "Iron Upgrade ",
@@ -695,7 +739,7 @@
     "loot_category.apotheosis.shears.plural": "Shears",
 
     "info.apotheosis.boss_spawn": "%s has awoken nearby!",
-    "info.apotheosis.boss": "%s Apothic Boss",
+    "info.apotheosis.boss": "%s Apothic Invader",
     "info.apotheosis.boss_item": "Will Drop: %s",
     "info.apotheosis.boss_modifiers": "Boss Modifiers:",
     "info.apotheosis.rarity_material": "Rarity Material (%s)",
@@ -823,7 +867,7 @@
     "advancements.apotheosis.ancient.desc": "Find an Ancient item",
 
     "advancements.apotheosis.boss": "He Wasn't So Strong",
-    "advancements.apotheosis.boss.desc": "Slay an Apothic Boss, and retrieve their affix item",
+    "advancements.apotheosis.boss.desc": "Slay an Apothic Invader, and retrieve their affix item",
     "advancements.apotheosis.chests": "I Found It Underground",
     "advancements.apotheosis.chests.desc": "Find an affix item in a chest",
     "advancements.apotheosis.merchant": "I Got Deals",
@@ -934,7 +978,8 @@
     "painting.apotheosis.window.author": "Faellynna",
 
     "stat.apotheosis.world_tiers_activated": "World Tier Changed",
-    "apotheosis.subtitle.reforge": "Reforging Table reforges",
+    "apotheosis.subtitle.reforge_item_placed": "Item placed in Reforging Table",
+    "apotheosis.subtitle.reforge_item_reforged": "Item reforged",
     "apotheosis.subtitle.malice": "Sigil of Malice applies malice",
 
     "apotheosis.subtitle.invader_uncommon": "Uncommon Apothic Invader spawns",

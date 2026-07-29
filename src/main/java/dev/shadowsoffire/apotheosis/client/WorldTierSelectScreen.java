@@ -132,7 +132,7 @@ public class WorldTierSelectScreen extends Screen {
 
         gfx.blit(SEPARATOR_LINE, leftPos, topPos + 50, 0, 0, 0, 275, 30, 275, 30);
 
-        Component diffText = Component.literal("Difficulty:").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
+        Component diffText = Apotheosis.lang("text", "world_tier.difficulty").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
         gfx.drawString(font, diffText.getVisualOrderText(), leftPos + 15, topPos + 80, 0xFFFFFF, true);
 
         pose.pushPose();

@@ -22,4 +22,17 @@ public class TooltipItem extends Item {
         list.add(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
     }
 
+    public static class GlowyTooltipItem extends TooltipItem {
+
+        public GlowyTooltipItem(Properties properties) {
+            super(properties);
+        }
+
+        @Override
+        public boolean isFoil(ItemStack stack) {
+            return true;
+        }
+
+    }
+
 }

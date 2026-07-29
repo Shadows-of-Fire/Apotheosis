@@ -6,15 +6,15 @@
         "G": {
             "item": "apotheosis:gem_fused_slate"
         },
-        "R": {
-            "item": "apotheosis:rare_material"
+        "L": {
+            "item": "apotheosis:luminous_crystal_shard"
         },
         "S": {
             "item": "minecraft:stone"
         }
     },
     "pattern": [
-        " R ",
+        " L ",
         "SGS",
         "SGS"
     ],

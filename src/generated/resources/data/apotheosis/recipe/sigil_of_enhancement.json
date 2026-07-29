@@ -9,13 +9,13 @@
         "G": {
             "item": "apotheosis:gem_dust"
         },
-        "M": {
-            "item": "apotheosis:mythic_material"
+        "O": {
+            "item": "apotheosis:godforged_pearl"
         }
     },
     "pattern": [
         "GEG",
-        "EME",
+        "EOE",
         "GEG"
     ],
     "result": {

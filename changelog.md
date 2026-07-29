@@ -1,3 +1,34 @@
+## 8.6.1
+* Invader Spawn Cooldowns are now clustered instead of global. This means invader spawns on servers should no longer be deadlocked by multiple players being far away from eachother.
+  * Spawn Cooldowns are applied on a per-player basis, only to players in the same world tier within the announcement radius of an Invader Spawn.
+* Added JEI Exclusion Zones for the Gem Case
+* Fixed some hardcoded english text in the World Tier menu.
+* Tenwoc: Updated Ukranian translation.
+* Quarkrus & Loperka: Added Russian translation.
+* PrincessStellar: Updated Brazilian translation.
+
+## 8.6.0
+* Backported the following changes from 9.0.0 (Minecraft 26.1.2)
+  * Apothic Enchanting is now integrated with World Tiers.
+    * Tier Augments now provide negative Max Eterna, limiting your enchanting power based on your overall progress.
+    * A recipe for the Enchanting Table of the Raven has been added.
+  * Apothic Spawners is now integrated with World Tiers.
+    * The basic spawner upgrade recipes provided by Apothic Spawners are disabled.
+    * Blowing up an Apothic Spawner grants Spawner Chains, used to craft Spawner Runes.
+    * Various Spawner Runes are now used to upgrade spawners, with 4 rarity-based runes for "core" stats.
+  * All cooldowns (with the hourglass symbol) use Apothic Attributes' unified cooldown system and respect Cooldown Reduction.
+  * The rarity salvage materials have been renamed to their real names (e.g. `mythic_material` -> `godforged_pearl`).
+    * The old ids are registry-aliased, so items in existing worlds and datapack references keep working.
+  * All textures have been updated, and the reforging table has new audio.
+  * Affix loot pools: added shears, and rebalanced ranged/shield weights.
+  * Fixed sigils not being consumed when augmenting in survival mode.
+  * Renamed lingering "Apothic Boss" strings to "Apothic Invader".
+  * pvpeuve: Added Spanish translation.
+  * mc-kaishixiaxue: Updated Chinese translation.
+
+## 8.5.4
+* WerewolfieMod: Fixed invalid modifier prefix in `EntityModifier`.
+
 ## 8.5.3
 * Fixed the augmenting table showing affixes that had 0 weight as reroll candidates.
   * This mostly impacted the table showing the Unbound (creative flight) affix when it was unavailable.

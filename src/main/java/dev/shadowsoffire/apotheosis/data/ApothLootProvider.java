@@ -14,6 +14,7 @@ import dev.shadowsoffire.apotheosis.loot.entry.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
+import dev.shadowsoffire.apothic_spawners.ASObjects;
 import dev.shadowsoffire.placebo.loot.StackLootEntry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.Holder;
@@ -37,6 +38,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.entries.TagEntry;
@@ -284,6 +286,13 @@ public class ApothLootProvider extends LootTableProvider {
                         .add(enchanted(Items.BOOK, registries).setWeight(400).setQuality(0))
                         .add(GemLootPoolEntry.builder(Set.of(Purity.FLAWED), Set.of()).setWeight(80).setQuality(5))
                         .add(AffixLootPoolEntry.builder(ApothMiscUtil.linkedSet(uncommon, rare, epic), Set.of()).setWeight(80).setQuality(5))));
+
+            // Override of AS's unstable spawner loot table — swaps Chains for Spawner Chains.
+            output.accept(ASObjects.UNSTABLE_SPAWNER_LOOT,
+                LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                        .setRolls(UniformGenerator.between(48, 64))
+                        .add(LootItem.lootTableItem(Apoth.Items.SPAWNER_CHAIN.value()))));
         }
 
     }

@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "apotheosis:items/spawner_runes/summit_spawner_upgrade_rune"
+    }
+}

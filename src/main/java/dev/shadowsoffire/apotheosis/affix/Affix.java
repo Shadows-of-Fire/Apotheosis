@@ -7,9 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
-import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
 import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
@@ -291,23 +289,6 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
 
     public final ResourceLocation id() {
         return AffixRegistry.INSTANCE.getKey(this);
-    }
-
-    /**
-     * Checks if the affix is still on cooldown, if a cooldown was set via {@link #startCooldown(Affix, int, LivingEntity)}
-     */
-    public static boolean isOnCooldown(ResourceLocation id, int cooldown, LivingEntity entity) {
-        long lastApplied = entity.getPersistentData().getLong("apoth.affix_cooldown." + id.toString());
-        return lastApplied != 0 && lastApplied + cooldown >= entity.level().getGameTime();
-    }
-
-    /**
-     * Records the current time as a cooldown tracker. Used in conjunction with {@link #isOnCooldown(Affix, int, LivingEntity)}
-     * <p>
-     * Use of this method is problematic if the id is not unique for the effect, as is the case with {@link Gem#getId()} and {@link GemBonus#getTypeKey()}.
-     */
-    public static void startCooldown(ResourceLocation id, LivingEntity entity) {
-        entity.getPersistentData().putLong("apoth.affix_cooldown." + id.toString(), entity.level().getGameTime());
     }
 
     public static String fmt(float f) {
