@@ -19,6 +19,8 @@
     "text.apotheosis.world_tier.pinnacle": "Пік",
     "text.apotheosis.world_tier.pinnacle.desc": "Загубися в бурхливих вершинах гори",
 
+    "text.apotheosis.world_tier.difficulty": "Складність:",
+
     "title.apotheosis.select_world_tier": "Оберіть світовий рівень",
     "title.apotheosis.world_tier_details": "Інфо про Світові рівні",
 
@@ -58,7 +60,7 @@
     "tutorial.apotheosis.world_tier.tier_name.desc": "Це назва вибраного світового рівня, а також його короткий опис.",
     
     "tutorial.apotheosis.world_tier.tier_difficulty.title": "Складність світового рівня",
-    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "Це складність обраного світового рівня. Вищі рівні складності означають сильніших мобів, але й кращі нагороди.\n\nНа рівні світу «Кордон» і вище, у вашому світі почнуть з’являтися апофеотичні загарбники.",
+    "tutorial.apotheosis.world_tier.tier_difficulty.desc": "Це складність обраного світового рівня. Вищі рівні складності означають сильніших мобів, але й кращі нагороди.\n\nНа рівні світу «Кордон» і вище, у вашому світі почнуть з'являтися апофеотичні загарбники.",
     
     "tutorial.apotheosis.world_tier.detailed_info.title": "Детальна інформація", 
     "tutorial.apotheosis.world_tier.detailed_info.desc": "Ця кнопка покаже вам детальну інформацію про рівень світу, включаючи посилення та послаблення для гравців і мобів, а також шанси на випадання кожного рівня рідкості та чистоти самоцвітів. Якщо ви не впевнені, що таке рідкість або чистота, дивіться «Хроніку тіней» (внутрішньоігровий довідник).",
@@ -86,14 +88,14 @@
 
     "info.apotheosis.affix_item": "Афіксний предмет",
     
-    "death.attack.apotheosis:execute": "%s був катований %s",
-    "death.attack.apotheosis:execute.item": "%s був катований %s за допомогою: %s",
-    "death.attack.apotheosis:execute.player": "%s був катований %s",
+    "death.attack.apotheosis:execute": "%2$s катував %1$s",
+    "death.attack.apotheosis:execute.item": "%2$s катував %1$s за допомогою: %s",
+    "death.attack.apotheosis:execute.player": "%2$s катував %1$s",
 
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",
     "misc.apotheosis.affix_name.four": "%s %s %s %s",
-    "misc.apotheosis.affix_bounds": "[%s - %s]",
+    "misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
 
     "misc.apotheosis.radial_state_updated": "Радіальний режим добування оновлено до \"%s\"",
     "misc.apotheosis.radial_state.require_not_sneaking": "Вимикати при підкраданні",
@@ -267,15 +269,15 @@
 
     "affix.apotheosis:melee/executing": "Катуючий",
     "affix.apotheosis:melee/executing.suffix": "ката",
-    "affix.apotheosis:melee/executing.desc": "Вороги з максимальним здоров’ям нижче %s%% будуть страчені.",
+    "affix.apotheosis:melee/executing.desc": "Вороги з максимальним здоров'ям нижче %s%% будуть страчені.",
     
     "affix.apotheosis:melee/cleaving": "Розколюючий",
-    "affix.apotheosis:melee/cleaving.suffix": "м’ясника",
+    "affix.apotheosis:melee/cleaving.suffix": "м'ясника",
     "affix.apotheosis:melee/cleaving.desc": "Атаки мають %s%% шанс додатково вразити до %s ворогів поблизу.",
 
     "affix.apotheosis:breaker/ability/enlightened": "Просвітлений",
     "affix.apotheosis:breaker/ability/enlightened.suffix": "освітлення",
-    "affix.apotheosis:breaker/ability/enlightened.desc": "Цей інструмент може поставити смолоскип ціною %s од. міцності.",
+    "affix.apotheosis:breaker/ability/enlightened.desc": "Цей інструмент може поставити джерело освітлення ціною %s од. міцності.",
 
     "affix.apotheosis:shield/psychic": "Медіумічний",
     "affix.apotheosis:shield/psychic.suffix": "мстивого",
@@ -318,10 +320,13 @@
     "affix.apotheosis:breaker/ability/supermassive.desc": "Цей інструмент добуває в області %sx%s.",
 
     "affix.apotheosis:melee_weapon/mob_effect/detonating": "Вибуховий",
-    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "елементального полум’я",
+    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "елементального полум'я",
 
     "affix.apotheosis:armor/attribute/oxygenated": "Оксигенований",
     "affix.apotheosis:armor/attribute/oxygenated.suffix": "пірнання",
+
+    "affix.apotheosis:armor/attribute/timekeeping": "Літочисленний",
+    "affix.apotheosis:armor/attribute/timekeeping.suffix": "Хроноса",
 
     "affix.apotheosis:melee/mob_effect/omniscient": "Усезнаючий",
     "affix.apotheosis:melee/mob_effect/omniscient.suffix": "великої мудрості",
@@ -335,8 +340,8 @@
     "affix.apotheosis:armor/dmg_reduction/grounded": "Заземлений",
     "affix.apotheosis:armor/dmg_reduction/grounded.suffix": "громовідводу",
 
-    "affix.apotheosis:ranged/mob_effect/deathbound": "Зв’язаний зі смертю",
-    "affix.apotheosis:ranged/mob_effect/deathbound.suffix": "повелителя зів’янення",
+    "affix.apotheosis:ranged/mob_effect/deathbound": "Зв'язаний зі смертю",
+    "affix.apotheosis:ranged/mob_effect/deathbound.suffix": "повелителя зів'янення",
 
     "affix.apotheosis:shield/mob_effect/reinforcing": "Укріплений",
     "affix.apotheosis:shield/mob_effect/reinforcing.suffix": "сталі",
@@ -347,7 +352,7 @@
     "affix.apotheosis:ranged/mob_effect/blighted": "Знищений",
     "affix.apotheosis:ranged/mob_effect/blighted.suffix": "мертвих земель",
 
-    "affix.apotheosis:armor/attribute/unbound": "Незв’язаний",
+    "affix.apotheosis:armor/attribute/unbound": "Незв'язаний",
     "affix.apotheosis:armor/attribute/unbound.suffix": "Ікара",
 
     "affix.apotheosis:armor/attribute/fireproof": "Вогнетривкий",
@@ -394,7 +399,7 @@
     "affix.apotheosis:armor/dmg_reduction/dwarven": "Дварфійський",
     "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "вулкану",
 
-    "affix.apotheosis:armor/dmg_reduction/feathery": "Пір’ястий",
+    "affix.apotheosis:armor/dmg_reduction/feathery": "Пір'ястий",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "орла",
 
     "affix.apotheosis:shield/attribute/stalwart": "Рішучий",
@@ -499,7 +504,7 @@
     "bonus.apotheosis:multi_attr.desc.and": "%s та %s",
     "bonus.apotheosis:multi_attr.desc.and_but": "%s та %s, але %s",
     "bonus.apotheosis:multi_attr.desc.but_and": "%s, але %s та %s",
-    "bonus.apotheosis:bloody_arrow.desc": "Під час атаки ви втрачатимете %s%% від запасу здоров’я та завдаватимете на %s%% більше шкоди. %s",
+    "bonus.apotheosis:bloody_arrow.desc": "Під час атаки ви втрачатимете %s%% від запасу здоров'я та завдаватимете на %s%% більше шкоди. %s",
     "bonus.apotheosis:leech_block.desc": "Блокування та атакування зцілює вас на %s%% від заподіяної шкоди. %s",
     "bonus.apotheosis:all_stats.desc": "+%s%% до усіх характеристик",
     "gem.apotheosis:overworld/royalty.bonus.pickaxe": "Добування мідної руди матиме %s%% ймовірність скинути золоту копалину.",
@@ -537,7 +542,7 @@
     "item.apotheosis.gem.apotheosis:twilight/forest": "Самоцвіт Сутінкового лісу",
     "item.apotheosis.gem.apotheosis:twilight/queen": "Самоцвіт морозної королеви",
 
-    "item.apotheosis.boss_summoner": "Породжувач апофеотичного боса",
+    "item.apotheosis.boss_summoner": "Породжувач апофеотичного загарбника",
     "item.apotheosis.gem.cracked": "Неотесаний %s",
     "item.apotheosis.gem.chipped": "Щербатий %s",
     "item.apotheosis.gem.flawed": "Недосконалий %s",
@@ -553,7 +558,8 @@
     "item.apotheosis.timeworn_fabric": "Зношена тканина",
     "item.apotheosis.luminous_crystal_shard": "Блискучий кришталевий уламок",
     "item.apotheosis.arcane_sands": "Таємничі піски",
-    "item.apotheosis.godforged_pearl": "Боговторена перлина",
+    "item.apotheosis.godforged_pearl": "Боготворена перлина",
+    "item.apotheosis.god_fused_pearl": "Богозлита перлина",
     "item.apotheosis.ancient_material": "Прояв нескінченності",
     "item.apotheosis.gem_fused_slate": "Самоцвітно-злитий сланець",
 
@@ -570,7 +576,7 @@
     "item.apotheosis.sigil_of_enhancement.desc": "Живить стіл доповнення",
 
     "item.apotheosis.sigil_of_unnaming": "Сигіл позбавлення імені",
-    "item.apotheosis.sigil_of_unnaming.desc": "Видаляє афіксне ім’я предмета",
+    "item.apotheosis.sigil_of_unnaming.desc": "Видаляє афіксне ім'я предмета",
 
     "item.apotheosis.sigil_of_malice": "Сигіл злоби",
     "item.apotheosis.sigil_of_malice.desc": "Додає Дотик злоби до афіксного предмета",
@@ -578,11 +584,49 @@
     "item.apotheosis.sigil_of_supremacy": "Сигіл перевершення",
     "item.apotheosis.sigil_of_supremacy.desc": "Посилює кожен афікс афіксного предмета за межі можливого",
 
+    "item.apotheosis.spawner_chain": "Ланцюг породжувача",
+    "item.apotheosis.spawner_chain.desc": "Можна отримати, підірвавши породжувач",
+    "item.apotheosis.spawner_rune": "Руна породжувача",
+    "item.apotheosis.infused_spawner_rune": "Просякнена руна породжувача",
+
+    "item.apotheosis.frontier_spawner_upgrade_rune": "Руна покращення породжувача першопрохідця",
+    "item.apotheosis.frontier_spawner_upgrade_rune.desc": "Трохи покращує породжувач монстрів",
+    "item.apotheosis.ascent_spawner_upgrade_rune": "Руна покращення породжувача мандрівника",
+    "item.apotheosis.ascent_spawner_upgrade_rune.desc": "Покращує породжувач монстрів",
+    "item.apotheosis.summit_spawner_upgrade_rune": "Руна покращення породжувача підкорювача гір",
+    "item.apotheosis.summit_spawner_upgrade_rune.desc": "Значно покращує породжувач монстрів",
+    "item.apotheosis.pinnacle_spawner_upgrade_rune": "Громова руна покращення породжувача",
+    "item.apotheosis.pinnacle_spawner_upgrade_rune.desc": "Доводить породжувач мобів до максимального потенціалу",
+
+    "item.apotheosis.spawn_range_spawner_rune": "Руна дальності породження",
+    "item.apotheosis.spawn_range_spawner_rune.desc": "Збільшує область, у якій породжувач породжуватиме мобів",
+    "item.apotheosis.redstone_control_spawner_rune": "Руна контролю",
+    "item.apotheosis.redstone_control_spawner_rune.desc": "Змушує породжувач працювати лише із редстоуновим заживленням",
+    "item.apotheosis.ignore_light_spawner_rune": "Руна вічних сутінків",
+    "item.apotheosis.ignore_light_spawner_rune.desc": "Змушує породжувач ігнорувати вимоги у рівні освітлення",
+    "item.apotheosis.initial_health_spawner_rune": "Руна знесилення",
+    "item.apotheosis.initial_health_spawner_rune.desc": "Зменшує початкове здоров’я породжених мобів",
+    "item.apotheosis.silent_spawner_rune": "Руна тиші",
+    "item.apotheosis.silent_spawner_rune.desc": "Породжені моби не видаватимуть звуків",
+    "item.apotheosis.youthful_spawner_rune": "Руна молодості",
+    "item.apotheosis.youthful_spawner_rune.desc": "Породжені моби будуть дитинчатами",
+    "item.apotheosis.burning_spawner_rune": "Руна спалення",
+    "item.apotheosis.burning_spawner_rune.desc": "Породжені моби будуть оповиті полум’ям",
+
+    "item.apotheosis.no_ai_spawner_rune": "Руна остовпіння",
+    "item.apotheosis.no_ai_spawner_rune.desc": "Породжені моби будуть позбавлені свого ШІ",
+    "item.apotheosis.ignore_conditions_spawner_rune": "Руна байдужості",
+    "item.apotheosis.ignore_conditions_spawner_rune.desc": "Змушує породжувач ігнорувати усі умови породження",
+    "item.apotheosis.ignore_players_spawner_rune": "Руна усамітнення",
+    "item.apotheosis.ignore_players_spawner_rune.desc": "Дозволяє породжувача працювати без гравця поруч",
+    "item.apotheosis.echoing_spawner_rune": "Руна відлуння",
+    "item.apotheosis.echoing_spawner_rune.desc": "Породжені моби скидатимуть додаткові копії свого дропу",
+
     "item.apotheosis.iron_upgrade_smithing_template": "Ковальський шаблон",
     "upgrade.apotheosis.iron": "Залізне покращення ",
-    "item.apotheosis.iron_upgrade_smithing_template.applies_to": "Кам’яне та кольчужне спорядження",
+    "item.apotheosis.iron_upgrade_smithing_template.applies_to": "Кам'яне та кольчужне спорядження",
     "item.apotheosis.iron_upgrade_smithing_template.ingredients": "4 залізних злитки",
-    "item.apotheosis.iron_upgrade_smithing_template.base_slot_description": "Розмістіть частину кольчужних обладунків чи кам’яного спорядження",
+    "item.apotheosis.iron_upgrade_smithing_template.base_slot_description": "Розмістіть частину кольчужних обладунків чи кам'яного спорядження",
     "item.apotheosis.iron_upgrade_smithing_template.additions_slot_description": "Розмістіть чотири залізних злитки",
 
     "item.apotheosis.gold_upgrade_smithing_template": "Ковальський шаблон",
@@ -613,7 +657,7 @@
     "block.apotheosis.gem_case": "Шкатулка",
     "tooltip.apotheosis.gem_case.capacity": "Місткість: %s самоцвітів",
     "tooltip.apotheosis.gem_case.unique_gems": "Містить %s різних самоцвітів",
-    "tooltip.apotheosis.gem_case.none_owned": "Немає власних",
+    "tooltip.apotheosis.gem_case.none_owned": "Немає власника",
     "block.apotheosis.ender_gem_case": "Шкатулка дому Фаберже",
 
     "button.apotheosis.salvage": "Перероблення предметів",
@@ -628,7 +672,7 @@
     "button.apotheosis.augmenting.no_alternatives": "Немає доступних альтернатив",
     "button.apotheosis.augmenting.upgrade.cost": "Вартість: %sx %s",
     "button.apotheosis.augmenting.upgrade.exp_cost": "Вартість досвіду: %s рівні(в)",
-    "button.apotheosis.gem_case.upgrade": "Покращити 2 %s самоцвіти до %s",
+    "button.apotheosis.gem_case.upgrade": "Покращити 2 самоцвіти рівня %s до %s",
     "button.apotheosis.gem_case.upgrade_no_gems": "Недостатньо самоцвітів",
     "button.apotheosis.gem_case.upgrade_no_materials": "Недостатньо матеріалів",
     "button.apotheosis.gem_case.upgrade_cost": "Вартість: %s %s та %s %s",
@@ -696,7 +740,7 @@
     "loot_category.apotheosis.shears.plural": "Ножиці",
 
     "info.apotheosis.boss_spawn": "%s пробудився поблизу!",
-    "info.apotheosis.boss": "%s (Апофеотичний бос)",
+    "info.apotheosis.boss": "%s (Апофеотичний загарбник)",
     "info.apotheosis.boss_item": "Скине: %s",
     "info.apotheosis.boss_modifiers": "Модифікатори боса:",
     "info.apotheosis.rarity_material": "Матеріал рідкості (%s)",
@@ -760,11 +804,11 @@
 
     "apotheosis.tiered/frontier": "Просторові ворота Першого кордону",
     "apotheosis.tiered/ascent": "Просторові ворота Сонячного сходження",
-    "apotheosis.tiered/summit": "Просторові ворота Грімної вершини",
+    "apotheosis.tiered/summit": "Просторові ворота Громової вершини",
     "apotheosis.tiered/pinnacle": "Просторові ворота Апофеотичного піку",
     "apotheosis.endless_invader": "Нескінченні просторові ворота Апофеотичних загарбників",
 
-    "comment_id3": "/Advancements",
+    "comment_id": "/Advancements",
 
     "advancements.apotheosis.progression.root.title": "Апофеотичні світові рівні",
     "advancements.apotheosis.progression.root.desc": "Етапи розблокування світових рівнів в Apotheosis.\nНатисніть CTRL+T, щоб відкрити екран вибору",
@@ -824,10 +868,10 @@
     "advancements.apotheosis.ancient.desc": "Знайдіть древній предмет.",
 
     "advancements.apotheosis.boss": "Він виявився не дуже й сильним",
-    "advancements.apotheosis.boss.desc": "Вбийте апофеотичного боса та заберіть його афіксний предмет.",
+    "advancements.apotheosis.boss.desc": "Вбийте апофеотичного загарбника та заберіть його афіксний предмет.",
     "advancements.apotheosis.chests": "Воно зустрілося мені у підземеллі",
     "advancements.apotheosis.chests.desc": "Знайдіть афіксний предмет у скрині.",
-    "advancements.apotheosis.merchant": "Маю для вас цікаву угоду...",
+    "advancements.apotheosis.merchant": "Маю для вас цікаву угоду…",
     "advancements.apotheosis.merchant.desc": "Придбайте афіксний предмет у мандрівного крамаря.",
     "advancements.apotheosis.random": "Звідки це у тебе?",
     "advancements.apotheosis.random.desc": "Отримайте афіксний предмет із випадкового монстра.",
@@ -857,7 +901,7 @@
     "advancements.apotheosis.challenge_gates.ascent.desc": "Пройдіть просторові ворота Сонячного сходження",
 
     "advancements.apotheosis.challenge_gates.summit.title": "Досягніть вершини",
-    "advancements.apotheosis.challenge_gates.summit.desc": "Пройдіть Просторові ворота Грімної вершини",
+    "advancements.apotheosis.challenge_gates.summit.desc": "Пройдіть Просторові ворота Громової вершини",
 
     "advancements.apotheosis.challenge_gates.pinnacle.title": "На пік",
     "advancements.apotheosis.challenge_gates.pinnacle.desc": "Пройдіть просторові ворота Апофеотичного піку",
@@ -887,7 +931,7 @@
 
     "comment_id": "/Wanderer Trades",
     "name.apotheosis.captive_dreams": "Ловець снів",
-    "name.apotheosis.stonebreaker": "Каменелом",
+    "name.apotheosis.stonebreaker": "Каменолом",
     "name.apotheosis.treecapitator": "Деревостягувач",
     "name.apotheosis.bonesplitter": "Костолом",
     "name.apotheosis.arachnids_fear": "Жах арахнідів",
@@ -922,7 +966,7 @@
     "painting.apotheosis.gems.title": "Самоцвіти",
     "painting.apotheosis.gems.author": "Faellynna",
 
-    "painting.apotheosis.craig.title": "Крейг Вічний",
+    "painting.apotheosis.craig.title": "Крейґ Вічний",
     "painting.apotheosis.craig.author": "Astrel",
 
     "painting.apotheosis.tower.title": "Вежа",
@@ -935,7 +979,8 @@
     "painting.apotheosis.window.author": "Faellynna",
 
     "stat.apotheosis.world_tiers_activated": "Світовий рівень змінено",
-    "apotheosis.subtitle.reforge": "Cтіл перекування кує",
+    "apotheosis.subtitle.reforge_item_placed": "Предмет розміщено у стіл перекування",
+    "apotheosis.subtitle.reforge_item_reforged": "Предмет перековано",
     "apotheosis.subtitle.malice": "Сигіл злоби накладає злобу",  
 
     "apotheosis.subtitle.invader_uncommon": "Прибуває незвичайний апофеотичний загарбник",
@@ -945,6 +990,6 @@
 
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Хроніки тіней",
-    "book.apotheosis.subtitle": "Керівництво по Апофеозу",
+    "book.apotheosis.subtitle": "Керівництво по Apotheosis",
     "book.apotheosis.landing": "Ласкаво просимо до світу Apotheosis.$(br2)Apotheosis організовано у $(#8080FF)модулі$(), як і зміст цієї книги.$(br2)Інформація вимкнених модулів прихована."
 }
