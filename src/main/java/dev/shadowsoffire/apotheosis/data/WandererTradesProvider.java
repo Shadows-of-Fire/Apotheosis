@@ -10,10 +10,11 @@ import java.util.function.UnaryOperator;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
 import dev.shadowsoffire.apotheosis.affix.trades.TieredTrade;
+import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
+import dev.shadowsoffire.apotheosis.compat.spawners.ApothicSpawnersCompat;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apothic_enchanting.Ench;
-import dev.shadowsoffire.apothic_spawners.ApothicSpawners;
 import dev.shadowsoffire.placebo.systems.wanderer.BasicWandererTrade;
 import dev.shadowsoffire.placebo.systems.wanderer.WandererTrade;
 import dev.shadowsoffire.placebo.systems.wanderer.WandererTradesRegistry;
@@ -26,17 +27,24 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 
 public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrade> {
 
     // TODO: Make one of these in AS directly.
-    public static final ResourceKey<Enchantment> CAPTURING = ResourceKey.create(Registries.ENCHANTMENT, ApothicSpawners.loc("capturing"));
+    public static final ResourceKey<Enchantment> CAPTURING = ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(ApothicSpawnersCompat.MODID, "capturing"));
+
+    private static final List<ICondition> REQUIRES_ENCH = List.of(new ModLoadedCondition(ApothicEnchantingCompat.MODID));
+    private static final List<ICondition> REQUIRES_SPAWNERS = List.of(new ModLoadedCondition(ApothicSpawnersCompat.MODID));
+    private static final List<ICondition> REQUIRES_BOTH = List.of(new ModLoadedCondition(ApothicEnchantingCompat.MODID), new ModLoadedCondition(ApothicSpawnersCompat.MODID));
 
     public WandererTradesProvider(PackOutput output, CompletableFuture<Provider> registries) {
         super(output, registries, WandererTradesRegistry.INSTANCE);
@@ -182,7 +190,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.UNBREAKING, 3)))
             .maxTrades(1)
             .xp(500),
-            WorldTier.SUMMIT, WorldTier.PINNACLE);
+            REQUIRES_BOTH, WorldTier.SUMMIT, WorldTier.PINNACLE);
 
         this.addTiered("rare_gear/captive_dreams", b -> b
             .rare()
@@ -199,7 +207,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(CAPTURING, 5)))
             .maxTrades(1)
             .xp(500),
-            WorldTier.SUMMIT, WorldTier.PINNACLE);
+            REQUIRES_SPAWNERS, WorldTier.SUMMIT, WorldTier.PINNACLE);
 
         this.addTiered("rare_gear/eternal_vigilance", b -> b
             .rare()
@@ -215,7 +223,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Ench.Enchantments.SCAVENGER, 5)))
             .maxTrades(1)
             .xp(1000),
-            WorldTier.SUMMIT, WorldTier.PINNACLE);
+            REQUIRES_ENCH, WorldTier.SUMMIT, WorldTier.PINNACLE);
 
         this.addTiered("rare_gear/greatplate_of_eternity", b -> b
             .rare()
@@ -231,7 +239,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Ench.Enchantments.BERSERKERS_FURY, 2)))
             .maxTrades(1)
             .xp(500),
-            WorldTier.SUMMIT, WorldTier.PINNACLE);
+            REQUIRES_ENCH, WorldTier.SUMMIT, WorldTier.PINNACLE);
 
         this.addTiered("rare_gear/rune_forged_greaves", b -> b
             .rare()
@@ -247,7 +255,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Ench.Enchantments.STABLE_FOOTING, 1)))
             .maxTrades(1)
             .xp(500),
-            WorldTier.SUMMIT, WorldTier.PINNACLE);
+            REQUIRES_ENCH, WorldTier.SUMMIT, WorldTier.PINNACLE);
 
         this.addTiered("rare_gear/stonebreaker", b -> b
             .rare()
@@ -263,7 +271,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Ench.Enchantments.BOON_OF_THE_EARTH, 4)))
             .maxTrades(1)
             .xp(500),
-            WorldTier.SUMMIT, WorldTier.PINNACLE);
+            REQUIRES_ENCH, WorldTier.SUMMIT, WorldTier.PINNACLE);
 
         this.addTiered("rare_gear/thunder_forged_legguards", b -> b
             .rare()
@@ -278,7 +286,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Ench.Enchantments.REBOUNDING, 10)))
             .maxTrades(1)
             .xp(500),
-            WorldTier.SUMMIT, WorldTier.PINNACLE);
+            REQUIRES_ENCH, WorldTier.SUMMIT, WorldTier.PINNACLE);
 
         this.addTiered("rare_gear/timeworn_visage", b -> b
             .rare()
@@ -311,7 +319,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Ench.Enchantments.CHAINSAW, 1)))
             .maxTrades(1)
             .xp(500),
-            WorldTier.SUMMIT, WorldTier.PINNACLE);
+            REQUIRES_ENCH, WorldTier.SUMMIT, WorldTier.PINNACLE);
 
         // Need to add a bunch of these so they sufficiently fill the trade pool.
         // Otherwise they become way too rare.
@@ -332,12 +340,21 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
     }
 
     public void addTiered(String path, UnaryOperator<Builder> builder, WorldTier... tiers) {
+        this.addTiered(path, builder, List.of(), tiers);
+    }
+
+    public void addTiered(String path, UnaryOperator<Builder> builder, List<ICondition> conditions, WorldTier... tiers) {
         WandererTrade underlying = builder.apply(new Builder()).build();
         Map<WorldTier, WandererTrade> byTier = new HashMap<>();
         for (WorldTier t : tiers) {
             byTier.put(t, underlying);
         }
-        this.add(Apotheosis.loc(path), new TieredTrade(byTier));
+        if (conditions.isEmpty()) {
+            this.add(Apotheosis.loc(path), new TieredTrade(byTier));
+        }
+        else {
+            this.addConditionally(Apotheosis.loc(path), new TieredTrade(byTier), conditions.toArray(new ICondition[0]));
+        }
     }
 
     public void add(String path, UnaryOperator<Builder> builder) {

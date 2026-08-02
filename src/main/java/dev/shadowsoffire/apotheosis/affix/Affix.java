@@ -11,7 +11,6 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
 import dev.shadowsoffire.apothic_attributes.modifiers.StackAttributeModifiersEvent;
-import dev.shadowsoffire.apothic_enchanting.asm.EnchHooks;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.ChatFormatting;
@@ -121,7 +120,7 @@ public abstract class Affix implements CodecProvider<Affix>, Weighted {
     /**
      * Calculates the protection value of this affix, with respect to the given damage source.<br>
      * Math is in {@link CombatRules#getDamageAfterMagicAbsorb}<br>
-     * Ench module overrides with {@link EnchHooks#getDamageAfterMagicAbsorb}<br>
+     * Apothic Enchanting overrides that logic via its EnchHooks ASM hooks.<br>
      *
      * @param inst   The affix instance.
      * @param source The damage source to compare against.

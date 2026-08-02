@@ -16,9 +16,11 @@ import dev.shadowsoffire.apotheosis.affix.UnnamingRecipe;
 import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingRecipe;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingRecipe.OutputData;
+import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
+import dev.shadowsoffire.apotheosis.compat.enchanting.CharmInfusionRecipe;
+import dev.shadowsoffire.apotheosis.compat.spawners.ApothicSpawnersCompat;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
-import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
 import dev.shadowsoffire.apotheosis.recipe.SupremacyRecipe;
@@ -36,7 +38,6 @@ import dev.shadowsoffire.apothic_attributes.api.ALObjects.Potions;
 import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.apothic_enchanting.table.EnchantingStatRegistry.Stats;
 import dev.shadowsoffire.apothic_enchanting.table.infusion.InfusionRecipe;
-import dev.shadowsoffire.apothic_spawners.ApothicSpawners;
 import dev.shadowsoffire.apothic_spawners.modifiers.SpawnerModifier;
 import dev.shadowsoffire.apothic_spawners.modifiers.StatModifier;
 import dev.shadowsoffire.apothic_spawners.modifiers.StatModifier.Mode;
@@ -67,6 +68,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.FalseCondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import net.neoforged.neoforge.common.conditions.NotCondition;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
 public class ApothRecipeProvider extends LegacyRecipeProvider {
@@ -165,15 +167,6 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
 
         out.accept(Apotheosis.loc("potion_charm"), new PotionCharmRecipe("", CraftingBookCategory.MISC, charmPattern()), null);
 
-        out.accept(Apotheosis.loc("infusion/potion_charm"), new CharmInfusionRecipe(
-            new Stats(30F, 100F, 8.5F, 32.5F, 0),
-            new Stats(30F, 100F, 13.5F, 37.5F, 0)),
-            null);
-
-        this.addInfusion("god_fused_pearl", new ItemStack(Items.GOD_FUSED_PEARL), Items.GODFORGED_PEARL, req(100, 9.65F, 58.75F), req(100, 11F, 60F));
-        this.addShaped(Ench.Items.RAVEN_ENCHANTING_TABLE, 3, 3, null, perfectRoyal(), null, Items.GOD_FUSED_PEARL, Ench.Items.APOTHIC_ENCHANTING_TABLE, Items.GOD_FUSED_PEARL, Tags.Items.OBSIDIANS, Tags.Items.OBSIDIANS,
-            Tags.Items.OBSIDIANS);
-
         addShaped(new ItemStack(Items.IRON_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.MYSTERIOUS_SCRAP_METAL, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
         addShaped(new ItemStack(Items.GOLD_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.TIMEWORN_FABRIC, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
         addShaped(new ItemStack(Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE, 2), 3, 3, null, Items.LUMINOUS_CRYSTAL_SHARD, null, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE, Items.STONE, Items.GEM_FUSED_SLATE, Items.STONE);
@@ -211,7 +204,12 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         // This is a bit of a hack. This provider doesn't currently support conditions, so I wrap this thing to force it to emit them.
         RecipeOutput _out = this.recipeOutput;
 
-        this.recipeOutput = _out.withConditions(new ModLoadedCondition(Gateways.MODID));
+        ModLoadedCondition gatewaysLoaded = new ModLoadedCondition(Gateways.MODID);
+        ModLoadedCondition enchLoaded = new ModLoadedCondition(ApothicEnchantingCompat.MODID);
+        ModLoadedCondition spawnersLoaded = new ModLoadedCondition(ApothicSpawnersCompat.MODID);
+        NotCondition enchAbsent = new NotCondition(enchLoaded);
+
+        this.recipeOutput = _out.withConditions(gatewaysLoaded);
 
         gateRecipe("tiered/frontier",
             Items.SPIDER_EYE, Tags.Items.INGOTS_IRON, Items.SPIDER_EYE,
@@ -228,16 +226,44 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             Items.ARCANE_SANDS, Items.ENDER_EYE, Items.ARCANE_SANDS,
             Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
 
+        this.recipeOutput = _out.withConditions(gatewaysLoaded, enchLoaded);
+
         gateRecipe("tiered/pinnacle",
             Items.SIGIL_OF_MALICE, Ench.Items.WARDEN_TENDRIL, Items.SIGIL_OF_MALICE,
             Ench.Items.INFUSED_BREATH, Items.GODFORGED_PEARL, Ench.Items.INFUSED_BREATH,
             Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
 
-        this.recipeOutput = _out;
+        this.recipeOutput = _out.withConditions(gatewaysLoaded, enchAbsent);
 
-        this.recipeOutput = _out.withConditions(new ModLoadedCondition(ApothicSpawners.MODID));
+        // Fallback pinnacle gate recipe for when Apothic Enchanting is not installed.
+        gateRecipe(Apotheosis.loc("fallback/gateways/tiered/pinnacle"), "tiered/pinnacle",
+            Items.SIGIL_OF_MALICE, Items.ECHO_SHARD, Items.SIGIL_OF_MALICE,
+            Items.DRAGON_BREATH, Items.GODFORGED_PEARL, Items.DRAGON_BREATH,
+            Items.GEM_DUST, Items.GEM_DUST, Items.GEM_DUST);
+
+        this.recipeOutput = _out.withConditions(spawnersLoaded);
         this.addSpawnerRuneRecipes();
         this.addRuneCraftingRecipes();
+
+        this.recipeOutput = _out.withConditions(spawnersLoaded, enchLoaded);
+        this.addInfusedRuneRecipes();
+
+        this.recipeOutput = _out.withConditions(spawnersLoaded, enchAbsent);
+        this.addFallbackInfusedRuneRecipes();
+
+        this.recipeOutput = _out.withConditions(enchLoaded);
+
+        this.recipeOutput.accept(Apotheosis.loc("infusion/potion_charm"), new CharmInfusionRecipe(
+            new Stats(30F, 100F, 8.5F, 32.5F, 0),
+            new Stats(30F, 100F, 13.5F, 37.5F, 0)),
+            null);
+
+        this.addInfusion("god_fused_pearl", new ItemStack(Items.GOD_FUSED_PEARL), Items.GODFORGED_PEARL, req(100, 9.65F, 58.75F), req(100, 11F, 60F));
+        this.addShaped(Ench.Items.RAVEN_ENCHANTING_TABLE, 3, 3,
+            null, perfectRoyal(), null,
+            Items.GOD_FUSED_PEARL, Ench.Items.APOTHIC_ENCHANTING_TABLE, Items.GOD_FUSED_PEARL,
+            Tags.Items.OBSIDIANS, Tags.Items.OBSIDIANS, Tags.Items.OBSIDIANS);
+
         this.recipeOutput = _out;
 
         this.disableSpawnerModifierRecipes();
@@ -302,20 +328,12 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             Items.SPAWNER_CHAIN, Items.GEM_FUSED_SLATE, Items.SPAWNER_CHAIN,
             Items.SPAWNER_CHAIN, Items.SPAWNER_CHAIN, Items.SPAWNER_CHAIN);
 
-        this.addInfusion("infused_spawner_rune", new ItemStack(Items.INFUSED_SPAWNER_RUNE), Items.SPAWNER_RUNE, req(70, 30, 50));
-
         // Tier upgrade runes — rarity material in the corners, themed mats on the cardinals, rune in the center.
         this.addTierRuneRecipe(Items.FRONTIER_SPAWNER_UPGRADE_RUNE, Items.TIMEWORN_FABRIC, Items.SPAWNER_RUNE,
             Items.CLOCK, Items.FLINT, Items.FLINT, Items.CLOCK);
 
         this.addTierRuneRecipe(Items.ASCENT_SPAWNER_UPGRADE_RUNE, Items.LUMINOUS_CRYSTAL_SHARD, Items.SPAWNER_RUNE,
             new Ingredient(new SpawnEggIngredient()), Tags.Items.GEMS_QUARTZ, Tags.Items.GEMS_QUARTZ, Items.SIGIL_OF_SOCKETING);
-
-        this.addTierRuneRecipe(Items.SUMMIT_SPAWNER_UPGRADE_RUNE, Items.ARCANE_SANDS, Items.INFUSED_SPAWNER_RUNE,
-            Ench.Items.WARDEN_TENDRIL, Items.PHANTOM_MEMBRANE, Items.PHANTOM_MEMBRANE, Items.SIGIL_OF_MALICE);
-
-        this.addTierRuneRecipe(Items.PINNACLE_SPAWNER_UPGRADE_RUNE, Items.GODFORGED_PEARL, Items.INFUSED_SPAWNER_RUNE,
-            perfectEndersurge(), Ench.Items.INFUSED_BREATH, Ench.Items.INFUSED_BREATH, Items.NETHER_STAR);
 
         // Per-stat runes — basic Spawner Rune for low-impact stats, Infused Spawner Rune for the gameplay-bending ones.
         this.addStatRuneRecipe(Items.SPAWN_RANGE_SPAWNER_RUNE, Items.SPAWNER_RUNE, Items.PISTON);
@@ -345,8 +363,48 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
             Items.ECHO_SHARD, Items.ECHO_SHARD, Items.ECHO_SHARD);
     }
 
+    /**
+     * Rune recipes that involve Apothic Enchanting's infusion mechanic or ingredients, emitted only when both it and
+     * Apothic Spawners are installed. {@link #addFallbackInfusedRuneRecipes()} supplies the counterparts.
+     */
+    private void addInfusedRuneRecipes() {
+        this.addInfusion("infused_spawner_rune", new ItemStack(Items.INFUSED_SPAWNER_RUNE), Items.SPAWNER_RUNE, req(70, 30, 50));
+
+        this.addTierRuneRecipe(Items.SUMMIT_SPAWNER_UPGRADE_RUNE, Items.ARCANE_SANDS, Items.INFUSED_SPAWNER_RUNE,
+            Ench.Items.WARDEN_TENDRIL, Items.PHANTOM_MEMBRANE, Items.PHANTOM_MEMBRANE, Items.SIGIL_OF_MALICE);
+
+        this.addTierRuneRecipe(Items.PINNACLE_SPAWNER_UPGRADE_RUNE, Items.GODFORGED_PEARL, Items.INFUSED_SPAWNER_RUNE,
+            perfectEndersurge(), Ench.Items.INFUSED_BREATH, Ench.Items.INFUSED_BREATH, Items.NETHER_STAR);
+    }
+
+    /**
+     * Crafting-table fallbacks for the infused rune line, used when Apothic Spawners is installed but Apothic
+     * Enchanting is not.
+     * 
+     * Note that Exp Bottles are pretty hard to come by without AEnch, so this might actually be a harder set of recipes...
+     */
+    private void addFallbackInfusedRuneRecipes() {
+        this.addShaped(Apotheosis.loc("fallback/infused_spawner_rune"), Items.INFUSED_SPAWNER_RUNE, 3, 3,
+            Items.GEM_DUST, Items.EXPERIENCE_BOTTLE, Items.GEM_DUST,
+            Items.EXPERIENCE_BOTTLE, Items.SPAWNER_RUNE, Items.EXPERIENCE_BOTTLE,
+            Items.GEM_DUST, Items.EXPERIENCE_BOTTLE, Items.GEM_DUST);
+
+        this.addTierRuneRecipe(Apotheosis.loc("fallback/summit_spawner_upgrade_rune"), Items.SUMMIT_SPAWNER_UPGRADE_RUNE, Items.ARCANE_SANDS, Items.INFUSED_SPAWNER_RUNE,
+            Items.ECHO_SHARD, Items.PHANTOM_MEMBRANE, Items.PHANTOM_MEMBRANE, Items.SIGIL_OF_MALICE);
+
+        this.addTierRuneRecipe(Apotheosis.loc("fallback/pinnacle_spawner_upgrade_rune"), Items.PINNACLE_SPAWNER_UPGRADE_RUNE, Items.GODFORGED_PEARL, Items.INFUSED_SPAWNER_RUNE,
+            perfectEndersurge(), Items.DRAGON_BREATH, Items.DRAGON_BREATH, Items.NETHER_STAR);
+    }
+
     private void addTierRuneRecipe(Holder<Item> output, Holder<Item> rarityMat, Holder<Item> rune, Object top, Object left, Object right, Object bottom) {
         this.addShaped(output, 3, 3,
+            rarityMat, top, rarityMat,
+            left, rune, right,
+            rarityMat, bottom, rarityMat);
+    }
+
+    private void addTierRuneRecipe(ResourceLocation id, Holder<Item> output, Holder<Item> rarityMat, Holder<Item> rune, Object top, Object left, Object right, Object bottom) {
+        this.addShaped(id, output, 3, 3,
             rarityMat, top, rarityMat,
             left, rune, right,
             rarityMat, bottom, rarityMat);
@@ -403,8 +461,8 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
     private void disableSpawnerModifierRecipes() {
         RecipeOutput disabled = this.recipeOutput.withConditions(FalseCondition.INSTANCE);
         for (String name : AS_MODIFIER_NAMES) {
-            ResourceLocation forward = ResourceLocation.fromNamespaceAndPath(ApothicSpawners.MODID, "spawner_modifiers/" + name);
-            ResourceLocation inverse = ResourceLocation.fromNamespaceAndPath(ApothicSpawners.MODID, "spawner_modifiers/_inverse/" + name);
+            ResourceLocation forward = ResourceLocation.fromNamespaceAndPath(ApothicSpawnersCompat.MODID, "spawner_modifiers/" + name);
+            ResourceLocation inverse = ResourceLocation.fromNamespaceAndPath(ApothicSpawnersCompat.MODID, "spawner_modifiers/_inverse/" + name);
             // Lazily use the MaliceRecipe because it has no args and the underlying recipe type is irrelevant.
             disabled.accept(forward, new MaliceRecipe(), null);
             disabled.accept(inverse, new MaliceRecipe(), null);
@@ -500,9 +558,13 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
     }
 
     private void gateRecipe(String gatePath, Object... pattern) {
+        this.gateRecipe(Apotheosis.loc("gateways/" + gatePath), gatePath, pattern);
+    }
+
+    private void gateRecipe(ResourceLocation id, String gatePath, Object... pattern) {
         ItemStack output = new ItemStack(GatewayObjects.GATE_PEARL);
         GatePearlItem.setGate(output, GatewayRegistry.INSTANCE.holder(Apotheosis.loc(gatePath)));
-        addShaped(Apotheosis.loc("gateways/" + gatePath), output, 3, 3, pattern);
+        addShaped(id, output, 3, 3, pattern);
     }
 
 }

@@ -1,0 +1,38 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        },
+        {
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:mod_loaded",
+                "modid": "apothic_enchanting"
+            }
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "apotheosis",
+    "key": {
+        "E": {
+            "item": "minecraft:experience_bottle"
+        },
+        "G": {
+            "item": "apotheosis:gem_dust"
+        },
+        "S": {
+            "item": "apotheosis:spawner_rune"
+        }
+    },
+    "pattern": [
+        "GEG",
+        "ESE",
+        "GEG"
+    ],
+    "result": {
+        "count": 1,
+        "id": "apotheosis:infused_spawner_rune"
+    }
+}

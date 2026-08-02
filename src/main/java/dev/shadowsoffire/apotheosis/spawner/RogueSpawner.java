@@ -12,7 +12,6 @@ import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.mixin.BaseSpawnerAccessor;
 import dev.shadowsoffire.apotheosis.util.PresetSpawnerStats;
-import dev.shadowsoffire.apothic_spawners.block.ApothSpawnerTile;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import net.minecraft.core.BlockPos;
@@ -30,6 +29,7 @@ import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.loot.LootTable;
 
@@ -76,7 +76,7 @@ public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted
     @SuppressWarnings("deprecation")
     public void place(WorldGenLevel level, BlockPos pos, RandomSource rand) {
         level.setBlock(pos, Blocks.SPAWNER.defaultBlockState(), 2);
-        if (level.getBlockEntity(pos) instanceof ApothSpawnerTile spawner) {
+        if (level.getBlockEntity(pos) instanceof SpawnerBlockEntity spawner) {
             this.stats.apply(spawner);
             spawner.getSpawner().spawnPotentials = this.spawnPotentials;
             ((BaseSpawnerAccessor) spawner.getSpawner()).callSetNextSpawnData(null, pos, this.spawnPotentials.getRandomValue(rand).get());

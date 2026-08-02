@@ -1,4 +1,10 @@
 {
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_enchanting"
+        }
+    ],
     "type": "apotheosis:tiered_trade",
     "trades": {
         "summit": {

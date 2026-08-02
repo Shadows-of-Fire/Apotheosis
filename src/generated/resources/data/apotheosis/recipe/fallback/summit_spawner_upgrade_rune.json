@@ -5,8 +5,11 @@
             "modid": "apothic_spawners"
         },
         {
-            "type": "neoforge:mod_loaded",
-            "modid": "apothic_enchanting"
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:mod_loaded",
+                "modid": "apothic_enchanting"
+            }
         }
     ],
     "type": "minecraft:crafting_shaped",
@@ -16,6 +19,9 @@
         "A": {
             "item": "apotheosis:arcane_sands"
         },
+        "E": {
+            "item": "minecraft:echo_shard"
+        },
         "I": {
             "item": "apotheosis:infused_spawner_rune"
         },
@@ -24,13 +30,10 @@
         },
         "S": {
             "item": "apotheosis:sigil_of_malice"
-        },
-        "W": {
-            "item": "apothic_enchanting:warden_tendril"
         }
     },
     "pattern": [
-        "AWA",
+        "AEA",
         "PIP",
         "ASA"
     ],

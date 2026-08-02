@@ -1,7 +1,7 @@
 {
     "type": "apotheosis:tiered",
     "settings": {
-        "soundtrack": "apothic_enchanting:music_disc.quanta",
+        "soundtrack": "apotheosis:soundtrack_pinnacle",
         "tier": "pinnacle",
         "size": "large",
         "color": "#ED7014"

@@ -5,8 +5,11 @@
             "modid": "apothic_spawners"
         },
         {
-            "type": "neoforge:mod_loaded",
-            "modid": "apothic_enchanting"
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:mod_loaded",
+                "modid": "apothic_enchanting"
+            }
         }
     ],
     "type": "minecraft:crafting_shaped",
@@ -20,23 +23,23 @@
             ],
             "purity": "perfect"
         },
-        "E": {
-            "item": "minecraft:nether_star"
+        "D": {
+            "item": "minecraft:dragon_breath"
         },
         "G": {
             "item": "apotheosis:godforged_pearl"
         },
         "I": {
-            "item": "apothic_enchanting:infused_breath"
+            "item": "apotheosis:infused_spawner_rune"
         },
         "N": {
-            "item": "apotheosis:infused_spawner_rune"
+            "item": "minecraft:nether_star"
         }
     },
     "pattern": [
         "GAG",
-        "INI",
-        "GEG"
+        "DID",
+        "GNG"
     ],
     "result": {
         "count": 1,

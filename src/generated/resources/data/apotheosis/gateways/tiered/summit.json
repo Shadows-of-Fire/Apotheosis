@@ -1,7 +1,7 @@
 {
     "type": "apotheosis:tiered",
     "settings": {
-        "soundtrack": "apothic_enchanting:music_disc.arcana",
+        "soundtrack": "apotheosis:soundtrack_summit",
         "tier": "summit",
         "size": "medium",
         "color": "#BB00BB"

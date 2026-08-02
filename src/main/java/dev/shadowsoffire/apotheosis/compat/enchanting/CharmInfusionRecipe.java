@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.recipe;
+package dev.shadowsoffire.apotheosis.compat.enchanting;
 
 import java.util.ArrayList;
 import java.util.List;

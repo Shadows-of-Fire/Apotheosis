@@ -9,7 +9,7 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.spawner.RogueSpawner;
 import dev.shadowsoffire.apotheosis.spawner.RogueSpawnerRegistry;
-import dev.shadowsoffire.apothic_spawners.stats.SpawnerStats;
+import dev.shadowsoffire.apotheosis.util.PresetSpawnerStats;
 import dev.shadowsoffire.placebo.util.data.DynamicRegistryProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -35,48 +35,48 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
             .lootTable(Apoth.LootTables.SPAWNER_BRUTAL)
             .weight(30)
             .stats(c -> c
-                .stat(SpawnerStats.MIN_DELAY, 200)
-                .stat(SpawnerStats.MAX_DELAY, 400)
-                .stat(SpawnerStats.SPAWN_COUNT, 3)
-                .stat(SpawnerStats.MAX_NEARBY_ENTITIES, 6)
-                .stat(SpawnerStats.SPAWN_RANGE, 5)
-                .stat(SpawnerStats.REQ_PLAYER_RANGE, 12))
+                .stat(PresetSpawnerStats.MIN_DELAY, 200)
+                .stat(PresetSpawnerStats.MAX_DELAY, 400)
+                .stat(PresetSpawnerStats.SPAWN_COUNT, 3)
+                .stat(PresetSpawnerStats.MAX_NEARBY_ENTITIES, 6)
+                .stat(PresetSpawnerStats.SPAWN_RANGE, 5)
+                .stat(PresetSpawnerStats.REQ_PLAYER_RANGE, 12))
             .spawnData(10, brutalZombie()));
 
         this.add("brutal/husk", b -> b
             .lootTable(Apoth.LootTables.SPAWNER_BRUTAL)
             .weight(20)
             .stats(c -> c
-                .stat(SpawnerStats.MIN_DELAY, 200)
-                .stat(SpawnerStats.MAX_DELAY, 400)
-                .stat(SpawnerStats.SPAWN_COUNT, 3)
-                .stat(SpawnerStats.MAX_NEARBY_ENTITIES, 6)
-                .stat(SpawnerStats.SPAWN_RANGE, 5)
-                .stat(SpawnerStats.REQ_PLAYER_RANGE, 12))
+                .stat(PresetSpawnerStats.MIN_DELAY, 200)
+                .stat(PresetSpawnerStats.MAX_DELAY, 400)
+                .stat(PresetSpawnerStats.SPAWN_COUNT, 3)
+                .stat(PresetSpawnerStats.MAX_NEARBY_ENTITIES, 6)
+                .stat(PresetSpawnerStats.SPAWN_RANGE, 5)
+                .stat(PresetSpawnerStats.REQ_PLAYER_RANGE, 12))
             .spawnData(10, brutalHusk()));
 
         this.add("brutal/pillager", b -> b
             .lootTable(Apoth.LootTables.SPAWNER_BRUTAL)
             .weight(20)
             .stats(c -> c
-                .stat(SpawnerStats.MIN_DELAY, 200)
-                .stat(SpawnerStats.MAX_DELAY, 400)
-                .stat(SpawnerStats.SPAWN_COUNT, 2)
-                .stat(SpawnerStats.MAX_NEARBY_ENTITIES, 4)
-                .stat(SpawnerStats.SPAWN_RANGE, 5)
-                .stat(SpawnerStats.REQ_PLAYER_RANGE, 12))
+                .stat(PresetSpawnerStats.MIN_DELAY, 200)
+                .stat(PresetSpawnerStats.MAX_DELAY, 400)
+                .stat(PresetSpawnerStats.SPAWN_COUNT, 2)
+                .stat(PresetSpawnerStats.MAX_NEARBY_ENTITIES, 4)
+                .stat(PresetSpawnerStats.SPAWN_RANGE, 5)
+                .stat(PresetSpawnerStats.REQ_PLAYER_RANGE, 12))
             .spawnData(10, brutalPillager()));
 
         this.add("brutal/rotating", b -> b
             .lootTable(Apoth.LootTables.SPAWNER_BRUTAL)
             .weight(10)
             .stats(c -> c
-                .stat(SpawnerStats.MIN_DELAY, 180)
-                .stat(SpawnerStats.MAX_DELAY, 400)
-                .stat(SpawnerStats.SPAWN_COUNT, 3)
-                .stat(SpawnerStats.MAX_NEARBY_ENTITIES, 7)
-                .stat(SpawnerStats.SPAWN_RANGE, 5)
-                .stat(SpawnerStats.REQ_PLAYER_RANGE, 12))
+                .stat(PresetSpawnerStats.MIN_DELAY, 180)
+                .stat(PresetSpawnerStats.MAX_DELAY, 400)
+                .stat(PresetSpawnerStats.SPAWN_COUNT, 3)
+                .stat(PresetSpawnerStats.MAX_NEARBY_ENTITIES, 7)
+                .stat(PresetSpawnerStats.SPAWN_RANGE, 5)
+                .stat(PresetSpawnerStats.REQ_PLAYER_RANGE, 12))
             .spawnData(30, brutalZombie())
             .spawnData(20, brutalHusk())
             .spawnData(10, brutalPillager()));
@@ -85,61 +85,61 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
             .lootTable(Apoth.LootTables.SPAWNER_SWARM)
             .weight(30)
             .stats(c -> c
-                .stat(SpawnerStats.MIN_DELAY, 50)
-                .stat(SpawnerStats.MAX_DELAY, 125)
-                .stat(SpawnerStats.SPAWN_COUNT, 2)
-                .stat(SpawnerStats.MAX_NEARBY_ENTITIES, 10)
-                .stat(SpawnerStats.SPAWN_RANGE, 7)
-                .stat(SpawnerStats.REQ_PLAYER_RANGE, 14))
+                .stat(PresetSpawnerStats.MIN_DELAY, 50)
+                .stat(PresetSpawnerStats.MAX_DELAY, 125)
+                .stat(PresetSpawnerStats.SPAWN_COUNT, 2)
+                .stat(PresetSpawnerStats.MAX_NEARBY_ENTITIES, 10)
+                .stat(PresetSpawnerStats.SPAWN_RANGE, 7)
+                .stat(PresetSpawnerStats.REQ_PLAYER_RANGE, 14))
             .spawnData(10, mobWithSwiftness(EntityType.SPIDER, 0)));
 
         this.add("swarm/cave_spider", b -> b
             .lootTable(Apoth.LootTables.SPAWNER_SWARM)
             .weight(20)
             .stats(c -> c
-                .stat(SpawnerStats.MIN_DELAY, 50)
-                .stat(SpawnerStats.MAX_DELAY, 125)
-                .stat(SpawnerStats.SPAWN_COUNT, 2)
-                .stat(SpawnerStats.MAX_NEARBY_ENTITIES, 10)
-                .stat(SpawnerStats.SPAWN_RANGE, 7)
-                .stat(SpawnerStats.REQ_PLAYER_RANGE, 14))
+                .stat(PresetSpawnerStats.MIN_DELAY, 50)
+                .stat(PresetSpawnerStats.MAX_DELAY, 125)
+                .stat(PresetSpawnerStats.SPAWN_COUNT, 2)
+                .stat(PresetSpawnerStats.MAX_NEARBY_ENTITIES, 10)
+                .stat(PresetSpawnerStats.SPAWN_RANGE, 7)
+                .stat(PresetSpawnerStats.REQ_PLAYER_RANGE, 14))
             .spawnData(10, mobWithSwiftness(EntityType.CAVE_SPIDER, 0)));
 
         this.add("swarm/silverfish", b -> b
             .lootTable(Apoth.LootTables.SPAWNER_SWARM)
             .weight(20)
             .stats(c -> c
-                .stat(SpawnerStats.MIN_DELAY, 50)
-                .stat(SpawnerStats.MAX_DELAY, 125)
-                .stat(SpawnerStats.SPAWN_COUNT, 2)
-                .stat(SpawnerStats.MAX_NEARBY_ENTITIES, 10)
-                .stat(SpawnerStats.SPAWN_RANGE, 7)
-                .stat(SpawnerStats.REQ_PLAYER_RANGE, 14))
+                .stat(PresetSpawnerStats.MIN_DELAY, 50)
+                .stat(PresetSpawnerStats.MAX_DELAY, 125)
+                .stat(PresetSpawnerStats.SPAWN_COUNT, 2)
+                .stat(PresetSpawnerStats.MAX_NEARBY_ENTITIES, 10)
+                .stat(PresetSpawnerStats.SPAWN_RANGE, 7)
+                .stat(PresetSpawnerStats.REQ_PLAYER_RANGE, 14))
             .spawnData(10, mobWithSwiftness(EntityType.SILVERFISH, 0)));
 
         this.add("swarm/fast_cave_spider", b -> b
             .lootTable(Apoth.LootTables.SPAWNER_SWARM)
             .weight(10)
             .stats(c -> c
-                .stat(SpawnerStats.MIN_DELAY, 50)
-                .stat(SpawnerStats.MAX_DELAY, 125)
-                .stat(SpawnerStats.SPAWN_COUNT, 2)
-                .stat(SpawnerStats.MAX_NEARBY_ENTITIES, 10)
-                .stat(SpawnerStats.SPAWN_RANGE, 7)
-                .stat(SpawnerStats.REQ_PLAYER_RANGE, 14))
+                .stat(PresetSpawnerStats.MIN_DELAY, 50)
+                .stat(PresetSpawnerStats.MAX_DELAY, 125)
+                .stat(PresetSpawnerStats.SPAWN_COUNT, 2)
+                .stat(PresetSpawnerStats.MAX_NEARBY_ENTITIES, 10)
+                .stat(PresetSpawnerStats.SPAWN_RANGE, 7)
+                .stat(PresetSpawnerStats.REQ_PLAYER_RANGE, 14))
             .spawnData(10, mobWithSwiftness(EntityType.CAVE_SPIDER, 2)));
 
         this.add("swarm/baby_zombie", b -> b
             .lootTable(Apoth.LootTables.SPAWNER_SWARM)
             .weight(10)
             .stats(c -> c
-                .stat(SpawnerStats.MIN_DELAY, 50)
-                .stat(SpawnerStats.MAX_DELAY, 125)
-                .stat(SpawnerStats.SPAWN_COUNT, 2)
-                .stat(SpawnerStats.MAX_NEARBY_ENTITIES, 10)
-                .stat(SpawnerStats.SPAWN_RANGE, 7)
-                .stat(SpawnerStats.REQ_PLAYER_RANGE, 14)
-                .stat(SpawnerStats.YOUTHFUL, true))
+                .stat(PresetSpawnerStats.MIN_DELAY, 50)
+                .stat(PresetSpawnerStats.MAX_DELAY, 125)
+                .stat(PresetSpawnerStats.SPAWN_COUNT, 2)
+                .stat(PresetSpawnerStats.MAX_NEARBY_ENTITIES, 10)
+                .stat(PresetSpawnerStats.SPAWN_RANGE, 7)
+                .stat(PresetSpawnerStats.REQ_PLAYER_RANGE, 14)
+                .stat(PresetSpawnerStats.YOUTHFUL, true))
             .spawnData(10, mobWithSwiftness(EntityType.ZOMBIE, 1)));
     }
 

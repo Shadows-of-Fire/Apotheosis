@@ -5,34 +5,37 @@
             "modid": "gateways"
         },
         {
-            "type": "neoforge:mod_loaded",
-            "modid": "apothic_enchanting"
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:mod_loaded",
+                "modid": "apothic_enchanting"
+            }
         }
     ],
     "type": "minecraft:crafting_shaped",
     "category": "misc",
     "group": "apotheosis",
     "key": {
+        "D": {
+            "item": "minecraft:dragon_breath"
+        },
         "E": {
-            "item": "apotheosis:gem_dust"
+            "item": "minecraft:echo_shard"
         },
         "G": {
             "item": "apotheosis:godforged_pearl"
         },
-        "I": {
-            "item": "apothic_enchanting:infused_breath"
+        "M": {
+            "item": "apotheosis:gem_dust"
         },
         "S": {
             "item": "apotheosis:sigil_of_malice"
-        },
-        "W": {
-            "item": "apothic_enchanting:warden_tendril"
         }
     },
     "pattern": [
-        "SWS",
-        "IGI",
-        "EEE"
+        "SES",
+        "DGD",
+        "MMM"
     ],
     "result": {
         "components": {
