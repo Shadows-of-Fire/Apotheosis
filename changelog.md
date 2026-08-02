@@ -1,3 +1,19 @@
+## 8.7.0
+* Apotheosis can now be run without Apothic Enchanting and/or Apothic Spawners, returning the behavior of disabling them via config from 1.20.
+  * Both mods are still marked as "mandatory" on CF for auto-install rules, but can be removed.
+  * When Apothic Enchanting is not installed:
+    * Unbreakable potion charms and the Gem Case of House Fabergé are unavailable.
+    * The Gem of the Incandescent Inferno is unavailable.
+    * The strong preset items sold by the Wandering Trader are unavailable.
+    * High-tier gateways will not play music since they normally play AEnch music tracks.
+    * Some items will have fallback crafting recipes.
+  * When Apothic Spawners is not installed:
+    * Spawner Runes are hidden and unavailable.
+    * Rogue Spawners still generate and work as expected, but will not set ASpawners-exclusive stats.
+    * Some (but not all) of the preset items sold by the Wandering Trader are unavailable.
+* The World Tier Details Screen now shows luck-adjusted weights. Hold shift to show the "default" weights.
+* Tenwoc: Updated Ukranian translation.
+
 ## 8.6.1
 * Invader Spawn Cooldowns are now clustered instead of global. This means invader spawns on servers should no longer be deadlocked by multiple players being far away from eachother.
   * Spawn Cooldowns are applied on a per-player basis, only to players in the same world tier within the announcement radius of an Invader Spawn.
