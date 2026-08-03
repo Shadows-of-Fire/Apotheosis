@@ -74,6 +74,7 @@ public class WorldTierDetailScreen extends Screen {
 
         LocalPlayer player = Minecraft.getInstance().player;
         AttributeTooltipContext ctx = AttributeTooltipContext.of(player, TooltipContext.of(player.level()), net.minecraft.world.item.component.TooltipDisplay.DEFAULT, ApothicAttributes.getTooltipFlag());
+        float effectiveLuck = Minecraft.getInstance().hasShiftDown() ? 0 : player.getLuck(); // Show default values on shift, "real" values otherwise.
 
         for (int i = 0; i < 3; i++) {
 
@@ -121,10 +122,10 @@ public class WorldTierDetailScreen extends Screen {
 
                 y += 35;
 
-                int totalWeight = RarityRegistry.INSTANCE.getValues().stream().mapToInt(r -> r.weights().getWeight(this.tier, 0)).sum();
+                int totalWeight = RarityRegistry.INSTANCE.getValues().stream().mapToInt(r -> r.weights().getWeight(this.tier, effectiveLuck)).sum();
                 for (LootRarity rarity : RarityRegistry.getSortedRarities()) {
                     y += 12;
-                    float percent = rarity.weights().getWeight(this.tier, 0) / (float) totalWeight;
+                    float percent = rarity.weights().getWeight(this.tier, effectiveLuck) / (float) totalWeight;
                     MutableComponent comp = rarity.toComponent();
                     comp.append(Component.translatable(": %s", Affix.fmt(100 * percent) + "%").withStyle(s -> s.withColor(rarity.color())));
                     this.drawScrollingStringWithoutMoving(gfx, this.font, comp, x + 12, x + BOX_WIDTH - 12, y, 0xFFFFFFFF);
@@ -136,10 +137,10 @@ public class WorldTierDetailScreen extends Screen {
                 y += 15;
 
                 Purity[] values = Purity.values();
-                totalWeight = Arrays.stream(values).mapToInt(r -> r.weights().getWeight(this.tier, 0)).sum();
+                totalWeight = Arrays.stream(values).mapToInt(r -> r.weights().getWeight(this.tier, effectiveLuck)).sum();
                 for (Purity purity : values) {
                     y += 12;
-                    float percent = purity.weights().getWeight(this.tier, 0) / (float) totalWeight;
+                    float percent = purity.weights().getWeight(this.tier, effectiveLuck) / (float) totalWeight;
                     MutableComponent comp = purity.toComponent();
                     comp.append(Component.translatable(": %s", Affix.fmt(100 * percent) + "%").withStyle(s -> s.withColor(purity.getColor())));
                     this.drawScrollingStringWithoutMoving(gfx, this.font, comp, x + 12, x + BOX_WIDTH - 12, y, 0xFFFFFFFF);
