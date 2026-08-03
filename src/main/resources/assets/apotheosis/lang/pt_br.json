@@ -18,6 +18,8 @@
     "text.apotheosis.world_tier.pinnacle": "Pináculo",
     "text.apotheosis.world_tier.pinnacle.desc": "Perder a si mesmo nos picos tempestuosos da montanha",
 
+    "text.apotheosis.world_tier.difficulty": "Dificuldade:",
+
     "title.apotheosis.select_world_tier": "Selecione Nível de Mundo",
     "title.apotheosis.world_tier_details": "Detalhes do Nível Mundial",
 
@@ -92,7 +94,7 @@
     "misc.apotheosis.affix_name.two": "%2$s %1$s",
     "misc.apotheosis.affix_name.three": "%2$s %1$s %3$s",
     "misc.apotheosis.affix_name.four": "%3$s %2$s %4$s de %1$s",
-	"misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
+    "misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
 
     "misc.apotheosis.radial_state_updated": "Modo de mineração radial atualizado para \"%s\"",
     "misc.apotheosis.radial_state.require_not_sneaking": "Desativado enquanto se agacha",
@@ -957,7 +959,7 @@
     "subtitle.apotheosis.music_disc.glimmer": "Caner Crebes - Glimmer",
 
     "item.apotheosis.music_disc_shimmer": "Disco Musical",
-    "jukebox_song.apotheosis.shimmer": "Camareiro Kaifry - Shimmer",
+    "jukebox_song.apotheosis.shimmer": "Chamberlain Kaifry - Shimmer",
     "subtitle.apotheosis.music_disc.shimmer": "Camareiro Kaifry - Shimmer",
 
     "painting.apotheosis.gems.title": "Gems",
@@ -984,7 +986,7 @@
     "apotheosis.subtitle.invader_rare": "Invasor Apótico Raro surge",
     "apotheosis.subtitle.invader_epic": "Invasor Apótico Épico surge",
     "apotheosis.subtitle.invader_mythic": "Invasor Apótico Mítico surge",
-    
+
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Crônica das Sombras",
     "book.apotheosis.subtitle": "Guia Apótico",

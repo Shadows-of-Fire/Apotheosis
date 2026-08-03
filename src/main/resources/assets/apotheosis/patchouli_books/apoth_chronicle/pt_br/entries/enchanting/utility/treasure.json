@@ -11,7 +11,7 @@
         },
         {
             "type": "patchouli:crafting",
-            "recipe": "apotheosis:treasure_shelf",
+            "recipe": "apothic_enchanting:treasure_shelf",
             "title": "Tesouros arcanos",
             "text": "Colocar esta estante em um slot válido fará com que encantamentos de tesouro apareçam durante o encantamento.$(p)Tenha em mente que a maioria das $(4)maldições$() são encantamentos de tesouro."
         }

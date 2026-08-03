@@ -34,13 +34,14 @@
         },
         {
             "type": "patchouli:text",
-            "title": "Retificação",
+            "title": "Estabilidade Quântica",
             "anchor": "rectification",
-            "text": "Retificação é um status terciário. Ela afeta diretamente o limite inferior das modificações de $(quanta).$(p)Lembre-se de que seu $(4)poder mínimo$() é igual a $(4)1 - Quanta$().$(p)Com retificação (R), seu $(4)poder mínimo$() é igual a $(4)1 - (1 - R) * Quanta$()."
+            "text": "Estabilidade Quântica é um status terciário. Ela afeta diretamente o limite inferior das modificações de $(quanta).$(p)Quando presente, você não pode mais sortear modificadores negativos de $(quanta)."
         },
         {
             "type": "patchouli:text",
-            "text": "Se isso não faz muito sentido, não se preocupe com isso.$(p)Saiba apenas que valores mais altos de retificação são sempre bons.$(p)Você também pode ter retificação negativa, o que é sempre ruim."
+            "title": "Matemática Quântica",
+            "text": "Se você não gosta de matemática, pode pular para a próxima página.$(p)Normalmente, os sorteios de $(quanta) usam uma distribuição normal em toda a faixa, mas uma vez estabilizado, isso muda para uma distribuição uniforme no lado positivo."
         },
         {
             "type": "patchouli:text",
