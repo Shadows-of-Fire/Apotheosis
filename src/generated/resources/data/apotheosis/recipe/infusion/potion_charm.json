@@ -1,4 +1,10 @@
 {
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_enchanting"
+        }
+    ],
     "type": "apotheosis:potion_charm_infusion",
     "max_requirements": {
         "arcana": 37.5,

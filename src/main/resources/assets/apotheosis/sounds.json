@@ -38,6 +38,22 @@
             }
         ]
     },
+    "soundtrack_summit": {
+        "sounds": [
+            {
+                "name": "apothic_enchanting:music_disc.arcana",
+                "type": "event"
+            }
+        ]
+    },
+    "soundtrack_pinnacle": {
+        "sounds": [
+            {
+                "name": "apothic_enchanting:music_disc.quanta",
+                "type": "event"
+            }
+        ]
+    },
     "invader_uncommon": {
         "subtitle": "apotheosis.subtitle.invader_uncommon",
         "sounds": ["apotheosis:invader_uncommon"]

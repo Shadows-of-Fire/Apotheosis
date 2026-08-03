@@ -52,14 +52,14 @@ ${mixinConfig}
 
 [[dependencies.${modid}]]
     modId="apothic_spawners"
-    type="required"
+    type="optional"
     versionRange="[${apothicSpawnersVersion},)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${modid}]]
     modId="apothic_enchanting"
-    type="required"
+    type="optional"
     versionRange="[${apothicEnchantingVersion},)"
     ordering="AFTER"
     side="BOTH"

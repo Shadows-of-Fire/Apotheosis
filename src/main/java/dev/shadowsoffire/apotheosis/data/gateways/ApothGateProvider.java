@@ -21,7 +21,6 @@ import dev.shadowsoffire.apotheosis.mobs.types.Elite;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
-import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.gateways.GatewayObjects;
 import dev.shadowsoffire.gateways.gate.BossEventSettings;
 import dev.shadowsoffire.gateways.gate.Gateway;
@@ -274,7 +273,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .tier(WorldTier.SUMMIT)
                 .size(NormalGateway.Size.MEDIUM)
                 .color(0xBB00BB)
-                .soundtrack(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(Ench.Sounds.MUSIC_DISC_ARCANA)))
+                .soundtrack(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(Apoth.Sounds.SOUNDTRACK_SUMMIT)))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true)
@@ -433,7 +432,7 @@ public class ApothGateProvider extends DynamicRegistryProvider<Gateway> {
                 .tier(WorldTier.PINNACLE)
                 .size(NormalGateway.Size.LARGE)
                 .color(0xED7014)
-                .soundtrack(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(Ench.Sounds.MUSIC_DISC_QUANTA)))
+                .soundtrack(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(Apoth.Sounds.SOUNDTRACK_PINNACLE)))
             .rules(c -> c
                 .lives(3)
                 .requiresNearbyPlayer(true)

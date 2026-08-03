@@ -3,6 +3,10 @@
         {
             "type": "neoforge:mod_loaded",
             "modid": "apothic_spawners"
+        },
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_enchanting"
         }
     ],
     "type": "apothic_enchanting:infusion",

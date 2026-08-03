@@ -5,14 +5,18 @@
             "modid": "apothic_spawners"
         },
         {
-            "type": "neoforge:mod_loaded",
-            "modid": "apothic_enchanting"
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:mod_loaded",
+                "modid": "apothic_enchanting"
+            }
         }
     ],
     "type": "minecraft:crafting_shaped",
     "category": "misc",
     "group": "apotheosis",
     "key": {
+        "D": "minecraft:dragon_breath",
         "E": {
             "neoforge:ingredient_type": "apotheosis:gem",
             "gems": [
@@ -21,14 +25,13 @@
             "purity": "perfect"
         },
         "G": "apotheosis:godforged_pearl",
-        "I": "apothic_enchanting:infused_breath",
-        "N": "apotheosis:infused_spawner_rune",
-        "T": "minecraft:nether_star"
+        "I": "apotheosis:infused_spawner_rune",
+        "N": "minecraft:nether_star"
     },
     "pattern": [
         "GEG",
-        "INI",
-        "GTG"
+        "DID",
+        "GNG"
     ],
     "result": {
         "id": "apotheosis:pinnacle_spawner_upgrade_rune"

@@ -53,14 +53,14 @@ config="apotheosis.mixins.json"
 
 [[dependencies.apotheosis]]
     modId="apothic_spawners"
-    type="required"
+    type="optional"
     versionRange="[2.0.0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="apothic_enchanting"
-    type="required"
+    type="optional"
     versionRange="[2.0.0,)"
     ordering="AFTER"
     side="BOTH"

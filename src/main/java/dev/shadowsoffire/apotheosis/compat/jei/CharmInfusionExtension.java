@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.compat.enchanting.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
-import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
 import dev.shadowsoffire.apothic_enchanting.compat.InfusionRecipeCategory;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

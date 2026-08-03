@@ -1,14 +1,14 @@
-// 26.1.2	2026-06-14T14:25:55.0970704	Tier Augments
+// 26.1.2	2026-08-02T21:23:01.127338004	Tier Augments
 e561d3e4aee5c8e052d0cc63067aa506f275dfce data/apotheosis/apotheosis/tier_augments/ascent/armor.json
 dbb715f4a88099be1d003bb411250c1d5e8cd27f data/apotheosis/apotheosis/tier_augments/ascent/armor_pierce.json
 5bfbb8e0a121ff7aa71f4e8698837368ae0d30ae data/apotheosis/apotheosis/tier_augments/ascent/experience.json
 790a78de15576845772f0d649d2b8d1239a6ba89 data/apotheosis/apotheosis/tier_augments/ascent/luck.json
-d2502740c8faca189f918c532439980488879317 data/apotheosis/apotheosis/tier_augments/ascent/max_eterna.json
+1ac0daefbf50d9994977658557eba53cf54c714d data/apotheosis/apotheosis/tier_augments/ascent/max_eterna.json
 fa9f8bc1683db08f5b6f0a1d44ec9674865d1d61 data/apotheosis/apotheosis/tier_augments/frontier/armor.json
 ecf12038a537a1fc807b32028a9f6f521381e411 data/apotheosis/apotheosis/tier_augments/frontier/experience.json
 81002512e0f7d485cc393426da74ef48b5fc904a data/apotheosis/apotheosis/tier_augments/frontier/luck.json
-423da93949a5988d4330a5d423eb3b05aa24d49e data/apotheosis/apotheosis/tier_augments/frontier/max_eterna.json
-fdc69abb286cddece0e697dfc3b53be18e60f2f3 data/apotheosis/apotheosis/tier_augments/haven/max_eterna.json
+ddb537237b2616622a38778367c73113e91e7f0d data/apotheosis/apotheosis/tier_augments/frontier/max_eterna.json
+bd1eea46ff61419c258b976002c169ae17fc4484 data/apotheosis/apotheosis/tier_augments/haven/max_eterna.json
 f981ef6ba7993e63c1724e7decc6d37fd27fea15 data/apotheosis/apotheosis/tier_augments/pinnacle/armor.json
 08ad43ae0e24a76c6269aca00cc39e38e842eaaa data/apotheosis/apotheosis/tier_augments/pinnacle/armor_pierce.json
 afbc00a897dee55531973f5b46769bc8661fe156 data/apotheosis/apotheosis/tier_augments/pinnacle/armor_toughness.json
@@ -20,5 +20,5 @@ b7b3ce42ed1fe3c5a9723e1877db843f3e5e27be data/apotheosis/apotheosis/tier_augment
 e0c3a0a09cc9c7cd71ba2b5e7faca18ec91acf21 data/apotheosis/apotheosis/tier_augments/summit/armor_toughness.json
 3976bb7f8e0526dcd3cb1a5d3657845c910cb2f8 data/apotheosis/apotheosis/tier_augments/summit/experience.json
 e04e7d1a0ea80884920d3e5856fc323177419740 data/apotheosis/apotheosis/tier_augments/summit/luck.json
-7b0015d78f4da1f299098bef2697aabf34760f18 data/apotheosis/apotheosis/tier_augments/summit/max_eterna.json
+19e1ed90fc5507039220d7ff3b397c6bbd8f7242 data/apotheosis/apotheosis/tier_augments/summit/max_eterna.json
 dcd8f2d5203143278e2c9c71fd97cb777a8cf31e data/apotheosis/apotheosis/tier_augments/summit/prot_pierce.json

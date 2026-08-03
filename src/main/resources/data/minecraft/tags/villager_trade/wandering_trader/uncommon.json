@@ -5,14 +5,38 @@
 		"apotheosis:enchanted_golden_apple",
 		"apotheosis:totem_of_undying",
 		"apotheosis:rare_gear/arachnids_fear",
-		"apotheosis:rare_gear/bonesplitter",
-		"apotheosis:rare_gear/captive_dreams",
-		"apotheosis:rare_gear/eternal_vigilance",
-		"apotheosis:rare_gear/greatplate_of_eternity",
-		"apotheosis:rare_gear/rune_forged_greaves",
-		"apotheosis:rare_gear/stonebreaker",
-		"apotheosis:rare_gear/thunder_forged_legguards",
+		{
+			"id": "apotheosis:rare_gear/bonesplitter",
+			"required": false
+		},
+		{
+			"id": "apotheosis:rare_gear/captive_dreams",
+			"required": false
+		},
+		{
+			"id": "apotheosis:rare_gear/eternal_vigilance",
+			"required": false
+		},
+		{
+			"id": "apotheosis:rare_gear/greatplate_of_eternity",
+			"required": false
+		},
+		{
+			"id": "apotheosis:rare_gear/rune_forged_greaves",
+			"required": false
+		},
+		{
+			"id": "apotheosis:rare_gear/stonebreaker",
+			"required": false
+		},
+		{
+			"id": "apotheosis:rare_gear/thunder_forged_legguards",
+			"required": false
+		},
 		"apotheosis:rare_gear/timeworn_visage",
-		"apotheosis:rare_gear/treecapitator"
+		{
+			"id": "apotheosis:rare_gear/treecapitator",
+			"required": false
+		}
 	]
 }

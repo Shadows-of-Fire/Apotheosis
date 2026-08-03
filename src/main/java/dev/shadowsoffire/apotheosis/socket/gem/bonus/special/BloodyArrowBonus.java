@@ -7,17 +7,22 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.affix.Affix;
+import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemView;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apothic_attributes.api.AbilityCooldowns;
-import dev.shadowsoffire.apothic_enchanting.Ench;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringUtil;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
@@ -29,6 +34,11 @@ public class BloodyArrowBonus extends GemBonus {
         .group(
             Purity.mapCodec(Data.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, BloodyArrowBonus::new));
+
+    /**
+     * Damage type supplied by Apothic Enchanting. When it is not installed, the gem falls back to magic damage.
+     */
+    public static final ResourceKey<DamageType> CORRUPTED = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(ApothicEnchantingCompat.MODID, "corrupted"));
 
     protected final Map<Purity, Data> values;
 
@@ -44,7 +54,10 @@ public class BloodyArrowBonus extends GemBonus {
             if (AbilityCooldowns.isOnCooldown(user, makeUniqueId(inst), d.cooldown)) {
                 return;
             }
-            user.hurtServer((ServerLevel) user.level(), user.damageSources().source(Ench.DamageTypes.CORRUPTED), user.getMaxHealth() * d.healthCost);
+            DamageSource src = user.level().registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE)
+                .get(CORRUPTED).map(DamageSource::new)
+                .orElseGet(() -> user.damageSources().magic());
+            user.hurtServer((ServerLevel) user.level(), src, user.getMaxHealth() * d.healthCost);
             arrow.setBaseDamage(arrow.baseDamage * d.dmgMultiplier);
             AbilityCooldowns.startCooldown(user, makeUniqueId(inst));
         }

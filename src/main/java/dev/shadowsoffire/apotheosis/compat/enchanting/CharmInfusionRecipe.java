@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.recipe;
+package dev.shadowsoffire.apotheosis.compat.enchanting;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

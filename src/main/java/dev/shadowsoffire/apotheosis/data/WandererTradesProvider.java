@@ -7,6 +7,8 @@ import java.util.Set;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
+import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
+import dev.shadowsoffire.apotheosis.compat.spawners.ApothicSpawnersCompat;
 import dev.shadowsoffire.apotheosis.loot.functions.TierGatedTrade;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import net.minecraft.core.Holder;
@@ -27,6 +29,8 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.item.trading.TradeCost;
 import net.minecraft.world.item.trading.VillagerTrade;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 
 public final class WandererTradesProvider {
 
@@ -216,6 +220,25 @@ public final class WandererTradesProvider {
                 0.05F,
                 Optional.empty(),
                 List.of(new TierGatedTrade(List.of(), WorldTier.SUMMIT))));
+    }
+
+    /**
+     * Conditions for the trades that reference Apothic Enchanting or Apothic Spawners enchantments. These are attached
+     * to the generated files through the DataGenBuilder so the trades vanish when the corresponding mod is absent.
+     * The tag entries for these trades in {@code villager_trade/wandering_trader/uncommon.json} must remain optional.
+     */
+    public static Map<ResourceKey<?>, List<ICondition>> conditions() {
+        ICondition enchLoaded = new ModLoadedCondition(ApothicEnchantingCompat.MODID);
+        ICondition spawnersLoaded = new ModLoadedCondition(ApothicSpawnersCompat.MODID);
+        return Map.of(
+            trade("rare_gear/bonesplitter"), List.of(enchLoaded, spawnersLoaded),
+            trade("rare_gear/captive_dreams"), List.of(spawnersLoaded),
+            trade("rare_gear/eternal_vigilance"), List.of(enchLoaded),
+            trade("rare_gear/greatplate_of_eternity"), List.of(enchLoaded),
+            trade("rare_gear/rune_forged_greaves"), List.of(enchLoaded),
+            trade("rare_gear/stonebreaker"), List.of(enchLoaded),
+            trade("rare_gear/thunder_forged_legguards"), List.of(enchLoaded),
+            trade("rare_gear/treecapitator"), List.of(enchLoaded));
     }
 
     private static ResourceKey<VillagerTrade> trade(String path) {

@@ -9,8 +9,9 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.UnnamingRecipe;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingRecipeCache;
+import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
+import dev.shadowsoffire.apotheosis.compat.enchanting.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.compat.jei.PotionCharmExtension.PotionCharmSubtypes;
-import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
 import dev.shadowsoffire.apotheosis.recipe.SupremacyRecipe;
@@ -121,13 +122,26 @@ public class AdventureJEIPlugin implements IModPlugin {
     @Override
     public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration reg) {
         reg.getCraftingCategory().addExtension(PotionCharmRecipe.class, new PotionCharmExtension());
-        InfusionRecipeCategory.registerExtension(CharmInfusionRecipe.class, new CharmInfusionExtension());
+        if (ApothicEnchantingCompat.isLoaded()) {
+            AEExtensions.register();
+        }
         reg.getSmithingCategory().addExtension(SizedUpgradeRecipe.class, new SizedUpgradeRecipeExtension());
         reg.getSmithingCategory().addExtension(AddSocketsRecipe.class, new AddSocketsExtension());
         reg.getSmithingCategory().addExtension(WithdrawalRecipe.class, new WithdrawalExtension());
         reg.getSmithingCategory().addExtension(UnnamingRecipe.class, new UnnamingExtension());
         reg.getSmithingCategory().addExtension(MaliceRecipe.class, new MaliceExtension());
         reg.getSmithingCategory().addExtension(SupremacyRecipe.class, new SupremacyExtension());
+    }
+
+    /**
+     * Holder class that prevents classloading Apothic Enchanting types when it is not installed.
+     */
+    private static class AEExtensions {
+
+        static void register() {
+            InfusionRecipeCategory.registerExtension(CharmInfusionRecipe.class, new CharmInfusionExtension());
+        }
+
     }
 
     /**

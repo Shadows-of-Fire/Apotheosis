@@ -21,6 +21,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.affix.ItemAffixes;
+import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
@@ -34,7 +35,6 @@ import dev.shadowsoffire.apotheosis.tiers.TieredWeights;
 import dev.shadowsoffire.apotheosis.tiers.TieredWeights.Weighted;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apothic_attributes.modifiers.EquipmentSlotCompat;
-import dev.shadowsoffire.apothic_enchanting.asm.EnchHooks;
 import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 import dev.shadowsoffire.placebo.json.ChancedEffectInstance;
 import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
@@ -317,7 +317,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         ItemEnchantments.Mutable enchMap = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
         for (Object2IntMap.Entry<Holder<Enchantment>> e : EnchantmentHelper.getEnchantmentsForCrafting(stack).entrySet()) {
             if (e.getKey() != null) {
-                enchMap.upgrade(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey().value()), e.getIntValue() + rand.nextInt(2)));
+                enchMap.upgrade(e.getKey(), Math.min(ApothicEnchantingCompat.getMaxLevel(e.getKey().value()), e.getIntValue() + rand.nextInt(2)));
             }
         }
 
@@ -325,7 +325,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
             List<Holder.Reference<Enchantment>> curses = reg.lookupOrThrow(Registries.ENCHANTMENT).listElements().filter(e -> e.is(EnchantmentTags.CURSE) && e.is(EnchantmentTags.ON_MOB_SPAWN_EQUIPMENT)).toList();
             if (!curses.isEmpty()) {
                 Holder<Enchantment> curse = curses.get(rand.nextInt(curses.size()));
-                enchMap.upgrade(curse, Mth.nextInt(rand, 1, EnchHooks.getMaxLevel(curse.value())));
+                enchMap.upgrade(curse, Mth.nextInt(rand, 1, ApothicEnchantingCompat.getMaxLevel(curse.value())));
             }
         }
 

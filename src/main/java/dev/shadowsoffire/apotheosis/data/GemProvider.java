@@ -9,6 +9,7 @@ import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.effect.DamageReductionAffix.DamageType;
 import dev.shadowsoffire.apotheosis.affix.effect.MobEffectAffix.Target;
+import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
 // import dev.shadowsoffire.apotheosis.compat.twilight.FortificationBonus; // Disabled: Twilight Forest has no 26.1 build yet
 // import dev.shadowsoffire.apotheosis.compat.twilight.OreMagnetBonus; // Disabled: Twilight Forest has no 26.1 build yet
 // import dev.shadowsoffire.apotheosis.compat.twilight.TreasureGoblinBonus; // Disabled: Twilight Forest has no 26.1 build yet
@@ -734,7 +735,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 Purity.FLAWLESS, new LeechBlockBonus.Data(0.55F, 450),
                 Purity.PERFECT, new LeechBlockBonus.Data(0.65F, 450)))));
 
-        this.addGem("the_nether/inferno", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
+        this.addConditionally(ApothicEnchantingCompat.MODID, "the_nether/inferno", TieredWeights.forTiersAbove(WorldTier.ASCENT, 50, 2F), c -> c
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.NETHER))

@@ -9,7 +9,9 @@ import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
 import dev.shadowsoffire.apotheosis.compat.curios.CuriosCompat;
 // import dev.shadowsoffire.apotheosis.compat.curios.CuriosCompat; // Disabled: Curios has no 26.1 build yet
+import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
 import dev.shadowsoffire.apotheosis.compat.gateways.GatewaysCompat;
+import dev.shadowsoffire.apotheosis.compat.spawners.ApothicSpawnersCompat;
 // import dev.shadowsoffire.apotheosis.compat.twilight.AdventureTwilightCompat; // Disabled: Twilight Forest has no 26.1 build yet
 import dev.shadowsoffire.apotheosis.data.AffixLootEntryProvider;
 import dev.shadowsoffire.apotheosis.data.AffixProvider;
@@ -127,6 +129,10 @@ public class Apotheosis {
         if (ModList.get().isLoaded("curios")) {
             CuriosCompat.register(bus);
         }
+
+        if (ApothicEnchantingCompat.isLoaded()) {
+            ApothicEnchantingCompat.register(bus);
+        }
     }
 
     @SubscribeEvent
@@ -137,12 +143,19 @@ public class Apotheosis {
                 Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_WITHDRAWAL, Items.SIGIL_OF_REBIRTH, Items.SIGIL_OF_ENHANCEMENT, Items.SIGIL_OF_UNNAMING, Items.SIGIL_OF_MALICE, Items.SIGIL_OF_SUPREMACY,
                 Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE, Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.AUGMENTING_TABLE, Items.GEM_CASE, Items.ENDER_GEM_CASE,
                 Items.IRON_UPGRADE_SMITHING_TEMPLATE, Items.GOLD_UPGRADE_SMITHING_TEMPLATE, Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE,
-                Items.MUSIC_DISC_FLASH, Items.MUSIC_DISC_GLIMMER, Items.MUSIC_DISC_SHIMMER,
-                Items.SPAWNER_CHAIN, Items.SPAWNER_RUNE, Items.INFUSED_SPAWNER_RUNE,
-                Items.FRONTIER_SPAWNER_UPGRADE_RUNE, Items.ASCENT_SPAWNER_UPGRADE_RUNE, Items.SUMMIT_SPAWNER_UPGRADE_RUNE, Items.PINNACLE_SPAWNER_UPGRADE_RUNE,
-                Items.SPAWN_RANGE_SPAWNER_RUNE, Items.REDSTONE_CONTROL_SPAWNER_RUNE, Items.IGNORE_LIGHT_SPAWNER_RUNE, Items.INITIAL_HEALTH_SPAWNER_RUNE,
-                Items.SILENT_SPAWNER_RUNE, Items.YOUTHFUL_SPAWNER_RUNE, Items.BURNING_SPAWNER_RUNE, Items.NO_AI_SPAWNER_RUNE,
-                Items.IGNORE_CONDITIONS_SPAWNER_RUNE, Items.IGNORE_PLAYERS_SPAWNER_RUNE, Items.ECHOING_SPAWNER_RUNE,
+                Items.MUSIC_DISC_FLASH, Items.MUSIC_DISC_GLIMMER, Items.MUSIC_DISC_SHIMMER);
+
+            if (ApothicSpawnersCompat.isLoaded()) {
+                // The spawner rune items only function when Apothic Spawners is installed, so they are hidden without it.
+                TabFillingRegistry.register(Apoth.Tabs.ADVENTURE.getKey(),
+                    Items.SPAWNER_CHAIN, Items.SPAWNER_RUNE, Items.INFUSED_SPAWNER_RUNE,
+                    Items.FRONTIER_SPAWNER_UPGRADE_RUNE, Items.ASCENT_SPAWNER_UPGRADE_RUNE, Items.SUMMIT_SPAWNER_UPGRADE_RUNE, Items.PINNACLE_SPAWNER_UPGRADE_RUNE,
+                    Items.SPAWN_RANGE_SPAWNER_RUNE, Items.REDSTONE_CONTROL_SPAWNER_RUNE, Items.IGNORE_LIGHT_SPAWNER_RUNE, Items.INITIAL_HEALTH_SPAWNER_RUNE,
+                    Items.SILENT_SPAWNER_RUNE, Items.YOUTHFUL_SPAWNER_RUNE, Items.BURNING_SPAWNER_RUNE, Items.NO_AI_SPAWNER_RUNE,
+                    Items.IGNORE_CONDITIONS_SPAWNER_RUNE, Items.IGNORE_PLAYERS_SPAWNER_RUNE, Items.ECHOING_SPAWNER_RUNE);
+            }
+
+            TabFillingRegistry.register(Apoth.Tabs.ADVENTURE.getKey(),
                 Items.GEM, // Gem is at the end because it also generates all the dynamic variants.
                 Items.BOSS_SUMMONER // Except this stupid little creature
             );
@@ -190,6 +203,7 @@ public class Apotheosis {
             .registry(Registries.JUKEBOX_SONG, SongProvider::bootstrap)
             .registry(Registries.PAINTING_VARIANT, ApothPaintingsProvider::bootstrap)
             .registry(Registries.VILLAGER_TRADE, WandererTradesProvider::bootstrap)
+            .conditions(WandererTradesProvider.conditions())
             .provider(ApothLootProvider::create)
             .provider(ApothRecipeProvider::new)
             .provider(ApothPaintingTagsProvider::new)

@@ -1,4 +1,10 @@
 {
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_enchanting"
+        }
+    ],
     "additional_wants": {
         "count": 32.0,
         "id": "minecraft:phantom_membrane"

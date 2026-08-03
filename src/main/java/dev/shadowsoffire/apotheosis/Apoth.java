@@ -38,6 +38,7 @@ import dev.shadowsoffire.apotheosis.gen.BossDungeonFeature2;
 import dev.shadowsoffire.apotheosis.gen.ItemFrameGemsProcessor;
 import dev.shadowsoffire.apotheosis.gen.RogueSpawnerFeature;
 import dev.shadowsoffire.apotheosis.item.BossSummonerItem;
+import dev.shadowsoffire.apotheosis.item.GlowyItem;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
 import dev.shadowsoffire.apotheosis.item.TooltipBlockItem;
 import dev.shadowsoffire.apotheosis.item.TooltipItem;
@@ -60,7 +61,6 @@ import dev.shadowsoffire.apotheosis.mobs.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.mobs.BossSpawnerBlock.BossSpawnerTile;
 import dev.shadowsoffire.apotheosis.mobs.InvaderSpawnRules;
 import dev.shadowsoffire.apotheosis.particle.RarityParticleData;
-import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
 import dev.shadowsoffire.apotheosis.recipe.SupremacyRecipe;
@@ -97,7 +97,6 @@ import dev.shadowsoffire.apotheosis.util.SpawnEggIngredient;
 import dev.shadowsoffire.apotheosis.util.SpawnEggSlotDisplay;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import dev.shadowsoffire.apothic_attributes.modifiers.EntitySlotGroup;
-import dev.shadowsoffire.apothic_enchanting.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType.TickSide;
 import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 import dev.shadowsoffire.placebo.registry.DeferredHelper;
@@ -459,6 +458,12 @@ public class Apoth {
         public static final SoundEvent MUSIC_DISC_GLIMMER = R.sound("music_disc_glimmer");
         public static final SoundEvent MUSIC_DISC_SHIMMER = R.sound("music_disc_shimmer");
 
+        // Soundtracks for the summit/pinnacle gateways. These delegate to Apothic Enchanting's music discs via
+        // sounds.json event references, and play silence when it is not installed. Referencing the AE sound events
+        // directly in the gateway files would prevent them from parsing without it.
+        public static final SoundEvent SOUNDTRACK_SUMMIT = R.sound("soundtrack_summit");
+        public static final SoundEvent SOUNDTRACK_PINNACLE = R.sound("soundtrack_pinnacle");
+
         public static final SoundEvent INVADER_UNCOMMON = R.sound("invader_uncommon");
         public static final SoundEvent INVADER_RARE = R.sound("invader_rare");
         public static final SoundEvent INVADER_EPIC = R.sound("invader_epic");
@@ -497,7 +502,6 @@ public class Apoth {
         public static final Holder<RecipeSerializer<?>> PURITY_UPGRADE = R.recipeSerializer("purity_upgrade", () -> PurityUpgradeRecipe.SERIALIZER);
         public static final Holder<RecipeSerializer<?>> BASIC_GEM_CUTTING = R.recipeSerializer("basic_gem_cutting", () -> BasicGemCuttingRecipe.SERIALIZER);
         public static final Holder<RecipeSerializer<?>> POTION_CHARM_CRAFTING = R.recipeSerializer("potion_charm_crafting", () -> PotionCharmRecipe.SERIALIZER);
-        public static final Holder<RecipeSerializer<?>> POTION_CHARM_INFUSION = R.recipeSerializer("potion_charm_infusion", () -> CharmInfusionRecipe.SERIALIZER);
         public static final Holder<RecipeSerializer<?>> SIZED_UPGRADE_RECIPE = R.recipeSerializer("sized_upgrade_recipe", () -> SizedUpgradeRecipe.SERIALIZER);
 
         private static void bootstrap() {}

@@ -115,8 +115,20 @@ dependencies {
     if (project.hasProperty('twilightFileId'))            localImplementation "curse.maven:the-twilight-forest-227639:${twilightFileId}"
     if (project.hasProperty('gatewaysVersion'))           localImplementation "dev.shadowsoffire:GatewaysToEternity:${mcVersion}-${gatewaysVersion}"
     if (project.hasProperty('apothicAttributesVersion'))  implementation      "dev.shadowsoffire:ApothicAttributes:${mcVersion}-${apothicAttributesVersion}"
-    if (project.hasProperty('apothicSpawnersVersion'))    implementation      "dev.shadowsoffire:ApothicSpawners:${mcVersion}-${apothicSpawnersVersion}"
-    if (project.hasProperty('apothicEnchantingVersion'))  implementation      "dev.shadowsoffire:ApothicEnchanting:${mcVersion}-${apothicEnchantingVersion}"
+    // Apothic Spawners and Apothic Enchanting are optional at runtime, but required for compilation and datagen.
+    // Pass -PexcludeApothicSpawners / -PexcludeApothicEnchanting to drop one from dev runs. Never combine these with runData.
+    if (project.hasProperty('apothicSpawnersVersion')) {
+        compileOnly "dev.shadowsoffire:ApothicSpawners:${mcVersion}-${apothicSpawnersVersion}"
+        if (!project.hasProperty('excludeApothicSpawners')) {
+            localRuntime "dev.shadowsoffire:ApothicSpawners:${mcVersion}-${apothicSpawnersVersion}"
+        }
+    }
+    if (project.hasProperty('apothicEnchantingVersion')) {
+        compileOnly "dev.shadowsoffire:ApothicEnchanting:${mcVersion}-${apothicEnchantingVersion}"
+        if (!project.hasProperty('excludeApothicEnchanting')) {
+            localRuntime "dev.shadowsoffire:ApothicEnchanting:${mcVersion}-${apothicEnchantingVersion}"
+        }
+    }
 }
 
 tasks.named("generateModMetadata") {
