@@ -2,28 +2,28 @@
     "name": "Tomo de remoção",
     "icon": "apothic_enchanting:scrap_tome",
     "category": "apotheosis:enchanting/utility",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
+    "flag": "apotheosis:enchanting",
+    "sortnum": 4,
     "pages": [
         {
             "type": "patchouli:text",
             "text": "O tomo de remoção é uma forma de recuperar encantamentos de um item.$(p)Combinar um com outro item em uma bigorna destruirá o outro item e fará um livro com alguns dos encantamentos aleatórios."
         },
-		{
+        {
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:scrap_tome",
-			"text": "Você sempre receberá metade dos encantamentos (arredondado para cima).$(p)Os encantamentos selecionados são baseados em sua $(l:apotheosis:enchanting/table/seed)semente de encantamento$()."
-		},
+            "recipe": "apothic_enchanting:scrap_tome",
+            "text": "Você sempre receberá metade dos encantamentos (arredondado para cima).$(p)Os encantamentos selecionados são baseados em sua $(l:apotheosis:enchanting/table/seed)semente de encantamento$()."
+        },
         {
             "type": "patchouli:spotlight",
-			"title": "Remoção superior",
-			"item": "apotheosis:improved_scrap_tome",
-			"text": "O $(9)tomo de remoção superior$() é uma versão melhorada do tomo de remoção.$(p)Ele extrai todos os encantmentos do item, ao invés da metade deles."
-		},
-		{
+            "title": "Remoção superior",
+            "item": "apothic_enchanting:improved_scrap_tome",
+            "text": "O $(9)tomo de remoção superior$() é uma versão melhorada do tomo de remoção.$(p)Ele extrai todos os encantmentos do item, ao invés da metade deles."
+        },
+        {
             "type": "patchouli:spotlight",
-			"item": "apotheosis:extraction_tome",
-			"text": "O $(9)tomo de extração$() é uma versão aperfeiçoada do tomo de remoção.$(p)Ele extrai todos os encantamentos de um item e não destrói o item no processo."
-		}
-	]
+            "item": "apothic_enchanting:extraction_tome",
+            "text": "O $(9)tomo de extração$() é uma versão aperfeiçoada do tomo de remoção.$(p)Ele extrai todos os encantamentos de um item e não destrói o item no processo."
+        }
+    ]
 }

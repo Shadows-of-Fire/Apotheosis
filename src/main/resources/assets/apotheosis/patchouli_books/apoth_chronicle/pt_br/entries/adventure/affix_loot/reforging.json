@@ -7,48 +7,43 @@
     "pages": [
 		{
             "type": "patchouli:text",
-            "text": "Através do potencial bruto de $(9)materiais de raridade$() e da versatilidade do $(9)pó de gema$(), agora é possível refazer um item com novos afixos.$(p)A reforja não se limita a itens que já possuem afixos e pode ser feita com qualquer item válido."
+            "text": "Através do potencial bruto dos $(9)Materiais de Raridade$() e da versatilidade do $(9)Pó de Gema$(), agora é possível reforjar um item com afixos totalmente novos.$(p)A reforja não se limita a itens que já possuem afixos, e pode ser realizada com qualquer item válido."
         },
 		{
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:simple_reforging_table",
-			"text": "Para começar a reforjar, construa uma $(#5555FF)bancada simples de reforjação$(), que permite que você reforge até a raridade $(#5555FF)raro$()."
+			"text": "Para começar a reforjar, fabrique uma $(#5555FF)Bancada Simples de Reforjação$(), que permite reforjar itens até a raridade $(#5555FF)Raro$()."
 		},
 		{
-            "type": "patchouli:image",
-			"title": "Slots de entrada",
-			"images": [
-				"apotheosis:textures/gui/book/reforge_slots.png"
-			],
-			"text": "A bancada de reforjação tem três slots de entrada."
+            "type": "patchouli:text",
+			"title": "Slots de Entrada",
+			"text": "A Bancada de Reforjação tem três slots de entrada.$(p)O slot central segura o item que você deseja reforjar.$(p)O slot superior esquerdo recebe $(9)Materiais de Raridade$() para a raridade com a qual você deseja reforjar."
         },
-		{
-			"type": "patchouli:text",
-			"title": "Slots de entrada",
-			"text": "O slot superior segura o item que você deseja refazer.$(p)O slot da esquerda recebe $(9)materiais de raridade$().$(p)O slot da direita é para pó de gema.$(p)Todos os slots devem ser preenchidos para uma reforjação bem-sucedida."
-		},
-		{
-            "type": "patchouli:image",
-			"title": "Reforjação",
-			"images": [
-				"apotheosis:textures/gui/book/reforge_menu.png"
-			],
-			"text": "Semelhante a uma mesa de encantamentos, você tem três escolhas."
-        },
-		{
-			"type": "patchouli:text",
-			"title": "Reforjação",
-			"text": "Cada escolha representa uma nova forma potencial do item que está sendo forjado. O custo varia de acordo com a escolha, exigindo 2/4/6 pó de gema, materiais de raridade e níveis de experiência respectivamente.$(p)Para reforjar seu item, basta clicar na opção desejada."
-		},
 		{
             "type": "patchouli:crafting",
+            "recipe": "apotheosis:sigil_of_rebirth",
+			"title": "Slots de Entrada",
+			"text": "O slot inferior direito recebe $(9)Sigilos do Renascimento$(), um item de combustível único usado durante o processo de Reforja."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Reforja",
+			"text": "Semelhante a uma Mesa de Encantamentos, ao reforjar, três escolhas são oferecidas.$(p)Cada escolha representa uma possível nova forma do item sendo reforjado.$(p)Nenhuma escolha é inerentemente mais forte que as outras."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Reforja",
+			"text": "Para cada raridade, há um custo base de experiência, sigilos e materiais. Os slots de escolha extras cobram o dobro e o triplo do custo base.$(p)Para reforjar seu item, basta clicar na escolha desejada."
+		},
+        {
+            "type": "patchouli:crafting",
 			"recipe": "apotheosis:reforging_table",
-			"text": "Para reforjar itens de raridade $(#BB00BB)épica$() ou maior, você precisará melhorar sua $(#5555FF)bancada simples de reforjação$() em uma $(#BB00BB)bancada de reforjação$()."
+			"text": "Para reforjar itens de raridade $(#BB00BB)Épico$() ou superior, você precisará melhorar sua $(#5555FF)Bancada Simples de Reforjação$() para uma $(#BB00BB)Bancada de Reforjação$()."
 		},
 		{
 			"type": "patchouli:text",
 			"title": "Notas",
-			"text": "Os itens podem ser reforjados várias vezes, mas você deve pegar e substituir o item primeiro.$(p)Nenhuma escolha é intrinsecamente mais forte que as outras."
+			"text": "Itens que ainda não possuem afixos podem ser reforjados.$(p)Itens podem ser reforjados múltiplas vezes.$(p)Modpacks podem alterar os custos ou impedir a reforja em certas raridades."
 		}
 	]
 }
