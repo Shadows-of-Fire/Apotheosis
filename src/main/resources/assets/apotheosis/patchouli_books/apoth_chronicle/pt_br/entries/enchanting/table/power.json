@@ -2,23 +2,23 @@
     "name": "Poder de encantamento",
     "icon": "minecraft:experience_bottle",
     "category": "apotheosis:enchanting/table",
-	"flag": "apotheosis:enchanting",
+    "flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
             "text": "Durante o processo de encantamento, você gasta experiência e lápis-lazúli para encantar um item.$(p)A partir disso, os encantamentos são selecionados aleatoriamente usando algumas fórmulas complexas.$(p)Este capítulo explica esse processo."
         },
-		{
+        {
             "type": "patchouli:text",
             "text": "Primeiro, veremos como os encantamentos são selecionados.$(p)Cada encantamento tem uma $(5)função de poder$(), que controla o que $(poderf) disponibilizará em um nível específico.$(p)Depois de tudo os encantamentos disponíveis são reunidos, alguns são selecionados aleatoriamente com base em seus pesos."
         },
-		{
-			"type": "patchouli:text",
-			"text": "O cálculo do $(poderf) é feito com os seguintes passos:$(p)Inicialmente, você tem um $(poderb), que é o nível que você gastou enquanto encantava.$(p)Então, $(quanta) e a retificação modificam seu $(poderb) para produzir seu $(poderf)."
-		},
-		{
-			"type": "patchouli:text",
-			"text": "Os detalhes de como cada status modifica seu $(poderb) podem ser encontrados em $(l:apotheosis:enchanting/table/stats#quanta)$(quanta) e entradas de $(l:apotheosis:enchanting/table/stats#rectification)retificação$().$(p)Normalmente, um $(poderf) maior lhe dará acesso a encantamentos de nível superior."
-		}
-	]
+        {
+            "type": "patchouli:text",
+            "text": "O cálculo do $(poderf) é feito com os seguintes passos:$(p)Inicialmente, você tem um $(poderb), que é o nível que você gastou enquanto encantava.$(p)Então, $(quanta) e a retificação modificam seu $(poderb) para produzir seu $(poderf)."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Os detalhes de como cada atributo modifica seu $(poderb) estão nas seções de $(l:apotheosis:enchanting/table/stats#quanta)$(quanta) e $(l:apotheosis:enchanting/table/stats#rectification)retificação$().$(p)Normalmente, um $(poderf) maior dá acesso a encantamentos de níveis superiores."
+        }
+    ]
 }

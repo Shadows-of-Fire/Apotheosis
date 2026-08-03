@@ -7,33 +7,33 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A $(9)bancada de aprimoramento$() é uma bancada de construção de fim de jogo usada para aumentar os afixos individuais de um item.$(p)Por meio dela, você pode atualizar ou rerrolar os afixos individuais, deixando o resto intacto."
+            "text": "A $(9)Bancada de Aprimoramento$() é uma bancada de final de jogo usada para melhorar os afixos individuais de um item.$(p)Nela, você pode aprimorar ou sortear novamente um afixo sem alterar os demais."
         },
         {
             "type": "patchouli:crafting",
             "recipe": "apotheosis:augmenting_table",
-            "text": "Criar uma bancada de aprimoramento requer focar a energia de uma $(9)estrela do nether$() através de duas $(9)pérolas forjadas por deuses$(), usando uma $(9)bancada de encantamentos$() como base."
+            "text": "Fabricar uma $(9)Bancada de Aprimoramento$() requer concentrar a energia de uma $(9)Estrela do Nether$() através de duas $(9)Pérolas Forjadas pelo Divino$(), usando uma $(9)Mesa de Encantamentos$() como base."
         },
         {
             "type": "patchouli:text",
             "title": "Encaixes de entrada",
-            "text": "A bancada de aprimoramento possui dois encaixes de entrada.$(p)O encaixe superior contém o item que você deseja aprimorar, que deve ser um item com afixo.$(p)Normalmente, você deve aprimorar apenas itens de raridade pelo menos $(#ED7014)mítica$(), embora também possa considerar aprimorar itens $(#BB00BB)épicos$()."
+            "text": "A Bancada de Aprimoramento possui dois encaixes de entrada.$(p)O encaixe superior contém o item que você deseja aprimorar, que deve ser um item com afixo.$(p)Normalmente, você deve aprimorar apenas itens de raridade pelo menos $(#ED7014)mítica$(), embora também possa considerar aprimorar itens $(#BB00BB)épicos$()."
         },
         {
             "type": "patchouli:crafting",
             "recipe": "apotheosis:sigil_of_enhancement",
             "title": "Encaixes de entrada",
-            "text": "O encaixe inferior contém $(9)amuletos de aprimoramento$(), o item combustível usado para aprimorar.$(p)Por fim, você precisará selecionar o afixo desejado no menu."
+            "text": "O encaixe inferior recebe $(9)Sigilos de Aprimoramento$(), o combustível usado no processo.$(p)Por fim, selecione no menu o afixo que deseja modificar."
         },
         {
             "type": "patchouli:text",
-            "title": "Aprimorando",
-            "text": "A primeira operação que pode ser realizada na bancada de aprimoramento é aumentar um afixo.$(p)Isso custa dois $(9)amuletos de aprimoramento$() e aumentará a força interna do afixo atual em 25%.$(p)O quanto essa melhoria oferece varia de acordo com o afixo."
+            "title": "Aprimoramento",
+            "text": "A primeira operação da Bancada de Aprimoramento é fortalecer um afixo.$(p)Ela consome dois $(9)Sigilos de Aprimoramento$() e aumenta em 25% a força interna do afixo atual.$(p)O efeito dessa melhoria varia conforme o afixo."
         },
         {
             "type": "patchouli:text",
-            "title": "Rerrolando",
-            "text": "A segunda operação da bancada de aprimoramento é rerrolar um afixo.$(p)Isso troca o afixo selecionado por outro do mesmo tipo a custo de um $(9)amuleto de aprimoramento$().$(p)As opções alternativas serão mostradas à esquerda."
+            "title": "Novo sorteio",
+            "text": "A segunda operação da Bancada de Aprimoramento é sortear novamente um afixo.$(p)Ela substitui o afixo selecionado por outro do mesmo tipo ao custo de um $(9)Sigilo de Aprimoramento$().$(p)As opções alternativas são exibidas à esquerda."
         }
     ]
 }

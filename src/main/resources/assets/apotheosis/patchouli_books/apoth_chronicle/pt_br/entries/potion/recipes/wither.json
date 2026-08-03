@@ -2,18 +2,18 @@
     "name": "Decomposição",
     "icon": "minecraft:textures/mob_effect/wither.png",
     "category": "apotheosis:potion/recipes",
-	"flag": "&apotheosis:potion,!apotheosis:wstloaded",
-	"sortnum": 0,
+    "flag": "&apotheosis:potion,!apotheosis:wstloaded",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
             "text": "$(c)Decomposição$() é um efeito hostil que normalmente não pode ser criado.$(p)Enquanto infligido com ele, você receberá dano a cada tick.$(p)Ao contrário do veneno, esse dano é letal."
         },
-		{
+        {
             "type": "patchouli:spotlight",
-			"title": "Receita de Fabricação de Poção",
-			"item": "minecraft:wither_skeleton_skull",
-            "text": "Esta poção pode ser criada com uma poção estranha e um crânio de esqueleto wither.$(p)Ela pode ser estendida, fortalecida ou transformada em uma poção arremesável com os ingredientes usuais."
+            "title": "Receita de preparo",
+            "item": "minecraft:wither_skeleton_skull",
+            "text": "Esta poção pode ser preparada com uma Poção Estranha e um Crânio de Esqueleto Wither.$(p)Ela pode ter a duração ou a potência aumentada, ou ser transformada em uma Poção Arremessável com os ingredientes habituais."
         }
-	]
+    ]
 }

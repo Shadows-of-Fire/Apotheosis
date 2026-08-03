@@ -1,13 +1,13 @@
 {
-    "name": "Dano de acerto crítico",
+    "name": "Dano crítico",
     "icon": "minecraft:netherite_axe",
     "category": "apotheosis:adventure/attributes",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Dano de acerto crítico$() é o modificador de dano para seus acertos críticos.$(p)Críticos de salto também usam seu valor de dano crítico, em vez do multiplicador usual de 1,5x.$(p)Encontrado em armas."
+            "text": "$(9)Dano crítico$() é o modificador de dano para seus acertos críticos.$(p)Críticos de salto também usam seu valor de dano crítico, em vez do multiplicador usual de 1,5x.$(p)Encontrado em armas."
         }
-	]
+    ]
 }

@@ -2,16 +2,16 @@
     "name": "Sangramento",
     "icon": "apothic_attributes:textures/mob_effect/bleeding.png",
     "category": "apotheosis:potion/effects",
-	"flag": "apotheosis:potion",
-	"sortnum": 1,
+    "flag": "apotheosis:potion",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)Sangramento$() é um efeito negativo aplicado por $(l:apotheosis:village/fletching#broadhead)flechas de sangramento$().$(p)Faz com que você receba dano a cada dois segundos."
+            "text": "$(c)Sangramento$() é um efeito negativo aplicado por Flechas de Ponta Larga.$(p)Ele faz com que você receba dano a cada dois segundos."
         },
-		{
+        {
             "type": "patchouli:text",
-            "text": "O dano aumenta com o nível de $(c)sangramento$().$(p)O dano de $(c)sangramento$() ultrapassa a armadura."
+            "text": "O dano aumenta conforme o nível de $(c)Sangramento$().$(p)O dano de $(c)Sangramento$() ignora a armadura."
         }
-	]
+    ]
 }

@@ -1,13 +1,13 @@
 {
-    "name": "Fragmentação de proteção",
+    "name": "Redução de proteção",
     "icon": "apothic_attributes:textures/mob_effect/sundering.png",
     "category": "apotheosis:adventure/attributes",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Fragmentação de armadura$() faz com que você ignore uma porcentagem de proteção do seu alvo ao atacar.$(p)$(9)Fragmentação de proteção$() é aplicada antes de $(9)perfuração de proteção$()."
+            "text": "A $(9)redução de proteção$() faz com que você ignore uma porcentagem dos pontos de proteção do alvo ao atacar.$(p)A $(9)perfuração de proteção$() é aplicada antes da $(9)redução de proteção$()."
         }
-	]
+    ]
 }

@@ -1,6 +1,6 @@
 {
-    "name": "Mobs Apóticos",
-    "description": "O Apotheosis introduz vários subtipos de Mobs que aparecerão no seu mundo.$(p)Esta seção discute que tipos de mobs existem e onde encontrá-los.",
+    "name": "Criaturas apóticas",
+    "description": "O Apotheosis introduz vários subtipos de criaturas que podem surgir no mundo.$(p)Esta seção explica quais são essas criaturas e onde encontrá-las.",
     "icon": "apotheosis:boss_summoner",
     "flag": "apotheosis:adventure",
     "parent": "apotheosis:adventure/adventure"

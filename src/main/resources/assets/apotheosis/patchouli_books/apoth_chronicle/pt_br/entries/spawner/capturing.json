@@ -2,18 +2,18 @@
     "name": "Captura",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:spawner/spawner",
-	"flag": "apotheosis:spawner",
-	"sortnum": 2,
+    "flag": "apotheosis:spawner",
+    "sortnum": 2,
     "pages": [
         {
             "type": "patchouli:text",
             "text": "Geradores podem ter sua entidade alterada usando um $(9)ovo gerador$().$(p)Normalmente, eles não podem ser obtidos. Para remediar isso, o Apotheosis adiciona o encantamento $(9)captura$() para espadas."
         },
-		{
+        {
             "type": "patchouli:spotlight",
-			"item": "minecraft:cow_spawn_egg",
-			"title": "Spawn Eggs",
+            "item": "minecraft:cow_spawn_egg",
+            "title": "Ovos geradores",
             "text": "Cada nível do encantamento de $(9)captura$() dá a você 0,4% de chance de as entidades largarem seus ovos geradores ao morrer.$(p)Entidades sem um item de ovo gerador (como visto no JEI) não podem largar um."
         }
-	]
+    ]
 }

@@ -2,12 +2,12 @@
     "name": "Soro de crescimento",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Soro de crescimento$() é um encantamento de obra-prima para tesouras.$(p)Faz com que as ovelhas tenham 50% de chance de regenerar a lã imediatamente."
+            "text": "$(2)Soro de Crescimento$() é um encantamento de obra-prima para tesouras.$(p)Faz com que as ovelhas tenham 50% de chance de regenerar a lã imediatamente."
         }
-	]
+    ]
 }
