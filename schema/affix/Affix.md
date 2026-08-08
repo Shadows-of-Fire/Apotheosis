@@ -3,7 +3,7 @@ An Affix is a construct very similar to an enchantment, providing bonuses to aff
 
 Affixes are not applied directly. Instead, [Loot Rules](../loot/LootRule.md) apply them when an affix item is generated or reforged, selecting randomly from all affixes that are applicable to the item's loot category and rarity.  
 
-Every affix on an item is stored with a level, which is a float from 0 to 1 that defines its relative power level, compared to max. What the level means is up to the individual affix. Most affixes map the level through a per-rarity [StepFunction](../../../../../Placebo/blob/-/schema/StepFunction.md) to produce their final values, meaning both the rarity and the level control the strength of the affix. The level of an affix can be rerolled in the Augmenting Table.
+Every affix on an item is stored with a level, which is a float from 0 to 1 that defines its relative power level, compared to max. What the level means is up to the individual affix. Most affixes map the level through a per-rarity [StepFunction](../../../../../Placebo/blob/1.21/schema/StepFunction.md) to produce their final values, meaning both the rarity and the level control the strength of the affix. The level of an affix can be rerolled in the Augmenting Table.
 
 # Dependencies
 This object references the following objects:

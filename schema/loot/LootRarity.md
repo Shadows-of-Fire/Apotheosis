@@ -7,8 +7,8 @@ Finally, rarities are mostly independent of one another. Many datapacks can add 
 
 # Dependencies
 This object references the following objects:
-1. [Color](../../../../../Placebo/blob/-/schema/Color.md)
-2. [ItemStack](../../../../../Placebo/blob/-/schema/ItemStack.md)
+1. [Color](../../../../../Placebo/blob/1.21/schema/Color.md)
+2. [ItemStack](../../../../../Placebo/blob/1.21/schema/ItemStack.md)
 3. [TieredWeights](../tier/TieredWeights.md)
 4. [LootRule](./LootRule.md)
 5. [RarityRenderData](./RarityRenderData.md)

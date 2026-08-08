@@ -5,8 +5,8 @@ Effects are applied with infinite duration, unless the mob is a creeper, in whic
 
 # Dependencies
 This object references the following objects:
-1. [ChancedEffectInstance](../../../../../Placebo/blob/-/schema/ChancedEffectInstance.md)
-2. [RandomAttributeModifier](../../../../../Placebo/blob/-/schema/RandomAttributeModifier.md)
+1. [ChancedEffectInstance](../../../../../Placebo/blob/1.21/schema/ChancedEffectInstance.md)
+2. [RandomAttributeModifier](../../../../../Placebo/blob/1.21/schema/RandomAttributeModifier.md)
 
 # Schema
 ```js

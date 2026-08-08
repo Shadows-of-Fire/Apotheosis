@@ -7,7 +7,7 @@ When loot is generated while the conditions match, a single roll is made against
 This object references the following objects:
 1. [GemClass](../GemClass.md)
 2. [Purity](../Purity.md)
-3. [ItemStack](../../../../../../Placebo/blob/-/schema/ItemStack.md)
+3. [ItemStack](../../../../../../Placebo/blob/1.21/schema/ItemStack.md)
 
 # Schema
 ```js

@@ -9,7 +9,7 @@ The strength of this affix does not change with the affix level — only the rar
 This object references the following objects:
 1. [AffixDefinition](../AffixDefinition.md)
 2. [LootRarity](../../loot/LootRarity.md)
-3. [ItemStack](../../../../../../Placebo/blob/-/schema/ItemStack.md)
+3. [ItemStack](../../../../../../Placebo/blob/1.21/schema/ItemStack.md)
 4. [LootCategory](../../loot/LootCategory.md)
 
 # Schema

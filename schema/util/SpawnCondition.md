@@ -7,7 +7,7 @@ These are used by Invaders and Elites to determine if they may spawn, as well as
 This object references the following objects:
 1. [MobSpawnType](../util/MobSpawnType.md)
 2. [SurfaceType](../util/SurfaceType.md)
-3. [CompoundTag](../../../../../Placebo/blob/-/schema/CompoundTag.md)
+3. [CompoundTag](../../../../../Placebo/blob/1.21/schema/CompoundTag.md)
 
 # Subtypes
 Spawn Conditions are subtyped, meaning each subtype declares a `"type"` key and its own parameters.

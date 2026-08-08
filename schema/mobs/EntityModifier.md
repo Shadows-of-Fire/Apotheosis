@@ -3,9 +3,9 @@ An Entity Modifier is a change applied to a spawning mob. They are the underlyin
 
 # Dependencies
 This object references the following objects:
-1. [ChancedEffectInstance](../../../../../Placebo/blob/-/schema/ChancedEffectInstance.md)
-2. [StepFunction](../../../../../Placebo/blob/-/schema/StepFunction.md)
-3. [SetPredicate](../../../../../Placebo/blob/-/schema/SetPredicate.md)
+1. [ChancedEffectInstance](../../../../../Placebo/blob/1.21/schema/ChancedEffectInstance.md)
+2. [StepFunction](../../../../../Placebo/blob/1.21/schema/StepFunction.md)
+3. [SetPredicate](../../../../../Placebo/blob/1.21/schema/SetPredicate.md)
 4. [LootRarity](../loot/LootRarity.md)
 5. [AffixLootEntry](../loot/AffixLootEntry.md)
 

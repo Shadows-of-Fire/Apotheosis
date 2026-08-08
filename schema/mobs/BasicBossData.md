@@ -9,8 +9,8 @@ This object references the following objects:
 2. [Constraints](../tier/Constraints.md)
 3. [BonusLootTables](../util/BonusLootTables.md)
 4. [WorldTier](../tier/WorldTier.md)
-5. [SetPredicate](../../../../../Placebo/blob/-/schema/SetPredicate.md)
-6. [CompoundTag](../../../../../Placebo/blob/-/schema/CompoundTag.md)
+5. [SetPredicate](../../../../../Placebo/blob/1.21/schema/SetPredicate.md)
+6. [CompoundTag](../../../../../Placebo/blob/1.21/schema/CompoundTag.md)
 7. [SupportingEntity](./SupportingEntity.md)
 8. [SpawnCondition](../util/SpawnCondition.md)
 

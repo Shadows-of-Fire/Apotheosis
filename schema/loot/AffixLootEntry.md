@@ -7,7 +7,7 @@ Note: Invaders and Elites do not use Affix Loot Entries during gear selection, a
 This object references the following objects:
 1. [TieredWeights](../tier/TieredWeights.md)
 2. [Constraints](../tier/Constraints.md)
-3. [ItemStack](../../../../../Placebo/blob/-/schema/ItemStack.md)
+3. [ItemStack](../../../../../Placebo/blob/1.21/schema/ItemStack.md)
 4. [LootRarity](./LootRarity.md)
 
 # Schema

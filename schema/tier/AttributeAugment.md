@@ -7,7 +7,7 @@ The modifier is silently ignored if the target entity does not have the attribut
 This object references the following objects:
 1. [TierAugment](./TierAugment.md)
 2. [WorldTier](./WorldTier.md)
-3. [RandomAttributeModifier](../../../../../Placebo/blob/-/schema/RandomAttributeModifier.md)
+3. [RandomAttributeModifier](../../../../../Placebo/blob/1.21/schema/RandomAttributeModifier.md)
 
 # Schema
 ```js

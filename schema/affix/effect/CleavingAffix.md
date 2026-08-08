@@ -9,7 +9,7 @@ This affix may only roll on melee weapons and tridents, and does not declare a c
 This object references the following objects:
 1. [AffixDefinition](../AffixDefinition.md)
 2. [LootRarity](../../loot/LootRarity.md)
-3. [StepFunction](../../../../../../Placebo/blob/-/schema/StepFunction.md)
+3. [StepFunction](../../../../../../Placebo/blob/1.21/schema/StepFunction.md)
 
 # Schema
 ```js

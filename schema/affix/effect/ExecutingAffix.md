@@ -7,7 +7,7 @@ When the user lands a fully-charged attack against an entity whose remaining hea
 This object references the following objects:
 1. [AffixDefinition](../AffixDefinition.md)
 2. [LootRarity](../../loot/LootRarity.md)
-3. [StepFunction](../../../../../../Placebo/blob/-/schema/StepFunction.md)
+3. [StepFunction](../../../../../../Placebo/blob/1.21/schema/StepFunction.md)
 4. [LootCategory](../../loot/LootCategory.md)
 
 # Schema

@@ -7,7 +7,7 @@ The tool can harvest any block that one of the configured items could harvest, a
 This object references the following objects:
 1. [GemClass](../GemClass.md)
 2. [Purity](../Purity.md)
-3. [ItemStack](../../../../../../Placebo/blob/-/schema/ItemStack.md)
+3. [ItemStack](../../../../../../Placebo/blob/1.21/schema/ItemStack.md)
 
 # Schema
 ```js
