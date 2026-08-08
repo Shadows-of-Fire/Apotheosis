@@ -1,7 +1,7 @@
 # Description
 A Tiered Weights is a mapping from World Tier to Weight, and is used by most objects to specify their per-tier weight and quality values. 
    
-There are a couple difference syntaxes to make specifying weights for all tiers uniformly, all tiers individually, or a subset of tiers.
+There are a couple different syntaxes for specifying weights for all tiers uniformly, all tiers individually, or a subset of tiers.
 
 # Dependencies
 This object references the following objects:
