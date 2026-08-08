@@ -29,10 +29,13 @@ Requires that the target mob have been spawned with any one of the specified spa
 A condition which requires that the mob be from a spawn egg, or a spawner.
 
 ```json
-"spawn_types": [
-    "spawn_egg",
-    "spawner"
-]
+{
+    "type": "apotheosis:spawn_type",
+    "spawn_types": [
+        "spawn_egg",
+        "spawner"
+    ]
+}
 ```
 
 ## Surface Type Condition
@@ -63,7 +66,7 @@ Requires that the spawned entity have a specific entity type tag.
 ```js
 {
     "type": "apotheosis:has_tag",
-    "tag": "string, // [Mandatory] || The registry name of the tag.
+    "tag": "string", // [Mandatory] || The registry name of the tag.
 }
 ```
 
@@ -74,6 +77,18 @@ A condition which requires the entity be a member of `minecraft:skeletons`.
 {
     "type": "apotheosis:has_tag",
     "tag": "minecraft:skeletons"
+}
+```
+
+## Is Monster Condition
+Requires that the spawned entity be a monster, meaning it must derive from the vanilla Monster class.  
+
+Note: Some hostile mobs, such as slimes and ghasts, do not derive from Monster, and will not pass this condition.
+
+### Schema
+```js
+{
+    "type": "apotheosis:is_monster"
 }
 ```
 

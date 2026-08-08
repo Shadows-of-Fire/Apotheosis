@@ -11,36 +11,43 @@ This object references the following objects:
 2. [ItemStack](../../../../../Placebo/blob/-/schema/ItemStack.md)
 3. [TieredWeights](../tier/TieredWeights.md)
 4. [LootRule](./LootRule.md)
-5. [LootCategory](./LootCategory.md)
+5. [RarityRenderData](./RarityRenderData.md)
 
 # Schema
 ```js
 {
-    "color": Color,              // [Mandatory] || The color of this rarity. Used in various places to identify it. This color should be unique and visible on different backgrounds.
-    "material": ItemStack,       // [Mandatory] || The rarity material for this rarity. Must not be empty.
-    "weights": TieredWeights,    // [Mandatory] || Tier-specific weights for this rarity, relative to other rarities.
-    "rules": [                   // [Mandatory] || The list of loot rules this rarity will apply during reforging.
+    "color": Color,                  // [Mandatory] || The color of this rarity. Used in various places to identify it. This color should be unique and visible on different backgrounds.
+    "material": ItemStack,           // [Mandatory] || The rarity material for this rarity. Must not be empty.
+    "weights": TieredWeights,        // [Mandatory] || Tier-specific weights for this rarity, relative to other rarities.
+    "rules": [                       // [Mandatory] || The list of loot rules this rarity will apply during reforging.
         LootRule
     ],
-    "overrides": {               // [Optional]  || A map of per-category loot rule overrides for this rarity. This allows you to provide different rules for certain categories.
-        LootCategory: [
-            LootRule
-        ]
-    },
-    "sort_index": integer        // [Optional]  || A magic number used to order the rarities when they are displayed together in a list. Lower numbers are displayed first.
+    "sort_index": integer,           // [Optional]  || A magic number used to order the rarities when they are displayed together in a list. Lower numbers are displayed first. Default value = 1000. Range: [0, 2000].
+    "render_data": RarityRenderData, // [Optional]  || Visual effects shown when an affix item of this rarity is dropped in-world. Defaults to the standard beam, glow, and shadow effects.
+    "invader_sound": "string"        // [Optional]  || Registry name of the sound event played when an invader spawns with this rarity. Default value = "minecraft:block.end_portal.spawn".
 }
 ```
 
+Note: Per-category loot rule overrides are not part of the rarity object. To specify different rules for certain loot categories, use a [RarityOverride](./RarityOverride.md).
+
 # Examples
-The common loot rarity. This rarity has a gray color and uses `apotheosis:common_material` as the rarity material.  
-It applies one stat, and has a 25% chance to apply a second stat. It has no category overrides, and is highly-weighted in early world tiers, eventually falling off entirely.
+The common loot rarity. This rarity has a gray color and uses `apotheosis:mysterious_scrap_metal` as the rarity material.  
+It applies one stat, and has a 25% chance to apply a second stat. It is highly-weighted in early world tiers, eventually falling off entirely.  
+It also disables the beam effect (by setting the beam height to zero) and silences the invader spawn sound.
 
 ```json
 {
     "type": "apotheosis:rarity",
     "color": "#808080",
-    "material": "apotheosis:common_material",
-    "overrides": {},
+    "invader_sound": "minecraft:intentionally_empty",
+    "material": "apotheosis:mysterious_scrap_metal",
+    "render_data": {
+        "beam_height": 0.0,
+        "beam_radius": 0.035,
+        "beam_texture": "apotheosis:textures/rarity/beam.png",
+        "glow_radius": 0.065,
+        "glow_texture": "apotheosis:textures/rarity/glow.png"
+    },
     "rules": [
         {
             "type": "apotheosis:affix",

@@ -6,6 +6,6 @@ World Tiers are represented as string literals. They may take one of the followi
 
 1. `"haven"`
 2. `"frontier"`
-3. `"summit"`
-4. `"ascent"`
+3. `"ascent"`
+4. `"summit"`
 5. `"pinnacle"`
