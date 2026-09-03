@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.data;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import dev.shadowsoffire.apotheosis.Apoth.DataMaps;
@@ -41,7 +40,6 @@ public class ApothDataMapProvider extends DataMapProvider {
                 WorldTier.ASCENT, 0.020F,
                 WorldTier.SUMMIT, 0.025F,
                 WorldTier.PINNACLE, 0.03F),
-            Optional.empty(),
             SurfaceType.NEEDS_SKY_OR_SAME_VERTICAL_SLICE), false);
 
         invaderRules.add(BuiltinDimensionTypes.NETHER, new InvaderSpawnRules(
@@ -51,7 +49,6 @@ public class ApothDataMapProvider extends DataMapProvider {
                 WorldTier.ASCENT, 0.027F,
                 WorldTier.SUMMIT, 0.03F,
                 WorldTier.PINNACLE, 0.035F),
-            Optional.empty(),
             SurfaceType.ANY), false);
 
         invaderRules.add(BuiltinDimensionTypes.END, new InvaderSpawnRules(
@@ -61,7 +58,6 @@ public class ApothDataMapProvider extends DataMapProvider {
                 WorldTier.ASCENT, 0.020F,
                 WorldTier.SUMMIT, 0.025F,
                 WorldTier.PINNACLE, 0.03F),
-            Optional.empty(),
             SurfaceType.SURFACE_OUTER_END), false);
 
         invaderRules.add(TWILIGHT_FOREST, new InvaderSpawnRules(
@@ -71,7 +67,6 @@ public class ApothDataMapProvider extends DataMapProvider {
                 WorldTier.ASCENT, 0.053F,
                 WorldTier.SUMMIT, 0.06F,
                 WorldTier.PINNACLE, 0.063F),
-            Optional.empty(),
             SurfaceType.NEEDS_SURFACE), false, new ModLoadedCondition(TWILIGHT_FOREST.getNamespace()));
 
         Builder<LootCategory, Item> catOverrides = builder(DataMaps.LOOT_CATEGORY_OVERRIDES);

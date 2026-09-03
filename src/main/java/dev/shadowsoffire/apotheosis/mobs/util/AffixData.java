@@ -62,7 +62,7 @@ public record AffixData(float chance, Set<LootRarity> rarities) {
         if (mob.hasCustomName()) {
             mob.setCustomName(mob.getCustomName().plainCopy().withStyle(Style.EMPTY.withColor(rarity.color())));
         }
-        Invader.modifyBossItem(temp, mob.getName(), ctx, rarity, enchLevel, mob.level().registryAccess());
+        Invader.modifyBossItem(temp, mob.getName(), ctx, rarity, enchLevel, mob.level().registryAccess(), false);
         if (guaranteeDrop) {
             mob.setDropChance(selectedSlot, 2F);
         }

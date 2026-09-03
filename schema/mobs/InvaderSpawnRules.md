@@ -13,11 +13,13 @@ This object references the following objects:
 # Schema
 ```js
 {
-    "spawn_chances": {            // [Mandatory] || Per-tier chances that an eligible natural spawn is replaced with an invader. All five world tiers must be specified. Range: [0, 1].
+    "spawn_chances": {          // [Mandatory] || Per-tier chances that an eligible natural spawn is replaced with an invader. All five world tiers must be specified. Range: [0, 1].
         WorldTier: float
     },
-    "cooldown": integer,          // [Optional]  || A per-dimension cooldown (in ticks) between invader spawns. Defaults to the cooldown from the Apotheosis config. Range: [0, 720000].
-    "surface_type": SurfaceType   // [Mandatory] || The surface check applied to the target spawn position.
+    "surface_type": SurfaceType // [Mandatory] || The surface check applied to the target spawn position.
+    "cooldown": integer,        // [Optional]  || A per-dimension cooldown (in ticks) between invader spawns. Defaults to the cooldown from the Apotheosis config. Range: [0, 720000].
+    "cursed": integer,          // [Optional]  || A per-dimension override for the 'Curse Boss Items' config option.
+    "auto_aggro": integer,      // [Optional]  || A per-dimension override for the 'Boss Auto-Aggro' config option.
 }
 ```
 

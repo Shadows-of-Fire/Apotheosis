@@ -18,15 +18,21 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
  * @param cooldown     An optional cooldown override for this dimension. If not set, the configured default cooldown will be used.
  * @param surfaceType  The surface type used for this dimension.
  */
-public record InvaderSpawnRules(Map<WorldTier, Float> spawnChances, Optional<Integer> cooldown, SurfaceType surfaceType) {
+public record InvaderSpawnRules(Map<WorldTier, Float> spawnChances, SurfaceType surfaceType, Optional<Integer> cooldown, Optional<Boolean> cursed, Optional<Boolean> autoAggro) {
 
     public static final Codec<InvaderSpawnRules> CODEC = RecordCodecBuilder.<InvaderSpawnRules>create(inst -> inst
         .group(
             WorldTier.mapCodec(Codec.floatRange(0, 1)).fieldOf("spawn_chances").forGetter(InvaderSpawnRules::spawnChances),
+            SurfaceType.CODEC.fieldOf("surface_type").forGetter(InvaderSpawnRules::surfaceType),
             Codec.intRange(0, 720000).optionalFieldOf("cooldown").forGetter(InvaderSpawnRules::cooldown),
-            SurfaceType.CODEC.fieldOf("surface_type").forGetter(InvaderSpawnRules::surfaceType))
+            Codec.BOOL.optionalFieldOf("cursed").forGetter(InvaderSpawnRules::cursed),
+            Codec.BOOL.optionalFieldOf("auto_aggro").forGetter(InvaderSpawnRules::autoAggro))
         .apply(inst, InvaderSpawnRules::new))
         .validate(InvaderSpawnRules::validate);
+
+    public InvaderSpawnRules(Map<WorldTier, Float> spawnChances, SurfaceType surfaceType) {
+        this(spawnChances, surfaceType, Optional.empty(), Optional.empty(), Optional.empty());
+    }
 
     private static DataResult<InvaderSpawnRules> validate(InvaderSpawnRules rules) {
         if (rules.spawnChances.size() == WorldTier.values().length) {
