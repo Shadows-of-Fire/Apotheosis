@@ -1,0 +1,9 @@
+{
+    "replace": false,
+	"values": [
+        {
+            "id": "occultism:soul_shattered",
+            "required": false
+        }
+	]
+}

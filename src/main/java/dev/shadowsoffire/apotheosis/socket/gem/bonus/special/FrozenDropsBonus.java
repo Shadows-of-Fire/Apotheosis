@@ -5,6 +5,7 @@ import java.util.Map;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
@@ -86,6 +87,10 @@ public class FrozenDropsBonus extends GemBonus {
     private static void increaseLootDrops(ObjectArrayList<ItemStack> loot, float percent, RandomSource rand) {
         for (int i = 0; i < loot.size(); i++) {
             ItemStack stack = loot.get(i);
+            if (stack.is(Apoth.Tags.CANNOT_BE_DUPLICATED)) {
+                continue;
+            }
+
             int max = stack.getMaxStackSize();
 
             // Figure out how much we want to increase the loot drops by.
