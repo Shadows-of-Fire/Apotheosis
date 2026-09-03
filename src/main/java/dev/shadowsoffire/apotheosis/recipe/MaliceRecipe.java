@@ -1,11 +1,16 @@
 package dev.shadowsoffire.apotheosis.recipe;
 
+import java.util.Map;
+
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
+import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
+import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.socket.ReactiveSmithingRecipe;
 import dev.shadowsoffire.apotheosis.util.ApothSmithingRecipe;
+import dev.shadowsoffire.placebo.dynreg.DynamicHolder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -28,7 +33,7 @@ public class MaliceRecipe extends ApothSmithingRecipe implements ReactiveSmithin
     public boolean matches(SmithingRecipeInput inv, Level level) {
         ItemStack base = inv.getItem(BASE);
         ItemStack sigils = inv.getItem(ADDITION);
-        return base.getCount() == 1 && sigils.is(Items.SIGIL_OF_MALICE) && AffixHelper.getAffixes(base).size() >= 2 && !base.getOrDefault(Apoth.Components.TOUCHED_BY_MALICE, false);
+        return base.getCount() == 1 && sigils.is(Items.SIGIL_OF_MALICE) && hasEnoughAffixes(base);
     }
 
     /**
@@ -59,6 +64,11 @@ public class MaliceRecipe extends ApothSmithingRecipe implements ReactiveSmithin
     @Override
     public boolean isSpecial() {
         return true;
+    }
+
+    private static boolean hasEnoughAffixes(ItemStack stack) {
+        Map<DynamicHolder<Affix>, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+        return affixes.values().stream().filter(a -> a.isValid() && !a.isLevelIndependent()).count() >= 2;
     }
 
 }

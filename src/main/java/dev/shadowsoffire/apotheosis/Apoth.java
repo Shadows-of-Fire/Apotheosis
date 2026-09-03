@@ -203,7 +203,7 @@ public class Apoth {
 
         public static final DataComponentType<Boolean> MALICE_MARKER = R.component("malice_marker", b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
-        public static final DataComponentType<Boolean> TOUCHED_BY_MALICE = R.component("touched_by_malice", b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+        public static final DataComponentType<Integer> TOUCHED_BY_MALICE = R.component("touched_by_malice", b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 
         public static final DataComponentType<Float> RENDER_ALPHA = R.component("render_alpha", b -> b.persistent(Codec.FLOAT).networkSynchronized(ByteBufCodecs.FLOAT));
 

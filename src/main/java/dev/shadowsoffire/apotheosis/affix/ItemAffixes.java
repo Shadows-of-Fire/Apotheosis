@@ -100,7 +100,7 @@ public final class ItemAffixes {
         }
 
         public Builder put(DynamicHolder<Affix> affix, float level) {
-            if (level <= 0) {
+            if (level < 0) {
                 this.affixes.removeFloat(affix);
             }
             else {
