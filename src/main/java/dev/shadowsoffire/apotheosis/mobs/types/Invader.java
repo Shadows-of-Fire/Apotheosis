@@ -16,6 +16,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
+import dev.shadowsoffire.apotheosis.Apoth.DataMaps;
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.Affix;
@@ -26,6 +27,7 @@ import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.mobs.InvaderSpawnRules;
 import dev.shadowsoffire.apotheosis.mobs.util.BasicBossData;
 import dev.shadowsoffire.apotheosis.mobs.util.BossStats;
 import dev.shadowsoffire.apotheosis.tiers.Constraints;
@@ -54,6 +56,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -72,6 +75,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.network.connection.ConnectionType;
 
@@ -249,8 +253,16 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
             }
 
             if (s == guaranteed) {
+
+                boolean cursed = false;
+                if (mob.level() instanceof ServerLevelAccessor sl) {
+                    ResourceKey<DimensionType> dimId = sl.getLevel().dimensionTypeRegistration().getKey();
+                    InvaderSpawnRules rules = sl.registryAccess().lookupOrThrow(Registries.DIMENSION_TYPE).getData(DataMaps.INVADER_SPAWN_RULES, dimId);
+                    cursed = rules.cursed().orElse(AdventureConfig.curseBossItems);
+                }
+
                 mob.setDropChance(s, 2F);
-                mob.setItemSlot(s, modifyBossItem(stack, mob.getName(), ctx, rarity, stats.enchLevels().primary(), mob.level().registryAccess()));
+                mob.setItemSlot(s, modifyBossItem(stack, mob.getName(), ctx, rarity, stats.enchLevels().primary(), mob.level().registryAccess(), cursed));
                 mob.setCustomName(mob.getName().copy().withStyle(Style.EMPTY.withColor(rarity.color())));
             }
             else if (rand.nextFloat() < stats.enchantChance()) {
@@ -278,7 +290,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         EnchantmentHelper.setEnchantments(stack, builder.toImmutable());
     }
 
-    public static ItemStack modifyBossItem(ItemStack stack, Component bossName, GenContext ctx, LootRarity rarity, int enchLevel, RegistryAccess reg) {
+    public static ItemStack modifyBossItem(ItemStack stack, Component bossName, GenContext ctx, LootRarity rarity, int enchLevel, RegistryAccess reg, boolean cursed) {
         RandomSource rand = ctx.rand();
         if (enchLevel > 0) {
             enchantBossItem(rand, stack, enchLevel, true, reg);
@@ -321,7 +333,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
             }
         }
 
-        if (AdventureConfig.curseBossItems) {
+        if (cursed) {
             List<Holder.Reference<Enchantment>> curses = reg.lookupOrThrow(Registries.ENCHANTMENT).listElements().filter(e -> e.is(EnchantmentTags.CURSE) && e.is(EnchantmentTags.ON_MOB_SPAWN_EQUIPMENT)).toList();
             if (!curses.isEmpty()) {
                 Holder<Enchantment> curse = curses.get(rand.nextInt(curses.size()));
