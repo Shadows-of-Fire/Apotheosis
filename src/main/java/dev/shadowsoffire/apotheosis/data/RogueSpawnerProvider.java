@@ -277,12 +277,12 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
                     "id": "minecraft:fire_resistance",
                     "amplifier": 0
                 }],
-                "HandItems": [{
+                "equipment": {
+                    "mainhand": {
                         "id": "minecraft:crossbow",
-                        "Count": 1
-                    },
-                    {}
-                ]
+                        "count": 1
+                    }
+                }
             }
             """;
         return parse(rawNbt);

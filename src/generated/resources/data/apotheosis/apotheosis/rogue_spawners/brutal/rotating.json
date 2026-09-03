@@ -110,13 +110,6 @@
         {
             "data": {
                 "entity": {
-                    "HandItems": [
-                        {
-                            "Count": 1,
-                            "id": "minecraft:crossbow"
-                        },
-                        {}
-                    ],
                     "Health": 36.0,
                     "active_effects": [
                         {
@@ -162,6 +155,12 @@
                             ]
                         }
                     ],
+                    "equipment": {
+                        "mainhand": {
+                            "count": 1,
+                            "id": "minecraft:crossbow"
+                        }
+                    },
                     "id": "minecraft:pillager"
                 }
             },
