@@ -595,6 +595,11 @@ public class Apoth {
          * This is necessary for certain effects (i.e. night vision) that have different effects at low duration levels.
          */
         public static final TagKey<MobEffect> EXTENDED_CHARM_DURATION = TagKey.create(Registries.MOB_EFFECT, Apotheosis.loc("extended_charm_duration"));
+
+        /**
+         * Items in this tag are prevented from duplication from means that try to grant the user additional loot.
+         */
+        public static final TagKey<Item> CANNOT_BE_DUPLICATED = TagKey.create(Registries.ITEM, Apotheosis.loc("cannot_be_duplicated"));
     }
 
     public static final class DamageTypes {

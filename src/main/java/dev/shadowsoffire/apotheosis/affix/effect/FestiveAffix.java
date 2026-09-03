@@ -10,6 +10,7 @@ import java.util.Set;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixBuilder;
 import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
@@ -118,7 +119,7 @@ public class FestiveAffix extends Affix {
 
                 List<ItemEntity> drops = new ArrayList<>(e.getDrops());
                 for (ItemEntity item : drops) {
-                    if (((IFestiveMarker) (Object) item.getItem()).isMarked()) {
+                    if (((IFestiveMarker) (Object) item.getItem()).isMarked() || item.getItem().is(Apoth.Tags.CANNOT_BE_DUPLICATED)) {
                         continue;
                     }
 
