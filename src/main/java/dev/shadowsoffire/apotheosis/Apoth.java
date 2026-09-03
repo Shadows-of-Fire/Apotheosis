@@ -82,11 +82,11 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
-import dev.shadowsoffire.apotheosis.util.SpawnEggIngredient;
 import dev.shadowsoffire.apotheosis.util.LootPatternMatcher;
 import dev.shadowsoffire.apotheosis.util.RadialUtil.RadialState;
 import dev.shadowsoffire.apotheosis.util.SingletonRecipeSerializer;
 import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.util.SpawnEggIngredient;
 import dev.shadowsoffire.apothic_attributes.api.ALObjects;
 import dev.shadowsoffire.apothic_attributes.modifiers.EntitySlotGroup;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType.TickSide;
@@ -195,7 +195,7 @@ public class Apoth {
 
         public static final DataComponentType<Boolean> MALICE_MARKER = R.component("malice_marker", b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
-        public static final DataComponentType<Boolean> TOUCHED_BY_MALICE = R.component("touched_by_malice", b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+        public static final DataComponentType<Integer> TOUCHED_BY_MALICE = R.component("touched_by_malice", b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 
         private static void bootstrap() {}
 

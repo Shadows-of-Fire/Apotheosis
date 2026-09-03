@@ -23,7 +23,6 @@ import dev.shadowsoffire.apothic_attributes.ApothicAttributes;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.CachedObject;
 import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
-import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -217,7 +216,7 @@ public class AffixHelper {
      */
     public static void applyMalice(Player player, ItemStack stack) {
         Map<DynamicHolder<Affix>, AffixInstance> affixes = AffixHelper.getAffixes(stack);
-        if (affixes.isEmpty() || affixes.size() < 2) {
+        if (affixes.size() < 2) {
             return;
         }
 
@@ -225,9 +224,12 @@ public class AffixHelper {
         RandomSource rand = new XoroshiroRandomSource(seed);
 
         ItemAffixes.Builder builder = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY).toBuilder();
-        List<DynamicHolder<Affix>> afxList = new ArrayList<>(affixes.keySet());
+        List<AffixInstance> afxList = new ArrayList<>(affixes.values());
 
-        // TODO: Should we filter out affixes that are level-independent?
+        afxList.removeIf(inst -> !inst.isValid() || inst.isLevelIndependent());
+        if (afxList.size() < 2) {
+            return;
+        }
 
         // Choose two distinct indices
         int size = afxList.size();
@@ -238,21 +240,21 @@ public class AffixHelper {
         }
         while (secondIndex == firstIndex);
 
-        DynamicHolder<Affix> buffed = afxList.get(firstIndex);
-        DynamicHolder<Affix> removed = afxList.get(secondIndex);
+        AffixInstance buffed = afxList.get(firstIndex);
+        AffixInstance reset = afxList.get(secondIndex);
 
-        builder.upgrade(buffed, 1.5F);
-        float oldLevel = builder.getLevel(removed);
-        builder.remove(removed);
+        builder.upgrade(buffed.affix(), 2F);
+        float oldLevel = builder.getLevel(reset.affix());
+        builder.put(reset.affix(), 0);
 
         setAffixes(stack, builder.build());
-        stack.set(Components.TOUCHED_BY_MALICE, true);
+        stack.set(Components.TOUCHED_BY_MALICE, stack.getOrDefault(Components.TOUCHED_BY_MALICE, 0) + 1);
         player.getPersistentData().putInt(ReforgingMenu.REFORGE_SEED, player.getRandom().nextInt());
 
         AttributeTooltipContext ctx = AttributeTooltipContext.of(player, TooltipContext.of(player.level()), ApothicAttributes.getTooltipFlag());
 
-        AffixInstance buff = new AffixInstance(buffed, 1.5F, getRarity(stack), stack);
-        AffixInstance rem = new AffixInstance(removed, oldLevel, getRarity(stack), stack);
+        AffixInstance buff = new AffixInstance(buffed.affix(), 2F, getRarity(stack), stack);
+        AffixInstance rem = new AffixInstance(reset.affix(), oldLevel, getRarity(stack), stack);
 
         MutableComponent buffedName = Component.translatable("[%s]", buff.getName(true));
         buffedName.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, buff.getAugmentingText(ctx))));
@@ -285,11 +287,6 @@ public class AffixHelper {
         }
 
         setAffixes(stack, builder.build());
-    }
-
-    @Deprecated
-    public static StepFunction step(float min, int steps, float step) {
-        return new StepFunction(min, steps, step);
     }
 
     private static TranslatableContents copyContents(Component comp) {

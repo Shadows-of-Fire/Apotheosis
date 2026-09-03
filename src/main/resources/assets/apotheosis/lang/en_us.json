@@ -578,7 +578,7 @@
     "item.apotheosis.sigil_of_unnaming.desc": "Removes the affixed name from an item",
 
     "item.apotheosis.sigil_of_malice": "Sigil of Malice",
-    "item.apotheosis.sigil_of_malice.desc": "Applies Touch of Malice to an Affix Item",
+    "item.apotheosis.sigil_of_malice.desc": "Overcharges one Affix and resets another",
 
     "item.apotheosis.sigil_of_supremacy": "Sigil of Supremacy",
     "item.apotheosis.sigil_of_supremacy.desc": "Overcharges every Affix on an Affix Item",
@@ -700,7 +700,7 @@
     "text.apotheosis.any_x_item": "Any %s Affix Item",
     "text.apotheosis.any_affix_item": "Any Affix Item",
     "text.apotheosis.malice_marker": "Malice will be applied on craft",
-    "text.apotheosis.touched_by_malice": "Touched by Malice",
+    "text.apotheosis.touched_by_malice": "Touched by Malice (x%s)",
     "text.apotheosis.malice_notice": "Malice: %s consumed the strength of %s",
 
     "title.apotheosis.smithing": "Apothic Smithing",
