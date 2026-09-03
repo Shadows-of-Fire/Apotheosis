@@ -113,7 +113,7 @@
                 "entity": {
                     "HandItems": [
                         {
-                            "Count": 1,
+                            "count": 1,
                             "id": "minecraft:crossbow"
                         },
                         {}

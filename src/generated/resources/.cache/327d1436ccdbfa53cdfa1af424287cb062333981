@@ -1,7 +1,7 @@
-// 1.21.1	2024-12-24T21:46:29.6487067	Rogue Spawners
+// 1.21.1	2026-09-03T02:54:46.8841505	Rogue Spawners
 c4aabb8d82ae4b5c68273aee22913ae9663dcac4 data/apotheosis/rogue_spawners/brutal/husk.json
-bf57eb0915d3147d97e703bb00751208c128acd2 data/apotheosis/rogue_spawners/brutal/pillager.json
-6dc0a8d734a6a47fe496e63dd6d6649bfd0c76a5 data/apotheosis/rogue_spawners/brutal/rotating.json
+81466835457a0af8cc2eaa6a5c3936aec2a12448 data/apotheosis/rogue_spawners/brutal/pillager.json
+ddf8fa35e4211910d0784b61e966269b73b6b068 data/apotheosis/rogue_spawners/brutal/rotating.json
 b87565bb5a2504749641fc64a08aed60698b6d55 data/apotheosis/rogue_spawners/brutal/zombie.json
 fdd60e6630f4750cee938004e66ac2a58bcbae49 data/apotheosis/rogue_spawners/swarm/baby_zombie.json
 85bc2f51f3175de12d41a6c6c68944ae35ce78ae data/apotheosis/rogue_spawners/swarm/cave_spider.json

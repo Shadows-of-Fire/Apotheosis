@@ -279,7 +279,7 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
                 }],
                 "HandItems": [{
                         "id": "minecraft:crossbow",
-                        "Count": 1
+                        "count": 1
                     },
                     {}
                 ]
