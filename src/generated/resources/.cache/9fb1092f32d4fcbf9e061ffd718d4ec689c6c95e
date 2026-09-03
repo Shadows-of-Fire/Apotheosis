@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-02T17:31:30.9669826	Recipes
+// 1.21.1	2026-09-03T02:16:36.3897318	Recipes
 08455beee9b23aab90de527b375f50524aa8c572 data/apotheosis/recipe/ascent_spawner_upgrade_rune.json
 2969bc1293b302c912c50ce6bd5bc97d52aa4b1b data/apotheosis/recipe/augmenting_table.json
 8a715f70fe1e48fe84d349ecc5e5b039ff3a3865 data/apotheosis/recipe/burning_spawner_rune.json
@@ -112,7 +112,7 @@ ee49a1d473c5cb47aea5834c917405f1f3bafa30 data/apotheosis/recipe/spawner_modifier
 7b61f63271f516fcee7375e493c51e10349942f2 data/apotheosis/recipe/spawner_modifiers/ignore_conditions.json
 315f5eec10c758f83edf50fe9d4b23e089b1efc6 data/apotheosis/recipe/spawner_modifiers/ignore_light.json
 aaff97b5d623bcc1c20f60b3934f929086c53397 data/apotheosis/recipe/spawner_modifiers/ignore_players.json
-0f99f5fab9c8d88996e123c045999cdb5c6f526e data/apotheosis/recipe/spawner_modifiers/initial_health.json
+ba86fbc9725a93ca08a77aea627878cdfb245baf data/apotheosis/recipe/spawner_modifiers/initial_health.json
 507e318b8b80720613fc6246d29ce0e975a07412 data/apotheosis/recipe/spawner_modifiers/no_ai.json
 803dc8b1815ae9eba72970eb1129cba117922ced data/apotheosis/recipe/spawner_modifiers/redstone_control.json
 8e2de955cf23306805d45ad416ab0a62bedebf33 data/apotheosis/recipe/spawner_modifiers/silent.json
@@ -127,7 +127,7 @@ e088de224b5a850b0ac931bc1a72ed6841bff9a2 data/apotheosis/recipe/spawner_modifier
 a2ef6fc130077c3384a4d3164f89e3878bb7a6b9 data/apotheosis/recipe/spawner_modifiers/_inverse/ignore_conditions.json
 90a216fb6a4f14eddbe0821bc69bcc2c82029d45 data/apotheosis/recipe/spawner_modifiers/_inverse/ignore_light.json
 69edb680a997577b6a3ea748d3579b0a9f49ff06 data/apotheosis/recipe/spawner_modifiers/_inverse/ignore_players.json
-0ce05b6629aca464de26acd0a5b2b5fbb0869a49 data/apotheosis/recipe/spawner_modifiers/_inverse/initial_health.json
+7cdfc1e8ee07f2529038e68a08a15a7a1f7d3b8e data/apotheosis/recipe/spawner_modifiers/_inverse/initial_health.json
 5182c8c2a3fbc917ce53de2dbd05a18efb19b000 data/apotheosis/recipe/spawner_modifiers/_inverse/no_ai.json
 2cdf899e82e7597402c242d72936402bdc4fe410 data/apotheosis/recipe/spawner_modifiers/_inverse/redstone_control.json
 198323d55c08480c2ef4bc5a65a6b80e44012cbd data/apotheosis/recipe/spawner_modifiers/_inverse/silent.json

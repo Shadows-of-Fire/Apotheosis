@@ -13,7 +13,7 @@
         {
             "type": "apothic_spawners:initial_health",
             "min": 0.2,
-            "value": -0.05
+            "value": -0.16
         }
     ]
 }

@@ -285,8 +285,8 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
         this.addRune("spawn_range", Items.SPAWN_RANGE_SPAWNER_RUNE, intChange(SpawnerStats.SPAWN_RANGE, 2, null, 32));
         this.addInverseRune("spawn_range", Items.SPAWN_RANGE_SPAWNER_RUNE, intChange(SpawnerStats.SPAWN_RANGE, -2, 1, null));
 
-        this.addRune("initial_health", Items.INITIAL_HEALTH_SPAWNER_RUNE, floatChange(SpawnerStats.INITIAL_HEALTH, -0.05F, 0.20F, null));
-        this.addInverseRune("initial_health", Items.INITIAL_HEALTH_SPAWNER_RUNE, floatChange(SpawnerStats.INITIAL_HEALTH, 0.05F, null, 1.0F));
+        this.addRune("initial_health", Items.INITIAL_HEALTH_SPAWNER_RUNE, floatChange(SpawnerStats.INITIAL_HEALTH, -0.16F, 0.20F, null));
+        this.addInverseRune("initial_health", Items.INITIAL_HEALTH_SPAWNER_RUNE, floatChange(SpawnerStats.INITIAL_HEALTH, 0.16F, null, 1.0F));
 
         this.addRune("ignore_players", Items.IGNORE_PLAYERS_SPAWNER_RUNE, boolSet(SpawnerStats.IGNORE_PLAYERS, true));
         this.addInverseRune("ignore_players", Items.IGNORE_PLAYERS_SPAWNER_RUNE, boolSet(SpawnerStats.IGNORE_PLAYERS, false));
@@ -380,7 +380,6 @@ public class ApothRecipeProvider extends LegacyRecipeProvider {
     /**
      * Crafting-table fallbacks for the infused rune line, used when Apothic Spawners is installed but Apothic
      * Enchanting is not.
-     * 
      * Note that Exp Bottles are pretty hard to come by without AEnch, so this might actually be a harder set of recipes...
      */
     private void addFallbackInfusedRuneRecipes() {
