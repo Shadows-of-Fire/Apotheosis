@@ -1,17 +1,17 @@
 {
-    "name": "Remendo de vida",
+    "name": "Remendo vital",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(4)Remendo de vida$() é um encantamento corrompido aplicável a todos os itens de dano.$(p)Enquanto $(9)remendo$() converte a experiência recebida em durabilidade, $(4)remendo de vida$() converte a cura recebida em durabilidade.$(p)A durabilidade por ponto de saúde aumenta com o nível."
+            "text": "$(4)Remendo Vital$() é um encantamento corrompido aplicável a itens com durabilidade.$(p)Enquanto $(9)Remendo$() converte experiência em durabilidade, $(4)Remendo Vital$() converte a cura recebida em durabilidade.$(p)A durabilidade restaurada por ponto de vida aumenta com o nível."
         },
-		{
+        {
             "type": "patchouli:text",
-            "text": "Além disso, esse encantamento pode ser encontrado na mesa de encantamentos."
+            "text": "Além disso, esse encantamento pode ser encontrado na Mesa de Encantamentos."
         }
-	]
+    ]
 }

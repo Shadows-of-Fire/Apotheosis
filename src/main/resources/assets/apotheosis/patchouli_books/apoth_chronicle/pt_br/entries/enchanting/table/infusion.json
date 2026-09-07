@@ -1,20 +1,20 @@
 {
-    "name": "Encantamento de infusão",
-    "icon": "apotheosis:infused_hellshelf",
-    "category": "apothic_enchanting:infused_hellshelf",
-	"flag": "apotheosis:enchanting",
+    "name": "Encantamento por infusão",
+    "icon": "apothic_enchanting:infused_hellshelf",
+    "category": "apotheosis:enchanting/table",
+    "flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Encantamento de infusão$() é um novo método de criação através da mesa de encantamentos.$(p)Cada receita de infusão tem um único item de entrada e três requisitos de status."
+            "text": "O $(9)Encantamento por Infusão$() é um novo método de fabricação realizado na Mesa de Encantamentos.$(p)Cada receita possui um item de entrada e três requisitos de atributos."
         },
-		{
-			"type": "patchouli:text",
-			"text": "Cada requisito de status normalmente requer pelo menos algum valor e, opcionalmente, terá um valor máximo.$(p)Encantamentos de infusão usam apenas o terceiro encaixe e permitem que você gaste mais experiência."
-		},
-		{
-			"type": "patchouli:text",
-			"text": "Para realizar um encantamento de infusão, basta colocar o item no encaixe.$(p)Se você tiver os status corretas, o terceiro encaixe acenderá, e clicando nele, realizará a infusão."
-		}
-	]
+        {
+            "type": "patchouli:text",
+            "text": "Cada requisito normalmente exige um valor mínimo e pode também estabelecer um valor máximo.$(p)O Encantamento por Infusão usa apenas o terceiro encaixe e permite gastar mais experiência."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Para realizar um Encantamento por Infusão, coloque o item no encaixe.$(p)Quando os atributos exigidos forem atendidos, o terceiro encaixe acenderá. Clique nele para concluir a infusão."
+        }
+    ]
 }

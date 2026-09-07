@@ -1,17 +1,17 @@
 {
-    "name": "Defensa refletiva",
+    "name": "Defesas refletoras",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Defensa refletiva$() é um encantamento de escudo.$(p)Faz com que todos os ataques bloqueados inflijam uma parte do dano de volta ao atacante.$(p)Mais especificamente, 15% do dano bloqueado é refletido de volta."
+            "text": "$(9)Defesas Refletoras$() é um encantamento para escudos.$(p)Faz com que ataques bloqueados devolvam parte do dano ao atacante.$(p)Mais especificamente, 15% do dano bloqueado é refletido."
         },
-		{
+        {
             "type": "patchouli:text",
-            "text": "O dano refletido é transformado em dano mágico.$(p)Níveis suficientemente altos de $(9)defesa refletiva$() infligirão mais do que o dano original."
+            "text": "O dano refletido é transformado em dano mágico.$(p)Níveis suficientemente altos de $(9)Defesas Refletoras$() infligirão mais do que o dano original."
         }
-	]
+    ]
 }

@@ -1,5 +1,5 @@
 {
-    "name": "Pó de Gema",
+    "name": "Pó de gema",
     "icon": "apotheosis:gem_dust",
     "category": "apotheosis:adventure/gems",
     "flag": "apotheosis:adventure",
@@ -14,8 +14,8 @@
         {
             "type": "patchouli:crafting",
             "recipe": "apotheosis:salvaging_table",
-            "title": "Reciclando Gemas",
-            "text": "Depois de esmagar algumas Gemas com uma bigorna, você pode criar e usar a $(9)Mesa de Reciclagem$() em vez disso."
+            "title": "Reciclagem de gemas",
+            "text": "Depois de triturar algumas Gemas com uma Bigorna, você poderá fabricar e usar a $(9)Bancada de Reciclagem$() para fazer isso com mais facilidade."
         }
     ]
 }

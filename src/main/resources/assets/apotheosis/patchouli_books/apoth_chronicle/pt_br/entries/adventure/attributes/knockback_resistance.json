@@ -1,13 +1,13 @@
 {
-    "name": "Resistência a impacto",
+    "name": "Resistência à repulsão",
     "icon": "minecraft:shulker_shell",
     "category": "apotheosis:adventure/attributes",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Resistência a impacto$() é o quão resistente você é para ser derrubado por ataques. No valor máximo, você fica imune a impacto.$(p)Geralmente fornecido por armaduras ou escudos."
+            "text": "$(9)Resistência à repulsão$() é o quão resistente você é para ser derrubado por ataques. No valor máximo, você fica imune a impacto.$(p)Geralmente fornecido por armaduras ou escudos."
         }
-	]
+    ]
 }

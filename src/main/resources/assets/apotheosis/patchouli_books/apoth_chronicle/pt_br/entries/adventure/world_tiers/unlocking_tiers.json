@@ -1,42 +1,42 @@
 {
-    "name": "Desbloqueando Níveis",
+    "name": "Desbloqueio dos Níveis de Mundo",
     "icon": "apotheosis:textures/gui/book/frontier_icon.png",
     "category": "apotheosis:adventure/world_tiers",
     "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Cada $(6)Nível Mundial$() must ser desbloqueado antes que você possa ativá-lo (exceto o Refúgio, que é habilitado por padrão).$(p)O desbloqueio dos níveis mundiais é feito completando Conquistas específicas.$(p)Uma vez que um nível é desbloqueado, você precisa ativá-lo na $(l:apotheosis:adventure/world_tiers/select_screen)Tela de Seleção$()."
+            "text": "Cada $(6)Nível de Mundo$() precisa ser desbloqueado antes de poder ser ativado, com exceção do Refúgio, que vem habilitado por padrão.$(p)Os níveis são desbloqueados ao concluir progressos específicos.$(p)Depois de desbloquear um nível, ative-o na $(l:apotheosis:adventure/world_tiers/select_screen)tela de seleção$()."
         },
         {
             "type": "patchouli:text",
             "title": "Prefácio",
-            "text": "Esta seção cobrirá os requisitos padrão para desbloquear os níveis mundiais.$(p)Nota: modpacks podem alterar esses requisitos, portanto, consulte a aba de Conquistas \\\"Níveis Mundiais Apóticos\\\" para informações completas."
+            "text": "Esta seção apresenta os requisitos padrão para desbloquear os Níveis de Mundo.$(p)Observação: modpacks podem alterar esses requisitos. Consulte a aba de progressos “Níveis de Mundo Apóticos” para obter as informações completas."
         },
         {
             "type": "patchouli:text",
             "title": "Refúgio",
-            "text": "$(9)Refúgio$() é desbloqueado por padrão, embora você não possa vê-lo até pegar seu primeiro Item de Afixo."
+            "text": "O $(9)Refúgio$() é desbloqueado por padrão, embora só se torne visível após você obter seu primeiro item com afixo."
         },
         {
             "type": "patchouli:text",
             "title": "Fronteira",
-            "text": "$(9)Fronteira$() é desbloqueado equipando um Item de Afixo em cada slot de armadura e segurando uma Arma com Afixo em qualquer mão."
+            "text": "A $(9)Fronteira$() é desbloqueada ao equipar um item com afixo em cada espaço de armadura e segurar uma arma com afixo em uma das mãos."
         },
         {
             "type": "patchouli:text",
             "title": "Ascensão",
-            "text": "Desbloquear a $(9)Ascensão$() requer que você equipe um conjunto completo de Itens de Afixo $(#33FF33)Incomuns$(), incluindo uma arma.$(p)Você também precisará matar um Invasor Apótico."
+            "text": "Para desbloquear a $(9)Ascensão$(), equipe um conjunto completo de itens com afixo $(#33FF33)Incomuns$(), incluindo uma arma.$(p)Você também precisará derrotar um Invasor Apótico."
         },
         {
             "type": "patchouli:text",
             "title": "Cume",
-            "text": "Chegar ao $(9)Cume$() é um pouco mais difícil.$(p)Você precisará adquirir um conjunto completo de Itens de Afixo $(#5555FF)Raros$() e ter matado o Wither."
+            "text": "Chegar ao $(9)Cume$() é um pouco mais difícil.$(p)Você precisará obter um conjunto completo de itens com afixo $(#5555FF)Raros$() e derrotar o Wither."
         },
         {
             "type": "patchouli:text",
             "title": "Pináculo",
-            "text": "O nível final, $(9)Pináculo$(), requer que você não apenas obtenha um conjunto completo de $(#BB00BB)Itens de Afixo Épicos$(), mas também que tenha derrotado o Dragão do End."
+            "text": "O nível final, o $(9)Pináculo$(), exige um conjunto completo de itens com afixo $(#BB00BB)Épicos$() e a derrota do Dragão End."
         }
     ]
 }

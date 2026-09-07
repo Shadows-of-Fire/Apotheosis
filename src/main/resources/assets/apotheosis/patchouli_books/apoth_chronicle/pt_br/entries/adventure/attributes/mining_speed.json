@@ -2,12 +2,12 @@
     "name": "Velocidade de mineração",
     "icon": "minecraft:netherite_pickaxe",
     "category": "apotheosis:adventure/attributes",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Ao aumentar sua $(9)velocidade de mineração$() aumenta a velocidade com que você quebra blocos. Você quebra os blocos de forma normal ao valor base de 1,0.$(p)Encontrado em picaretas e pás."
+            "text": "Ao aumentar sua $(9)velocidade de mineração$(), acelera a velocidade com que você quebra blocos. Você quebra os blocos de forma normal ao valor base de 1,0.$(p)Encontrado em picaretas e pás."
         }
-	]
+    ]
 }

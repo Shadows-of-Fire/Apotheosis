@@ -1,7 +1,7 @@
 {
     "name": "Geradores traiçoeiros",
-    "description": "São geradores únicos encontrados pelas cavernas, cobertos por um bloco resistente e escondendo um baú embaixo.$(p)Como eles não têm origem, propósito ou dono, nos referimos a eles como $(9)geradores traiçoeiros$().",
+    "description": "São geradores únicos encontrados em cavernas, protegidos por um bloco resistente e com um baú escondido embaixo.$(p)Como não têm origem, propósito ou dono conhecidos, são chamados de $(9)geradores traiçoeiros$().",
     "icon": "minecraft:spawner",
-	"flag": "apotheosis:adventure",
-	"parent": "apotheosis:adventure/adventure"
+    "flag": "apotheosis:adventure",
+    "parent": "apotheosis:adventure/adventure"
 }

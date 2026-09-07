@@ -1,67 +1,67 @@
 {
-    "name": "Status de gerador",
+    "name": "Parâmetros do gerador",
     "icon": "minecraft:writable_book",
     "category": "apotheosis:spawner/spawner",
-	"flag": "apotheosis:spawner",
-	"sortnum": 0,
+    "flag": "apotheosis:spawner",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Cada gerador tem $(9)status$(), que ditam sua operação.$(p)Quanto tempo entre as gerações, quantos mobs são gerados, etc.$(p)Este capítulo detalha todos eles."
+            "text": "Cada gerador possui $(9)parâmetros$() que controlam seu funcionamento, como o intervalo entre gerações e a quantidade de criaturas geradas.$(p)Este capítulo detalha cada um deles."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Atraso na geração",
-            "text": "Após um gerador gerar uma entidade, há um atraso até a próxima geração.$(p)Esse atraso é um número aleatório entre o $(9)atraso mínimo de geração$() e o $(9)atraso máximo de geração$( ).$(p)Se o atraso máximo estiver sempre abaixo do atraso mínimo, o atraso mínimo é usado."
+            "title": "Atraso na geração",
+            "text": "Após um gerador criar uma entidade, há um atraso até a próxima geração.$(p)Esse atraso é um valor aleatório entre o $(9)atraso mínimo de geração$() e o $(9)atraso máximo de geração$().$(p)Se o atraso máximo ficar abaixo do mínimo, o atraso mínimo será usado."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Contagem de geração",
-            "text": "A $(9)contagem de geração$() determina quantos mobs são gerados de uma vez.$(p)Nem todas as gerações serão bem-sucedidas, então, às vezes, menos entidades irão aparecer.$(p)A geração é contada como bem-sucedida (e marcada como a reinicialização do atraso) desde que uma entidade apareça."
+            "title": "Contagem de geração",
+            "text": "A $(9)contagem de geração$() determina quantas criaturas são geradas de uma vez.$(p)Nem todas as tentativas são bem-sucedidas, portanto às vezes menos entidades aparecem.$(p)A geração é considerada bem-sucedida, reiniciando o atraso, desde que pelo menos uma entidade apareça."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Entidades máximas",
+            "title": "Entidades máximas",
             "text": "Geradores rastreiam o número de entidades próximas.$(p)Se esse número exceder o $(9)máximo de entidades$(), a geração para.$(p)Apenas entidades do mesmo tipo que a gerada são contadas."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Alcance de ativação",
+            "title": "Alcance de ativação",
             "text": "Geradores requerem um jogador próximo para operar.$(p)Esse jogador deve estar dentro do $(9)alcance de ativação$(), que é um raio em blocos, para a geração correr."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Alcance de geração",
+            "title": "Alcance de geração",
             "text": "O $(9)alcance de geração$() é um raio em blocos de quão longe as entidades podem aparecer.$(p)Tente certificar-se de que esta área seja adequada para entidades, caso contrário, algumas gerações podem falhar."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Ignora jogadores",
+            "title": "Ignora jogadores",
             "text": "Um gerador que $(9)ignora jogadores$() não precisa de um jogador dentro do $(9)alcance de ativação$().$(p)Ele funcionará com ou sem um jogador próximo."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Ignora condições",
+            "title": "Ignora condições",
             "text": "Um gerador que $(9)ignora condições$() não exigirá mais certas condições de desova específicas da criatura.$(p)Isso inclui coisas como a exigência de grama para animais.$(p)Ele só precisará de espaço suficiente e uma falta de entidades próximas."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Controle de Redstone",
-            "text": "Um gerador com $(9)controle de redstone$() requer um sinal redstone para operar.$(p)Isso permite que você controle quando o gerador estára operando."
+            "title": "Controle de redstone",
+            "text": "Um gerador com $(9)controle de redstone$() requer um sinal de redstone para funcionar.$(p)Isso permite controlar quando o gerador estará ativo."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Ignora a luz",
-            "text": "Um gerador que $(9)ignora a luz$() funcionará em todos os níveis de luz.$(p)Isso significa que os mobs podem aparecer à luz do dia.$(p)Se já $(9)ignorar condições$(), então este modificador não fará nada."
+            "title": "Ignora a luz",
+            "text": "Um gerador que $(9)ignora a luz$() funciona em qualquer nível de luz.$(p)Isso significa que criaturas podem aparecer mesmo durante o dia.$(p)Se ele já $(9)ignorar condições$(), esta modificação não terá efeito."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Sem IA",
-            "text": "Um gerador $(9)sem IA$() habilitado gerará mobs sem qualquer IA.$(p)Normalmente, essas criaturas irão simplesmente ficar lá, imóveis, sem fazer nada.$(p)No entanto, os criados pelo Apotheosis ainda pode ser movidos."
+            "title": "Sem IA",
+            "text": "Um gerador com $(9)sem IA$() ativo gera criaturas sem inteligência artificial.$(p)Normalmente, elas permanecem imóveis e não realizam ações.$(p)No entanto, as criaturas geradas pelo Apotheosis ainda podem ser movidas."
         },
-		{
+        {
             "type": "patchouli:text",
-            "text": "Se você estiver fazendo grandes fazendas de mobs, você deve sempre utilizar a melhoria $(9)sem IA$().$(p)Isso reduz significativamente a carga do servidor e torna as criaturas mais fáceis de controlar."
+            "text": "Em grandes fazendas de criaturas, use sempre a melhoria $(9)sem IA$().$(p)Ela reduz significativamente a carga do servidor e facilita o controle das criaturas."
         }
-	]
+    ]
 }

@@ -1,17 +1,17 @@
 {
-    "name": "Carniceiro",
+    "name": "Saqueador",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Carniceiro$() é um encantamento de obra-prima para espadas.$(p)Dá uma chance de 2,5% por nível de itens caírem duas vezes quando você mata uma criatura.$(p)Quando bem-sucedido, será como se você tivesse matado duas entidades da mesma."
+            "text": "$(2)Saqueador$() é um encantamento de obra-prima para espadas.$(p)Concede 2,5% de chance por nível de repetir os itens derrubados ao matar uma criatura.$(p)Quando ativado, o saque é calculado como se duas criaturas idênticas tivessem sido derrotadas."
         },
-		{
+        {
             "type": "patchouli:text",
             "text": "Este encantamento funciona em todas as entidades, incluindo chefes como o $(8)Wither$().$(p)Também acumula com $(9)saque$()."
         }
-	]
+    ]
 }

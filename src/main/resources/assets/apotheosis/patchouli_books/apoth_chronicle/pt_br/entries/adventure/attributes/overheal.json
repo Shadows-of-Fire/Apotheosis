@@ -2,12 +2,12 @@
     "name": "Sobrecura",
     "icon": "minecraft:experience_bottle",
     "category": "apotheosis:adventure/attributes",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
             "text": "Ao ter $(9)sobrecura$() significa que parte do seu dano físico causado será obtido como um escudo de absorção. Ao contrário do roubo de vida, a sobrecura funciona quando você está com a vida cheia.$(p)Este atributo é encontrado apenas em armas pesadas."
         }
-	]
+    ]
 }

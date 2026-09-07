@@ -2,63 +2,63 @@
     "name": "O menu de informações",
     "icon": "apotheosis:textures/gui/book/question_mark.png",
     "category": "apotheosis:enchanting/table",
-	"flag": "apotheosis:enchanting",
+    "flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A mesa de encantamento tem uma tela útil para que você saiba quais encantamentos estão disponíveis.$(p)Para acessá-la, coloque um item na mesa de encantamento e clique no ponto de interrogação no canto superior direito."
+            "text": "A Mesa de Encantamentos tem uma tela útil para que você saiba quais encantamentos estão disponíveis.$(p)Para acessá-la, coloque um item na Mesa de Encantamentos e clique no ponto de interrogação no canto superior direito."
         },
-		{
-			"type": "patchouli:text",
-			"text": "O objetivo deste capítulo é apresentar esta tela e ajudá-lo a navegar por ela.$(p)Se você tiver uma compreensão completa dela, nunca mais ficará confuso ao encantar."
-		},
-		{
+        {
+            "type": "patchouli:text",
+            "text": "O objetivo deste capítulo é apresentar esta tela e ajudá-lo a navegar por ela.$(p)Se você tiver uma compreensão completa dela, nunca mais ficará confuso ao encantar."
+        },
+        {
             "type": "patchouli:image",
-			"title": "O seletor de encaixe",
-			"images": [
-				"apotheosis:textures/gui/book/slot_selector.png"
-			],
-			"text": "Isso permite que você selecione qual encaixe de encantamento inspecionar."
+            "title": "O seletor de encaixe",
+            "images": [
+                "apotheosis:textures/gui/book/slot_selector.png"
+            ],
+            "text": "Isso permite que você selecione qual encaixe de encantamento inspecionar."
         },
-		{
-			"type": "patchouli:text",
-			"text": "O encaixe atualmente selecionado será destacado e os slots que não estiverem disponíveis ficarão acinzentados.$(p)Passar o mouse sobre o encaixe mostrará o nível, o $(4)poder mínimo$() e o $(9)poder máximo$()."
-		},
-		{
+        {
+            "type": "patchouli:text",
+            "text": "O encaixe atualmente selecionado será destacado e os slots que não estiverem disponíveis ficarão acinzentados.$(p)Passar o mouse sobre o encaixe mostrará o nível, o $(4)poder mínimo$() e o $(9)poder máximo$()."
+        },
+        {
             "type": "patchouli:image",
-			"title": "Janela de encantamentos",
-			"images": [
-				"apotheosis:textures/gui/book/enchantments_window.png"
-			],
-			"text": "Isso mostra quais encantamentos estão disponíveis."
+            "title": "Janela de encantamentos",
+            "images": [
+                "apotheosis:textures/gui/book/enchantments_window.png"
+            ],
+            "text": "Isso mostra quais encantamentos estão disponíveis."
         },
-		{
-			"type": "patchouli:text",
-			"text": "Dado o item atual e o nível de poder atualmente selecionado, uma certa variedade de encantamentos está disponível.$(p)Esta janela mostra cada encantamento, seu nível, raridade e chance de ser selecionado.$(p)Também mostrará quais encantamentos são exclusivos entre si."
-		},
-		{
+        {
+            "type": "patchouli:text",
+            "text": "Dado o item atual e o nível de poder atualmente selecionado, uma certa variedade de encantamentos está disponível.$(p)Esta janela mostra cada encantamento, seu nível, raridade e chance de ser selecionado.$(p)Também mostrará quais encantamentos são exclusivos entre si."
+        },
+        {
             "type": "patchouli:image",
-			"title": "O controle deslizante de poder",
-			"images": [
-				"apotheosis:textures/gui/book/power_slider.png"
-			],
-			"text": "Isso permite alterar o nível de poder simulado."
+            "title": "O controle deslizante de poder",
+            "images": [
+                "apotheosis:textures/gui/book/power_slider.png"
+            ],
+            "text": "Isso permite alterar o nível de poder simulado."
         },
-		{
-			"type": "patchouli:text",
-			"text": "Quando você seleciona um encaixe, o controle deslizante de poder seleciona automaticamente o nível de potência diretamente no meio da faixa de poder.$(p)O deslizador só pode descer até o $(4)poder mínimo$() e subir até o $(9)poder máximo$() para o encaixe atual."
-		},
-		{
+        {
+            "type": "patchouli:text",
+            "text": "Quando você seleciona um encaixe, o controle deslizante de poder seleciona automaticamente o nível de potência diretamente no meio da faixa de poder.$(p)O deslizador só pode descer até o $(4)poder mínimo$() e subir até o $(9)poder máximo$() para o encaixe atual."
+        },
+        {
             "type": "patchouli:image",
-			"title": "Pesos de raridade",
-			"images": [
-				"apotheosis:textures/gui/book/weights.png"
-			],
-			"text": "Isso mostra o peso de cada raridade."
+            "title": "Pesos de raridade",
+            "images": [
+                "apotheosis:textures/gui/book/weights.png"
+            ],
+            "text": "Isso mostra o peso de cada raridade."
         },
-		{
-			"type": "patchouli:text",
-			"text": "Cada encantamento tem uma raridade, e cada raridade tem um peso.$(p)A chance de selecionar um encantamento é seu peso individual dividido pelo conjunto total (dos pesos de todos os encantamentos disponíveis).$(p)$(arcana) pode alterar os pesos de raridade."
-		}
-	]
+        {
+            "type": "patchouli:text",
+            "text": "Cada encantamento tem uma raridade, e cada raridade tem um peso.$(p)A chance de selecionar um encantamento é seu peso individual dividido pelo conjunto total (dos pesos de todos os encantamentos disponíveis).$(p)$(arcana) pode alterar os pesos de raridade."
+        }
+    ]
 }

@@ -1,13 +1,13 @@
 {
     "name": "Curios",
-    "icon": "curios:textures/item/empty_charm_slot.png",
+    "icon": "curios:textures/slot/empty_charm_slot.png",
     "category": "apotheosis:potion/charms",
-	"flag": "&apotheosis:potion,apotheosis:curiosloaded",
-	"sortnum": 1,
+    "flag": "&apotheosis:potion,apotheosis:curiosloaded",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
             "text": "Quando você tiver o $(9)Curios$() instalado, poderá equipar amuletos de poção no slot de $(9)amuletos$(). $(p)Eles funcionarão da mesma forma que no inventário."
         }
-	]
+    ]
 }
