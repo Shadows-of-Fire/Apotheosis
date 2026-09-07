@@ -18,6 +18,8 @@
     "text.apotheosis.world_tier.pinnacle": "顶点",
     "text.apotheosis.world_tier.pinnacle.desc": "醉心于山颠的风暴之中",
 
+    "text.apotheosis.world_tier.difficulty": "难度：",
+
     "title.apotheosis.select_world_tier": "选择世界层级",
     "title.apotheosis.world_tier_details": "世界层级详情",
 
@@ -69,6 +71,7 @@
     "text.apotheosis.tier_info": "世界层级信息",
     "text.apotheosis.monster_augments": "怪物强化",
     "text.apotheosis.player_augments": "玩家强化",
+    "tier_augment.apotheosis.damage_reduction": "+%s%%%s抗性",
     "text.apotheosis.drop_chances": "掉落概率",
     "text.apotheosis.rarities": "稀有度",
     "text.apotheosis.purities": "纯度",
@@ -576,7 +579,7 @@
     "item.apotheosis.sigil_of_unnaming.desc": "从物品中移除词缀名称",
 
     "item.apotheosis.sigil_of_malice": "恶意符石",
-    "item.apotheosis.sigil_of_malice.desc": "将恶意之触施加于词缀物品",
+    "item.apotheosis.sigil_of_malice.desc": "过度充能一个词缀并重置另一个",
 
     "item.apotheosis.sigil_of_supremacy": "至高符石",
     "item.apotheosis.sigil_of_supremacy.desc": "对词缀物品上的每个词缀进行过度充能",
@@ -698,7 +701,7 @@
     "text.apotheosis.any_x_item": "任意%s词缀物品",
     "text.apotheosis.any_affix_item": "任意词缀物品",
     "text.apotheosis.malice_marker": "合成时将会施加恶意",
-    "text.apotheosis.touched_by_malice": "受恶意侵蚀",
+    "text.apotheosis.touched_by_malice": "受恶意侵蚀（x%s）",
     "text.apotheosis.malice_notice": "恶意：%s吞噬了%s的力量",
 
     "title.apotheosis.smithing": "神化锻造",
