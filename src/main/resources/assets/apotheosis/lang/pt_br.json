@@ -71,6 +71,7 @@
     "text.apotheosis.tier_info": "Informações do Nível de Mundo",
     "text.apotheosis.monster_augments": "Modificadores de criaturas",
     "text.apotheosis.player_augments": "Modificadores do jogador",
+    "tier_augment.apotheosis.damage_reduction": "+%s%% de resistência a dano %s",
     "text.apotheosis.drop_chances": "Chances de obtenção",
     "text.apotheosis.rarities": "Raridades",
     "text.apotheosis.purities": "Purezas",
@@ -377,14 +378,14 @@
     "affix.apotheosis:breaker/effect/omnetic.suffix": "da Singularidade",
     "affix.apotheosis:breaker/effect/omnetic.desc": "Esta ferramenta tem %s de eficácia contra todos os blocos.",
 
-    "misc.apotheosis.physical": "Físico",
-    "misc.apotheosis.magic": "Mágico",
-    "misc.apotheosis.fire": "de Fogo",
-    "misc.apotheosis.fall": "de Queda",
-    "misc.apotheosis.explosion": "Explosivo",
-    "misc.apotheosis.projectile": "Projétil",
-    "misc.apotheosis.lightning": "Relâmpago",
-    "affix.apotheosis:damage_reduction.desc": "O dano de %s recebido é reduzido em %s%%",
+    "misc.apotheosis.physical": "físico",
+    "misc.apotheosis.magic": "mágico",
+    "misc.apotheosis.fire": "de fogo",
+    "misc.apotheosis.fall": "de queda",
+    "misc.apotheosis.explosion": "de explosão",
+    "misc.apotheosis.projectile": "de projétil",
+    "misc.apotheosis.lightning": "de raio",
+    "affix.apotheosis:damage_reduction.desc": "O dano %s recebido é reduzido em %s%%",
 
     "affix.apotheosis:armor/dmg_reduction/blockading": "Bloqueador",
     "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "do Bloqueio",
@@ -578,7 +579,7 @@
     "item.apotheosis.sigil_of_unnaming.desc": "Remove o nome afixado de um item",
 
     "item.apotheosis.sigil_of_malice": "Sigilo da Malícia",
-    "item.apotheosis.sigil_of_malice.desc": "Aplica o Toque de Malícia a um item com afixo",
+    "item.apotheosis.sigil_of_malice.desc": "Sobrecarrega um afixo e reseta outro",
 
     "item.apotheosis.sigil_of_supremacy": "Sigilo da Supremacia",
     "item.apotheosis.sigil_of_supremacy.desc": "Sobrecarrega todos os afixos de um item com afixo",
@@ -700,7 +701,7 @@
     "text.apotheosis.any_x_item": "Qualquer item %s com afixo",
     "text.apotheosis.any_affix_item": "Qualquer item com afixo",
     "text.apotheosis.malice_marker": "A Malícia será aplicada ao fabricar",
-    "text.apotheosis.touched_by_malice": "Tocado por Malícia",
+    "text.apotheosis.touched_by_malice": "Tocado por Malícia (x%s)",
     "text.apotheosis.malice_notice": "Malícia: %s consumiu a força de %s",
 
     "title.apotheosis.smithing": "Ferraria Apótica",
