@@ -1,4 +1,4 @@
-// 26.1.2	2026-08-02T21:23:01.127338004	Tier Augments
+// 26.1.2	2026-10-02T16:56:11.438158063	Tier Augments
 e561d3e4aee5c8e052d0cc63067aa506f275dfce data/apotheosis/apotheosis/tier_augments/ascent/armor.json
 dbb715f4a88099be1d003bb411250c1d5e8cd27f data/apotheosis/apotheosis/tier_augments/ascent/armor_pierce.json
 5bfbb8e0a121ff7aa71f4e8698837368ae0d30ae data/apotheosis/apotheosis/tier_augments/ascent/experience.json
@@ -14,11 +14,15 @@ f981ef6ba7993e63c1724e7decc6d37fd27fea15 data/apotheosis/apotheosis/tier_augment
 afbc00a897dee55531973f5b46769bc8661fe156 data/apotheosis/apotheosis/tier_augments/pinnacle/armor_toughness.json
 76f99cc1b107d0f0757126ba9695f9b006f015c8 data/apotheosis/apotheosis/tier_augments/pinnacle/experience.json
 c0bb50584d86739aa88fe2effcb4cf086c138f99 data/apotheosis/apotheosis/tier_augments/pinnacle/luck.json
+2907bcbb5fbd8140a3003dda5212a9ed674e94a5 data/apotheosis/apotheosis/tier_augments/pinnacle/magic_reduction.json
+27e2754108556348ca341a97744fc087020ba03b data/apotheosis/apotheosis/tier_augments/pinnacle/physical_reduction.json
 7a02c28c932afd00e7ce7ef0d94afc9b4fc7df0c data/apotheosis/apotheosis/tier_augments/pinnacle/prot_pierce.json
 3d6a998e3829aeb49583cb48461a43a99386892d data/apotheosis/apotheosis/tier_augments/summit/armor.json
 b7b3ce42ed1fe3c5a9723e1877db843f3e5e27be data/apotheosis/apotheosis/tier_augments/summit/armor_pierce.json
 e0c3a0a09cc9c7cd71ba2b5e7faca18ec91acf21 data/apotheosis/apotheosis/tier_augments/summit/armor_toughness.json
 3976bb7f8e0526dcd3cb1a5d3657845c910cb2f8 data/apotheosis/apotheosis/tier_augments/summit/experience.json
 e04e7d1a0ea80884920d3e5856fc323177419740 data/apotheosis/apotheosis/tier_augments/summit/luck.json
+64d49eb83c35836a0600f2648a41529be139b60d data/apotheosis/apotheosis/tier_augments/summit/magic_reduction.json
 19e1ed90fc5507039220d7ff3b397c6bbd8f7242 data/apotheosis/apotheosis/tier_augments/summit/max_eterna.json
+7d2ad4867b5ab3aa3b96ff6d6ad2196e0ccd335a data/apotheosis/apotheosis/tier_augments/summit/physical_reduction.json
 dcd8f2d5203143278e2c9c71fd97cb777a8cf31e data/apotheosis/apotheosis/tier_augments/summit/prot_pierce.json

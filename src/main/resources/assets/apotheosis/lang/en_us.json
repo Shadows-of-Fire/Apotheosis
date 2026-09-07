@@ -71,6 +71,7 @@
     "text.apotheosis.tier_info": "World Tier Information",
     "text.apotheosis.monster_augments": "Monster Augments",
     "text.apotheosis.player_augments": "Player Augments",
+    "tier_augment.apotheosis.damage_reduction": "+%s%% %s Resist",
     "text.apotheosis.drop_chances": "Drop Chances",
     "text.apotheosis.rarities": "Rarities",
     "text.apotheosis.purities": "Purities",

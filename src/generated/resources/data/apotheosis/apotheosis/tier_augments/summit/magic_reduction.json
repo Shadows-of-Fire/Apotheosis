@@ -1,0 +1,9 @@
+{
+    "type": "apotheosis:damage_reduction",
+    "amount": 0.1,
+    "damage_type": "magic",
+    "reduction_id": "apotheosis:summit/magic_reduction",
+    "sort_index": 500,
+    "target": "monsters",
+    "tier": "summit"
+}

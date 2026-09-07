@@ -20,7 +20,8 @@ public final class TierAugmentRegistry extends DynamicRegistry<TierAugment> {
      * Public serializer so external mods can register additional TierAugment subtypes during their setup phase.
      */
     public static final SubtypedSerializer<TierAugment> SERIALIZER = RegistrySerializer.<TierAugment>subtypedSynced("tier_augments")
-        .register(Apotheosis.loc("attribute"), AttributeAugment.CODEC);
+        .register(Apotheosis.loc("attribute"), AttributeAugment.CODEC)
+        .register(Apotheosis.loc("damage_reduction"), DamageReductionAugment.CODEC);
 
     public static TierAugmentRegistry INSTANCE = new TierAugmentRegistry();
 

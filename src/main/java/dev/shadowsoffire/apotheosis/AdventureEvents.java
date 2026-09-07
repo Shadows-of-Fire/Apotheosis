@@ -17,6 +17,7 @@ import dev.shadowsoffire.apotheosis.affix.effect.OmneticAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.RadialAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.TelepathicAffix;
 import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingMenu;
+import dev.shadowsoffire.apotheosis.attachments.DamageReductions;
 import dev.shadowsoffire.apotheosis.commands.AffixCommand;
 import dev.shadowsoffire.apotheosis.commands.BossCommand;
 import dev.shadowsoffire.apotheosis.commands.CategoryCheckCommand;
@@ -170,6 +171,12 @@ public class AdventureEvents {
     public void onDamage(LivingIncomingDamageEvent e) {
         DamageSource src = e.getSource();
         LivingEntity ent = e.getEntity();
+
+        if (ent.hasData(Apoth.Attachments.DAMAGE_REDUCTIONS)) {
+            DamageReductions reductions = ent.getData(Apoth.Attachments.DAMAGE_REDUCTIONS);
+            e.setAmount(reductions.applyReductions(src, e.getAmount()));
+        }
+
         float amount = e.getAmount();
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             ItemStack s = ent.getItemBySlot(slot);

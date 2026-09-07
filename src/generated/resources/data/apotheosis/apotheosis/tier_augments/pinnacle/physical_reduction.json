@@ -1,0 +1,9 @@
+{
+    "type": "apotheosis:damage_reduction",
+    "amount": 0.15,
+    "damage_type": "physical",
+    "reduction_id": "apotheosis:pinnacle/physical_reduction",
+    "sort_index": 400,
+    "target": "monsters",
+    "tier": "pinnacle"
+}
