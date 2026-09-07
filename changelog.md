@@ -1,3 +1,17 @@
+## 8.8.0
+* Reimplemented the Sigil of Malice.
+  * Malice now increases a random affix's power to 200% (the Sigil of Supremacy's boost is to 150%).
+  * Malice no longer removes an affix, but instead resets one to 0% power.
+* Increased the value of the Rune of Debilitation (Initial Health) from 5% to 16%
+  * This reduces the number of runes needed to get to max value from 16 to 5.
+* Added the `apotheosis:cannot_be_duplicated` item tag.
+  * Items in this tag will never be cloned by abilities that copy loot items outright.
+* Added additional options to the Invader Spawn Rules.
+* Fixed rogue spawners that contained pillagers spawning them without held items.
+* Added damage reduction augments.
+  * All monsters will now receive slight physical and magic damage reduction in summit and pinnacle.
+* t0piy & PrincessStellar: Updated Brazilian translation.
+
 ## 8.7.0
 * Apotheosis can now be run without Apothic Enchanting and/or Apothic Spawners, returning the behavior of disabling them via config from 1.20.
   * Both mods are still marked as "mandatory" on CF for auto-install rules, but can be removed.
