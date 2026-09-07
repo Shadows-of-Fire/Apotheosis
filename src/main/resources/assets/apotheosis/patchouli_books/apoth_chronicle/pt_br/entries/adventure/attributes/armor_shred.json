@@ -1,13 +1,13 @@
 {
-    "name": "Fragmentação de armadura",
+    "name": "Redução de armadura",
     "icon": "apothic_attributes:textures/mob_effect/sundering.png",
     "category": "apotheosis:adventure/attributes",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Fragmentação de armadura$() faz com que você ignore uma porcentagem de armadura do seu alvo ao atacar.$(p)$(9)Perfuração de armadura$() é aplicada antes de $(9)perfuração de armadura$()."
+            "text": "A $(9)redução de armadura$() faz com que você ignore uma porcentagem da armadura do alvo ao atacar.$(p)A $(9)perfuração de armadura$() é aplicada antes da $(9)redução de armadura$()."
         }
-	]
+    ]
 }

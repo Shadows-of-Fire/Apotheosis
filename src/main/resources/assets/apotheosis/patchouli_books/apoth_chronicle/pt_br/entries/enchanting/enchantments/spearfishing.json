@@ -1,13 +1,13 @@
 {
-    "name": "Caça submarina",
+    "name": "Pesca com lança",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Caça submarina$() é um encantamento de tridente.$(p)Dá a abates com um tridente lançado uma chance de 3,5% por nível de derrubar alguns peixes aleatórios."
+            "text": "$(9)Pesca com Lança$() é um encantamento para tridentes.$(p)Abater uma criatura com um tridente arremessado tem 3,5% de chance por nível de render alguns peixes aleatórios."
         }
-	]
+    ]
 }

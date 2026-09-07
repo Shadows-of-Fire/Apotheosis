@@ -1,17 +1,17 @@
 {
-    "name": "Feridas dolorosas",
+    "name": "Feridas Dolorosas",
     "icon": "apothic_attributes:textures/mob_effect/grievous.png",
     "category": "apotheosis:potion/effects",
-	"flag": "apotheosis:potion",
-	"sortnum": 0,
+    "flag": "apotheosis:potion",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A poção de $(c)feridas dolorosas$() é um efeito negativo.$(p)Enquanto estiver sob seus efeitos, toda cura recebida é reduzida."
+            "text": "A poção de $(c)Feridas Dolorosas$() concede um efeito negativo.$(p)Enquanto ele estiver ativo, toda cura recebida será reduzida."
         },
-		{
+        {
             "type": "patchouli:text",
             "text": "A redução de cura é igual a 40% por nível.$(p)Enquanto estiver no nível III ou acima, toda cura é impedida."
         }
-	]
+    ]
 }

@@ -2,16 +2,16 @@
     "name": "Conhecimento das eras",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Conhecimento das eras$() é um encantamento de$(br)obra-prima que pode ser aplicado a espadas.$(p)Quando você mata uma criatura, todos os saques são convertidas em experiência.$(p)Cada item individual vale a mesma quantidade de experiência."
+            "text": "$(2)Conhecimento das Eras$() é um encantamento de obra-prima que pode ser aplicado a espadas.$(p)Ao matar uma criatura, todos os itens derrubados são convertidos em experiência.$(p)Cada item individual concede a mesma quantidade de experiência."
         },
-		{
-			"type": "patchouli:text",
-			"text": "Isso torna mais eficiente matar criaturas que derrubam um grande volume de itens.$(p)A experiência por item aumenta com o nível de encantamento.$(p)Por precaução, matar um jogador não converterá seus itens."
-		}
-	]
+        {
+            "type": "patchouli:text",
+            "text": "Isso torna mais eficiente matar criaturas que derrubam um grande volume de itens.$(p)A experiência por item aumenta com o nível de encantamento.$(p)Por precaução, matar um jogador não converterá seus itens."
+        }
+    ]
 }

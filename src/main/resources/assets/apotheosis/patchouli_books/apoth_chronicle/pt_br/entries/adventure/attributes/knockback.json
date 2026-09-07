@@ -1,17 +1,17 @@
 {
-    "name": "Impacto de ataque",
+    "name": "Repulsão de ataque",
     "icon": "minecraft:piston",
     "category": "apotheosis:adventure/attributes",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Impacto de ataque$() é o quão longe você empurra quando você ataca.$(p)Cada ponto fará com que os inimigos sejam jogados a meio bloco de distância.$(p)Armas e escudos podem fornecer este atributo."
+            "text": "$(9)Repulsão de ataque$() é o quão longe você empurra quando você ataca.$(p)Cada ponto fará com que os inimigos sejam jogados a meio bloco de distância.$(p)Armas e escudos podem fornecer este atributo."
         },
-		{
-			"type": "patchouli:text",
-			"text": "O encantamento impacto fornece um bônus equivalente a este atributo, mas não conta para o valor máximo"
-		}
-	]
+        {
+            "type": "patchouli:text",
+            "text": "O encantamento impacto fornece um bônus equivalente a este atributo, mas não conta para o valor máximo"
+        }
+    ]
 }

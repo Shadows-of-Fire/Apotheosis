@@ -2,40 +2,41 @@
     "name": "Tomos",
     "icon": "apothic_enchanting:other_tome",
     "category": "apotheosis:enchanting/utility",
-	"flag": "apotheosis:enchanting",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 3,
     "pages": [
         {
             "type": "patchouli:text",
             "text": "Tomos são um tipo especial de livro.$(p)Um Tomo pode ser encantado como um livro, mas só pode receber encantamentos específicos.$(p)A exceção é o $(l:apotheosis:enchanting/utility/scrapping)tomo de remoção$(), que tem outra finalidade."
         },
-		{
+        {
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:other_tome",
-			"text": "Depois de encantar um tomo, ele se transformará em um livro encantado."
-		},
-		{
+            "recipe": "apothic_enchanting:other_tome",
+            "text": "Depois de encantar um tomo, ele se transformará em um livro encantado."
+        },
+        {
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:helmet_tome",
-			"recipe2": "apotheosis:chestplate_tome",
-			"text": ""
-		},
-		{
+            "recipe": "apothic_enchanting:helmet_tome",
+            "recipe2": "apothic_enchanting:chestplate_tome",
+            "text": ""
+        },
+        {
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:leggings_tome",
-			"recipe2": "apotheosis:boots_tome",
-			"text": ""
-		},
-		{
+            "recipe": "apothic_enchanting:leggings_tome",
+            "recipe2": "apothic_enchanting:boots_tome",
+            "text": ""
+        },
+        {
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:weapon_tome",
-			"recipe2": "apotheosis:pickaxe_tome",
-			"text": ""
-		},
-		{
+            "recipe": "apothic_enchanting:weapon_tome",
+            "recipe2": "apothic_enchanting:pickaxe_tome",
+            "text": ""
+        },
+        {
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:fishing_tome",
-			"recipe2": "apotheosis:bow_tome",
-			"text": ""
-		}
-	]
+            "recipe": "apothic_enchanting:fishing_tome",
+            "recipe2": "apothic_enchanting:bow_tome",
+            "text": ""
+        }
+    ]
 }

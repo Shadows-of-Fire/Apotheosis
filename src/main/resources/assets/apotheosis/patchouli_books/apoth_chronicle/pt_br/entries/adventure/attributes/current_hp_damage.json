@@ -1,13 +1,13 @@
 {
-    "name": "Dano pelo PV atual",
+    "name": "Dano baseado na vida atual",
     "icon": "minecraft:dragon_head",
     "category": "apotheosis:adventure/attributes",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Dano pelo PV atual$() é um tipo de dano ao contato. A cada acerto, você causa uma porcentagem da vida atual do alvo como dano adicional.$(p)Este atributo só é encontrado em armas pesadas."
+            "text": "$(9)Dano baseado na vida atual$() é um tipo de dano ao contato. A cada acerto, você causa uma porcentagem da vida atual do alvo como dano adicional.$(p)Este atributo só é encontrado em armas pesadas."
         }
-	]
+    ]
 }

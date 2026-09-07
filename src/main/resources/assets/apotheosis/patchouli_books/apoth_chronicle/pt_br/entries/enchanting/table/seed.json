@@ -2,15 +2,15 @@
     "name": "Semente de encantamento",
     "icon": "minecraft:wheat_seeds",
     "category": "apotheosis:enchanting/table",
-	"flag": "apotheosis:enchanting",
+    "flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Tudo no encantamento (e algumas outras mecânicas) é baseado em sua $(9)semente de encantamento$().$(p)A semente é trocada sempre que você encanta um item em uma mesa de encantamento."
+            "text": "Tudo no encantamento (e algumas outras mecânicas) é baseado em sua $(9)semente de encantamento$().$(p)A semente é trocada sempre que você encanta um item em uma Mesa de Encantamentos."
         },
-		{
-			"type": "patchouli:text",
-			"text": "A menos que sua semente mude, todos os resultados aleatórios baseados em sementes permanecerão os mesmos.$(p)Por exemplo, quais encantamentos são selecionados para um encaixe específico é um resultado aleatório baseado em semente."
-		}
-	]
+        {
+            "type": "patchouli:text",
+            "text": "A menos que sua semente mude, todos os resultados aleatórios baseados em sementes permanecerão os mesmos.$(p)Por exemplo, quais encantamentos são selecionados para um encaixe específico é um resultado aleatório baseado em semente."
+        }
+    ]
 }

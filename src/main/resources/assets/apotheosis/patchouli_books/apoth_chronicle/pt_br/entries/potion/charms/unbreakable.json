@@ -2,16 +2,16 @@
     "name": "Amuletos inquebráveis",
     "icon": "minecraft:enchanting_table",
     "category": "apotheosis:potion/charms",
-	"flag": "&apotheosis:potion,apotheosis:enchanting",
-	"sortnum": -1,
+    "flag": "&apotheosis:potion,apotheosis:enchanting",
+    "sortnum": -1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Através de $(l:apotheosis:enchanting/table/infusion)encantamento de infusão$(), os amuletos podem se tornar inquebráveis.$(p)Através disso, você pode ter duração ilimitada de qualquer efeito de poção."
+            "text": "Através de $(l:apotheosis:enchanting/table/infusion)Encantamento por Infusão$(), os amuletos podem se tornar inquebráveis.$(p)Através disso, você pode ter duração ilimitada de qualquer efeito de poção."
         },
-		{
+        {
             "type": "patchouli:text",
-            "text": "A receita de infusão para amuletos inquebráveis é bastante difícil.$(p)Você precisará de um conhecimento firme de $(l:apotheosis:enchanting/table/stats)status de encantamento$() para poder completá-la."
+            "text": "A receita de infusão para amuletos inquebráveis é bastante difícil.$(p)Você precisará compreender bem os $(l:apotheosis:enchanting/table/stats)atributos de encantamento$() para concluí-la."
         }
-	]
+    ]
 }

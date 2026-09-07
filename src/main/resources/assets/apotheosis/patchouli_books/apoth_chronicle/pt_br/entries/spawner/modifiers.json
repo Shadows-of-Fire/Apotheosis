@@ -2,36 +2,36 @@
     "name": "Modificadores de gerador",
     "icon": "minecraft:clock",
     "category": "apotheosis:spawner/spawner",
-	"flag": "apotheosis:spawner",
-	"sortnum": 1,
+    "flag": "apotheosis:spawner",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Depois de ler sobre $(l:apotheosis:spawner/stats)status de geradoress$(), você pode estar se perguntando como alterá-los.$(p)Digite $(9)modificadores de gerador$(), um sistema para editar geradores.$ (p) Um modificador consiste em até dois itens e produz uma certa mudança nas status de um gerador."
+            "text": "Depois de ler sobre os $(l:apotheosis:spawner/stats)parâmetros do gerador$(), você talvez queira saber como alterá-los.$(p)Os $(9)modificadores de gerador$() são o sistema usado para editar Geradores de Criaturas.$(p)Um modificador utiliza até dois itens e altera um parâmetro específico."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Vendo modificadores",
+            "title": "Consulta dos modificadores",
             "text": "Cada modificador é visível no JEI.$(p)Eles podem ser acessados observando os usos e receitas para $(9)geradores$(), ou os usos para os itens modificadores.$(p)Há muitas dicas de ferramentas lá, então olhe ao redor."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Numeração",
-            "text": "No JEI, as alterações de status são anotadas como $(9)+/- X status$().$(p)Alguns status não possuem valores numéricos, portanto, serão mostrados como $(9)+/- status$().$(p)Na descrição do itens, os status não numéricos não são mostrados, a menos que estejam ativos."
+            "title": "Valores",
+            "text": "No JEI, as alterações são indicadas como $(9)+/- X parâmetro$().$(p)Alguns parâmetros não possuem valores numéricos e são exibidos apenas como $(9)+/- parâmetro$().$(p)Na descrição do item, os parâmetros não numéricos só aparecem quando estão ativos."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Limites de modificador",
-            "text": "Certos modificadores não podem reduzir ou aumentar os status além de um determinado valor.$(p)Isso será anotado na descrição do item para esse status específico no JEI.$(p)Esses limites são específicos do modificador, portanto, um modificador pode ter um limite diferente de outro para o mesmo status."
+            "title": "Limites dos modificadores",
+            "text": "Certos modificadores não podem reduzir ou aumentar os parâmetros além de um determinado valor.$(p)Isso será anotado na descrição do item para esse parâmetro específico no JEI.$(p)Esses limites são específicos do modificador, portanto, um modificador pode ter um limite diferente de outro para o mesmo parâmetro."
         },
-		{
+        {
             "type": "patchouli:text",
-			"title": "Aplicando modificadores",
+            "title": "Aplicação dos modificadores",
             "text": "Para aplicar um modificador, basta segurar os respectivos itens em suas mãos e clicar com o botão direito do mouse no $(9)gerador$().$(p)Se a modificação for bem-sucedida, os itens serão consumidos.$(p)O item principal sempre é consumido, mas o item secundário pode não ser."
         },
-		{
+        {
             "type": "patchouli:text",
             "text": "Embora o JEI declare que os itens devem ser mantidos em mãos específicas, isso não é obrigatório.$(p)Você pode aplicar um modificador desde que esteja segurando os itens em suas mãos, independentemente de qual mão."
         }
-	]
+    ]
 }

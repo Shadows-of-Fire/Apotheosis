@@ -1,17 +1,17 @@
 {
-    "name": "Estouro de vitalidade",
+    "name": "Vitalidade Transbordante",
     "icon": "apothic_attributes:textures/mob_effect/vitality.png",
     "category": "apotheosis:potion/effects",
-	"flag": "apotheosis:potion",
-	"sortnum": 0,
+    "flag": "apotheosis:potion",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A poção de $(9)estouro de vitalidade$() é um efeito benéfico.$(p)Enquanto estiver sob seus efeitos, toda a cura recebida é aumentada."
+            "text": "A poção de $(9)Vitalidade Transbordante$() concede um efeito benéfico.$(p)Enquanto ele estiver ativo, toda cura recebida será aumentada."
         },
-		{
+        {
             "type": "patchouli:text",
             "text": "O aumento de cura é igual a 20% por nível."
         }
-	]
+    ]
 }

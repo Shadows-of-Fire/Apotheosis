@@ -1,28 +1,28 @@
 {
-    "name": "Invasores Apóticos",
+    "name": "Invasores apóticos",
     "icon": "minecraft:beacon",
     "category": "apotheosis:adventure/mobs",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
             "text": "Um barulho estranho, uma mensagem peculiar e um feixe de luz gigante do céu...$(p)Todos os sinais apontam para uma incursão de um Invasor Apótico!"
         },
-		{
-			"type": "patchouli:text",
-			"title": "Mecânica de Spawn",
-			"text": "Invasores Apóticos podem raramente aparecer na superfície onde criaturas normalmente podem surgir.$(p)A chegada deles será marcada por um barulho alto, uma mensagem de status e um feixe de farol.$(p)Invasores podem se tornar mais ou menos comuns dependendo do Nível do Mundo e da Dimensão."
-		},
-		{
-			"type": "patchouli:text",
-			"title": "Raridades de Invasores",
-			"text": "Cada Invasor tem uma raridade, que é indicada pelo seu nome e cor de contorno.$(p)Invasores de raridade maior serão mais fortes, mas derrubarão saques melhores como resultado."
-		},
-		{
-			"type": "patchouli:text",
-			"title": "Saque (Loot)",
-			"text": "Invasores têm garantia de derrubar um $(l:apotheosis:adventure/mobs/invader_items)item de afixo especial$(), e podem ter tabelas de saque bônus adicionais além de suas contrapartes normais.$(p)Eles também têm uma maior probabilidade de derrubar Gemas."
-		}
-	]
+        {
+            "type": "patchouli:text",
+            "title": "Mecânica de geração",
+            "text": "Invasores Apóticos podem surgir raramente na superfície, em locais onde criaturas normalmente aparecem.$(p)A chegada deles é marcada por um som alto, uma mensagem na tela e um feixe de luz.$(p)A frequência dos Invasores pode variar conforme o Nível de Mundo e a dimensão."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Raridades dos invasores",
+            "text": "Cada Invasor tem uma raridade, que é indicada pelo seu nome e cor de contorno.$(p)Invasores de raridade maior serão mais fortes, mas derrubarão saques melhores como resultado."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Saque",
+            "text": "Invasores sempre derrubam um $(l:apotheosis:adventure/mobs/invader_items)item especial com afixo$() e podem ter recompensas adicionais além das criaturas equivalentes.$(p)Eles também têm uma chance maior de derrubar Gemas."
+        }
+    ]
 }

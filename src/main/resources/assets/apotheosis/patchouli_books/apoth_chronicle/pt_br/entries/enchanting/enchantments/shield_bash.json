@@ -2,12 +2,12 @@
     "name": "Golpe de escudo",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Golpe de escudo$() é um encantamento de escudo.$(p)Faz com que ataques corpo a corpo com escudo causem dano extra.$(p)No entanto, atacar com $(9)golpe de escudo$() causa dano de durabilidade adicional."
+            "text": "$(9)Golpe de Escudo$() é um encantamento de escudo.$(p)Faz com que ataques corpo a corpo com escudo causem dano extra.$(p)No entanto, atacar com $(9)golpe de escudo$() causa dano de durabilidade adicional."
         }
-	]
+    ]
 }

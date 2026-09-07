@@ -2,18 +2,18 @@
     "name": "Absorção",
     "icon": "minecraft:textures/mob_effect/absorption.png",
     "category": "apotheosis:potion/recipes",
-	"flag": "apotheosis:potion",
-	"sortnum": 0,
+    "flag": "apotheosis:potion",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
             "text": "$(9)Absorção$() é um efeito interessante.$(p)Cada nível concede 2 corações temporários adicionais.$(p)No entanto, esses corações não são atualizados durante a duração, então um $(l:apotheosis:potion/charms/charm)amuleto de poção$() é preferível."
         },
-		{
+        {
             "type": "patchouli:spotlight",
-			"title": "Receita de Fabricação de Poções",
-			"item": "minecraft:golden_apple",
-            "text": "Esta poção pode ser criada com uma poção estranha e uma maçã dourada.$(p)Ela pode ser estendida, fortalecida ou transformada em uma poção inicial com os ingredientes usuais."
+            "title": "Receita de preparo",
+            "item": "minecraft:golden_apple",
+            "text": "Esta poção pode ser criada com uma poção estranha e uma maçã dourada.$(p)Ela pode ser estendida, fortalecida ou transformada em uma Poção Arremessável com os ingredientes usuais."
         }
-	]
+    ]
 }

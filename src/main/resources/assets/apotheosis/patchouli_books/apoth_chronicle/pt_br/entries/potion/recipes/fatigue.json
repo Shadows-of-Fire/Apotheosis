@@ -2,18 +2,18 @@
     "name": "Exaustão",
     "icon": "minecraft:textures/mob_effect/mining_fatigue.png",
     "category": "apotheosis:potion/recipes",
-	"flag": "apotheosis:potion",
-	"sortnum": 0,
+    "flag": "apotheosis:potion",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
             "text": "$(c)Exaustão$() é um efeito negativo que normalmente só é aplicado por guardiões.$(p)Enquanto ativo, sua velocidade de mineração é reduzida em 20% por nível.$(p)É o oposto direto de $(9)pressa$()."
         },
-		{
+        {
             "type": "patchouli:spotlight",
-			"title": "Receita de fabricação de poção",
-			"item": "minecraft:fermented_spider_eye",
-            "text": "Esta poção pode ser criada com uma $(9)poção de aceleração$() e um olho de aranha fermentado.$(p)Ela pode ser estendida, fortalecida ou transformada em uma poção inicial com os ingredientes usuais."
+            "title": "Receita de preparo",
+            "item": "minecraft:fermented_spider_eye",
+            "text": "Esta poção pode ser criada com uma $(9)poção de aceleração$() e um olho de aranha fermentado.$(p)Ela pode ser estendida, fortalecida ou transformada em uma Poção Arremessável com os ingredientes usuais."
         }
-	]
+    ]
 }
