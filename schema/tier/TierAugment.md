@@ -28,3 +28,4 @@ In addition to the type key, every tier augment provides the following common fi
 The list of tier augment types is as follows:
 
 1. [Attribute Augment](./AttributeAugment.md) - Applies an attribute modifier to all targets.
+2. [Damage Reduction Augment](./DamageReductionAugment.md) - Grants all targets a reduction to incoming damage of a specific type.

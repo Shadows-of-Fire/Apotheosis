@@ -1,0 +1,9 @@
+{
+    "type": "apotheosis:damage_reduction",
+    "amount": 0.1,
+    "damage_type": "physical",
+    "reduction_id": "apotheosis:summit/physical_reduction",
+    "sort_index": 400,
+    "target": "monsters",
+    "tier": "summit"
+}

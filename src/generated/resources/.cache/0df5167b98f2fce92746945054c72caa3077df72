@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-28T17:02:09.845979826	Tier Augments
+// 1.21.1	2026-09-06T19:49:10.64914087	Tier Augments
 3ef4ab965d8616373b5d33e51cd494fcbabca909 data/apotheosis/tier_augments/ascent/armor.json
 e1c8da41876a9635d7f14cf9242f2c454d502001 data/apotheosis/tier_augments/ascent/armor_pierce.json
 6871c24d2e4b9ba6d9b2ca73fb3ea74b541b0f07 data/apotheosis/tier_augments/ascent/experience.json
@@ -14,11 +14,15 @@ a6619e80dd13aa462531ad672c0302c0e4e7ce7e data/apotheosis/tier_augments/pinnacle/
 a60217a2b958c755f077814685d15cf0761767fa data/apotheosis/tier_augments/pinnacle/armor_toughness.json
 66191fade62cdd5cafafb57647572d2f1f2dd638 data/apotheosis/tier_augments/pinnacle/experience.json
 e6264090e309eab63489cbd3496e624121e74fb1 data/apotheosis/tier_augments/pinnacle/luck.json
+2907bcbb5fbd8140a3003dda5212a9ed674e94a5 data/apotheosis/tier_augments/pinnacle/magic_reduction.json
+27e2754108556348ca341a97744fc087020ba03b data/apotheosis/tier_augments/pinnacle/physical_reduction.json
 19b5b30f5455422fec7ea9737772fd8d79ff54e8 data/apotheosis/tier_augments/pinnacle/prot_pierce.json
 02da8cad3c3302069c812b1f1df97465b5c27de2 data/apotheosis/tier_augments/summit/armor.json
 9f494263461f4e3ed416b30bdbe91edeeb3c124e data/apotheosis/tier_augments/summit/armor_pierce.json
 8b5eaf0fe814386fbb88629665078b84a9ab6850 data/apotheosis/tier_augments/summit/armor_toughness.json
 6100a47f31946d715e61be6f6d7262a26bdf6812 data/apotheosis/tier_augments/summit/experience.json
 7c6d2a476828ff7c6a67943cf1d89035065646b9 data/apotheosis/tier_augments/summit/luck.json
+64d49eb83c35836a0600f2648a41529be139b60d data/apotheosis/tier_augments/summit/magic_reduction.json
 b67a3348148e512e16fd7b7f588cc0bad4300783 data/apotheosis/tier_augments/summit/max_eterna.json
+7d2ad4867b5ab3aa3b96ff6d6ad2196e0ccd335a data/apotheosis/tier_augments/summit/physical_reduction.json
 61a1074ee1634d475e6c469342fa0ceb80572577 data/apotheosis/tier_augments/summit/prot_pierce.json

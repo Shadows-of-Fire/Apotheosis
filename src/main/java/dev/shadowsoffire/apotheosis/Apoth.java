@@ -30,6 +30,7 @@ import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingTableBlock;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingTableTile;
 import dev.shadowsoffire.apotheosis.attachments.BonusLootTables;
+import dev.shadowsoffire.apotheosis.attachments.DamageReductions;
 import dev.shadowsoffire.apotheosis.gen.BlacklistModifier;
 import dev.shadowsoffire.apotheosis.gen.BossDungeonFeature;
 import dev.shadowsoffire.apotheosis.gen.BossDungeonFeature2;
@@ -207,6 +208,11 @@ public class Apoth {
          * Holds additional loot tables that will be dropped by the entity when it is killed.
          */
         public static final AttachmentType<BonusLootTables> BONUS_LOOT_TABLES = R.attachment("bonus_loot_tables", () -> BonusLootTables.EMPTY, b -> b.serialize(BonusLootTables.CODEC, blt -> !blt.tables().isEmpty()));
+
+        /**
+         * Holds additional (pre-mitigation) damage reduction values for a given entity.
+         */
+        public static final AttachmentType<DamageReductions> DAMAGE_REDUCTIONS = R.attachment("damage_reductions", () -> DamageReductions.EMPTY, b -> b.serialize(DamageReductions.CODEC, dr -> !dr.isEmpty()));
 
         /**
          * The player's current {@link WorldTier}.

@@ -3,9 +3,11 @@ package dev.shadowsoffire.apotheosis.data;
 import java.util.concurrent.CompletableFuture;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.effect.DamageReductionAffix.DamageType;
 import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
 import dev.shadowsoffire.apotheosis.tiers.augments.AttributeAugment;
+import dev.shadowsoffire.apotheosis.tiers.augments.DamageReductionAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
@@ -61,6 +63,8 @@ public class TierAugmentProvider extends DynamicRegistryProvider<TierAugment> {
         this.addAttribute("summit/armor_toughness", WorldTier.SUMMIT, Target.MONSTERS, 150, Attributes.ARMOR_TOUGHNESS, Operation.ADD_VALUE, 10);
         this.addAttribute("summit/armor_pierce", WorldTier.SUMMIT, Target.MONSTERS, 200, ALObjects.Attributes.ARMOR_PIERCE, Operation.ADD_VALUE, 15F);
         this.addAttribute("summit/prot_pierce", WorldTier.SUMMIT, Target.MONSTERS, 300, ALObjects.Attributes.PROT_PIERCE, Operation.ADD_VALUE, 10F);
+        this.addDamageReduction("summit/physical_reduction", WorldTier.SUMMIT, Target.MONSTERS, 400, DamageType.PHYSICAL, 0.10F);
+        this.addDamageReduction("summit/magic_reduction", WorldTier.SUMMIT, Target.MONSTERS, 500, DamageType.MAGIC, 0.10F);
 
         this.addAttribute("summit/experience", WorldTier.SUMMIT, Target.PLAYERS, 100, ALObjects.Attributes.EXPERIENCE_GAINED, Operation.ADD_MULTIPLIED_TOTAL, 0.75F);
         this.addAttribute("summit/luck", WorldTier.SUMMIT, Target.PLAYERS, 200, Attributes.LUCK, Operation.ADD_MULTIPLIED_TOTAL, 0.50F);
@@ -70,6 +74,8 @@ public class TierAugmentProvider extends DynamicRegistryProvider<TierAugment> {
         this.addAttribute("pinnacle/armor_toughness", WorldTier.PINNACLE, Target.MONSTERS, 150, Attributes.ARMOR_TOUGHNESS, Operation.ADD_VALUE, 20);
         this.addAttribute("pinnacle/armor_pierce", WorldTier.PINNACLE, Target.MONSTERS, 200, ALObjects.Attributes.ARMOR_PIERCE, Operation.ADD_VALUE, 25F);
         this.addAttribute("pinnacle/prot_pierce", WorldTier.PINNACLE, Target.MONSTERS, 300, ALObjects.Attributes.PROT_PIERCE, Operation.ADD_VALUE, 20F);
+        this.addDamageReduction("pinnacle/physical_reduction", WorldTier.PINNACLE, Target.MONSTERS, 400, DamageType.PHYSICAL, 0.15F);
+        this.addDamageReduction("pinnacle/magic_reduction", WorldTier.PINNACLE, Target.MONSTERS, 500, DamageType.MAGIC, 0.15F);
 
         this.addAttribute("pinnacle/experience", WorldTier.PINNACLE, Target.PLAYERS, 100, ALObjects.Attributes.EXPERIENCE_GAINED, Operation.ADD_MULTIPLIED_TOTAL, 1.25F);
         this.addAttribute("pinnacle/luck", WorldTier.PINNACLE, Target.PLAYERS, 200, Attributes.LUCK, Operation.ADD_MULTIPLIED_TOTAL, 1.00F);
@@ -85,5 +91,10 @@ public class TierAugmentProvider extends DynamicRegistryProvider<TierAugment> {
         else {
             this.add(id, augment);
         }
+    }
+
+    private void addDamageReduction(String path, WorldTier tier, Target target, int sortIdx, DamageType type, float amount) {
+        ResourceLocation id = Apotheosis.loc(path);
+        this.add(id, new DamageReductionAugment(tier, target, sortIdx, type, amount, id));
     }
 }

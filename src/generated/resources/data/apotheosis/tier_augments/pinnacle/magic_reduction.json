@@ -1,0 +1,9 @@
+{
+    "type": "apotheosis:damage_reduction",
+    "amount": 0.15,
+    "damage_type": "magic",
+    "reduction_id": "apotheosis:pinnacle/magic_reduction",
+    "sort_index": 500,
+    "target": "monsters",
+    "tier": "pinnacle"
+}

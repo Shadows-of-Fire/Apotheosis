@@ -25,6 +25,7 @@ public final class TierAugmentRegistry extends DynamicRegistry<TierAugment> {
     @Override
     protected void registerBuiltinCodecs() {
         this.registerCodec(Apotheosis.loc("attribute"), AttributeAugment.CODEC);
+        this.registerCodec(Apotheosis.loc("damage_reduction"), DamageReductionAugment.CODEC);
     }
 
     @Override
