@@ -8,13 +8,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:cold_damage",
-            "gem_class": {
-                "key": "light_weapon",
-                "types": [
-                    "apotheosis:melee_weapon",
-                    "apotheosis:trident"
-                ]
-            },
+            "gem_class": "apotheosis:melee_weapon",
             "operation": "add_value",
             "values": {
                 "cracked": 1.0,
@@ -58,6 +52,17 @@
                 "flawless": 0.6,
                 "perfect": 0.8
             }
+        },
+        {
+            "type": "apotheosis:anti_gravity_arrow",
+            "gem_class": {
+                "key": "ranged_weapon",
+                "types": [
+                    "apotheosis:bow",
+                    "apotheosis:trident"
+                ]
+            },
+            "min_purity": "flawless"
         }
     ]
 }

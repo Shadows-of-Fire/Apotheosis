@@ -505,6 +505,7 @@
     "bonus.apotheosis:multi_attr.desc.and_but": "%s and %s, but %s",
     "bonus.apotheosis:multi_attr.desc.but_and": "%s, but %s and %s",
     "bonus.apotheosis:bloody_arrow.desc": "When firing, you lose %s%% Max Health and deal %s%% damage. %s",
+    "bonus.apotheosis:anti_gravity_arrow.desc": "Fired arrows are unaffected by gravity.",
     "bonus.apotheosis:leech_block.desc": "Blocking an attack heals you for %s%% of the damage. %s",
     "bonus.apotheosis:all_stats.desc": "+%s%% to All Stats",
     "gem.apotheosis:overworld/royalty.bonus.pickaxe": "Breaking Copper Ore has a %s%% chance to drop Raw Gold instead.",
