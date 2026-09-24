@@ -258,7 +258,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
                 if (mob.level() instanceof ServerLevelAccessor sl) {
                     ResourceKey<DimensionType> dimId = sl.getLevel().dimensionTypeRegistration().getKey();
                     InvaderSpawnRules rules = sl.registryAccess().lookupOrThrow(Registries.DIMENSION_TYPE).getData(DataMaps.INVADER_SPAWN_RULES, dimId);
-                    cursed = rules.cursed().orElse(AdventureConfig.curseBossItems);
+                    cursed = (rules == null ? Optional.<Boolean>empty() : rules.cursed()).orElse(AdventureConfig.curseBossItems);
                 }
 
                 mob.setDropChance(s, 2F);
