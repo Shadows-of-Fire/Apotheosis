@@ -32,6 +32,7 @@ import dev.shadowsoffire.apotheosis.mobs.types.Elite;
 import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.AntiGravityArrowBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.OmneticBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.RadialBonus;
 import dev.shadowsoffire.apotheosis.tiers.WorldTier;
@@ -60,6 +61,7 @@ import net.minecraft.world.entity.animal.golem.AbstractGolem;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -295,6 +297,9 @@ public class AdventureEvents {
     @SuppressWarnings("deprecation")
     public void update(EntityTickEvent.Post e) {
         Entity entity = e.getEntity();
+        if (entity instanceof AbstractArrow arrow && !arrow.level().isClientSide() && arrow.hasData(Attachments.ANTI_GRAVITY_ARROW_START)) {
+            AntiGravityArrowBonus.tick(arrow);
+        }
         if (entity.getPersistentData().contains("apoth.burns_in_sun")) {
             // Copy of Mob#isSunBurnTick()
             if (entity.level().isBrightOutside() && !entity.level().isClientSide()) {

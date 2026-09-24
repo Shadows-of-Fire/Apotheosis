@@ -26,6 +26,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.bonus.EnchantmentBonus.Mode;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.MobEffectBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.MultiAttrBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.AllStatsBonus;
+import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.AntiGravityArrowBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.BloodyArrowBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.DropTransformBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.LeechBlockBonus;
@@ -266,7 +267,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.PERFECT, 0.70)));
 
         this.addGem("core/lunar", c -> c
-            .bonus(LIGHT_WEAPON, AttributeBonus.builder()
+            .bonus(LootCategories.MELEE_WEAPON, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.COLD_DAMAGE)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 1)
@@ -292,7 +293,9 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWED, 0.30)
                 .value(Purity.NORMAL, 0.45)
                 .value(Purity.FLAWLESS, 0.60)
-                .value(Purity.PERFECT, 0.80)));
+                .value(Purity.PERFECT, 0.80))
+            .bonus(RANGED_WEAPON, AntiGravityArrowBonus.builder()
+                .minPurity(Purity.FLAWLESS)));
 
         this.addGem("core/samurai", c -> c
             .unique()

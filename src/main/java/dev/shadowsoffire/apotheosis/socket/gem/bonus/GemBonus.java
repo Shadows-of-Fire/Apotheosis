@@ -14,6 +14,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemView;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.AllStatsBonus;
+import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.AntiGravityArrowBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.BloodyArrowBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.DropTransformBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.FrozenDropsBonus;
@@ -267,6 +268,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
         register("damage_reduction", DamageReductionBonus.CODEC);
         register("enchantment", EnchantmentBonus.CODEC);
         register("bloody_arrow", BloodyArrowBonus.CODEC);
+        register("anti_gravity_arrow", AntiGravityArrowBonus.CODEC);
         register("leech_block", LeechBlockBonus.CODEC);
         register("all_stats", AllStatsBonus.CODEC);
         register("drop_transform", DropTransformBonus.CODEC);
