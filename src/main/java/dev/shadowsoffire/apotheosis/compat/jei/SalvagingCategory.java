@@ -25,17 +25,18 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-@SuppressWarnings("removal")
 public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
 
     public static final ResourceLocation TEXTURES = Apotheosis.loc("textures/gui/salvage_jei.png");
+    public static final int WIDTH = 98;
+    public static final int HEIGHT = 74;
 
     private final Component title = Component.translatable("title.apotheosis.salvaging");
     private final IDrawable background;
     private final IDrawable icon;
 
     public SalvagingCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.drawableBuilder(TEXTURES, 0, 0, 98, 74).addPadding(0, 0, 0, 0).build();
+        this.background = guiHelper.drawableBuilder(TEXTURES, 0, 0, WIDTH, HEIGHT).addPadding(0, 0, 0, 0).build();
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Items.SALVAGING_TABLE));
     }
 
@@ -50,8 +51,13 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     @Override
@@ -61,6 +67,8 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
 
     @Override
     public void draw(SalvagingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gfx, double mouseX, double mouseY) {
+        this.background.draw(gfx);
+
         List<OutputData> outputs = recipe.getOutputs();
         Font font = Minecraft.getInstance().font;
         PoseStack pose = gfx.pose();

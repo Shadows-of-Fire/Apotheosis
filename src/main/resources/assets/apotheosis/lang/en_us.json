@@ -704,8 +704,10 @@
     "text.apotheosis.touched_by_malice": "Touched by Malice (x%s)",
     "text.apotheosis.malice_notice": "Malice: %s consumed the strength of %s",
 
-    "title.apotheosis.smithing": "Apothic Smithing",
     "title.apotheosis.salvaging": "Salvaging",
+    "title.apotheosis.stoneforming": "Stoneforming",
+    "info.apotheosis.stoneforming": "A tool with the %s affix can convert between these blocks.",
+    "info.apotheosis.stoneforming.target": "Shift-right-click a block to select a target.",
 
     "text.apotheosis.anything": "Anything",
     "loot_category.apotheosis.none": "Nothing",

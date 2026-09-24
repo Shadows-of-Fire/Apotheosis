@@ -8,11 +8,15 @@ import org.jetbrains.annotations.Nullable;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.Affix;
+import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.affix.UnnamingRecipe;
+import dev.shadowsoffire.apotheosis.affix.effect.StoneformingAffix;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
 import dev.shadowsoffire.apotheosis.compat.enchanting.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.compat.jei.PotionCharmExtension.PotionCharmSubtypes;
+import dev.shadowsoffire.apotheosis.compat.jei.StoneformingCategory.StoneformingDisplay;
 import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
 import dev.shadowsoffire.apotheosis.recipe.SupremacyRecipe;
@@ -25,7 +29,6 @@ import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.storage.GemCaseScreen;
-import dev.shadowsoffire.apotheosis.util.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.util.SizedUpgradeRecipe;
 import dev.shadowsoffire.apothic_enchanting.compat.InfusionRecipeCategory;
 import mezz.jei.api.IModPlugin;
@@ -48,15 +51,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.SmithingRecipe;
-import net.minecraft.world.level.block.Blocks;
 
 @JeiPlugin
 public class AdventureJEIPlugin implements IModPlugin {
 
-    public static final RecipeType<SmithingRecipe> APO_SMITHING = RecipeType.create(Apotheosis.MODID, "smithing", ApothSmithingRecipe.class);
     public static final RecipeType<SalvagingRecipe> SALVAGING = RecipeType.create(Apotheosis.MODID, "salvaging", SalvagingRecipe.class);
     public static final RecipeType<GemCuttingRecipe> GEM_CUTTING = RecipeType.create(Apotheosis.MODID, "gem_cutting", PurityUpgradeRecipe.class);
+    public static final RecipeType<StoneformingDisplay> STONEFORMING = RecipeType.create(Apotheosis.MODID, "stoneforming", StoneformingDisplay.class);
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -86,18 +87,25 @@ public class AdventureJEIPlugin implements IModPlugin {
         reg.addRecipes(GEM_CUTTING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeTypes.GEM_CUTTING).stream()
             .map(RecipeHolder::value)
             .toList());
+
+        // Candidate sets are resolved lazily by the display, so only the affix references are captured here.
+        List<StoneformingDisplay> stoneforming = AffixRegistry.INSTANCE.getValues().stream()
+            .filter(StoneformingAffix.class::isInstance)
+            .sorted(Comparator.comparing(Affix::id))
+            .map(affix -> new StoneformingDisplay(AffixRegistry.INSTANCE.holder(affix)))
+            .toList();
+        reg.addRecipes(STONEFORMING, stoneforming);
     }
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration reg) {
-        reg.addRecipeCategories(new ApothSmithingCategory(reg.getJeiHelpers().getGuiHelper()));
         reg.addRecipeCategories(new SalvagingCategory(reg.getJeiHelpers().getGuiHelper()));
         reg.addRecipeCategories(new GemCuttingCategory(reg.getJeiHelpers().getGuiHelper()));
+        reg.addRecipeCategories(new StoneformingCategory(reg.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
-        reg.addRecipeCatalyst(new ItemStack(Blocks.SMITHING_TABLE), APO_SMITHING);
         reg.addRecipeCatalyst(new ItemStack(Apoth.Blocks.SALVAGING_TABLE.value()), SALVAGING);
         reg.addRecipeCatalyst(new ItemStack(Apoth.Blocks.GEM_CUTTING_TABLE.value()), GEM_CUTTING);
     }
