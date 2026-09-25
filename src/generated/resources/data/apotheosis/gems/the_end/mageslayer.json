@@ -33,18 +33,18 @@
                     "attribute": "apothic_attributes:prot_shred",
                     "operation": "add_value",
                     "values": {
-                        "normal": 0.3,
-                        "flawless": 0.55,
-                        "perfect": 0.75
+                        "normal": 0.25,
+                        "flawless": 0.35,
+                        "perfect": 0.45
                     }
                 },
                 {
                     "attribute": "apothic_attributes:armor_shred",
                     "operation": "add_multiplied_base",
                     "values": {
-                        "normal": -0.2,
-                        "flawless": -0.35,
-                        "perfect": -0.55
+                        "normal": -0.15,
+                        "flawless": -0.3,
+                        "perfect": -0.5
                     }
                 }
             ]
