@@ -1,5 +1,9 @@
 {
     "values": [
-        "apotheosis:pinnacle/ranged/enchanted_netherite"
+        "apotheosis:pinnacle/ranged/enchanted_netherite",
+        {
+            "id": "apotheosis:pinnacle/ranged/apothic/enchanted_netherite",
+            "required": false
+        }
     ]
 }

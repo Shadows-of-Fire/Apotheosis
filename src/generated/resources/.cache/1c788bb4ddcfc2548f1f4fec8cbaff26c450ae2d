@@ -1,4 +1,4 @@
-// 26.1.2	2026-04-26T00:42:36.4882934	Gear Sets
+// 26.1.2	2026-10-02T17:06:09.590479632	Gear Sets
 51637a418faeb2e113ca903e8b63d44b9e732230 data/apotheosis/placebo/gear_sets/ascent/diamond.json
 d06c9bea9d3a0e1338e1f1d257db9e8eaf74032c data/apotheosis/placebo/gear_sets/ascent/enchanted_gold.json
 876dc9a8cabdc0ad49b7d7e2e937fe2e24f91674 data/apotheosis/placebo/gear_sets/ascent/iron.json
@@ -16,8 +16,11 @@ a34694db6172e9a78fd5821934acc2d14e3092db data/apotheosis/placebo/gear_sets/front
 0356e31a0ebc7eb783c1d5988f220ad25a206d19 data/apotheosis/placebo/gear_sets/haven/leather.json
 5c20ad3eadaa001f3d3f84b46d5e148e60ee83b7 data/apotheosis/placebo/gear_sets/haven/ranged/chain.json
 7225a51c26ad4fd55ca11b23f73e4fee26420008 data/apotheosis/placebo/gear_sets/haven/ranged/leather.json
-b74f42b30f6d2878b761ed2e45bc367ae2042fbc data/apotheosis/placebo/gear_sets/pinnacle/enchanted_netherite.json
-ab80fd9aad78d1ace9eab294866db7d5220cbb00 data/apotheosis/placebo/gear_sets/pinnacle/ranged/enchanted_netherite.json
+a525d6e5df73ed0205ff05a1ac931c18f43600f7 data/apotheosis/placebo/gear_sets/pinnacle/apothic/enchanted_netherite.json
+24a73d0e72256065a5d7efcb2ff4dc6260de5277 data/apotheosis/placebo/gear_sets/pinnacle/enchanted_netherite.json
+6afc4e1a75e07b4cdcd7b17e1edab7b407d2e36f data/apotheosis/placebo/gear_sets/pinnacle/ranged/apothic/enchanted_netherite.json
+d7df2af8036a377de2c6c5d7a969ef113199e030 data/apotheosis/placebo/gear_sets/pinnacle/ranged/enchanted_netherite.json
+24981a325c96d2763451ad7e8544ff27315e67a2 data/apotheosis/placebo/gear_sets/pinnacle/spawners/enchanted_netherite.json
 44ceee75025cb68d91fa7ef2db6b6fe6e23d80e0 data/apotheosis/placebo/gear_sets/summit/diamond.json
 19cbd8e78ecb11d0dea10e70df42f5dade6dfe17 data/apotheosis/placebo/gear_sets/summit/enchanted_diamond.json
 cf1aad2bd8f0c5b9b9dbb5acf2a2268a3d27ffc6 data/apotheosis/placebo/gear_sets/summit/enchanted_iron.json

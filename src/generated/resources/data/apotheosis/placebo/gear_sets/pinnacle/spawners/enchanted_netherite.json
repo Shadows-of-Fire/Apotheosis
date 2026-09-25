@@ -1,4 +1,10 @@
 {
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_spawners"
+        }
+    ],
     "boots": [
         {
             "stack": {
@@ -143,54 +149,37 @@
                 "components": {
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
-                        "minecraft:power": 15
+                        "apothic_spawners:capturing": 10
                     }
                 },
                 "count": 1,
-                "id": "minecraft:bow"
+                "id": "minecraft:netherite_sword"
+            },
+            "weight": 6
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "apothic_spawners:capturing": 10
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_axe"
+            },
+            "weight": 4
+        }
+    ],
+    "offhands": [
+        {
+            "stack": {
+                "count": 1,
+                "id": "minecraft:shield"
             },
             "weight": 10
-        },
-        {
-            "stack": {
-                "components": {
-                    "apotheosis:durability_bonus": 0.8,
-                    "minecraft:enchantments": {
-                        "minecraft:power": 15
-                    }
-                },
-                "count": 1,
-                "id": "minecraft:crossbow"
-            },
-            "weight": 8
-        },
-        {
-            "stack": {
-                "components": {
-                    "apotheosis:durability_bonus": 0.8,
-                    "minecraft:enchantments": {
-                        "minecraft:piercing": 15
-                    }
-                },
-                "count": 1,
-                "id": "minecraft:crossbow"
-            },
-            "weight": 8
-        },
-        {
-            "stack": {
-                "components": {
-                    "apotheosis:durability_bonus": 0.8,
-                    "minecraft:enchantments": {
-                        "minecraft:unbreaking": 15
-                    }
-                },
-                "count": 1,
-                "id": "minecraft:crossbow"
-            },
-            "weight": 3
         }
     ],
     "quality": 5.0,
-    "weight": 100
+    "weight": 20
 }

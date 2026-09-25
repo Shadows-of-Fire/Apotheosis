@@ -12,6 +12,10 @@ import java.util.function.UnaryOperator;
 
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
+import dev.shadowsoffire.apotheosis.compat.spawners.ApothicSpawnersCompat;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
+import dev.shadowsoffire.apothic_enchanting.Ench;
 import dev.shadowsoffire.placebo.json.WeightedItemStack;
 import dev.shadowsoffire.placebo.systems.gear.GearSet;
 import dev.shadowsoffire.placebo.systems.gear.GearSetRegistry;
@@ -37,6 +41,8 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import net.minecraft.world.level.block.entity.BannerPatterns;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 
 public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
 
@@ -48,6 +54,12 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
      * {@link GearSetTagsProvider} to emit the corresponding tag JSON files.
      */
     public static final Map<String, List<Identifier>> TAG_ASSOCIATIONS = new LinkedHashMap<>();
+
+    /**
+     * Same as {@link #TAG_ASSOCIATIONS}, but for gear sets that are registered conditionally. These must be emitted as optional
+     * tag entries, since a missing required entry causes the entire tag to be skipped when the condition fails.
+     */
+    public static final Map<String, List<Identifier>> OPTIONAL_TAG_ASSOCIATIONS = new LinkedHashMap<>();
 
     public GearSetProvider(PackOutput output, CompletableFuture<Provider> registries) {
         super(output, registries, GearSetRegistry.INSTANCE);
@@ -305,26 +317,41 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .tag("summit_ranged"));
 
         // Pinnacle
-        this.addSet("pinnacle/enchanted_netherite", DEFAULT_WEIGHT, 5, c -> c
-            .mainhand(buffedItem(Items.NETHERITE_SWORD, enchants, Enchantments.SHARPNESS, 15, 0.8F), 10)
-            .mainhand(buffedItem(Items.NETHERITE_AXE, enchants, Enchantments.SHARPNESS, 15, 0.8F), 10)
-            .mainhand(buffedItem(Items.NETHERITE_PICKAXE, enchants, Enchantments.FORTUNE, 15, 0.8F), 10)
-            .mainhand(buffedItem(Items.NETHERITE_SHOVEL, enchants, Enchantments.FORTUNE, 15, 0.8F), 10)
-            .offhand(new ItemStackTemplate(Items.SHIELD), 10)
-            .helmet(buffedItem(Items.NETHERITE_HELMET, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
-            .chestplate(buffedItem(Items.NETHERITE_CHESTPLATE, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
-            .leggings(buffedItem(Items.NETHERITE_LEGGINGS, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
-            .boots(buffedItem(Items.NETHERITE_BOOTS, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
+        // Every pinnacle item is a "chase" item: a single enchantment at CHASE_LEVEL, which is above the Apothic Enchanting max level
+        // and therefore cannot be obtained, moved, or reapplied through normal means. Invader#modifyBossItem intentionally clamps
+        // the enchantments of the guaranteed affix item, so only the non-affixed pieces retain these levels.
+        // See the javadoc on CHASE_LEVEL for the selection rules.
+        this.addSet("pinnacle/enchanted_netherite", DEFAULT_WEIGHT, 5, c -> chaseArmor(chaseTools(c, registries)
+            .offhand(new ItemStackTemplate(Items.SHIELD), 10), registries)
             .tag("pinnacle_melee"));
 
-        this.addSet("pinnacle/ranged/enchanted_netherite", DEFAULT_WEIGHT, 5, c -> c
-            .mainhand(buffedItem(Items.BOW, enchants, Enchantments.POWER, 15, 0.8F), 10)
-            .mainhand(buffedItem(Items.CROSSBOW, enchants, Enchantments.POWER, 15, 0.8F), 10)
-            .helmet(buffedItem(Items.NETHERITE_HELMET, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
-            .chestplate(buffedItem(Items.NETHERITE_CHESTPLATE, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
-            .leggings(buffedItem(Items.NETHERITE_LEGGINGS, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
-            .boots(buffedItem(Items.NETHERITE_BOOTS, enchants, Enchantments.PROTECTION, 6, 0.7F), 10)
+        this.addSet("pinnacle/ranged/enchanted_netherite", DEFAULT_WEIGHT, 5, c -> chaseArmor(c
+            .mainhand(chaseItem(Items.BOW, registries, Enchantments.POWER), 10)
+            .mainhand(chaseItem(Items.CROSSBOW, registries, Enchantments.POWER), 8)
+            .mainhand(chaseItem(Items.CROSSBOW, registries, Enchantments.PIERCING), 8)
+            .mainhand(chaseItem(Items.CROSSBOW, registries, Enchantments.UNBREAKING), 3), registries)
             .tag("pinnacle_ranged"));
+
+        // Apothic Enchanting variants. These reference AE enchantments, so they live in separate, conditional sets:
+        // an unknown enchantment id would fail the item codec and prevent the entire set from loading.
+        // The armor pool is the vanilla pool plus AE additions, so wearing this set does not look different; only the weapons do.
+        this.addSet("pinnacle/apothic/enchanted_netherite", 40, 5, c -> apothicChaseArmor(chaseArmor(apothicChaseTools(c, registries)
+            .offhand(chaseItem(Items.SHIELD, registries, Ench.Enchantments.SHIELD_BASH), 5)
+            .offhand(chaseItem(Items.SHIELD, registries, Ench.Enchantments.REFLECTIVE_DEFENSES), 5), registries), registries)
+            .tag("pinnacle_melee"),
+            new ModLoadedCondition(ApothicEnchantingCompat.MODID));
+
+        this.addSet("pinnacle/ranged/apothic/enchanted_netherite", 40, 5, c -> apothicChaseArmor(chaseArmor(c
+            .mainhand(chaseItem(Items.CROSSBOW, registries, Ench.Enchantments.CRESCENDO_OF_BOLTS, REDUCED_CHASE_LEVEL), 10), registries), registries)
+            .tag("pinnacle_ranged"),
+            new ModLoadedCondition(ApothicEnchantingCompat.MODID));
+
+        // Apothic Spawners variant. Capturing is only carried on melee weapons: the kill hook reads the main hand when the mob dies,
+        // which is unreliable for ranged kills.
+        this.addSet("pinnacle/spawners/enchanted_netherite", 20, 5, c -> chaseArmor(spawnersChaseTools(c, registries)
+            .offhand(new ItemStackTemplate(Items.SHIELD), 10), registries)
+            .tag("pinnacle_melee"),
+            new ModLoadedCondition(ApothicSpawnersCompat.MODID));
 
         this.addSet("gateway_only/nether_herald", 0, 0, c -> c
             .helmet(getNetherHeraldBannerInstance(registries.lookupOrThrow(Registries.BANNER_PATTERN)), 1)
@@ -337,6 +364,149 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
             .chestplate(new ItemStackTemplate(Items.NETHERITE_CHESTPLATE), 1)
             .leggings(new ItemStackTemplate(Items.NETHERITE_LEGGINGS), 1)
             .boots(new ItemStackTemplate(Items.NETHERITE_BOOTS), 1));
+    }
+
+    /**
+     * The enchantment level applied to pinnacle "chase" items.
+     * <p>
+     * This must exceed the Apothic Enchanting max level of every enchantment used by {@link #chaseItem}, so that the enchantment
+     * cannot be reached via the enchanting table, and cannot be reapplied to another item through the anvil (which clamps to the max level).
+     * <p>
+     * Enchantments are only eligible for chase items when a level this high is both meaningful and desirable. We exclude:
+     * <ul>
+     * <li>Single-level enchantments (Mending, Silk Touch, Infinity, Flame, Multishot, Chainsaw, etc), where the level does nothing.</li>
+     * <li>Enchantments that are hard-capped in code below this level (Depth Strider, Swift Sneak, Frost Walker, Quick Charge).</li>
+     * <li>Enchantments that become unusable or harmful at this level (Knockback and Rebounding launch targets out of reach,
+     * Berserker's Fury has an exponential health cost, Knowledge of the Ages becomes an unbounded experience source).</li>
+     * <li>Enchantments for item types that invaders do not carry (tridents, maces, fishing rods, hoes, shears).</li>
+     * <li>Enchantments that are unwanted at this level (Smite, Blast Protection, etc).</li>
+     * </ul>
+     */
+    public static final int CHASE_LEVEL = 15;
+
+    /**
+     * A reduced chase level for enchantments whose value grows too quickly at {@link #CHASE_LEVEL}: Protection (the total protection cap is
+     * reached with fewer pieces), Scavenger, Boon of the Earth, and Capturing (uncapped linear loot chances), and Crescendo of Bolts (extra shots per level).
+     * Still above the Apothic Enchanting max level of each of these enchantments.
+     */
+    public static final int REDUCED_CHASE_LEVEL = 10;
+
+    /**
+     * Creates a chase item: an item with exactly one enchantment at {@link #CHASE_LEVEL} and the max durability bonus.
+     * <p>
+     * Chase items must only ever have a single enchantment. The over-cap enchantment is the entire identity of the item.
+     */
+    protected static ItemStackTemplate chaseItem(Item item, HolderLookup.Provider registries, ResourceKey<Enchantment> ench) {
+        return chaseItem(item, registries, ench, CHASE_LEVEL);
+    }
+
+    protected static ItemStackTemplate chaseItem(Item item, HolderLookup.Provider registries, ResourceKey<Enchantment> ench, int level) {
+        ItemEnchantments.Mutable mut = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+        // Standalone holders are required: Apothic Enchanting's enchantments are not present in the datagen registry lookup.
+        mut.set(ApothMiscUtil.standaloneHolder(registries, ench), level);
+        DataComponentPatch patch = DataComponentPatch.builder()
+            .set(Components.DURABILITY_BONUS, 0.8F)
+            .set(DataComponents.ENCHANTMENTS, mut.toImmutable())
+            .build();
+        return new ItemStackTemplate(item, 1, patch);
+    }
+
+    /**
+     * Adds the vanilla pinnacle chase tool pool (netherite sword, axe, pickaxe, and shovel) to a gear set builder.
+     */
+    protected static GSBuilder chaseTools(GSBuilder c, HolderLookup.Provider registries) {
+        return chaseTools(c, registries, Items.NETHERITE_SWORD, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SHOVEL);
+    }
+
+    /**
+     * Adds the vanilla pinnacle chase tool pool to a gear set builder, using the provided items.
+     */
+    protected static GSBuilder chaseTools(GSBuilder c, HolderLookup.Provider registries, Item sword, Item axe, Item pickaxe, Item shovel) {
+        return c
+            .mainhand(chaseItem(sword, registries, Enchantments.SHARPNESS), 10)
+            .mainhand(chaseItem(sword, registries, Enchantments.LOOTING), 5)
+            .mainhand(chaseItem(axe, registries, Enchantments.SHARPNESS), 10)
+            .mainhand(chaseItem(axe, registries, Enchantments.EFFICIENCY), 3)
+            .mainhand(chaseItem(pickaxe, registries, Enchantments.FORTUNE), 10)
+            .mainhand(chaseItem(pickaxe, registries, Enchantments.EFFICIENCY), 5)
+            .mainhand(chaseItem(pickaxe, registries, Enchantments.UNBREAKING), 3)
+            .mainhand(chaseItem(shovel, registries, Enchantments.FORTUNE), 10)
+            .mainhand(chaseItem(shovel, registries, Enchantments.EFFICIENCY), 5)
+            .mainhand(chaseItem(shovel, registries, Enchantments.UNBREAKING), 3);
+    }
+
+    /**
+     * Adds the Apothic Enchanting pinnacle chase tool pool (netherite) to a gear set builder. Only valid in sets conditional on Apothic Enchanting.
+     */
+    protected static GSBuilder apothicChaseTools(GSBuilder c, HolderLookup.Provider registries) {
+        return apothicChaseTools(c, registries, Items.NETHERITE_SWORD, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE);
+    }
+
+    /**
+     * Adds the Apothic Enchanting pinnacle chase tool pool to a gear set builder, using the provided items.
+     * Only valid in sets conditional on Apothic Enchanting.
+     */
+    protected static GSBuilder apothicChaseTools(GSBuilder c, HolderLookup.Provider registries, Item sword, Item axe, Item pickaxe) {
+        return c
+            .mainhand(chaseItem(sword, registries, Ench.Enchantments.SCAVENGER, REDUCED_CHASE_LEVEL), 6)
+            .mainhand(chaseItem(axe, registries, Ench.Enchantments.SCAVENGER, REDUCED_CHASE_LEVEL), 4)
+            .mainhand(chaseItem(pickaxe, registries, Ench.Enchantments.BOON_OF_THE_EARTH, REDUCED_CHASE_LEVEL), 6);
+    }
+
+    /**
+     * Adds the Apothic Spawners pinnacle chase tool pool (netherite) to a gear set builder. Only valid in sets conditional on Apothic Spawners.
+     */
+    protected static GSBuilder spawnersChaseTools(GSBuilder c, HolderLookup.Provider registries) {
+        return spawnersChaseTools(c, registries, Items.NETHERITE_SWORD, Items.NETHERITE_AXE);
+    }
+
+    /**
+     * Adds the Apothic Spawners pinnacle chase tool pool to a gear set builder, using the provided items.
+     * Only valid in sets conditional on Apothic Spawners.
+     */
+    protected static GSBuilder spawnersChaseTools(GSBuilder c, HolderLookup.Provider registries, Item sword, Item axe) {
+        return c
+            .mainhand(chaseItem(sword, registries, ApothicSpawnersCompat.CAPTURING, REDUCED_CHASE_LEVEL), 6)
+            .mainhand(chaseItem(axe, registries, ApothicSpawnersCompat.CAPTURING, REDUCED_CHASE_LEVEL), 4);
+    }
+
+    /**
+     * Adds the vanilla pinnacle chase armor pool (netherite) to a gear set builder.
+     */
+    protected static GSBuilder chaseArmor(GSBuilder c, HolderLookup.Provider registries) {
+        return chaseArmor(c, registries, Items.NETHERITE_HELMET, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS);
+    }
+
+    /**
+     * Adds the vanilla pinnacle chase armor pool to a gear set builder, using the provided items.
+     */
+    protected static GSBuilder chaseArmor(GSBuilder c, HolderLookup.Provider registries, Item helmet, Item chestplate, Item leggings, Item boots) {
+        return c
+            .helmet(chaseItem(helmet, registries, Enchantments.PROTECTION, REDUCED_CHASE_LEVEL), 10)
+            .helmet(chaseItem(helmet, registries, Enchantments.RESPIRATION), 3)
+            .helmet(chaseItem(helmet, registries, Enchantments.THORNS), 2)
+            .chestplate(chaseItem(chestplate, registries, Enchantments.PROTECTION, REDUCED_CHASE_LEVEL), 10)
+            .chestplate(chaseItem(chestplate, registries, Enchantments.THORNS), 3)
+            .leggings(chaseItem(leggings, registries, Enchantments.PROTECTION, REDUCED_CHASE_LEVEL), 10)
+            .leggings(chaseItem(leggings, registries, Enchantments.THORNS), 3)
+            .boots(chaseItem(boots, registries, Enchantments.PROTECTION, REDUCED_CHASE_LEVEL), 10)
+            .boots(chaseItem(boots, registries, Enchantments.FEATHER_FALLING), 4)
+            .boots(chaseItem(boots, registries, Enchantments.THORNS), 2);
+    }
+
+    /**
+     * Adds the Apothic Enchanting additions to the pinnacle chase armor pool (netherite). Only valid in sets conditional on Apothic Enchanting.
+     */
+    protected static GSBuilder apothicChaseArmor(GSBuilder c, HolderLookup.Provider registries) {
+        return apothicChaseArmor(c, registries, Items.NETHERITE_CHESTPLATE);
+    }
+
+    /**
+     * Adds the Apothic Enchanting additions to the pinnacle chase armor pool, using the provided items.
+     * Only valid in sets conditional on Apothic Enchanting.
+     */
+    protected static GSBuilder apothicChaseArmor(GSBuilder c, HolderLookup.Provider registries, Item chestplate) {
+        return c.chestplate(chaseItem(chestplate, registries, Ench.Enchantments.ICY_THORNS), 4);
     }
 
     protected static ItemStackTemplate buffedItem(Item item, RegistryLookup<Enchantment> enchants, ResourceKey<Enchantment> enchant, int level, float durabilityBonus) {
@@ -382,6 +552,18 @@ public class GearSetProvider extends DynamicRegistryProvider<GearSet> {
         this.add(id, builder.build());
         for (String tag : builder.tags()) {
             TAG_ASSOCIATIONS.computeIfAbsent(tag, k -> new ArrayList<>()).add(id);
+        }
+    }
+
+    /**
+     * Adds a gear set that only loads when the given conditions are met. Its tags are recorded in {@link #OPTIONAL_TAG_ASSOCIATIONS}.
+     */
+    protected void addSet(String name, int weight, float quality, UnaryOperator<GSBuilder> config, ICondition... conditions) {
+        Identifier id = Apotheosis.loc(name);
+        GSBuilder builder = config.apply(new GSBuilder(weight, quality));
+        this.addConditionally(id, builder.build(), conditions);
+        for (String tag : builder.tags()) {
+            OPTIONAL_TAG_ASSOCIATIONS.computeIfAbsent(tag, k -> new ArrayList<>()).add(id);
         }
     }
 

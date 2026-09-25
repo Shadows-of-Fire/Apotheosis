@@ -16,7 +16,8 @@ import net.minecraft.resources.Identifier;
 /**
  * Generates the gear-set tag JSON files based on the inline {@code .tag(...)} declarations made by
  * {@link GearSetProvider}. Must be registered to datagen <em>after</em> {@link GearSetProvider} so that
- * {@link GearSetProvider#TAG_ASSOCIATIONS} is fully populated by the time this provider runs.
+ * {@link GearSetProvider#TAG_ASSOCIATIONS} and {@link GearSetProvider#OPTIONAL_TAG_ASSOCIATIONS} are fully populated by the
+ * time this provider runs.
  */
 public class GearSetTagsProvider extends DynamicTagProvider<GearSet> {
 
@@ -36,6 +37,15 @@ public class GearSetTagsProvider extends DynamicTagProvider<GearSet> {
             TagAppender appender = this.tag(key);
             for (Identifier id : entry.getValue()) {
                 appender.add(id);
+            }
+        }
+
+        // Conditional gear sets may be absent at runtime, and a missing required entry would cause the whole tag to be skipped.
+        for (Map.Entry<String, List<Identifier>> entry : GearSetProvider.OPTIONAL_TAG_ASSOCIATIONS.entrySet()) {
+            DynamicTagKey<GearSet> key = new DynamicTagKey<>(GearSetRegistry.INSTANCE.getId(), Apotheosis.loc(entry.getKey()));
+            TagAppender appender = this.tag(key);
+            for (Identifier id : entry.getValue()) {
+                appender.addOptional(id);
             }
         }
     }

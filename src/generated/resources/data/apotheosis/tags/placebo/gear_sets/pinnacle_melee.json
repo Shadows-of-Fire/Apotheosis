@@ -1,5 +1,13 @@
 {
     "values": [
-        "apotheosis:pinnacle/enchanted_netherite"
+        "apotheosis:pinnacle/enchanted_netherite",
+        {
+            "id": "apotheosis:pinnacle/apothic/enchanted_netherite",
+            "required": false
+        },
+        {
+            "id": "apotheosis:pinnacle/spawners/enchanted_netherite",
+            "required": false
+        }
     ]
 }

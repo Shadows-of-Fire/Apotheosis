@@ -3,60 +3,138 @@
         {
             "stack": {
                 "components": {
-                    "apotheosis:durability_bonus": 0.7,
+                    "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
-                        "minecraft:protection": 6
+                        "minecraft:protection": 10
                     }
                 },
                 "count": 1,
                 "id": "minecraft:netherite_boots"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "minecraft:feather_falling": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_boots"
+            },
+            "weight": 4
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "minecraft:thorns": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_boots"
+            },
+            "weight": 2
         }
     ],
     "chestplates": [
         {
             "stack": {
                 "components": {
-                    "apotheosis:durability_bonus": 0.7,
+                    "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
-                        "minecraft:protection": 6
+                        "minecraft:protection": 10
                     }
                 },
                 "count": 1,
                 "id": "minecraft:netherite_chestplate"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "minecraft:thorns": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_chestplate"
+            },
+            "weight": 3
         }
     ],
     "helmets": [
         {
             "stack": {
                 "components": {
-                    "apotheosis:durability_bonus": 0.7,
+                    "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
-                        "minecraft:protection": 6
+                        "minecraft:protection": 10
                     }
                 },
                 "count": 1,
                 "id": "minecraft:netherite_helmet"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "minecraft:respiration": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_helmet"
+            },
+            "weight": 3
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "minecraft:thorns": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_helmet"
+            },
+            "weight": 2
         }
     ],
     "leggings": [
         {
             "stack": {
                 "components": {
-                    "apotheosis:durability_bonus": 0.7,
+                    "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
-                        "minecraft:protection": 6
+                        "minecraft:protection": 10
                     }
                 },
                 "count": 1,
                 "id": "minecraft:netherite_leggings"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "minecraft:thorns": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_leggings"
+            },
+            "weight": 3
         }
     ],
     "mainhands": [
@@ -78,6 +156,19 @@
                 "components": {
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
+                        "minecraft:looting": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_sword"
+            },
+            "weight": 5
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
                         "minecraft:sharpness": 15
                     }
                 },
@@ -85,6 +176,19 @@
                 "id": "minecraft:netherite_axe"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "minecraft:efficiency": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_axe"
+            },
+            "weight": 3
         },
         {
             "stack": {
@@ -104,6 +208,32 @@
                 "components": {
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
+                        "minecraft:efficiency": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_pickaxe"
+            },
+            "weight": 5
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "minecraft:unbreaking": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_pickaxe"
+            },
+            "weight": 3
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
                         "minecraft:fortune": 15
                     }
                 },
@@ -111,6 +241,32 @@
                 "id": "minecraft:netherite_shovel"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "minecraft:efficiency": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_shovel"
+            },
+            "weight": 5
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "minecraft:unbreaking": 15
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_shovel"
+            },
+            "weight": 3
         }
     ],
     "offhands": [
