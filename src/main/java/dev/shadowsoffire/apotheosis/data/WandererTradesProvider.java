@@ -23,11 +23,9 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -38,9 +36,6 @@ import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 
 public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrade> {
-
-    // TODO: Make one of these in AS directly.
-    public static final ResourceKey<Enchantment> CAPTURING = ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(ApothicSpawnersCompat.MODID, "capturing"));
 
     private static final List<ICondition> REQUIRES_ENCH = List.of(new ModLoadedCondition(ApothicEnchantingCompat.MODID));
     private static final List<ICondition> REQUIRES_SPAWNERS = List.of(new ModLoadedCondition(ApothicSpawnersCompat.MODID));
@@ -185,7 +180,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.SHARPNESS, 10)
                 .enchant(Enchantments.MENDING, 1)
                 .enchant(Ench.Enchantments.SCAVENGER, 2)
-                .enchant(CAPTURING, 2)
+                .enchant(ApothicSpawnersCompat.CAPTURING, 2)
                 .enchant(Enchantments.LOOTING, 5)
                 .enchant(Enchantments.UNBREAKING, 3)))
             .maxTrades(1)
@@ -204,7 +199,7 @@ public class WandererTradesProvider extends DynamicRegistryProvider<WandererTrad
                 .enchant(Enchantments.MENDING, 1)
                 .enchant(Enchantments.LOOTING, 4)
                 .enchant(Enchantments.UNBREAKING, 5)
-                .enchant(CAPTURING, 5)))
+                .enchant(ApothicSpawnersCompat.CAPTURING, 5)))
             .maxTrades(1)
             .xp(500),
             REQUIRES_SPAWNERS, WorldTier.SUMMIT, WorldTier.PINNACLE);

@@ -9,7 +9,10 @@ import dev.shadowsoffire.apotheosis.util.PresetSpawnerStats;
 import dev.shadowsoffire.apothic_spawners.block.ApothSpawnerTile;
 import dev.shadowsoffire.apothic_spawners.stats.SpawnerStat;
 import dev.shadowsoffire.apothic_spawners.stats.SpawnerStats;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.neoforged.fml.ModList;
 
@@ -20,6 +23,11 @@ import net.neoforged.fml.ModList;
 public class ApothicSpawnersCompat {
 
     public static final String MODID = "apothic_spawners";
+
+    /**
+     * Key for the Capturing enchantment. Only useful when {@link #isLoaded()} is true, but safe to reference at any time.
+     */
+    public static final ResourceKey<Enchantment> CAPTURING = ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(MODID, "capturing"));
 
     private static final boolean LOADED = ModList.get().isLoaded(MODID);
 

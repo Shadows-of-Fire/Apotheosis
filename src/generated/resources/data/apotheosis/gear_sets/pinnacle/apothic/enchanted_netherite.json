@@ -1,4 +1,10 @@
 {
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apothic_enchanting"
+        }
+    ],
     "type": "placebo:gear_set",
     "boots": [
         {
@@ -77,6 +83,21 @@
                 "id": "minecraft:netherite_chestplate"
             },
             "weight": 3
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "apothic_enchanting:icy_thorns": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_chestplate"
+            },
+            "weight": 4
         }
     ],
     "helmets": [
@@ -165,14 +186,14 @@
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
                         "levels": {
-                            "minecraft:power": 15
+                            "apothic_enchanting:scavenger": 10
                         }
                     }
                 },
                 "count": 1,
-                "id": "minecraft:bow"
+                "id": "minecraft:netherite_sword"
             },
-            "weight": 10
+            "weight": 6
         },
         {
             "stack": {
@@ -180,14 +201,14 @@
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
                         "levels": {
-                            "minecraft:power": 15
+                            "apothic_enchanting:scavenger": 10
                         }
                     }
                 },
                 "count": 1,
-                "id": "minecraft:crossbow"
+                "id": "minecraft:netherite_axe"
             },
-            "weight": 8
+            "weight": 4
         },
         {
             "stack": {
@@ -195,14 +216,31 @@
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
                         "levels": {
-                            "minecraft:piercing": 15
+                            "apothic_enchanting:boon_of_the_earth": 10
                         }
                     }
                 },
                 "count": 1,
-                "id": "minecraft:crossbow"
+                "id": "minecraft:netherite_pickaxe"
             },
-            "weight": 8
+            "weight": 6
+        }
+    ],
+    "offhands": [
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "apothic_enchanting:shield_bash": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:shield"
+            },
+            "weight": 5
         },
         {
             "stack": {
@@ -210,19 +248,19 @@
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
                         "levels": {
-                            "minecraft:unbreaking": 15
+                            "apothic_enchanting:reflective_defenses": 15
                         }
                     }
                 },
                 "count": 1,
-                "id": "minecraft:crossbow"
+                "id": "minecraft:shield"
             },
-            "weight": 3
+            "weight": 5
         }
     ],
     "quality": 5.0,
     "tags": [
-        "pinnacle_ranged"
+        "pinnacle_melee"
     ],
-    "weight": 100
+    "weight": 40
 }

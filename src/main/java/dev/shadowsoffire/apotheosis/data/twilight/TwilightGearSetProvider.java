@@ -4,7 +4,10 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.UnaryOperator;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.compat.enchanting.ApothicEnchantingCompat;
+import dev.shadowsoffire.apotheosis.compat.spawners.ApothicSpawnersCompat;
 import dev.shadowsoffire.apotheosis.data.GearSetProvider;
+import dev.shadowsoffire.apothic_enchanting.Ench;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderLookup.RegistryLookup;
@@ -13,6 +16,8 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import twilightforest.init.TFItems;
 
@@ -184,36 +189,55 @@ public class TwilightGearSetProvider extends GearSetProvider {
             .tag("summit_ranged"));
 
         // Pinnacle
-        addSet("pinnacle/enchanted_yeti", 35, 5, c -> c
-            .mainhand(buffedItem(Items.NETHERITE_SWORD, enchants, 3F), 10)
-            .mainhand(buffedItem(Items.NETHERITE_AXE, enchants, 3F), 10)
-            .mainhand(buffedItem(Items.NETHERITE_PICKAXE, enchants, 3F), 10)
-            .mainhand(buffedItem(Items.NETHERITE_SHOVEL, enchants, 3F), 10)
-            .mainhand(buffedItem(TFItems.GIANT_SWORD.value(), enchants, 3F), 4)
-            .mainhand(buffedItem(TFItems.GLASS_SWORD.value(), enchants, 3F), 2)
-            .mainhand(buffedItem(TFItems.GIANT_PICKAXE.value(), enchants, 3F), 4)
-            .offhand(new ItemStack(TFItems.KNIGHTMETAL_SHIELD.value()), 10)
-            .helmet(buffedItem(TFItems.YETI_HELMET.value(), enchants, 3F), 10)
-            .chestplate(buffedItem(TFItems.YETI_CHESTPLATE.value(), enchants, 3F), 10)
-            .leggings(buffedItem(TFItems.YETI_LEGGINGS.value(), enchants, 3F), 10)
-            .boots(buffedItem(TFItems.YETI_BOOTS.value(), enchants, 3F), 10)
+        // Chase items, following the rules in GearSetProvider#CHASE_LEVEL: one enchantment per item at the chase level.
+        addSet("pinnacle/enchanted_yeti", 35, 5, c -> chaseArmor(chaseTools(c, registries)
+            .mainhand(chaseItem(TFItems.GIANT_SWORD.value(), registries, Enchantments.SHARPNESS), 4)
+            .mainhand(chaseItem(TFItems.GLASS_SWORD.value(), registries, Enchantments.SHARPNESS), 2)
+            .mainhand(chaseItem(TFItems.GIANT_PICKAXE.value(), registries, Enchantments.FORTUNE), 4)
+            .offhand(new ItemStack(TFItems.KNIGHTMETAL_SHIELD.value()), 10),
+            registries, TFItems.YETI_HELMET.value(), TFItems.YETI_CHESTPLATE.value(), TFItems.YETI_LEGGINGS.value(), TFItems.YETI_BOOTS.value())
             .tag("pinnacle_melee"));
 
-        addSet("apotheosis/ranged/enchanted_netherite", 35, 5, c -> c
-            .mainhand(buffedItem(TFItems.TRIPLE_BOW.value(), enchants, 3F), 2)
-            .mainhand(buffedItem(TFItems.ENDER_BOW.value(), enchants, 3F), 2)
-            .mainhand(buffedItem(TFItems.SEEKER_BOW.value(), enchants, 3F), 2)
-            .mainhand(buffedItem(TFItems.ICE_BOW.value(), enchants, 3F), 2)
-            .helmet(buffedItem(TFItems.YETI_HELMET.value(), enchants, 3F), 10)
-            .chestplate(buffedItem(TFItems.YETI_CHESTPLATE.value(), enchants, 3F), 10)
-            .leggings(buffedItem(TFItems.YETI_LEGGINGS.value(), enchants, 3F), 10)
-            .boots(buffedItem(TFItems.YETI_BOOTS.value(), enchants, 3F), 10)
+        addSet("pinnacle/ranged/enchanted_yeti", 35, 5, c -> chaseArmor(c
+            .mainhand(chaseItem(TFItems.TRIPLE_BOW.value(), registries, Enchantments.POWER), 2)
+            .mainhand(chaseItem(TFItems.ENDER_BOW.value(), registries, Enchantments.POWER), 2)
+            .mainhand(chaseItem(TFItems.SEEKER_BOW.value(), registries, Enchantments.POWER), 2)
+            .mainhand(chaseItem(TFItems.ICE_BOW.value(), registries, Enchantments.POWER), 2),
+            registries, TFItems.YETI_HELMET.value(), TFItems.YETI_CHESTPLATE.value(), TFItems.YETI_LEGGINGS.value(), TFItems.YETI_BOOTS.value())
             .tag("pinnacle_ranged"));
+
+        // Apothic Enchanting variant, mirroring pinnacle/apothic/enchanted_netherite. Requires both Twilight Forest and Apothic Enchanting.
+        // There is no ranged variant: the only ranged AE chase enchantment is for crossbows, which this set does not carry.
+        addSet("pinnacle/apothic/enchanted_yeti", 14, 5, c -> apothicChaseArmor(chaseArmor(apothicChaseTools(c, registries)
+            .mainhand(chaseItem(TFItems.GIANT_SWORD.value(), registries, Ench.Enchantments.SCAVENGER, REDUCED_CHASE_LEVEL), 4)
+            .mainhand(chaseItem(TFItems.GIANT_PICKAXE.value(), registries, Ench.Enchantments.BOON_OF_THE_EARTH, REDUCED_CHASE_LEVEL), 4)
+            .offhand(chaseItem(TFItems.KNIGHTMETAL_SHIELD.value(), registries, Ench.Enchantments.SHIELD_BASH), 5)
+            .offhand(chaseItem(TFItems.KNIGHTMETAL_SHIELD.value(), registries, Ench.Enchantments.REFLECTIVE_DEFENSES), 5),
+            registries, TFItems.YETI_HELMET.value(), TFItems.YETI_CHESTPLATE.value(), TFItems.YETI_LEGGINGS.value(), TFItems.YETI_BOOTS.value()),
+            registries, TFItems.YETI_CHESTPLATE.value())
+            .tag("pinnacle_melee"),
+            new ModLoadedCondition(ApothicEnchantingCompat.MODID));
+
+        // Apothic Spawners variant, mirroring pinnacle/spawners/enchanted_netherite. Requires both Twilight Forest and Apothic Spawners.
+        addSet("pinnacle/spawners/enchanted_yeti", 7, 5, c -> chaseArmor(spawnersChaseTools(c, registries)
+            .mainhand(chaseItem(TFItems.GIANT_SWORD.value(), registries, ApothicSpawnersCompat.CAPTURING, REDUCED_CHASE_LEVEL), 4)
+            .offhand(new ItemStack(TFItems.KNIGHTMETAL_SHIELD.value()), 10),
+            registries, TFItems.YETI_HELMET.value(), TFItems.YETI_CHESTPLATE.value(), TFItems.YETI_LEGGINGS.value(), TFItems.YETI_BOOTS.value())
+            .tag("pinnacle_melee"),
+            new ModLoadedCondition(ApothicSpawnersCompat.MODID));
     }
 
     @Override
     protected void addSet(String name, int weight, float quality, UnaryOperator<GSBuilder> config) {
         this.addConditionally(Apotheosis.loc(name), config.apply(new GSBuilder(weight, quality)).build(), new ModLoadedCondition("twilightforest"));
+    }
+
+    @Override
+    protected void addSet(String name, int weight, float quality, UnaryOperator<GSBuilder> config, ICondition... conditions) {
+        ICondition[] all = new ICondition[conditions.length + 1];
+        all[0] = new ModLoadedCondition("twilightforest");
+        System.arraycopy(conditions, 0, all, 1, conditions.length);
+        this.addConditionally(Apotheosis.loc(name), config.apply(new GSBuilder(weight, quality)).build(), all);
     }
 
 }
