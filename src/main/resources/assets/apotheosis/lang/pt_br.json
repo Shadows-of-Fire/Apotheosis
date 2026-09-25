@@ -131,7 +131,7 @@
     "affix.apotheosis:armor/attribute/gravitational": "Gravitacional",
     "affix.apotheosis:armor/attribute/gravitational.suffix": "da Gravidade",
 
-    "affix.apotheosis:breaker/attribute/lengthy": "Comprido",
+    "affix.apotheosis:breaker/attribute/lengthy": "Comprida",
     "affix.apotheosis:breaker/attribute/lengthy.suffix": "do Alcance",
 
     "affix.apotheosis:breaker/attribute/experienced": "Experiente",
@@ -174,7 +174,13 @@
     "affix.apotheosis:melee/attribute/piercing.suffix": "do Destruidor",
 
     "affix.apotheosis:weapon/attribute/shredding": "Dilacerante",
-    "affix.apotheosis:weapon/attribute/shredding.suffix": "do Maelstrom",
+    "affix.apotheosis:weapon/attribute/shredding.suffix": "do Turbilhão",
+
+    "affix.apotheosis:weapon/attribute/runebreaking": "Quebra-Runas",
+    "affix.apotheosis:weapon/attribute/runebreaking.suffix": "do Quebra-Runas",
+
+    "affix.apotheosis:weapon/attribute/nullifying": "Anulante",
+    "affix.apotheosis:weapon/attribute/nullifying.suffix": "da Anulação",
 
     "affix.apotheosis:melee/attribute/giant_slaying": "Matador de Gigantes",
     "affix.apotheosis:melee/attribute/giant_slaying.suffix": "de Ataques Colossais",
@@ -182,7 +188,7 @@
     "affix.apotheosis:melee/attribute/berserking": "Enfurecido",
     "affix.apotheosis:melee/attribute/berserking.suffix": "do Berserker",
 
-    "affix.apotheosis:breaker/attribute/destructive": "Destrutivo",
+    "affix.apotheosis:breaker/attribute/destructive": "Destrutiva",
     "affix.apotheosis:breaker/attribute/destructive.suffix": "das Pedreiras",
 
     "affix.apotheosis:ranged/attribute/elven": "Élfico",
@@ -197,7 +203,7 @@
     "affix.apotheosis:breaker/mob_effect/swift": "Veloz",
     "affix.apotheosis:breaker/mob_effect/swift.suffix": "do Esmagamento",
 
-    "affix.apotheosis:breaker/mob_effect/spelunkers": "Espeleológico",
+    "affix.apotheosis:breaker/mob_effect/spelunkers": "Espeleológica",
     "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "de Exploração de Cavernas",
 
     "affix.apotheosis:ranged/mob_effect/ensnaring": "Enredante",
@@ -275,7 +281,7 @@
     "affix.apotheosis:melee/cleaving.suffix": "do Açougueiro",
     "affix.apotheosis:melee/cleaving.desc": "Os ataques têm %s%% de chance de também atingir até %s inimigos próximos.",
 
-    "affix.apotheosis:breaker/ability/enlightened": "Iluminado",
+    "affix.apotheosis:breaker/ability/enlightened": "Iluminada",
     "affix.apotheosis:breaker/ability/enlightened.suffix": "do Arauto da Luz",
     "affix.apotheosis:breaker/ability/enlightened.desc": "Esta ferramenta pode colocar uma fonte de luz ao custo de %s de durabilidade.",
 
@@ -315,7 +321,7 @@
     "affix.apotheosis:breaker/effect/radial.suffix": "do Quebra-terra",
     "affix.apotheosis:breaker/effect/radial.desc": "Esta ferramenta quebra em uma área de %sx%s.",
 
-    "affix.apotheosis:breaker/ability/supermassive": "Supermassivo",
+    "affix.apotheosis:breaker/ability/supermassive": "Supermassiva",
     "affix.apotheosis:breaker/ability/supermassive.suffix": "do Destruidor de Mundos",
     "affix.apotheosis:breaker/ability/supermassive.desc": "Esta ferramenta quebra em uma área de %sx%s.",
 
@@ -331,7 +337,7 @@
     "affix.apotheosis:melee/mob_effect/omniscient": "Onisciente",
     "affix.apotheosis:melee/mob_effect/omniscient.suffix": "do Grande Sábio",
 
-    "affix.apotheosis:breaker/attribute/submerged": "Submerso",
+    "affix.apotheosis:breaker/attribute/submerged": "Submersa",
     "affix.apotheosis:breaker/attribute/submerged.suffix": "do Minerador Marinho",
 
     "affix.apotheosis:shield/mob_effect/galvanizing": "Galvanizante",
@@ -361,7 +367,7 @@
     "affix.apotheosis:armor/attribute/adamantine": "Adamantino",
     "affix.apotheosis:armor/attribute/adamantine.suffix": "de Adamantina",
 
-    "affix.apotheosis:breaker/enchantment/prosperous": "Próspero",
+    "affix.apotheosis:breaker/enchantment/prosperous": "Próspera",
     "affix.apotheosis:breaker/enchantment/prosperous.suffix": "da Grande Fortuna",
 
     "affix.apotheosis:ranged/enchantment/prosperous": "Próspero",
@@ -374,7 +380,7 @@
     "misc.apotheosis.diamond": "diamante",
     "misc.apotheosis.netherite": "netherita",
 
-    "affix.apotheosis:breaker/effect/omnetic": "Omnético",
+    "affix.apotheosis:breaker/effect/omnetic": "Omnética",
     "affix.apotheosis:breaker/effect/omnetic.suffix": "da Singularidade",
     "affix.apotheosis:breaker/effect/omnetic.desc": "Esta ferramenta tem %s de eficácia contra todos os blocos.",
 
@@ -426,18 +432,18 @@
     "affix.apotheosis:durable": "Durável",
     "affix.apotheosis:durable.suffix": "da Durabilidade",
 
-    "affix.apotheosis:breaker/ability/stoneforming": "Moldador de Pedra",
+    "affix.apotheosis:breaker/ability/stoneforming": "Moldadora de Pedra",
     "affix.apotheosis:breaker/ability/stoneforming.suffix": "do Mestre da Pedra",
     "affix.apotheosis:breaker/ability/stoneforming.desc": "As pedras naturais podem ser convertidas entre si",
 
-    "affix.apotheosis:breaker/ability/sandforming": "Formador de Areia",
+    "affix.apotheosis:breaker/ability/sandforming": "Moldadora de Areia",
     "affix.apotheosis:breaker/ability/sandforming.suffix": "das Areias",
     "affix.apotheosis:breaker/ability/sandforming.desc": "Areia e blocos semelhantes podem ser convertidos entre si",
 
     "affix.apotheosis.stoneforming.desc": "Quebrar [%s] transforma em %s; pressione Shift e clique com o botão direito para selecionar um alvo.",
     "affix.apotheosis.stoneforming.target_updated": "Alvo atualizado para: %s",
 
-    "affix.apotheosis:shears/effect/leafforming": "Formador de Folhas",
+    "affix.apotheosis:shears/effect/leafforming": "Moldadora de Folhas",
     "affix.apotheosis:shears/effect/leafforming.suffix": "do Arborista",
     "affix.apotheosis:shears/effect/leafforming.desc": "Folhas podem ser convertidas entre si",
 
@@ -505,6 +511,7 @@
     "bonus.apotheosis:multi_attr.desc.and_but": "%s e %s, mas %s",
     "bonus.apotheosis:multi_attr.desc.but_and": "%s, mas %s e %s",
     "bonus.apotheosis:bloody_arrow.desc": "Ao atirar, você perde %s%% da vida máxima e causa %s%% de dano. %s",
+    "bonus.apotheosis:anti_gravity_arrow.desc": "As flechas disparadas não são afetadas pela gravidade.",
     "bonus.apotheosis:leech_block.desc": "Cura você em %s%% do dano ao bloquear um ataque. %s",
     "bonus.apotheosis:all_stats.desc": "+%s%% em todos os atributos",
     "gem.apotheosis:overworld/royalty.bonus.pickaxe": "Quebrar Minério de Cobre tem %s%% de chance de derrubar Ouro Bruto no lugar.",
@@ -704,8 +711,10 @@
     "text.apotheosis.touched_by_malice": "Tocado por Malícia (x%s)",
     "text.apotheosis.malice_notice": "Malícia: %s consumiu a força de %s",
 
-    "title.apotheosis.smithing": "Ferraria Apótica",
     "title.apotheosis.salvaging": "Reciclagem",
+    "title.apotheosis.stoneforming": "Moldagem",
+    "info.apotheosis.stoneforming": "Uma ferramenta com o afixo %s pode converter estes blocos entre si.",
+    "info.apotheosis.stoneforming.target": "Pressione Shift e clique com o botão direito em um bloco para selecionar um alvo.",
 
     "text.apotheosis.anything": "Qualquer coisa",
     "loot_category.apotheosis.none": "Nada",
