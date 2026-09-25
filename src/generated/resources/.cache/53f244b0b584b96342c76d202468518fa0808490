@@ -1,4 +1,4 @@
-// 26.1.2	2026-04-28T01:19:12.257183	Affixes
+// 26.1.2	2026-10-02T17:09:22.941157758	Affixes
 51adbffbacf80ea9de7233993ab6f44b45aba3c6 data/apotheosis/apotheosis/affixes/armor/attribute/adamantine.json
 6df2683685c5934ff580ef1d3901e1c593c48fde data/apotheosis/apotheosis/affixes/armor/attribute/aquatic.json
 f8c148e30d5432eb036c04b3e67f9be60107fc94 data/apotheosis/apotheosis/affixes/armor/attribute/blessed.json
@@ -11,7 +11,7 @@ ee983c7c252401871b825314e8a3f46a9127a8db data/apotheosis/apotheosis/affixes/armo
 fd7a6053b36ada31af79c9efc046e085ce3cb1eb data/apotheosis/apotheosis/affixes/armor/attribute/spiritual.json
 76cbb116c5bdd7ee9a6efc109dce6da132cc4773 data/apotheosis/apotheosis/affixes/armor/attribute/stalwart.json
 14f2ff78013bcee76b41377eb9a1d31f14e387d1 data/apotheosis/apotheosis/affixes/armor/attribute/steel_touched.json
-7ef6745c86df7ede16b3703c00ff421f91df36f5 data/apotheosis/apotheosis/affixes/armor/attribute/timekeeping.json
+ea24ed82ce847d035de8ce0d7e6e693dcb62dd78 data/apotheosis/apotheosis/affixes/armor/attribute/timekeeping.json
 63bb7cfc7aa7ca163bba0821947bb29ca9935a8c data/apotheosis/apotheosis/affixes/armor/attribute/unbound.json
 424283ce8191904b817a8583ae9267c8e3324ba2 data/apotheosis/apotheosis/affixes/armor/attribute/windswept.json
 4b53092559db63540120d16cef0f3a8433c4bc3c data/apotheosis/apotheosis/affixes/armor/attribute/winged.json
@@ -92,4 +92,6 @@ ef5bf67dd0b91824e0ab9d76c5b640546444cb48 data/apotheosis/apotheosis/affixes/shie
 3ae1fc6fdf91854947f4e5b89a33b77fd2c43e7a data/apotheosis/apotheosis/affixes/shield/mob_effect/withering.json
 b032d7cf55117acd81f930721e2541a8b1533728 data/apotheosis/apotheosis/affixes/shield/psychic.json
 e81e7c274f39fb20acf57bb0026b7e72afa6902a data/apotheosis/apotheosis/affixes/shield/retreating.json
+3935467af1121432e98e8998800ec44c6ee76a7f data/apotheosis/apotheosis/affixes/weapon/attribute/nullifying.json
+e77ff2039a2ab868e38cb63ee31278782d1f4aba data/apotheosis/apotheosis/affixes/weapon/attribute/runebreaking.json
 98245d6dc9044213f99909bcf8e904aa5d62081b data/apotheosis/apotheosis/affixes/weapon/attribute/shredding.json
