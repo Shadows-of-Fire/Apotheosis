@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-04T02:40:06.703859465	Affixes
+// 1.21.1	2026-09-25T02:25:10.6662439	Affixes
 25581ee0a1d84bdbe5eadaa04ac02e33ba182b0e data/apotheosis/affixes/armor/attribute/adamantine.json
 6df2683685c5934ff580ef1d3901e1c593c48fde data/apotheosis/affixes/armor/attribute/aquatic.json
 a08886d35608a8ff9f1f79282f5f9beb203ddd47 data/apotheosis/affixes/armor/attribute/blessed.json
@@ -11,7 +11,7 @@ d1ab8f4746600aa352b17b51a7a020a27a7c1cc5 data/apotheosis/affixes/armor/attribute
 fd7a6053b36ada31af79c9efc046e085ce3cb1eb data/apotheosis/affixes/armor/attribute/spiritual.json
 80bdf9b872577a552a6ff5310722663ab89b7c9f data/apotheosis/affixes/armor/attribute/stalwart.json
 63cd8f6855ea53a022d1a9ef7055d4df996c13a3 data/apotheosis/affixes/armor/attribute/steel_touched.json
-7ef6745c86df7ede16b3703c00ff421f91df36f5 data/apotheosis/affixes/armor/attribute/timekeeping.json
+ea24ed82ce847d035de8ce0d7e6e693dcb62dd78 data/apotheosis/affixes/armor/attribute/timekeeping.json
 63bb7cfc7aa7ca163bba0821947bb29ca9935a8c data/apotheosis/affixes/armor/attribute/unbound.json
 f0f4f5dd01326cab14fae0e5fe8a44d304a89c44 data/apotheosis/affixes/armor/attribute/windswept.json
 4b53092559db63540120d16cef0f3a8433c4bc3c data/apotheosis/affixes/armor/attribute/winged.json
@@ -92,4 +92,6 @@ f7301e51b531f842331b024cc19f95b573efa056 data/apotheosis/affixes/shears/effect/g
 3ae1fc6fdf91854947f4e5b89a33b77fd2c43e7a data/apotheosis/affixes/shield/mob_effect/withering.json
 b032d7cf55117acd81f930721e2541a8b1533728 data/apotheosis/affixes/shield/psychic.json
 e81e7c274f39fb20acf57bb0026b7e72afa6902a data/apotheosis/affixes/shield/retreating.json
+3935467af1121432e98e8998800ec44c6ee76a7f data/apotheosis/affixes/weapon/attribute/nullifying.json
+e77ff2039a2ab868e38cb63ee31278782d1f4aba data/apotheosis/affixes/weapon/attribute/runebreaking.json
 98245d6dc9044213f99909bcf8e904aa5d62081b data/apotheosis/affixes/weapon/attribute/shredding.json

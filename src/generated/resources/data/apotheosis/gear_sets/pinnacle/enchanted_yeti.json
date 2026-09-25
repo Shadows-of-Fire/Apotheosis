@@ -13,7 +13,7 @@
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
                         "levels": {
-                            "minecraft:protection": 9
+                            "minecraft:protection": 10
                         }
                     }
                 },
@@ -21,6 +21,36 @@
                 "id": "twilightforest:yeti_boots"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:feather_falling": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "twilightforest:yeti_boots"
+            },
+            "weight": 4
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:thorns": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "twilightforest:yeti_boots"
+            },
+            "weight": 2
         }
     ],
     "chestplates": [
@@ -30,7 +60,7 @@
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
                         "levels": {
-                            "minecraft:protection": 9
+                            "minecraft:protection": 10
                         }
                     }
                 },
@@ -38,6 +68,21 @@
                 "id": "twilightforest:yeti_chestplate"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:thorns": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "twilightforest:yeti_chestplate"
+            },
+            "weight": 3
         }
     ],
     "helmets": [
@@ -47,7 +92,7 @@
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
                         "levels": {
-                            "minecraft:protection": 9
+                            "minecraft:protection": 10
                         }
                     }
                 },
@@ -55,6 +100,36 @@
                 "id": "twilightforest:yeti_helmet"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:respiration": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "twilightforest:yeti_helmet"
+            },
+            "weight": 3
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:thorns": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "twilightforest:yeti_helmet"
+            },
+            "weight": 2
         }
     ],
     "leggings": [
@@ -64,7 +139,7 @@
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
                         "levels": {
-                            "minecraft:protection": 9
+                            "minecraft:protection": 10
                         }
                     }
                 },
@@ -72,6 +147,21 @@
                 "id": "twilightforest:yeti_leggings"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:thorns": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "twilightforest:yeti_leggings"
+            },
+            "weight": 3
         }
     ],
     "mainhands": [
@@ -96,6 +186,21 @@
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
                         "levels": {
+                            "minecraft:looting": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_sword"
+            },
+            "weight": 5
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
                             "minecraft:sharpness": 15
                         }
                     }
@@ -104,6 +209,21 @@
                 "id": "minecraft:netherite_axe"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:efficiency": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_axe"
+            },
+            "weight": 3
         },
         {
             "stack": {
@@ -126,6 +246,36 @@
                     "apotheosis:durability_bonus": 0.8,
                     "minecraft:enchantments": {
                         "levels": {
+                            "minecraft:efficiency": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_pickaxe"
+            },
+            "weight": 5
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:unbreaking": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_pickaxe"
+            },
+            "weight": 3
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
                             "minecraft:fortune": 15
                         }
                     }
@@ -134,6 +284,36 @@
                 "id": "minecraft:netherite_shovel"
             },
             "weight": 10
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:efficiency": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_shovel"
+            },
+            "weight": 5
+        },
+        {
+            "stack": {
+                "components": {
+                    "apotheosis:durability_bonus": 0.8,
+                    "minecraft:enchantments": {
+                        "levels": {
+                            "minecraft:unbreaking": 15
+                        }
+                    }
+                },
+                "count": 1,
+                "id": "minecraft:netherite_shovel"
+            },
+            "weight": 3
         },
         {
             "stack": {

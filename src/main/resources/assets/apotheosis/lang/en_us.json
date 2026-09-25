@@ -176,6 +176,12 @@
     "affix.apotheosis:weapon/attribute/shredding": "Shredding",
     "affix.apotheosis:weapon/attribute/shredding.suffix": "of the Maelstrom",
 
+    "affix.apotheosis:weapon/attribute/runebreaking": "Runebreaking",
+    "affix.apotheosis:weapon/attribute/runebreaking.suffix": "of the Runebreaker",
+
+    "affix.apotheosis:weapon/attribute/nullifying": "Nullifying",
+    "affix.apotheosis:weapon/attribute/nullifying.suffix": "of Nullification",
+
     "affix.apotheosis:melee/attribute/giant_slaying": "Giant Slaying",
     "affix.apotheosis:melee/attribute/giant_slaying.suffix": "of Colossal Strikes",
 
@@ -505,6 +511,7 @@
     "bonus.apotheosis:multi_attr.desc.and_but": "%s and %s, but %s",
     "bonus.apotheosis:multi_attr.desc.but_and": "%s, but %s and %s",
     "bonus.apotheosis:bloody_arrow.desc": "When firing, you lose %s%% Max Health and deal %s%% damage. %s",
+    "bonus.apotheosis:anti_gravity_arrow.desc": "Fired arrows are unaffected by gravity.",
     "bonus.apotheosis:leech_block.desc": "Blocking an attack heals you for %s%% of the damage. %s",
     "bonus.apotheosis:all_stats.desc": "+%s%% to All Stats",
     "gem.apotheosis:overworld/royalty.bonus.pickaxe": "Breaking Copper Ore has a %s%% chance to drop Raw Gold instead.",
@@ -704,8 +711,10 @@
     "text.apotheosis.touched_by_malice": "Touched by Malice (x%s)",
     "text.apotheosis.malice_notice": "Malice: %s consumed the strength of %s",
 
-    "title.apotheosis.smithing": "Apothic Smithing",
     "title.apotheosis.salvaging": "Salvaging",
+    "title.apotheosis.stoneforming": "Stoneforming",
+    "info.apotheosis.stoneforming": "A tool with the %s affix can convert between these blocks.",
+    "info.apotheosis.stoneforming.target": "Shift-right-click a block to select a target.",
 
     "text.apotheosis.anything": "Anything",
     "loot_category.apotheosis.none": "Nothing",

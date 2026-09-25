@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-16T22:37:44.2256103	Gear Sets
+// 1.21.1	2026-09-25T00:26:09.7360124	Gear Sets
 7db6ddffe4ddd1299f228efd0d7c1d76bfecd42f data/apotheosis/gear_sets/ascent/diamond.json
 b7351473d45c4243e58ff7f337da2ef803ebc9cc data/apotheosis/gear_sets/ascent/enchanted_gold.json
 f1ce67abd81ca45bde88274635c59b6f78079641 data/apotheosis/gear_sets/ascent/iron.json
@@ -16,8 +16,11 @@ aa09eaf3d1ca58009497719386bdd3bbaf842eec data/apotheosis/gear_sets/ascent/ranged
 1db0894dff66e5de076ed386ad30ac0feeea1b8f data/apotheosis/gear_sets/haven/leather.json
 94c302983290b99b90f31f91770b1dc99fc4a1b3 data/apotheosis/gear_sets/haven/ranged/chain.json
 5580574a75cbc439343fdf5c1131a5b6d7a1775a data/apotheosis/gear_sets/haven/ranged/leather.json
-8b6332f8434876cca97ba4b276c3483a6237d7bc data/apotheosis/gear_sets/pinnacle/enchanted_netherite.json
-4d9ac48ac4dac11851bd47714c76eb3297ef0171 data/apotheosis/gear_sets/pinnacle/ranged/enchanted_netherite.json
+539f92635a7cba6827b135782ab539b49d4dfd31 data/apotheosis/gear_sets/pinnacle/apothic/enchanted_netherite.json
+b0985355ca7337e6adc76f396f05c11a3f193559 data/apotheosis/gear_sets/pinnacle/enchanted_netherite.json
+65898ecfc40e98d7a1bbf014a3e6dfa01c5f3039 data/apotheosis/gear_sets/pinnacle/ranged/apothic/enchanted_netherite.json
+74113da400fac79424b81fcae1dd4c5bf3cbfea6 data/apotheosis/gear_sets/pinnacle/ranged/enchanted_netherite.json
+b0dfbddbd0b2bf3d017fe63fb32394b4d6a87a8e data/apotheosis/gear_sets/pinnacle/spawners/enchanted_netherite.json
 dcf7efdf1c443c31b04622c2f61299fa765419f5 data/apotheosis/gear_sets/summit/diamond.json
 4b0de995b67966a9786f6c3fbed4b9c528b161e8 data/apotheosis/gear_sets/summit/enchanted_diamond.json
 24583a9f41a6ca3718ca553d33cd835a2d81ba19 data/apotheosis/gear_sets/summit/enchanted_iron.json

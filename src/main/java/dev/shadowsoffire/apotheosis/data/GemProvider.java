@@ -26,6 +26,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.bonus.EnchantmentBonus.Mode;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.MobEffectBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.MultiAttrBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.AllStatsBonus;
+import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.AntiGravityArrowBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.BloodyArrowBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.DropTransformBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.FrozenDropsBonus;
@@ -269,7 +270,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.PERFECT, 0.70)));
 
         addGem("core/lunar", c -> c
-            .bonus(LIGHT_WEAPON, AttributeBonus.builder()
+            .bonus(LootCategories.MELEE_WEAPON, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.COLD_DAMAGE)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 1)
@@ -295,7 +296,9 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWED, 0.30)
                 .value(Purity.NORMAL, 0.45)
                 .value(Purity.FLAWLESS, 0.60)
-                .value(Purity.PERFECT, 0.80)));
+                .value(Purity.PERFECT, 0.80))
+            .bonus(RANGED_WEAPON, AntiGravityArrowBonus.builder()
+                .minPurity(Purity.FLAWLESS)));
 
         addGem("core/samurai", c -> c
             .unique()
@@ -842,15 +845,15 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .modifier(b -> b
                     .attr(ALObjects.Attributes.PROT_SHRED)
                     .op(Operation.ADD_VALUE)
-                    .value(Purity.NORMAL, 0.30F)
-                    .value(Purity.FLAWLESS, 0.55F)
-                    .value(Purity.PERFECT, 0.75F))
+                    .value(Purity.NORMAL, 0.25F)
+                    .value(Purity.FLAWLESS, 0.35F)
+                    .value(Purity.PERFECT, 0.45F))
                 .modifier(b -> b
                     .attr(ALObjects.Attributes.ARMOR_SHRED)
                     .op(Operation.ADD_MULTIPLIED_BASE)
-                    .value(Purity.NORMAL, -0.20F)
-                    .value(Purity.FLAWLESS, -0.35F)
-                    .value(Purity.PERFECT, -0.55F)))
+                    .value(Purity.NORMAL, -0.15F)
+                    .value(Purity.FLAWLESS, -0.30F)
+                    .value(Purity.PERFECT, -0.50F)))
             .bonus(new MageSlayerBonus(
                 new GemClass(LootCategories.HELMET), Map.of(
                     Purity.NORMAL, 0.15F,

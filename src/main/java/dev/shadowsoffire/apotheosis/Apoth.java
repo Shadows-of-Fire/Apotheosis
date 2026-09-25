@@ -68,6 +68,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
+import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.AntiGravityArrowBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.bonus.special.FrozenDropsBonus;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.BasicGemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingBlock;
@@ -238,6 +239,13 @@ public class Apoth {
          * the boss announcement range. A value of zero (or any time in the past) means no cooldown is active.
          */
         public static final AttachmentType<Long> INVADER_COOLDOWN = R.attachment("invader_cooldown", () -> 0L, b -> b.serialize(Codec.LONG, t -> t != 0L).copyOnDeath());
+
+        /**
+         * Supports the {@link AntiGravityArrowBonus} by recording the game time at which an arrow had its gravity disabled.
+         * <p>
+         * Only present on arrows that are currently flying without gravity. Removed once gravity is restored.
+         */
+        public static final AttachmentType<Long> ANTI_GRAVITY_ARROW_START = R.attachment("anti_gravity_arrow_start", () -> 0L, b -> b.serialize(Codec.LONG));
 
         /**
          * Client-only attachment to record if the affix effect render has started.

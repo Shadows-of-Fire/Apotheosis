@@ -239,7 +239,7 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
 
         this.addAttribute("armor", "timekeeping", ALObjects.Attributes.COOLDOWN_REDUCTION, Operation.ADD_VALUE, b -> b
             .definition(AffixType.STAT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
-            .categories(LootCategories.HELMET, LootCategories.CHESTPLATE)
+            .categories(LootCategories.HELMET, LootCategories.CHESTPLATE, LootCategories.SHIELD)
             .step(0.005F)
             .value(rare, 0.01F, 0.05F)
             .value(epic, 0.05F, 0.075F)
@@ -402,6 +402,22 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
             .value(rare, 0.15F, 0.25F)
             .value(epic, 0.20F, 0.28F)
             .value(mythic, 0.30F, 0.40F));
+
+        this.addAttribute("weapon", "runebreaking", ALObjects.Attributes.PROT_PIERCE, Operation.ADD_VALUE, b -> b
+            .definition(AffixType.STAT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
+            .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW)
+            .step(0.5F)
+            .value(rare, 4F, 8F)
+            .value(epic, 5F, 10F)
+            .value(mythic, 5F, 12F));
+
+        this.addAttribute("weapon", "nullifying", ALObjects.Attributes.PROT_SHRED, Operation.ADD_VALUE, b -> b
+            .definition(AffixType.STAT, DEFAULT_WEIGHT, DEFAULT_QUALITY)
+            .categories(LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW)
+            .step(0.005F)
+            .value(rare, 0.10F, 0.15F)
+            .value(epic, 0.125F, 0.175F)
+            .value(mythic, 0.15F, 0.20F));
 
         // TODO: Rename to "weapon"
         this.addAttribute("melee", "lacerating", ALObjects.Attributes.CRIT_DAMAGE, Operation.ADD_VALUE, b -> b

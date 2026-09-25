@@ -12,10 +12,12 @@ import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +25,8 @@ import net.minecraft.world.item.ItemStack;
 public class GemCuttingCategory implements IRecipeCategory<GemCuttingRecipe> {
 
     public static final ResourceLocation TEXTURES = Apotheosis.loc("textures/gui/gem_cutting_jei.png");
+    public static final int WIDTH = 148;
+    public static final int HEIGHT = 78;
 
     private static final Map<Class<?>, GemCuttingExtension<?>> EXTENSIONS = new IdentityHashMap<>();
 
@@ -30,7 +34,7 @@ public class GemCuttingCategory implements IRecipeCategory<GemCuttingRecipe> {
     private final IDrawable icon;
 
     public GemCuttingCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.drawableBuilder(TEXTURES, 0, 0, 148, 78).addPadding(0, 0, 0, 0).build();
+        this.background = guiHelper.drawableBuilder(TEXTURES, 0, 0, WIDTH, HEIGHT).addPadding(0, 0, 0, 0).build();
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.GEM_CUTTING_TABLE.value()));
     }
 
@@ -45,13 +49,23 @@ public class GemCuttingCategory implements IRecipeCategory<GemCuttingRecipe> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     @Override
     public IDrawable getIcon() {
         return this.icon;
+    }
+
+    @Override
+    public void draw(GemCuttingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gfx, double mouseX, double mouseY) {
+        this.background.draw(gfx);
     }
 
     @Override
