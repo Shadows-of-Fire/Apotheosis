@@ -293,8 +293,8 @@ public class GemCaseScreen extends AdventureContainerScreen<GemCaseMenu> impleme
             SimpleTexButton button = this.upgradeButtons.get(i);
             if (match != null) {
                 button.active = true;
-                ItemStack leftMat = this.menu.upgradeMatInv.getItem(match.leftSlot());
-                ItemStack rightMat = this.menu.upgradeMatInv.getItem(match.rightSlot());
+                ItemStack leftMat = this.menu.getUpgradeMaterial(match.leftSlot());
+                ItemStack rightMat = this.menu.getUpgradeMaterial(match.rightSlot());
                 int leftCount = match.leftIng().count(), rightCount = match.rightIng().count();
 
                 button.setTooltipProvider((btn, tooltip) -> {

@@ -9,24 +9,28 @@ import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
-import net.minecraft.world.Container;
+import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 record GemUpgradeMatch(PurityUpgradeRecipe recipe, int leftSlot, int rightSlot, SizedIngredient leftIng, SizedIngredient rightIng) {
 
-    void execute(Container matInv, EnumMap<Purity, Integer> map) {
+    void execute(InternalItemHandler matInv, EnumMap<Purity, Integer> map) {
         map.put(this.recipe.purity(), map.get(this.recipe.purity()) - 2);
         map.put(this.recipe.purity().next(), map.get(this.recipe.purity().next()) + 1);
-        matInv.removeItem(this.leftSlot, this.leftIng.count());
-        matInv.removeItem(this.rightSlot, this.rightIng.count());
-        matInv.setChanged();
+        try (Transaction tx = Transaction.openRoot()) {
+            matInv.extractInternal(this.leftSlot, matInv.getResource(this.leftSlot), this.leftIng.count(), tx);
+            matInv.extractInternal(this.rightSlot, matInv.getResource(this.rightSlot), this.rightIng.count(), tx);
+            tx.commit();
+        }
     }
 
     @Nullable
-    static GemUpgradeMatch findMatch(Level level, Purity purity, EnumMap<Purity, Integer> map, Container matInv) {
+    static GemUpgradeMatch findMatch(Level level, Purity purity, EnumMap<Purity, Integer> map, InternalItemHandler matInv) {
         Purity prev = Purity.values()[purity.ordinal() - 1];
         if (map.get(prev) < 2) {
             return null;
@@ -39,8 +43,8 @@ record GemUpgradeMatch(PurityUpgradeRecipe recipe, int leftSlot, int rightSlot, 
                 int leftSlot = -1, rightSlot = -1;
                 SizedIngredient leftIng = null, rightIng = null;
 
-                for (int i = 0; i < matInv.getContainerSize(); i++) {
-                    ItemStack stack = matInv.getItem(i);
+                for (int i = 0; i < matInv.size(); i++) {
+                    ItemStack stack = ItemUtil.getStack(matInv, i);
                     if (stack.isEmpty()) {
                         continue;
                     }
