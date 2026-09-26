@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.effect.AttributeToggleAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.CatalyzingAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.CleavingAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.DamageReductionAffix;
@@ -36,6 +37,7 @@ public class AffixRegistry extends TieredDynamicRegistry<Affix> {
      */
     public static final SubtypedSerializer<Affix> SERIALIZER = RegistrySerializer.<Affix>subtypedSynced("affixes")
         .register(Apotheosis.loc("attribute"), AttributeAffix.CODEC)
+        .register(Apotheosis.loc("attribute_toggle"), AttributeToggleAffix.CODEC)
         .register(Apotheosis.loc("multi_attr"), MultiAttrAffix.CODEC)
         .register(Apotheosis.loc("mob_effect"), MobEffectAffix.CODEC)
         .register(Apotheosis.loc("damage_reduction"), DamageReductionAffix.CODEC)

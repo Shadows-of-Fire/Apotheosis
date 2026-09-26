@@ -7,6 +7,7 @@
     "mixins": [
         "AbstractSkeletonMixin",
         "AnyHolderSetMixin",
+        "AttributeInstanceMixin",
         "BaseSpawnerAccessor",
         "DamageSourceMixin",
         "EnchantmentHelperMixin",

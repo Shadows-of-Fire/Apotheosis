@@ -1,4 +1,4 @@
-// 26.1.2	2026-10-02T17:09:22.941157758	Affixes
+// 26.1.2	2026-10-02T17:19:52.375544661	Affixes
 51adbffbacf80ea9de7233993ab6f44b45aba3c6 data/apotheosis/apotheosis/affixes/armor/attribute/adamantine.json
 6df2683685c5934ff580ef1d3901e1c593c48fde data/apotheosis/apotheosis/affixes/armor/attribute/aquatic.json
 f8c148e30d5432eb036c04b3e67f9be60107fc94 data/apotheosis/apotheosis/affixes/armor/attribute/blessed.json
@@ -26,6 +26,8 @@ a49916079b9826d5558f76ac471a775eb78c511a data/apotheosis/apotheosis/affixes/armo
 a418c8fb1495522315b7ff6ac99b73277060a25a data/apotheosis/apotheosis/affixes/armor/mob_effect/bursting.json
 b7588e9f4701bef45f7af4535173fc35ac5ac7ce data/apotheosis/apotheosis/affixes/armor/mob_effect/nimble.json
 8ce430995efe6ad103726fc22112428736c6ee66 data/apotheosis/apotheosis/affixes/armor/mob_effect/revitalizing.json
+a50f0aee0e29f96522b7b6503892984fbb09eaaf data/apotheosis/apotheosis/affixes/boots/ability/surefooted.json
+dcdb5d69f1b2a2959f971ae628da87c6c1176589 data/apotheosis/apotheosis/affixes/boots/ability/unhurried.json
 ac3f461cba20b90918a6bcb02e8a01d2f6605742 data/apotheosis/apotheosis/affixes/breaker/ability/enlightened.json
 6ffceecd55ecf6ce391c4047aa650a4ef9dad79c data/apotheosis/apotheosis/affixes/breaker/ability/sandforming.json
 b53cd0d77b6ad0097290ed68113fd6440bb294ee data/apotheosis/apotheosis/affixes/breaker/ability/stoneforming.json

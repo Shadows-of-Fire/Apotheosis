@@ -20,6 +20,7 @@ import dev.shadowsoffire.apotheosis.affix.UnnamingRecipe;
 import dev.shadowsoffire.apotheosis.affix.augmenting.AugmentingMenu;
 import dev.shadowsoffire.apotheosis.affix.augmenting.AugmentingTableBlock;
 import dev.shadowsoffire.apotheosis.affix.augmenting.AugmentingTableTile;
+import dev.shadowsoffire.apotheosis.affix.effect.AttributeToggleAffix;
 import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingMenu;
 import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingRecipe;
 import dev.shadowsoffire.apotheosis.affix.reforging.ReforgingTableBlock;
@@ -31,6 +32,7 @@ import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingTableBlock;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingTableTile;
 import dev.shadowsoffire.apotheosis.affix.trades.AutomaticAffixTrade;
+import dev.shadowsoffire.apotheosis.attachments.AttributeToggles;
 import dev.shadowsoffire.apotheosis.attachments.BonusLootTables;
 import dev.shadowsoffire.apotheosis.attachments.DamageReductions;
 import dev.shadowsoffire.apotheosis.gen.BlacklistModifier;
@@ -278,8 +280,10 @@ public class Apoth {
         public static final AttachmentType<Integer> AFFIX_EFFECT_NEXT_PARTICLE_TIME = R.attachment("affix_effect_next_particle_time", () -> 0, UnaryOperator.identity());
 
         /**
-         * Client-only attachment to record the time (in ticks, relative to the entity tick count) at which the next affix effect particle spawns.
+         * Holds the set of attributes whose bonuses the player has chosen to suppress via an {@link AttributeToggleAffix}.
          */
+        public static final AttachmentType<AttributeToggles> ATTRIBUTE_TOGGLES = R.attachment("attribute_toggles", () -> AttributeToggles.EMPTY, b -> b.serialize(AttributeToggles.CODEC.fieldOf("attributes"), t -> !t.isEmpty()).copyOnDeath());
+
         public static final AttachmentType<RadialState> RADIAL_MINING_MODE = R.attachment("radial_mining_mode", () -> RadialState.REQUIRE_NOT_SNEAKING, b -> b.serialize(RadialState.CODEC.fieldOf("mode")).copyOnDeath());
 
         private static void bootstrap() {}

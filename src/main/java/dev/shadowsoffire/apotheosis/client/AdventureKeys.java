@@ -6,6 +6,8 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Type;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.effect.AttributeToggleAffix;
+import dev.shadowsoffire.apotheosis.net.AttributeTogglesPayload;
 import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
 import dev.shadowsoffire.apotheosis.util.ItemLinking;
 import net.minecraft.client.KeyMapping;
@@ -25,6 +27,11 @@ public class AdventureKeys {
         Apotheosis.langKey("key", "toggle_radial_mining"),
         KeyConflictContext.IN_GAME, KeyModifier.CONTROL, Type.KEYSYM,
         GLFW.GLFW_KEY_O, CATEGORY);
+
+    public static final KeyMapping TOGGLE_ATTRIBUTE_BONUSES = new KeyMapping(
+        AttributeToggleAffix.TOGGLE_KEY,
+        KeyConflictContext.IN_GAME, KeyModifier.CONTROL, Type.KEYSYM,
+        GLFW.GLFW_KEY_K, CATEGORY);
 
     public static final KeyMapping OPEN_WORLD_TIER_SELECT = new KeyMapping(
         Apotheosis.langKey("key", "open_world_tier_select"),
@@ -50,6 +57,12 @@ public class AdventureKeys {
         while (TOGGLE_RADIAL.consumeClick() && TOGGLE_RADIAL.isConflictContextAndModifierActive()) {
             if (Minecraft.getInstance().screen == null) {
                 ClientPacketDistributor.sendToServer(new RadialStatePayload());
+            }
+        }
+
+        while (TOGGLE_ATTRIBUTE_BONUSES.consumeClick() && TOGGLE_ATTRIBUTE_BONUSES.isConflictContextAndModifierActive()) {
+            if (Minecraft.getInstance().screen == null) {
+                ClientPacketDistributor.sendToServer(new AttributeTogglesPayload());
             }
         }
 
