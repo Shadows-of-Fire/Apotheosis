@@ -141,6 +141,7 @@ public class SimpleTexButton extends Button {
                 tooltips.addAll(this.inactiveMessage);
             }
             gfx.renderComponentTooltip(Minecraft.getInstance().font, tooltips, pMouseX, pMouseY);
+            gfx.flush();
         }
     }
 
