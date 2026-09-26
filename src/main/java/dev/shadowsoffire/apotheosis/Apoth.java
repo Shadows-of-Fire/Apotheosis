@@ -41,6 +41,7 @@ import dev.shadowsoffire.apotheosis.gen.RogueSpawnerFeature;
 import dev.shadowsoffire.apotheosis.item.BossSummonerItem;
 import dev.shadowsoffire.apotheosis.item.GlowyItem;
 import dev.shadowsoffire.apotheosis.item.PotionCharmItem;
+import dev.shadowsoffire.apotheosis.item.SpawnerChainItem;
 import dev.shadowsoffire.apotheosis.item.TooltipItem;
 import dev.shadowsoffire.apotheosis.item.TooltipItem.GlowyTooltipItem;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
@@ -371,7 +372,7 @@ public class Apoth {
 
         public static final Holder<Item> MUSIC_DISC_SHIMMER = R.item("music_disc_shimmer", Item::new, p -> p.rarity(Rarity.RARE).stacksTo(1).jukeboxPlayable(Songs.SHIMMER));
 
-        public static final Holder<Item> SPAWNER_CHAIN = R.item("spawner_chain", TooltipItem::new);
+        public static final Holder<Item> SPAWNER_CHAIN = R.item("spawner_chain", SpawnerChainItem::new);
         public static final Holder<Item> SPAWNER_RUNE = R.item("spawner_rune", Item::new);
         public static final Holder<Item> INFUSED_SPAWNER_RUNE = R.item("infused_spawner_rune", GlowyItem::new, p -> p.rarity(Rarity.UNCOMMON));
 
