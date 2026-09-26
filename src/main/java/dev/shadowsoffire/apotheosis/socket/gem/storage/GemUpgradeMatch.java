@@ -9,7 +9,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.socket.gem.cutting.PurityUpgradeRecipe;
-import net.minecraft.world.Container;
+import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
@@ -17,16 +17,15 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
 record GemUpgradeMatch(PurityUpgradeRecipe recipe, int leftSlot, int rightSlot, SizedIngredient leftIng, SizedIngredient rightIng) {
 
-    void execute(Container matInv, EnumMap<Purity, Integer> map) {
+    void execute(InternalItemHandler matInv, EnumMap<Purity, Integer> map) {
         map.put(recipe.purity(), map.get(recipe.purity()) - 2);
         map.put(recipe.purity().next(), map.get(recipe.purity().next()) + 1);
-        matInv.removeItem(leftSlot, leftIng.count());
-        matInv.removeItem(rightSlot, rightIng.count());
-        matInv.setChanged();
+        matInv.extractItemInternal(leftSlot, leftIng.count(), false);
+        matInv.extractItemInternal(rightSlot, rightIng.count(), false);
     }
 
     @Nullable
-    static GemUpgradeMatch findMatch(Level level, Purity purity, EnumMap<Purity, Integer> map, Container matInv) {
+    static GemUpgradeMatch findMatch(Level level, Purity purity, EnumMap<Purity, Integer> map, InternalItemHandler matInv) {
         Purity prev = Purity.values()[purity.ordinal() - 1];
         if (map.get(prev) < 2) return null;
 
@@ -37,8 +36,8 @@ record GemUpgradeMatch(PurityUpgradeRecipe recipe, int leftSlot, int rightSlot, 
                 int leftSlot = -1, rightSlot = -1;
                 SizedIngredient leftIng = null, rightIng = null;
 
-                for (int i = 0; i < matInv.getContainerSize(); i++) {
-                    ItemStack stack = matInv.getItem(i);
+                for (int i = 0; i < matInv.getSlots(); i++) {
+                    ItemStack stack = matInv.getStackInSlot(i);
                     if (stack.isEmpty()) continue;
                     if (leftIng == null) {
                         leftIng = GemCuttingRecipe.getMatch(stack, rec.left());

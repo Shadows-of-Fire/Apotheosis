@@ -13,6 +13,7 @@ import dev.shadowsoffire.apotheosis.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.socket.gem.Purity;
 import dev.shadowsoffire.apotheosis.socket.gem.UnsocketedGem;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
+import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.network.VanillaPacketDispatcher;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -26,7 +27,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -37,10 +37,26 @@ import net.neoforged.neoforge.items.IItemHandler;
 
 public abstract class GemCaseTile extends BlockEntity implements TickingBlockEntity {
 
+    public static final int UPGRADE_MAT_SLOTS = 6;
+
     protected final Object2ObjectMap<DynamicHolder<Gem>, EnumMap<Purity, Integer>> gems = new Object2ObjectLinkedOpenHashMap<>();
     protected final Set<GemCaseMenu> activeContainers = new HashSet<>();
     protected final IItemHandler itemHandler = new GemCaseItemHandler();
     protected final int maxCount;
+
+    /**
+     * Persistent storage for purity upgrade materials.
+     * <p>
+     * This inventory is intentionally not exposed through {@link #getItemHandler(Direction)}, so automation cannot see or touch it.
+     * It is retained across break/place via {@link #saveAdditional} being written to the item stack.
+     */
+    protected final InternalItemHandler upgradeMats = new InternalItemHandler(UPGRADE_MAT_SLOTS){
+        @Override
+        protected void onContentsChanged(int slot) {
+            GemCaseTile.this.setChanged();
+            GemCaseTile.this.activeContainers.forEach(GemCaseMenu::onChanged);
+        }
+    };
     private final Int2ObjectMap<UnsocketedGem> slotIndicies = new Int2ObjectOpenHashMap<>();
 
     // Client-side only: Animation state for gem position switching
@@ -98,10 +114,14 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
         return stack;
     }
 
-    public boolean upgradeGem(DynamicHolder<Gem> gem, Purity purity, Container matInv) {
-        GemUpgradeMatch match = this.getUpgradeMatch(gem, purity, matInv);
+    /**
+     * Attempts to upgrade two gems of the previous purity into one gem of the target purity,
+     * consuming materials from {@link #getUpgradeMaterials()}.
+     */
+    public boolean upgradeGem(DynamicHolder<Gem> gem, Purity purity) {
+        GemUpgradeMatch match = this.getUpgradeMatch(gem, purity);
         if (match != null) {
-            match.execute(matInv, this.getGems(gem));
+            match.execute(this.upgradeMats, this.getGems(gem));
 
             if (!this.level.isClientSide()) {
                 VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
@@ -116,10 +136,17 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
     }
 
     @Nullable
-    public GemUpgradeMatch getUpgradeMatch(DynamicHolder<Gem> gem, Purity purity, Container matInv) {
+    public GemUpgradeMatch getUpgradeMatch(DynamicHolder<Gem> gem, Purity purity) {
         EnumMap<Purity, Integer> map = this.getGems(gem);
         if (map.get(purity) >= maxCount) return null;
-        return GemUpgradeMatch.findMatch(this.level, purity, map, matInv);
+        return GemUpgradeMatch.findMatch(this.level, purity, map, this.upgradeMats);
+    }
+
+    /**
+     * Returns the persistent upgrade material inventory. Only intended for use by {@link GemCaseMenu}.
+     */
+    public InternalItemHandler getUpgradeMaterials() {
+        return this.upgradeMats;
     }
 
     public int getCount(DynamicHolder<Gem> gem, Purity purity) {
@@ -194,12 +221,16 @@ public abstract class GemCaseTile extends BlockEntity implements TickingBlockEnt
     public void saveAdditional(CompoundTag tag, HolderLookup.Provider regs) {
         super.saveAdditional(tag, regs);
         saveGemData(tag);
+        tag.put("upgrade_materials", this.upgradeMats.serializeNBT(regs));
     }
 
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider regs) {
         super.loadAdditional(tag, regs);
         loadGemData(tag);
+        if (tag.contains("upgrade_materials")) {
+            this.upgradeMats.deserializeNBT(regs, tag.getCompound("upgrade_materials"));
+        }
     }
 
     @Override
