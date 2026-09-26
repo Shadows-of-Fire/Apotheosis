@@ -1,0 +1,23 @@
+{
+    "type": "apotheosis:attribute_toggle",
+    "attributes": [
+        "minecraft:generic.movement_speed",
+        "minecraft:generic.step_height"
+    ],
+    "definition": {
+        "affix_type": "ability",
+        "exclusive_set": [
+            "apotheosis:boots/ability/unhurried",
+            "apotheosis:boots/ability/surefooted"
+        ],
+        "weights": {
+            "pinnacle": {
+                "quality": 0.75,
+                "weight": 20
+            }
+        }
+    },
+    "rarities": [
+        "apotheosis:mythic"
+    ]
+}

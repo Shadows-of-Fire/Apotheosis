@@ -73,14 +73,17 @@ public final class AttributeToggles {
     }
 
     /**
-     * Returns a copy of this object with the suppression state of the given attribute flipped.
+     * Returns a copy of this object with every attribute in {@code attributes} set to the given suppression state.
      */
-    public AttributeToggles toggle(Holder<Attribute> attribute) {
+    public AttributeToggles withSuppressed(Set<Holder<Attribute>> attributes, boolean suppressed) {
         Set<Holder<Attribute>> copy = new HashSet<>(this.suppressed);
-        if (!copy.remove(attribute)) {
-            copy.add(attribute);
+        if (suppressed) {
+            copy.addAll(attributes);
         }
-        return new AttributeToggles(copy);
+        else {
+            copy.removeAll(attributes);
+        }
+        return copy.equals(this.suppressed) ? this : copy.isEmpty() ? EMPTY : new AttributeToggles(copy);
     }
 
     /**

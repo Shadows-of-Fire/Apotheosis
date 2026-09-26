@@ -35,7 +35,10 @@ import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * Boots ability affix that lets the wearer toggle all bonuses to a specific attribute on or off with a keybind.
+ * Boots ability affix that lets the wearer toggle all bonuses to one or more attributes on or off with a keybind.
+ * <p>
+ * All attributes of a single affix are toggled together: if any of them is currently suppressed, the key re-enables all of them,
+ * otherwise it suppresses all of them.
  * <p>
  * While suppressed, {@link LivingEntity#getAttributeValue(Holder)} clamps the attribute for the wearer down to its base value,
  * carving out the vanilla sprint boost. Net penalties still pass through (see {@link AttributeToggles#getCappedValue}).
@@ -50,21 +53,21 @@ public class AttributeToggleAffix extends Affix {
     public static final Codec<AttributeToggleAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             affixDef(),
-            BuiltInRegistries.ATTRIBUTE.holderByNameCodec().fieldOf("attribute").forGetter(a -> a.attribute),
+            PlaceboCodecs.setOf(BuiltInRegistries.ATTRIBUTE.holderByNameCodec()).fieldOf("attributes").forGetter(a -> a.attributes),
             PlaceboCodecs.setOf(LootRarity.CODEC).fieldOf("rarities").forGetter(a -> a.rarities))
         .apply(inst, AttributeToggleAffix::new));
 
-    protected final Holder<Attribute> attribute;
+    protected final Set<Holder<Attribute>> attributes;
     protected final Set<LootRarity> rarities;
 
-    public AttributeToggleAffix(AffixDefinition def, Holder<Attribute> attribute, Set<LootRarity> rarities) {
+    public AttributeToggleAffix(AffixDefinition def, Set<Holder<Attribute>> attributes, Set<LootRarity> rarities) {
         super(def);
-        this.attribute = attribute;
+        this.attributes = attributes;
         this.rarities = rarities;
     }
 
-    public Holder<Attribute> getAttribute() {
-        return this.attribute;
+    public Set<Holder<Attribute>> getAttributes() {
+        return this.attributes;
     }
 
     @Override
@@ -77,7 +80,8 @@ public class AttributeToggleAffix extends Affix {
         MutableComponent desc = Component.translatable("affix." + this.id() + ".desc", Component.keybind(TOGGLE_KEY));
         Player player = ctx.player();
         if (player != null) {
-            boolean suppressed = getToggles(player).isSuppressed(this.attribute);
+            AttributeToggles toggles = getToggles(player);
+            boolean suppressed = this.attributes.stream().allMatch(toggles::isSuppressed);
             MutableComponent state = Apotheosis.lang("misc", "attribute_toggle." + (suppressed ? "off" : "on"))
                 .withStyle(suppressed ? ChatFormatting.RED : ChatFormatting.GREEN);
             desc.append(CommonComponents.SPACE).append(Apotheosis.lang("misc", "attribute_toggle.state", state));
@@ -116,6 +120,13 @@ public class AttributeToggleAffix extends Affix {
     }
 
     /**
+     * Collects every attribute that the player's worn boots allow toggling.
+     */
+    public static Set<Holder<Attribute>> getWornAttributes(Player player) {
+        return streamWornAffixes(player).flatMap(a -> a.attributes.stream()).collect(Collectors.toSet());
+    }
+
+    /**
      * Drops any suppressed attributes that are no longer provided by the player's worn boots, syncing to the client if anything changed.
      * <p>
      * Called when the boots slot changes and when the player joins a level.
@@ -125,8 +136,7 @@ public class AttributeToggleAffix extends Affix {
         if (toggles.isEmpty()) {
             return;
         }
-        Set<Holder<Attribute>> worn = streamWornAffixes(player).map(AttributeToggleAffix::getAttribute).collect(Collectors.toSet());
-        AttributeToggles pruned = toggles.retain(worn);
+        AttributeToggles pruned = toggles.retain(getWornAttributes(player));
         if (pruned != toggles) {
             setToggles(player, pruned);
             sync(player);
@@ -134,27 +144,27 @@ public class AttributeToggleAffix extends Affix {
     }
 
     /**
-     * Server-side handler for the toggle keybind. Flips the suppression state of every toggle affix on the worn boots and syncs
-     * the result to the client.
+     * Server-side handler for the toggle keybind. If any attribute provided by the worn boots is suppressed, all of them are
+     * re-enabled; otherwise all of them are suppressed. The result is synced to the client.
      */
     public static void handleToggle(ServerPlayer player) {
-        Set<Holder<Attribute>> attrs = streamWornAffixes(player).map(AttributeToggleAffix::getAttribute).collect(Collectors.toSet());
+        Set<Holder<Attribute>> attrs = getWornAttributes(player);
         if (attrs.isEmpty()) {
             player.sendSystemMessage(Apotheosis.sysMessageHeader().append(Apotheosis.lang("misc", "attribute_toggle.none").withStyle(ChatFormatting.YELLOW)));
             return;
         }
 
         AttributeToggles toggles = getToggles(player);
+        boolean suppress = attrs.stream().noneMatch(toggles::isSuppressed);
+        setToggles(player, toggles.withSuppressed(attrs, suppress));
+        sync(player);
+
+        MutableComponent state = Apotheosis.lang("misc", "attribute_toggle." + (suppress ? "off" : "on"))
+            .withStyle(suppress ? ChatFormatting.RED : ChatFormatting.GREEN);
         for (Holder<Attribute> attr : attrs) {
-            toggles = toggles.toggle(attr);
-            boolean suppressed = toggles.isSuppressed(attr);
-            MutableComponent state = Apotheosis.lang("misc", "attribute_toggle." + (suppressed ? "off" : "on"))
-                .withStyle(suppressed ? ChatFormatting.RED : ChatFormatting.GREEN);
             Component attrName = Component.translatable(attr.value().getDescriptionId());
             player.sendSystemMessage(Apotheosis.sysMessageHeader().append(Apotheosis.lang("misc", "attribute_toggle.updated", attrName, state).withStyle(ChatFormatting.YELLOW)));
         }
-        setToggles(player, toggles);
-        sync(player);
     }
 
     public static void sync(ServerPlayer player) {

@@ -43,3 +43,4 @@ The list of affix types is as follows:
 17. [Telepathic Affix](./effect/TelepathicAffix.md) - Teleports drops directly to the player.
 18. [Thunderstruck Affix](./effect/ThunderstruckAffix.md) - Makes melee attacks chain damage to all nearby enemies.
 19. [Enchantment Affix](./effect/EnchantmentAffix.md) - Grants bonus enchantment levels.
+20. [Attribute Toggle Affix](./effect/AttributeToggleAffix.md) - Lets the wearer toggle attribute bonuses on or off with a keybind.

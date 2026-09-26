@@ -933,13 +933,22 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
 
         this.add(Apotheosis.loc("boots/ability/unhurried"), new AttributeToggleAffix(
             AffixDefinition.builder(AffixType.ABILITY).weights(TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY)).build(),
-            Attributes.MOVEMENT_SPEED,
+            ApothMiscUtil.linkedSet(Attributes.MOVEMENT_SPEED),
             linkedSet(epic, mythic)));
 
         this.add(Apotheosis.loc("boots/ability/surefooted"), new AttributeToggleAffix(
             AffixDefinition.builder(AffixType.ABILITY).weights(TieredWeights.forAllTiers(DEFAULT_WEIGHT, DEFAULT_QUALITY)).build(),
-            Attributes.STEP_HEIGHT,
+            ApothMiscUtil.linkedSet(Attributes.STEP_HEIGHT),
             linkedSet(epic, mythic)));
+
+        this.add(Apotheosis.loc("boots/ability/steadfast"), new AttributeToggleAffix(
+            AffixDefinition.builder(AffixType.ABILITY)
+                .weights(TieredWeights.onlyFor(WorldTier.PINNACLE, 20, 0.75F))
+                .exclusiveWith(afx("boots/ability/unhurried"))
+                .exclusiveWith(afx("boots/ability/surefooted"))
+                .build(),
+            ApothMiscUtil.linkedSet(Attributes.MOVEMENT_SPEED, Attributes.STEP_HEIGHT),
+            linkedSet(mythic)));
 
         // Shield Abilities
 
