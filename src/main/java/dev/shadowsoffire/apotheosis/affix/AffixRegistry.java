@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.effect.AttributeToggleAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.CatalyzingAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.CleavingAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.DamageReductionAffix;
@@ -60,6 +61,7 @@ public class AffixRegistry extends TieredDynamicRegistry<Affix> {
     @Override
     protected void registerBuiltinCodecs() {
         this.registerCodec(Apotheosis.loc("attribute"), AttributeAffix.CODEC);
+        this.registerCodec(Apotheosis.loc("attribute_toggle"), AttributeToggleAffix.CODEC);
         this.registerCodec(Apotheosis.loc("multi_attr"), MultiAttrAffix.CODEC);
         this.registerCodec(Apotheosis.loc("mob_effect"), MobEffectAffix.CODEC);
         this.registerCodec(Apotheosis.loc("damage_reduction"), DamageReductionAffix.CODEC);

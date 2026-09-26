@@ -53,6 +53,7 @@ import dev.shadowsoffire.apotheosis.mobs.util.SpawnCondition;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
 import dev.shadowsoffire.apotheosis.net.GemCaseSelectPayload;
 import dev.shadowsoffire.apotheosis.net.LinkItemToChatPayload;
+import dev.shadowsoffire.apotheosis.net.AttributeTogglesPayload;
 import dev.shadowsoffire.apotheosis.net.RadialStatePayload;
 import dev.shadowsoffire.apotheosis.net.RerollResultPayload;
 import dev.shadowsoffire.apotheosis.net.WorldTierPayload;
@@ -171,6 +172,7 @@ public class Apotheosis {
         PayloadHelper.registerPayload(new BossSpawnPayload.Provider());
         PayloadHelper.registerPayload(new RerollResultPayload.Provider());
         PayloadHelper.registerPayload(new RadialStatePayload.Provider());
+        PayloadHelper.registerPayload(new AttributeTogglesPayload.Provider());
         PayloadHelper.registerPayload(new WorldTierPayload.Provider());
         PayloadHelper.registerPayload(new ConfigPayload.Provider());
         PayloadHelper.registerPayload(new LinkItemToChatPayload.Provider());

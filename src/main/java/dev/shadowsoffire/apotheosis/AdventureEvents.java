@@ -10,6 +10,7 @@ import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
+import dev.shadowsoffire.apotheosis.affix.effect.AttributeToggleAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.FestiveAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.MagicalArrowAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.OmneticAffix;
@@ -52,6 +53,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SlotAccess;
@@ -342,6 +344,9 @@ public class AdventureEvents {
     public void equip(LivingEquipmentChangeEvent e) {
         if (e.getEntity() instanceof ServerPlayer player) {
             Apoth.Triggers.EQUIPPED_ITEM.trigger(player, e.getSlot(), e.getTo());
+            if (e.getSlot() == EquipmentSlot.FEET) {
+                AttributeToggleAffix.prune(player);
+            }
         }
     }
 
@@ -430,6 +435,14 @@ public class AdventureEvents {
     public void syncRadialState(EntityJoinLevelEvent e) {
         if (e.getEntity() instanceof ServerPlayer player) {
             PacketDistributor.sendToPlayer(player, new RadialStatePayload(RadialState.getState(player)));
+        }
+    }
+
+    @SubscribeEvent
+    public void syncAttributeToggles(EntityJoinLevelEvent e) {
+        if (e.getEntity() instanceof ServerPlayer player) {
+            AttributeToggleAffix.prune(player);
+            AttributeToggleAffix.sync(player);
         }
     }
 

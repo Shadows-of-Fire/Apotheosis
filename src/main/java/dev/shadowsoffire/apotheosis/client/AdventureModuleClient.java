@@ -207,6 +207,7 @@ public class AdventureModuleClient {
     @SubscribeEvent
     public static void keys(RegisterKeyMappingsEvent e) {
         e.register(AdventureKeys.TOGGLE_RADIAL);
+        e.register(AdventureKeys.TOGGLE_ATTRIBUTE_BONUSES);
         e.register(AdventureKeys.OPEN_WORLD_TIER_SELECT);
         e.register(AdventureKeys.LINK_ITEM_TO_CHAT);
         e.register(AdventureKeys.COMPARE_EQUIPMENT);
