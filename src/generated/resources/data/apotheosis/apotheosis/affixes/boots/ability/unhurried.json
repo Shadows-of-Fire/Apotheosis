@@ -1,6 +1,8 @@
 {
     "type": "apotheosis:attribute_toggle",
-    "attribute": "minecraft:movement_speed",
+    "attributes": [
+        "minecraft:movement_speed"
+    ],
     "definition": {
         "affix_type": "ability",
         "exclusive_set": [],

@@ -1,6 +1,8 @@
 {
     "type": "apotheosis:attribute_toggle",
-    "attribute": "minecraft:step_height",
+    "attributes": [
+        "minecraft:step_height"
+    ],
     "definition": {
         "affix_type": "ability",
         "exclusive_set": [],
