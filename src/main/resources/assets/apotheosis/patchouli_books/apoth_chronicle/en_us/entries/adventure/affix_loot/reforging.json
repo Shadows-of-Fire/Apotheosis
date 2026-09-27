@@ -33,7 +33,7 @@
 		{
 			"type": "patchouli:text",
 			"title": "Reforging",
-			"text": "For each rarity, there is a base cost of experience, sigils, and materials. The extra choice slots charge double and triple the base cost.$(p)To reforge your item, simply click the desired choice."
+			"text": "For each rarity, there is a base cost of levels, materials, and sigils.$(p)The second and third choices require double and triple the level requirement and materials, but only spend one, two, or three levels' worth of experience.$(p)To reforge your item, simply click the desired choice."
 		},
         {
             "type": "patchouli:crafting",

@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Knowledge of the Ages$() is a Masterwork$(br)enchantment that can be applied to swords.$(p)When you kill a mob, all drops will be converted to experience.$(p)Each individual item is worth the same amount of experience."
+            "text": "$(2)Knowledge of the Ages$() is a Masterwork$(br)enchantment that can be applied to swords and axes.$(p)When you kill a mob, all drops will be converted to experience.$(p)Each individual item is worth the same amount of experience."
         },
 		{
 			"type": "patchouli:text",

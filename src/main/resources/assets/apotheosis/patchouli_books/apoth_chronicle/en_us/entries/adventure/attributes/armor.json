@@ -11,15 +11,15 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "The first component of the formula is the $(br)A-value, equal to $(9)10 + (damage - 20) / 2$(), with a minimum value of $(9)10$().$(p)You then reduce damage equal to $(br)$(9)A / (A + armor)$().$(p)The aforementioned formula is not the one used by Vanilla Minecraft, as Apotheosis replaces it."
+			"text": "The first component of the formula is the $(br)A-value, equal to $(9)10 + (damage - 20) / 2$(), with a minimum value of $(9)10$().$(p)You then reduce damage equal to $(br)$(9)A / (A + armor)$().$(p)The aforementioned formula is not the one used by Vanilla Minecraft, as Apothic Attributes replaces it (though it is configurable)."
 		},
 		{
 			"type": "patchouli:text",
-			"text": "For vanilla armor and damage values, you will find yourself taking slightly less damage.$(p)For high armor and damage values, armor will be significantly less effective."
+			"text": "For vanilla armor and damage values, you will find yourself taking slightly less damage.$(p)For high armor and damage values, armor will be significantly less effective.$(p)Negative armor increases damage taken by 1.5% per point."
 		},
 		{
 			"type": "patchouli:text",
-			"text": "The goal of this change is to reduce invulnerabilty at high levels, and make $(9)Protection$() and $(9)Resistance$() more impactful.$(p)It also makes fights where both parties are heavily armored significantly more active."
+			"text": "The goal of this change is to reduce invulnerability at high levels, and make $(9)Protection$() and $(9)Resistance$() more impactful.$(p)It also makes fights where both parties are heavily armored significantly more active."
 		}
 	]
 }

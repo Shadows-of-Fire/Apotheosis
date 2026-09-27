@@ -1,12 +1,16 @@
 {
     "name": "Item Enchantability",
-    "icon": "minecraft:golden_sword",
     "category": "apotheosis:enchanting/table",
+    "icon": "minecraft:golden_sword",
 	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "In vanilla, an item's enchantability contributes to your $(fpower).$(p)Apotheosis changes it to provide a direct $(arcana) boost instead.$(p)$(arcana) is increased by 50% of an item's enchantability."
+            "text": "In vanilla, an item's enchantability contributes to your $(fpower).$(p)Apotheosis removes that, and instead treats enchantability as a chance to strengthen each enchantment you roll."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Each rolled enchantment has a chance, based on the item's enchantability, to gain one extra level.$(p)This can push an enchantment past its normal maximum. Such levels are marked with a star in the name."
         }
-	]
+    ]
 }

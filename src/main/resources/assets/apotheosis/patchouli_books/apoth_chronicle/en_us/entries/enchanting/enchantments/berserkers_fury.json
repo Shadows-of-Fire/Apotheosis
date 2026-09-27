@@ -11,7 +11,7 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "The damage taken and potion strength are based on the enchantment level."
+			"text": "Triggering requires damage from an attacker, and has a cooldown.$(p)You take exponentially more damage per level, which bypasses armor and Resistance.$(p)The buffs last 25 seconds, at a strength equal to the level."
 		}
 	]
 }

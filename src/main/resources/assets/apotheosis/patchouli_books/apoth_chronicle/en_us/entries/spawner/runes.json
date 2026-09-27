@@ -1,0 +1,135 @@
+{
+    "name": "Spawner Runes",
+    "icon": "apotheosis:spawner_rune",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "After reading about $(l:apotheosis:spawner/stats)Spawner Stats$(), you may be wondering how to change them.$(p)Enter $(9)Spawner Runes$(). Hold a rune and right-click a $(9)Mob Spawner$() to apply it.$(p)Every rune and its effect is visible in JEI under the uses of Mob Spawners."
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:spawner_chain",
+            "title": "Spawner Chains",
+            "text": "Runes are forged from $(9)Spawner Chains$(), which drop when a spawner is destroyed by an explosion.$(p)The initial explosion triggers a cascade. A few seconds later it detonates, littering the ground with the stored mob and many chains."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:spawner_rune",
+            "title": "Blank Runes",
+            "text": "Once you have some chains, the first thing you'll need to do is craft some blank $(9)Spawner Runes$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Upgrade Runes",
+            "text": "There are four core upgrade runes, one for each World Tier above Haven.$(p)These runes modify the core stats: Min/Max Spawn Delay, Spawn Count, Max Entities, and Activation Range."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Frontiersman's Rune",
+            "recipe": "apotheosis:frontier_spawner_upgrade_rune",
+            "text": "Each tier rune is crafted around that tier's $(9)Rarity Material$()."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Wayfarer's Rune",
+            "recipe": "apotheosis:ascent_spawner_upgrade_rune",
+            "text": "The core stat upgrades increase with the rune's tier."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Mountaineer's Rune",
+            "recipe": "apotheosis:summit_spawner_upgrade_rune",
+            "text": "The higher runes require an $(9)Infused Spawner Rune$() and rarer materials."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Thundering Rune",
+            "recipe": "apotheosis:pinnacle_spawner_upgrade_rune",
+            "text": "The final rune will create an unstoppable engine of mob creation."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Stat Runes",
+            "text": "Changing other (non-core) stats requires a rune dedicated to that stat. Each stat has one rune, with the cost depending on how strong the effect is."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Spawning Range",
+            "recipe": "apotheosis:spawn_range_spawner_rune",
+            "text": "This rune changes a Spawner's Spawn Range."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Control",
+            "recipe": "apotheosis:redstone_control_spawner_rune",
+            "text": "This rune gives a spawner redstone control. The spawner will not operate without a redstone signal."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Perpetual Twilight",
+            "recipe": "apotheosis:ignore_light_spawner_rune",
+            "text": "This rune makes the mob spawning process ignore light levels.$(p)Dark mobs can spawn in light, and vice versa."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Silence!",
+            "recipe": "apotheosis:silent_spawner_rune",
+            "text": "This rune makes all spawned mobs make no sound.$(p)No hurt noises, no ambient noises, nothing."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "The Fountain of Youth",
+            "recipe": "apotheosis:youthful_spawner_rune",
+            "text": "This rune will cause spawned mobs to be reverted to their infant form.$(p)Assuming they have one, anyway. If they don't, nothing will happen."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Burn Them All!",
+            "recipe": "apotheosis:burning_spawner_rune",
+            "text": "This rune causes spawned mobs to be set on fire.$(p)Obviously, this won't work if the mob is immune to fire."
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:infused_spawner_rune",
+            "title": "Infused Runes",
+            "text": "Stronger runes need an $(9)Infused Spawner Rune$(), which are created via Infusion Enchanting."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Brain Drain",
+            "recipe": "apotheosis:no_ai_spawner_rune",
+            "text": "This infused rune causes spawned mobs to have no entity AI.$(p)Unlike 'true' no AI mobs, they can still be pushed around."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Defying All Logic",
+            "recipe": "apotheosis:ignore_conditions_spawner_rune",
+            "text": "This infused rune is a direct upgrade to the $(9)Rune of Perpetual Twilight$().$(p)All spawn conditions, including light, will be ignored. Empty space is still required."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Alone in the World",
+            "recipe": "apotheosis:ignore_players_spawner_rune",
+            "text": "This infused rune allows the spawner to run without a player nearby.$(p)The mobs might get lonely."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Again and Again",
+            "recipe": "apotheosis:echoing_spawner_rune",
+            "text": "This infused rune grants Echoing, which causes spawned mobs to drop an additional copy of their loot table.$(p)It can be applied multiple times."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Inverting Runes",
+            "text": "Hold $(9)Nether Quartz$() in your off hand while applying a rune to reverse its effect.$(p)The quartz is not consumed.$(p)Tier runes cannot be inverted."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Notes",
+            "text": "Stat runes respect the caps shown in JEI, while tier runes set values directly.$(p)Hold Shift over a spawner item to see its stats."
+        }
+    ]
+}

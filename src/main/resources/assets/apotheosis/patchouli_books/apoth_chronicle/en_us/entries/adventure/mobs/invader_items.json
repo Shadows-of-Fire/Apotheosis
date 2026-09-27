@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Each Invader is empowered with exactly one Affix Item, alongside the rest of their fully enchanted gear.$(p)This Affix Item is guaranteed to be dropped on death, and will be the same rarity as the Invader.$(p)The affixes on it tend to be stronger than usual."
+            "text": "Each Invader is empowered with exactly one Affix Item, alongside the rest of their gear, which is often enchanted.$(p)This Affix Item is guaranteed to be dropped on death, and will be the same rarity as the Invader.$(p)The affixes on it are stronger than usual."
         },
 		{
 			"type": "patchouli:text",

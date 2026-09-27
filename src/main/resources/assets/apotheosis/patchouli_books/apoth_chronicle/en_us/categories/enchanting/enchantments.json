@@ -1,6 +1,6 @@
 {
     "name": "New Enchantments",
-    "description": "Each entry in this section details a new enchantment added by this module.$(p)Enchantments added by other modules will not be covered here.",
+    "description": "Each entry in this section details a new enchantment added by Apothic Enchanting.$(p)Enchantments from other Apothic mods, such as Capturing, are covered in their own sections.",
     "icon": "minecraft:enchanted_book",
 	"flag": "apotheosis:enchanting",
 	"parent": "apotheosis:enchanting/enchanting"

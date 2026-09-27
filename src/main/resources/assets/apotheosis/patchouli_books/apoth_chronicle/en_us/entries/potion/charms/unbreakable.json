@@ -11,7 +11,7 @@
         },
 		{
             "type": "patchouli:text",
-            "text": "The infusion recipe for Unbreakable charms is rather difficult.$(p)You'll need a firm understanding of $(l:apotheosis:enchanting/table/stats)Enchanting Stats$() to be able to complete it."
+            "text": "The infusion recipe for Unbreakable charms is rather difficult.$(p)You'll need a firm understanding of $(l:apotheosis:enchanting/table/stats)Enchanting Stats$() to be able to complete it. You'll also need to be in World Tier: $(9)Pinnacle$()."
         }
 	]
 }

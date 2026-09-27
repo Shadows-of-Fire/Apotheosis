@@ -15,9 +15,7 @@ public class PatchouliCompat {
             api.setConfigFlag("apotheosis:enchanting", ApothicEnchantingCompat.isLoaded());
             api.setConfigFlag("apotheosis:adventure", true);
             api.setConfigFlag("apotheosis:spawner", ApothicSpawnersCompat.isLoaded());
-            api.setConfigFlag("apotheosis:garden", true);
             api.setConfigFlag("apotheosis:potion", ModList.get().isLoaded(ApothicAttributes.MODID));
-            api.setConfigFlag("apotheosis:village", false);
             api.setConfigFlag("apotheosis:wstloaded", ModList.get().isLoaded("wstweaks"));
             api.setConfigFlag("apotheosis:curiosloaded", ModList.get().isLoaded("curios"));
         }

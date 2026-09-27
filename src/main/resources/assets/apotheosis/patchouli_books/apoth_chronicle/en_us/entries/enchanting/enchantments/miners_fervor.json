@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(5)Miner's Fervor$() is a Twisted enchantment that can be applied to all tools.$(p)It causes you to break blocks very quickly, but never instantaneously.$(p)It is exclusive with $(9)Efficiency$()."
+            "text": "$(5)Miner's Fervor$() is a Twisted enchantment that can be applied to mining tools.$(p)It causes you to break blocks very quickly, but never instantaneously. Blocks that already break instantly are unaffected."
         },
 		{
             "type": "patchouli:text",
-            "text": "Despite having a speed cap, the per-level boost is much higher than $(9)Efficiency$().$(p)This makes it an ideal choice for tools with a slow base speed."
+            "text": "Despite having a speed cap, the per-level boost is much higher than $(9)Efficiency$().$(p)This makes it an ideal choice for tools with a slow base speed.$(p)For obvious reasons, it is exclusive with $(9)Efficiency$()."
         }
 	]
 }

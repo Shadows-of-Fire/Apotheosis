@@ -22,7 +22,7 @@
         },
 		{
             "type": "patchouli:text",
-            "text": "As long as the charm is active and in your inventory, it will apply the potion to you, consuming durability.$(p)The charm will only apply a couple seconds of potion at a time.$(p)When the charm runs out of durability, it will break."
+            "text": "As long as the charm is active and in your inventory, it will apply the potion to you, consuming durability.$(p)The charm applies a short burst of the effect at a time. One charm lasts much longer than its three potions.$(p)When the charm runs out of durability, it will break."
         }
 	]
 }

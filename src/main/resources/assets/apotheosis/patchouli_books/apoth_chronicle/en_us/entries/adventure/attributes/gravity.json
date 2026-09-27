@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Gravity$() is how fast you fall down, in blocks per second squared.$(p)Could be found on anything, or nothing, who knows.$(p)Note: Gravity can go negative. With negative gravity, you float upwards."
+            "text": "$(9)Gravity$() is how fast you fall down, applied every tick (vanilla is 0.08).$(p)Found on chestplates and some core gems.$(p)Note: Gravity can go negative. With negative gravity, you float upwards."
         }
 	]
 }

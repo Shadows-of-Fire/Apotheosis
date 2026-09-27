@@ -28,12 +28,12 @@
         {
             "type": "patchouli:text",
             "title": "Upgrading",
-            "text": "The first operation that can be performed in the augmenting table is upgrading an affix.$(p)This costs two $(9)Sigils of Enhancement$(), and will upgrade the internal strength of the current affix by 25%.$(p)How much of a boost this provides varies per Affix."
+            "text": "The first operation that can be performed in the augmenting table is upgrading an affix.$(p)This costs two $(9)Sigils of Enhancement$() and 225 levels, and will upgrade the internal strength of the current affix by 25%.$(p)Affixes without levels cannot be upgraded."
         },
         {
             "type": "patchouli:text",
             "title": "Rerolling",
-            "text": "The second operation of the augmenting table is to reroll an affix.$(p)This costs one $(9)Sigil of Enhancement$() and swaps out the selected affix for another one of the same type.$(p)The alternative options will be shown on the left."
+            "text": "The second operation of the augmenting table is to reroll an affix.$(p)This costs one $(9)Sigil of Enhancement$() and 175 levels, and swaps out the selected affix for another one of the same type.$(p)The alternative options will be shown on the left."
         }
     ]
 }

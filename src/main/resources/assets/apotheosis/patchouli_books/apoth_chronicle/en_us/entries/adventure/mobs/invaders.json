@@ -12,7 +12,12 @@
 		{
 			"type": "patchouli:text",
 			"title": "Spawn Mechanics",
-			"text": "Apothic Invaders may rarely show up on the surface where mobs can normally spawn.$(p)Their arrival will be marked by a loud noise, a status message, and a beacon beam.$(p)Invaders may become more or less common depending on World Tier and Dimension."
+			"text": "Invaders replace a small fraction of natural monster spawns. In the Overworld, they appear on the surface or near your depth underground; in the Nether anywhere; in the End only on the outer islands.$(p)They never appear in $(9)Haven$()."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Spawn Mechanics",
+			"text": "Their arrival will be marked by a loud noise, a status message, and a beacon beam.$(p)Invaders become more common in higher World Tiers, and rates differ per Dimension."
 		},
 		{
 			"type": "patchouli:text",

@@ -16,12 +16,17 @@
         {
             "type": "patchouli:text",
             "title": "Tier Information",
-            "text": "To view information about a tier, select the tier, then press the \"Detailed Info\" button.$(p)This will show you the rarity and purity weights for that tier, as well as any Tier Augments that will be applied."
+            "text": "To view information about a tier, select the tier, then press the \"Detailed Info\" button.$(p)This will show you the rarity and purity weights for that tier, as well as any Tier Augments that will be applied.$(p)The weights shown are adjusted by your Luck. Hold Shift to see the defaults."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Tutorial",
+            "text": "The '?' button opens the World Tier tutorial.$(p)Until you activate a tier for the first time, affix items appear as $(9)Unidentified$() and hide their descriptions."
         },
         {
             "type": "patchouli:text",
             "title": "Notes",
-            "text": "You may switch between Tiers at any time.$(p)In multiplayer, multiple players may have different Tiers without impacting eachother. Most content will resolve the Tier of the closest player."
+            "text": "You may switch between unlocked Tiers at any time, unless a modpack has disabled manual changes.$(p)In multiplayer, multiple players may have different Tiers without impacting each other. Most content will resolve the Tier of the closest player."
         }
     ]
 }

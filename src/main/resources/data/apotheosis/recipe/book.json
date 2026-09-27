@@ -4,7 +4,7 @@
 		"type": "neoforge:mod_loaded",
 		"modid": "patchouli"
 	}],
-	"group": "something",
+	"group": "apotheosis",
 	"ingredients": [
 		"minecraft:book",
 		"#c:ingots/gold"

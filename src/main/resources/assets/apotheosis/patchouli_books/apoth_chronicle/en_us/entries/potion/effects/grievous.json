@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "The Potion of $(c)Grievous Wounds$() is a negative effect.$(p)While under its effects, all healing received is reduced."
+            "text": "$(c)Grievous Wounds$() is a negative effect, granted by the Potion of Healing Reduction.$(p)While under its effects, all healing received is reduced."
         },
 		{
             "type": "patchouli:text",

@@ -10,7 +10,7 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "Each stat requirement will typically require at least some value, and will optionally have a maximum value.$(p)Infusion enchantments only use the third slot, and will let you over-spend experience."
+			"text": "Each stat requirement will typically require at least some value, and will optionally have a maximum value.$(p)Infusion enchantments only use the third slot, cost three Lapis Lazuli, and charge the level cost of the recipe's $(eterna) requirement (minimum 3)."
 		},
 		{
 			"type": "patchouli:text",

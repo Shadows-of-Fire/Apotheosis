@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Tempting$() is a hoe enchantment.$(p)When holding a hoe with this enchantment, all animals will follow you as if holding their breeding item."
+            "text": "$(9)Tempting$() is a hoe enchantment.$(p)When holding a hoe with this enchantment in your main hand, all animals will follow you as if holding their breeding item."
         }
 	]
 }
