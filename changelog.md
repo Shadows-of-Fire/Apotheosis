@@ -1,3 +1,18 @@
+## 8.9.0
+* Fixed a crash with the Gateway of Apothic Invaders.
+* Added JEI display for stoneforming-type affixes.
+* Added an anti-gravity arrow affix.
+* Updated the "chase" item pool.
+* Added prot pierce/shred affixes.
+* Added speed and step height clamping affixes.
+* Made spawner chains immune to fire and explosion damage.
+* Made the Gem Case's upgrade material inventory persistent.
+  * Automation still can't see it, though.
+* Updated Malice to explicitly tell you when you've maxed out the item.
+* Made various corrections to the Chronicle of Shadows.
+* t0piy: Updated Brazilian translation.
+* mc-kaishixiaxue: Updated Chinese translation.
+
 ## 8.8.0
 * Reimplemented the Sigil of Malice.
   * Malice now increases a random affix's power to 200% (the Sigil of Supremacy's boost is to 150%).
