@@ -13,7 +13,7 @@
             "type": "patchouli:spotlight",
 			"title": "Brewing Recipe",
 			"item": "minecraft:mushroom_stew",
-            "text": "This potion can be crafted with an Awkward Potion and some Mushroom Stew.$(p)It can be extended, strengthend, or turned into a splash potion with the usual ingredients."
+            "text": "This potion can be crafted with an Awkward Potion and some Mushroom Stew.$(p)It can be extended, strengthened, or turned into a splash potion with the usual ingredients."
         }
 	]
 }

@@ -7,7 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Boon of the Earth$() is a Masterwork enchantment for pickaxes.$(p)When mining simple stones, there is a chance for an ore block to be dropped."
+            "text": "$(2)Boon of the Earth$() is a Masterwork enchantment for pickaxes.$(p)When mining simple stones, there is a chance to drop a raw ore or other mineral alongside the normal drop."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Silk Touch yields the ore block instead, and Fortune multiplies the drop.$(p)Netherrack has its own pool, and some drops depend on depth or biome."
         }
 	]
 }

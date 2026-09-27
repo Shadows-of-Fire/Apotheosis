@@ -1,5 +1,5 @@
 {
-    "name": "Attack Range",
+    "name": "Entity Interaction Range",
     "icon": "minecraft:skeleton_skull",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Your $(9)Attack Range$() is the maximum distance at which you may attack targets with a melee weapon.$(p)Generally found on weapons."
+            "text": "Your $(9)Entity Interaction Range$() is the maximum distance at which you may attack targets with a melee weapon.$(p)Generally found on weapons."
         }
 	]
 }

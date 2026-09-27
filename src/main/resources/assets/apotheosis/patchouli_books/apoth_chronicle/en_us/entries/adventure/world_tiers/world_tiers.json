@@ -16,7 +16,7 @@
         {
             "type": "patchouli:text",
             "title": "Tier Augments",
-            "text": "Each tier has its own augments, modifiers that are applied to players in the tier, as well as mobs that have spawned in that tier.$(p)You can see all tier augments for each tier in the $(l:apotheosis:adventure/world_tiers/select_screen)World Tier Select Screen$()."
+            "text": "Each tier has augments: modifiers that are applied to either players in that tier, and/or mobs that have spawned in that tier.$(p)These include limits on your maximum enchanting $(eterna), and damage reduction for monsters in Summit and Pinnacle.$(p)You can see all tier augments for each tier in the $(l:apotheosis:adventure/world_tiers/select_screen)Select Screen$()."
         },
         {
             "type": "patchouli:text",

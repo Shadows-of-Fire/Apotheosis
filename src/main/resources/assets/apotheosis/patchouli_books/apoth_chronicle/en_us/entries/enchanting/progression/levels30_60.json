@@ -32,7 +32,7 @@
             "type": "patchouli:spotlight",
 			"title": "Enchanting Clues",
 			"item": "apothic_enchanting:sightshelf",
-			"text": "You now have access to better options for increasing other stats.$(p)On top of the bonuses from Hellshelves and Seashelves, you may now also create $(9)Sightshelves$() to increase your $(clues)."
+			"text": "You now have access to better options for increasing other stats.$(p)On top of the bonuses from Hellshelves and Seashelves, you may now also create the $(9)Hellshelf of Sight$() to increase your $(clues)."
 		},
 		{
             "type": "patchouli:crafting",

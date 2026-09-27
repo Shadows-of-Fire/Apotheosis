@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "The Potion of $(9)Ancient Knowledge$() is a beneficial effect.$(p)While under its effects, any experience generated from mobs you kill is multiplied."
+            "text": "The Potion of $(9)Ancient Knowledge$() is a beneficial effect.$(p)While under its effects, any experience generated from mobs you kill and blocks you mine is multiplied."
         },
 		{
             "type": "patchouli:text",
-            "text": "At Level I, it quadruples experience drops.$(p)At Level II, it multiplies them by 8."
+            "text": "At Level I, it quadruples experience drops.$(p)At Level II, it multiplies them by 8.$(p)The strong potion is Level IV, for 16x. The multiplier is configurable."
         }
 	]
 }

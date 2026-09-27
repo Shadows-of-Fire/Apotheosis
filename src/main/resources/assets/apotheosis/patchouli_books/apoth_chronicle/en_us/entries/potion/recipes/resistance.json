@@ -13,7 +13,7 @@
             "type": "patchouli:spotlight",
 			"title": "Brewing Recipe",
 			"item": "minecraft:shulker_shell",
-            "text": "This potion can be crafted with an Awkward Potion and a Shulker Shell.$(p)It can be extended, strengthend, or turned into a splash potion with the usual ingredients."
+            "text": "This potion can be crafted with an Awkward Potion and a Shulker Shell.$(p)It can be extended, strengthened, or turned into a splash potion with the usual ingredients."
         }
 	]
 }

@@ -1,6 +1,6 @@
 {
     "name": "Attributes",
-    "description": "In addition to the vanilla attributes, Apotheosis adds a breadth of new ones.$(p)This section details all of them.",
+    "description": "In addition to the vanilla attributes, $(9)Apothic Attributes$() adds many new ones.$(p)This section details the attributes you will find on affix items and gems.",
     "icon": "minecraft:diamond_chestplate",
 	"flag": "apotheosis:adventure",
 	"parent": "apotheosis:adventure/adventure"

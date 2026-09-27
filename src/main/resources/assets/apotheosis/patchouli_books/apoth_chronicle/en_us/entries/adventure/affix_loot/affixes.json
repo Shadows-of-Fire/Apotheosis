@@ -17,22 +17,27 @@
 		{
 			"type": "patchouli:text",
 			"title": "Stat Affixes",
-			"text": "The most common type of affixes are stat affixes. These affixes provide a simple bonus to a specific attribute, and are available across all rarities.  Higher rarities receive additional stat affixes."
+			"text": "The most common type of affixes are stat affixes.$(p)These simple affixes provide a bonus to a specific attribute, and are available across all rarities. Higher rarities receive additional stat affixes."
 		},
 		{
 			"type": "patchouli:text",
 			"title": "Effect Affixes",
-			"text": "Effect affixes are the most interesting type of affix. They have free range to add all sorts of additional functionality to your items, ranging from simple utility bonuses to strong combat effects.$(p)These can only be found on Rare+ items."
+			"text": "Effect affixes are the most varied type of affix. They have free range to add all sorts of functionality to your items, ranging from simple utility bonuses to strong combat effects.$(p)They start appearing on $(#33FF33)Uncommon$() items."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Ability Affixes",
+			"text": "Abilities are the strongest type of affixes, and often carry a cooldown (shown with an hourglass) that respects Cooldown Reduction.$(p)Every Epic and Mythic item carries exactly one."
 		},
 		{
 			"type": "patchouli:text",
 			"title": "Sockets",
-			"text": "A Socket is a special type of affix that simply provides a vessel for a $(l:apotheosis:adventure/affix_loot/gems)Gem$().$(p)Gems can convey great bonuses, but can be difficult to find."
+			"text": "A Socket is a special type of affix that simply provides a vessel for a $(l:apotheosis:adventure/gems/gems)Gem$().$(p)Gems can convey great bonuses, but can be difficult to find.$(p)Sockets can also be added with a $(9)Sigil of Socketing$(), up to two per item."
 		},
 		{
 			"type": "patchouli:text",
 			"title": "The Durability Affix",
-			"text": "The Durability Affix makes an item more resistant to damage, and is present on all Rare+ items.$(p)It applies after all other damage resistances, making it multiplicative with Unbreaking."
+			"text": "The Durability Affix makes an item more resistant to damage, and is present on most Rare+ items. Rarely, mythic items may be Unbreakable instead.$(p)It applies after all other damage resistances, making it multiplicative with Unbreaking."
 		}
 	]
 }

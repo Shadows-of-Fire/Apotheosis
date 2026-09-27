@@ -22,7 +22,7 @@
 		{
 			"type": "patchouli:text",
 			"title": "Socketing Gems",
-			"text": "To socket a gem into an item, combine the two in a Smithing Table.$(p)Each gem states which items it may fit in.$(p)Some gems are $(#C73912)Unique$(), meaning that only one copy of that gem may be socketed in an item."
+			"text": "To socket a gem into an item, combine the two in a Smithing Table, or pick up the gem and right-click it onto the item in any inventory.$(p)Each gem states which items it may fit in.$(p)Some gems are $(#C73912)Unique$(), meaning that only one copy of that gem may be socketed in an item."
 		},
 		{
 			"type": "patchouli:text",

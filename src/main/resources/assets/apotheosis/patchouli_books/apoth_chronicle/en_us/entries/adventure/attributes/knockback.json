@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Attack Knockback$() is how far you knockback enemies when you attack them.$(p)Each point will cause hit enemies to be pushed half a block away.$(p)Weapons and shields may provide this stat."
+            "text": "$(9)Attack Knockback$() is how far you knockback enemies when you attack them.$(p)Each point will cause hit enemies to be pushed half a block away.$(p)Melee weapons may provide this stat."
         },
 		{
 			"type": "patchouli:text",

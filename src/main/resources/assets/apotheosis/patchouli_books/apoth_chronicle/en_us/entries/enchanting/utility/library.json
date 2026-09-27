@@ -19,7 +19,7 @@
 		},
 		{
 			"type": "patchouli:text",
-			"text": "You may also place a book in the output slot to add enchantments to it.$(p)The library records the max level that has ever been inserted for each enchantment, and can only extract up to that level."
+			"text": "You may also place an $(9)Enchanted Book$() in the output slot to add enchantments to it.$(p)The library records the max level that has ever been inserted for each enchantment, and can only extract up to that level."
 		},
 		{
             "type": "patchouli:crafting",

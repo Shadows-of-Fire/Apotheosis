@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Shield Bash$() is a shield enchantment.$(p)It makes melee attacks with that shield do extra damage.$(p)However, attacking with $(9)Shield Bash$() causes additional durability damage."
+            "text": "$(9)Shield Bash$() is a shield enchantment.$(p)It makes melee attacks with that shield deal extra damage per level.$(p)However, attacking with $(9)Shield Bash$() causes additional durability damage."
         }
 	]
 }

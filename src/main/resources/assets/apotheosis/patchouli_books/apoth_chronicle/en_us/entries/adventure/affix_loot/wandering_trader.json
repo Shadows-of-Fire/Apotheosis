@@ -1,0 +1,25 @@
+{
+    "name": "Wandering Trader",
+    "icon": "minecraft:emerald",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 10,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Have you ever met one of those shady merchants that just appear on your lawn?$(p)Those are called $(9)Wandering Traders$().$(p)Typically they only sell hot garbage."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "However, Apotheosis adds a ton of new trades to their tables so they are actually worth interacting with.$(p)These trades include items like $(9)Beacons$() and $(9)Totems of Undying$(), as well as random $(9)Affix Items$(), priced in emeralds plus their repair material."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "In $(9)Summit$() and $(9)Pinnacle$(), traders may also offer powerful preset gear. Most of it requires Apothic Enchanting or Apothic Spawners to be installed."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Apotheosis also makes Wandering Traders appear more often, stay for a shorter time, and allows them to spawn underground (configurable)."
+        }
+    ]
+}

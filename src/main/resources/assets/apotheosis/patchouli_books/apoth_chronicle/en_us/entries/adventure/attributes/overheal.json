@@ -7,7 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Having $(9)Overheal$() means that part of your physical damage dealt will be gained as an absorption shield. As opposed to lifesteal, Overheal works when you are at full health.$(p)This stat is only found on heavy weapons."
+            "text": "Having $(9)Overheal$() means that part of your physical damage dealt will be gained as an absorption shield.$(p)As opposed to lifesteal, Overheal works when you are at full health."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "The absorption is capped at half your maximum health, and only applies to melee hits.$(p)This stat is only found on melee weapons."
         }
 	]
 }

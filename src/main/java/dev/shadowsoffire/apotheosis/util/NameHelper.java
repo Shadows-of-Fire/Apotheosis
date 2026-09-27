@@ -45,7 +45,7 @@ public class NameHelper {
     /**
      * List of all possible full names.
      */
-    private static String[] names = { "Biscuit", "Elisande", "Willow",
+    private static String[] names = { "Biscuit", "Elisande", "Willow", "Gunnar",
         "Bippy", "Butto", "Prim", "Tyrael", "Bajorno", "Michael Morbius", "Morbius", "Arun", "Panez", "Doomsday", "Vanamar", "WhatTheDrunk",
         "Lothrazar", "Chelly", "Chelicia", "Darsh", "Dariush", "Cheese E Piloza", "Bing", "Royal", "NoWayHere", "SwankyStella", "Isosahedron",
         "Asfalis", "Biz", "Icicle", "Darko", "Shadows", "Katarina", "Faellynna", "Diliviel", "Jank", "Albert", "Andrew", "Anderson", "Andy", "Allan",
@@ -80,7 +80,7 @@ public class NameHelper {
         "Pig", "Sil", "Ver", "Fish", "Cow", "Chic", "Ken", "Sheep", "Squid", "Hell", "Dra", "Gor", "Nyx", "Fae", "Lux", "Vex",
         "Hex", "Rune", "Frost", "Flame", "Storm", "Shade", "Dawn", "Dusk", "Ash", "Mist", "Might", "Fury", "Rage", "Doom", "Grim",
         "Void", "Rend", "Slay", "Ar", "Or", "Ur", "El", "Al", "Im", "Un", "En", "Ix", "Ox", "Dire", "Dark", "Bright", "Swift", "Glow",
-        "Shine", "Gleam", "Spark"
+        "Shine", "Gleam", "Spark", "Gun"
     };
 
     /**
@@ -101,7 +101,8 @@ public class NameHelper {
         "Scary", "Undoubtable", "Honest", "Non-Suspicious", "Boring", "Odd", "Lazy", "Super", "Nifty", "Ogre Slayer", "Pig Thief", "Dirt Digger", "Really Cool",
         "Doominator", "... Something", "Extra-Fishy", "Gorilla Slaughterer", "Marbles Winner", "AC Rizzlord", "President", "Burger Chef", "Professional Animator",
         "Cheese Sprayer", "Happiness Advocate", "Ghost Hunter", "Head of Potatoes", "Ninja", "Warrior", "Pyromancer", "Trombone Player", "Airport Technician",
-        "Grand Magistrix", "Starved", "Terrifying", "Expert Cloud Watcher", "Cookie Enthusiast", "Grass Toucher", "Coffee Addict", "Mildly Confused"
+        "Grand Magistrix", "Starved", "Terrifying", "Expert Cloud Watcher", "Cookie Enthusiast", "Grass Toucher", "Coffee Addict", "Mildly Confused", "Conveyor Belt Technician",
+        "Subpar Lawyer"
     };
 
     /**

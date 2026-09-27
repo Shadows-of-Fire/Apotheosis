@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)Bleeding$() is a negative effect applied by $(l:apotheosis:village/fletching#broadhead)Broadhead Arrows$().$(p)It causes you to take damage every two seconds."
+            "text": "$(c)Bleeding$() is a negative effect applied by some affixes and gem bonuses.$(p)It causes you to take damage every two seconds."
         },
 		{
             "type": "patchouli:text",

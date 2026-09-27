@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Current HP Damage$() is a type of on-hit damage. Every hit, you will deal a percentage of the target's current health as additional physical damage.$(p)This stat is only found on heavy weapons."
+            "text": "$(9)Current HP Damage$() is a type of on-hit damage. Every hit, you will deal a percentage of the target's current health as additional physical damage.$(p)This stat is only found on melee weapons."
         }
 	]
 }

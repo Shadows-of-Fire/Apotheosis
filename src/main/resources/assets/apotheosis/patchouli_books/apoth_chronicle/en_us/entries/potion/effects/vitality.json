@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "The Potion of $(9)Bursting Vitality$() is a beneficial effect.$(p)While under its effects, all healing received is increased."
+            "text": "$(9)Bursting Vitality$() is a beneficial effect, granted by the Potion of Healing Boost.$(p)While under its effects, all healing received is increased."
         },
 		{
             "type": "patchouli:text",

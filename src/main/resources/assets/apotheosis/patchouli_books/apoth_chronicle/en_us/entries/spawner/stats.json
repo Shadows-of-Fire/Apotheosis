@@ -22,7 +22,7 @@
 		{
             "type": "patchouli:text",
 			"title": "Max Entities",
-            "text": "Mob Spawners track the number of entities nearby.$(p)If that number ever exceeds the $(9)Max Entities$(), spawning stops.$(p)Only entities of the same type as the spawned one are counted."
+            "text": "Mob Spawners track the number of entities nearby.$(p)If that number reaches the $(9)Max Entities$(), spawning stops.$(p)Only entities of the same type as the spawned one are counted."
         },
 		{
             "type": "patchouli:text",
@@ -57,7 +57,7 @@
 		{
             "type": "patchouli:text",
 			"title": "No AI",
-            "text": "A spawner with $(9)No AI$() enabled will spawn mobs without any AI.$(p)Normally, these mobs will just simply float there, immobile, doing nothing.$(p)However, the ones created by Apotheosis can still be moved."
+            "text": "A spawner with $(9)No AI$() enabled will spawn mobs without any AI.$(p)Normally, these mobs will just simply float there, immobile, doing nothing.$(p)However, the ones created by Apothic Spawners can still be moved."
         },
 		{
             "type": "patchouli:text",

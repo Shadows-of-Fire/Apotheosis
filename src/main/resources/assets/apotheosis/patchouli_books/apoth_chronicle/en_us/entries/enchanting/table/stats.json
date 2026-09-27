@@ -11,7 +11,7 @@
 		{
 			"type": "patchouli:text",
 			"title": "Eterna",
-			"text": "$(eterna) is the primary stat of enchanting.$(p)Each point of $(eterna) increases the maximum enchanting level by two.$(p)Some blocks can only provide $(eterna) up to a certain maximum value."
+			"text": "$(eterna) is the primary stat of enchanting.$(p)Each point of $(eterna) increases the maximum enchanting level by one. A vanilla Bookshelf provides two, so fifteen of them reach level 30.$(p)Some blocks can only provide $(eterna) up to a certain maximum value."
 		},
 		{
 			"type": "patchouli:text",
@@ -30,7 +30,7 @@
 		},
 		{
 			"type": "patchouli:text",
-			"text": "By default, the rarities have the following weights:$(p)Common: 10$(br)Uncommon: 5$(br)Rare: 3$(br)Very Rare: 1$(p)Every 10% of $(arcana) changes the weights, eventually becoming fully inverted.$(p)Hovering the $(arcana) Bar will show the current weights."
+			"text": "By default, the rarities have the following weights:$(p)Common: 10$(br)Uncommon: 5$(br)Rare: 2$(br)Very Rare: 1$(p)Every 10% of $(arcana) changes the weights, eventually becoming fully inverted.$(p)Hovering the $(arcana) Bar will show the current weights."
 		},
 		{
 			"type": "patchouli:text",
@@ -46,7 +46,7 @@
 		{
 			"type": "patchouli:text",
 			"title": "Clues",
-			"text": "Clues are another tertiary stat.$(p)Each clue allows you to see one additional item in the preview window.$(p)When you can see every available enchantment, the text will change slightly."
+			"text": "Clues are another tertiary stat.$(p)Every table starts with one clue, and each clue allows you to see one additional item in the preview window.$(p)When you can see every available enchantment, the text will change slightly."
 		},
 		{
 			"type": "patchouli:text",
