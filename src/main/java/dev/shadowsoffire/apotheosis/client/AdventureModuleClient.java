@@ -394,7 +394,9 @@ public class AdventureModuleClient {
 
         if (stack.getOrDefault(Components.TOUCHED_BY_MALICE, 0) > 0) {
             Component desc = Apotheosis.lang("text", "touched_by_malice", String.valueOf(stack.get(Components.TOUCHED_BY_MALICE)));
-            components.add(ApothMiscUtil.dotPrefix(desc).withStyle(ChatFormatting.RED));
+            // Items that can no longer benefit from malice get a star prefix instead of a dot prefix.
+            MutableComponent prefixed = AffixHelper.isExtremelyMalicious(stack) ? ApothMiscUtil.starPrefix(desc) : ApothMiscUtil.dotPrefix(desc);
+            components.add(prefixed.withStyle(ChatFormatting.RED));
         }
 
         if (!components.isEmpty()) {
