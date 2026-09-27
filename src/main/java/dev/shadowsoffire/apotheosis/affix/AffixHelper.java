@@ -42,7 +42,7 @@ import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.component.TooltipDisplay;
-import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
+import net.minecraft.world.level.levelgen.SingleThreadedRandomSource;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 
@@ -61,7 +61,7 @@ public class AffixHelper {
     /**
      * The chance that the Sigil of Malice will not reset another affix when only one affix below {@link #MALICE_LEVEL} remains.
      */
-    public static final float FINAL_MALICE_CHANCE = 1 / 3F;
+    public static final float FINAL_MALICE_CHANCE = 0.033F;
 
     /**
      * Adds this specific affix to the Item's NBT tag.
@@ -268,7 +268,8 @@ public class AffixHelper {
      * <p>
      * The sigil increases the effective level of one affix on the item to {@link #MALICE_LEVEL}, and resets another affix at random (based on the reforge seed).
      * <p>
-     * If only one affix below {@link #MALICE_LEVEL} remains, it is always the one upgraded. In that case, there is a {@link #FINAL_MALICE_CHANCE} chance that nothing is reset,
+     * If only one affix below {@link #MALICE_LEVEL} remains, it is always the one upgraded. In that case, there is a {@link #FINAL_MALICE_CHANCE} chance that
+     * nothing is reset,
      * leaving the item {@link #isExtremelyMalicious(ItemStack) extremely malicious}. Otherwise, one of the other affixes is reset as usual.
      * <p>
      * Does nothing if {@link #canApplyMalice(ItemStack)} is false.
@@ -283,7 +284,7 @@ public class AffixHelper {
         }
 
         int seed = player.getPersistentData().getIntOr(ReforgingMenu.REFORGE_SEED, 0);
-        RandomSource rand = new XoroshiroRandomSource(seed);
+        RandomSource rand = new SingleThreadedRandomSource(seed);
 
         ItemAffixes.Builder builder = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY).toBuilder();
 
