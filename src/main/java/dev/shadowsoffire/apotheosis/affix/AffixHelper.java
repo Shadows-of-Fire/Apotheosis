@@ -54,6 +54,16 @@ public class AffixHelper {
     public static final String SOURCE_WEAPON = "apoth.source_weapon";
 
     /**
+     * The level that the Sigil of Malice raises an affix to.
+     */
+    public static final float MALICE_LEVEL = Affix.MAX_LEVEL;
+
+    /**
+     * The chance that the Sigil of Malice will not reset another affix when only one affix below {@link #MALICE_LEVEL} remains.
+     */
+    public static final float FINAL_MALICE_CHANCE = 1 / 3F;
+
+    /**
      * Adds this specific affix to the Item's NBT tag.
      */
     public static void applyAffix(ItemStack stack, AffixInstance inst) {
@@ -213,16 +223,62 @@ public class AffixHelper {
     }
 
     /**
+     * Returns true if the Sigil of Malice can be applied to the given item stack.
+     * <p>
+     * Malice requires at least two level-dependent affixes, and cannot be applied if all level-dependent affixes are already at {@link #MALICE_LEVEL}.
+     */
+    public static boolean canApplyMalice(ItemStack stack) {
+        return canApplyMalice(getMaliceTargets(stack));
+    }
+
+    /**
+     * Returns true if the given item stack has at least one level-dependent affix, and all level-dependent affixes are at {@link #MALICE_LEVEL}.
+     * <p>
+     * An item in this state can no longer benefit from the Sigil of Malice.
+     */
+    public static boolean isExtremelyMalicious(ItemStack stack) {
+        return isExtremelyMalicious(getMaliceTargets(stack));
+    }
+
+    /**
+     * @see #canApplyMalice(ItemStack)
+     */
+    private static boolean canApplyMalice(List<AffixInstance> targets) {
+        return targets.size() >= 2 && !isExtremelyMalicious(targets);
+    }
+
+    /**
+     * @see #isExtremelyMalicious(ItemStack)
+     */
+    private static boolean isExtremelyMalicious(List<AffixInstance> targets) {
+        return !targets.isEmpty() && targets.stream().allMatch(i -> i.level() >= MALICE_LEVEL);
+    }
+
+    /**
+     * Returns all valid, level-dependent affixes on the item, which are the only affixes that the Sigil of Malice will interact with.
+     */
+    private static List<AffixInstance> getMaliceTargets(ItemStack stack) {
+        List<AffixInstance> list = new ArrayList<>(AffixHelper.getAffixes(stack).values());
+        list.removeIf(i -> !i.isValid() || i.isLevelIndependent());
+        return list;
+    }
+
+    /**
      * Applies the effect of the Sigil of Malice to the given item stack.
      * <p>
-     * The sigil increases the effective level of one affix on the item to 1.5F, and removes another affix at random (based on the reforge seed).
+     * The sigil increases the effective level of one affix on the item to {@link #MALICE_LEVEL}, and resets another affix at random (based on the reforge seed).
+     * <p>
+     * If only one affix below {@link #MALICE_LEVEL} remains, it is always the one upgraded. In that case, there is a {@link #FINAL_MALICE_CHANCE} chance that nothing is reset,
+     * leaving the item {@link #isExtremelyMalicious(ItemStack) extremely malicious}. Otherwise, one of the other affixes is reset as usual.
+     * <p>
+     * Does nothing if {@link #canApplyMalice(ItemStack)} is false.
      *
      * @param stack The input stack. The stack is modified in place.
      * @apiNote This cannot be run reliably on the client, as the reforge seed is not guaranteed to be present.
      */
     public static void applyMalice(Player player, ItemStack stack) {
-        Map<DynamicHolder<Affix>, AffixInstance> affixes = AffixHelper.getAffixes(stack);
-        if (affixes.size() < 2) {
+        List<AffixInstance> afxList = getMaliceTargets(stack);
+        if (!canApplyMalice(afxList)) {
             return;
         }
 
@@ -230,28 +286,38 @@ public class AffixHelper {
         RandomSource rand = new XoroshiroRandomSource(seed);
 
         ItemAffixes.Builder builder = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY).toBuilder();
-        List<AffixInstance> afxList = new ArrayList<>(affixes.values());
 
-        afxList.removeIf(inst -> !inst.isValid() || inst.isLevelIndependent());
-        if (afxList.size() < 2) {
-            return;
+        AffixInstance buffed;
+        AffixInstance reset = null;
+
+        List<AffixInstance> upgradable = afxList.stream().filter(i -> i.level() < MALICE_LEVEL).toList();
+        if (upgradable.size() == 1) {
+            // Only one affix can still be upgraded. It is always upgraded, but there is only a 1/3 chance that nothing else is consumed.
+            buffed = upgradable.getFirst();
+            if (rand.nextFloat() >= FINAL_MALICE_CHANCE) {
+                List<AffixInstance> others = new ArrayList<>(afxList);
+                others.remove(buffed);
+                reset = others.get(rand.nextInt(others.size()));
+            }
+        }
+        else {
+            // Choose two distinct indices
+            int size = afxList.size();
+            int firstIndex = rand.nextInt(size);
+            int secondIndex;
+            do {
+                secondIndex = rand.nextInt(size);
+            }
+            while (secondIndex == firstIndex);
+
+            buffed = afxList.get(firstIndex);
+            reset = afxList.get(secondIndex);
         }
 
-        // Choose two distinct indices
-        int size = afxList.size();
-        int firstIndex = rand.nextInt(size);
-        int secondIndex;
-        do {
-            secondIndex = rand.nextInt(size);
+        builder.upgrade(buffed.affix(), MALICE_LEVEL);
+        if (reset != null) {
+            builder.put(reset.affix(), 0);
         }
-        while (secondIndex == firstIndex);
-
-        AffixInstance buffed = afxList.get(firstIndex);
-        AffixInstance reset = afxList.get(secondIndex);
-
-        builder.upgrade(buffed.affix(), 2F);
-        float oldLevel = builder.getLevel(reset.affix());
-        builder.put(reset.affix(), 0);
 
         setAffixes(stack, builder.build());
         stack.set(Components.TOUCHED_BY_MALICE, stack.getOrDefault(Components.TOUCHED_BY_MALICE, 0) + 1);
@@ -259,16 +325,19 @@ public class AffixHelper {
 
         AttributeTooltipContext ctx = AttributeTooltipContext.of(player, TooltipContext.of(player.level()), TooltipDisplay.DEFAULT, ApothicAttributes.getTooltipFlag());
 
-        AffixInstance buff = new AffixInstance(buffed.affix(), 2F, getRarity(stack), stack);
-        AffixInstance rem = new AffixInstance(reset.affix(), oldLevel, getRarity(stack), stack);
-
+        AffixInstance buff = new AffixInstance(buffed.affix(), MALICE_LEVEL, getRarity(stack), stack);
         MutableComponent buffedName = Component.translatable("[%s]", buff.getName(true));
         buffedName.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW).withHoverEvent(new HoverEvent.ShowText(buff.getAugmentingText(ctx))));
 
-        MutableComponent removedName = Component.translatable("[%s]", rem.getName(true));
-        removedName.setStyle(Style.EMPTY.withColor(ChatFormatting.RED).withHoverEvent(new HoverEvent.ShowText(rem.getAugmentingText(ctx))));
-
-        Component msg = Apotheosis.lang("text", "malice_notice", buffedName, removedName);
+        Component msg;
+        if (reset == null) {
+            msg = Apotheosis.lang("text", "malice_notice_final", buffedName);
+        }
+        else {
+            MutableComponent removedName = Component.translatable("[%s]", reset.getName(true));
+            removedName.setStyle(Style.EMPTY.withColor(ChatFormatting.RED).withHoverEvent(new HoverEvent.ShowText(reset.getAugmentingText(ctx))));
+            msg = Apotheosis.lang("text", "malice_notice", buffedName, removedName);
+        }
         player.sendSystemMessage(msg);
     }
 
