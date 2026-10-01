@@ -1,5 +1,5 @@
 {
-    "name": "触及距离",
+    "name": "方块交互距离",
     "icon": "minecraft:iron_pickaxe",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "你的$(9)触及距离$()是你可以触及一个物体的最大距离。当你能触及一个物体时，你就可以与之互动，如果它是方块，就可以将其破坏。$(p)通常发现于破坏方块的工具，因为它对武器没有用。"
+            "text": "你的$(9)方块交互距离$()是你可以触及一个物体的最大距离。当你能触及一个物体时，你就可以与之互动，如果它是方块，就可以将其破坏。$(p)通常发现于破坏方块的工具，因为它对武器没有用。"
         }
 	]
 }

@@ -16,7 +16,7 @@
         {
             "type": "patchouli:text",
             "title": "层级强化",
-            "text": "每个层级都有专属的增强效果，这些加成会同时作用于身处该层级的玩家和生成的生物。$(p)你可以在$(l:apotheosis:adventure/world_tiers/select_screen)世界层级选择界面$()查看每个层级的所有增强效果。"
+            "text": "每个层级都有增强效果：这些加成会作用于身处该层级的玩家和/或生成的生物。$(p)其中包括你的最大附魔$(eterna_zhcn)限制，以及“高峰”和“顶点”中怪物所受伤害的减免。$(p)你可以在$(l:apotheosis:adventure/world_tiers/select_screen)世界层级选择界面$()查看每个层级的所有增强效果。"
         },
         {
             "type": "patchouli:text",
