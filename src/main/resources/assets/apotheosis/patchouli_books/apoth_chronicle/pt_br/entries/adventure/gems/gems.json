@@ -22,7 +22,7 @@
         {
             "type": "patchouli:text",
             "title": "Encaixe de gemas",
-            "text": "Para encaixar uma gema em um item, combine os dois em uma Bancada de Ferraria.$(p)Cada gema indica em quais itens pode ser encaixada.$(p)Algumas gemas são $(#C73912)Únicas$(), o que significa que apenas uma cópia da mesma gema pode ser encaixada em cada item."
+            "text": "Para encaixar uma gema em um item, combine os dois em uma Bancada de Ferraria ou pegue a gema com o cursor e clique com o botão direito sobre o item em qualquer inventário.$(p)Cada gema indica em quais itens pode ser encaixada.$(p)Algumas gemas são $(#C73912)únicas$(), o que significa que apenas uma cópia da mesma gema pode ser encaixada em cada item."
         },
         {
             "type": "patchouli:text",

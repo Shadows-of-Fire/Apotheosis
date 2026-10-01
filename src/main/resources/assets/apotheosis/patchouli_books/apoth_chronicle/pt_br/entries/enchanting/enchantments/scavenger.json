@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Saqueador$() é um encantamento de obra-prima para espadas.$(p)Concede 2,5% de chance por nível de repetir os itens derrubados ao matar uma criatura.$(p)Quando ativado, o saque é calculado como se duas criaturas idênticas tivessem sido derrotadas."
+            "text": "$(2)Saqueador$() é um encantamento de obra-prima para espadas e machados.$(p)Concede 2,5% de chance por nível de sortear os itens derrubados duas vezes ao matar uma criatura.$(p)Quando ativado, é como se duas criaturas idênticas tivessem sido derrotadas."
         },
         {
             "type": "patchouli:text",

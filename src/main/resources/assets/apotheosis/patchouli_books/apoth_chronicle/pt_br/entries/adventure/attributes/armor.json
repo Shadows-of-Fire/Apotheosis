@@ -11,15 +11,15 @@
         },
         {
             "type": "patchouli:text",
-            "text": "O primeiro componente da fórmula é o valor A, igual a $(9)10 + (dano − 20) / 2$(), com valor mínimo de $(9)10$().$(p)A redução de dano é calculada como $(9)A / (A + armadura)$().$(p)Esta não é a fórmula original do Minecraft, pois o Apotheosis a substitui."
+            "text": "O primeiro componente da fórmula é o $(br)valor A, igual a $(9)10 + (dano - 20) / 2$(), com valor mínimo de $(9)10$().$(p)A redução de dano é calculada como $(br)$(9)A / (A + armadura)$().$(p)Esta não é a fórmula original do Minecraft, pois o Apothic Attributes a substitui (embora seja configurável)."
         },
         {
             "type": "patchouli:text",
-            "text": "Para armaduras do vanilla e valores de dano, você sofrerá um pouco menos de dano.$(p)Para valores altos de armadura e dano, a armadura será significativamente menos eficaz."
+            "text": "Para valores de armadura e dano do Minecraft original, você sofrerá um pouco menos de dano.$(p)Para valores altos de armadura e dano, a armadura será significativamente menos eficaz.$(p)Cada ponto de armadura negativa aumenta o dano recebido em 1,5%."
         },
         {
             "type": "patchouli:text",
-            "text": "O objetivo desta mudança é reduzir a invulnerabilidade em níveis altos e tornar $(9)proteção$() e $(9)resistência$() mais impactantes.$(p)Isso também torna as lutas onde ambas as partes estão fortemente blindadas significativamente mais ativa."
+            "text": "O objetivo desta mudança é reduzir a invulnerabilidade em níveis altos e tornar $(9)Proteção$() e $(9)Resistência$() mais relevantes.$(p)Isso também torna os combates em que ambos os lados usam armaduras pesadas significativamente mais dinâmicos."
         }
     ]
 }

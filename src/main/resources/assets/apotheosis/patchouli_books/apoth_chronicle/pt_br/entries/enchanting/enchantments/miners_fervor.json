@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(5)Fervor do Minerador$() é um encantamento distorcido aplicável a ferramentas.$(p)Permite quebrar blocos muito rapidamente, mas nunca de forma instantânea.$(p)É incompatível com $(9)Eficiência$()."
+            "text": "$(5)Fervor do Minerador$() é um encantamento distorcido aplicável a ferramentas de mineração.$(p)Permite quebrar blocos muito rapidamente, mas nunca de forma instantânea. Blocos que já são quebrados instantaneamente não são afetados."
         },
         {
             "type": "patchouli:text",
-            "text": "Apesar de ter um limite de velocidade, o aumento por nível é muito maior do que o encantamento $(9)eficiência$().$(p)Isso o torna a escolha ideal para ferramentas com velocidade base lenta."
+            "text": "Apesar de ter um limite de velocidade, o aumento por nível é muito maior que o de $(9)Eficiência$().$(p)Isso o torna a escolha ideal para ferramentas com baixa velocidade base.$(p)Por motivos óbvios, é incompatível com $(9)Eficiência$()."
         }
     ]
 }

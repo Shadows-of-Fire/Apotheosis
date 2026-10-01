@@ -7,7 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Ao ter $(9)sobrecura$() significa que parte do seu dano físico causado será obtido como um escudo de absorção. Ao contrário do roubo de vida, a sobrecura funciona quando você está com a vida cheia.$(p)Este atributo é encontrado apenas em armas pesadas."
+            "text": "Ter $(9)sobrecura$() faz com que parte do dano físico causado seja obtida como um escudo de absorção.$(p)Ao contrário do roubo de vida, a sobrecura funciona quando você está com a vida cheia."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "A absorção é limitada à metade da sua vida máxima e só se aplica a acertos corpo a corpo.$(p)Este atributo é encontrado apenas em armas corpo a corpo."
         }
     ]
 }

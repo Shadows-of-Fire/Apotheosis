@@ -725,6 +725,7 @@
     "text.apotheosis.malice_marker": "A Malícia será aplicada ao fabricar",
     "text.apotheosis.touched_by_malice": "Tocado por Malícia (x%s)",
     "text.apotheosis.malice_notice": "Malícia: %s consumiu a força de %s",
+    "text.apotheosis.malice_notice_final": "A Malícia se entrelaça com %s e se apodera completamente do seu item!",
 
     "title.apotheosis.salvaging": "Reciclagem",
     "title.apotheosis.stoneforming": "Moldagem",
@@ -1015,5 +1016,5 @@
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Crônica das Sombras",
     "book.apotheosis.subtitle": "Guia Apótico",
-    "book.apotheosis.landing": "Bem-vindo ao mundo do Apotheosis.$(br2)O Apotheosis é organizado em $(#8080FF)módulos$(), assim como o conteúdo deste livro.$(br2)Os módulos desativados ficam ocultos."
+    "book.apotheosis.landing": "Bem-vindo ao mundo do Apotheosis.$(br2)O Apotheosis é um dos mods $(#8080FF)apóticos$(), e este livro abrange todos eles.$(br2)As seções só aparecem quando o mod correspondente está instalado."
 }

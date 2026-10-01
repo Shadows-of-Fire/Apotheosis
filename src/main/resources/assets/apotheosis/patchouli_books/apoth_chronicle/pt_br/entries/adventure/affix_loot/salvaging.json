@@ -8,7 +8,7 @@
         {
             "type": "patchouli:crafting",
             "recipe": "apotheosis:salvaging_table",
-            "text": "A $(9)Bancada de Reciclagem$() é usada para separar itens com afixo para seus $(9)materiais de raridade$() correspondentes."
+            "text": "A $(9)Bancada de Reciclagem$() é usada para desmontar itens com afixo nos $(9)Materiais de Raridade$() correspondentes.$(p)Equipamentos normais e gemas também podem ser reciclados."
         },
         {
             "type": "patchouli:spotlight",
@@ -38,7 +38,7 @@
             "type": "patchouli:spotlight",
             "item": "apotheosis:godforged_pearl",
             "link_recipe": true,
-            "text": "Uma pérola de energia divina purificada. O imenso poder selado dentro dele o torna bastante volátil.$(p)Essas criações extraordinárias só podem ser obtidas através da reciclagem de itens míticos."
+            "text": "Uma pérola de energia divina purificada. O imenso poder selado em seu interior a torna bastante volátil.$(p)Essas criações extraordinárias são obtidas ao reciclar itens míticos."
         }
     ]
 }

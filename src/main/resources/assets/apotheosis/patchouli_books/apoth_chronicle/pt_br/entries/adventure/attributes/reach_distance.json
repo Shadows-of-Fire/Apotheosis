@@ -1,5 +1,5 @@
 {
-    "name": "Distância de alcance",
+    "name": "Alcance de interação com blocos",
     "icon": "minecraft:iron_pickaxe",
     "category": "apotheosis:adventure/attributes",
     "flag": "apotheosis:adventure",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Sua $(9)distância de alcance$() é a distância máxima na qual você pode alcançar um objeto. Ao alcançar um objeto, você pode interagir com ele ou quebrá-lo caso seja um bloco.$(p)Geralmente encontrado em ferramentas que quebram blocos, pois não é útil para armas."
+            "text": "Seu $(9)alcance de interação com blocos$() é a distância máxima na qual você pode alcançar um bloco. Ao alcançar um objeto, você pode interagir com ele ou quebrá-lo caso seja um bloco.$(p)Geralmente encontrado em ferramentas que quebram blocos, pois não é útil para armas."
         }
     ]
 }

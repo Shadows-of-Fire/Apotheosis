@@ -28,12 +28,12 @@
         {
             "type": "patchouli:text",
             "title": "Aprimoramento",
-            "text": "A primeira operação da Bancada de Aprimoramento é fortalecer um afixo.$(p)Ela consome dois $(9)Sigilos de Aprimoramento$() e aumenta em 25% a força interna do afixo atual.$(p)O efeito dessa melhoria varia conforme o afixo."
+            "text": "A primeira operação da Bancada de Aprimoramento é fortalecer um afixo.$(p)Ela consome dois $(9)Sigilos de Aprimoramento$() e 225 níveis, e aumenta em 25% a força interna do afixo atual.$(p)Afixos sem níveis não podem ser aprimorados."
         },
         {
             "type": "patchouli:text",
             "title": "Novo sorteio",
-            "text": "A segunda operação da Bancada de Aprimoramento é sortear novamente um afixo.$(p)Ela substitui o afixo selecionado por outro do mesmo tipo ao custo de um $(9)Sigilo de Aprimoramento$().$(p)As opções alternativas são exibidas à esquerda."
+            "text": "A segunda operação da Bancada de Aprimoramento é sortear novamente um afixo.$(p)Ela substitui o afixo selecionado por outro do mesmo tipo ao custo de um $(9)Sigilo de Aprimoramento$() e 175 níveis.$(p)As opções alternativas são exibidas à esquerda."
         }
     ]
 }
