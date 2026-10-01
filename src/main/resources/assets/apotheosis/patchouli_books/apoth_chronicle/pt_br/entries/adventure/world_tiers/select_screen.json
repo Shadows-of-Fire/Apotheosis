@@ -16,12 +16,17 @@
         {
             "type": "patchouli:text",
             "title": "Informações do Nível de Mundo",
-            "text": "Para ver informações sobre um nível, selecione o nível e pressione o botão \\\"Informações Detalhadas\\\".$(p)Isso mostrará os pesos de raridade e pureza para aquele nível, bem como quaisquer Aprimoramentos de Nível que serão aplicados."
+            "text": "Para ver informações sobre um nível, selecione-o e pressione o botão \"Informações detalhadas\".$(p)Isso mostrará os pesos de raridade e pureza daquele nível, além dos modificadores de nível que serão aplicados.$(p)Os pesos exibidos são ajustados pela sua sorte. Segure Shift para ver os valores padrão."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Tutorial",
+            "text": "O botão \"?\" abre o tutorial de Nível de Mundo.$(p)Até que você ative um nível pela primeira vez, os itens com afixo aparecem como $(9)Não Identificados$() e suas descrições ficam ocultas."
         },
         {
             "type": "patchouli:text",
             "title": "Notas",
-            "text": "Você pode alternar entre os Níveis a qualquer momento.$(p)No multiplayer, vários jogadores podem ter Níveis diferentes sem impactar um ao outro. A maioria do conteúdo resolverá o Nível pelo jogador mais próximo."
+            "text": "Você pode alternar entre os níveis desbloqueados a qualquer momento, a menos que o modpack tenha desativado as alterações manuais.$(p)No multijogador, os jogadores podem ter níveis diferentes sem afetar uns aos outros. A maior parte do conteúdo usa o nível do jogador mais próximo."
         }
     ]
 }

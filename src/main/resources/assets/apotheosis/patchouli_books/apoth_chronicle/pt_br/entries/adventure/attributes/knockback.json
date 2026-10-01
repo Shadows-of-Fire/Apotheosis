@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Repulsão de ataque$() é o quão longe você empurra quando você ataca.$(p)Cada ponto fará com que os inimigos sejam jogados a meio bloco de distância.$(p)Armas e escudos podem fornecer este atributo."
+            "text": "$(9)Repulsão de ataque$() determina a distância que você empurra os inimigos ao atacá-los.$(p)Cada ponto faz com que os inimigos atingidos sejam empurrados meio bloco.$(p)Armas corpo a corpo podem fornecer este atributo."
         },
         {
             "type": "patchouli:text",

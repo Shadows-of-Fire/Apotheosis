@@ -17,22 +17,27 @@
         {
             "type": "patchouli:text",
             "title": "Afixos de atributo",
-            "text": "O tipo mais comum é o afixo de atributo. Esses afixos concedem um bônus simples a um atributo específico e estão disponíveis em todas as raridades.$(p)Raridades maiores recebem mais afixos de atributo."
+            "text": "O tipo mais comum é o afixo de atributo.$(p)Esses afixos simples concedem um bônus a um atributo específico e estão disponíveis em todas as raridades. Raridades maiores recebem mais afixos de atributo."
         },
         {
             "type": "patchouli:text",
             "title": "Afixos de efeito",
-            "text": "Os afixos de efeito são o tipo mais variado de afixo. Eles podem adicionar todo tipo de funcionalidade aos itens, desde bônus simples de utilidade até poderosos efeitos de combate.$(p)Eles só podem ser encontrados em itens raros ou superiores."
+            "text": "Os afixos de efeito são o tipo mais variado de afixo. Eles podem adicionar todo tipo de funcionalidade aos itens, desde bônus simples de utilidade até poderosos efeitos de combate.$(p)Eles começam a aparecer em itens $(#33FF33)incomuns$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Afixos de habilidade",
+            "text": "Habilidades são o tipo mais poderoso de afixo e costumam ter um tempo de recarga (indicado por uma ampulheta) que leva em conta a redução do tempo de recarga.$(p)Cada item épico e mítico tem exatamente uma."
         },
         {
             "type": "patchouli:text",
             "title": "Encaixes",
-            "text": "Um encaixe é um tipo especial de afixo que oferece espaço para uma $(l:apotheosis:adventure/gems/gems)Gema$().$(p)Gemas podem conceder bônus poderosos, mas nem sempre são fáceis de encontrar."
+            "text": "Um encaixe é um tipo especial de afixo que oferece espaço para uma $(l:apotheosis:adventure/gems/gems)Gema$().$(p)Gemas podem conceder bônus poderosos, mas nem sempre são fáceis de encontrar.$(p)Também é possível adicionar encaixes com um $(9)Sigilo de Encaixe$(), até dois por item."
         },
         {
             "type": "patchouli:text",
             "title": "O afixo de durabilidade",
-            "text": "O afixo de durabilidade torna o item mais resistente ao desgaste e está presente em todos os itens raros ou superiores.$(p)Ele é aplicado após todas as outras reduções de dano à durabilidade, multiplicando seus efeitos."
+            "text": "O afixo de durabilidade torna o item mais resistente ao desgaste e está presente na maioria dos itens raros ou superiores. Raramente, itens míticos podem ser inquebráveis em vez disso.$(p)Ele é aplicado após todas as outras reduções de dano à durabilidade, combinando-se de forma multiplicativa com o encantamento Durabilidade."
         }
     ]
 }

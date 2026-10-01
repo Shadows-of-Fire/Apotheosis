@@ -16,7 +16,7 @@
         {
             "type": "patchouli:text",
             "title": "Modificadores de nível",
-            "text": "Cada nível possui seus próprios modificadores, aplicados tanto aos jogadores quanto às criaturas que surgem nele.$(p)Você pode consultar todos os modificadores de cada nível na $(l:apotheosis:adventure/world_tiers/select_screen)tela de seleção de Nível de Mundo$()."
+            "text": "Cada nível tem modificadores aplicados aos jogadores desse nível, às criaturas que surgem nele ou a ambos.$(p)Eles incluem limites para o valor máximo de $(eterna) ao encantar e redução de dano para monstros no Cume e no Pináculo.$(p)Você pode consultar todos os modificadores de cada nível na $(l:apotheosis:adventure/world_tiers/select_screen)tela de seleção$()."
         },
         {
             "type": "patchouli:text",

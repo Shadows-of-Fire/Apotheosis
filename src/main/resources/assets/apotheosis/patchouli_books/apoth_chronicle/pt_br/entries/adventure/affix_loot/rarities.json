@@ -17,22 +17,22 @@
         {
             "type": "patchouli:text",
             "title": "Incomum",
-            "text": "Um item $(#33FF33)incomum$() é superior a um item comum, mas ainda não recebe efeitos especiais. Ele sempre possui dois bônus de atributo e pode receber um terceiro.$(p)Também pode receber um encaixe."
+            "text": "Um item $(#33FF33)incomum$() é superior a um item comum, mas ainda não recebe efeitos únicos. Ele sempre possui dois bônus de atributo e tem chance de receber um efeito básico.$(p)Também pode receber um encaixe."
         },
         {
             "type": "patchouli:text",
             "title": "Raro",
-            "text": "Nos itens $(#5555FF)raros$(), os afixos começam a se destacar. Eles recebem três bônus de atributo e um efeito especial, podendo receber um segundo efeito.$(p)Também podem receber um encaixe e sempre possuem um pequeno bônus de durabilidade."
+            "text": "Nos itens $(#5555FF)raros$(), os afixos começam a se destacar. Eles recebem dois bônus de atributo e um efeito especial, podendo receber um segundo efeito.$(p)Também podem receber até dois encaixes e sempre possuem um pequeno bônus de durabilidade."
         },
         {
             "type": "patchouli:text",
             "title": "Épico",
-            "text": "Itens $(#BB00BB)épicos$() estão à beira da grandeza. Eles recebem três bônus de atributo e um efeito, podendo receber um quarto atributo e um segundo efeito.$(p)Também podem receber até dois encaixes e possuem um bônus de durabilidade mais forte."
+            "text": "Itens $(#BB00BB)épicos$() estão à beira da grandeza. Eles recebem três bônus de atributo, um efeito e sempre uma $(9)habilidade$(), com chance de receber um segundo efeito.$(p)Sempre possuem um ou mais encaixes e um bônus de durabilidade mais forte."
         },
         {
             "type": "patchouli:text",
             "title": "Mítico",
-            "text": "Itens $(#ED7014)míticos$() foram forjados por uma entidade perdida de grande poder. Eles recebem quatro bônus de atributo e dois efeitos, podendo receber um terceiro efeito e até três encaixes.$(p)Também possuem um bônus de durabilidade significativo."
+            "text": "Itens $(#ED7014)míticos$() foram forjados por uma entidade perdida de grande poder. Eles recebem quatro bônus de atributo, dois efeitos e uma $(9)habilidade$().$(p)Possuem um ou mais encaixes e um bônus de durabilidade significativo.$(p)Itens $(#ED7014)míticos$() têm bônus adicionais não mencionados aqui."
         }
     ]
 }

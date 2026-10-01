@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Espinhos Gélidos$() é um encantamento para peitorais.$(p)Aplica lentidão aos atacantes. A duração e a intensidade do efeito aumentam conforme o nível do encantamento.$(p)É incompatível com $(9)Espinhos$()."
+            "text": "$(9)Espinhos Gélidos$() é um encantamento para peitorais.$(p)Aplica lentidão aos atacantes. A chance de aplicação e a intensidade do efeito aumentam conforme o nível do encantamento.$(p)É incompatível com $(9)Espinhos$()."
         }
     ]
 }

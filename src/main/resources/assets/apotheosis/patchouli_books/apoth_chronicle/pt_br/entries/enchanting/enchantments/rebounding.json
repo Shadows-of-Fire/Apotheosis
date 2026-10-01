@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Rebote$() é um encantamento para peitorais e calças.$(p)Faz com que todos os atacantes corpo a corpo sejam lançados para longe do usuário.$(p)Níveis mais altos aumentam a distância."
+            "text": "$(9)Rebote$() é um encantamento para peitorais e calças.$(p)Faz com que atacantes corpo a corpo próximos sejam lançados para longe do usuário.$(p)Níveis mais altos aumentam a distância."
         }
     ]
 }

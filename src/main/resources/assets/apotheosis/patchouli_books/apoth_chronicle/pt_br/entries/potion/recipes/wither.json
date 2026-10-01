@@ -2,12 +2,12 @@
     "name": "Decomposição",
     "icon": "minecraft:textures/mob_effect/wither.png",
     "category": "apotheosis:potion/recipes",
-    "flag": "&apotheosis:potion,!apotheosis:wstloaded",
+    "flag": "apotheosis:potion",
     "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)Decomposição$() é um efeito hostil que normalmente não pode ser criado.$(p)Enquanto infligido com ele, você receberá dano a cada tick.$(p)Ao contrário do veneno, esse dano é letal."
+            "text": "$(c)Decomposição$() é um efeito hostil que normalmente não pode ser preparado.$(p)Enquanto estiver sob seu efeito, você receberá dano a cada dois segundos (a cada segundo no nível II).$(p)Ao contrário do veneno, esse dano é letal."
         },
         {
             "type": "patchouli:spotlight",
