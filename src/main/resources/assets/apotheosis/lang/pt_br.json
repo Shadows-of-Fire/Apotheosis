@@ -725,6 +725,7 @@
     "text.apotheosis.malice_marker": "A Malícia será aplicada ao fabricar",
     "text.apotheosis.touched_by_malice": "Tocado por Malícia (x%s)",
     "text.apotheosis.malice_notice": "Malícia: %s consumiu a força de %s",
+    "text.apotheosis.malice_notice_final": "A Malícia se entrelaça com %s e se apodera completamente do seu item!",
 
     "title.apotheosis.salvaging": "Reciclagem",
     "title.apotheosis.stoneforming": "Moldagem",
