@@ -143,11 +143,11 @@ public class EliteProvider extends DynamicRegistryProvider<Elite> {
                 "attributes": [
                     {
                         "base": 0.3,
-                        "id": "generic.movement_speed"
+                        "id": "movement_speed"
                     },
                     {
                         "base": 0.5,
-                        "id": "generic.knockback_resistance"
+                        "id": "knockback_resistance"
                     }
                 ]
             }

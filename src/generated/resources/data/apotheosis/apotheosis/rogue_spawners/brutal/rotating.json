@@ -17,7 +17,7 @@
                     "attributes": [
                         {
                             "base": 0.23,
-                            "id": "minecraft:generic.movement_speed",
+                            "id": "minecraft:movement_speed",
                             "modifiers": [
                                 {
                                     "amount": 0.15,
@@ -28,7 +28,7 @@
                         },
                         {
                             "base": 3.0,
-                            "id": "minecraft:generic.attack_damage",
+                            "id": "minecraft:attack_damage",
                             "modifiers": [
                                 {
                                     "amount": 0.5,
@@ -39,7 +39,7 @@
                         },
                         {
                             "base": 20.0,
-                            "id": "minecraft:generic.max_health",
+                            "id": "minecraft:max_health",
                             "modifiers": [
                                 {
                                     "amount": 0.5,
@@ -70,7 +70,7 @@
                     "attributes": [
                         {
                             "base": 0.23,
-                            "id": "minecraft:generic.movement_speed",
+                            "id": "minecraft:movement_speed",
                             "modifiers": [
                                 {
                                     "amount": 0.15,
@@ -81,7 +81,7 @@
                         },
                         {
                             "base": 3.0,
-                            "id": "minecraft:generic.attack_damage",
+                            "id": "minecraft:attack_damage",
                             "modifiers": [
                                 {
                                     "amount": 0.5,
@@ -92,7 +92,7 @@
                         },
                         {
                             "base": 20.0,
-                            "id": "minecraft:generic.max_health",
+                            "id": "minecraft:max_health",
                             "modifiers": [
                                 {
                                     "amount": 0.5,
@@ -123,7 +123,7 @@
                     "attributes": [
                         {
                             "base": 0.35,
-                            "id": "minecraft:generic.movement_speed",
+                            "id": "minecraft:movement_speed",
                             "modifiers": [
                                 {
                                     "amount": 0.15,
@@ -145,7 +145,7 @@
                         },
                         {
                             "base": 24.0,
-                            "id": "minecraft:generic.max_health",
+                            "id": "minecraft:max_health",
                             "modifiers": [
                                 {
                                     "amount": 0.5,

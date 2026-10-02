@@ -158,7 +158,7 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
                             "operation": "add_multiplied_total",
                             "id": "placebo:brutal_max_spd"
                         }],
-                        "id": "minecraft:generic.movement_speed"
+                        "id": "minecraft:movement_speed"
                     },
                     {
                         "base": 3.0,
@@ -167,7 +167,7 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
                             "operation": "add_multiplied_total",
                             "id": "placebo:brutal_max_dmg"
                         }],
-                        "id": "minecraft:generic.attack_damage"
+                        "id": "minecraft:attack_damage"
                     },
                     {
                         "base": 20.0,
@@ -176,7 +176,7 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
                             "operation": "add_multiplied_total",
                             "id": "placebo:brutal_max_hp"
                         }],
-                        "id": "minecraft:generic.max_health"
+                        "id": "minecraft:max_health"
                     }
                 ],
                 "id": "husk",
@@ -203,7 +203,7 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
                             "operation": "add_multiplied_total",
                             "id": "placebo:brutal_max_spd"
                         }],
-                        "id": "minecraft:generic.movement_speed"
+                        "id": "minecraft:movement_speed"
                     },
                     {
                         "base": 3.0,
@@ -212,7 +212,7 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
                             "operation": "add_multiplied_total",
                             "id": "placebo:brutal_max_dmg"
                         }],
-                        "id": "minecraft:generic.attack_damage"
+                        "id": "minecraft:attack_damage"
                     },
                     {
                         "base": 20.0,
@@ -221,7 +221,7 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
                             "operation": "add_multiplied_total",
                             "id": "placebo:brutal_max_hp"
                         }],
-                        "id": "minecraft:generic.max_health"
+                        "id": "minecraft:max_health"
                     }
                 ],
                 "id": "zombie",
@@ -248,7 +248,7 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
                             "operation": "add_multiplied_total",
                             "id": "placebo:brutal_max_spd"
                         }],
-                        "id": "minecraft:generic.movement_speed"
+                        "id": "minecraft:movement_speed"
                     },
                     {
                         "base": 1.0,
@@ -266,7 +266,7 @@ public class RogueSpawnerProvider extends DynamicRegistryProvider<RogueSpawner> 
                             "operation": "add_multiplied_total",
                             "id": "placebo:brutal_max_hp"
                         }],
-                        "id": "minecraft:generic.max_health"
+                        "id": "minecraft:max_health"
                     }
                 ],
                 "id": "pillager",
