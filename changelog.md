@@ -1,3 +1,45 @@
+## 9.1.0
+* Ported forward all changes from Apotheosis 8.8.0 through 8.9.0 (1.21). Merged changelog below.
+* Apotheosis can now be run without Apothic Enchanting and/or Apothic Spawners, returning the behavior of disabling them via config from 1.20.
+  * Both mods are still marked as "mandatory" on CF for auto-install rules, but can be removed.
+  * When Apothic Enchanting is not installed:
+    * Unbreakable potion charms and the Gem Case of House Fabergé are unavailable.
+    * The Gem of the Incandescent Inferno is unavailable.
+    * The strong preset items sold by the Wandering Trader are unavailable.
+    * High-tier gateways will not play music since they normally play AEnch music tracks.
+    * Some items will have fallback crafting recipes.
+  * When Apothic Spawners is not installed:
+    * Spawner Runes are hidden and unavailable.
+    * Rogue Spawners still generate and work as expected, but will not set ASpawners-exclusive stats.
+    * Some (but not all) of the preset items sold by the Wandering Trader are unavailable.
+* The World Tier Details Screen now shows luck-adjusted weights. Hold shift to show the "default" weights.
+* Reimplemented the Sigil of Malice.
+  * Malice now increases a random affix's power to 200% (the Sigil of Supremacy's boost is to 150%).
+  * Malice no longer removes an affix, but instead resets one to 0% power.
+  * Malice now explicitly tells you when you've maxed out the item.
+* Increased the value of the Rune of Debilitation (Initial Health) from 5% to 16%
+  * This reduces the number of runes needed to get to max value from 16 to 5.
+* Added the `apotheosis:cannot_be_duplicated` item tag.
+  * Items in this tag will never be cloned by abilities that copy loot items outright.
+* Added additional options to the Invader Spawn Rules.
+* Added damage reduction augments.
+  * All monsters will now receive slight physical and magic damage reduction in summit and pinnacle.
+* Added JEI display for stoneforming-type affixes.
+* Added an anti-gravity arrow affix.
+* Updated the "chase" item pool.
+* Added prot pierce/shred affixes.
+* Added speed and step height clamping affixes.
+* Made spawner chains immune to fire and explosion damage.
+* Made the Gem Case's upgrade material inventory persistent.
+  * Automation still can't see it, though.
+* Made various corrections to the Chronicle of Shadows.
+* Fixed rogue spawners that contained pillagers spawning them without held items.
+* Fixed brutal rogue spawners and the Undead Knight's mount not receiving their attribute changes.
+* Tenwoc: Updated Ukranian translation.
+* Quarkrus & Loperka: Added Russian translation.
+* t0piy & PrincessStellar: Updated Brazilian translation.
+* mc-kaishixiaxue: Updated Chinese translation.
+
 ## 9.0.3
 * Updated to Gateways 6.0.2 and Placebo 10.0.2.
   * Fixes the Endless Gateway of Apothic Invaders crashing on wave 6 with "Modifier is already applied on this attribute!" (#1768).
