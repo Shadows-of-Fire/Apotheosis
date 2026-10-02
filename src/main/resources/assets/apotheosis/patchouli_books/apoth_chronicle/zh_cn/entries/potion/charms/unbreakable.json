@@ -1,5 +1,5 @@
 {
-    "name": "不毁护符",
+    "name": "无法破坏的护符",
     "icon": "minecraft:enchanting_table",
     "category": "apotheosis:potion/charms",
 	"flag": "&apotheosis:potion,apotheosis:enchanting",
@@ -11,7 +11,7 @@
         },
 		{
             "type": "patchouli:text",
-            "text": "不毁护符的灌注配方相当困难。$(p)你需要充分理解$(l:apotheosis:enchanting/table/stats)附魔状态$()才能完成它。"
+            "text": "无法破坏的护符的灌注配方相当困难。$(p)你需要充分理解$(l:apotheosis:enchanting/table/stats)附魔状态$()才能完成它，还需要处于世界层级：$(9)顶点$()。"
         }
 	]
 }

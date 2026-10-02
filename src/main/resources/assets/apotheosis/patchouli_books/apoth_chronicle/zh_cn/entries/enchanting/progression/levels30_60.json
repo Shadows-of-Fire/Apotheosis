@@ -32,7 +32,7 @@
             "type": "patchouli:spotlight",
 			"title": "附魔线索",
 			"item": "apothic_enchanting:sightshelf",
-			"text": "你现在可以使用更好的选项来增加其他属性。$(p)除了来自下界书架和海洋书架的加成之外，你现在还可以制作$(9)视界书架$()来增加你的$(#00AAAA)魔咒线索$()。"
+			"text": "你现在可以使用更好的选项来增加其他属性。$(p)除了来自下界书架和海洋书架的加成之外，你现在还可以制作$(9)视界下界书架$()来增加你的$(clues_zhcn)。"
 		},
 		{
             "type": "patchouli:crafting",
