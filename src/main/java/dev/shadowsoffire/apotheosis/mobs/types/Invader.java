@@ -16,6 +16,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig;
+import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apoth.DataMaps;
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
@@ -282,6 +283,10 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
 
         if (AdventureConfig.bossGlowOnSpawn) {
             mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3600, 0, true, false));
+        }
+
+        if (rand.nextFloat() < AdventureConfig.invaderWingChance) {
+            mob.setData(Attachments.WINGS, rand.nextInt());
         }
 
         this.basicData.appendBonusLoot(mob);

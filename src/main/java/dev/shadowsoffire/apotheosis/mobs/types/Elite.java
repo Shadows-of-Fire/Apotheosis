@@ -8,6 +8,8 @@ import java.util.function.UnaryOperator;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.AdventureConfig;
+import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry;
 import dev.shadowsoffire.apotheosis.mobs.registries.EliteRegistry.IEntityMatch;
@@ -171,6 +173,10 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
         }
 
         mob.setHealth(mob.getMaxHealth());
+
+        if (rand.nextFloat() < AdventureConfig.eliteWingChance) {
+            mob.setData(Attachments.WINGS, rand.nextInt());
+        }
 
         this.basicData.appendBonusLoot(mob);
     }

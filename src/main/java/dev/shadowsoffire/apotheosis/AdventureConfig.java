@@ -35,6 +35,8 @@ public class AdventureConfig {
     public static int bossSpawnCooldown = 3600;
     public static boolean bossAutoAggro = false;
     public static boolean bossGlowOnSpawn = true;
+    public static float invaderWingChance = 0.33F;
+    public static float eliteWingChance = 0.15F;
 
     // Generation
     public static float spawnerValueChance = 0.11F;
@@ -93,6 +95,8 @@ public class AdventureConfig {
             "The time, in ticks, that must pass before a player may trigger another natural invader spawn.\nWhen an invader spawns, this cooldown is applied to the triggering player and to all same-tier players within the boss announcement range.\nMay be overridden per-dimension via the invader spawn rules data map.\nServer-authoritative.");
         bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", bossAutoAggro, "If true, invading bosses will automatically target the closest player.\nServer-authoritative.");
         bossGlowOnSpawn = c.getBoolean("Boss Glowing On Spawn", "bosses", bossGlowOnSpawn, "If true, bosses will glow when they spawn.\nServer-authoritative.");
+        invaderWingChance = c.getFloat("Invader Wing Chance", "bosses", invaderWingChance, 0, 1, "The chance that an invader spawns with a random set of cosmetic wings. 0 = 0%, 1 = 100%\nServer-authoritative.");
+        eliteWingChance = c.getFloat("Elite Wing Chance", "bosses", eliteWingChance, 0, 1, "The chance that an elite spawns with a random set of cosmetic wings. 0 = 0%, 1 = 100%\nServer-authoritative.");
 
         String[] dims = c.getStringList("Generation Dimension Whitelist", "worldgen", new String[] { "overworld" }, "The dimensions that Apotheosis's worldgen will generate in.\nServer-authoritative.");
         DIM_WHITELIST.clear();

@@ -60,6 +60,8 @@ import dev.shadowsoffire.apotheosis.loot.modifiers.GemLootModifier;
 import dev.shadowsoffire.apotheosis.mobs.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.mobs.BossSpawnerBlock.BossSpawnerTile;
 import dev.shadowsoffire.apotheosis.mobs.InvaderSpawnRules;
+import dev.shadowsoffire.apotheosis.mobs.types.Elite;
+import dev.shadowsoffire.apotheosis.mobs.types.Invader;
 import dev.shadowsoffire.apotheosis.particle.RarityParticleData;
 import dev.shadowsoffire.apotheosis.recipe.MaliceRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
@@ -275,6 +277,15 @@ public class Apoth {
         public static final AttachmentType<AttributeToggles> ATTRIBUTE_TOGGLES = R.attachment("attribute_toggles", () -> AttributeToggles.EMPTY, b -> b.serialize(AttributeToggles.CODEC, t -> !t.isEmpty()).copyOnDeath());
 
         public static final AttachmentType<RadialState> RADIAL_MINING_MODE = R.attachment("radial_mining_mode", () -> RadialState.REQUIRE_NOT_SNEAKING, b -> b.serialize(RadialState.CODEC).copyOnDeath());
+
+        /**
+         * Marks a mob as displaying a cosmetic set of Placebo's patreon wings. Rolled when an {@link Invader} or {@link Elite} is initialized.
+         * <p>
+         * Placebo's wing type list is only safe to load on the client, we use a random number here and convert it to a wing type later.
+         * <p>
+         * Only present on mobs that rolled wings, and synced to all tracking clients.
+         */
+        public static final AttachmentType<Integer> WINGS = R.attachment("wings", () -> 0, b -> b.serialize(Codec.INT).sync(ByteBufCodecs.INT));
 
         private static void bootstrap() {}
     }
