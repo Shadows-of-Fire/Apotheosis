@@ -8,7 +8,7 @@
         {
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:salvaging_table",
-			"text": "$(9)回收台$()用于将词缀物品分解为其相应的$(9)珍宝材料$()。"
+			"text": "$(9)回收台$()用于将词缀物品分解为其相应的$(9)珍宝材料$()。$(p)普通装备和宝石也可以回收。"
 		},
 		{
             "type": "patchouli:spotlight",
@@ -38,7 +38,7 @@
             "type": "patchouli:spotlight",
 			"item": "apotheosis:godforged_pearl",
 			"link_recipe": true,
-            "text": "一颗净化过的超神珍珠。封存在其中的强大力量使它相当不稳定。$(p)这些非凡的创造物只能通过回收神话物品获得。"
+            "text": "一颗净化过的超神珍珠，封存在其中的强大力量使它相当不稳定。$(p)这些非凡的创造物是通过回收神话物品获得的。"
         }
 	]
 }

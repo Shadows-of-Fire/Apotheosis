@@ -10,15 +10,15 @@
         },
 		{
             "type": "patchouli:text",
-            "text": "首先，我们来看看如何选择魔咒。$(p)每个魔咒都有一个$(5)附魔威力函数$()，它控制着需要多少$(#CC00CC)最终附魔威力$(),才能使一个特定的附魔等级可用。$(p)一旦所有可用的魔咒都被程序收集，系统会根据其权重随机选择其中一些魔咒进行附魔。"
+            "text": "首先，我们来看看如何选择魔咒。$(p)每个魔咒都有一个$(5)附魔威力函数$()，它控制着需要多少$(fpower_zhcn),才能使一个特定的附魔等级可用。$(p)一旦所有可用的魔咒都被程序收集，系统会根据其权重随机选择其中一些魔咒进行附魔。"
         },
 		{
 			"type": "patchouli:text",
-			"text": "计算$(#CC00CC)最终附魔威力$()的步骤如下：$(p)首先，你有一个$(6)基础附魔威力$()，这是你在附魔时花费的等级。$(p)然后，$(#FC5454)量子化$()和校准修正你的$(6)基础附魔威力$()，得到你的$(#CC00CC)最终附魔威力$()。"
+			"text": "计算$(fpower_zhcn)的步骤如下：$(p)首先，你有一个$(bpower_zhcn)，这是你在附魔时花费的等级。$(p)然后，$(quanta_zhcn)修正你的$(bpower_zhcn)，得到你的$(fpower_zhcn)。$(p)$(9)量子稳定$()会移除该随机结果中的负面那一半。"
 		},
 		{
 			"type": "patchouli:text",
-			"text": "每个属性如何调整你$(6)基础附魔威力$()的细节可以在$(l:apotheosis:enchanting/table/stats#quanta)$(#FC5454)量子化$()和$(l:apotheosis:enchanting/table/stats#rectification)校准$()条目中找到。$(p)通常，更高的$(#CC00CC)最终附魔威力$()会让你获得更高等级的魔咒。"
+			"text": "每个属性如何调整你$(bpower_zhcn)的细节可以在$(l:apotheosis:enchanting/table/stats#quanta)$(quanta_zhcn)和$(l:apotheosis:enchanting/table/stats#rectification)量子稳定$()条目中找到。$(p)通常，更高的$(fpower_zhcn)会让你获得更高等级的魔咒。"
 		}
 	]
 }
