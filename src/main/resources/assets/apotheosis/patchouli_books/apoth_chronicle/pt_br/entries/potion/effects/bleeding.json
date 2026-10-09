@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)Sangramento$() é um efeito negativo aplicado por Flechas de Ponta Larga.$(p)Ele faz com que você receba dano a cada dois segundos."
+            "text": "$(c)Sangramento$() é um efeito negativo aplicado por alguns afixos e bônus de gemas.$(p)Ele faz com que você receba dano a cada dois segundos."
         },
         {
             "type": "patchouli:text",

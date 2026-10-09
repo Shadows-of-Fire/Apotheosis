@@ -7,7 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Dádiva da Terra$() é um encantamento de obra-prima para picaretas.$(p)Ao minerar pedras simples, há uma chance de cair um bloco de minério."
+            "text": "$(2)Dádiva da Terra$() é um encantamento de obra-prima para picaretas.$(p)Ao minerar pedras simples, há uma chance de obter um minério bruto ou outro mineral junto com os itens normalmente derrubados."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Com Toque Suave, o bloco de minério é obtido no lugar, e Fortuna multiplica a quantidade obtida.$(p)Netherrack tem sua própria seleção de itens, e alguns resultados dependem da profundidade ou do bioma."
         }
     ]
 }

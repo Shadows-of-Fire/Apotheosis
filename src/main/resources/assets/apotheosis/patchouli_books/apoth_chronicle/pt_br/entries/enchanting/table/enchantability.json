@@ -2,11 +2,15 @@
     "name": "Encantabilidade do item",
     "icon": "minecraft:golden_sword",
     "category": "apotheosis:enchanting/table",
-	"flag": "apotheosis:enchanting",
+    "flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "No vanilla, a encantabilidade de um item contribui para seu $(poderf).$(p)O Apotheosis altera para fornecer um aumento direto de $(arcana).$(p)$(arcana) aumenta em 50% a encantabilidade de um item."
+            "text": "No Minecraft original, a encantabilidade de um item contribui para seu $(poderf).$(p)O Apotheosis remove essa contribuição e passa a tratar a encantabilidade como uma chance de fortalecer cada encantamento sorteado."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Cada encantamento sorteado tem uma chance, baseada na encantabilidade do item, de ganhar um nível extra.$(p)Isso pode fazer um encantamento ultrapassar seu nível máximo normal. Esses níveis são marcados com uma estrela no nome."
         }
-	]
+    ]
 }

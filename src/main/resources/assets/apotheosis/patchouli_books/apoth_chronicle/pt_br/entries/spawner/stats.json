@@ -22,7 +22,7 @@
         {
             "type": "patchouli:text",
             "title": "Entidades máximas",
-            "text": "Geradores rastreiam o número de entidades próximas.$(p)Se esse número exceder o $(9)máximo de entidades$(), a geração para.$(p)Apenas entidades do mesmo tipo que a gerada são contadas."
+            "text": "Geradores rastreiam o número de entidades próximas.$(p)Se esse número atingir o $(9)máximo de entidades$(), a geração para.$(p)Apenas entidades do mesmo tipo que a gerada são contadas."
         },
         {
             "type": "patchouli:text",
@@ -57,7 +57,7 @@
         {
             "type": "patchouli:text",
             "title": "Sem IA",
-            "text": "Um gerador com $(9)sem IA$() ativo gera criaturas sem inteligência artificial.$(p)Normalmente, elas permanecem imóveis e não realizam ações.$(p)No entanto, as criaturas geradas pelo Apotheosis ainda podem ser movidas."
+            "text": "Um gerador com $(9)Sem IA$() ativado gera criaturas sem inteligência artificial.$(p)Normalmente, elas permanecem imóveis, sem fazer nada.$(p)No entanto, as criaturas geradas pelo Apothic Spawners ainda podem ser movidas."
         },
         {
             "type": "patchouli:text",

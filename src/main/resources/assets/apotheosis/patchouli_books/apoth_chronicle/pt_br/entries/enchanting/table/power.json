@@ -14,11 +14,11 @@
         },
         {
             "type": "patchouli:text",
-            "text": "O cálculo do $(poderf) é feito com os seguintes passos:$(p)Inicialmente, você tem um $(poderb), que é o nível que você gastou enquanto encantava.$(p)Então, $(quanta) e a retificação modificam seu $(poderb) para produzir seu $(poderf)."
+            "text": "O cálculo do $(poderf) é feito com os seguintes passos:$(p)Inicialmente, você tem um $(poderb), que é o nível gasto ao encantar.$(p)Então, $(quanta) modifica seu $(poderb) para produzir seu $(poderf).$(p)A $(9)Estabilidade Quântica$() elimina a metade negativa desse sorteio."
         },
         {
             "type": "patchouli:text",
-            "text": "Os detalhes de como cada atributo modifica seu $(poderb) estão nas seções de $(l:apotheosis:enchanting/table/stats#quanta)$(quanta) e $(l:apotheosis:enchanting/table/stats#rectification)retificação$().$(p)Normalmente, um $(poderf) maior dá acesso a encantamentos de níveis superiores."
+            "text": "Os detalhes de como cada atributo modifica seu $(poderb) estão nas seções de $(l:apotheosis:enchanting/table/stats#quanta)$(quanta) e $(l:apotheosis:enchanting/table/stats#rectification)Estabilidade Quântica$().$(p)Normalmente, um $(poderf) maior dá acesso a encantamentos de níveis superiores."
         }
     ]
 }

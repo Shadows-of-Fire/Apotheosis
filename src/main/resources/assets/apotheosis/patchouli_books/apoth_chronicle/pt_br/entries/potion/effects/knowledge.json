@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A poção de $(9)Conhecimento Ancestral$() concede um efeito benéfico.$(p)Enquanto ele estiver ativo, a experiência gerada pelas criaturas que você derrotar será multiplicada."
+            "text": "A poção de $(9)Conhecimento Ancestral$() concede um efeito benéfico.$(p)Enquanto ele estiver ativo, a experiência gerada pelas criaturas que você derrotar e pelos blocos que você minerar será multiplicada."
         },
         {
             "type": "patchouli:text",
-            "text": "No nível I, quadruplica a experiência derrubada.$(p)No Nível II, multiplica-as por 8."
+            "text": "No nível I, quadruplica a experiência obtida.$(p)No nível II, multiplica-a por 8.$(p)A poção forte é de nível IV e multiplica a experiência por 16. O multiplicador é configurável."
         }
     ]
 }

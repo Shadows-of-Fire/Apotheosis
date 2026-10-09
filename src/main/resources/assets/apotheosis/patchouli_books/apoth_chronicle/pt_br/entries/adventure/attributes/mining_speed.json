@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Ao aumentar sua $(9)velocidade de mineração$(), acelera a velocidade com que você quebra blocos. Você quebra os blocos de forma normal ao valor base de 1,0.$(p)Encontrado em picaretas e pás."
+            "text": "Aumentar sua $(9)velocidade de mineração$() aumenta a rapidez com que você quebra blocos. Você quebrará blocos normalmente com o valor base de 1,0.$(p)Encontrada em ferramentas que quebram blocos e em tesouras."
         }
     ]
 }

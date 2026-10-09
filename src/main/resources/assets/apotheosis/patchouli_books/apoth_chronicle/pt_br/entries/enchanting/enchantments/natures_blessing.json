@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Bênção da Natureza$() é um encantamento de enxada.$(p)Permite que uma enxada seja usada como Farinha de Osso, por um custo de durabilidade.$(p)Níveis de encantamento mais altos reduzem o custo de durabilidade."
+            "text": "$(9)Bênção da Natureza$() é um encantamento para enxadas.$(p)Permite usar uma enxada como Farinha de Osso, ao custo de durabilidade.$(p)Níveis mais altos do encantamento reduzem esse custo.$(p)Não é ativado enquanto você estiver agachado."
         }
     ]
 }

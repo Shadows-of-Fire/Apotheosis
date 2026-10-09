@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Defesas Refletoras$() é um encantamento para escudos.$(p)Faz com que ataques bloqueados devolvam parte do dano ao atacante.$(p)Mais especificamente, 15% do dano bloqueado é refletido."
+            "text": "$(9)Defesas Refletoras$() é um encantamento para escudos.$(p)Cada ataque bloqueado tem chance de refletir parte do dano bloqueado de volta ao atacante.$(p)Cada reflexão consome um pouco da durabilidade do escudo."
         },
         {
             "type": "patchouli:text",
