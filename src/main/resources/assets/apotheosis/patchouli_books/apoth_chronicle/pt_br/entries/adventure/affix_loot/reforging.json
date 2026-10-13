@@ -33,7 +33,7 @@
         {
             "type": "patchouli:text",
             "title": "Reforja",
-            "text": "Para cada raridade, há um custo básico de experiência, sigilos e materiais. As opções adicionais custam o dobro e o triplo desse valor.$(p)Para reforjar o item, basta clicar na opção desejada."
+            "text": "Para cada raridade, há um custo básico de níveis, materiais e sigilos.$(p)A segunda e a terceira opções exigem, respectivamente, o dobro e o triplo dos níveis e materiais, mas as três opções consomem apenas o equivalente a um, dois ou três níveis de experiência.$(p)Para reforjar o item, basta clicar na opção desejada."
         },
         {
             "type": "patchouli:crafting",

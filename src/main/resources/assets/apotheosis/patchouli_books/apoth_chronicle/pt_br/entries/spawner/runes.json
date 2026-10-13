@@ -1,0 +1,135 @@
+{
+    "name": "Runas de gerador",
+    "icon": "apotheosis:spawner_rune",
+    "category": "apotheosis:spawner/spawner",
+    "flag": "apotheosis:spawner",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Depois de ler sobre os $(l:apotheosis:spawner/stats)parâmetros do gerador$(), você deve estar se perguntando como alterá-los.$(p)É aí que entram as $(9)Runas de Gerador$(). Segure uma runa e clique com o botão direito em um $(9)Gerador de Criaturas$() para aplicá-la.$(p)Todas as runas e seus efeitos podem ser vistos no JEI, nos usos dos Geradores de Criaturas."
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:spawner_chain",
+            "title": "Correntes de Gerador",
+            "text": "Runas são forjadas com $(9)Correntes de Gerador$(), obtidas quando um gerador é destruído por uma explosão.$(p)A explosão inicial desencadeia uma reação em cadeia. Alguns segundos depois, ele detona, espalhando pelo chão a criatura armazenada e muitas correntes."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:spawner_rune",
+            "title": "Runas em branco",
+            "text": "Depois de obter algumas correntes, a primeira coisa que você precisa fazer é fabricar algumas $(9)Runas de Gerador$() em branco."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Runas de aprimoramento",
+            "text": "Há quatro runas de aprimoramento básico, uma para cada Nível de Mundo acima do Refúgio.$(p)Elas modificam os parâmetros principais: atraso mínimo e máximo de geração, contagem de geração, máximo de entidades e alcance de ativação."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:frontier_spawner_upgrade_rune",
+            "title": "Runa do Desbravador",
+            "text": "Cada runa de nível é fabricada usando o $(9)Material de Raridade$() daquele nível como base."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:ascent_spawner_upgrade_rune",
+            "title": "Runa do Andarilho",
+            "text": "As melhorias dos parâmetros principais aumentam conforme o nível da runa."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:summit_spawner_upgrade_rune",
+            "title": "Runa do Montanhista",
+            "text": "As runas de níveis mais altos exigem uma $(9)Runa Infundida de Gerador$() e materiais mais raros."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:pinnacle_spawner_upgrade_rune",
+            "title": "Runa Trovejante",
+            "text": "A última runa criará uma máquina imparável de geração de criaturas."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Runas de parâmetros",
+            "text": "Para alterar os demais parâmetros, é necessária uma runa específica para cada um. Cada parâmetro tem uma runa, cujo custo depende da força do efeito."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:spawn_range_spawner_rune",
+            "title": "Alcance de geração",
+            "text": "Esta runa altera o alcance de geração de um gerador."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:redstone_control_spawner_rune",
+            "title": "Controle",
+            "text": "Esta runa concede controle de redstone a um gerador. Ele não funcionará sem um sinal de redstone."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:ignore_light_spawner_rune",
+            "title": "Crepúsculo Perpétuo",
+            "text": "Esta runa faz a geração de criaturas ignorar os níveis de luz.$(p)Criaturas que surgem no escuro podem aparecer na luz, e vice-versa."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:silent_spawner_rune",
+            "title": "Silêncio!",
+            "text": "Esta runa faz todas as criaturas geradas ficarem sem som.$(p)Sem sons de dano, sem sons ambientes, nada."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:youthful_spawner_rune",
+            "title": "A fonte da juventude",
+            "text": "Esta runa faz as criaturas geradas voltarem à forma de filhote.$(p)Isso se elas tiverem uma, é claro. Caso contrário, nada acontecerá."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:burning_spawner_rune",
+            "title": "Queime todos!",
+            "text": "Esta runa faz as criaturas geradas pegarem fogo.$(p)Obviamente, isso não funcionará se a criatura for imune ao fogo."
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:infused_spawner_rune",
+            "title": "Runas infundidas",
+            "text": "Runas mais fortes exigem uma $(9)Runa Infundida de Gerador$(), criada por Encantamento por Infusão."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:no_ai_spawner_rune",
+            "title": "Drenagem cerebral",
+            "text": "Esta runa infundida faz as criaturas geradas ficarem sem IA.$(p)Ao contrário de criaturas realmente sem IA, elas ainda podem ser empurradas."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:ignore_conditions_spawner_rune",
+            "title": "Desafiando toda a lógica",
+            "text": "Esta runa infundida é uma melhoria direta da $(9)Runa do Crepúsculo Perpétuo$().$(p)Todas as condições de geração, incluindo a luz, serão ignoradas. Ainda é necessário haver espaço vazio."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:ignore_players_spawner_rune",
+            "title": "A sós no mundo",
+            "text": "Esta runa infundida permite que o gerador funcione sem um jogador por perto.$(p)As criaturas podem se sentir sozinhas."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:echoing_spawner_rune",
+            "title": "De novo e de novo",
+            "text": "Esta runa infundida concede Ecos, fazendo as criaturas geradas derrubarem uma cópia adicional de sua tabela de saque.$(p)Ela pode ser aplicada várias vezes."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Inversão de runas",
+            "text": "Segure $(9)Quartzo do Nether$() na mão secundária ao aplicar uma runa para inverter seu efeito.$(p)O quartzo não é consumido.$(p)Runas de nível não podem ser invertidas."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Observações",
+            "text": "Runas de parâmetros respeitam os limites exibidos no JEI, enquanto runas de nível definem os valores diretamente.$(p)Segure Shift com o cursor sobre um item de gerador para ver seus parâmetros."
+        }
+    ]
+}

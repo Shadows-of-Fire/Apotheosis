@@ -12,7 +12,12 @@
         {
             "type": "patchouli:text",
             "title": "Mecânica de geração",
-            "text": "Invasores Apóticos podem surgir raramente na superfície, em locais onde criaturas normalmente aparecem.$(p)A chegada deles é marcada por um som alto, uma mensagem na tela e um feixe de luz.$(p)A frequência dos Invasores pode variar conforme o Nível de Mundo e a dimensão."
+            "text": "Invasores substituem uma pequena parte das gerações naturais de monstros. Na dimensão Superfície, aparecem na superfície ou perto da sua profundidade no subsolo; no Nether, em qualquer lugar; e no End, apenas nas ilhas externas.$(p)Eles nunca aparecem no $(9)Refúgio$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Mecânica de geração",
+            "text": "A chegada deles é marcada por um som alto, uma mensagem na tela e um feixe de luz.$(p)Invasores se tornam mais comuns em Níveis de Mundo mais altos, e as taxas variam conforme a dimensão."
         },
         {
             "type": "patchouli:text",

@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A poção de $(9)Vitalidade Transbordante$() concede um efeito benéfico.$(p)Enquanto ele estiver ativo, toda cura recebida será aumentada."
+            "text": "$(9)Vitalidade Transbordante$() é um efeito benéfico concedido pela Poção de Estouro de Vitalidade.$(p)Enquanto ele estiver ativo, toda cura recebida será aumentada."
         },
         {
             "type": "patchouli:text",

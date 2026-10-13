@@ -2,12 +2,12 @@
     "name": "Tentação",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Tentação$() é um encantamento de enxada.$(p)Ao segurar uma enxada com este encantamento, todos os animais o seguirão como se estivessem segurando seu item de reprodução."
+            "text": "$(9)Tentação$() é um encantamento para enxadas.$(p)Ao segurar uma enxada com este encantamento na mão principal, todos os animais seguirão você como se você estivesse segurando o item usado para reproduzi-los."
         }
-	]
+    ]
 }

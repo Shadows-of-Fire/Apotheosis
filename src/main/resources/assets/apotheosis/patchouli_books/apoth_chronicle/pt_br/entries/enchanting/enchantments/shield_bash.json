@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Golpe de Escudo$() é um encantamento de escudo.$(p)Faz com que ataques corpo a corpo com escudo causem dano extra.$(p)No entanto, atacar com $(9)golpe de escudo$() causa dano de durabilidade adicional."
+            "text": "$(9)Golpe de Escudo$() é um encantamento para escudos.$(p)Faz com que ataques corpo a corpo com o escudo causem dano extra por nível.$(p)No entanto, atacar com $(9)Golpe de Escudo$() consome durabilidade adicional."
         }
     ]
 }

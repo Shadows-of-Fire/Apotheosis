@@ -11,7 +11,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "O dano recebido e a força da poção são baseados no nível de encantamento."
+            "text": "A ativação exige dano causado por um atacante e tem um tempo de recarga.$(p)Você recebe exponencialmente mais dano por nível, ignorando armadura e Resistência.$(p)Os efeitos benéficos duram 25 segundos, com intensidade igual ao nível do encantamento."
         }
     ]
 }

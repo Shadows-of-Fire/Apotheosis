@@ -1,0 +1,25 @@
+{
+    "name": "Vendedor ambulante",
+    "icon": "minecraft:emerald",
+    "category": "apotheosis:adventure/affix_loot",
+    "flag": "apotheosis:adventure",
+    "sortnum": 10,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Você já encontrou um daqueles comerciantes suspeitos que simplesmente aparecem no seu gramado?$(p)Eles são chamados de $(9)Vendedores Ambulantes$().$(p)Normalmente, só vendem porcarias."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "No entanto, o Apotheosis adiciona tantas novas trocas que passa a valer a pena negociar com eles.$(p)Essas trocas incluem itens como $(9)Sinalizadores$() e $(9)Totens da Imortalidade$(), além de $(9)itens com afixo$() aleatórios, pagos com esmeraldas e seu material de reparo."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "No $(9)Cume$() e no $(9)Pináculo$(), os vendedores também podem oferecer equipamentos poderosos predefinidos. A maioria desses equipamentos exige que Apothic Enchanting ou Apothic Spawners esteja instalado."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "O Apotheosis também faz os Vendedores Ambulantes aparecerem com mais frequência, ficarem por menos tempo e permite que surjam no subsolo (configurável)."
+        }
+    ]
+}

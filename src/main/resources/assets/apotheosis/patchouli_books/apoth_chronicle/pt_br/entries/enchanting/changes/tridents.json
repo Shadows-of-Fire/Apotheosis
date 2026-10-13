@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Juntamente com os novos encantamentos, tridentes agora também podem receber $(9)afiação$(), $(9)saque$() e $(9)perfuração$().$(p)Afiação e saque funcionam da mesma forma que nas espadas.$(p)Perfuração faz com que os tridentes lançados sejam capazes de atingir inimigos adicionais."
+            "text": "Juntamente com os novos encantamentos, tridentes agora também podem receber $(9)Afiação$(), $(9)Saque$() e $(9)Perfuração$().$(p)Afiação funciona da mesma forma que nas espadas. Saque se aplica a acertos corpo a corpo.$(p)Perfuração permite que os tridentes lançados atinjam inimigos adicionais."
         },
         {
             "type": "patchouli:spotlight",

@@ -1,6 +1,6 @@
 {
-    "name": "Módulo de geradores",
-    "description": "O módulo de geradores permite mover e modificar $(9)Geradores de Criaturas$().",
+    "name": "Geradores",
+    "description": "O $(9)Apothic Spawners$() permite mover e modificar $(9)Geradores de Criaturas$().$(p)O Apotheosis substitui suas receitas de aprimoramento por Runas de Gerador.",
     "icon": "minecraft:spawner",
     "flag": "apotheosis:spawner"
 }

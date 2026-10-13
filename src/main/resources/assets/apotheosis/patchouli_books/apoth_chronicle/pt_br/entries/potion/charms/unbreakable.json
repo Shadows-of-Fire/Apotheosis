@@ -11,7 +11,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "A receita de infusão para amuletos inquebráveis é bastante difícil.$(p)Você precisará compreender bem os $(l:apotheosis:enchanting/table/stats)atributos de encantamento$() para concluí-la."
+            "text": "A receita de infusão para amuletos inquebráveis é bastante difícil.$(p)Você precisará compreender bem os $(l:apotheosis:enchanting/table/stats)atributos de encantamento$() para concluí-la. Você também precisará estar no Nível de Mundo: $(9)Pináculo$()."
         }
     ]
 }

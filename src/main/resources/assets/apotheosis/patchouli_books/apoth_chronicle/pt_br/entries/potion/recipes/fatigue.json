@@ -7,13 +7,13 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)Exaustão$() é um efeito negativo que normalmente só é aplicado por guardiões.$(p)Enquanto ativo, sua velocidade de mineração é reduzida em 20% por nível.$(p)É o oposto direto de $(9)pressa$()."
+            "text": "$(c)Exaustão$() é um efeito negativo que normalmente só é aplicado por guardiões-mestres.$(p)Enquanto estiver ativo, sua velocidade de mineração é reduzida para 30% no nível I e 9% no nível II."
         },
         {
             "type": "patchouli:spotlight",
             "title": "Receita de preparo",
             "item": "minecraft:fermented_spider_eye",
-            "text": "Esta poção pode ser criada com uma $(9)poção de aceleração$() e um olho de aranha fermentado.$(p)Ela pode ser estendida, fortalecida ou transformada em uma Poção Arremessável com os ingredientes usuais."
+            "text": "Esta poção pode ser preparada com uma $(9)Poção de Pressa$() e um Olho de Aranha Fermentado.$(p)Ela pode ter a duração ou a potência aumentada, ou ser transformada em uma Poção Arremessável com os ingredientes habituais."
         }
     ]
 }

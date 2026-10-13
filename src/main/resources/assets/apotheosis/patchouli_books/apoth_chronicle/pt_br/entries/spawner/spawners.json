@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Os $(9)Geradores de Criaturas$() são blocos mágicos que fazem criaturas surgirem no mundo.$(p)No Apotheosis, eles podem ser coletados usando $(9)Toque Suave$()."
+            "text": "Um $(9)Gerador de Criaturas$() é um bloco mágico capaz de trazer entidades do vazio.$(p)Mas você já sabia disso, então vamos às novidades.$(p)Com o Apothic Spawners, geradores podem ser coletados usando $(9)Toque Suave$()."
         },
         {
             "type": "patchouli:text",
-            "text": "Coletar um gerador dessa forma causa um custo adicional de durabilidade.$(p)Cada gerador possui vários $(l:apotheosis:spawner/stats)parâmetros$() que controlam seu funcionamento.$(p)Esses parâmetros podem ser alterados com $(l:apotheosis:spawner/modifiers)modificadores de gerador$()."
+            "text": "Coletar um gerador dessa forma causa um custo adicional de durabilidade.$(p)Cada gerador possui vários $(l:apotheosis:spawner/stats)parâmetros$() que controlam seu funcionamento.$(p)Esses parâmetros podem ser alterados com $(l:apotheosis:spawner/runes)Runas de Gerador$()."
         }
     ]
 }

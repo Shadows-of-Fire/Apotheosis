@@ -19,7 +19,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "Você também pode colocar um livro no encaixe de saída para adicionar encantamentos a ele. $(p)A biblioteca registra o nível máximo que já foi inserido para cada encantamento e só pode extrair até esse nível."
+            "text": "Você também pode colocar um $(9)Livro Encantado$() no encaixe de saída para adicionar encantamentos a ele.$(p)A biblioteca registra o nível máximo que já foi inserido para cada encantamento e só pode extrair até esse nível."
         },
         {
             "type": "patchouli:crafting",

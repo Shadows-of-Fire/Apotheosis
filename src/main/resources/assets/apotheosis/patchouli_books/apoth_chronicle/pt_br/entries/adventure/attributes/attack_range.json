@@ -1,13 +1,13 @@
 {
-    "name": "Alcance de ataque",
+    "name": "Alcance de interação com entidades",
     "icon": "minecraft:skeleton_skull",
     "category": "apotheosis:adventure/attributes",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Seu $(9)alcance de ataque$() é a distância máxima na qual você consegue atacar alvos com uma arma corpo a corpo.$(p)Geralmente encontrado em armas."
+            "text": "Seu $(9)alcance de interação com entidades$() é a distância máxima na qual você consegue atacar alvos com uma arma corpo a corpo.$(p)Geralmente encontrado em armas."
         }
-	]
+    ]
 }

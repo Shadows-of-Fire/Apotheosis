@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A poção de $(c)Feridas Dolorosas$() concede um efeito negativo.$(p)Enquanto ele estiver ativo, toda cura recebida será reduzida."
+            "text": "$(c)Feridas Dolorosas$() é um efeito negativo concedido pela Poção de Redução de Cura.$(p)Enquanto ele estiver ativo, toda cura recebida será reduzida."
         },
         {
             "type": "patchouli:text",

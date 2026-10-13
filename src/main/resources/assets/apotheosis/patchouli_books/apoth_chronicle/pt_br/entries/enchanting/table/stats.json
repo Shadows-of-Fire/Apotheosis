@@ -11,7 +11,7 @@
         {
             "type": "patchouli:text",
             "title": "Eterna",
-            "text": "$(eterna) é o atributo principal do encantamento.$(p)Cada ponto de $(eterna) aumenta em dois o nível máximo de encantamento.$(p)Alguns blocos só fornecem $(eterna) até determinado valor máximo."
+            "text": "$(eterna) é o atributo principal do encantamento.$(p)Cada ponto de $(eterna) aumenta em um o nível máximo de encantamento. Uma Estante de Livros do Minecraft original fornece dois pontos; portanto, quinze estantes permitem alcançar o nível 30.$(p)Alguns blocos só fornecem $(eterna) até determinado valor máximo."
         },
         {
             "type": "patchouli:text",
@@ -30,7 +30,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "Por padrão, as raridades têm os seguintes pesos:$(p)Comum: 10$(br)Incomum: 5$(br)Raro: 3$(br)Muito raro: 1$(p)A cada 10% de $(arcana), os pesos mudam até se inverterem completamente.$(p)Passe o cursor sobre a barra de $(arcana) para ver os pesos atuais."
+            "text": "Por padrão, as raridades têm os seguintes pesos:$(p)Comum: 10$(br)Incomum: 5$(br)Raro: 2$(br)Muito raro: 1$(p)A cada 10% de $(arcana), os pesos mudam até se inverterem completamente.$(p)Passe o cursor sobre a barra de $(arcana) para ver os pesos atuais."
         },
         {
             "type": "patchouli:text",
@@ -46,7 +46,7 @@
         {
             "type": "patchouli:text",
             "title": "Pistas",
-            "text": "As pistas são outro atributo terciário.$(p)Cada pista revela um encantamento adicional na janela de visualização.$(p)Quando todos os encantamentos disponíveis estiverem visíveis, o texto mudará ligeiramente."
+            "text": "As pistas são outro atributo terciário.$(p)Toda mesa começa com uma pista, e cada pista revela um item adicional na janela de visualização.$(p)Quando todos os encantamentos disponíveis estiverem visíveis, o texto mudará ligeiramente."
         },
         {
             "type": "patchouli:text",

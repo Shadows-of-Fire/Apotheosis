@@ -10,7 +10,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "Cada requisito normalmente exige um valor mínimo e pode também estabelecer um valor máximo.$(p)O Encantamento por Infusão usa apenas o terceiro encaixe e permite gastar mais experiência."
+            "text": "Cada requisito normalmente exige um valor mínimo e pode também estabelecer um valor máximo.$(p)O Encantamento por Infusão usa apenas o terceiro encaixe, consome três Lápis-Lazúli e cobra um custo em níveis igual ao requisito de $(eterna) da receita (mínimo de 3)."
         },
         {
             "type": "patchouli:text",
