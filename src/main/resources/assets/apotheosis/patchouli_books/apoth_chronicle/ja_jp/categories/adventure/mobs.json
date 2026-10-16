@@ -1,0 +1,7 @@
+{
+    "name": "この世界の敵",
+    "description": "Apotheosisの世界では、新たに様々なサブタイプの敵に出会うことになる。$(p)ここでは、どのような種類の敵が存在するか、そしてそれらがどこで見つかるかについて分かっていることを記しておく。",
+    "icon": "apotheosis:boss_summoner",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

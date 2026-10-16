@@ -1,0 +1,31 @@
+{
+    "name": "宝石箱",
+    "icon": "apotheosis:gem_case",
+    "category": "apotheosis:adventure/gems",
+	"flag": "apotheosis:adventure",
+	"sortnum": 6,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_case",
+            "text": "$(9)宝石箱は$()、$(l:apotheosis:adventure/gems/gems)ジェム$()の保管用アイテムである。$(p)異なる種類と純度のジェムを最大32,000個まで収納でき、アップグレードすればより多くのジェムを収納できるだろう。"
+        },
+        {
+            "title": "フィルター機能",
+            "type": "patchouli:text",
+            "text": "宝石箱には２つのフィルター機能がある。名称フィルターとアイテムフィルダーの２つだ。$(p)名称フィルターでは、ジェムをアイテム名で検索できる。一方でアイテムフィルターは、ジェムをはめ込むことができるアイテム種別から検索できる。"
+        },
+		{
+			"title": "ジェム加工",
+            "type": "patchouli:text",
+            "text": "宝石箱には６つの補助的なスロットが付いており、アップグレード用の材料を入れておくことができる。$(p)もし十分な材料とジェムが宝石箱内に存在していれば、レシピに従って直接ジェムをアップグレードできる。$(p)$(l:apotheosis:adventure/gems/gem_cutting)ジェム加工台$()よりも効率的に作業できるはずだ。"
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:ender_gem_case",
+            "title": "至高の宝石箱",
+            "link_recipe": true,
+            "text": "$(9)貴族の宝石箱$()の$(6)収容能力$()は200万個にも上る。この宝石箱は通常のクラフトで入手することはできないが、$(l:apotheosis:enchanting/table/infusion)注入エンチャント$()によって生成することが可能だ。"
+        }
+	]
+}

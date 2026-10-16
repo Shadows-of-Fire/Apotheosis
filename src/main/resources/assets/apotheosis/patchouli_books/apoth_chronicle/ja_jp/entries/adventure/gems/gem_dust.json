@@ -1,7 +1,7 @@
 {
     "name": "ジェムの粉",
     "icon": "apotheosis:gem_dust",
-    "category": "apotheosis:adventure/affix_loot",
+    "category": "apotheosis:adventure/gems",
 	"flag": "apotheosis:adventure",
 	"sortnum": 2,
     "pages": [
@@ -9,7 +9,7 @@
             "type": "patchouli:spotlight",
 			"item": "apotheosis:gem_dust",
 			"link_recipe": true,
-            "text": "すべてのApothicジェムは、破砕することで$(br)$(9)ジェムの粉$()にすることができる。$(p)その方法の１つが、金床による粉砕である。"
+            "text": "Apotheosis世界のジェムは、破砕することで$(br)$(9)ジェムの粉$()にすることができる。$(p)その方法の１つが、金床による粉砕である。設置した金床を使うのではなく、ジェムの上に落として使う。"
         },
 		{
             "type": "patchouli:crafting",

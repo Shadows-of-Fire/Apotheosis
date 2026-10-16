@@ -1,0 +1,17 @@
+{
+    "name": "エリートモブ",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "時折、ワールドのあちこちで、名前のついたモブやパワーアップしたモブを目撃することがある。$(p)それらはおそら「$(9)エリート$()」と呼ばれる特殊なモブだろう。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "このモブは、通常のモブの代わりにランダムに出現する。$(p)エリートモブは、神略者のように出現時の明確な兆候がないため油断は禁物だ。$(p)エリートモブも同様に称号付きアイテムをドロップすることがある。"
+		}
+	]
+}

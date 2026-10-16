@@ -1,0 +1,135 @@
+{
+    "name": "スポナールーン",
+    "icon": "apotheosis:spawner_rune",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l:apotheosis:spawner/stats)スポナー属性$()についての説明を読んだとき、これらの属性はどうやって調整するのか？という疑問が頭をよぎっただろう。$(9)スポナールーン$()がその答えだ。ルーンを手に持ち、$(9)モブスポナー$()を右クリックすることで、ルーンの効果を与えることができる。それぞれのルーンとその効果は、使用時にJEIで確認することができるだろう。"
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:spawner_chain",
+            "title": "スポナーの鎖",
+            "text": "ルーンは$(9)スポナーの鎖$()によって魔力を吹き込まれる。それはスポナーを爆破することで得られるだろう。$(p)最初の爆発が連鎖反応を引き起こし、数秒後には 中に収容されていたモブや鎖が辺りにばら撒かれるだろう。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:spawner_rune",
+            "title": "空白のルーン",
+            "text": "スポナーの鎖をいくつか手に入れたら、まずは空白の$(9)スポナールーン$()をクラフトしてみることをオススメする。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "ルーンの強化",
+            "text": "強化ルーンは４つある。安全地帯以外のワールドレベルに対応するものが１つずつ存在している。$(p)これらのルーンはコアとなる属性を強化する。コア属性とは、最小/最大スポーン間隔、スポーン数、最大エンティティ数および作動範囲である。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "開拓者の強化ルーン",
+            "recipe": "apotheosis:frontier_spawner_upgrade_rune",
+            "text": "各段階のルーンは、その段階の$(9)レアリティ素材$()を軸に作成される。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "彷徨者の強化ルーン",
+            "recipe": "apotheosis:ascent_spawner_upgrade_rune",
+            "text": "ルーンのレベルが上がると、コア属性の強化値も上昇する。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "登頂者の強化ルーン",
+            "recipe": "apotheosis:summit_spawner_upgrade_rune",
+            "text": "高レベルの強化ルーンは、$(9)注入されたスポナールーン$()とさらに貴重な素材を必要とする。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "雷轟の強化ルーン",
+            "recipe": "apotheosis:pinnacle_spawner_upgrade_rune",
+            "text": "最終段階のルーンによって、スポナーはモブ生成の永久機関と化すだろう。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "属性ルーン",
+            "text": "その他のコアではない属性を変更するには、その属性専用のルーンが必要。各属性に対応するルーンは1種類ずつ存在し、そのコストは効果の強さに応じて異なる。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "スポーン範囲",
+            "recipe": "apotheosis:spawn_range_spawner_rune",
+            "text": "このルーンによってスポーン範囲が変化する。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "コントロール可能",
+            "recipe": "apotheosis:redstone_control_spawner_rune",
+            "text": "このルーンによってスポナーがレッドストーン回路で制御可能になる。スポナーはレッドストーン信号なしでは動作しなくなる。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "明けない夜",
+            "recipe": "apotheosis:ignore_light_spawner_rune",
+            "text": "このルーンによって、明るさレベルを無視してモブがスポーンするようになる。$(p)暗闇に住むものは明るい場所でスポーンし、その逆も可能になる。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "だまれ！",
+            "recipe": "apotheosis:silent_spawner_rune",
+            "text": "このルーンによって、スポーンしたモブは一切の音を立てなくなる。$(p)ダメージ音も環境音も、全てが消える。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "若さ溢れる",
+            "recipe": "apotheosis:youthful_spawner_rune",
+            "text": "このルーンによって、モブは必ずその幼生個体としてスポーンするようになる。$(p)幼生個体が存在するならば、ではあるが。幼生個体がなければ何も変化は起こらない。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "焼き尽くせ！",
+            "recipe": "apotheosis:burning_spawner_rune",
+            "text": "このルーンによってスポーンしたモブは炎上する。$(p)もっとも、火に対して耐性のある個体についてはその限りではない。"
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:infused_spawner_rune",
+            "title": "注入されたルーン",
+            "text": "強力なルーンは$(9)注入されたスポナールーン$()を必要とする。そのためには注入エンチャントが必須になる。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "脳なし",
+            "recipe": "apotheosis:no_ai_spawner_rune",
+            "text": "魔法が注入されたこのルーンによって、モブはAIを持たない状態でスポーンするようになる。$(p)「完全な」AIなしの個体とは違って、これらのモブは押して移動させることができる。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "自由だ",
+            "recipe": "apotheosis:ignore_conditions_spawner_rune",
+            "text": "この魔力を宿したルーンは、$(9)極夜のルーン$()の上位互換である。$(p)明かりレベルを含む全てのスポーン条件は無視されるようになる。ただし、スポーンするための空きスペースは引き続き必要だ。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "世界にただ独り",
+            "recipe": "apotheosis:ignore_players_spawner_rune",
+            "text": "魔法が注入されたこのルーンによって、スポナーはプレイヤーが近くにいなくても動作するようになる。$(p)モブたちはちょっとさみしいかもしれないが。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "何度も何度でも",
+            "recipe": "apotheosis:echoing_spawner_rune",
+            "text": "魔法が注入されたこのルーンは「共鳴状態」を引き起こす。つまり、モブは自身のドロップテーブルに含まれるアイテムを、追加でもう1セットドロップするようになる。$(p)さらにそれは複数回適用することが可能。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "反転のルーン",
+            "text": "$(9)ネザークォーツ$()をオフハンドにもった状態でルーンを適用すると、 その効果を反転させることができる。$(p)クォーツは消費されない。$(p)また、強化ルーンは反転できない。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "注意",
+            "text": "属性を変更するルーンはJEIに表示されている上限値を踏まえて作用するが、強化ルーンは上限値などによらず値を直接更新する。$(p)スポナーアイテムにカーソルを合わせ、シフトキーを押すとステータスを確認できる。"
+        }
+    ]
+}

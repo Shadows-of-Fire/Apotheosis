@@ -1,7 +1,0 @@
-{
-    "name": "Bosses",
-    "description": "$(9)ボス$()は称号の力を得て強化された敵である。$(p)特別な名前と強力な装備を持ち、たいていは見分けが付くだろう。",
-    "icon": "apotheosis:boss_summoner",
-	"flag": "apotheosis:adventure",
-	"parent": "apotheosis:adventure/adventure"
-}

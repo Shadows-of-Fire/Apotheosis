@@ -1,0 +1,7 @@
+{
+    "name": "ワールドレベル",
+    "description": "汝が強くなるにつれ、汝を取り巻く環境も厳しさを増すだろう。$(p)ここでは、ワールドレベルについて記載する。どのように変化するのか、どのように解放するのか、そして現在のワールドレベルを変更する方法について説明しよう。",
+    "icon": "apotheosis:textures/gui/book/summit_icon.png",
+    "flag": "apotheosis:adventure",
+    "parent": "apotheosis:adventure/adventure"
+}

@@ -1,13 +1,13 @@
 {
     "name": "重傷",
-    "icon": "attributeslib:textures/mob_effect/grievous.png",
+    "icon": "apothic_attributes:textures/mob_effect/grievous.png",
     "category": "apotheosis:potion/effects",
 	"flag": "apotheosis:potion",
 	"sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)重傷()ポーションはデバフ効果を与える。$(p)この効果を受けている間は、全ての回復効果が弱くなってしまう。"
+            "text": "$(c)重傷$()は、主に回復弱化のポーションによって引き起こされるデバフ効果である。$(p)この効果を受けている間は、全ての回復効果が弱くなってしまう。"
         },
 		{
             "type": "patchouli:text",

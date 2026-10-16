@@ -14,7 +14,7 @@
             "type": "patchouli:spotlight",
 			"title": "その他のステータス",
 			"item": "minecraft:skeleton_skull",
-			"text": "この段階では、他のステータスを上げるための基本的な選択肢がいくつかあるだろう。$(p)$(arcana_jajp)を増やすにはろうそくを、$(quanta_jajp)を増やすには頭蓋骨を、$(rectification_jajp)を増やすにはアメジストの塊を使う。"
+			"text": "この段階では、他のステータスを上げるための基本的な選択肢はそう多くない。$(p)$(arcana_jajp)を増やすにはろうそくを、$(quanta_jajp)を増やすには頭蓋骨を使う。"
 		}
 	]
 }

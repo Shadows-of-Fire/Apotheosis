@@ -2,12 +2,12 @@
     "name": "ウィザー",
     "icon": "minecraft:textures/mob_effect/wither.png",
     "category": "apotheosis:potion/recipes",
-	"flag": "&apotheosis:potion,!apotheosis:wstloaded",
+	"flag": "apotheosis:potion",
 	"sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)ウィザー$()はデバフ効果だがバニラではポーション作成は不可。$(p)この効果を受けてしまうと、毎ティックの継続ダメージを受けることになる。$(p)毒とは違い、この効果は放置すればそのまま死因になる。"
+            "text": "$(c)ウィザー$()はデバフ効果だがバニラでのポーション作成は不可能だ。$(p)この効果を受けてしまうと、2秒毎に継続ダメージを受けることになる（レベルIIなら1秒毎）。$(p)毒とは違い、この効果は放置すればそのまま死因になる。"
         },
 		{
             "type": "patchouli:spotlight",

@@ -1,0 +1,7 @@
+{
+    "name": "ジェムとソケット",
+    "description": "キラキラした石は、常に人の目を引く。$(p)Apotheosis世界のキラキラした石、ジェムを探すのだ。それは、称号付きアイテムに嵌め込むことで様々なボーナスを与えてくれるだろう。",
+    "icon": "apotheosis:gem",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

@@ -1,13 +1,13 @@
 {
     "name": "崩壊",
-    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
     "category": "apotheosis:potion/effects",
 	"flag": "apotheosis:potion",
 	"sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)崩壊$()ポーションはデバフ効果を与える。$(p)この効果を受けている間は、全ての受けるダメージが1レベルあたり20%増加してしまう。"
+            "text": "$(c)崩壊$()は同名のポーションで与えることができるデバフ効果である。$(p)この効果を受けている間は、全ての受けるダメージが1レベルあたり20%増加してしまう。"
         },
 		{
             "type": "patchouli:text",
