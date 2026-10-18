@@ -185,6 +185,7 @@ public class Apotheosis {
         ExtraGemBonusRegistry.INSTANCE.registerToBus();
         GemRegistry.INSTANCE.registerToBus();
         AffixLootRegistry.INSTANCE.registerToBus();
+        AffixLootRegistry.registerDeferredValidation();
         InvaderRegistry.INSTANCE.registerToBus();
         RogueSpawnerRegistry.INSTANCE.registerToBus();
         EliteRegistry.INSTANCE.registerToBus();
