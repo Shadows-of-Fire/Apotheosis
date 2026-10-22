@@ -7,6 +7,7 @@ import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -42,6 +43,21 @@ public class SalvagingTableTile extends BlockEntity implements Clearable {
     public void loadAdditional(ValueInput in) {
         super.loadAdditional(in);
         in.readChild("output", this.output);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        if (this.level != null) {
+            for (int i = 0; i < this.output.size(); i++) {
+                ItemResource res = this.output.getResource(i);
+                int amount = this.output.getAmountAsInt(i);
+                if (!res.isEmpty() && amount > 0) {
+                    Block.popResource(this.level, pos, res.toStack(amount));
+                }
+            }
+            this.clearContent();
+        }
+        super.preRemoveSideEffects(pos, state);
     }
 
     @Override
