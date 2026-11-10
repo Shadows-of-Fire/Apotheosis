@@ -188,7 +188,7 @@
     "affix.apotheosis:weapon/attribute/nullifying": "无效化",
     "affix.apotheosis:weapon/attribute/nullifying.suffix": "无效化",
 
-    "affix.apotheosis:melee/attribute/giant_slaying": "爆杀",
+    "affix.apotheosis:melee/attribute/giant_slaying": "屠巨",
     "affix.apotheosis:melee/attribute/giant_slaying.suffix": "巨人打击",
 
     "affix.apotheosis:melee/attribute/berserking": "狂暴",
@@ -252,7 +252,7 @@
     "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "自然毒素",
 
     "affix.apotheosis:ranged/mob_effect/satanic": "邪恶",
-    "affix.apotheosis:ranged/mob_effect/satanic.suffix": "诅咒",
+    "affix.apotheosis:ranged/mob_effect/satanic.suffix": "烈焰地狱",
 
     "affix.apotheosis:ranged/spectral": "光灵",
     "affix.apotheosis:ranged/spectral.suffix": "被遗弃者",
@@ -329,7 +329,7 @@
     "affix.apotheosis:melee/mob_effect/sophisticated": "老练",
     "affix.apotheosis:melee/mob_effect/sophisticated.suffix": "古代图书馆",
 
-    "affix.apotheosis:shield/mob_effect/devilish": "残忍",
+    "affix.apotheosis:shield/mob_effect/devilish": "邪魔",
     "affix.apotheosis:shield/mob_effect/devilish.suffix": "老兵",
 
     "affix.apotheosis:breaker/effect/radial": "范围",
@@ -367,7 +367,7 @@
     "affix.apotheosis:shield/mob_effect/reinforcing": "强化",
     "affix.apotheosis:shield/mob_effect/reinforcing.suffix": "钢铁",
 
-    "affix.apotheosis:melee/attribute/lengthy": "冗长",
+    "affix.apotheosis:melee/attribute/lengthy": "极长",
     "affix.apotheosis:melee/attribute/lengthy.suffix": "极限长度",
 
     "affix.apotheosis:ranged/mob_effect/blighted": "枯萎",
@@ -414,7 +414,7 @@
     "affix.apotheosis:armor/dmg_reduction/runed": "符文",
     "affix.apotheosis:armor/dmg_reduction/runed.suffix": "咒法监守",
 
-    "affix.apotheosis:armor/dmg_reduction/blast_forged": "爆诞",
+    "affix.apotheosis:armor/dmg_reduction/blast_forged": "爆锻",
     "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "锻造之神",
 
     "affix.apotheosis:armor/dmg_reduction/dwarven": "矮人",
@@ -1004,8 +1004,8 @@
     "painting.apotheosis.window.author": "Faellynna",
 
     "stat.apotheosis.world_tiers_activated": "世界层级更改次数",
-    "apotheosis.subtitle.reforge_item_placed": "物品：放入重铸台",
-    "apotheosis.subtitle.reforge_item_reforged": "物品：重铸",
+    "apotheosis.subtitle.reforge_item_placed": "物品：被放入重铸台",
+    "apotheosis.subtitle.reforge_item_reforged": "物品：被重铸",
     "apotheosis.subtitle.malice": "恶意符石：施加恶意",
 
     "apotheosis.subtitle.invader_uncommon": "罕见神化入侵者：生成",
