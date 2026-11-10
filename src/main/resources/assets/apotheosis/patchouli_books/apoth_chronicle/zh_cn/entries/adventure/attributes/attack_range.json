@@ -1,5 +1,5 @@
 {
-    "name": "攻击范围",
+    "name": "实体交互距离",
     "icon": "minecraft:skeleton_skull",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "你的$(9)攻击范围$()是你可以用近战武器攻击目标的最大距离。$(p)通常发现于武器。"
+            "text": "你的$(9)实体交互距离$()是你可以用近战武器攻击目标的最大距离。$(p)通常发现于武器。"
         }
 	]
 }

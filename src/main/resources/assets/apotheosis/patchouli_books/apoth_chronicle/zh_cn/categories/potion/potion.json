@@ -1,6 +1,6 @@
 {
-    "name": "药水模块",
-    "description": "药水模块负责新的药水和药水配方。$(p)几乎所有的药水。",
+    "name": "药水",
+    "description": "$(9)Apothic Attributes$()负责一些新的药水和药水配方。",
     "icon": "minecraft:potion",
 	"flag": "apotheosis:potion"
 }
