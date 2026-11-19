@@ -1,0 +1,17 @@
+{
+    "name": "Fervor minero",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(5)Fervor minero$() es un encantamiento Retorcido para herramientas de minería.$(p)Hace que rompas bloques muy rápido, pero nunca al instante. Los bloques que ya se rompen al instante no se ven afectados."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Aunque tiene un límite de velocidad, la mejora por nivel es mucho mayor que la de $(9)Eficiencia$().$(p)Por eso es ideal para herramientas con poca velocidad base.$(p)Por razones obvias, es incompatible con $(9)Eficiencia$()."
+        }
+	]
+}

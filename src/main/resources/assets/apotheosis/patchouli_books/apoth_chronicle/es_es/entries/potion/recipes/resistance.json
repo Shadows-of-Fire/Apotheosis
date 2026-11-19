@@ -1,0 +1,19 @@
+{
+    "name": "Resistencia",
+    "icon": "minecraft:textures/mob_effect/resistance.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Resistencia$() es un efecto bastante útil sin receta en vanilla.$(p)Cada nivel da +20% de reducción de daño de cualquier fuente.$(p)También la necesitarás para las pociones de $(l:apotheosis:potion/effects/sundering)Quebranto$()."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Receta de poción",
+			"item": "minecraft:shulker_shell",
+            "text": "Esta poción se prepara con una Poción rara y un Caparazón de shulker.$(p)Se puede alargar, potenciar o convertir en arrojadiza con los ingredientes habituales."
+        }
+	]
+}

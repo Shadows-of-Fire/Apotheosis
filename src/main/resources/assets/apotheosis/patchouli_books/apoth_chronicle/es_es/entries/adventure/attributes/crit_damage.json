@@ -1,0 +1,13 @@
+{
+    "name": "Daño crítico",
+    "icon": "minecraft:netherite_axe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "El $(9)Daño crítico$() es el modificador de daño de tus críticos.$(p)Los críticos al saltar también usan tu Daño crítico, no el multiplicador habitual de 1,5x.$(p)Aparece en armas."
+        }
+	]
+}

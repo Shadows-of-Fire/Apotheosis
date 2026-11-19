@@ -1,0 +1,17 @@
+{
+    "name": "Sobrecuración",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Con $(9)Sobrecuración$(), parte del daño físico que infliges se convierte en un escudo de absorción.$(p)A diferencia del robo de vida, la Sobrecuración funciona con la salud al máximo."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "La absorción se limita a la mitad de tu salud máxima y solo se aplica a golpes cuerpo a cuerpo.$(p)Solo aparece en armas cuerpo a cuerpo."
+        }
+	]
+}

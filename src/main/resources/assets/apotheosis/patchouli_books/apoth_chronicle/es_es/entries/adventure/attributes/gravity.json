@@ -1,0 +1,13 @@
+{
+    "name": "Gravedad",
+    "icon": "minecraft:elytra",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Gravedad$() es lo rápido que caes, aplicada cada tick (en vanilla, 0,08).$(p)Aparece en petos y en algunas gemas básicas.$(p)Nota: la gravedad puede ser negativa. Si lo es, flotas hacia arriba."
+        }
+	]
+}

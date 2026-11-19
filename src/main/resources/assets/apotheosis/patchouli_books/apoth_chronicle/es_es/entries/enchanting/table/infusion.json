@@ -1,0 +1,20 @@
+{
+    "name": "Encantamiento por infusión",
+    "icon": "apothic_enchanting:infused_hellshelf",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "El $(9)Encantamiento por infusión$() es una nueva forma de fabricar con la Mesa de encantamientos.$(p)Cada receta tiene un solo objeto y tres requisitos de estadísticas."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Cada requisito suele exigir un valor mínimo y, opcionalmente, puede tener un valor máximo.$(p)Las infusiones solo usan la tercera ranura, cuestan tres lapislázulis y tantos niveles como el requisito de $(eterna) de la receta (mínimo 3)."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "Para hacer una infusión, basta con poner el objeto en la ranura.$(p)Si tienes las estadísticas adecuadas, la tercera ranura se iluminará; haz clic en ella para realizar la infusión."
+		}
+	]
+}

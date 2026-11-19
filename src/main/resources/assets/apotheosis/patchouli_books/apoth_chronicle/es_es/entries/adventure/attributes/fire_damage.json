@@ -1,0 +1,13 @@
+{
+    "name": "Daño por fuego",
+    "icon": "minecraft:blaze_powder",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "El $(9)Daño por fuego$() es daño mágico extra en ataques cuerpo a cuerpo. También prende fuego al objetivo un rato; cuanto más daño, más dura.$(p)Aparece en armas cuerpo a cuerpo."
+        }
+	]
+}

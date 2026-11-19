@@ -1,0 +1,13 @@
+{
+    "name": "Velocidad de minado",
+    "icon": "minecraft:netherite_pickaxe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Aumentar tu $(9)Velocidad de minado$() hace que rompas bloques más rápido. Con el valor base de 1,0, los rompes a velocidad normal.$(p)Aparece en herramientas que rompen bloques y en tijeras."
+        }
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Defensas reflectantes",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Defensas reflectantes$() es un encantamiento para escudos.$(p)Cada ataque bloqueado puede devolver parte del daño bloqueado al atacante.$(p)Cada reflejo le cuesta algo de durabilidad al escudo."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "El daño reflejado se convierte en daño mágico.$(p)Con niveles lo bastante altos de $(9)Defensas reflectantes$() se inflige más daño que el original."
+        }
+	]
+}

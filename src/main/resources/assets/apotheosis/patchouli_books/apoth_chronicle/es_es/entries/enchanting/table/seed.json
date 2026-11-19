@@ -1,0 +1,16 @@
+{
+    "name": "Semilla de encantamiento",
+    "icon": "minecraft:wheat_seeds",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Todo el encantamiento (y alguna otra mecánica) depende de tu $(9)Semilla de encantamiento$().$(p)La semilla cambia cada vez que encantas algo en una mesa de encantamientos."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Si tu semilla no cambia, todos los resultados aleatorios que dependen de ella se mantienen.$(p)Por ejemplo, los encantamientos que salen en una ranura concreta dependen de la semilla."
+		}
+	]
+}

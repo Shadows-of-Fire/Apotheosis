@@ -1,0 +1,13 @@
+{
+    "name": "Crescendo de virotes",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Crescendo de virotes$() es un encantamiento Magistral para ballestas.$(p)Cada nivel del encantamiento te da un disparo extra por recarga.$(p)Los disparos extra no gastan munición."
+        }
+	]
+}

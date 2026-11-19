@@ -1,0 +1,7 @@
+{
+    "name": "Criaturas apóticas",
+    "description": "Apotheosis introduce varios subtipos de criaturas que aparecerán en tu mundo.$(p)Esta sección explica qué tipos de criaturas hay y dónde encontrarlas.",
+    "icon": "apotheosis:boss_summoner",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

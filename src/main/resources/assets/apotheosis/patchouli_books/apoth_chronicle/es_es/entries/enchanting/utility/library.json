@@ -1,0 +1,36 @@
+{
+    "name": "Bibliotecas",
+    "icon": "apothic_enchanting:library",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Una Biblioteca de encantamientos sirve para almacenar encantamientos.$(p)Inserta libros encantados y cada encantamiento del libro se guardará como puntos."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Cada biblioteca tiene una $(6)Capacidad de nivel$(): el nivel más alto de encantamiento que puede guardar.$(p)Los excedentes se destruyen."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "Al hacer clic en un encantamiento guardado, extraerás un nivel de ese encantamiento.$(p)Con Mayús + clic extraerás tantos niveles como sea posible.$(p)Los libros se generan en la ranura de salida según haga falta."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "También puedes poner un $(9)Libro encantado$() en la ranura de salida para añadirle encantamientos.$(p)La biblioteca registra el nivel máximo insertado de cada encantamiento, y solo puede extraer hasta ese nivel."
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:library",
+			"text": "La $(9)Biblioteca de encantamientos$() normal tiene una $(6)Capacidad de nivel$() de dieciséis (XVI)."
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "apothic_enchanting:ender_library",
+			"link_recipe": true,
+			"text": "La $(9)Biblioteca de Alejandría$() tiene una $(6)Capacidad de nivel$() de treinta y uno (XXXI).$(p)No se fabrica directamente: se crea con el $(l:apotheosis:enchanting/table/infusion)Encantamiento por infusión$()."
+		}
+	]
+}

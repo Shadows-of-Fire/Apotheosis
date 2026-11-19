@@ -1,0 +1,13 @@
+{
+    "name": "Daño de ataque",
+    "icon": "minecraft:diamond_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "El $(9)Daño de ataque$() es el atributo que determina cuánto daño hacen tus ataques.$(p)Suelen proporcionarlo las armas."
+        }
+	]
+}

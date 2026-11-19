@@ -1,0 +1,32 @@
+{
+    "name": "Niveles 80 - 100",
+    "icon": "apothic_enchanting:endshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"title": "Llegar al nivel 90",
+			"item": "apothic_enchanting:infused_breath",
+			"text": "Acceder al penúltimo escalón requiere una mesa de nivel 80 y $(9)Aliento de dragón$().$(p)Con ellos puedes crear $(9)Aliento de dragón infundido$(), componente clave de las $(9)Librerías del End$()."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Llegar al nivel 90",
+			"recipe": "apothic_enchanting:endshelf",
+			"recipe2": "apothic_enchanting:pearl_endshelf"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Llegar al nivel 100",
+			"item": "minecraft:dragon_head",
+			"text": "El nivel máximo de una Mesa de encantamientos es el 100, pero solo una librería puede dar tanto poder.$(p)Crearla requiere aventurarse en las islas exteriores del End para conseguir una $(9)Cabeza de dragón$()."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Llegar al nivel 100",
+			"recipe": "apothic_enchanting:draconic_endshelf",
+			"text": "Una sola $(9)Librería del End dracónica$() basta para subir una mesa del nivel 90 al 100.$(p)Sin embargo, no mejora ninguna otra estadística."
+		}
+	]
+}

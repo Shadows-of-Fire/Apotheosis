@@ -1,0 +1,13 @@
+{
+    "name": "Desgarro de protección",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "El $(9)Desgarro de protección$() ignora un porcentaje de los puntos de protección del objetivo al atacar.$(p)El $(9)Desgarro$() se aplica antes que la $(9)Perforación de protección$()."
+        }
+	]
+}

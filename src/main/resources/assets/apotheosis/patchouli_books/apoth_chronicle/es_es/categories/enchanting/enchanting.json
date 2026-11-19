@@ -1,0 +1,6 @@
+{
+    "name": "Encantamiento",
+    "description": "$(9)Apothic Enchanting$() se encarga de todos los cambios del sistema de encantamiento.$(p)Hay mucho contenido, así que echa un vistazo.",
+    "icon": "minecraft:enchanting_table",
+	"flag": "apotheosis:enchanting"
+}

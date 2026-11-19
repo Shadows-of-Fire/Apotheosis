@@ -1,0 +1,31 @@
+{
+    "name": "Caja de Gemas",
+    "icon": "apotheosis:gem_case",
+    "category": "apotheosis:adventure/gems",
+	"flag": "apotheosis:adventure",
+	"sortnum": 6,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_case",
+			"text": "La $(9)Caja de Gemas$() sirve para almacenar $(l:apotheosis:adventure/gems/gems)gemas$().$(p)Guarda hasta treinta y dos mil gemas de cada tipo y pureza, y se puede mejorar para que quepan más."
+		},
+        {
+            "title": "Filtros",
+            "type": "patchouli:text",
+            "text": "La Caja de Gemas tiene dos filtros: uno por nombre y otro por objeto.$(p)El filtro por nombre te permite buscar una gema por su nombre, y el filtro por objeto, buscar gemas que encajen en un objeto concreto."
+        },
+		{
+			"title": "Tallado de gemas",
+            "type": "patchouli:text",
+            "text": "La Caja de Gemas también tiene seis ranuras auxiliares para materiales de mejora.$(p)Si hay suficientes materiales y gemas, siguiendo las recetas de mejora de pureza, puedes mejorar gemas en la propia caja.$(p)En la práctica, esto deja obsoleta la $(l:apotheosis:adventure/gems/gem_cutting)Mesa de Tallado de Gemas$()."
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:ender_gem_case",
+            "title": "Caja de Gemas suprema",
+            "link_recipe": true,
+            "text": "La $(9)Caja de Gemas de la Casa Fabergé$() tiene una $(6)capacidad$() de dos mil millones.$(p)No se fabrica directamente: se crea mediante $(l:apotheosis:enchanting/table/infusion)Encantamiento por infusión$()."
+        }
+	]
+}

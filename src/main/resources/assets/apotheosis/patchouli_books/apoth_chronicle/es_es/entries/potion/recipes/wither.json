@@ -1,0 +1,19 @@
+{
+    "name": "Descomposición",
+    "icon": "minecraft:textures/mob_effect/wither.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(c)Descomposición$() es un efecto hostil que normalmente no se puede preparar.$(p)Con ella recibes daño cada dos segundos (cada segundo en el nivel II).$(p)A diferencia del Veneno, este daño es letal."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Receta de poción",
+			"item": "minecraft:wither_skeleton_skull",
+            "text": "Esta poción se prepara con una Poción rara y una Calavera de esqueleto del Wither.$(p)Se puede alargar, potenciar o convertir en arrojadiza con los ingredientes habituales."
+        }
+	]
+}

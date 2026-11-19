@@ -1,0 +1,37 @@
+{
+    "name": "Niveles de Mundo",
+    "icon": "apotheosis:textures/gui/book/summit_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Un $(6)Nivel de Mundo$() es un modificador de la fuerza del mundo para cada jugador. Cada nivel controla qué contenido aparece, lo fuertes que son los enemigos, qué bonificaciones puedes recibir y más."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Los niveles",
+            "text": "Hay cinco niveles, y cada uno sube la dificultad del mundo y las recompensas más que el anterior.$(p)Los niveles son $(9)Refugio$(), $(9)Frontera$(), $(9)Ascenso$(), $(9)Cumbre$() y $(9)Pináculo$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Aumentos de nivel",
+            "text": "Cada nivel tiene aumentos: modificadores que se aplican a los jugadores de ese nivel o a las criaturas que aparecen en él, o a ambos.$(p)Incluyen límites a tu $(eterna) máxima de encantamiento y reducción de daño para los monstruos en Cumbre y Pináculo.$(p)Puedes ver todos los aumentos de cada nivel en la $(l:apotheosis:adventure/world_tiers/select_screen)pantalla de selección$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Probabilidad de rareza",
+            "text": "Los Niveles de Mundo también fijan el peso de cada rareza.$(p)Según avances, los objetos (e Invasores) de mayor rareza serán más comunes.$(p)Las probabilidades exactas se ven en la $(l:apotheosis:adventure/world_tiers/select_screen)pantalla de selección$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Gemas",
+            "text": "Los Niveles de Mundo también determinan qué gemas pueden aparecer y con qué purezas.$(p)Como antes, las probabilidades detalladas de pureza están en la pantalla de selección."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Otras notas",
+            "text": "Los niveles también pueden ajustar la tasa de aparición de otras cosas, como afijos, entradas de botín con afijos y élites.$(p)Estas tasas no se muestran, pero puedes encontrar contenido distinto en cada nivel."
+        }
+    ]
+}

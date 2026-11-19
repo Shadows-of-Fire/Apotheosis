@@ -1,0 +1,7 @@
+{
+    "name": "Generadores Errantes",
+    "description": "Por las cuevas hay generadores sueltos, coronados por un bloque duro y con un cofre oculto debajo.$(p)Como no tienen origen, propósito ni dueño conocidos, los llamamos $(9)Generadores Errantes$().",
+    "icon": "minecraft:spawner",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

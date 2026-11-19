@@ -1,0 +1,16 @@
+{
+    "name": "Encantabilidad del objeto",
+    "category": "apotheosis:enchanting/table",
+    "icon": "minecraft:golden_sword",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "En vanilla, la encantabilidad de un objeto suma a tu $(fpower_eses).$(p)Apotheosis elimina eso y, en su lugar, la trata como una probabilidad de reforzar cada encantamiento que obtienes."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Cada encantamiento obtenido puede, según la encantabilidad del objeto, ganar un nivel extra.$(p)Así un encantamiento puede superar su máximo normal. Esos niveles llevan una estrella en el nombre."
+        }
+    ]
+}

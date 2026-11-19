@@ -1,0 +1,19 @@
+{
+    "name": "Captura",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Para cambiar la entidad de un Generador de Criaturas, usa un $(9)Huevo generador$().$(p)Los huevos no suelen obtenerse, así que Apothic Spawners añade el encantamiento $(9)Captura$()."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "minecraft:cow_spawn_egg",
+			"title": "Huevos generadores",
+            "text": "Cada nivel de $(9)Captura$() da una probabilidad muy pequeña de que las entidades suelten su huevo generador al morir.$(p)Las entidades sin huevo generador o excluidas (p. ej., jefes) no pueden soltarlo."
+        }
+	]
+}

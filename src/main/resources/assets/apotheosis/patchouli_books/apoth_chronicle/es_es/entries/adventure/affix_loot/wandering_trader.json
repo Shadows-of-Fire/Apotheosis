@@ -1,0 +1,25 @@
+{
+    "name": "Vendedor ambulante",
+    "icon": "minecraft:emerald",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 10,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "¿Has visto alguna vez a esos turbios mercaderes que aparecen sin más en tu jardín?$(p)Son los $(9)vendedores ambulantes$().$(p)Suelen vender pura basura."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Pero Apotheosis les añade un montón de intercambios, así que ahora sí merece la pena tratar con ellos.$(p)Ofrecen objetos como $(9)Faros$() y $(9)Tótems de la inmortalidad$(), y $(9)objetos con afijos$() aleatorios por esmeraldas más su material de reparación."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "En $(9)Cumbre$() y $(9)Pináculo$() también pueden ofrecer potente equipo predefinido. Casi todo requiere Apothic Enchanting o Apothic Spawners."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Apotheosis también hace que los vendedores ambulantes vengan más a menudo, se queden menos y puedan aparecer bajo tierra (configurable)."
+        }
+    ]
+}

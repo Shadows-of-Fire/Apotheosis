@@ -1,0 +1,17 @@
+{
+    "name": "Élites",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "A veces verás por tu mundo criaturas con nombre o potenciadas.$(p)Seguramente sean $(9)Élites Apóticos$()."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Aparecen al azar en lugar de sus equivalentes normales.$(p)No hacen entradas llamativas como los Invasores, así que no bajes la guardia.$(p)También pueden soltar objetos con afijos."
+		}
+	]
+}

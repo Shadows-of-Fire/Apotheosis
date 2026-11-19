@@ -18,6 +18,8 @@
     "text.apotheosis.world_tier.pinnacle": "Pináculo",
     "text.apotheosis.world_tier.pinnacle.desc": "Sumérgete en las cumbres tormentosas de la montaña",
 
+    "text.apotheosis.world_tier.difficulty": "Dificultad:",
+
     "title.apotheosis.select_world_tier": "Seleccione el Nivel de Mundo",
     "title.apotheosis.world_tier_details": "Detalles del Nivel de Mundo",
 
@@ -60,15 +62,16 @@
     "tutorial.apotheosis.world_tier.tier_difficulty.desc": "Esta es la dificultad del Nivel de Mundo seleccionado. Dificultades más altas significan mobs más fuertes, pero también mejores recompensas.\n\nEn el Nivel de Mundo: Frontera y superiores, comenzarán a aparecer Invasores Apóticos en tu mundo.",
     
     "tutorial.apotheosis.world_tier.detailed_info.title": "Información Detallada", 
-    "tutorial.apotheosis.world_tier.detailed_info.desc": "Este botón te mostrará información detallada sobre el Nivel de Mundo, incluyendo los buffs y debuffs para jugadores y mobs, así como las probabilidades de obtención para cada rareza y pureza de gema.\n\nSi no estás seguro de qué son las Rarezas o las Purezas, consulta el Chronicle of Shadows (el libro de guía dentro del juego).",
+    "tutorial.apotheosis.world_tier.detailed_info.desc": "Este botón te mostrará información detallada sobre el Nivel de Mundo, incluyendo los buffs y debuffs para jugadores y mobs, así como las probabilidades de obtención para cada rareza y pureza de gema.\n\nSi no estás seguro de qué son las Rarezas o las Purezas, consulta las Crónicas Sombrías (el libro de guía dentro del juego).",
     
     "tutorial.apotheosis.world_tier.activate.title": "Activar Niveles de Mundo",
-    "tutorial.apotheosis.world_tier.activate.desc": "Este botón te permite activar el Nivel de Mundo seleccionado, si no está ya activo.\n\nHacer clic en \"Hecho\" activará automáticamente el Nivel de Mundo: Haven. Para todos los demás Niveles de Mundo, necesitarás volver aquí y activarlos tú mismo.",
+    "tutorial.apotheosis.world_tier.activate.desc": "Este botón te permite activar el Nivel de Mundo seleccionado, si no está ya activo.\n\nHacer clic en \"Hecho\" activará automáticamente el Nivel de Mundo: Refugio. Para todos los demás Niveles de Mundo, necesitarás volver aquí y activarlos tú mismo.",
     "tutorial.apotheosis.world_tier.activate_disabled.desc": "Normalmente, este botón te permite activar el Nivel de Mundo seleccionado.\n\nSin embargo, en este modpack, los Niveles de Mundo se activan automáticamente y no se pueden cambiar manualmente. Aún puedes ver los detalles de cada Nivel de Mundo, pero no puedes activarlo o desactivarlo.",
 
     "text.apotheosis.tier_info": "Información de Nivel de Mundo",
     "text.apotheosis.monster_augments": "Aumentos de Mobs",
     "text.apotheosis.player_augments": "Aumentos de Jugador",
+    "tier_augment.apotheosis.damage_reduction": "+%s%% de resistencia (%s)",
     "text.apotheosis.drop_chances": "Probabilidades de Obtención",
     "text.apotheosis.rarities": "Rarezas",
     "text.apotheosis.purities": "Purezas",
@@ -77,13 +80,14 @@
     "text.apotheosis.world_tier_tutorial.2": "Presiona %s y activa el Nivel de Mundo: Refugio para desbloquearlo",
 
     "key.apotheosis.toggle_radial_mining": "Cambiar Modo de Minado Radial",
+    "key.apotheosis.toggle_attribute_bonuses": "Alternar Bonificaciones de Atributos de las Botas",
     "key.apotheosis.open_world_tier_select": "Abrir Selección de Nivel de Mundo",
     "key.apotheosis.compare_equipment": "Comparar Equipamiento Seleccionado",
     "key.apotheosis.link_item_to_chat": "Vincular Objeto Seleccionado al Chat",
 
     "chat.apotheosis.link_item_with_count": "%s %s",
 
-    "info.apotheosis.affix_item": "Fijar Objeto Apótico",
+    "info.apotheosis.affix_item": "Objeto con Afijos Apótico",
 
     "death.attack.apotheosis:execute": "%s fue ejecutado por %s",
     "death.attack.apotheosis:execute.item": "%s fue ejecutado por %s usando %s",
@@ -94,6 +98,11 @@
     "misc.apotheosis.affix_name.four": "%s %s %s %s",
     "misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
 
+    "misc.apotheosis.attribute_toggle.updated": "Bonificaciones de %s: %s",
+    "misc.apotheosis.attribute_toggle.none": "Tus botas no tienen ningún afijo para alternar atributos.",
+    "misc.apotheosis.attribute_toggle.state": "[%s]",
+    "misc.apotheosis.attribute_toggle.on": "Activadas",
+    "misc.apotheosis.attribute_toggle.off": "Desactivadas",
     "misc.apotheosis.radial_state_updated": "Modo de minado radial actualizado a \"%s\"",
     "misc.apotheosis.radial_state.require_not_sneaking": "Desactivado mientras se agacha",
     "misc.apotheosis.radial_state.require_sneaking": "Activado mientras se agacha",
@@ -172,6 +181,12 @@
 
     "affix.apotheosis:weapon/attribute/shredding": "Desgarrador",
     "affix.apotheosis:weapon/attribute/shredding.suffix": "del Remolino",
+
+    "affix.apotheosis:weapon/attribute/runebreaking": "Rompe Runas",
+    "affix.apotheosis:weapon/attribute/runebreaking.suffix": "del Rompedor de Runas",
+
+    "affix.apotheosis:weapon/attribute/nullifying": "Anulador",
+    "affix.apotheosis:weapon/attribute/nullifying.suffix": "de la Anulación",
 
     "affix.apotheosis:melee/attribute/giant_slaying": "Asesino de Gigantes",
     "affix.apotheosis:melee/attribute/giant_slaying.suffix": "de los Golpes Colosales",
@@ -272,6 +287,15 @@
     "affix.apotheosis:melee/cleaving.suffix": "del Carnicero",
     "affix.apotheosis:melee/cleaving.desc": "Los ataques tienen un %s%% de probabilidad de golpear a hasta %s enemigos cercanos.",
 
+    "affix.apotheosis:boots/ability/unhurried": "Pausado",
+    "affix.apotheosis:boots/ability/unhurried.suffix": "del Viaje Tranquilo",
+    "affix.apotheosis:boots/ability/unhurried.desc": "Pulsa %s para alternar todas las bonificaciones de Velocidad de movimiento.",
+    "affix.apotheosis:boots/ability/surefooted": "Firme",
+    "affix.apotheosis:boots/ability/surefooted.suffix": "del Paso Medido",
+    "affix.apotheosis:boots/ability/surefooted.desc": "Pulsa %s para alternar todas las bonificaciones de Altura de paso.",
+    "affix.apotheosis:boots/ability/steadfast": "Inquebrantable",
+    "affix.apotheosis:boots/ability/steadfast.suffix": "de la Rigidez",
+    "affix.apotheosis:boots/ability/steadfast.desc": "Pulsa %s para alternar todas las bonificaciones de Velocidad de movimiento y Altura de paso.",
     "affix.apotheosis:breaker/ability/enlightened": "Iluminado",
     "affix.apotheosis:breaker/ability/enlightened.suffix": "del Portador de la Luz",
     "affix.apotheosis:breaker/ability/enlightened.desc": "Esta herramienta puede colocar una fuente de luz a costa de %s de durabilidad.",
@@ -465,7 +489,7 @@
     "text.apotheosis.when_socketed_typed": "Cuando está Acoplado en %s:",
     "info.apotheosis.socketing": "Las gemas pueden ser acopladas con una Mesa de Herrería. El objeto está a la izquierda y la gema a la derecha.\n\nElige sabiamente, ya que remover una gema acoplada es costoso.",
 
-    "purity.apotheosis.cracked": "Rachado",
+    "purity.apotheosis.cracked": "Rajado",
     "purity.apotheosis.chipped": "Lascado",
     "purity.apotheosis.flawed": "Imperfecto",
     "purity.apotheosis.normal": "Normal",
@@ -502,6 +526,7 @@
     "bonus.apotheosis:multi_attr.desc.and_but": "%s y %s, pero %s",
     "bonus.apotheosis:multi_attr.desc.but_and": "%s, pero %s y %s",
     "bonus.apotheosis:bloody_arrow.desc": "Al disparar, pierdes %s%% de Vida Máxima y realizas %s%% de daño. %s",
+    "bonus.apotheosis:anti_gravity_arrow.desc": "Las flechas disparadas no se ven afectadas por la gravedad.",
     "bonus.apotheosis:leech_block.desc": "Bloquear un ataque te cura por %s%% del daño. %s",
     "bonus.apotheosis:all_stats.desc": "+%s%% a Todos los Atributos",
     "gem.apotheosis:overworld/royalty.bonus.pickaxe": "Romper Mena de Cobre tiene un %s%% de probabilidad de soltar Oro en Bruto.",
@@ -539,8 +564,8 @@
     "item.apotheosis.gem.apotheosis:twilight/forest": "Gema del Bosque del Atardecer",
     "item.apotheosis.gem.apotheosis:twilight/queen": "Gema de la Reina Helada",
 
-    "item.apotheosis.boss_summoner": "Invocador de Jefes Apóticos",
-    "item.apotheosis.gem.cracked": "Rachada %s",
+    "item.apotheosis.boss_summoner": "Invocador de Invasores Apóticos",
+    "item.apotheosis.gem.cracked": "Rajada %s",
     "item.apotheosis.gem.chipped": "Lascada %s",
     "item.apotheosis.gem.flawed": "Imperfecta %s",
     "item.apotheosis.gem.normal": "%s",
@@ -576,7 +601,7 @@
     "item.apotheosis.sigil_of_unnaming.desc": "Elimina el nombre afijado a un objeto",
 
     "item.apotheosis.sigil_of_malice": "Sello de Malicia",
-    "item.apotheosis.sigil_of_malice.desc": "Aplica Toque de Malicia a un Objeto Afijado",
+    "item.apotheosis.sigil_of_malice.desc": "Sobrecarga un Afijo y reinicia otro",
 
     "item.apotheosis.sigil_of_supremacy": "Sello de Supremacía",
     "item.apotheosis.sigil_of_supremacy.desc": "Sobrecarga todos los Afijos de un Objeto Afijado",
@@ -698,11 +723,15 @@
     "text.apotheosis.any_x_item": "Cualquier Objeto con Afijo %s",
     "text.apotheosis.any_affix_item": "Cualquier Objeto con Afijo",
     "text.apotheosis.malice_marker": "La Malicia se aplicará al crear",
-    "text.apotheosis.touched_by_malice": "Tocado por la Malicia",
+    "text.apotheosis.touched_by_malice": "Tocado por la Malicia (x%s)",
     "text.apotheosis.malice_notice": "Malicia: %s consumió la fuerza de %s",
+    "text.apotheosis.malice_notice_final": "¡La Malicia se entrelaza con %s y se apodera por completo de tu objeto!",
 
     "title.apotheosis.smithing": "Forja Apótica",
     "title.apotheosis.salvaging": "Reciclaje",
+    "title.apotheosis.stoneforming": "Formación de Piedra",
+    "info.apotheosis.stoneforming": "Una herramienta con el afijo %s puede convertir estos bloques entre sí.",
+    "info.apotheosis.stoneforming.target": "Mayús + clic derecho en un bloque para elegirlo como objetivo.",
 
     "text.apotheosis.anything": "Cualquiera",
     "loot_category.apotheosis.none": "Nada",
@@ -737,7 +766,7 @@
     "loot_category.apotheosis.shears.plural": "Tijeras",
     
     "info.apotheosis.boss_spawn": "%s ha despertado cerca!",
-    "info.apotheosis.boss": "Jefe Apótico %s",
+    "info.apotheosis.boss": "Invasor Apótico %s",
     "info.apotheosis.boss_item": "Soltará: %s",
     "info.apotheosis.boss_modifiers": "Modificadores del Jefe:",
     "info.apotheosis.rarity_material": "Material de Rareza (%s)",
@@ -865,7 +894,7 @@
     "advancements.apotheosis.ancient.desc": "Encuentra un objeto con un Afijo Antiguo",
 
     "advancements.apotheosis.boss": "No Era Tan Fuerte",
-    "advancements.apotheosis.boss.desc": "Mata a un Jefe Apótico y recupera su objeto con afijo",
+    "advancements.apotheosis.boss.desc": "Mata a un Invasor Apótico y recupera su objeto con afijos",
     "advancements.apotheosis.chests": "Lo Encontré Bajo Tierra",
     "advancements.apotheosis.chests.desc": "Encuentra un objeto con afijo en un cofre",
     "advancements.apotheosis.merchant": "Tengo Ofertas",
@@ -980,13 +1009,13 @@
     "apotheosis.subtitle.reforge_item_reforged": "Objeto reforjado",
     "apotheosis.subtitle.malice": "Sello de Malicia aplica malicia",
 
-    "apotheosis.subtitle.invader_uncommon": "Invasor Apotrico Incomún aparece",
-    "apotheosis.subtitle.invader_rare": "Invasor Apotrico Raro aparece",
-    "apotheosis.subtitle.invader_epic": "Invasor Apotrico Épico aparece",
-    "apotheosis.subtitle.invader_mythic": "Invasor Apotrico Mítico aparece",
+    "apotheosis.subtitle.invader_uncommon": "Aparece un Invasor Apótico Poco Común",
+    "apotheosis.subtitle.invader_rare": "Aparece un Invasor Apótico Raro",
+    "apotheosis.subtitle.invader_epic": "Aparece un Invasor Apótico Épico",
+    "apotheosis.subtitle.invader_mythic": "Aparece un Invasor Apótico Mítico",
 
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Crónicas Sombrías",
     "book.apotheosis.subtitle": "Guía de Apotheosis",
-    "book.apotheosis.landing": "Bienvenido al mundo de Apotheosis.$(br2)Apotheosis está organizado en $(#8080FF)Módulos$(), y el contenido de este libro también lo está.$(br2)Los módulos deshabilitados están ocultos."
+    "book.apotheosis.landing": "Bienvenido al mundo de Apotheosis.$(br2)Apotheosis es uno de los mods $(#8080FF)Apothic$(), y este libro los abarca todos.$(br2)Cada sección solo aparece si el mod correspondiente está instalado."
 }

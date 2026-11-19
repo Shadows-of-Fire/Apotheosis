@@ -1,0 +1,7 @@
+{
+    "name": "Objetos de utilidad",
+    "description": "Esta sección detalla las diversas herramientas que facilitan encantar.",
+    "icon": "apothic_enchanting:library",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

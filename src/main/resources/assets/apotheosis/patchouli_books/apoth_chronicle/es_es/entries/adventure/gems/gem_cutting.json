@@ -1,0 +1,19 @@
+{
+    "name": "Tallado de gemas",
+    "icon": "apotheosis:gem_cutting_table",
+    "category": "apotheosis:adventure/gems",
+	"flag": "apotheosis:adventure",
+	"sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_cutting_table",
+			"text": "La $(9)Mesa de Tallado de Gemas$() sirve para mejorar $(l:apotheosis:adventure/gems/gems)gemas$().$(p)Mejorar una suele costar $(9)Polvo de gema$(), $(9)Materiales de Rareza$() y otra gema de igual pureza."
+		},
+		{
+			"title": "Costes de mejora",
+            "type": "patchouli:text",
+            "text": "El coste de mejorar una gema aumenta con su pureza.$(p)Las gemas más fuertes piden más $(9)Polvo de gema$() y $(9)Materiales de Rareza$() de mayor nivel.$(p)El coste exacto de cada mejora se ve en JEI."
+        }
+	]
+}

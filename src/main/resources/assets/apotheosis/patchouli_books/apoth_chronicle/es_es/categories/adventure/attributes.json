@@ -1,0 +1,7 @@
+{
+    "name": "Atributos",
+    "description": "Además de los atributos vanilla, $(9)Apothic Attributes$() añade muchos nuevos.$(p)Esta sección detalla los atributos que encontrarás en objetos con afijos y gemas.",
+    "icon": "minecraft:diamond_chestplate",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

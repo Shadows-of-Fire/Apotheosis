@@ -1,0 +1,17 @@
+{
+    "name": "Amuletos irrompibles",
+    "icon": "minecraft:enchanting_table",
+    "category": "apotheosis:potion/charms",
+	"flag": "&apotheosis:potion,apotheosis:enchanting",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Con el $(l:apotheosis:enchanting/table/infusion)Encantamiento por infusión$(), los amuletos pueden hacerse irrompibles.$(p)Así, cualquier efecto de poción puede durar sin límite."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "La receta de infusión de los amuletos irrompibles es bastante difícil.$(p)Necesitarás dominar las $(l:apotheosis:enchanting/table/stats)Estadísticas de encantamiento$() para completarla. Además, debes estar en el Nivel de Mundo: $(9)Pináculo$()."
+        }
+	]
+}

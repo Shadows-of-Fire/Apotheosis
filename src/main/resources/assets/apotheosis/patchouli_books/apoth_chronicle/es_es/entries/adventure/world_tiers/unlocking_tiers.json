@@ -1,0 +1,42 @@
+{
+    "name": "Desbloquear niveles",
+    "icon": "apotheosis:textures/gui/book/frontier_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Cada $(6)Nivel de Mundo$() debe desbloquearse antes de poder activarlo (salvo Refugio, que está activo por defecto).$(p)Los niveles se desbloquean completando progresos concretos.$(p)Una vez desbloqueado un nivel, tienes que activarlo en la $(l:apotheosis:adventure/world_tiers/select_screen)pantalla de selección$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Prefacio",
+            "text": "Esta sección trata los requisitos por defecto para desbloquear los Niveles de Mundo.$(p)Ojo: los modpacks pueden cambiarlos, así que consulta la pestaña de progresos «Niveles de Mundo Apóticos» para ver la información completa."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Refugio",
+            "text": "$(9)Refugio$() está desbloqueado por defecto, aunque no podrás verlo hasta que recojas tu primer objeto con afijos."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Frontera",
+            "text": "Para $(9)Frontera$(), equipa un objeto con afijos en cada espacio de armadura y lleva un arma con afijos en cualquier mano."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Ascenso",
+            "text": "Para desbloquear $(9)Ascenso$(), equípate un conjunto completo de objetos con afijos $(#33FF33)Poco Comunes$(), arma incluida.$(p)Además, debes matar a un Invasor Apótico."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Cumbre",
+            "text": "Llegar a $(9)Cumbre$() cuesta algo más.$(p)Necesitarás un conjunto completo de objetos con afijos $(#5555FF)Raros$() y haber matado al Wither."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Pináculo",
+            "text": "El último nivel, $(9)Pináculo$(), no solo exige un conjunto completo de objetos $(#BB00BB)Épicos$(), sino también que liberes el End.$(p)Es decir, que mates al dragón de Ender."
+        }
+    ]
+}

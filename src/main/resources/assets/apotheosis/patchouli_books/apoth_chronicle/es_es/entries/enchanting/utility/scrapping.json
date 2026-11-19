@@ -1,0 +1,29 @@
+{
+    "name": "Tomo de desguace",
+    "icon": "apothic_enchanting:scrap_tome",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 4,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "El Tomo de desguace permite recuperar los encantamientos de un objeto.$(p)Al combinarlo con otro objeto en un yunque, el objeto se destruye y se crea un libro con algunos de sus encantamientos al azar."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:scrap_tome",
+			"text": "Siempre obtienes la mitad de los encantamientos (redondeando al alza).$(p)Los elegidos dependen de tu $(l:apotheosis:enchanting/table/seed)Semilla de encantamiento$()."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Desguace superior",
+			"item": "apothic_enchanting:improved_scrap_tome",
+			"text": "El $(9)Tomo de desguace superior$() es una versión mejorada del Tomo de desguace.$(p)Extrae todos los encantamientos del objeto, en vez de la mitad."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"item": "apothic_enchanting:extraction_tome",
+			"text": "El $(9)Tomo de extracción$() es una versión perfeccionada del Tomo de desguace.$(p)Extrae todos los encantamientos de un objeto, sin destruirlo en el proceso."
+		}
+	]
+}

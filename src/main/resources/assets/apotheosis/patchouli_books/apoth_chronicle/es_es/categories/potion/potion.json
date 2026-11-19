@@ -1,0 +1,6 @@
+{
+    "name": "Pociones",
+    "description": "$(9)Apothic Attributes$() añade algunas pociones nuevas y nuevas recetas de pociones.",
+    "icon": "minecraft:potion",
+	"flag": "apotheosis:potion"
+}

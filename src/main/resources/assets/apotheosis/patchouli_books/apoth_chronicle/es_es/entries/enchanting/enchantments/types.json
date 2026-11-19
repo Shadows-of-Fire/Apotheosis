@@ -1,0 +1,28 @@
+{
+    "name": "Tipos de encantamiento",
+    "icon": "minecraft:emerald",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Quizá notes que algunos encantamientos tienen nombres de otro color.$(p)Esto se debe a que Apotheosis añade tres nuevas subcategorías de encantamientos.$(p)Cada subcategoría comparte un tema."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Magistral",
+            "text": "Los encantamientos $(2)Magistrales$() son los más fuertes y raros.$(p)Suelen requerir un $(fpower_eses) alto para obtenerse."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Retorcido",
+            "text": "Todo encantamiento $(5)Retorcido$() tiene un efecto bueno y otro malo."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Corrupto",
+            "text": "Los encantamientos $(4)Corruptos$() tienen un coste de salud asociado a su efecto.$(p)Se consideran $(c)maldiciones$()."
+        }
+	]
+}

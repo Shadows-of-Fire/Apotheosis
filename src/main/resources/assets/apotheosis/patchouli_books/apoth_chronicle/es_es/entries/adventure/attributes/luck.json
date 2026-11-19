@@ -1,0 +1,17 @@
+{
+    "name": "Suerte",
+    "icon": "minecraft:rabbit_foot",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "¡La $(9)Suerte$() te da suerte! O sea, aumenta la probabilidad de conseguir mejor botín.$(p)Cualquier cosa puede dar suerte."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Puedes tener suerte negativa, lo que hace aún más difícil conseguir buen botín."
+		}
+	]
+}

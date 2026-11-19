@@ -1,0 +1,17 @@
+{
+    "name": "Empuje de ataque",
+    "icon": "minecraft:piston",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "El $(9)Empuje de ataque$() es lo lejos que empujas a los enemigos al atacarlos.$(p)Cada punto los hace retroceder medio bloque.$(p)Las armas cuerpo a cuerpo pueden dar esta estadística."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "El encantamiento Empuje da una bonificación equivalente a esta estadística, pero no cuenta para el límite máximo."
+		}
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Alcance con entidades",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Tu $(9)Alcance con entidades$() es la distancia máxima a la que puedes atacar con un arma cuerpo a cuerpo.$(p)Suele encontrarse en armas."
+        }
+	]
+}

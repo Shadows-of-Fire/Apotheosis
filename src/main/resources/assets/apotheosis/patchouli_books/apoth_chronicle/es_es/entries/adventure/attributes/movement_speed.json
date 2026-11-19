@@ -1,0 +1,13 @@
+{
+    "name": "Velocidad de movimiento",
+    "icon": "minecraft:leather_boots",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Tu $(9)Velocidad de movimiento$() es lo rápido que te mueves respecto a la velocidad normal de un jugador al caminar.$(p)Casi cualquier objeto puede darla."
+        }
+	]
+}

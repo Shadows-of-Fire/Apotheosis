@@ -1,0 +1,49 @@
+{
+    "name": "Reforjado",
+    "icon": "apotheosis:reforging_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 4,
+    "pages": [
+		{
+            "type": "patchouli:text",
+            "text": "Gracias al potencial puro de los $(9)Materiales de Rareza$() y la versatilidad del $(9)Polvo de gema$(), ahora es posible reforjar un objeto con afijos totalmente nuevos.$(p)El reforjado no se limita a objetos que ya tienen afijos: sirve con cualquier objeto válido."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:simple_reforging_table",
+			"text": "Para empezar, fabrica una $(#5555FF)Mesa de Reforjado Simple$(), que te permite reforjar objetos hasta los $(#5555FF)Raros$()."
+		},
+		{
+            "type": "patchouli:text",
+			"title": "Ranuras de entrada",
+			"text": "La Mesa de Reforjado tiene tres ranuras de entrada.$(p)La central, para el objeto que quieres reforjar.$(p)La superior izquierda, para los $(9)Materiales de Rareza$() de la rareza que quieras."
+        },
+		{
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:sigil_of_rebirth",
+			"title": "Ranuras de entrada",
+			"text": "La ranura inferior derecha aloja los $(9)Sellos de Renacimiento$(), un combustible único que se usa al reforjar."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Reforjado",
+			"text": "Como en una Mesa de encantamientos, al reforjar se ofrecen tres opciones.$(p)Cada opción representa una posible nueva forma del objeto reforjado.$(p)Ninguna opción es de por sí más fuerte que las demás."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Reforjado",
+			"text": "Cada rareza tiene un coste base de niveles, materiales y sellos.$(p)La segunda y la tercera opción exigen el doble y el triple de niveles y materiales, pero solo gastan uno, dos o tres niveles de experiencia.$(p)Para reforjar tu objeto, haz clic en la opción deseada."
+		},
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:reforging_table",
+			"text": "Para reforjar objetos $(#BB00BB)Épicos$() o superiores, tendrás que mejorar tu $(#5555FF)Mesa de Reforjado Simple$() a una $(#BB00BB)Mesa de Reforjado$()."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Notas",
+			"text": "Puedes reforjar objetos sin afijos.$(p)Un objeto se puede reforjar varias veces.$(p)Los modpacks pueden cambiar los costes o impedir reforjar en ciertas rarezas."
+		}
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Telarañas",
+    "icon": "apothic_enchanting:prismatic_web",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "En un yunque, una Telaraña prismática quita todas las maldiciones de un objeto."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:prismatic_web"
+		}
+	]
+}

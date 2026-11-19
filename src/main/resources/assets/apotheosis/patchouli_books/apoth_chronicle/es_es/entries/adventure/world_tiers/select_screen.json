@@ -1,0 +1,32 @@
+{
+    "name": "Selección de nivel",
+    "icon": "apotheosis:textures/gui/book/haven_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)pantalla de selección de Nivel de Mundo$() es tu página todo en uno para conocer y gestionar los $(6)Niveles de Mundo$().$(p)Se abre con el control «Abrir Selección de Nivel de Mundo» (por defecto, CTRL+T)."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Activar niveles",
+            "text": "Los niveles no se activan solos. Cuando desbloqueas uno nuevo, primero tienes que pulsar el botón «Activar» para habilitarlo.$(p)Puedes seleccionar un nivel haciendo clic en su símbolo en la pantalla y luego activarlo con el botón."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Información del nivel",
+            "text": "Para ver información de un nivel, selecciónalo y pulsa el botón «Información Detallada».$(p)Verás los pesos de rareza y pureza de ese nivel, además de los aumentos de nivel que se aplicarán.$(p)Los pesos mostrados se ajustan según tu Suerte. Mantén Mayús para ver los valores por defecto."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Tutorial",
+            "text": "El botón «?» abre el tutorial de Niveles de Mundo.$(p)Hasta activar tu primer nivel, los objetos con afijos aparecen $(9)Sin identificar$() y ocultan su descripción."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Notas",
+            "text": "Puedes cambiar entre niveles desbloqueados cuando quieras, salvo que un modpack desactive los cambios manuales.$(p)En multijugador, cada uno puede tener un nivel distinto sin afectar a los demás. Casi todo el contenido usa el nivel del jugador más cercano."
+        }
+    ]
+}

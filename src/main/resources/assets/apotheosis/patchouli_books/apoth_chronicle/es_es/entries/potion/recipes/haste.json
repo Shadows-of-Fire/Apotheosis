@@ -1,0 +1,19 @@
+{
+    "name": "Prisa minera",
+    "icon": "minecraft:textures/mob_effect/haste.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Prisa minera$() es otro efecto útil sin receta en vanilla.$(p)Cada nivel da +20% de velocidad de minado."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Receta de poción",
+			"item": "minecraft:mushroom_stew",
+            "text": "Esta poción se prepara con una Poción rara y un Estofado de champiñones.$(p)Se puede alargar, potenciar o convertir en arrojadiza con los ingredientes habituales."
+        }
+	]
+}

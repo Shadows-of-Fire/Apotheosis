@@ -1,0 +1,19 @@
+{
+    "name": "Fatiga minera",
+    "icon": "minecraft:textures/mob_effect/mining_fatigue.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(c)Fatiga minera$() es un efecto negativo que normalmente solo aplican los guardianes ancianos.$(p)Mientras dura, tu velocidad de minado baja al 30% en el nivel I y al 9% en el II."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Receta de poción",
+			"item": "minecraft:fermented_spider_eye",
+            "text": "Esta poción se prepara con una $(9)Poción de prisa minera$() y un Ojo de araña fermentado.$(p)Se puede alargar, potenciar o convertir en arrojadiza con los ingredientes habituales."
+        }
+	]
+}

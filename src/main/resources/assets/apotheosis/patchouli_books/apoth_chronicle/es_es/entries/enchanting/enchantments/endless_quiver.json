@@ -1,0 +1,17 @@
+{
+    "name": "Carcaj infinito",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Carcaj infinito$() es un encantamiento Magistral para arcos.$(p)Al disparar, no se gastan flechas, sean del tipo que sean.$(p)Se considera una mejora directa de $(9)Infinidad$()."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Debería hacer infinitas incluso las flechas de otros mods."
+        }
+	]
+}

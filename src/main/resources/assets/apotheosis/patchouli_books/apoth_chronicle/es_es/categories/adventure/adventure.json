@@ -1,0 +1,6 @@
+{
+    "name": "Aventura",
+    "description": "Con Apotheosis puedes equiparte con botín procedural de potentes bonificaciones.$(p)Pero cuidado: también hay nuevos enemigos.",
+    "icon": "minecraft:netherite_sword",
+	"flag": "apotheosis:adventure"
+}

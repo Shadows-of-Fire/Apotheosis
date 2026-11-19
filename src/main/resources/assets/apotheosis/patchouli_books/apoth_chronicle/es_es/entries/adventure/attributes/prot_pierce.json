@@ -1,0 +1,13 @@
+{
+    "name": "Perforación de protección",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Perforación de protección$() ignora una cantidad fija de los puntos de protección de tu objetivo al atacar.$(p)El exceso no deja al objetivo con protección negativa."
+        }
+	]
+}

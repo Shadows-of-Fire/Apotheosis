@@ -1,0 +1,39 @@
+{
+    "name": "Aumentación",
+    "icon": "apotheosis:augmenting_table",
+    "category": "apotheosis:adventure/affix_loot",
+    "flag": "apotheosis:adventure",
+    "sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Mesa de Aumentación$() es una estación de final de partida que sirve para aumentar afijos concretos de un objeto.$(p)Con ella puedes mejorar o renovar un solo afijo y dejar intactos los demás."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:augmenting_table",
+            "text": "Para crear esta mesa, canaliza la energía de una $(9)Estrella del Nether$() a través de dos $(9)Perlas Forjadas por Dioses$() sobre una $(9)Mesa de encantamientos$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Ranuras de entrada",
+            "text": "La Mesa de Aumentación tiene dos ranuras de entrada.$(p)La superior aloja el objeto que quieres aumentar, que debe tener afijos.$(p)Normalmente solo conviene aumentar objetos $(#ED7014)Míticos$() o superiores, aunque también podrías plantearte aumentar los $(#BB00BB)Épicos$()."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:sigil_of_enhancement",
+            "title": "Ranuras de entrada",
+            "text": "La ranura inferior aloja los $(9)Sellos de Mejora$(), el combustible de la aumentación.$(p)Por último, elige el afijo deseado en el menú desplegable."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Mejora",
+            "text": "La primera operación que puedes hacer en la Mesa de Aumentación es mejorar un afijo.$(p)Cuesta dos $(9)Sellos de Mejora$() y 225 niveles, y aumenta un 25% la potencia interna del afijo actual.$(p)Los afijos sin niveles no se pueden mejorar."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Renovación",
+            "text": "La segunda operación de la Mesa de Aumentación es renovar un afijo.$(p)Cuesta un $(9)Sello de Mejora$() y 175 niveles, y cambia el afijo seleccionado por otro del mismo tipo.$(p)Las alternativas posibles se muestran a la izquierda."
+        }
+    ]
+}

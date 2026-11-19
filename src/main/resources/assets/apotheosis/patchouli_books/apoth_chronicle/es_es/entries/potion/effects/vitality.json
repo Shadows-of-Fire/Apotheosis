@@ -1,0 +1,17 @@
+{
+    "name": "Vitalidad desbordante",
+    "icon": "apothic_attributes:textures/mob_effect/vitality.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Vitalidad desbordante$() es un efecto beneficioso que otorga la Poción de aumento de curación.$(p)Mientras dura, toda la curación que recibes aumenta."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "El aumento de curación es del 20% por nivel."
+        }
+	]
+}
