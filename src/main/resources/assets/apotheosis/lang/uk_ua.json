@@ -769,7 +769,7 @@
     "info.apotheosis.boss": "%s (Апофеотичний загарбник)",
     "info.apotheosis.boss_item": "Скине: %s",
     "info.apotheosis.boss_modifiers": "Модифікатори боса:",
-    "info.apotheosis.rarity_material": "Матеріал рідкості (%s)",
+    "info.apotheosis.rarity_material": "%s матеріал рідкості",
     "info.apotheosis.gem_crushing": "Свій перший пил самоцвітів ви можете отримати шляхом скидання ковадла на будь-який апофеотичний самоцвіт.",
     "info.apotheosis.gem_extraction": "Використовується на ковальському столі для вилучення апофеотичних самоцвітів.\n\nУ процесі буде знищено предмет.",
     "info.apotheosis.gem_expulsion": "Використовується на ковальському столі для вилучення апофеотичних самоцвітів.\n\nУ процесі буде знищено самоцвіти.",
@@ -1017,5 +1017,5 @@
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Хроніки тіней",
     "book.apotheosis.subtitle": "Керівництво по Apotheosis",
-    "book.apotheosis.landing": "Ласкаво просимо до світу Apotheosis.$(br2)Apotheosis організовано у $(#8080FF)модами$(), як і зміст цієї книги.$(br2)Інформація відсутнії модів прихована."
+    "book.apotheosis.landing": "Ласкаво просимо до світу Apotheosis.$(br2)Apotheosis організовано за $(#8080FF)модами$(), як і зміст цієї книги.$(br2)Інформація відсутніх модів прихована."
 }
