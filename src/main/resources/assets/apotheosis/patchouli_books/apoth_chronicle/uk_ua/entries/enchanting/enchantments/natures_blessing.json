@@ -1,13 +1,13 @@
 {
-    "name": "Благословення природи",
-    "icon": "minecraft:enchanted_book",
-    "category": "apotheosis:enchanting/enchantments",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
-    "pages": [
-        {
-            "type": "patchouli:text",
-            "text": "$(9)Благословення природи$() це чари для мотики.$(p)Дозволяє використовувати мотику як кісткове борошно, за рахунок міцності.$(p)Вищі рівні зачарування зменшують вартість підвищення міцності."
-        }
-	]
+  "name": "Благословення природи",
+  "icon": "minecraft:enchanted_book",
+  "category": "apotheosis:enchanting/enchantments",
+  "flag": "apotheosis:enchanting",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(9)Благословення природи$() — це чари для мотики.$(p)З ними мотика може застосовуватись як кісткове борошно ціною міцности.$(p)Вищі рівні зменшують пошкодження. $(p) Не працюють під час присідання."
+    }
+  ]
 }
