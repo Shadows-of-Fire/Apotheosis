@@ -1,13 +1,17 @@
 {
-    "name": "Благо Землі",
-    "icon": "minecraft:enchanted_book",
-    "category": "apotheosis:enchanting/enchantments",
-	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
-    "pages": [
-        {
-            "type": "patchouli:text",
-            "text": "$(2)Благо Землі$() це майстерні чари для кайл.$(p)Під час видобутку простого каміння є шанс отримати блок руди."
-        }
-	]
+  "name": "Благо Землі",
+  "icon": "minecraft:enchanted_book",
+  "category": "apotheosis:enchanting/enchantments",
+  "flag": "apotheosis:enchanting",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(2)Благо Землі$() — це майстерні чари для кайл.$(p)Під час видобутку простого каміння є шанс отримати руду чи інший мінерал."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Шовковий дотик змушує отримувати блоки руди, а Удача збільшує кількість отримуваних предметів.$(p)У незерака є власний пул, а деякі предмети залежать від глибини або біому."
+    }
+  ]
 }

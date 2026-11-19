@@ -1,13 +1,13 @@
 {
-    "name": "Швидкість пересування",
-    "icon": "minecraft:leather_boots",
-    "category": "apotheosis:adventure/attributes",
-	"flag": "apotheosis:adventure",
-	"sortnum": 0,
-    "pages": [
-        {
-            "type": "patchouli:text",
-            "text": "$(9)Швидкість пересування$() визначає швидкість вашого руху, відносно до базової швидкости ходьби гравця.$(p)Ця характеристика забезпечується майже чим завгодно."
-        }
-	]
+  "name": "Швидкість руху",
+  "icon": "minecraft:leather_boots",
+  "category": "apotheosis:adventure/attributes",
+  "flag": "apotheosis:adventure",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(9)Швидкість руху$() визначає швидкість вашого руху, відносно до базової швидкости ходьби гравця.$(p)Ця характеристика забезпечується майже чим завгодно."
+    }
+  ]
 }
