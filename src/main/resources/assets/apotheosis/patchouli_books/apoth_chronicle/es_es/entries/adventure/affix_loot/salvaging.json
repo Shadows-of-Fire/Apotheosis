@@ -1,0 +1,44 @@
+{
+    "name": "Reciclaje",
+    "icon": "apotheosis:salvaging_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:salvaging_table",
+			"text": "La $(9)Mesa de Reciclaje$() sirve para descomponer objetos con afijos en sus $(9)Materiales de Rareza$().$(p)También puedes reciclar equipo normal y gemas."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:mysterious_scrap_metal",
+			"link_recipe": true,
+            "text": "Un trozo de forma extraña de un metal no identificable.$(p)Se obtiene al reciclar objetos comunes."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:timeworn_fabric",
+			"link_recipe": true,
+            "text": "Una tela increíblemente resistente, gastada por incontables eras. No tiene ni un roto.$(p)Aparece al reciclar objetos poco comunes."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:luminous_crystal_shard",
+			"link_recipe": true,
+            "text": "Un trozo del cristal más brillante que jamás existió. Aunque solo es un fragmento, alberga un gran poder mágico.$(p)Se obtiene al reciclar objetos raros."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:arcane_sands",
+			"link_recipe": true,
+            "text": "Granos de arena de un reino mágico donde la magia arcana deforma toda vida.$(p)Reciclar un objeto épico lo reduce a esto."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:godforged_pearl",
+			"link_recipe": true,
+            "text": "Una perla de energía divina purificada. El inmenso poder que encierra la vuelve muy inestable.$(p)Estas creaciones extraordinarias se obtienen al reciclar objetos míticos."
+        }
+	]
+}

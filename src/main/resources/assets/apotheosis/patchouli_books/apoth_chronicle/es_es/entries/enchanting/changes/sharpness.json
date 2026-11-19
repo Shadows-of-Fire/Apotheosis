@@ -1,0 +1,13 @@
+{
+    "name": "Filo",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Filo$() ya no es incompatible con otros encantamientos de daño.$(p)Así que ahora puedes tener $(9)Filo$() y otro encantamiento de daño que normalmente sería incompatible."
+        }
+	]
+}

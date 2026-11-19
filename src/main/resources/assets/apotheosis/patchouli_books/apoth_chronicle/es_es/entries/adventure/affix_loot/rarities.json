@@ -1,0 +1,38 @@
+{
+    "name": "Rarezas",
+    "icon": "minecraft:nether_star",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Todo objeto con afijos tiene una $(9)rareza$() asociada. La rareza determina lo fuerte que será el objeto y qué afijos recibirá.$(p)Una rareza superior siempre es más fuerte que la anterior."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Común",
+			"text": "Un objeto $(#808080)Común$() es el objeto con afijos más básico. Siempre tiene una bonificación de estadística y poca probabilidad de obtener otra."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Poco Común",
+			"text": "Un objeto $(#33FF33)Poco Común$() está un escalón por encima del común, pero aún sin efectos únicos. Siempre tiene dos bonificaciones de estadística y puede tener un efecto básico.$(p)También puede tener un espacio de acoplamiento."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Raro",
+			"text": "Con los objetos $(#5555FF)Raros$(), los afijos empiezan a brillar. Reciben dos bonificaciones de estadística y un efecto especial, y quizá un segundo efecto.$(p)Pueden tener hasta dos espacios y siempre tienen una pequeña bonificación de durabilidad."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Épico",
+			"text": "Los objetos $(#BB00BB)Épicos$() rozan la grandeza. Reciben tres estadísticas, un efecto y siempre una $(9)Habilidad$(), con probabilidad de un segundo efecto.$(p)Siempre tienen uno o más espacios y una bonificación de durabilidad mayor."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Mítico",
+			"text": "Una entidad perdida de gran poder forjó los objetos $(#ED7014)Míticos$(). Reciben cuatro estadísticas, dos efectos y una $(9)Habilidad$().$(p)Tienen uno o más espacios y una gran bonificación de durabilidad.$(p)Los $(#ED7014)Míticos$() poseen otras bonificaciones no mencionadas aquí."
+		}
+	]
+}

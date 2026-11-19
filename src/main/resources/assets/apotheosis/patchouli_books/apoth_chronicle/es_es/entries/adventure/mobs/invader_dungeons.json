@@ -1,0 +1,17 @@
+{
+    "name": "Mazmorras de Invasores",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "En lo hondo de las antiguas cavernas de la tierra se ocultan estructuras que guardan el inmenso poder de los afijos. Sería una grata sorpresa que ese poder fuera gratis, pero, por desgracia, lo defiende un Invasor Enjaulado."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Bajo tierra hay varias variantes de estas estructuras. Cada mazmorra contiene un Invasor Enjaulado y unos cuantos cofres con botín. La jaula se activa cuando te acercas a ella y libera al Invasor."
+		}
+	]
+}

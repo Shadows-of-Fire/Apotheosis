@@ -1,0 +1,17 @@
+{
+    "name": "Generadores Brutales",
+    "icon": "minecraft:zombie_head",
+    "category": "apotheosis:adventure/rogue_spawners",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Un generador brutal es un subtipo de generador errante que genera criaturas más fuertes de lo normal.$(p)Estas criaturas tienen más salud, velocidad y daño que sus equivalentes habituales, y son resistentes al fuego."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Lo único bueno es que estos generadores tardan bastante en invocar refuerzos."
+        }
+	]
+}

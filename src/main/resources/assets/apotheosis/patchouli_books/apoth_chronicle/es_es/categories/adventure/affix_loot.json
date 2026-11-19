@@ -1,0 +1,7 @@
+{
+    "name": "Botín con afijos",
+    "description": "En tus aventuras puedes encontrar objetos con diversas bonificaciones.$(p)Son los objetos con afijos, reliquias del pasado de poder variable.",
+    "icon": "minecraft:chest",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

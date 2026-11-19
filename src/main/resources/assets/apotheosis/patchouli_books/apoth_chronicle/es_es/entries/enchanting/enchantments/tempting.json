@@ -1,0 +1,13 @@
+{
+    "name": "Tentación",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Tentación$() es un encantamiento para azadas.$(p)Con una azada así en la mano principal, todos los animales te seguirán como si llevaras su comida para criarlos."
+        }
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Quebranto",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La Poción de $(c)Quebranto$() da un efecto negativo.$(p)Mientras dura, todo el daño que recibes aumenta un 20% por nivel."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Contrarresta directamente la Resistencia y se suma con ella.$(p)Si tuvieras Quebranto II y Resistencia II, recibirías el daño normal."
+        }
+	]
+}

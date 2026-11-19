@@ -1,0 +1,43 @@
+{
+    "name": "Afijos",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Un $(6)afijo$() es lo que da poder a los objetos con afijos. Cada afijo se parece mucho a un encantamiento y otorga una bonificación concreta al objeto que lo lleva.$(p)Este libro no los enumerará todos, eso te toca descubrirlo a ti, pero te ayudará a entenderlos."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Tipos de afijos",
+			"text": "Hay varios tipos de afijos, y cada tipo ofrece un conjunto concreto de funciones.$(p)Los tipos de afijos que recibe un objeto dependen de su $(l:apotheosis:adventure/affix_loot/rarities)rareza$()."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Afijos de estadística",
+			"text": "Los afijos más comunes son los de estadística.$(p)Estos afijos sencillos otorgan una bonificación a un atributo concreto y existen en todas las rarezas. Las rarezas superiores reciben más afijos de estadística."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Afijos de efecto",
+			"text": "Los afijos de efecto son el tipo más variado. Pueden añadir todo tipo de funciones a tus objetos, desde simples ventajas prácticas hasta potentes efectos de combate.$(p)Empiezan a aparecer en objetos $(#33FF33)Poco Comunes$()."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Afijos de habilidad",
+			"text": "Las habilidades, los afijos más potentes, suelen tener enfriamiento (marcado con un reloj de arena) sujeto a la Reducción de enfriamiento.$(p)Todo objeto Épico y Mítico tiene justo una."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Espacios de acoplamiento",
+			"text": "Un espacio de acoplamiento es un afijo especial que solo aloja una $(l:apotheosis:adventure/gems/gems)gema$().$(p)Las gemas dan grandes bonificaciones, pero cuesta encontrarlas.$(p)También puedes añadirlos con un $(9)Sello del Acoplamiento$(), hasta dos por objeto."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "El afijo de durabilidad",
+			"text": "El afijo de durabilidad reduce el desgaste de un objeto y está en casi todos los objetos Raros o superiores. A veces, los míticos son irrompibles en su lugar.$(p)Se aplica tras las demás reducciones de daño: es multiplicativo con Irrompibilidad."
+		}
+	]
+}

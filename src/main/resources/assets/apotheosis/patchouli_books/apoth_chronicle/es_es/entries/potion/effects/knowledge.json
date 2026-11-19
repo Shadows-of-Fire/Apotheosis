@@ -1,0 +1,17 @@
+{
+    "name": "Conocimiento ancestral",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La Poción de $(9)Conocimiento ancestral$() da un efecto beneficioso.$(p)Mientras dura, se multiplica la experiencia que generan las criaturas que matas y los bloques que minas."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "En el nivel I, cuadruplica la experiencia.$(p)En el nivel II, la multiplica por 8.$(p)La poción potenciada es de nivel IV: 16x. El multiplicador es configurable."
+        }
+	]
+}

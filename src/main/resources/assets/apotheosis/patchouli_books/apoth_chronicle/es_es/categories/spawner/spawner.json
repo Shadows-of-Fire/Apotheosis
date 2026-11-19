@@ -1,0 +1,6 @@
+{
+    "name": "Generadores",
+    "description": "$(9)Apothic Spawners$() permite mover y alterar $(9)Generadores de Criaturas$().$(p)Apotheosis cambia sus mejoras por Runas de Generador.",
+    "icon": "minecraft:spawner",
+	"flag": "apotheosis:spawner"
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Reparación vital",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(4)Reparación vital$() es un encantamiento Corrupto para todo objeto con durabilidad.$(p)$(9)Reparación$() convierte la experiencia recibida en durabilidad; $(4)Reparación vital$() hace lo mismo con la curación recibida.$(p)La durabilidad por punto de salud sube con el nivel."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Además, este encantamiento aparece en la Mesa de encantamientos."
+        }
+	]
+}

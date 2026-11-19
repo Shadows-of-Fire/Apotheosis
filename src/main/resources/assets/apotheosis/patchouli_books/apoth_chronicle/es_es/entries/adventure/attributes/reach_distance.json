@@ -1,0 +1,13 @@
+{
+    "name": "Alcance con bloques",
+    "icon": "minecraft:iron_pickaxe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Tu $(9)Alcance con bloques$() es la distancia máxima a la que llegas a un bloque. Si alcanzas algo, puedes interactuar con ello, o romperlo si es un bloque.$(p)Suele aparecer en herramientas que rompen bloques, ya que no sirve en las armas."
+        }
+	]
+}

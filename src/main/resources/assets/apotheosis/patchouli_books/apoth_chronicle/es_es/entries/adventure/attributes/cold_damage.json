@@ -1,0 +1,13 @@
+{
+    "name": "Daño por frío",
+    "icon": "minecraft:blue_ice",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "El $(9)Daño por frío$() es daño mágico extra en ataques cuerpo a cuerpo. También ralentiza según la fuerza del daño.$(p)Aparece en armas cuerpo a cuerpo."
+        }
+	]
+}

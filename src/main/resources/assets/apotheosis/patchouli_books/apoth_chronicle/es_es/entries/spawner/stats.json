@@ -1,0 +1,67 @@
+{
+    "name": "Estadísticas",
+    "icon": "minecraft:writable_book",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Cada Generador de Criaturas tiene $(9)Estadísticas del generador$() que rigen cómo funciona.$(p)Tiempo entre apariciones, cuántas criaturas salen, etc.$(p)Aquí las verás todas."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Retraso de aparición",
+            "text": "Tras generar una entidad, el generador espera un tiempo antes de la siguiente.$(p)Ese retraso es aleatorio, entre el $(9)Retraso mínimo de aparición$() y el $(9)Retraso máximo de aparición$().$(p)Si el máximo es menor que el mínimo, se usa el mínimo."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Cantidad de aparición",
+            "text": "La $(9)Cantidad de aparición$() indica cuántas criaturas salen a la vez.$(p)No siempre salen todas, así que a veces habrá menos entidades.$(p)La aparición cuenta como exitosa (y el retraso se reinicia) si sale al menos una entidad."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Máximo de entidades",
+            "text": "Los Generadores de Criaturas cuentan las entidades cercanas.$(p)Si esa cifra llega al $(9)Máximo de entidades$(), dejan de generar.$(p)Solo cuentan las del mismo tipo que la generada."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Rango de activación",
+            "text": "Los Generadores de Criaturas solo funcionan con un jugador cerca.$(p)Debe estar dentro del $(9)Rango de activación$(), que es un radio en bloques."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Rango de aparición",
+            "text": "El $(9)Rango de aparición$() es el radio en bloques hasta donde pueden aparecer entidades.$(p)Procura que la zona sea apta, o algunas apariciones pueden fallar."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Ignora jugadores",
+            "text": "Un generador que $(9)Ignora jugadores$() no necesita un jugador dentro del $(9)Rango de activación$().$(p)Funcionará con o sin él."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Ignora condiciones",
+            "text": "Un generador que $(9)Ignora condiciones$() ya no necesita ciertas condiciones de aparición propias de cada criatura.$(p)Entre ellas, el requisito de hierba de los animales.$(p)Solo necesitará espacio suficiente y que no haya entidades cerca."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Control por redstone",
+            "text": "Un generador con $(9)Control por redstone$() necesita una señal de redstone para funcionar.$(p)Así decides cuándo funciona el generador."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Ignora la luz",
+            "text": "Un generador que $(9)Ignora la luz$() funciona con cualquier nivel de luz.$(p)Así, las criaturas pueden aparecer de día.$(p)Si ya $(9)Ignora condiciones$(), este modificador no hace nada."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Sin IA",
+            "text": "Un generador con $(9)Sin IA$() activado genera criaturas sin ninguna IA.$(p)Normalmente, esas criaturas se quedan flotando, inmóviles, sin hacer nada.$(p)Sin embargo, las creadas por Apothic Spawners aún se pueden mover."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Si haces granjas grandes de criaturas, usa siempre la mejora $(9)Sin IA$().$(p)Reduce mucho la carga del servidor y hace que las criaturas sean más fáciles de controlar."
+        }
+	]
+}

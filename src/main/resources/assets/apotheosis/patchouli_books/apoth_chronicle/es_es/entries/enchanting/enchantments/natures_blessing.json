@@ -1,0 +1,13 @@
+{
+    "name": "Bendición de la naturaleza",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Bendición de la naturaleza$() es un encantamiento para azadas.$(p)Permite usar la azada como polvo de hueso, gastando durabilidad.$(p)Cuanto más nivel, menor es el coste.$(p)No se activa si estás agachado."
+        }
+	]
+}

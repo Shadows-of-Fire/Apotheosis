@@ -1,0 +1,17 @@
+{
+    "name": "Generadores de Criaturas",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Un $(9)Generador de Criaturas$() es un bloque mágico que trae entidades desde el vacío.$(p)Pero eso ya lo sabías, así que vamos a lo nuevo.$(p)Con Apothic Spawners, los generadores se pueden recoger con $(9)Toque de seda$()."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Recoger un generador así tiene un coste adicional de durabilidad.$(p)Los generadores tienen una serie de $(l:apotheosis:spawner/stats)Estadísticas del generador$() que controlan su funcionamiento.$(p)Puedes cambiarlas con $(l:apotheosis:spawner/runes)Runas de Generador$()."
+        }
+	]
+}

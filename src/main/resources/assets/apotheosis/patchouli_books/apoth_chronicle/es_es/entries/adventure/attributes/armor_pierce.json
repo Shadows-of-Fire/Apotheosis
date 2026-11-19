@@ -1,0 +1,13 @@
+{
+    "name": "Perforación de armadura",
+    "icon": "apothic_attributes:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Perforación de armadura$() ignora una cantidad fija de la armadura de tu objetivo al atacar.$(p)El exceso puede dejar al objetivo con armadura negativa."
+        }
+	]
+}

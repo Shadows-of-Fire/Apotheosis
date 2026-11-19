@@ -1,0 +1,17 @@
+{
+    "name": "Furia del berserker",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(4)Furia del berserker$() es un encantamiento Corrupto que se puede aplicar a petos.$(p)Con este encantamiento, si te hieren, recibirás daño adicional y obtendrás Resistencia, Velocidad y Fuerza."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Se activa con daño de un atacante y tiene tiempo de recarga.$(p)Recibes exponencialmente más daño por nivel, que ignora armadura y Resistencia.$(p)Los efectos duran 25 segundos, con potencia igual al nivel."
+		}
+	]
+}

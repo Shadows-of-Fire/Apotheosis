@@ -1,0 +1,13 @@
+{
+    "name": "Resistencia al empuje",
+    "icon": "minecraft:shulker_shell",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Resistencia al empuje$() indica cuánto resistes el empuje de los ataques. Con el valor máximo, eres inmune al empuje.$(p)Suele provenir de armaduras o escudos."
+        }
+	]
+}

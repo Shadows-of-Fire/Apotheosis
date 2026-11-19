@@ -1,0 +1,13 @@
+{
+    "name": "Daño por salud actual",
+    "icon": "minecraft:dragon_head",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "El $(9)Daño por salud actual$() es un daño al impactar: cada golpe inflige un porcentaje de la salud actual del objetivo como daño físico extra.$(p)Solo aparece en armas cuerpo a cuerpo."
+        }
+	]
+}

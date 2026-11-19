@@ -1,0 +1,17 @@
+{
+    "name": "Bendición de la tierra",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Bendición de la tierra$() es un encantamiento Magistral para picos.$(p)Al picar piedras simples, puede soltar un mineral en bruto u otro material además de lo habitual."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Con Toque de seda sale la mena y Fortuna multiplica el botín.$(p)El netherrack tiene tabla propia; ciertos botines dependen de la profundidad o el bioma."
+        }
+	]
+}

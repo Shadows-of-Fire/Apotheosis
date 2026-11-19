@@ -1,0 +1,13 @@
+{
+    "name": "Espinas gélidas",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Espinas gélidas$() es un encantamiento para petos.$(p)Aplica lentitud a los atacantes. La probabilidad y la potencia del efecto aumentan con el nivel.$(p)Es incompatible con $(9)Espinas$()."
+        }
+	]
+}

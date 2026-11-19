@@ -1,0 +1,44 @@
+{
+    "name": "Niveles 30 - 60",
+    "icon": "apothic_enchanting:hellshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Llegar al nivel 45",
+			"recipe": "apothic_enchanting:hellshelf",
+			"text": "Para llegar al nivel 45, crea algunas $(9)Librerías infernales$() y añádelas a tus librerías actuales."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Llegar al nivel 45",
+			"recipe": "apothic_enchanting:seashelf",
+			"text": "Si no te gusta el Nether, también puedes ir al océano y crear $(9)Librerías oceánicas$() en su lugar."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Llegar al nivel 60",
+			"item": "apothic_enchanting:infused_hellshelf",
+			"text": "Al llegar al nivel 45, necesitarás el $(l:apotheosis:enchanting/table/infusion)Encantamiento por infusión$() para mejorar tus librerías."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Llegar al nivel 60",
+			"item": "apothic_enchanting:infused_seashelf",
+			"text": "Crea unas cuantas más del tipo de librería que usabas, infúndelas y mejóralas.$(p)Estas nuevas librerías, junto con las antiguas, te llevarán al nivel 60."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Pistas de encantamiento",
+			"item": "apothic_enchanting:sightshelf",
+			"text": "Ahora tienes mejores opciones para subir otras estadísticas.$(p)Además de las bonificaciones de las librerías infernales y oceánicas, puedes crear la $(9)Librería infernal de la visión$() para subir tus $(clues_eses)."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Estabilidad cuántica",
+			"recipe": "apothic_enchanting:geode_shelf",
+			"text": "Con la infusión que crea la amatista brotante, podrás fabricar una $(9)Librería de la estabilidad$().$(p)Así evitarás las tiradas negativas de Quanta."
+		}
+	]
+}

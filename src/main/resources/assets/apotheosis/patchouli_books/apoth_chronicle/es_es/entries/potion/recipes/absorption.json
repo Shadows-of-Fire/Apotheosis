@@ -1,0 +1,19 @@
+{
+    "name": "Absorción",
+    "icon": "minecraft:textures/mob_effect/absorption.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Absorción$() es un efecto interesante.$(p)Cada nivel da 2 corazones temporales extra.$(p)Pero no se recuperan durante el efecto, así que es mejor usar un $(l:apotheosis:potion/charms/charm)Amuleto de poción$()."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Receta de poción",
+			"item": "minecraft:golden_apple",
+            "text": "Esta poción se prepara con una Poción rara y una Manzana dorada.$(p)Se puede alargar, potenciar o convertir en arrojadiza con los ingredientes habituales."
+        }
+	]
+}

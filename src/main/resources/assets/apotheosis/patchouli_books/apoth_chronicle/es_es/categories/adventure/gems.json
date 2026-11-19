@@ -1,0 +1,7 @@
+{
+    "name": "Gemas y acoplamiento",
+    "description": "Una piedra brillante siempre llama la atención.$(p)Busca las Gemas Apóticas, objetos que otorgan bonificaciones al acoplarse en objetos con afijos.",
+    "icon": "apotheosis:gem",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

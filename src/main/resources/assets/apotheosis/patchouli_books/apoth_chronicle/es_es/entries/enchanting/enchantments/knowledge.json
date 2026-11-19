@@ -1,0 +1,17 @@
+{
+    "name": "Conocimiento de los siglos",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Conocimiento de los siglos$() es un$(br)encantamiento Magistral para espadas y hachas.$(p)Al matar una criatura, todo su botín se convierte en experiencia.$(p)Cada objeto individual vale la misma cantidad de experiencia."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Por eso, lo más eficiente es matar criaturas que suelten muchos objetos.$(p)La experiencia por objeto aumenta con el nivel del encantamiento.$(p)Por precaución, matar a un jugador no convierte sus objetos."
+		}
+	]
+}

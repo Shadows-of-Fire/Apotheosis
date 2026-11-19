@@ -1,0 +1,13 @@
+{
+    "name": "Altura de paso",
+    "icon": "minecraft:iron_boots",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Altura de paso$() cambia cuánta altura puedes subir sin saltar.$(p)Solo aparece en botas."
+        }
+	]
+}

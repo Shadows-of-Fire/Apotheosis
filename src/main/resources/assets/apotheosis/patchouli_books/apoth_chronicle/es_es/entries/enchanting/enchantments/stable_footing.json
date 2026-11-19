@@ -1,0 +1,17 @@
+{
+    "name": "Pie firme",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Pie firme$() es un encantamiento para botas.$(p)Anula la penalización de velocidad de minado al volar.$(p)Esto incluye todas las penalizaciones por no estar en el suelo."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Combinado con $(9)Afinidad acuática$(), tendrás velocidad de minado completa al nadar."
+		}
+	]
+}

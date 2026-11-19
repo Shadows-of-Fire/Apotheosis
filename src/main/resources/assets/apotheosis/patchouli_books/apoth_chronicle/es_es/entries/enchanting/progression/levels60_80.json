@@ -1,0 +1,43 @@
+{
+    "name": "Niveles 60 - 80",
+    "icon": "apothic_enchanting:dormant_deepshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Llegar al nivel 70",
+			"recipe": "apothic_enchanting:dormant_deepshelf",
+			"text": "El nivel 70 requiere una Mesa de encantamientos de nivel 60 y pizarra profunda."
+		},
+		{
+            "type": "patchouli:text",
+			"title": "Llegar al nivel 70",
+			"text": "Cuando fabriques una $(9)Librería abisal latente$(), tendrás que infundirla.$(p)Esta infusión requerirá bloques extra para alcanzar las estadísticas necesarias.$(p)Al completarla obtendrás una $(9)Librería abisal$(), que te llevará al nivel 70."
+		},
+		{
+            "type": "patchouli:text",
+			"title": "Llegar al nivel 75",
+			"text": "Para el nivel 75, mejora tus librerías abisales.$(p)Para ello necesitas materiales exclusivos de la $(9)Oscuridad profunda$().$(p)Los $(9)Fragmentos de eco$() se saquean en la ciudad antigua, y el $(9)sculk$() se recoge con Toque de seda."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Llegar al nivel 75",
+			"recipe": "apothic_enchanting:echoing_deepshelf",
+			"recipe2": "apothic_enchanting:soul_touched_deepshelf"
+		},
+		{
+            "type": "patchouli:entity",
+			"entity": "minecraft:warden",
+			"title": "Llegar al nivel 80",
+			"scale": 0.95,
+			"text": "El último paso al nivel 80 es matar al $(9)warden$(), lo que permite fabricar $(9)Librerías de sculk$()."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Llegar al nivel 80",
+			"recipe": "apothic_enchanting:echoing_sculkshelf",
+			"recipe2": "apothic_enchanting:soul_touched_sculkshelf"
+		}
+	]
+}

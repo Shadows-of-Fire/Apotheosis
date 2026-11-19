@@ -1,0 +1,64 @@
+{
+    "name": "El menú de información",
+    "icon": "apotheosis:textures/gui/book/question_mark.png",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La mesa de encantamientos tiene una pantalla muy útil que muestra qué encantamientos hay disponibles.$(p)Para abrirla, pon un objeto en la mesa y haz clic en el signo de interrogación de arriba a la derecha."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Este capítulo presenta esta pantalla y te ayuda a manejarla.$(p)Si la entiendes a fondo, el encantamiento nunca volverá a confundirte."
+		},
+		{
+            "type": "patchouli:image",
+			"title": "Selector de ranura",
+			"images": [
+				"apotheosis:textures/gui/book/slot_selector.png"
+			],
+			"text": "Aquí eliges qué ranura de encantamiento examinar."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "La ranura seleccionada se resalta, y las que no están disponibles aparecen en gris.$(p)Al pasar el cursor por la ranura verás el nivel, el $(4)Poder mínimo$() y el $(9)Poder máximo$()."
+		},
+		{
+            "type": "patchouli:image",
+			"title": "Panel de encantamientos",
+			"images": [
+				"apotheosis:textures/gui/book/enchantments_window.png"
+			],
+			"text": "Muestra qué encantamientos hay disponibles."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Según el objeto actual y el nivel de poder seleccionado, habrá disponible cierto conjunto de encantamientos.$(p)Este panel muestra cada encantamiento, su nivel, su rareza y su probabilidad de salir.$(p)También muestra qué encantamientos son incompatibles entre sí."
+		},
+		{
+            "type": "patchouli:image",
+			"title": "Deslizador de poder",
+			"images": [
+				"apotheosis:textures/gui/book/power_slider.png"
+			],
+			"text": "Te permite cambiar el nivel de poder simulado."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Al elegir una ranura, el deslizador de poder se coloca automáticamente justo en el centro del rango de poder.$(p)El deslizador solo puede bajar hasta el $(4)Poder mínimo$() y subir hasta el $(9)Poder máximo$() de la ranura actual."
+		},
+		{
+            "type": "patchouli:image",
+			"title": "Pesos de rareza",
+			"images": [
+				"apotheosis:textures/gui/book/weights.png"
+			],
+			"text": "Muestra el peso de cada rareza."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Cada encantamiento tiene una rareza, y cada rareza tiene un peso.$(p)La probabilidad de elegir un encantamiento es su peso dividido entre la suma de los pesos de todos los disponibles.$(p)La $(arcana) puede cambiar los pesos de rareza."
+		}
+	]
+}

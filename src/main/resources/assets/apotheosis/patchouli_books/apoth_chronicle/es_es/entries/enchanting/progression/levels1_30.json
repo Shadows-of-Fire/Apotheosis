@@ -1,0 +1,20 @@
+{
+    "name": "Niveles 1 - 30",
+    "icon": "minecraft:bookshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Llegar al nivel 30",
+			"recipe": "minecraft:bookshelf",
+			"text": "Al nivel 30 se llega como siempre: con quince librerías."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Otras estadísticas",
+			"item": "minecraft:skeleton_skull",
+			"text": "En esta fase hay algunas opciones básicas para subir otras estadísticas.$(p)Puedes usar velas para subir la $(arcana) y cráneos para subir la $(quanta)."
+		}
+	]
+}

@@ -1,0 +1,20 @@
+{
+    "name": "Tridentes",
+    "icon": "minecraft:trident",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Además de los nuevos encantamientos, los tridentes ahora admiten $(9)Filo$(), $(9)Saqueo$() y $(9)Perforación$().$(p)Filo funciona como en las espadas. Saqueo se aplica a golpes cuerpo a cuerpo.$(p)Perforación permite que los tridentes lanzados golpeen a más enemigos."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Crear tridentes",
+			"item": "apothic_enchanting:inert_trident",
+			"link_recipe": true,
+            "text": "Apotheosis también añade una forma de crear tridentes.$(p)Fabrica un $(9)Tridente inerte$() y mejóralo con el $(l:apotheosis:enchanting/table/infusion)Encantamiento por infusión$()."
+        }
+	]
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Nuevos encantamientos",
+    "description": "Cada entrada de esta sección describe un encantamiento nuevo de Apothic Enchanting.$(p)Los encantamientos de otros mods Apothic, como Captura, tienen sus propias secciones.",
+    "icon": "minecraft:enchanted_book",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

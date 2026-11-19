@@ -1,0 +1,135 @@
+{
+    "name": "Runas de Generador",
+    "icon": "apotheosis:spawner_rune",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Ya conoces las $(l:apotheosis:spawner/stats)Estadísticas del generador$(); ahora, ¿cómo cambiarlas?$(p)Para eso están las $(9)Runas de Generador$(): haz clic derecho con una en un $(9)generador$().$(p)JEI muestra cada runa y su efecto en los usos del Generador de Criaturas."
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:spawner_chain",
+            "title": "Cadenas de Generador",
+            "text": "Las runas se forjan con $(9)Cadenas de Generador$(), obtenidas al volar un generador con una explosión.$(p)Esto desata una cascada: segundos después, el generador estalla y deja la criatura almacenada y muchas cadenas."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:spawner_rune",
+            "title": "Runas en blanco",
+            "text": "Con algunas cadenas, lo primero que debes hacer es fabricar unas $(9)Runas de Generador$() en blanco."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Runas de mejora",
+            "text": "Hay cuatro runas de mejora básicas, una por Nivel de Mundo sobre Refugio.$(p)Modifican el retraso mín./máx., la cantidad de aparición, el máximo de entidades y el rango de activación."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Runa del Colonizador",
+            "recipe": "apotheosis:frontier_spawner_upgrade_rune",
+            "text": "Cada runa de nivel usa el $(9)Material de Rareza$() de su nivel."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Runa del Viajero",
+            "recipe": "apotheosis:ascent_spawner_upgrade_rune",
+            "text": "Las mejoras básicas aumentan con el nivel de la runa."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Runa del Alpinista",
+            "recipe": "apotheosis:summit_spawner_upgrade_rune",
+            "text": "Las runas altas exigen una $(9)Runa de Generador Infundida$() y materiales más raros."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Runa Fulminante",
+            "recipe": "apotheosis:pinnacle_spawner_upgrade_rune",
+            "text": "La última runa crea una imparable máquina de generar criaturas."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Runas de estadística",
+            "text": "Cambiar otras estadísticas (no básicas) requiere una runa específica. Cada estadística tiene una, y su coste depende de la fuerza del efecto."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Rango de aparición",
+            "recipe": "apotheosis:spawn_range_spawner_rune",
+            "text": "Cambia el rango de aparición del generador."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Control",
+            "recipe": "apotheosis:redstone_control_spawner_rune",
+            "text": "Esta runa da control por redstone a un generador, que no funcionará sin señal de redstone."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Atardecer perpetuo",
+            "recipe": "apotheosis:ignore_light_spawner_rune",
+            "text": "Esta runa hace que la aparición ignore la luz.$(p)Las criaturas de la oscuridad pueden salir con luz, y viceversa."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "¡Silencio!",
+            "recipe": "apotheosis:silent_spawner_rune",
+            "text": "Esta runa silencia a todas las criaturas generadas.$(p)Ni quejidos, ni sonidos ambientales, nada."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "La fuente de la juventud",
+            "recipe": "apotheosis:youthful_spawner_rune",
+            "text": "Esta runa hace que las criaturas generadas aparezcan en su forma de cría.$(p)Si es que la tienen, claro. Si no, no pasará nada."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "¡Que ardan todos!",
+            "recipe": "apotheosis:burning_spawner_rune",
+            "text": "Esta runa prende fuego a las criaturas generadas.$(p)Obviamente, no funciona si la criatura es inmune al fuego."
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "apotheosis:infused_spawner_rune",
+            "title": "Runas infundidas",
+            "text": "Las runas más fuertes requieren una $(9)Runa de Generador Infundida$(), creada mediante infusión."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Fuga de cerebros",
+            "recipe": "apotheosis:no_ai_spawner_rune",
+            "text": "Esta runa infundida deja sin IA a las criaturas generadas.$(p)A diferencia de las «auténticas» sin IA, aún se pueden empujar."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Desafiando toda lógica",
+            "recipe": "apotheosis:ignore_conditions_spawner_rune",
+            "text": "Esta runa infundida es una mejora directa de la $(9)Runa de Atardecer Perpetuo$().$(p)Ignora toda condición de aparición, incluida la luz, pero necesita espacio libre."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Solo en el mundo",
+            "recipe": "apotheosis:ignore_players_spawner_rune",
+            "text": "Esta runa infundida activa el generador sin jugadores cerca.$(p)Quizá las criaturas se sientan solas."
+        },
+        {
+            "type": "patchouli:crafting",
+            "title": "Una y otra vez",
+            "recipe": "apotheosis:echoing_spawner_rune",
+            "text": "Esta runa infundida otorga Eco, que hace que las criaturas generadas suelten una copia adicional de su botín.$(p)Se puede aplicar varias veces."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Invertir runas",
+            "text": "Con $(9)Cuarzo del Nether$() en la mano secundaria, aplicar una runa invierte su efecto.$(p)El cuarzo no se consume.$(p)Las runas de nivel no se invierten."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Notas",
+            "text": "Las de estadística respetan los topes de JEI; las de nivel fijan los valores.$(p)Con Mayús sobre un generador verás sus estadísticas."
+        }
+    ]
+}

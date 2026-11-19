@@ -1,0 +1,21 @@
+{
+    "name": "Polvo de gema",
+    "icon": "apotheosis:gem_dust",
+    "category": "apotheosis:adventure/gems",
+	"flag": "apotheosis:adventure",
+	"sortnum": 2,
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:gem_dust",
+			"link_recipe": true,
+            "text": "Toda Gema Apótica se puede triturar $(br)para obtener $(9)Polvo de gema$().$(p)Una forma es aplastarla con un yunque $(br)en el mundo."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:salvaging_table",
+			"title": "Reciclar gemas",
+            "text": "Tras aplastar algunas gemas con un yunque, podrás fabricar y usar la $(9)Mesa de Reciclaje$() en su lugar."
+        }
+	]
+}

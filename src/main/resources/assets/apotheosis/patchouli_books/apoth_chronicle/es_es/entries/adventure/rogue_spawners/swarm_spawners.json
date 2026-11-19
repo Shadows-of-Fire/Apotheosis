@@ -1,0 +1,13 @@
+{
+    "name": "Generadores de Enjambre",
+    "icon": "minecraft:spider_eye",
+    "category": "apotheosis:adventure/rogue_spawners",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Un generador de enjambre es un vil subtipo de generador errante que genera criaturas en grandes cantidades y muy deprisa.$(p)Suelen limitarse a criaturas débiles, a menudo arácnidas, así que no resultan terriblemente abrumadores."
+        }
+	]
+}

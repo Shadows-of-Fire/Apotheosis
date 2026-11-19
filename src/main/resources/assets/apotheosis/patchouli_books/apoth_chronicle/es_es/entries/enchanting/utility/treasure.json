@@ -1,0 +1,19 @@
+{
+    "name": "Encantamientos de tesoro",
+    "icon": "apothic_enchanting:treasure_shelf",
+    "category": "apotheosis:enchanting/utility",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Los encantamientos de tesoro son especiales y no suelen salir en la Mesa de encantamientos.$(p)Sin embargo, puedes remediarlo con una $(9)Librería abisal de tesoros arcanos$()."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apothic_enchanting:treasure_shelf",
+            "title": "Tesoros arcanos",
+            "text": "Con esta librería en una posición válida, aparecerán encantamientos de tesoro al encantar.$(p)Ten en cuenta que casi todas las $(4)maldiciones$() son de tesoro."
+        }
+    ]
+}

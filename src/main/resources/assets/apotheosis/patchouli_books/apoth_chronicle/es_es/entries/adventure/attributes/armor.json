@@ -1,0 +1,25 @@
+{
+    "name": "Armadura",
+    "icon": "minecraft:iron_chestplate",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Armadura$() mide lo resistente que eres al daño físico.$(p)Suele provenir de piezas de armadura y de escudos.$(p)El daño que recibes depende del daño entrante y de tu armadura."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "El primer componente de la fórmula es el $(br)valor A, igual a $(9)10 + (daño - 20) / 2$(), con un mínimo de $(9)10$().$(p)Después, el daño se reduce en $(br)$(9)A / (A + armadura)$().$(p)Esta fórmula no es la de Minecraft vanilla, ya que Apothic Attributes la sustituye (aunque es configurable)."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "Con valores de armadura y daño vanilla, recibirás algo menos de daño.$(p)Con valores altos de armadura y daño, la armadura será bastante menos eficaz.$(p)La armadura negativa aumenta el daño recibido un 1,5% por punto."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "El objetivo de este cambio es reducir la invulnerabilidad a niveles altos y dar más peso a $(9)Protección$() y $(9)Resistencia$().$(p)También hace mucho más dinámicos los combates en los que ambos bandos llevan mucha armadura."
+		}
+	]
+}

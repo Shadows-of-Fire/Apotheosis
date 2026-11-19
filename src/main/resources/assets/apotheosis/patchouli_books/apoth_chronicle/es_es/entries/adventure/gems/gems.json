@@ -1,0 +1,39 @@
+{
+    "name": "Gemas",
+    "icon": "apotheosis:gem",
+    "category": "apotheosis:adventure/gems",
+	"flag": "apotheosis:adventure",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Una $(9)gema$() es un cristal de fuerza condensada.$(p)Acoplada en un objeto con afijos, otorga una potente bonificación.$(p)Puede dar bonificaciones distintas según el objeto, y se puede mejorar."
+        },
+		{
+			"title": "Pureza",
+            "type": "patchouli:text",
+            "text": "Cada gema tiene una pureza, de $(#808080)Rajada$() a $(6)Perfecta$().$(p)Solo la pureza determina la fuerza de la gema, y cuanto más pura es, más cuesta mejorarla.$(p)Una gema $(6)Perfecta$() ya no se puede mejorar."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Obtener gemas",
+			"text": "Las gemas se encuentran en cofres y, rara vez, al matar criaturas. Caen más a menudo con jugadores reales, pero tienen una probabilidad muy baja de caer con máquinas u otras fuentes automatizadas.$(p)Es más probable que las suelten los jefes."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Acoplar gemas",
+			"text": "Para acoplar una gema en un objeto, combínalos en una Mesa de herrería o coge la gema y haz clic derecho con ella sobre el objeto en cualquier inventario.$(p)Cada gema indica en qué objetos encaja.$(p)Algunas gemas son $(#C73912)Únicas$(): solo se puede acoplar una copia de ellas por objeto."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Quitar gemas",
+			"text": "Quitar gemas de un objeto era un proceso difícil, pero unos ingeniosos alquimistas descubrieron cómo hacerlo.$(p)Sus notas están en la página siguiente."
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:sigil_of_withdrawal",
+			"title": "Sello de Retirada",
+			"text": "Combina un objeto con gemas acopladas y un $(9)Sello de Retirada$() en una Mesa de herrería para quitarle las gemas. Recuperarás el objeto y todas las gemas."
+		}
+	]
+}

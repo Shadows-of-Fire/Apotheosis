@@ -1,0 +1,27 @@
+{
+    "name": "Filtrar encantamientos",
+    "icon": "apothic_enchanting:filtering_shelf",
+    "category": "apotheosis:enchanting/utility",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "A veces conviene evitar por completo ciertos encantamientos al encantar.$(p)La $(9)Librería oceánica de filtración acuática$() te permite hacer justo eso."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apothic_enchanting:filtering_shelf",
+            "title": "Filtración acuática",
+            "text": "La librería admite hasta seis libros de un solo encantamiento, y evita que esos encantamientos aparezcan."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Para usarla, inserta un libro con un solo encantamiento que quieras bloquear.$(p)Ese encantamiento ya no estará disponible en la Mesa de encantamientos.$(p)La librería también gana $(eterna) y $(arcana) según el número de libros insertados."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Nota: los libros se insertan como en una librería cincelada, y la librería debe estar en una posición válida para funcionar.$(p)Los encantamientos bloqueados se verán en la $(l:apotheosis:enchanting/table/info)pantalla de información de la mesa$()."
+        }
+    ]
+}

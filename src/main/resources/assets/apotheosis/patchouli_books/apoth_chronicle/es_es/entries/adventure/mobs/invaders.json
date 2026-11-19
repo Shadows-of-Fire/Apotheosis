@@ -1,0 +1,33 @@
+{
+    "name": "Invasores Apóticos",
+    "icon": "minecraft:beacon",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Un ruido extraño, un mensaje peculiar y un enorme haz de luz que cae del cielo...$(p)¡Todo apunta a la incursión de un Invasor Apótico!"
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Mecánica de aparición",
+			"text": "Los Invasores reemplazan una pequeña parte de los monstruos naturales: en la Superficie, a cielo abierto o bajo tierra cerca de tu profundidad; en el Nether, donde sea; en el End, solo en las islas exteriores.$(p)Nunca aparecen en $(9)Refugio$()."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Mecánica de aparición",
+			"text": "Su llegada se anuncia con un fuerte ruido, un mensaje de estado y un haz de faro.$(p)Son más frecuentes en Niveles de Mundo altos, y la tasa varía según la dimensión."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Rarezas de Invasores",
+			"text": "Cada Invasor tiene una rareza, indicada por el color de su nombre y su contorno.$(p)Los de mayor rareza son más fuertes, pero a cambio sueltan mejor botín."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Botín",
+			"text": "Los Invasores siempre sueltan un $(l:apotheosis:adventure/mobs/invader_items)objeto con afijos especial$() y pueden tener tablas de botín adicionales además de las de sus equivalentes normales.$(p)También es más probable que suelten gemas."
+		}
+	]
+}

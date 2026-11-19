@@ -1,0 +1,13 @@
+{
+    "name": "Velocidad de tensado",
+    "icon": "minecraft:bow",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Velocidad de tensado$() es lo rápido que tensas un arma a distancia respecto a lo normal. 1 = 100%, 2 = 200%, etc.$(p)Aparece en armas a distancia."
+        }
+	]
+}

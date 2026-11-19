@@ -1,0 +1,17 @@
+{
+    "name": "Prob. de crítico",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "La $(9)Probabilidad de crítico$() es la posibilidad de que cualquier daño que hagas sea crítico. Con más del 100% puedes hacer multicríticos.$(p)Aparece en armas."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "El daño que infligen tus golpes críticos depende de tu $(l:apotheosis:adventure/attributes/crit_damage)Daño crítico$()."
+		}
+	]
+}

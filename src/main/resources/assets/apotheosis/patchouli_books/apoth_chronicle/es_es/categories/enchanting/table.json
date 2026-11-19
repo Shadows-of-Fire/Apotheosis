@@ -1,0 +1,8 @@
+{
+    "name": "Mesa de encantamientos",
+    "description": "Esta sección repasa los cambios en la Mesa de encantamientos.",
+    "icon": "minecraft:enchanting_table",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting",
+	"sortnum": -2
+}
